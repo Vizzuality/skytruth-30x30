@@ -1,3 +1,14 @@
-export default function Custom500() {
-  return <h1>500 - Server-side error occurred</h1>;
-}
+import Head from 'next/head';
+
+import { DefaultLayout } from '@/layouts/default';
+
+const Home: React.FC = () => (
+  <DefaultLayout>
+    <Head>
+      <title>Error</title>
+    </Head>
+    <p>500</p>
+  </DefaultLayout>
+);
+
+export default Home;

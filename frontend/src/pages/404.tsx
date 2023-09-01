@@ -1,3 +1,14 @@
-export default function Custom404() {
-  return <h1>404 - Page Not Found</h1>;
-}
+import Head from 'next/head';
+
+import { DefaultLayout } from '@/layouts/default';
+
+const Home: React.FC = () => (
+  <DefaultLayout>
+    <Head>
+      <title>Page Not Found</title>
+    </Head>
+    <p>404</p>
+  </DefaultLayout>
+);
+
+export default Home;

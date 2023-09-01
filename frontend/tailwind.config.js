@@ -1,17 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-
-/* eslint-disable @typescript-eslint/no-var-requires */
-const forms = require('@tailwindcss/forms');
-const lineClamp = require('@tailwindcss/line-clamp');
-const typography = require('@tailwindcss/typography');
-
 module.exports = {
   darkMode: ['class'],
   content: [
-    './src/pages/**/*.{ts,tsx}',
-    './src/components/**/*.{ts,tsx}',
-    './src/layouts/**/*.@(tsx|ts)',
-    './src/containers/**/*.@(tsx|ts)',
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
   theme: {
     container: {
@@ -21,7 +15,22 @@ module.exports = {
         '2xl': '1400px',
       },
     },
-    extend: {},
+    extend: {
+      keyframes: {
+        'accordion-down': {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+    },
   },
-  plugins: [require('tailwindcss-animate'), forms, lineClamp, typography],
+  plugins: [require('tailwindcss-animate')],
 };
