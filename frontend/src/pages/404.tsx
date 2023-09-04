@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { ArrowLeft } from 'lucide-react';
 
-import { DefaultLayout } from '@/layouts/default';
+import DefaultLayout from '@/layouts/default';
 
 const Home: React.FC = () => (
   <DefaultLayout>
