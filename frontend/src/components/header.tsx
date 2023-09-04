@@ -28,7 +28,7 @@ const Header: React.FC = () => (
     >
       <Link
         href="/"
-        className="-m-1.5 rounded-lg p-1.5 ring-offset-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
+        className="-m-1.5 rounded-lg p-1.5 ring-offset-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
       >
         Logo
       </Link>
@@ -36,7 +36,7 @@ const Header: React.FC = () => (
       {/* Mobile hamburger menu */}
       <div className="flex md:hidden">
         <Sheet>
-          <SheetTrigger className="rounded-lg px-3 py-2 ring-offset-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
+          <SheetTrigger className="rounded-lg px-3 py-2 ring-offset-white hover:bg-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
             <span className="sr-only">Open main menu</span>
             <Menu className="h-6 w-6" aria-hidden="true" />
           </SheetTrigger>
@@ -51,7 +51,7 @@ const Header: React.FC = () => (
                         <ActiveLink
                           key={href}
                           href={href}
-                          className="-mx-3 block rounded-lg px-3 py-2 font-semibold leading-7 ring-offset-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                          className="-mx-3 block rounded-lg px-3 py-2 font-semibold leading-7 ring-offset-white hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
                           activeClassName="bg-black text-white hover:bg-black"
                         >
                           {name}
@@ -71,7 +71,7 @@ const Header: React.FC = () => (
           <li key={href}>
             <ActiveLink
               href={href}
-              className="-mx-3 block rounded-lg px-3 py-2 font-semibold leading-7 ring-offset-black hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
+              className="-mx-3 block rounded-lg px-3 py-2 font-semibold leading-7 ring-offset-black hover:bg-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
               activeClassName="bg-white text-black hover:bg-white"
             >
               {name}

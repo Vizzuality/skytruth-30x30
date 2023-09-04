@@ -14,7 +14,7 @@ const Footer: React.FC = () => (
           <li key={href}>
             <Link
               href={href}
-              className="block rounded-lg ring-offset-black transition-colors hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
+              className="block rounded-lg ring-offset-black transition-colors hover:text-gray-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
             >
               {name}
             </Link>
