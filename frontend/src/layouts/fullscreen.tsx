@@ -1,14 +1,32 @@
 import { PropsWithChildren } from 'react';
 
+import Head from 'next/head';
+
 import Header from '@/components/header';
 
-const FullscreenLayout: React.FC<PropsWithChildren> = ({ children }) => (
-  <div className="flex h-screen w-screen flex-col">
-    <div className="flex-shrink-0">
-      <Header />
+export interface FullscreenLayoutProps {
+  title?: string;
+  description?: string;
+}
+
+const FullscreenLayout: React.FC<PropsWithChildren<FullscreenLayoutProps>> = ({
+  children,
+  title,
+  description,
+}) => (
+  <>
+    <Head>
+      {!title && <title>Skytruth 30x30</title>}
+      {!!title && <title>{title} | Skytruth 30x30</title>}
+      {description && <meta name="description" content={description} />}
+    </Head>
+    <div className="flex h-screen w-screen flex-col">
+      <div className="flex-shrink-0">
+        <Header />
+      </div>
+      {children}
     </div>
-    {children}
-  </div>
+  </>
 );
 
 export default FullscreenLayout;
