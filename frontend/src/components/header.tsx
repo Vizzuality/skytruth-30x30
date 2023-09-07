@@ -23,12 +23,12 @@ const navigation = [
 const Header: React.FC = () => (
   <header className="bg-black text-white">
     <nav
-      className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+      className="mx-auto flex max-w-7xl items-center justify-between p-6 py-2.5 md:py-6 lg:px-8"
       aria-label="Global"
     >
       <Link
         href="/"
-        className="-m-1.5 rounded-lg p-1.5 ring-offset-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+        className="-m-1.5 rounded-lg p-1.5 ring-offset-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
       >
         Logo
       </Link>
@@ -36,7 +36,7 @@ const Header: React.FC = () => (
       {/* Mobile hamburger menu */}
       <div className="flex md:hidden">
         <Sheet>
-          <SheetTrigger className="rounded-lg px-3 py-2 ring-offset-white hover:bg-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
+          <SheetTrigger className="rounded-lg px-3 py-2 ring-offset-white transition-colors hover:bg-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
             <span className="sr-only">Open main menu</span>
             <Menu className="h-6 w-6" aria-hidden="true" />
           </SheetTrigger>
@@ -71,7 +71,7 @@ const Header: React.FC = () => (
           <li key={href}>
             <ActiveLink
               href={href}
-              className="-mx-3 block rounded-lg px-3 py-2 font-semibold leading-7 ring-offset-black hover:bg-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+              className="-mx-3 block rounded-lg px-3 py-2 font-semibold leading-7 ring-offset-black transition-colors hover:bg-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
               activeClassName="bg-white text-black hover:bg-white"
             >
               {name}

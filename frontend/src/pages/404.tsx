@@ -13,7 +13,7 @@ const Home: React.FC = () => (
       <div className="mt-10 flex justify-center">
         <Link
           href="/"
-          className="rounded-lg text-sm font-semibold leading-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+          className="rounded-lg text-sm font-semibold leading-7 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
         >
           <ArrowLeft className="mr-2 inline-block h-6 w-6" aria-hidden /> Back to home
         </Link>
