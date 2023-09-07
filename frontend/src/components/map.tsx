@@ -5,6 +5,8 @@ import { Minus, Plus } from 'lucide-react';
 import type { Map as MapLibreType } from 'maplibre-gl';
 import MapLibreMap, { Layer, Source } from 'react-map-gl/maplibre';
 
+import { Button } from '@/components/ui/button';
+
 const Map: React.FC = () => {
   const [map, setMap] = useState<MapLibreType | null>(null);
   const [zoom, setZoom] = useState(1);
@@ -46,10 +48,10 @@ const Map: React.FC = () => {
       >
         <Layer id="basemap" type="raster" />
       </Source>
-      <div className="absolute top-6 right-6 z-10 flex flex-col">
-        <button
+      <div className="absolute top-3 right-3 z-10 flex flex-col">
+        <Button
           type="button"
-          className="block rounded-lg rounded-b-none bg-black p-1 text-white ring-offset-white transition-colors hover:bg-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-70"
+          size="icon"
           disabled={zoom === maxZoom}
           onClick={() =>
             map.zoomTo(Math.round(Math.min(map.getZoom() + 1, maxZoom)), { duration: 250 })
@@ -57,10 +59,10 @@ const Map: React.FC = () => {
         >
           <Plus className="h-6 w-6" aria-hidden />
           <span className="sr-only">Zoom in</span>
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          className="block rounded-lg rounded-t-none bg-black p-1 text-white ring-offset-white transition-colors hover:bg-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-70"
+          size="icon"
           onClick={() =>
             map.zoomTo(Math.round(Math.max(map.getZoom() - 1, minZoom)), { duration: 250 })
           }
@@ -68,7 +70,7 @@ const Map: React.FC = () => {
         >
           <Minus className="h-6 w-6" aria-hidden />
           <span className="sr-only">Zoom out</span>
-        </button>
+        </Button>
       </div>
     </MapLibreMap>
   );
