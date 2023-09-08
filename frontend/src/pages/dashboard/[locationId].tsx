@@ -1301,8 +1301,8 @@ const DashboardPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = 
   return (
     <DefaultLayout title={`${locationName} Dashboard`}>
       <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
-        <PopoverTrigger>
-          <h1 className="mt-6 flex items-center text-left text-4xl font-black uppercase md:text-6xl">
+        <PopoverTrigger className="mt-6 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
+          <h1 className="flex items-center text-left text-4xl font-black uppercase md:text-6xl">
             {locationName}
             <ChevronDown className="ml-2 h-10 w-10" />
           </h1>
@@ -1321,16 +1321,16 @@ const DashboardPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = 
                     setLocationPopoverOpen(false);
                   }}
                 >
-                  <div className="flex w-full flex-wrap justify-between gap-x-4">
-                    <span className="font-bold underline">
+                  <div className="flex w-full justify-between gap-x-4">
+                    <div className="flex font-bold underline">
                       <Check
                         className={cn(
-                          'mr-2 inline-block h-4 w-4',
+                          'relative top-1 mr-2 inline-block h-4 w-4 flex-shrink-0',
                           locationId === value ? 'opacity-100' : 'opacity-0'
                         )}
                       />
                       {label}
-                    </span>
+                    </div>
                     <span className="flex-shrink-0 capitalize text-gray-400">{type}</span>
                   </div>
                 </CommandItem>
