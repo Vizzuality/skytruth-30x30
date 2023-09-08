@@ -16,8 +16,7 @@ const FullscreenLayout: React.FC<PropsWithChildren<FullscreenLayoutProps>> = ({
 }) => (
   <>
     <Head>
-      {!title && <title>Skytruth 30x30</title>}
-      {!!title && <title>{title} | Skytruth 30x30</title>}
+      <title>{`${title ? `${title} | ` : ''}Skytruth 30x30`}</title>
       {description && <meta name="description" content={description} />}
     </Head>
     <div className="flex h-screen w-screen flex-col">

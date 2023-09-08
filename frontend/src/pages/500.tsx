@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Link from 'next/link';
 
 import { ArrowLeft } from 'lucide-react';
@@ -6,10 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import DefaultLayout from '@/layouts/default';
 
 const Home: React.FC = () => (
-  <DefaultLayout>
-    <Head>
-      <title>Internal Server Error</title>
-    </Head>
+  <DefaultLayout title="Internal Server Error">
     <div className="mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8">
       <p className="text-base font-semibold leading-8">500</p>
       <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-5xl">Internal Server Error</h1>
