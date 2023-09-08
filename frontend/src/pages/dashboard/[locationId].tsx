@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react';
 
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { Check, ChevronDown } from 'lucide-react';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
+import DashboardTable, { DashboardTableItem } from '@/components/dashboard-table';
 import {
   Command,
   CommandGroup,
@@ -1269,6 +1271,72 @@ const locations = [
   },
 ];
 
+const tableData: DashboardTableItem[] = [
+  {
+    location: 'United Kingdom',
+    locationId: 'GB',
+    type: 'country',
+    signedInitiative: true,
+    score: 0.6,
+    ecosystems: ['Mangroves', 'Open ocean', 'Kelp forest'],
+    updated: new Date('2023-08-01'),
+  },
+  {
+    location: 'Mexico',
+    locationId: 'MX',
+    type: 'country',
+    signedInitiative: false,
+    score: undefined,
+    ecosystems: [],
+    updated: new Date('2023-07-01'),
+  },
+  {
+    location: 'Spain',
+    locationId: 'ES',
+    type: 'country',
+    signedInitiative: true,
+    score: 3.0,
+    ecosystems: ['Open ocean'],
+    updated: new Date('2022-10-01'),
+  },
+  {
+    location: 'Brazil',
+    locationId: 'BR',
+    type: 'country',
+    signedInitiative: false,
+    score: undefined,
+    ecosystems: [],
+    updated: new Date('2023-01-01'),
+  },
+  {
+    location: 'France',
+    locationId: 'FR',
+    type: 'country',
+    signedInitiative: true,
+    score: 12.7,
+    ecosystems: ['Mangroves'],
+    updated: new Date('2021-12-01'),
+  },
+  {
+    location: 'Netherlands',
+    locationId: 'NL',
+    type: 'country',
+    signedInitiative: true,
+    score: 1.6,
+    ecosystems: ['Kelp forest', 'Open ocean'],
+    updated: new Date('2022-02-01'),
+  },
+  {
+    location: 'Worldwide',
+    locationId: 'worldwide',
+    type: 'region',
+    signedInitiative: true,
+    score: 1.6,
+    ecosystems: ['Coral reefs', 'Kelp forest', 'Open ocean'],
+    updated: new Date('2023-04-01'),
+  },
+];
+
 export const getStaticPaths: GetStaticPaths = () => {
   return {
     paths: locations.map(({ value }) => ({ params: { locationId: value } })),
@@ -1300,46 +1368,65 @@ const DashboardPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = 
 
   return (
     <DefaultLayout title={`${locationName} Dashboard`}>
-      <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
-        <PopoverTrigger className="mt-6 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
-          <h1 className="flex items-center text-left text-4xl font-black uppercase md:text-6xl">
-            {locationName}
-            <ChevronDown className="ml-2 h-10 w-10" />
-          </h1>
-        </PopoverTrigger>
-        <PopoverContent className="w-96 max-w-screen" align="start">
-          <Command label="Search country or region">
-            <CommandInput placeholder="Search country or region" />
-            <CommandEmpty>No result</CommandEmpty>
-            <CommandGroup className="mt-4 max-h-64 overflow-y-scroll">
-              {locations.map(({ label, value, type }) => (
-                <CommandItem
-                  key={value}
-                  value={label}
-                  onSelect={() => {
-                    void router.replace(`/dashboard/${value}`);
-                    setLocationPopoverOpen(false);
-                  }}
-                >
-                  <div className="flex w-full justify-between gap-x-4">
-                    <div className="flex font-bold underline">
-                      <Check
-                        className={cn(
-                          'relative top-1 mr-2 inline-block h-4 w-4 flex-shrink-0',
-                          locationId === value ? 'opacity-100' : 'opacity-0'
-                        )}
-                      />
-                      {label}
+      <div className="mt-6">
+        {locationId !== 'worldwide' && (
+          <Link
+            href="/dashboard/worldwide"
+            className="mb-3 block w-fit bg-black p-2 text-xs font-bold text-white underline ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+          >
+            Worldwide
+          </Link>
+        )}
+        <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
+          <PopoverTrigger className="ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
+            <h1
+              className={cn('flex items-center text-left text-4xl font-black uppercase', {
+                'md:text-6xl': locationId === 'worldwide',
+              })}
+            >
+              {locationName}
+              <ChevronDown className="ml-2 h-10 w-10" />
+            </h1>
+          </PopoverTrigger>
+          <PopoverContent className="w-96 max-w-screen" align="start">
+            <Command label="Search country or region">
+              <CommandInput placeholder="Search country or region" />
+              <CommandEmpty>No result</CommandEmpty>
+              <CommandGroup className="mt-4 max-h-64 overflow-y-scroll">
+                {locations.map(({ label, value, type }) => (
+                  <CommandItem
+                    key={value}
+                    value={label}
+                    onSelect={() => {
+                      void router.replace(`/dashboard/${value}`);
+                      setLocationPopoverOpen(false);
+                    }}
+                  >
+                    <div className="flex w-full justify-between gap-x-4">
+                      <div className="flex font-bold underline">
+                        <Check
+                          className={cn(
+                            'relative top-1 mr-2 inline-block h-4 w-4 flex-shrink-0',
+                            locationId === value ? 'opacity-100' : 'opacity-0'
+                          )}
+                        />
+                        {label}
+                      </div>
+                      <span className="flex-shrink-0 capitalize text-gray-400">{type}</span>
                     </div>
-                    <span className="flex-shrink-0 capitalize text-gray-400">{type}</span>
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </Command>
-        </PopoverContent>
-      </Popover>
-      <p className="mt-3 text-xs text-gray-500">Status last updated: August 2023</p>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </Command>
+          </PopoverContent>
+        </Popover>
+        <p className="mt-3 text-xs text-gray-500">Status last updated: August 2023</p>
+        {locationId === 'worldwide' && (
+          <div className="mt-8">
+            <DashboardTable data={tableData} />
+          </div>
+        )}
+      </div>
     </DefaultLayout>
   );
 };
