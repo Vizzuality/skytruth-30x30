@@ -123,9 +123,9 @@ const columns: ColumnDef<DashboardTableItem>[] = [
       ) : (
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger className="whitespace-nowrap">{`${row.original.ecosystems[0]} +${
-              row.original.ecosystems.length - 1
-            }`}</TooltipTrigger>
+            <TooltipTrigger className="whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">{`${
+              row.original.ecosystems[0]
+            } +${row.original.ecosystems.length - 1}`}</TooltipTrigger>
             <TooltipContent>
               <ul>
                 {row.original.ecosystems.map((ecosystem) => (
