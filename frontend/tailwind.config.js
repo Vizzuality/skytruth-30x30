@@ -16,6 +16,9 @@ module.exports = {
       },
     },
     extend: {
+      maxWidth: {
+        screen: '100vw',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: 0 },

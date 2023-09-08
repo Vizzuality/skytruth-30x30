@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 import Link, { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 
-import cx from 'classnames';
+import { cn } from '@/lib/utils';
 
 export type ActiveLinkProps = LinkProps & {
   /** Class of the link */
@@ -52,7 +52,7 @@ const ActiveLink: React.FC<ActiveLinkProps> = ({
     <Link
       {...props}
       {...(isActive ? additionalProps : {})}
-      className={cx({ [className]: true, [activeClassName]: isActive })}
+      className={cn(className, isActive ? activeClassName : undefined)}
     >
       {children}
     </Link>

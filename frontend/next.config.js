@@ -35,6 +35,15 @@ const nextConfig = {
 
     return config;
   },
+  redirects() {
+    return [
+      {
+        source: '/dashboard',
+        destination: '/dashboard/worldwide',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

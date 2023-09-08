@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import cx from 'classnames';
 import { ChevronLeft } from 'lucide-react';
 
 import Map from '@/components/map';
@@ -8,6 +7,7 @@ import SidebarContent from '@/components/sidebar-content';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import FullscreenLayout from '@/layouts/fullscreen';
+import { cn } from '@/lib/utils';
 
 const MapPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -20,12 +20,12 @@ const MapPage: React.FC = () => {
             <Button
               type="button"
               size="icon"
-              className={cx('absolute bottom-3 z-10', {
+              className={cn('absolute bottom-3 z-10', {
                 'left-0': !sidebarOpen,
                 'left-[430px] transition-[left] delay-500': sidebarOpen,
               })}
             >
-              <ChevronLeft className={cx('h-6 w-6', { 'rotate-180': !sidebarOpen })} aria-hidden />
+              <ChevronLeft className={cn('h-6 w-6', { 'rotate-180': !sidebarOpen })} aria-hidden />
               <span className="sr-only">Toggle sidebar</span>
             </Button>
           </CollapsibleTrigger>
