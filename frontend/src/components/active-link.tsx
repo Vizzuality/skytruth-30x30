@@ -41,7 +41,7 @@ const ActiveLink: React.FC<ActiveLinkProps> = ({
 
       // Using URL().pathname to get rid of query and hash
       const activePathname = new URL(asPath, window.location.href).pathname;
-      const isActive = linkPathname === activePathname;
+      const isActive = activePathname.startsWith(linkPathname);
 
       setIsActive(isActive);
       setAdditionalProps({ 'aria-current': isActive ? 'page' : undefined });
