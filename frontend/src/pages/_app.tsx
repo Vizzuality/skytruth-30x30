@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { AppProps } from 'next/app';
 
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import { RecoilRoot } from 'recoil';
 
 import 'styles/globals.css';
 
@@ -32,7 +33,9 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
+        <RecoilRoot>
+          <Component {...pageProps} />
+        </RecoilRoot>
       </Hydrate>
     </QueryClientProvider>
   );
