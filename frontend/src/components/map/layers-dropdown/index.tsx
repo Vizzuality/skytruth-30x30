@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 import { ChevronDown } from 'lucide-react';
 import { useRecoilState } from 'recoil';
@@ -8,12 +8,14 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Switch } from '@/components/ui/switch';
 import { LAYERS } from '@/constants/map';
+import { cn } from '@/lib/utils';
 import { layersAtom } from '@/store/map';
 import { Layer } from '@/types/layer';
 
 const layers = [...LAYERS].sort((layerA, layerB) => layerA.name.localeCompare(layerB.name));
 
 const LayersDropdown: FC = () => {
+  const [opened, setOpened] = useState(false);
   const [activeLayers, setActiveLayers] = useRecoilState(layersAtom);
 
   const onToggleLayer = useCallback(
@@ -28,11 +30,16 @@ const LayersDropdown: FC = () => {
 
   return (
     <div className="absolute top-3 left-3 z-10 font-sans text-base">
-      <Popover>
+      <Popover open={opened} onOpenChange={setOpened}>
         <PopoverTrigger asChild>
           <Button type="button">
             Layers
-            <ChevronDown className="ml-2 inline-block h-6 w-6" aria-hidden />
+            <ChevronDown
+              className={cn('ml-2 inline-block h-6 w-6', {
+                'rotate-180': opened,
+              })}
+              aria-hidden
+            />
           </Button>
         </PopoverTrigger>
         <PopoverContent align="start" className="w-[calc(100vw_-_24px)] max-w-sm">
