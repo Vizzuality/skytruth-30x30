@@ -12,8 +12,8 @@ import { useRecoilState } from 'recoil';
 import { useDebounce } from 'usehooks-ts';
 
 import { cn } from '@/lib/utils';
+import { bboxAtom } from '@/store/map';
 
-import { bboxAtom } from './atoms';
 import { DEFAULT_VIEW_STATE } from './constants';
 import type { MapProps } from './types';
 
@@ -171,3 +171,4 @@ export const Map: FC<MapProps> = ({
 
 export default Map;
 export { default as ZoomControls } from './zoom-controls';
+export { default as LayersDropdown } from './layers-dropdown';

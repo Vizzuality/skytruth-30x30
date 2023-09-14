@@ -4,7 +4,8 @@ import { ChevronLeft } from 'lucide-react';
 import { Layer, Source } from 'react-map-gl/maplibre';
 import { RecoilURLSyncJSONNext } from 'recoil-sync-next';
 
-import Map, { ZoomControls } from '@/components/map';
+import LayerManager from '@/components/layer-manager';
+import Map, { ZoomControls, LayersDropdown } from '@/components/map';
 import SidebarContent from '@/components/sidebar-content';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -42,6 +43,7 @@ const MapPage: React.FC = () => {
           <Map>
             {() => (
               <>
+                <LayersDropdown />
                 <ZoomControls />
                 <Source
                   id="basemap"
@@ -53,10 +55,11 @@ const MapPage: React.FC = () => {
                 >
                   <Layer id="basemap" type="raster" />
                 </Source>
+                <LayerManager />
               </>
             )}
           </Map>
-          <div className="h-2/3 flex-shrink-0 bg-white p-6 pb-3 md:hidden">
+          <div className="h-1/2 flex-shrink-0 bg-white p-6 pb-3 md:hidden">
             <SidebarContent />
           </div>
         </div>
