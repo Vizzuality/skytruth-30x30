@@ -161,9 +161,11 @@ const Legend: FC = () => {
                 .filter(Number)}
               onValueChange={onToggleAccordion}
             >
-              {activeLayersDef.map((layerDef, index) => {
-                const isFirst = index === 0;
-                const isLast = index + 1 === activeLayersDef.length;
+              {activeLayersDef.map((layerDef, reverseIndex) => {
+                const isFirst = reverseIndex === 0;
+                const isLast = reverseIndex + 1 === activeLayersDef.length;
+
+                const index = activeLayersDef.length - reverseIndex - 1;
                 const isVisible = activeLayers[index].settings?.visibility !== false;
                 const opacity = activeLayers[index].settings?.opacity ?? 1;
 
@@ -172,8 +174,8 @@ const Legend: FC = () => {
                     key={layerDef.id}
                     value={`${layerDef.id}`}
                     className={cn({
-                      'pb-3': index + 1 < activeLayers.length,
-                      'border-t border-gray-300 pt-3': index > 0,
+                      'pb-3': reverseIndex + 1 < activeLayers.length,
+                      'border-t border-gray-300 pt-3': reverseIndex > 0,
                     })}
                   >
                     <div className="flex justify-between gap-4">
