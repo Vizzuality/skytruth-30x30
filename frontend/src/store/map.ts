@@ -28,6 +28,7 @@ export const layersAtom = atom<readonly { id: Layer['id']; settings?: LayerSetti
             object({
               visibility: optional(bool()),
               opacity: optional(number()),
+              expanded: optional(bool()),
             })
           ),
         })

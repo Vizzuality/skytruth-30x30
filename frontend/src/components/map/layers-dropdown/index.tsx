@@ -22,7 +22,7 @@ const LayersDropdown: FC = () => {
     (layerId: Layer['id'], isActive: boolean) =>
       setActiveLayers(
         isActive
-          ? [...activeLayers, { id: layerId }]
+          ? [...activeLayers, { id: layerId, settings: { expanded: true } }]
           : activeLayers.filter(({ id }) => id !== layerId)
       ),
     [activeLayers, setActiveLayers]

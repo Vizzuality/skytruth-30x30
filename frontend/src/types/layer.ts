@@ -20,6 +20,7 @@ export interface LayerMetadata {
   // resolution?: string;
   // contentDate?: string;
   // license?: string;
+  attributions?: string;
 }
 
 export interface Layer {
@@ -42,12 +43,16 @@ export interface Layer {
     )[];
   };
   // paramsConfig?: unknown;
-  // legendConfig?: unknown;
+  legend: {
+    type: 'basic' | 'choropleth' | 'gradient';
+    items: { value: string; color: string }[];
+  };
   // interactionConfig?: unknown;
-  // metadata?: LayerMetadata;
+  metadata?: LayerMetadata;
 }
 
 export interface LayerSettings {
   visibility?: boolean;
   opacity?: number;
+  expanded?: boolean;
 }

@@ -1,5 +1,6 @@
 import { Layer } from '@/types/layer';
 
+// Every sub-layer (`config.layers`) must have an ID in order to be correctly ordered on the map
 export const LAYERS: readonly Layer[] = [
   {
     id: 1,
@@ -150,6 +151,35 @@ export const LAYERS: readonly Layer[] = [
         },
       ],
     },
+    legend: {
+      type: 'basic',
+      items: [
+        {
+          color: '#bf6938',
+          value: 'Indigenous Lands - Acknowledged by Government',
+        },
+        {
+          color: '#f3aa72',
+          value: 'Indigenous Lands - Not acknowledged by Government',
+        },
+        {
+          color: '#2C5682',
+          value: 'Community Lands - Acknowledged by Government',
+        },
+        {
+          color: '#407ebe',
+          value: 'Community Lands - Not acknowledged by Government',
+        },
+        {
+          color: '#9c9c9c',
+          value: 'Indicative Areas of Indigenous and Community Land Rights',
+        },
+      ],
+    },
+    metadata: {
+      attributions:
+        'Powered by <a href="https://resourcewatch.org/" target="_blank" rel="noopener noreferrer">Resource Watch</a>',
+    },
   },
   {
     id: 2,
@@ -171,6 +201,19 @@ export const LAYERS: readonly Layer[] = [
           type: 'raster',
         },
       ],
+    },
+    legend: {
+      type: 'basic',
+      items: [
+        {
+          color: '#658434',
+          value: 'Primary forest',
+        },
+      ],
+    },
+    metadata: {
+      attributions:
+        'Powered by <a href="https://resourcewatch.org/" target="_blank" rel="noopener noreferrer">Resource Watch</a>',
     },
   },
 ];

@@ -9,7 +9,7 @@ import ReactMapGL, {
   LngLatBoundsLike,
 } from 'react-map-gl/maplibre';
 import { useRecoilState } from 'recoil';
-import { useDebounce } from 'usehooks-ts';
+import { useDebouncedValue } from 'rooks';
 
 import { cn } from '@/lib/utils';
 import { bboxAtom } from '@/store/map';
@@ -48,7 +48,7 @@ export const Map: FC<MapProps> = ({
         }
       : null
   );
-  const debouncedLocalViewState = useDebounce(localViewState, 250);
+  const [debouncedLocalViewState] = useDebouncedValue(localViewState, 250);
   // Whether a bounds animation is playing
   const [isFlying, setFlying] = useState(false);
   // Store the timeout to restore `isFlying` to `false`
@@ -160,6 +160,7 @@ export const Map: FC<MapProps> = ({
         doubleClickZoom={!isFlying && doubleClickZoom}
         onMove={onMove}
         onLoad={onLoad}
+        attributionControl={false}
         {...rest}
         {...localViewState}
       >
@@ -172,3 +173,5 @@ export const Map: FC<MapProps> = ({
 export default Map;
 export { default as ZoomControls } from './zoom-controls';
 export { default as LayersDropdown } from './layers-dropdown';
+export { default as Legend } from './legend';
+export { default as Attributions } from './attributions';
