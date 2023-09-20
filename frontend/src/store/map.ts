@@ -1,4 +1,5 @@
 import { nullable, number, tuple, object, array, optional, bool } from '@recoiljs/refine';
+import { Feature } from 'geojson';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
@@ -35,4 +36,13 @@ export const layersAtom = atom<readonly { id: Layer['id']; settings?: LayerSetti
       ),
     }),
   ],
+});
+
+// Drawing state
+export const drawStateAtom = atom<{ active: boolean; feature: Feature }>({
+  key: 'draw-state',
+  default: {
+    active: false,
+    feature: null,
+  },
 });

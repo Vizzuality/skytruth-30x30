@@ -175,3 +175,5 @@ export { default as ZoomControls } from './zoom-controls';
 export { default as LayersDropdown } from './layers-dropdown';
 export { default as Legend } from './legend';
 export { default as Attributions } from './attributions';
+export { default as DrawControls } from './draw-controls';
+export { default as Drawing } from './drawing';

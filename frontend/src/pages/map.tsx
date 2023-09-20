@@ -2,18 +2,28 @@ import { useState } from 'react';
 
 import { ChevronLeft } from 'lucide-react';
 import { Layer, Source } from 'react-map-gl/maplibre';
+import { useRecoilValue } from 'recoil';
 import { RecoilURLSyncJSONNext } from 'recoil-sync-next';
 
 import LayerManager from '@/components/layer-manager';
-import Map, { ZoomControls, LayersDropdown, Legend, Attributions } from '@/components/map';
+import Map, {
+  ZoomControls,
+  LayersDropdown,
+  Legend,
+  Attributions,
+  DrawControls,
+  Drawing,
+} from '@/components/map';
 import SidebarContent from '@/components/sidebar-content';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import FullscreenLayout from '@/layouts/fullscreen';
 import { cn } from '@/lib/utils';
+import { drawStateAtom } from '@/store/map';
 
 const MapPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const drawState = useRecoilValue(drawStateAtom);
 
   return (
     <FullscreenLayout title="Map">
@@ -43,9 +53,16 @@ const MapPage: React.FC = () => {
           <Map>
             {() => (
               <>
-                <LayersDropdown />
-                <Legend />
+                <div
+                  className={cn({
+                    'hidden md:block': drawState.active,
+                  })}
+                >
+                  <LayersDropdown />
+                  <Legend />
+                </div>
                 <ZoomControls />
+                <DrawControls />
                 <Source
                   id="basemap"
                   type="raster"
@@ -57,6 +74,7 @@ const MapPage: React.FC = () => {
                   <Layer id="basemap" type="raster" />
                 </Source>
                 <LayerManager />
+                <Drawing />
                 <Attributions />
               </>
             )}
