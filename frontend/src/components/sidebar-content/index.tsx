@@ -21,7 +21,7 @@ const SidebarContent: FC = () => {
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col gap-y-3">
       <div className="flex-grow overflow-y-auto">
         <content.Content />
       </div>
