@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_documentation_metadata",
+  "info": {
+    "displayName": "Metadata",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "citation": {
+      "type": "richtext",
+      "required": false
+    },
+    "source": {
+      "type": "richtext"
+    },
+    "resolution": {
+      "type": "string"
+    },
+    "content_date": {
+      "type": "date"
+    },
+    "license": {
+      "type": "string"
+    }
+  }
+}

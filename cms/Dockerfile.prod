@@ -1,0 +1,56 @@
+# Build all the things
+FROM node:18.17-bullseye-slim as build
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+      build-essential \
+      gcc autoconf \
+      automake \
+      zlib1g-dev \
+      libpng-dev \
+      nasm bash \
+      libvips-dev \
+    && apt-get clean
+
+ENV NODE_ENV production
+
+WORKDIR /app
+
+COPY .yarn ./.yarn
+COPY config ./config
+COPY database ./database
+COPY public ./public
+COPY src ./src
+
+COPY .env \
+     .nvmrc \
+     favicon.png \
+     package.json \
+     entrypoint.sh \
+     tsconfig.json \
+     ./
+
+RUN yarn install
+
+RUN yarn build
+
+# Copy only the built files into the final image
+FROM node:18.17-bullseye-slim AS runner
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y libvips-dev && \
+    apt-get clean
+
+ENV NODE_ENV production
+
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 strapi
+
+COPY --from=build --chown=strapi:nodejs /app ./
+
+USER strapi
+
+EXPOSE 1337
+ENTRYPOINT ["/app/entrypoint.sh"]
