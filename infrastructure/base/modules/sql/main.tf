@@ -11,7 +11,7 @@ resource "google_project_service" "compute_engine_api" {
 }
 
 resource "random_string" "random_string" {
-  length  = 4
+  length = 4
   keepers = {
     name = var.name
   }
@@ -35,21 +35,21 @@ resource "google_sql_database_instance" "db-main" {
   settings {
     tier = var.sql-database-instance-tier
     ip_configuration {
-      ipv4_enabled    = false
-      private_network = var.network_id
+      ipv4_enabled                                  = false
+      private_network                               = var.network_id
       enable_private_path_for_google_cloud_services = true
     }
 
     backup_configuration {
-      enabled    = var.enable_backups
-      start_time = "05:00"
+      enabled                        = var.enable_backups
+      start_time                     = "05:00"
       point_in_time_recovery_enabled = true
 
       backup_retention_settings {
         retained_backups = 30
       }
     }
-    disk_autoresize = true
+    disk_autoresize       = true
     disk_autoresize_limit = 64
   }
 }

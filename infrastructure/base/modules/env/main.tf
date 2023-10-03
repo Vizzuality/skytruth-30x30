@@ -1,5 +1,5 @@
 locals {
-  domain          = var.subdomain == "" ? var.domain : "${var.subdomain}.${var.domain}"
+  domain = var.subdomain == "" ? var.domain : "${var.subdomain}.${var.domain}"
 }
 
 module "network" {
@@ -134,61 +134,64 @@ resource "random_password" "app_key" {
 
 locals {
   cms_env = {
-    HOST                = "0.0.0.0"
-    PORT                = 1337
-    APP_KEYS            = join(
-                            ",",
-                            [
-                              base64encode(random_password.app_key.result),
-                              base64encode(random_password.app_key.result)
-                            ]
+    HOST = "0.0.0.0"
+    PORT = 1337
+    APP_KEYS = join(
+      ",",
+      [
+        base64encode(random_password.app_key.result),
+        base64encode(random_password.app_key.result)
+      ]
     )
     API_TOKEN_SALT      = random_password.api_token_salt.result
     ADMIN_JWT_SECRET    = random_password.admin_jwt_secret.result
     TRANSFER_TOKEN_SALT = random_password.transfer_token_salt.result
     JWT_SECRET          = random_password.jwt_secret.result
-    CMS_URL             = "${module.backend_cloudrun.cloudrun_service_url}/"
+    # CMS_URL             = "${module.backend_cloudrun.cloudrun_service_url}/"
+    CMS_URL = "https://${local.domain}/backend/"
 
-    DATABASE_CLIENT                  = "postgres"
-    DATABASE_HOST                    = module.database.database_host
-    DATABASE_NAME                    = module.database.database_name # var.database_name
-    DATABASE_USERNAME                = module.database.database_user # var.database_user
-    DATABASE_PASSWORD                = module.database.database_password # module.postgres_application_user_password.secret_name
-    DATABASE_SSL                     = false
+    DATABASE_CLIENT   = "postgres"
+    DATABASE_HOST     = module.database.database_host
+    DATABASE_NAME     = module.database.database_name     # var.database_name
+    DATABASE_USERNAME = module.database.database_user     # var.database_user
+    DATABASE_PASSWORD = module.database.database_password # module.postgres_application_user_password.secret_name
+    DATABASE_SSL      = false
   }
   client_env = {
-    NEXT_PUBLIC_URL              = module.frontend_cloudrun.cloudrun_service_url
-    NEXT_PUBLIC_ENVIRONMENT      = "production"
-    NEXT_PUBLIC_API_URL          = "${module.backend_cloudrun.cloudrun_service_url}/api"
-    LOG_LEVEL                    = "info"
+    # NEXT_PUBLIC_URL              = module.frontend_cloudrun.cloudrun_service_url
+    # NEXT_PUBLIC_API_URL          = "${module.backend_cloudrun.cloudrun_service_url}/api"
+    NEXT_PUBLIC_URL         = "https://${local.domain}"
+    NEXT_PUBLIC_API_URL     = "https://${local.domain}/backend/api/"
+    NEXT_PUBLIC_ENVIRONMENT = "production"
+    LOG_LEVEL               = "info"
   }
 }
 
 locals {
-  gcp_sa_key = "${upper(var.environment)}_GCP_SA_KEY"
-  cms_env_file = "${upper(var.environment)}_CMS_ENV_TF_MANAGED"
-  client_env_file = "${upper(var.environment)}_CLIENT_ENV_TF_MANAGED"
-  project_name = "${upper(var.environment)}_PROJECT_NAME"
-  cms_repository = "${upper(var.environment)}_CMS_REPOSITORY"
+  gcp_sa_key        = "${upper(var.environment)}_GCP_SA_KEY"
+  cms_env_file      = "${upper(var.environment)}_CMS_ENV_TF_MANAGED"
+  client_env_file   = "${upper(var.environment)}_CLIENT_ENV_TF_MANAGED"
+  project_name      = "${upper(var.environment)}_PROJECT_NAME"
+  cms_repository    = "${upper(var.environment)}_CMS_REPOSITORY"
   client_repository = "${upper(var.environment)}_CLIENT_REPOSITORY"
-  cms_service = "${upper(var.environment)}_CMS_SERVICE"
-  client_service = "${upper(var.environment)}_CLIENT_SERVICE"
+  cms_service       = "${upper(var.environment)}_CMS_SERVICE"
+  client_service    = "${upper(var.environment)}_CLIENT_SERVICE"
 }
 
 module "github_values" {
-  source     = "../github_values"
-  repo_name  = var.github_project
+  source    = "../github_values"
+  repo_name = var.github_project
   secret_map = {
-    GCP_PROJECT_ID = var.gcp_project_id
-    GCP_REGION = var.gcp_region
-    (local.gcp_sa_key) = base64decode(google_service_account_key.deploy_service_account_key.private_key)
-    (local.project_name) = var.project_name
-    (local.cms_repository) = module.backend_gcr.repository_name
+    GCP_PROJECT_ID            = var.gcp_project_id
+    GCP_REGION                = var.gcp_region
+    (local.gcp_sa_key)        = base64decode(google_service_account_key.deploy_service_account_key.private_key)
+    (local.project_name)      = var.project_name
+    (local.cms_repository)    = module.backend_gcr.repository_name
     (local.client_repository) = module.frontend_gcr.repository_name
-    (local.cms_service) = module.backend_cloudrun.name
-    (local.client_service) = module.frontend_cloudrun.name
-    (local.cms_env_file)            = join("\n", [for key, value in local.cms_env : "${key}=${value}"])
-    (local.client_env_file)         = join("\n", [for key, value in local.client_env : "${key}=${value}"])
+    (local.cms_service)       = module.backend_cloudrun.name
+    (local.client_service)    = module.frontend_cloudrun.name
+    (local.cms_env_file)      = join("\n", [for key, value in local.cms_env : "${key}=${value}"])
+    (local.client_env_file)   = join("\n", [for key, value in local.client_env : "${key}=${value}"])
   }
 }
 
@@ -213,7 +216,7 @@ resource "google_project_iam_member" "deploy_service_account_roles" {
 variable "roles" {
   description = "List of roles to grant to the Cloud Run Deploy Service Account"
   type        = list(string)
-  default     = [
+  default = [
     "roles/iam.serviceAccountTokenCreator",
     "roles/iam.serviceAccountUser",
     "roles/run.developer",

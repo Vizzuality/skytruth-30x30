@@ -37,35 +37,11 @@ variable "gcp_project_id" {
 }
 
 variable "domain" {
-  type = string
+  type        = string
   description = "Base domain for the DNS zone"
 }
 
 variable "uptime_alert_email" {
   type        = string
   description = "Email address to which uptime alerts should be sent"
-}
-
-variable "staging_http_auth_username" {
-  type = string
-  description = "Http auth username (for staging)"
-  default = ""
-}
-
-variable "staging_http_auth_password" {
-  type = string
-  description = "Http auth password (for staging)"
-  default = ""
-}
-
-variable "production_http_auth_username" {
-  type = string
-  description = "Http auth username (for production)"
-  default = ""
-}
-
-variable "production_http_auth_password" {
-  type = string
-  description = "Http auth password (for production)"
-  default = ""
 }

@@ -1,7 +1,7 @@
 output "site_url" {
-  value = var.domain
+  value = local.domain
 }
 
 output "api_url" {
-  value = "${var.domain}/backend"
+  value = "${local.domain}/backend/api"
 }

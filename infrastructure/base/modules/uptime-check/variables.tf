@@ -12,12 +12,12 @@ variable "host" {
 }
 
 variable "path" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "period" {
-  type = string
+  type    = string
   default = "300s"
 }
 

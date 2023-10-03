@@ -11,10 +11,10 @@ resource "google_monitoring_uptime_check_config" "https" {
   }
 
   monitored_resource {
-    type   = "uptime_url"
+    type = "uptime_url"
     labels = {
       project_id = var.project_id
-      host    = var.host
+      host       = var.host
     }
   }
 }
@@ -44,7 +44,7 @@ resource "google_monitoring_alert_policy" "alert_policy" {
 
 resource "google_monitoring_notification_channel" "email" {
   display_name = "${var.name} Alert email"
-  type = "email"
+  type         = "email"
   labels = {
     email_address = var.email
   }

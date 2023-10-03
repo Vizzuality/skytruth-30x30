@@ -1,12 +1,12 @@
 resource "random_password" "secret_value" {
-  count = var.use_random_value ? 1 :0
+  count = var.use_random_value ? 1 : 0
 
   length  = var.random_value_length
   special = false
 }
 
 resource "google_project_service" "secret_manager_api" {
-  service = "secretmanager.googleapis.com"
+  service            = "secretmanager.googleapis.com"
   disable_on_destroy = false
 }
 

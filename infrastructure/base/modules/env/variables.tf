@@ -36,78 +36,68 @@ variable "tf_state_prefix" {
   description = "The prefix for the TF state in the Google Storage Bucket"
 }
 
-variable "http_auth_username" {
-  type = string
-  description = "Http auth username (for staging)"
+variable "dns_zone_name" {
+  type        = string
+  description = "Name for the GCP DNS Zone"
 }
-
-variable "http_auth_password" {
-  type = string
-  description = "Http auth password (for staging)"
-}
-
-# variable "dns_zone_name" {
-#   type        = string
-#   description = "Name for the GCP DNS Zone"
-# }
 
 variable "domain" {
-  type = string
+  type        = string
   description = "Base domain for the DNS zone"
 }
 
 variable "subdomain" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "If set, it will be prepended to the domain to form a subdomain."
 }
 
 variable "frontend_min_scale" {
-  type = number
+  type        = number
   description = "Minimum number of frontend app instances to deploy"
-  default = 0
+  default     = 0
 }
 
 variable "frontend_max_scale" {
-  type = number
+  type        = number
   description = "Maximum number of frontend app instances to deploy"
-  default = 5
+  default     = 5
 }
 
 variable "backend_min_scale" {
-  type = number
+  type        = number
   description = "Minimum number of backend app instances to deploy"
-  default = 0
+  default     = 0
 }
 
 variable "backend_max_scale" {
-  type = number
+  type        = number
   description = "Maximum number of backend app instances to deploy"
-  default = 5
+  default     = 5
 }
 
 variable "cors_origin" {
-  type = string
+  type        = string
   description = "Origin for CORS config"
-  default = "*"
+  default     = "*"
 }
 
 variable "uptime_alert_email" {
-  type = string
+  type        = string
   description = "Email address to which uptime alerts should be sent"
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = "staging | production"
 }
 
 variable "database_name" {
-  type = string
+  type        = string
   description = "Name of the database"
 }
 
 variable "database_user" {
-  type = string
+  type        = string
   description = "Name of the database user"
 }

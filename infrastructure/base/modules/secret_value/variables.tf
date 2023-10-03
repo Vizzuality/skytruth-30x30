@@ -3,7 +3,7 @@ variable "key" {
 }
 
 variable "value" {
-  type = any
+  type    = any
   default = null
 }
 
@@ -13,12 +13,12 @@ variable "region" {
 }
 
 variable "use_random_value" {
-  type = bool
+  type    = bool
   default = false
 }
 
 
 variable "random_value_length" {
-  type = number
+  type    = number
   default = 32
 }

@@ -9,19 +9,19 @@ variable "project_id" {
 }
 
 variable "name" {
-  type = string
+  type        = string
   description = "Name of the SQL server instance"
 }
 
 variable "sql-database-instance-tier" {
   description = "Cloud SQL database instance (server) tier"
-  type = string
-  default = "db-f1-micro"
+  type        = string
+  default     = "db-f1-micro"
 }
 
 variable "database_version" {
-  type = string
-  default = "POSTGRES_14"
+  type        = string
+  default     = "POSTGRES_14"
   description = "Version SQL server instance"
 }
 
@@ -30,22 +30,22 @@ variable "network_id" {
 }
 
 variable "database_name" {
-  type = string
+  type        = string
   description = "Name of the database"
 }
 
 variable "database_user" {
-  type = string
+  type        = string
   description = "Name of the database user"
 }
 
 variable "database_password" {
-  type = string
+  type        = string
   description = "Password for the database user"
 }
 
 variable "enable_backups" {
-  type = bool
-  default = true
+  type        = bool
+  default     = true
   description = "If database backups should be enabled"
 }

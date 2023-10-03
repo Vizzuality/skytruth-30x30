@@ -61,9 +61,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   GAR_LOCATION: ${{ secrets.GCP_REGION }}
-   # TODO: update Artifact Registry repository name
-   # TODO: update Cloud Run service name
-  REGION: ${{ secrets.GCP_REGION }} # TODO: update Cloud Run service region
+  REGION: ${{ secrets.GCP_REGION }}
 
 jobs:
   deploy_client:
