@@ -58,9 +58,13 @@ Please note, there are some actions that need to be carried out manually - you'l
 
 #### Github Actions
 
-As part of this infrastructure, Github Actions are used to automatically build and push Docker images to [Artifact Registry](https://cloud.google.com/artifact-registry), and to deploy those images to CloudRun once they are pushed. Access by
-Github to GCP
-is configured through special authorization rules, automatically set up by the Terraform `base` project above.
+As part of this infrastructure, Github Actions are used to automatically build and push Docker images to [Artifact Registry](https://cloud.google.com/artifact-registry), and to deploy those images to CloudRun once they are pushed. Access by Github to GCP is configured through special authorization rules, automatically set up by the Terraform `base` project above.
+These permissions are necessary for the service account that runs the deployment:
+- "roles/iam.serviceAccountTokenCreator",
+- "roles/iam.serviceAccountUser",
+- "roles/run.developer",
+- "roles/artifactregistry.reader",
+- "roles/artifactregistry.writer"
 
 There are 2 CloudRun instances, one for the client application and one for the API. Github Secrets are used to provide environment secrets to these instances. Some of the secrets are managed by terraform when provisioning resources (e.g. database credentials for the API). To make it clear, the respective GH Secrets are suffixed "TF_MANAGED".
 
