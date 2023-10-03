@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
@@ -16,6 +19,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        mono: ['"Overpass Mono"', ...defaultTheme.fontFamily.mono],
+      },
       maxWidth: {
         screen: '100vw',
       },
