@@ -5,5 +5,18 @@ declare global {
   }
 }
 
+declare module '*.svg';
+declare module '*.svg?sprite' {
+  const content: {
+    id: string;
+    viewBox: string;
+    content: string;
+    node: SVGSymbolElement;
+  };
+  export default content;
+}
+declare module '*.png';
+declare module '*.jpg';
+
 // ? If your module exports nothing, you will need this line. Otherwise, delete it */
 export {};

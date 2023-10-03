@@ -22,6 +22,13 @@ module.exports = {
       fontFamily: {
         mono: ['"Overpass Mono"', ...defaultTheme.fontFamily.mono],
       },
+      colors: {
+        black: '#1E1E1E',
+        blue: '#3C70FF',
+        green: '#02B07C',
+        orange: '#FD8E28',
+        violet: '#AD6CFF',
+      },
       maxWidth: {
         screen: '100vw',
       },

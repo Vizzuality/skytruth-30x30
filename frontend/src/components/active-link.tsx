@@ -2,21 +2,21 @@
  * This component comes from Next.js' repository:
  * https://github.com/vercel/next.js/blob/canary/examples/active-class-name/components/ActiveLink.js
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, PropsWithChildren } from 'react';
 
 import Link, { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 
 import { cn } from '@/lib/utils';
 
-export type ActiveLinkProps = LinkProps & {
-  /** Class of the link */
-  className?: string;
-  /** Additional class of the link when it is active */
-  activeClassName: string;
-  /** Anchor element */
-  children: string;
-};
+export type ActiveLinkProps = PropsWithChildren<
+  LinkProps & {
+    /** Class of the link */
+    className?: string;
+    /** Additional class of the link when it is active */
+    activeClassName: string;
+  }
+>;
 
 const ActiveLink: React.FC<ActiveLinkProps> = ({
   className,

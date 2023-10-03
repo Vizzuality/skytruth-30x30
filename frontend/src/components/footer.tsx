@@ -8,7 +8,7 @@ const navigation = [
 
 const Footer: React.FC = () => (
   <footer className="bg-black text-white">
-    <div className="mx-auto max-w-7xl px-6 py-2 md:flex md:items-center md:justify-between lg:px-8">
+    <div className="mx-auto max-w-7xl px-6 py-2 md:flex md:items-center md:justify-between lg:px-10">
       <ul className="flex justify-center space-x-6">
         {navigation.map(({ name, href }) => (
           <li key={href}>
