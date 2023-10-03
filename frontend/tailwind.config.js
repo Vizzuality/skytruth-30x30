@@ -21,6 +21,7 @@ module.exports = {
     extend: {
       fontFamily: {
         mono: ['"Overpass Mono"', ...defaultTheme.fontFamily.mono],
+        sans: ['"Figtree"', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         black: '#1E1E1E',
