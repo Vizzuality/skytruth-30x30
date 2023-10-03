@@ -53,6 +53,7 @@ on:
     branches:
       - main
       - develop
+      - infrastructure/setup
     paths:
       - 'frontend/**'
       - 'cms/**'
