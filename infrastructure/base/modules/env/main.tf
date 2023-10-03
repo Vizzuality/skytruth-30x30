@@ -229,3 +229,17 @@ resource "google_project_service" "iam_service" {
   project = var.gcp_project_id
   service = "iam.googleapis.com"
 }
+
+module "load_balancer" {
+  source                  = "../load-balancer"
+  region                  = var.gcp_region
+  project                 = var.gcp_project_id
+  name                    = var.project_name
+  backend_cloud_run_name  = module.backend_cloudrun.name
+  frontend_cloud_run_name = module.frontend_cloudrun.name
+  domain                  = var.domain
+  dns_managed_zone_name   = var.dns_zone_name
+  # redirect_domain                       = var.redirect_domain
+  # redirect_domain_dns_managed_zone_name = var.redirect_dns_zone_name
+  subdomain = var.subdomain
+}

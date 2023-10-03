@@ -6,9 +6,9 @@ output "staging_api_url" {
   value = module.staging.api_url
 }
 
-# output "dns_name_servers" {
-#   value = module.dns.dns_name_servers
-# }
+output "dns_name_servers" {
+  value = module.dns.dns_name_servers
+}
 
 # output "production_site_url" {
 #   value = module.production.site_url

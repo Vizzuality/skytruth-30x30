@@ -19,10 +19,17 @@ module "staging" {
   backend_min_scale  = 0
   frontend_max_scale = 1
   backend_max_scale  = 1
+  dns_zone_name      = module.dns.dns_zone_name
   domain             = var.domain
   subdomain          = "30x30"
   uptime_alert_email = var.uptime_alert_email
   environment        = "staging"
   database_name      = "strapi"
   database_user      = "strapi"
+}
+
+module "dns" {
+  source = "./modules/dns"
+  domain = var.domain
+  name   = "skytruth"
 }
