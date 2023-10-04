@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "datasets",
+  "info": {
+    "singularName": "dataset",
+    "pluralName": "datasets",
+    "displayName": "Dataset",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "dataset_group": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::dataset-group.dataset-group",
+      "inversedBy": "datasets"
+    },
+    "layers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::layer.layer",
+      "mappedBy": "dataset"
+    },
+    "metadata": {
+      "type": "component",
+      "repeatable": false,
+      "component": "documentation.metadata"
+    }
+  }
+}

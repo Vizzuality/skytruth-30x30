@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "layers",
+  "info": {
+    "singularName": "layer",
+    "pluralName": "layers",
+    "displayName": "Layer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "deckgl",
+        "mapbox",
+        "carto"
+      ],
+      "required": true,
+      "default": "mapbox"
+    },
+    "dataset": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::dataset.dataset",
+      "inversedBy": "layers"
+    },
+    "config": {
+      "type": "json",
+      "required": true
+    },
+    "params_config": {
+      "type": "json"
+    },
+    "legend_config": {
+      "type": "json",
+      "required": true
+    },
+    "interaction_config": {
+      "type": "json"
+    },
+    "metadata": {
+      "type": "component",
+      "repeatable": false,
+      "component": "documentation.metadata"
+    }
+  }
+}

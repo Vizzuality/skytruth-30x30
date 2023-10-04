@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dataset_groups",
+  "info": {
+    "singularName": "dataset-group",
+    "pluralName": "dataset-groups",
+    "displayName": "Dataset group",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "datasets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::dataset.dataset",
+      "mappedBy": "dataset_group"
+    }
+  }
+}
