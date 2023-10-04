@@ -79,6 +79,11 @@ resource "google_compute_url_map" "load-balancer-url-map" {
     path_rule {
       paths   = ["/${var.backend_path_prefix}/*"]
       service = google_compute_backend_service.backend_service.id
+      route_action {
+        url_rewrite {
+          path_prefix_rewrite = "/"
+        }
+      }
     }
   }
 }
