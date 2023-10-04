@@ -148,7 +148,7 @@ locals {
     TRANSFER_TOKEN_SALT = random_password.transfer_token_salt.result
     JWT_SECRET          = random_password.jwt_secret.result
     # CMS_URL             = "${module.backend_cloudrun.cloudrun_service_url}/"
-    CMS_URL = "https://${local.domain}/backend/"
+    CMS_URL = "https://${local.domain}/${var.backend_path_prefix}/"
 
     DATABASE_CLIENT   = "postgres"
     DATABASE_HOST     = module.database.database_host
@@ -158,10 +158,8 @@ locals {
     DATABASE_SSL      = false
   }
   client_env = {
-    # NEXT_PUBLIC_URL              = module.frontend_cloudrun.cloudrun_service_url
-    # NEXT_PUBLIC_API_URL          = "${module.backend_cloudrun.cloudrun_service_url}/api"
     NEXT_PUBLIC_URL         = "https://${local.domain}"
-    NEXT_PUBLIC_API_URL     = "https://${local.domain}/backend/api/"
+    NEXT_PUBLIC_API_URL     = "https://${local.domain}/${var.backend_path_prefix}/api/"
     NEXT_PUBLIC_ENVIRONMENT = "production"
     LOG_LEVEL               = "info"
   }
@@ -238,8 +236,7 @@ module "load_balancer" {
   backend_cloud_run_name  = module.backend_cloudrun.name
   frontend_cloud_run_name = module.frontend_cloudrun.name
   domain                  = var.domain
+  subdomain               = var.subdomain
   dns_managed_zone_name   = var.dns_zone_name
-  # redirect_domain                       = var.redirect_domain
-  # redirect_domain_dns_managed_zone_name = var.redirect_dns_zone_name
-  subdomain = var.subdomain
+  backend_path_prefix     = var.backend_path_prefix
 }

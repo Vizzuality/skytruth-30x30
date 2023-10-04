@@ -77,24 +77,10 @@ resource "google_compute_url_map" "load-balancer-url-map" {
     default_service = google_compute_backend_service.frontend_service.id
 
     path_rule {
-      paths   = ["/backend/*"]
+      paths   = ["/${var.backend_path_prefix}/*"]
       service = google_compute_backend_service.backend_service.id
     }
   }
-
-  # host_rule {
-  #   hosts        = [local.redirect_domain]
-  #   path_matcher = "redirect"
-  # }
-
-  # path_matcher {
-  #   name            = "redirect"
-  #   default_url_redirect {
-  #     strip_query = false
-  #     host_redirect = local.domain
-  #     https_redirect = true
-  #   }
-  # }
 }
 
 resource "google_compute_region_network_endpoint_group" "cloudrun_backend_neg" {
@@ -146,13 +132,3 @@ resource "google_dns_record_set" "frontend-dns-record-set" {
   managed_zone = var.dns_managed_zone_name
   rrdatas      = [google_compute_global_address.ip_address.address]
 }
-
-# DNS record
-# resource "google_dns_record_set" "redirect-dns-record-set" {
-#   project      = var.project
-#   name         = "${local.redirect_domain}."
-#   type         = "A"
-#   ttl          = 3600
-#   managed_zone = var.redirect_domain_dns_managed_zone_name
-#   rrdatas      = [google_compute_global_address.ip_address.address]
-# }

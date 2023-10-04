@@ -38,3 +38,8 @@ variable "backend_cloud_run_name" {
   type        = string
   description = "Name of the backend Cloud Run service"
 }
+
+variable "backend_path_prefix" {
+  type        = string
+  description = "Path prefix for the backend service"
+}

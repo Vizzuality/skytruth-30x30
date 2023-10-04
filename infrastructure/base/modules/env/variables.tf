@@ -101,3 +101,8 @@ variable "database_user" {
   type        = string
   description = "Name of the database user"
 }
+
+variable "backend_path_prefix" {
+  type        = string
+  description = "Path prefix for the backend service"
+}
