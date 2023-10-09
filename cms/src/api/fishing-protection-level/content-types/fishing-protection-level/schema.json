@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fishing_protection_levels",
+  "info": {
+    "singularName": "fishing-protection-level",
+    "pluralName": "fishing-protection-levels",
+    "displayName": "Fishing Protection Level"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "info": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fishing_protection_level_stats",
+  "info": {
+    "singularName": "fishing-protection-level-stat",
+    "pluralName": "fishing-protection-level-stats",
+    "displayName": "Fishing Protection Level Stats",
+    "description": "Calculation of area of protection by location and fishing protection level"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location"
+    },
+    "fishing_protection_level": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::fishing-protection-level.fishing-protection-level"
+    },
+    "area": {
+      "type": "decimal"
+    }
+  }
+}

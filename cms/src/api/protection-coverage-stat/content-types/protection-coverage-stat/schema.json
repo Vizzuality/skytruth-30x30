@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "protection_coverage_stats",
+  "info": {
+    "singularName": "protection-coverage-stat",
+    "pluralName": "protection-coverage-stats",
+    "displayName": "Protection Coverage Stats",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location"
+    },
+    "protection_status": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::protection-status.protection-status"
+    },
+    "year": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "cumSumProtectedArea": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "protectedArea": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    }
+  }
+}

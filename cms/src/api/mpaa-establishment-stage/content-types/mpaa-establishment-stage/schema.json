@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mpaa_establishment_stages",
+  "info": {
+    "singularName": "mpaa-establishment-stage",
+    "pluralName": "mpaa-establishment-stages",
+    "displayName": "MPAA Establishment Stage"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "info": {
+      "type": "text"
+    }
+  }
+}
