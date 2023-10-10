@@ -1,0 +1,697 @@
+{
+	"version": 2,
+	"data": {
+		"api::protection-status.protection-status": {
+			"1": {
+				"id": 1,
+				"slug": "mpa",
+				"name": "MPA",
+				"info": null,
+				"createdAt": "2023-10-09T18:00:35.426Z",
+				"updatedAt": "2023-10-09T18:00:35.426Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"slug": "oecm",
+				"name": "OECM",
+				"info": null,
+				"createdAt": "2023-10-09T18:00:45.377Z",
+				"updatedAt": "2023-10-09T18:00:45.377Z",
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::location.location": {
+			"1": {
+				"id": 1,
+				"totalMarineArea": 361000000,
+				"createdAt": "2023-10-09T17:51:13.794Z",
+				"updatedAt": "2023-10-09T17:51:13.794Z",
+				"code": "GLOB",
+				"name": "Worldwide",
+				"type": "worldwide",
+				"groups": [],
+				"members": [],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"totalMarineArea": 3830955,
+				"createdAt": "2023-10-10T14:02:56.853Z",
+				"updatedAt": "2023-10-10T14:02:56.853Z",
+				"code": "BRA",
+				"name": "Brasil",
+				"type": "country",
+				"groups": [],
+				"members": [],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"totalMarineArea": 8148250,
+				"createdAt": "2023-10-10T14:04:30.833Z",
+				"updatedAt": "2023-10-10T14:04:30.833Z",
+				"code": "AUS",
+				"name": "Australia",
+				"type": "country",
+				"groups": [],
+				"members": [],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"4": {
+				"id": 4,
+				"totalMarineArea": 1039233,
+				"createdAt": "2023-10-10T14:05:03.026Z",
+				"updatedAt": "2023-10-10T14:41:18.059Z",
+				"code": "ESP",
+				"name": "Spain",
+				"type": "country",
+				"groups": [
+					9
+				],
+				"members": [],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"5": {
+				"id": 5,
+				"totalMarineArea": 600000,
+				"createdAt": "2023-10-10T14:07:27.469Z",
+				"updatedAt": "2023-10-10T14:07:27.469Z",
+				"code": "KOR",
+				"name": "Korea",
+				"type": "country",
+				"groups": [],
+				"members": [],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"6": {
+				"id": 6,
+				"totalMarineArea": 11351000,
+				"createdAt": "2023-10-10T14:08:02.385Z",
+				"updatedAt": "2023-10-10T14:08:02.385Z",
+				"code": "USA",
+				"name": "United States of America",
+				"type": "country",
+				"groups": [],
+				"members": [],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"7": {
+				"id": 7,
+				"totalMarineArea": 6805586,
+				"createdAt": "2023-10-10T14:08:38.182Z",
+				"updatedAt": "2023-10-10T14:41:33.649Z",
+				"code": "GBR",
+				"name": "United Kingdom",
+				"type": "country",
+				"groups": [
+					9
+				],
+				"members": [],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"8": {
+				"id": 8,
+				"totalMarineArea": 240666667,
+				"createdAt": "2023-10-10T14:09:44.636Z",
+				"updatedAt": "2023-10-10T14:09:44.636Z",
+				"code": "ABNJ",
+				"name": "Highseas",
+				"type": "country",
+				"groups": [],
+				"members": [],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"9": {
+				"id": 9,
+				"totalMarineArea": 10351000,
+				"createdAt": "2023-10-10T14:10:43.898Z",
+				"updatedAt": "2023-10-10T14:48:08.431Z",
+				"code": "EEE",
+				"name": "Europe",
+				"type": "region",
+				"groups": [],
+				"members": [
+					4,
+					7
+				],
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::protection-coverage-stat.protection-coverage-stat": {
+			"1": {
+				"id": 1,
+				"year": 2016,
+				"cumSumProtectedArea": 49388.08,
+				"protectedArea": 14016.04,
+				"createdAt": "2023-10-09T18:06:25.069Z",
+				"updatedAt": "2023-10-09T18:06:25.069Z",
+				"location": 1,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"year": 2017,
+				"cumSumProtectedArea": 57086.42,
+				"protectedArea": 7698.34,
+				"createdAt": "2023-10-09T18:07:23.774Z",
+				"updatedAt": "2023-10-09T18:07:23.774Z",
+				"location": 1,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"year": 2018,
+				"cumSumProtectedArea": 73020.52,
+				"protectedArea": 17531.99,
+				"createdAt": "2023-10-09T18:08:11.027Z",
+				"updatedAt": "2023-10-09T18:08:11.027Z",
+				"location": 1,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"4": {
+				"id": 4,
+				"year": 2019,
+				"cumSumProtectedArea": 81937.99,
+				"protectedArea": 8917.46,
+				"createdAt": "2023-10-09T18:09:07.222Z",
+				"updatedAt": "2023-10-09T18:09:07.222Z",
+				"location": 1,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"5": {
+				"id": 5,
+				"year": 2020,
+				"cumSumProtectedArea": 88077,
+				"protectedArea": 6139.01,
+				"createdAt": "2023-10-09T18:09:53.024Z",
+				"updatedAt": "2023-10-09T18:09:53.024Z",
+				"location": 1,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"6": {
+				"id": 6,
+				"year": 2021,
+				"cumSumProtectedArea": 103438.89,
+				"protectedArea": 15361.89,
+				"createdAt": "2023-10-09T18:10:55.677Z",
+				"updatedAt": "2023-10-09T18:10:55.677Z",
+				"location": 1,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"7": {
+				"id": 7,
+				"year": 2022,
+				"cumSumProtectedArea": 104821.11,
+				"protectedArea": 1382.22,
+				"createdAt": "2023-10-09T18:11:47.597Z",
+				"updatedAt": "2023-10-09T18:11:47.597Z",
+				"location": 1,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"8": {
+				"id": 8,
+				"year": 2023,
+				"cumSumProtectedArea": 119875.35,
+				"protectedArea": 15054.24,
+				"createdAt": "2023-10-09T18:13:05.513Z",
+				"updatedAt": "2023-10-09T18:13:05.513Z",
+				"location": 1,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"9": {
+				"id": 9,
+				"year": 2016,
+				"cumSumProtectedArea": 294347.25,
+				"protectedArea": 19770.83,
+				"createdAt": "2023-10-09T18:16:58.350Z",
+				"updatedAt": "2023-10-09T18:16:58.350Z",
+				"location": 1,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"10": {
+				"id": 10,
+				"year": 2017,
+				"cumSumProtectedArea": 4067.7,
+				"protectedArea": 1039233,
+				"createdAt": "2023-10-09T18:17:35.404Z",
+				"updatedAt": "2023-10-09T18:17:35.404Z",
+				"location": 1,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"11": {
+				"id": 11,
+				"year": 2018,
+				"cumSumProtectedArea": 317505.54,
+				"protectedArea": 19090.58,
+				"createdAt": "2023-10-09T18:18:13.921Z",
+				"updatedAt": "2023-10-09T18:18:13.921Z",
+				"location": 1,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"12": {
+				"id": 12,
+				"year": 2019,
+				"cumSumProtectedArea": 333510.37,
+				"protectedArea": 16004.83,
+				"createdAt": "2023-10-09T18:18:52.180Z",
+				"updatedAt": "2023-10-09T18:18:52.180Z",
+				"location": 1,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"13": {
+				"id": 13,
+				"year": 2020,
+				"cumSumProtectedArea": 348528.82,
+				"protectedArea": 15018.45,
+				"createdAt": "2023-10-09T18:20:00.527Z",
+				"updatedAt": "2023-10-09T18:20:00.527Z",
+				"location": 1,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"14": {
+				"id": 14,
+				"year": 2021,
+				"cumSumProtectedArea": 356396.89,
+				"protectedArea": 7868.07,
+				"createdAt": "2023-10-09T18:20:55.327Z",
+				"updatedAt": "2023-10-09T18:20:55.327Z",
+				"location": 1,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"15": {
+				"id": 15,
+				"year": 2022,
+				"cumSumProtectedArea": 372116.52,
+				"protectedArea": 15719.63,
+				"createdAt": "2023-10-09T18:21:28.688Z",
+				"updatedAt": "2023-10-09T18:21:28.688Z",
+				"location": 1,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"16": {
+				"id": 16,
+				"year": 2023,
+				"cumSumProtectedArea": 388064.81,
+				"protectedArea": 15948.29,
+				"createdAt": "2023-10-09T18:22:00.955Z",
+				"updatedAt": "2023-10-09T18:22:00.955Z",
+				"location": 1,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::mpaa-protection-level.mpaa-protection-level": {
+			"1": {
+				"id": 1,
+				"slug": "fully-highly-protected",
+				"name": "Fully / Highly Protected",
+				"info": null,
+				"createdAt": "2023-10-09T18:03:52.299Z",
+				"updatedAt": "2023-10-09T18:03:52.299Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"slug": "less-protected-unknown",
+				"name": "Less Protected / Unknown",
+				"info": null,
+				"createdAt": "2023-10-09T18:04:19.597Z",
+				"updatedAt": "2023-10-09T18:04:19.597Z",
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::mpaa-protection-level-stat.mpaa-protection-level-stat": {
+			"1": {
+				"id": 1,
+				"area": 80777.16,
+				"createdAt": "2023-10-09T18:04:45.059Z",
+				"updatedAt": "2023-10-09T18:04:45.059Z",
+				"location": 1,
+				"mpaa_protection_level": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"area": 136195.75,
+				"createdAt": "2023-10-09T18:05:00.025Z",
+				"updatedAt": "2023-10-09T18:05:00.025Z",
+				"location": 1,
+				"mpaa_protection_level": 2,
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::mpaa-establishment-stage.mpaa-establishment-stage": {
+			"1": {
+				"id": 1,
+				"slug": "designated-implemented",
+				"name": "Designated / implemented",
+				"info": null,
+				"createdAt": "2023-10-09T17:59:47.613Z",
+				"updatedAt": "2023-10-09T17:59:47.613Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"slug": "designated-unimplemented",
+				"name": "Designated / unimplemented",
+				"info": null,
+				"createdAt": "2023-10-09T18:00:00.776Z",
+				"updatedAt": "2023-10-09T18:00:00.776Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"slug": "proposed-committed",
+				"name": "Proposed / committed",
+				"info": null,
+				"createdAt": "2023-10-09T18:00:15.236Z",
+				"updatedAt": "2023-10-09T18:00:15.236Z",
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat": {
+			"1": {
+				"id": 1,
+				"year": 2023,
+				"area": 60932.13,
+				"createdAt": "2023-10-09T18:01:13.948Z",
+				"updatedAt": "2023-10-09T18:01:53.654Z",
+				"location": 1,
+				"mpaa_establishment_stage": 1,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"year": 2023,
+				"area": 56710.02,
+				"createdAt": "2023-10-09T18:01:44.996Z",
+				"updatedAt": "2023-10-09T18:01:44.996Z",
+				"location": 1,
+				"mpaa_establishment_stage": 2,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"year": 2023,
+				"area": 311675.1,
+				"createdAt": "2023-10-09T18:02:13.453Z",
+				"updatedAt": "2023-10-09T18:02:13.453Z",
+				"location": 1,
+				"mpaa_establishment_stage": 3,
+				"protection_status": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"4": {
+				"id": 4,
+				"year": 2023,
+				"area": 84461.76,
+				"createdAt": "2023-10-09T18:02:37.147Z",
+				"updatedAt": "2023-10-09T18:02:37.147Z",
+				"location": 1,
+				"mpaa_establishment_stage": 1,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"5": {
+				"id": 5,
+				"year": 2023,
+				"area": 164579.41,
+				"createdAt": "2023-10-09T18:02:55.685Z",
+				"updatedAt": "2023-10-09T18:02:55.685Z",
+				"location": 1,
+				"mpaa_establishment_stage": 2,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"6": {
+				"id": 6,
+				"year": 2023,
+				"area": 202021.55,
+				"createdAt": "2023-10-09T18:03:18.032Z",
+				"updatedAt": "2023-10-09T18:03:18.032Z",
+				"location": 1,
+				"mpaa_establishment_stage": 3,
+				"protection_status": 1,
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::habitat.habitat": {
+			"1": {
+				"id": 1,
+				"slug": "saltmarshes",
+				"name": "Saltmarshes",
+				"info": null,
+				"createdAt": "2023-10-09T17:54:55.874Z",
+				"updatedAt": "2023-10-09T17:54:55.874Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"slug": "seagrasses",
+				"name": "Seagrasses",
+				"info": null,
+				"createdAt": "2023-10-09T17:55:08.906Z",
+				"updatedAt": "2023-10-09T17:55:08.906Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"slug": "warm-water corals",
+				"name": "Warm-water corals",
+				"info": null,
+				"createdAt": "2023-10-09T17:55:31.406Z",
+				"updatedAt": "2023-10-09T17:55:31.406Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"4": {
+				"id": 4,
+				"slug": "cold-water corals",
+				"name": "Cold-water corals",
+				"info": null,
+				"createdAt": "2023-10-09T17:55:51.134Z",
+				"updatedAt": "2023-10-09T17:55:51.134Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"5": {
+				"id": 5,
+				"slug": "mangroves",
+				"name": "Mangroves",
+				"info": null,
+				"createdAt": "2023-10-09T17:56:06.117Z",
+				"updatedAt": "2023-10-09T17:56:06.117Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"6": {
+				"id": 6,
+				"slug": "seamounts",
+				"name": "Seamounts",
+				"info": null,
+				"createdAt": "2023-10-09T17:56:21.561Z",
+				"updatedAt": "2023-10-09T17:56:21.561Z",
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::habitat-stat.habitat-stat": {
+			"1": {
+				"id": 1,
+				"year": 2023,
+				"protectedArea": 111638.25,
+				"totalArea": 224435.08,
+				"createdAt": "2023-10-09T17:57:00.168Z",
+				"updatedAt": "2023-10-09T17:57:00.168Z",
+				"location": 1,
+				"habitat": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"year": 2023,
+				"protectedArea": 74787.45,
+				"totalArea": 314001.94,
+				"createdAt": "2023-10-09T17:57:24.349Z",
+				"updatedAt": "2023-10-09T17:57:24.349Z",
+				"location": 1,
+				"habitat": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"year": 2023,
+				"protectedArea": 63259.5,
+				"totalArea": 149886.97,
+				"createdAt": "2023-10-09T17:57:55.786Z",
+				"updatedAt": "2023-10-09T17:57:55.786Z",
+				"location": 1,
+				"habitat": 3,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"4": {
+				"id": 4,
+				"year": 2023,
+				"protectedArea": 4400.14,
+				"totalArea": 15336.98,
+				"createdAt": "2023-10-09T17:58:29.609Z",
+				"updatedAt": "2023-10-09T17:58:29.609Z",
+				"location": 1,
+				"habitat": 4,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"5": {
+				"id": 5,
+				"year": 2023,
+				"protectedArea": 61287.2,
+				"totalArea": 147358.99,
+				"createdAt": "2023-10-09T17:58:54.453Z",
+				"updatedAt": "2023-10-09T17:58:54.453Z",
+				"location": 1,
+				"habitat": 5,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"6": {
+				"id": 6,
+				"year": 2023,
+				"protectedArea": 297168.14,
+				"totalArea": 352349.89,
+				"createdAt": "2023-10-09T17:59:25.804Z",
+				"updatedAt": "2023-10-09T17:59:25.804Z",
+				"location": 1,
+				"habitat": 6,
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::fishing-protection-level.fishing-protection-level": {
+			"1": {
+				"id": 1,
+				"slug": "highly",
+				"name": "Highly",
+				"info": null,
+				"createdAt": "2023-10-09T17:52:27.434Z",
+				"updatedAt": "2023-10-09T17:52:27.434Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"slug": "moderately",
+				"name": "Moderately",
+				"info": null,
+				"createdAt": "2023-10-09T17:52:54.865Z",
+				"updatedAt": "2023-10-09T17:52:54.865Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"slug": "less",
+				"name": "Less",
+				"info": null,
+				"createdAt": "2023-10-09T17:53:13.011Z",
+				"updatedAt": "2023-10-09T17:53:13.011Z",
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"api::fishing-protection-level-stat.fishing-protection-level-stat": {
+			"1": {
+				"id": 1,
+				"area": 147894.05,
+				"createdAt": "2023-10-09T17:53:51.182Z",
+				"updatedAt": "2023-10-09T17:53:51.182Z",
+				"location": 1,
+				"fishing_protection_level": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"area": 191410.98,
+				"createdAt": "2023-10-09T17:54:09.922Z",
+				"updatedAt": "2023-10-09T17:54:09.922Z",
+				"location": 1,
+				"fishing_protection_level": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"area": 286354.1,
+				"createdAt": "2023-10-09T17:54:26.300Z",
+				"updatedAt": "2023-10-09T17:54:26.300Z",
+				"location": 1,
+				"fishing_protection_level": 3,
+				"createdBy": null,
+				"updatedBy": null
+			}
+		}
+	}
+}
