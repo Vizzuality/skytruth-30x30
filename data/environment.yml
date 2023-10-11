@@ -6,34 +6,33 @@ channels:
   - pip
 dependencies:
   - python=3.10
-  - nodejs>=14
-  - jupyterlab=3.6
-  - cython
+  - nodejs=20.8.0
+  - jupyterlab=3.6.6
+  - cython=3.0.3
   - gdal=3.7.2
-  - simplejson
-  - tqdm
-  - black[jupyter]
-  - cartopy
+  - simplejson=3.19.1
+  - tqdm=4.66.1
+  - black[jupyter]=23.9.1
+  - cartopy=0.22.0
   - beautifulsoup4=4.12.2
-  - rtree
+  - rtree=1.0.1
   - affine=2.4.0
-  - proj
-  - fiona
-  - rasterstats
-  - pandas
-  - geopandas=0.14
-  - rasterio
-  - plotly
-  - termcolor
-  - google-cloud-storage
-  - google-api-python-client
-  - pydantic[all]
-  - google-cloud-storage
-  - google-api-python-client
+  - proj=9.3.0
+  - fiona=1.9.4
+  - rasterstats=0.19.0
+  - pandas=2.1.1
+  - geopandas=0.14.0
+  - rasterio=1.3.8
+  - plotly=5.17.0
+  - termcolor=2.3.0
+  - pydantic[all]=2.4.2
+  - pydantic-settings=2.0.3
+  - google-cloud-storage=2.11.0
+  - google-api-python-client=2.102.0
   - pre-commit=3.3.3
   - statsmodels=0.14.0
   - supermercado=0.2.0
-  - cachetools
-  - python-dotenv
+  - cachetools=5.3.1
+  - python-dotenv=1.0.0
   - pip:
       - jupyterlab-code-formatter==2.2.1
