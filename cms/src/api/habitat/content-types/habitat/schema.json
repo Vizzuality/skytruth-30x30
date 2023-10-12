@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "habitats",
+  "info": {
+    "singularName": "habitat",
+    "pluralName": "habitats",
+    "displayName": "Habitat",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "info": {
+      "type": "text"
+    }
+  }
+}

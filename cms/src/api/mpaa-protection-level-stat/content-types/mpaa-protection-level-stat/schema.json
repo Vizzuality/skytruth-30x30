@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mpaa_protection_level_stats",
+  "info": {
+    "singularName": "mpaa-protection-level-stat",
+    "pluralName": "mpaa-protection-level-stats",
+    "displayName": "MPAA Protection Level Stats"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location"
+    },
+    "mpaa_protection_level": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpaa-protection-level.mpaa-protection-level"
+    },
+    "area": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    }
+  }
+}

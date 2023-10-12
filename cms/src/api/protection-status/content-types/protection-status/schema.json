@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "protection_statuses",
+  "info": {
+    "singularName": "protection-status",
+    "pluralName": "protection-statuses",
+    "displayName": "Protection Status"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "info": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "key": "plugin_content_manager_configuration_components::documentation.metadata",
+  "value": {
+    "uid": "documentation.metadata",
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "resolution",
+      "defaultSortBy": "resolution",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "description": {
+        "edit": {
+          "label": "description",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "description",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "citation": {
+        "edit": {
+          "label": "citation",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "citation",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "source": {
+        "edit": {
+          "label": "source",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "source",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "resolution": {
+        "edit": {
+          "label": "resolution",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "resolution",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "content_date": {
+        "edit": {
+          "label": "content_date",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "content_date",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "license": {
+        "edit": {
+          "label": "license",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "license",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "resolution",
+        "content_date",
+        "license"
+      ],
+      "edit": [
+        [
+          {
+            "name": "description",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "citation",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "source",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "resolution",
+            "size": 6
+          },
+          {
+            "name": "content_date",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "license",
+            "size": 6
+          }
+        ]
+      ]
+    },
+    "isComponent": true
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

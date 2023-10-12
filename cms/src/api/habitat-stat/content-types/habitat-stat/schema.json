@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "habitat_stats",
+  "info": {
+    "singularName": "habitat-stat",
+    "pluralName": "habitat-stats",
+    "displayName": "Habitat Stats",
+    "description": "Calculation of area of protection by location, habitat and year"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location"
+    },
+    "habitat": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::habitat.habitat"
+    },
+    "year": {
+      "type": "integer",
+      "required": true
+    },
+    "protectedArea": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "totalArea": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    }
+  }
+}

@@ -1,0 +1,248 @@
+{
+  "key": "plugin_content_manager_configuration_content_types::api::protection-coverage-stat.protection-coverage-stat",
+  "value": {
+    "uid": "api::protection-coverage-stat.protection-coverage-stat",
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "id",
+      "defaultSortBy": "id",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "location": {
+        "edit": {
+          "label": "location",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "locationId"
+        },
+        "list": {
+          "label": "location",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "protection_status": {
+        "edit": {
+          "label": "protection_status",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "slug"
+        },
+        "list": {
+          "label": "protection_status",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "year": {
+        "edit": {
+          "label": "year",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "year",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "cumSumProtectedArea": {
+        "edit": {
+          "label": "cumSumProtectedArea",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "cumSumProtectedArea",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "protectedArea": {
+        "edit": {
+          "label": "protectedArea",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "protectedArea",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "totalArea": {
+        "edit": {
+          "label": "totalArea",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "totalArea",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "globalContribution": {
+        "edit": {
+          "label": "globalContribution",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "globalContribution",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "localContribution": {
+        "edit": {
+          "label": "localContribution",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "localContribution",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdAt": {
+        "edit": {
+          "label": "createdAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "createdAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedAt": {
+        "edit": {
+          "label": "updatedAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "updatedAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdBy": {
+        "edit": {
+          "label": "createdBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "createdBy",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedBy": {
+        "edit": {
+          "label": "updatedBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "updatedBy",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "location",
+        "protection_status",
+        "year"
+      ],
+      "edit": [
+        [
+          {
+            "name": "location",
+            "size": 6
+          },
+          {
+            "name": "protection_status",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "year",
+            "size": 4
+          },
+          {
+            "name": "cumSumProtectedArea",
+            "size": 4
+          },
+          {
+            "name": "protectedArea",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "totalArea",
+            "size": 4
+          },
+          {
+            "name": "globalContribution",
+            "size": 4
+          },
+          {
+            "name": "localContribution",
+            "size": 4
+          }
+        ]
+      ]
+    }
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

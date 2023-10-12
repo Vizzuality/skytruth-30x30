@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "locations",
+  "info": {
+    "singularName": "location",
+    "pluralName": "locations",
+    "displayName": "Location",
+    "description": "Stores names of geographical locations of different types (worldwide, country, region)."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "description": "Unique textual identifier for the location, e.g. iso3 code for countries."
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "totalMarineArea": {
+      "type": "integer",
+      "description": "Total marine area in km2",
+      "required": true,
+      "min": 0
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "groups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::location.location",
+      "inversedBy": "members"
+    },
+    "members": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::location.location",
+      "inversedBy": "groups"
+    }
+  }
+}
