@@ -17,8 +17,9 @@ import { cn } from '@/lib/utils';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 const navigation = [
-  { name: 'Map', href: '/map', colorClassName: 'text-blue fill-blue' },
-  { name: 'Dashboard', href: '/dashboard', colorClassName: 'text-blue fill-blue' },
+  { name: 'Data tool', href: '/data-tool', colorClassName: 'text-blue fill-blue' },
+  // { name: 'Map', href: '/map', colorClassName: 'text-blue fill-blue' },
+  // { name: 'Dashboard', href: '/dashboard', colorClassName: 'text-blue fill-blue' },
   { name: 'Knowledge Hub', href: '/knowledge-hub', colorClassName: 'text-green fill-green' },
   { name: 'About', href: '/about', colorClassName: 'text-black fill-black' },
   { name: 'Contact', href: '/contact', colorClassName: 'text-black fill-black' },
@@ -27,7 +28,7 @@ const navigation = [
 const Header: React.FC = () => (
   <header className="border-b border-black bg-white font-mono text-sm text-black">
     <nav
-      className="mx-auto flex max-w-7xl items-center justify-between p-6 py-2.5 md:py-4 lg:px-10"
+      className="mx-auto flex items-center justify-between p-6 py-2.5 md:py-4 lg:px-10"
       aria-label="Global"
     >
       <Link
