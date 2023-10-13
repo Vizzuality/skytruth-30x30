@@ -4,4 +4,6 @@
 
 import { factories } from '@strapi/strapi';
 
-export default factories.createCoreRouter('api::mpaa-protection-level-stat.mpaa-protection-level-stat');
+export default factories.createCoreRouter('api::mpaa-protection-level-stat.mpaa-protection-level-stat', {
+    only: ['find', 'findOne']
+});
