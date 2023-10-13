@@ -7,8 +7,8 @@
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "locationId",
-      "defaultSortBy": "locationId",
+      "mainField": "code",
+      "defaultSortBy": "code",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -20,44 +20,30 @@
           "sortable": true
         }
       },
-      "locationId": {
+      "code": {
         "edit": {
-          "label": "locationId",
+          "label": "code",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "locationId",
+          "label": "code",
           "searchable": true,
           "sortable": true
         }
       },
-      "locationType": {
+      "name": {
         "edit": {
-          "label": "locationType",
+          "label": "name",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "locationType",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "locationName": {
-        "edit": {
-          "label": "locationName",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "locationName",
+          "label": "name",
           "searchable": true,
           "sortable": true
         }
@@ -74,6 +60,50 @@
           "label": "totalMarineArea",
           "searchable": true,
           "sortable": true
+        }
+      },
+      "type": {
+        "edit": {
+          "label": "type",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "type",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "groups": {
+        "edit": {
+          "label": "groups",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "code"
+        },
+        "list": {
+          "label": "groups",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "members": {
+        "edit": {
+          "label": "members",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "code"
+        },
+        "list": {
+          "label": "members",
+          "searchable": false,
+          "sortable": false
         }
       },
       "createdAt": {
@@ -138,29 +168,41 @@
     "layouts": {
       "list": [
         "id",
-        "locationId",
-        "locationType",
-        "locationName"
+        "code",
+        "name",
+        "type"
       ],
       "edit": [
         [
           {
-            "name": "locationId",
+            "name": "code",
             "size": 6
           },
           {
-            "name": "locationType",
+            "name": "name",
             "size": 6
           }
         ],
         [
           {
-            "name": "locationName",
+            "name": "type",
             "size": 6
-          },
+          }
+        ],
+        [
           {
             "name": "totalMarineArea",
             "size": 4
+          },
+          {
+            "name": "groups",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "members",
+            "size": 6
           }
         ]
       ]

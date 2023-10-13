@@ -27,24 +27,10 @@
           "placeholder": "",
           "visible": true,
           "editable": true,
-          "mainField": "locationId"
+          "mainField": "code"
         },
         "list": {
           "label": "location",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "area": {
-        "edit": {
-          "label": "area",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "area",
           "searchable": true,
           "sortable": true
         }
@@ -60,6 +46,20 @@
         },
         "list": {
           "label": "fishing_protection_level",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "area": {
+        "edit": {
+          "label": "area",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "area",
           "searchable": true,
           "sortable": true
         }
