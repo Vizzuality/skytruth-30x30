@@ -199,10 +199,12 @@
       "subject": "api::location.location",
       "properties": {
         "fields": [
-          "locationId",
-          "locationType",
-          "locationName",
-          "totalMarineArea"
+          "code",
+          "name",
+          "totalMarineArea",
+          "type",
+          "groups",
+          "members"
         ]
       },
       "conditions": []
@@ -220,10 +222,12 @@
       "subject": "api::location.location",
       "properties": {
         "fields": [
-          "locationId",
-          "locationType",
-          "locationName",
-          "totalMarineArea"
+          "code",
+          "name",
+          "totalMarineArea",
+          "type",
+          "groups",
+          "members"
         ]
       },
       "conditions": []
@@ -234,10 +238,67 @@
       "subject": "api::location.location",
       "properties": {
         "fields": [
-          "locationId",
-          "locationType",
-          "locationName",
-          "totalMarineArea"
+          "code",
+          "name",
+          "totalMarineArea",
+          "type",
+          "groups",
+          "members"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::mpa.mpa",
+      "properties": {
+        "fields": [
+          "location",
+          "wdpaid",
+          "name",
+          "mpaa_protection_level",
+          "fishing_protection_level",
+          "area"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::mpa.mpa",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::mpa.mpa",
+      "properties": {
+        "fields": [
+          "location",
+          "wdpaid",
+          "name",
+          "mpaa_protection_level",
+          "fishing_protection_level",
+          "area"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::mpa.mpa",
+      "properties": {
+        "fields": [
+          "location",
+          "wdpaid",
+          "name",
+          "mpaa_protection_level",
+          "fishing_protection_level",
+          "area"
         ]
       },
       "conditions": []
@@ -443,9 +504,7 @@
           "year",
           "cumSumProtectedArea",
           "protectedArea",
-          "totalArea",
-          "globalContribution",
-          "localContribution"
+          "protected_areas_count"
         ]
       },
       "conditions": []
@@ -468,9 +527,7 @@
           "year",
           "cumSumProtectedArea",
           "protectedArea",
-          "totalArea",
-          "globalContribution",
-          "localContribution"
+          "protected_areas_count"
         ]
       },
       "conditions": []
@@ -486,9 +543,7 @@
           "year",
           "cumSumProtectedArea",
           "protectedArea",
-          "totalArea",
-          "globalContribution",
-          "localContribution"
+          "protected_areas_count"
         ]
       },
       "conditions": []
@@ -535,49 +590,6 @@
           "slug",
           "name",
           "info"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
-      "subject": "api::region-location.region-location",
-      "properties": {
-        "fields": [
-          "region",
-          "location"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::region-location.region-location",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::region-location.region-location",
-      "properties": {
-        "fields": [
-          "region",
-          "location"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
-      "subject": "api::region-location.region-location",
-      "properties": {
-        "fields": [
-          "region",
-          "location"
         ]
       },
       "conditions": []

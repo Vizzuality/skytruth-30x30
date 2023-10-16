@@ -4,4 +4,6 @@
 
 import { factories } from '@strapi/strapi';
 
-export default factories.createCoreRouter('api::fishing-protection-level.fishing-protection-level');
+export default factories.createCoreRouter('api::fishing-protection-level.fishing-protection-level', {
+    only: ['find', 'findOne']
+});

@@ -27,7 +27,7 @@
           "placeholder": "",
           "visible": true,
           "editable": true,
-          "mainField": "locationId"
+          "mainField": "code"
         },
         "list": {
           "label": "location",

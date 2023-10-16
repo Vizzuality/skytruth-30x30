@@ -34,6 +34,12 @@
       "action": "api::location.location.findOne"
     },
     {
+      "action": "api::mpa.mpa.find"
+    },
+    {
+      "action": "api::mpa.mpa.findOne"
+    },
+    {
       "action": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat.find"
     },
     {
@@ -68,12 +74,6 @@
     },
     {
       "action": "api::protection-status.protection-status.findOne"
-    },
-    {
-      "action": "api::region-location.region-location.find"
-    },
-    {
-      "action": "api::region-location.region-location.findOne"
     },
     {
       "action": "plugin::users-permissions.auth.callback"

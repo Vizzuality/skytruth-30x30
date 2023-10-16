@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mpas",
+  "info": {
+    "singularName": "mpa",
+    "pluralName": "mpas",
+    "displayName": "MPA",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location"
+    },
+    "wdpaid": {
+      "type": "integer",
+      "required": false
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "mpaa_protection_level": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpaa-protection-level.mpaa-protection-level"
+    },
+    "fishing_protection_level": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::fishing-protection-level.fishing-protection-level"
+    },
+    "area": {
+      "type": "decimal"
+    }
+  }
+}

@@ -27,7 +27,7 @@
           "placeholder": "",
           "visible": true,
           "editable": true,
-          "mainField": "locationId"
+          "mainField": "code"
         },
         "list": {
           "label": "location",
@@ -92,44 +92,16 @@
           "sortable": true
         }
       },
-      "totalArea": {
+      "protected_areas_count": {
         "edit": {
-          "label": "totalArea",
+          "label": "protected_areas_count",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "totalArea",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "globalContribution": {
-        "edit": {
-          "label": "globalContribution",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "globalContribution",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "localContribution": {
-        "edit": {
-          "label": "localContribution",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "localContribution",
+          "label": "protected_areas_count",
           "searchable": true,
           "sortable": true
         }
@@ -227,15 +199,7 @@
         ],
         [
           {
-            "name": "totalArea",
-            "size": 4
-          },
-          {
-            "name": "globalContribution",
-            "size": 4
-          },
-          {
-            "name": "localContribution",
+            "name": "protected_areas_count",
             "size": 4
           }
         ]

@@ -1,5 +1,5 @@
 {
-  "/mpaa-protection-levels": {
+  "/mpas": {
     "get": {
       "responses": {
         "200": {
@@ -7,7 +7,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MpaaProtectionLevelListResponse"
+                "$ref": "#/components/schemas/MpaListResponse"
               }
             }
           }
@@ -64,7 +64,7 @@
         }
       },
       "tags": [
-        "Mpaa-protection-level"
+        "Mpa"
       ],
       "parameters": [
         {
@@ -169,10 +169,10 @@
           }
         }
       ],
-      "operationId": "get/mpaa-protection-levels"
+      "operationId": "get/mpas"
     }
   },
-  "/mpaa-protection-levels/{id}": {
+  "/mpas/{id}": {
     "get": {
       "responses": {
         "200": {
@@ -180,7 +180,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MpaaProtectionLevelResponse"
+                "$ref": "#/components/schemas/MpaResponse"
               }
             }
           }
@@ -237,7 +237,7 @@
         }
       },
       "tags": [
-        "Mpaa-protection-level"
+        "Mpa"
       ],
       "parameters": [
         {
@@ -251,7 +251,7 @@
           }
         }
       ],
-      "operationId": "get/mpaa-protection-levels/{id}"
+      "operationId": "get/mpas/{id}"
     }
   }
 }

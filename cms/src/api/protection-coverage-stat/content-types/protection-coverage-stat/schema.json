@@ -36,6 +36,10 @@
       "type": "decimal",
       "required": true,
       "min": 0
+    },
+    "protected_areas_count": {
+      "type": "integer",
+      "required": true
     }
   }
 }
