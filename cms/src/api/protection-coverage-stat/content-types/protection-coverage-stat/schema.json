@@ -37,7 +37,7 @@
       "required": true,
       "min": 0
     },
-    "protected_areas_count": {
+    "protectedAreasCount": {
       "type": "integer",
       "required": true
     }
