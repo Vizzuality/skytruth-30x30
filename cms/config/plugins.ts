@@ -4,7 +4,6 @@ module.exports = {
     config: {
       "x-strapi-config": {
         mutateDocumentation: (generatedDocumentationDraft) => {
-          console.log("generatedDocumentationDraft", generatedDocumentationDraft);
           Object.keys(generatedDocumentationDraft.paths).forEach((path) => {
             // check if it has {id} in the path
             if (path.includes("{id}")) {

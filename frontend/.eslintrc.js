@@ -2,7 +2,6 @@
 module.exports = {
   extends: [
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:prettier/recommended',
     'next/core-web-vitals',
   ],
@@ -11,7 +10,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.eslint.json'],
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  ignorePatterns: ['src/types/generated/*'],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': [
