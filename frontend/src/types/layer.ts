@@ -9,7 +9,7 @@ import type {
   RasterLayer,
   SymbolLayer,
   AnySource,
-} from 'react-map-gl/maplibre';
+} from 'react-map-gl';
 
 export type LayerType = 'default' | 'mapbox';
 

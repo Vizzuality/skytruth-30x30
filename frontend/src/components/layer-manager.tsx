@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
-import { Layer, Source } from 'react-map-gl/maplibre';
+import { Layer, Source } from 'react-map-gl';
+
 import { useRecoilValue } from 'recoil';
 
 import { LAYERS } from '@/constants/map';

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+
+import { useMap } from 'react-map-gl';
 
 import { ChevronLeft } from 'lucide-react';
-import { Layer, Source } from 'react-map-gl/maplibre';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { RecoilURLSyncJSONNext } from 'recoil-sync-next';
 
 import LayerManager from '@/components/layer-manager';
@@ -19,11 +20,30 @@ import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import FullscreenLayout from '@/layouts/fullscreen';
 import { cn } from '@/lib/utils';
-import { drawStateAtom } from '@/store/map';
+import { bboxAtom, drawStateAtom } from '@/store/map';
 
 const MapPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const drawState = useRecoilValue(drawStateAtom);
+  const [urlBbox, setUrlBbox] = useRecoilState(bboxAtom);
+  const { default: map } = useMap();
+
+  const handleMoveEnd = useCallback(() => {
+    setUrlBbox(
+      map
+        .getBounds()
+        .toArray()
+        .flat()
+        .map((b) => parseFloat(b.toFixed(2))) as [number, number, number, number]
+    );
+  }, [map, setUrlBbox]);
+
+  const bounds = useMemo(() => {
+    if (!urlBbox) return null;
+    return {
+      bbox: urlBbox,
+    };
+  }, [urlBbox]);
 
   return (
     <FullscreenLayout title="Map">
@@ -50,34 +70,27 @@ const MapPage: React.FC = () => {
               <SidebarContent />
             </CollapsibleContent>
           </Collapsible>
-          <Map>
-            {() => (
-              <>
-                <div
-                  className={cn({
-                    'hidden md:block': drawState.active,
-                  })}
-                >
-                  <LayersDropdown />
-                  <Legend />
-                </div>
-                <ZoomControls />
-                <DrawControls />
-                <Source
-                  id="basemap"
-                  type="raster"
-                  tiles={['https://tile.openstreetmap.org/{z}/{x}/{y}.png']}
-                  attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`}
-                  maxzoom={20}
-                  tileSize={256}
-                >
-                  <Layer id="basemap" type="raster" />
-                </Source>
-                <LayerManager />
-                <Drawing />
-                <Attributions />
-              </>
-            )}
+          <Map
+            onMoveEnd={handleMoveEnd}
+            initialViewState={{
+              bounds,
+            }}
+          >
+            <>
+              <div
+                className={cn({
+                  'hidden md:block': drawState.active,
+                })}
+              >
+                <LayersDropdown />
+                <Legend />
+              </div>
+              <ZoomControls />
+              <DrawControls />
+              <LayerManager />
+              <Drawing />
+              <Attributions />
+            </>
           </Map>
           <div className="h-1/2 flex-shrink-0 bg-white p-6 pb-3 md:hidden">
             <SidebarContent />

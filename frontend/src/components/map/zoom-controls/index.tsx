@@ -1,7 +1,8 @@
 import { FC } from 'react';
 
+import { useMap } from 'react-map-gl';
+
 import { Minus, Plus } from 'lucide-react';
-import { useMap } from 'react-map-gl/maplibre';
 
 import { Button } from '@/components/ui/button';
 

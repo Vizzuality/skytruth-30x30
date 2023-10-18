@@ -1,9 +1,10 @@
 import { useEffect, useMemo } from 'react';
 
+import { useMap, FillLayer, LineLayer, CircleLayer } from 'react-map-gl';
+
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import { Feature } from 'geojson';
-import { IControl } from 'maplibre-gl';
-import { useMap, FillLayer, LineLayer, CircleLayer } from 'react-map-gl/maplibre';
+import { IControl } from 'mapbox-gl';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
 // See https://github.com/mapbox/mapbox-gl-draw/blob/main/docs/EXAMPLES.md

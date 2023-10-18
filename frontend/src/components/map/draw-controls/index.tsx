@@ -4,10 +4,10 @@ import { Trash2 } from 'lucide-react';
 import { useRecoilState } from 'recoil';
 
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import { useMapboxDraw, UseMapboxDrawProps } from './hooks';
+
 import { Button } from '@/components/ui/button';
 import { drawStateAtom } from '@/store/map';
-
-import { useMapboxDraw, UseMapboxDrawProps } from './hooks';
 
 const DrawControls: FC = () => {
   const [startedDrawing, setStartedDrawing] = useState(false);

@@ -1,23 +1,16 @@
 import { useEffect, useState, useCallback, FC } from 'react';
 
-import 'maplibre-gl/dist/maplibre-gl.css';
-import { Map as MapLibreMap, FitBoundsOptions } from 'maplibre-gl';
-import ReactMapGL, {
-  ViewState,
-  ViewStateChangeEvent,
-  MapEvent,
-  LngLatBoundsLike,
-} from 'react-map-gl/maplibre';
-import { useRecoilState } from 'recoil';
-import { useDebouncedValue } from 'rooks';
+import ReactMapGL, { ViewState, ViewStateChangeEvent, MapEvent, useMap } from 'react-map-gl';
 
-import { cn } from '@/lib/utils';
-import { bboxAtom } from '@/store/map';
+import { useDebounce } from 'rooks';
 
 import { DEFAULT_VIEW_STATE } from './constants';
-import type { MapProps } from './types';
+import type { CustomMapProps } from './types';
 
-export const Map: FC<MapProps> = ({
+// import env from '@/env.mjs';
+import { cn } from '@/lib/utils';
+
+export const Map: FC<CustomMapProps> = ({
   // * if no id is passed, react-map-gl will store the map reference in a 'default' key:
   // * https://github.com/visgl/react-map-gl/blob/ecb27c8d02db7dd09d8104e8c2011bda6aed4b6f/src/components/use-map.tsx#L18
   id = 'default',
@@ -26,85 +19,44 @@ export const Map: FC<MapProps> = ({
   viewState,
   constrainedAxis,
   initialViewState,
-  bounds: externalBounds,
+  bounds,
   onMapViewStateChange,
-  dragPan = true,
-  dragRotate = false,
-  scrollZoom = true,
-  doubleClickZoom = true,
-  onLoad: externalOnLoad,
-  ...rest
-}) => {
-  const [map, setMap] = useState<MapLibreMap | null>(null);
+  onLoad,
+  ...mapboxProps
+}: CustomMapProps) => {
+  /**
+   * REFS
+   */
+  const { [id]: mapRef } = useMap();
 
-  const [loaded, setLoaded] = useState(false);
-  const [urlBbox, setUrlBbox] = useRecoilState(bboxAtom);
+  /**
+   * STATE
+   */
   const [localViewState, setLocalViewState] = useState<Partial<ViewState> | null>(
     !initialViewState
       ? {
           ...DEFAULT_VIEW_STATE,
           ...viewState,
-          ...(urlBbox ? { bounds: urlBbox as LngLatBoundsLike } : {}),
         }
       : null
   );
-  const [debouncedLocalViewState] = useDebouncedValue(localViewState, 250);
-  // Whether a bounds animation is playing
   const [isFlying, setFlying] = useState(false);
-  // Store the timeout to restore `isFlying` to `false`
-  const [flyingTimeout, setFlyingTimeout] = useState<number | null>(null);
-  // Store whether the map has been interacted with
-  const [mapInteractedWith, setMapInteractedWith] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   /**
    * CALLBACKS
    */
-  const fitBounds = useCallback(
-    (bounds: LngLatBoundsLike, options?: FitBoundsOptions) => {
-      if (map && bounds) {
-        // Enable fly mode to avoid the map being interrupted during the bounds transition
-        setFlying(true);
+  const debouncedViewStateChange = useDebounce((_viewState: Partial<ViewState>) => {
+    if (onMapViewStateChange) onMapViewStateChange(_viewState);
+  }, 250);
 
-        map.fitBounds(bounds, options);
+  const handleFitBounds = useCallback(() => {
+    if (mapRef && bounds) {
+      const { bbox, options } = bounds;
+      // enabling fly mode avoids the map to be interrupted during the bounds transition
+      setFlying(true);
 
-        if (flyingTimeout) {
-          window.clearInterval(flyingTimeout);
-        }
-        setFlyingTimeout(window.setTimeout(() => setFlying(false), options?.duration ?? 0));
-      }
-    },
-    [flyingTimeout, map]
-  );
-
-  const onMove = useCallback(
-    ({ viewState: _viewState }: ViewStateChangeEvent) => {
-      const newViewState = {
-        ..._viewState,
-        latitude: constrainedAxis === 'y' ? localViewState?.latitude : _viewState.latitude,
-        longitude: constrainedAxis === 'x' ? localViewState?.longitude : _viewState.longitude,
-      };
-      setLocalViewState(newViewState);
-      setMapInteractedWith(true);
-    },
-    [constrainedAxis, localViewState?.latitude, localViewState?.longitude]
-  );
-
-  const onLoad = useCallback(
-    (e: MapEvent) => {
-      setLoaded(true);
-      setMap(e.target);
-
-      if (externalOnLoad) {
-        externalOnLoad(e);
-      }
-    },
-    [externalOnLoad]
-  );
-
-  useEffect(() => {
-    if (map && externalBounds) {
-      const { bbox, options } = externalBounds;
-      fitBounds(
+      mapRef.fitBounds(
         [
           [bbox[0], bbox[1]],
           [bbox[2], bbox[3]],
@@ -112,15 +64,37 @@ export const Map: FC<MapProps> = ({
         options
       );
     }
-  }, [map, externalBounds, fitBounds]);
+  }, [bounds, mapRef]);
 
-  // Restore the map's position from the URL i.e. set the map bounds based on what the URL contains
-  // until the user has interacted with the map
+  const handleMapMove = useCallback(
+    ({ viewState: _viewState }: ViewStateChangeEvent) => {
+      const newViewState = {
+        ..._viewState,
+        latitude: constrainedAxis === 'y' ? localViewState?.latitude : _viewState.latitude,
+        longitude: constrainedAxis === 'x' ? localViewState?.longitude : _viewState.longitude,
+      };
+      setLocalViewState(newViewState);
+      debouncedViewStateChange(newViewState);
+    },
+    [constrainedAxis, localViewState?.latitude, localViewState?.longitude, debouncedViewStateChange]
+  );
+
+  const handleMapLoad = useCallback(
+    (e: MapEvent) => {
+      setLoaded(true);
+
+      if (onLoad) {
+        onLoad(e);
+      }
+    },
+    [onLoad]
+  );
+
   useEffect(() => {
-    if (map && !mapInteractedWith && urlBbox) {
-      fitBounds(urlBbox as LngLatBoundsLike, { animate: false });
+    if (mapRef && bounds) {
+      handleFitBounds();
     }
-  }, [map, urlBbox, fitBounds, mapInteractedWith]);
+  }, [mapRef, bounds, handleFitBounds]);
 
   useEffect(() => {
     setLocalViewState((prevViewState) => ({
@@ -129,42 +103,39 @@ export const Map: FC<MapProps> = ({
     }));
   }, [viewState]);
 
-  // Store the map's position in the URL every time it changes after the user's interacted with the
-  // map
   useEffect(() => {
-    if (map && mapInteractedWith) {
-      setUrlBbox(
-        map
-          .getBounds()
-          .toArray()
-          .flat()
-          .map((b) => parseFloat(b.toFixed(2))) as [number, number, number, number]
-      );
+    if (!bounds) return undefined;
+
+    const { options } = bounds;
+    const animationDuration = options?.duration || 0;
+    let timeoutId: number;
+
+    if (isFlying) {
+      timeoutId = window.setTimeout(() => {
+        setFlying(false);
+      }, animationDuration);
     }
 
-    if (onMapViewStateChange) {
-      onMapViewStateChange(debouncedLocalViewState);
-    }
-  }, [debouncedLocalViewState, map, mapInteractedWith, onMapViewStateChange, setUrlBbox]);
+    return () => {
+      if (timeoutId) {
+        window.clearInterval(timeoutId);
+      }
+    };
+  }, [bounds, isFlying]);
 
   return (
     <div className={cn('relative z-0 h-full w-full', className)}>
       <ReactMapGL
         id={id}
         initialViewState={initialViewState}
-        dragPan={!isFlying && dragPan}
-        dragRotate={!isFlying && dragRotate}
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        scrollZoom={!isFlying && scrollZoom}
-        doubleClickZoom={!isFlying && doubleClickZoom}
-        onMove={onMove}
-        onLoad={onLoad}
-        attributionControl={false}
-        {...rest}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
+        onMove={handleMapMove}
+        onLoad={handleMapLoad}
+        mapStyle="mapbox://styles/skytruth/clnud2d3100nr01pl3b4icpyw"
+        {...mapboxProps}
         {...localViewState}
       >
-        {!!map && loaded && !!children && children(map)}
+        {!!mapRef && loaded && children}
       </ReactMapGL>
     </div>
   );

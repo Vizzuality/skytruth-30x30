@@ -1,13 +1,13 @@
 import { FC, useEffect } from 'react';
 
+import { Source, Layer, LngLatBoundsLike, useMap } from 'react-map-gl';
+
 import { bbox } from '@turf/turf';
-import { Source, Layer, LngLatBoundsLike } from 'react-map-gl/maplibre';
-import { useMap } from 'react-map-gl/maplibre';
 import { useRecoilValue } from 'recoil';
 
-import { drawStateAtom } from '@/store/map';
-
 import { DRAW_STYLES } from '../draw-controls/hooks';
+
+import { drawStateAtom } from '@/store/map';
 
 const Drawing: FC = () => {
   const { current: map } = useMap();

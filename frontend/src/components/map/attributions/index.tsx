@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react';
 
-import { AttributionControl } from 'react-map-gl/maplibre';
+import { AttributionControl } from 'react-map-gl';
+
 import { useRecoilValue } from 'recoil';
 
 import { LAYERS } from '@/constants/map';
