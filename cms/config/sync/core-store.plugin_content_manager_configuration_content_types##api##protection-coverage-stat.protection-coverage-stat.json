@@ -92,16 +92,16 @@
           "sortable": true
         }
       },
-      "protected_areas_count": {
+      "protectedAreasCount": {
         "edit": {
-          "label": "protected_areas_count",
+          "label": "protectedAreasCount",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "protected_areas_count",
+          "label": "protectedAreasCount",
           "searchable": true,
           "sortable": true
         }
@@ -199,7 +199,7 @@
         ],
         [
           {
-            "name": "protected_areas_count",
+            "name": "protectedAreasCount",
             "size": 4
           }
         ]
