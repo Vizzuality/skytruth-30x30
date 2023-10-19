@@ -24,10 +24,12 @@ COPY src ./src
 
 COPY .env \
      .nvmrc \
+     .yarnrc.yml \
      favicon.png \
      package.json \
      entrypoint.sh \
      tsconfig.json \
+     yarn.lock \
      ./
 
 RUN yarn install
