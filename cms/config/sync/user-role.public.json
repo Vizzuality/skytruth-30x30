@@ -34,6 +34,12 @@
       "action": "api::location.location.findOne"
     },
     {
+      "action": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat.find"
+    },
+    {
+      "action": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat.findOne"
+    },
+    {
       "action": "api::mpa.mpa.find"
     },
     {

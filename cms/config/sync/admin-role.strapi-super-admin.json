@@ -251,15 +251,67 @@
     {
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
+      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
+      "properties": {
+        "fields": [
+          "mpa",
+          "fishing_protection_level",
+          "mpaa_protection_level",
+          "location",
+          "area"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
+      "properties": {
+        "fields": [
+          "mpa",
+          "fishing_protection_level",
+          "mpaa_protection_level",
+          "location",
+          "area"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
+      "properties": {
+        "fields": [
+          "mpa",
+          "fishing_protection_level",
+          "mpaa_protection_level",
+          "location",
+          "area"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
-          "location",
           "wdpaid",
           "name",
-          "mpaa_protection_level",
-          "fishing_protection_level",
-          "area"
+          "area",
+          "year",
+          "mpaa_establishment_stage",
+          "protection_status"
         ]
       },
       "conditions": []
@@ -277,12 +329,12 @@
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
-          "location",
           "wdpaid",
           "name",
-          "mpaa_protection_level",
-          "fishing_protection_level",
-          "area"
+          "area",
+          "year",
+          "mpaa_establishment_stage",
+          "protection_status"
         ]
       },
       "conditions": []
@@ -293,12 +345,12 @@
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
-          "location",
           "wdpaid",
           "name",
-          "mpaa_protection_level",
-          "fishing_protection_level",
-          "area"
+          "area",
+          "year",
+          "mpaa_establishment_stage",
+          "protection_status"
         ]
       },
       "conditions": []

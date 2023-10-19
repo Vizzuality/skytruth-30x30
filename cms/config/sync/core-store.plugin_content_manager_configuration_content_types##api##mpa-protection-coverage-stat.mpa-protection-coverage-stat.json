@@ -1,14 +1,14 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::mpa.mpa",
+  "key": "plugin_content_manager_configuration_content_types::api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
   "value": {
-    "uid": "api::mpa.mpa",
+    "uid": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "name",
-      "defaultSortBy": "name",
+      "mainField": "id",
+      "defaultSortBy": "id",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -20,30 +20,62 @@
           "sortable": true
         }
       },
-      "wdpaid": {
+      "mpa": {
         "edit": {
-          "label": "wdpaid",
+          "label": "mpa",
           "description": "",
           "placeholder": "",
           "visible": true,
-          "editable": true
+          "editable": true,
+          "mainField": "name"
         },
         "list": {
-          "label": "wdpaid",
+          "label": "mpa",
           "searchable": true,
           "sortable": true
         }
       },
-      "name": {
+      "fishing_protection_level": {
         "edit": {
-          "label": "name",
+          "label": "fishing_protection_level",
           "description": "",
           "placeholder": "",
           "visible": true,
-          "editable": true
+          "editable": true,
+          "mainField": "slug"
         },
         "list": {
-          "label": "name",
+          "label": "fishing_protection_level",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "mpaa_protection_level": {
+        "edit": {
+          "label": "mpaa_protection_level",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "slug"
+        },
+        "list": {
+          "label": "mpaa_protection_level",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "location": {
+        "edit": {
+          "label": "location",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "code"
+        },
+        "list": {
+          "label": "location",
           "searchable": true,
           "sortable": true
         }
@@ -58,50 +90,6 @@
         },
         "list": {
           "label": "area",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "year": {
-        "edit": {
-          "label": "year",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "year",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "mpaa_establishment_stage": {
-        "edit": {
-          "label": "mpaa_establishment_stage",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "slug"
-        },
-        "list": {
-          "label": "mpaa_establishment_stage",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "protection_status": {
-        "edit": {
-          "label": "protection_status",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "slug"
-        },
-        "list": {
-          "label": "protection_status",
           "searchable": true,
           "sortable": true
         }
@@ -168,20 +156,28 @@
     "layouts": {
       "list": [
         "id",
-        "wdpaid",
-        "name",
-        "year"
+        "mpa",
+        "fishing_protection_level",
+        "mpaa_protection_level"
       ],
       "edit": [
         [
           {
-            "name": "wdpaid",
-            "size": 4
+            "name": "mpa",
+            "size": 6
+          },
+          {
+            "name": "fishing_protection_level",
+            "size": 6
           }
         ],
         [
           {
-            "name": "name",
+            "name": "mpaa_protection_level",
+            "size": 6
+          },
+          {
+            "name": "location",
             "size": 6
           }
         ],
@@ -189,20 +185,6 @@
           {
             "name": "area",
             "size": 4
-          },
-          {
-            "name": "year",
-            "size": 4
-          }
-        ],
-        [
-          {
-            "name": "mpaa_establishment_stage",
-            "size": 6
-          },
-          {
-            "name": "protection_status",
-            "size": 6
           }
         ]
       ]

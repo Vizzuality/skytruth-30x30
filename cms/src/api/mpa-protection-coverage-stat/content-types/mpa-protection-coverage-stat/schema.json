@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mpa_protection_coverage_stats",
+  "info": {
+    "singularName": "mpa-protection-coverage-stat",
+    "pluralName": "mpa-protection-coverage-stats",
+    "displayName": "MPA Protection Coverage Stats"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "mpa": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpa.mpa"
+    },
+    "fishing_protection_level": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::fishing-protection-level.fishing-protection-level"
+    },
+    "mpaa_protection_level": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpaa-protection-level.mpaa-protection-level"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location"
+    },
+    "area": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    }
+  }
+}
