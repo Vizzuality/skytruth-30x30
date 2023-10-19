@@ -13,7 +13,9 @@ import { Layer } from '@/types/layer';
 
 const layers = [...LAYERS].sort((layerA, layerB) => layerA.name.localeCompare(layerB.name));
 
-const LayersDropdown: FC = () => {
+const LayersDropdown: FC<{
+  className?: HTMLDivElement['className'];
+}> = ({ className }) => {
   const [opened, setOpened] = useState(false);
   const [{ layers: activeLayers = [] }, setMapSettings] = useSyncMapSettings();
 
@@ -29,7 +31,12 @@ const LayersDropdown: FC = () => {
   );
 
   return (
-    <div className="absolute top-3 left-3 z-10 font-sans text-base">
+    <div
+      className={cn({
+        'absolute top-3 left-3 z-10 font-sans text-base': true,
+        [className]: Boolean(className),
+      })}
+    >
       <Popover open={opened} onOpenChange={setOpened}>
         <PopoverTrigger asChild>
           <Button type="button">

@@ -66,6 +66,9 @@ const MapPage: React.FC = () => {
             bounds: bbox,
           }}
           onMoveEnd={handleMoveEnd}
+          className="absolute left-0 w-full"
+          renderWorldCopies={false}
+          attributionControl={false}
         >
           <>
             <div
@@ -73,7 +76,12 @@ const MapPage: React.FC = () => {
                 'hidden md:block': drawState.active,
               })}
             >
-              <LayersDropdown />
+              <LayersDropdown
+                className={cn({
+                  'translate-x-[calc(430px+12px)] animate-in-absolute': sidebarOpen,
+                  'translate-x-0 animate-out-absolute': !sidebarOpen,
+                })}
+              />
               <Legend />
             </div>
             <ZoomControls />
