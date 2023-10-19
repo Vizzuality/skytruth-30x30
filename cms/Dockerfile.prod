@@ -1,5 +1,5 @@
-# Build all the things
 FROM node:18.17-bullseye-slim as build
+
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y \

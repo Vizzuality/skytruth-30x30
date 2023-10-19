@@ -1,5 +1,5 @@
 FROM node:18.17-bullseye-slim
-# Install dependencies
+
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y \
@@ -11,10 +11,12 @@ RUN apt-get update -y && \
       libpng-dev \
       nasm bash \
       libvips-dev \
+      git \
     && apt-get clean
+
 ENV NODE_ENV development
 
-WORKDIR /app/
+WORKDIR /app
 
 COPY .yarn ./.yarn
 COPY config ./config
@@ -37,4 +39,4 @@ RUN yarn install
 ENV PATH /app/node_modules/.bin:$PATH
 
 EXPOSE 1337
-ENTRYPOINT ["/app/cms/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]

@@ -11,6 +11,8 @@ case "${NODE_ENV}" in
         exec yarn test
         ;;
     production)
+        echo "Import config"
+        yarn config-sync import -y
         echo "Running Production Server"
         exec yarn start
         ;;
