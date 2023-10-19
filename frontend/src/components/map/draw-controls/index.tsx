@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo, useState } from 'react';
 
+import { useAtom } from 'jotai';
 import { Trash2 } from 'lucide-react';
-import { useRecoilState } from 'recoil';
 
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ import { useMapboxDraw, UseMapboxDrawProps } from './hooks';
 
 const DrawControls: FC = () => {
   const [startedDrawing, setStartedDrawing] = useState(false);
-  const [drawState, setDrawState] = useRecoilState(drawStateAtom);
+  const [drawState, setDrawState] = useAtom(drawStateAtom);
 
   const onCreate: UseMapboxDrawProps['onCreate'] = useCallback(
     ({ features }) => {

@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import { Button } from '@/components/ui/button';
 import { drawStateAtom } from '@/store/map';
@@ -11,7 +11,7 @@ const OverviewStateContent = {
     </>
   ),
   Footer: () => {
-    const [drawState, setDrawState] = useRecoilState(drawStateAtom);
+    const [drawState, setDrawState] = useAtom(drawStateAtom);
 
     return (
       <Button

@@ -1,7 +1,7 @@
 import { ChangeEvent, ChangeEventHandler, useCallback, useState } from 'react';
 
+import { useAtom, useSetAtom } from 'jotai';
 import { AlertCircle } from 'lucide-react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -12,7 +12,7 @@ import { convertFilesToGeojson, supportedFileformats } from './helpers';
 
 const DrawingStateContent = {
   Content: () => {
-    const setDrawState = useSetRecoilState(drawStateAtom);
+    const setDrawState = useSetAtom(drawStateAtom);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -85,7 +85,7 @@ const DrawingStateContent = {
     );
   },
   Footer: () => {
-    const [drawState, setDrawState] = useRecoilState(drawStateAtom);
+    const [drawState, setDrawState] = useAtom(drawStateAtom);
 
     return (
       <Button

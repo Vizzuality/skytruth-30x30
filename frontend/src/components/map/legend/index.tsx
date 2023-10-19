@@ -1,7 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ChevronUp, CircleDashed, Eye, EyeOff, MoveUp, X } from 'lucide-react';
-import { useRecoilState } from 'recoil';
 import { usePreviousDifferent } from 'rooks';
 
 import {
@@ -17,15 +16,15 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Slider } from '@/components/ui/slider';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { LAYERS } from '@/constants/map';
+import { useSyncMapSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/utils';
-import { layersAtom } from '@/store/map';
 import { Layer } from '@/types/layer';
 
 import LegendItems from './items';
 
 const Legend: FC = () => {
   const [opened, setOpened] = useState(false);
-  const [activeLayers, setActiveLayers] = useRecoilState(layersAtom);
+  const [{ layers: activeLayers = [] }, setMapSettings] = useSyncMapSettings();
   const previousActiveLayers = usePreviousDifferent(activeLayers);
 
   const activeLayersDef = useMemo(
@@ -34,14 +33,20 @@ const Legend: FC = () => {
   );
 
   const onRemoveLayer = useCallback(
-    (layerId: Layer['id']) => setActiveLayers(activeLayers.filter(({ id }) => id !== layerId)),
-    [activeLayers, setActiveLayers]
+    (layerId: Layer['id']) =>
+      setMapSettings((prev) => ({
+        ...prev,
+        layers: activeLayers.filter(({ id }) => id !== layerId),
+      })),
+    [activeLayers, setMapSettings]
   );
 
   const onToggleLayerVisibility = useCallback(
     (layerId: Layer['id'], isVisible: boolean) => {
-      setActiveLayers(
-        activeLayers.map((layer) => ({
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      setMapSettings((prev) => ({
+        ...prev,
+        layers: activeLayers.map((layer) => ({
           ...layer,
           ...(layer.id === layerId
             ? {
@@ -51,16 +56,18 @@ const Legend: FC = () => {
                 },
               }
             : {}),
-        }))
-      );
+        })),
+      }));
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setMapSettings]
   );
 
   const onChangeLayerOpacity = useCallback(
     (layerId: Layer['id'], opacity: number) => {
-      setActiveLayers(
-        activeLayers.map((layer) => ({
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      setMapSettings((prev) => ({
+        ...prev,
+        layers: activeLayers.map((layer) => ({
           ...layer,
           ...(layer.id === layerId
             ? {
@@ -70,10 +77,10 @@ const Legend: FC = () => {
                 },
               }
             : {}),
-        }))
-      );
+        })),
+      }));
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setMapSettings]
   );
 
   const onMoveLayerDown = useCallback(
@@ -87,9 +94,13 @@ const Legend: FC = () => {
       const [layer] = newActiveLayers.splice(layerIndex, 1);
       newActiveLayers.splice(layerIndex - 1, 0, layer);
 
-      setActiveLayers(newActiveLayers);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      setMapSettings((prev) => ({
+        ...prev,
+        layers: newActiveLayers,
+      }));
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setMapSettings]
   );
 
   const onMoveLayerUp = useCallback(
@@ -103,24 +114,30 @@ const Legend: FC = () => {
       const [layer] = newActiveLayers.splice(layerIndex, 1);
       newActiveLayers.splice(layerIndex + 1, 0, layer);
 
-      setActiveLayers(newActiveLayers);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      setMapSettings((prev) => ({
+        ...prev,
+        layers: newActiveLayers,
+      }));
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setMapSettings]
   );
 
   const onToggleAccordion = useCallback(
     (layerStringIds: string[]) => {
-      setActiveLayers(
-        activeLayers.map((layer) => ({
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      setMapSettings((prev) => ({
+        ...prev,
+        layers: activeLayers.map((layer) => ({
           ...layer,
           settings: {
             ...(layer.settings ?? {}),
             expanded: layerStringIds.findIndex((stringId) => stringId === `${layer.id}`) !== -1,
           },
-        }))
-      );
+        })),
+      }));
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setMapSettings]
   );
 
   // When the user adds the first layer, we open the legend automatically
@@ -274,7 +291,10 @@ const Legend: FC = () => {
                                 type="button"
                                 variant="ghost"
                                 size="icon-sm"
-                                onClick={() => onRemoveLayer(layerDef.id)}
+                                onClick={() => {
+                                  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                                  onRemoveLayer(layerDef.id);
+                                }}
                               >
                                 <span className="sr-only">Remove</span>
                                 <X className="h-4 w-4" aria-hidden />

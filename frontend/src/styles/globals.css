@@ -18,10 +18,10 @@
   font-display: swap;
 }
 
-.maplibregl-ctrl.maplibregl-ctrl-attrib {
+.mapboxgl-ctrl-attrib-button {
   @apply !p-0;
 }
 
-.maplibregl-ctrl-attrib-inner {
+.mapboxgl-ctrl-attrib-inner {
   @apply px-2 max-w-[100vw] md:max-w-[calc(100vw_-_430px_-_40px_-_16px)] py-1 overflow-hidden font-sans text-xs text-left whitespace-nowrap text-ellipsis;
 }

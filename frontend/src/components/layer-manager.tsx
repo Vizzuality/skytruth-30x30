@@ -1,13 +1,12 @@
 import { FC } from 'react';
 
-import { Layer, Source } from 'react-map-gl/maplibre';
-import { useRecoilValue } from 'recoil';
+import { Layer, Source } from 'react-map-gl';
 
 import { LAYERS } from '@/constants/map';
-import { layersAtom } from '@/store/map';
+import { useSyncMapSettings } from '@/containers/map/sync-settings';
 
 const LayerManager: FC = () => {
-  const layers = useRecoilValue(layersAtom);
+  const [{ layers = [] }] = useSyncMapSettings();
 
   return (
     <>

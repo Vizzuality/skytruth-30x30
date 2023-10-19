@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { drawStateAtom } from '@/store/map';
 
@@ -9,7 +9,7 @@ import DrawingStateContent from './drawing';
 import OverviewStateContent from './overview';
 
 const SidebarContent: FC = () => {
-  const drawState = useRecoilValue(drawStateAtom);
+  const drawState = useAtomValue(drawStateAtom);
 
   let content: { Content: FC; Footer: FC };
   if (drawState.active) {
