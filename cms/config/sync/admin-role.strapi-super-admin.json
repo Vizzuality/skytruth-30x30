@@ -504,7 +504,7 @@
           "year",
           "cumSumProtectedArea",
           "protectedArea",
-          "protected_areas_count"
+          "protectedAreasCount"
         ]
       },
       "conditions": []
@@ -527,7 +527,7 @@
           "year",
           "cumSumProtectedArea",
           "protectedArea",
-          "protected_areas_count"
+          "protectedAreasCount"
         ]
       },
       "conditions": []
@@ -543,7 +543,7 @@
           "year",
           "cumSumProtectedArea",
           "protectedArea",
-          "protected_areas_count"
+          "protectedAreasCount"
         ]
       },
       "conditions": []
