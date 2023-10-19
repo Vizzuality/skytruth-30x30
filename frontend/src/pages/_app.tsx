@@ -5,7 +5,6 @@ import { MapProvider } from 'react-map-gl';
 import type { AppProps } from 'next/app';
 
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
-import { RecoilRoot } from 'recoil';
 
 import 'styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -22,11 +21,9 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <RecoilRoot>
-          <MapProvider>
-            <Component {...pageProps} />
-          </MapProvider>
-        </RecoilRoot>
+        <MapProvider>
+          <Component {...pageProps} />
+        </MapProvider>
       </Hydrate>
     </QueryClientProvider>
   );

@@ -2,8 +2,8 @@ import { useCallback, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
+import { useAtomValue } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
-import { useRecoilValue } from 'recoil';
 
 import LayerManager from '@/components/layer-manager';
 import Map, {
@@ -24,7 +24,7 @@ import { drawStateAtom } from '@/store/map';
 
 const MapPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const drawState = useRecoilValue(drawStateAtom);
+  const drawState = useAtomValue(drawStateAtom);
   const [{ bbox }, setMapSettings] = useSyncMapSettings();
   const { default: map } = useMap();
 

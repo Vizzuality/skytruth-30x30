@@ -1,11 +1,11 @@
-import { useSetRecoilState } from 'recoil';
+import { useSetAtom } from 'jotai';
 
 import { Button } from '@/components/ui/button';
 import { drawStateAtom } from '@/store/map';
 
 const AnalysisStateContent = {
   Content: () => {
-    const setDrawState = useSetRecoilState(drawStateAtom);
+    const setDrawState = useSetAtom(drawStateAtom);
 
     return (
       <>
@@ -22,7 +22,7 @@ const AnalysisStateContent = {
     );
   },
   Footer: () => {
-    const setDrawState = useSetRecoilState(drawStateAtom);
+    const setDrawState = useSetAtom(drawStateAtom);
 
     return (
       <Button

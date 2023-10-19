@@ -13,12 +13,7 @@ module.exports = {
   ignorePatterns: ['src/types/generated/*'],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': [
-      'warn',
-      {
-        additionalHooks: '(useRecoilCallback|useRecoilTransaction_UNSTABLE)',
-      },
-    ],
+    'react-hooks/exhaustive-deps': ['warn'],
     'no-console': [1, { allow: ['info', 'error'] }],
     'react/jsx-props-no-spreading': [
       'error',

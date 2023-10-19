@@ -3,15 +3,15 @@ import { FC, useEffect } from 'react';
 import { Source, Layer, LngLatBoundsLike, useMap } from 'react-map-gl';
 
 import { bbox } from '@turf/turf';
-import { useRecoilValue } from 'recoil';
-
-import { DRAW_STYLES } from '../draw-controls/hooks';
+import { useAtomValue } from 'jotai';
 
 import { drawStateAtom } from '@/store/map';
 
+import { DRAW_STYLES } from '../draw-controls/hooks';
+
 const Drawing: FC = () => {
   const { current: map } = useMap();
-  const { active, feature } = useRecoilValue(drawStateAtom);
+  const { active, feature } = useAtomValue(drawStateAtom);
 
   useEffect(() => {
     if (map && feature) {

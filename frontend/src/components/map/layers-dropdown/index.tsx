@@ -1,7 +1,6 @@
 import { FC, useCallback, useState } from 'react';
 
 import { ChevronDown } from 'lucide-react';
-// import { useRecoilState } from 'recoil';
 
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
