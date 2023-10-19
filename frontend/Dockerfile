@@ -3,7 +3,9 @@ FROM node:18.15-bullseye AS deps
 WORKDIR /app
 COPY .yarn ./.yarn
 COPY package.json yarn.lock .yarnrc.yml ./
-RUN yarn install --immutable
+
+RUN corepack enable && corepack prepare
+RUN yarn install
 
 # If using npm with a `package-lock.json` comment out above and use below instead
 # COPY package.json package-lock.json ./
