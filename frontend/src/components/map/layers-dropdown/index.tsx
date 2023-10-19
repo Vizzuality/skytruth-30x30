@@ -1,31 +1,32 @@
 import { FC, useCallback, useState } from 'react';
 
 import { ChevronDown } from 'lucide-react';
-import { useRecoilState } from 'recoil';
+// import { useRecoilState } from 'recoil';
 
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Switch } from '@/components/ui/switch';
 import { LAYERS } from '@/constants/map';
+import { useSyncMapSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/utils';
-import { layersAtom } from '@/store/map';
 import { Layer } from '@/types/layer';
 
 const layers = [...LAYERS].sort((layerA, layerB) => layerA.name.localeCompare(layerB.name));
 
 const LayersDropdown: FC = () => {
   const [opened, setOpened] = useState(false);
-  const [activeLayers, setActiveLayers] = useRecoilState(layersAtom);
+  const [{ layers: activeLayers = [] }, setMapSettings] = useSyncMapSettings();
 
   const onToggleLayer = useCallback(
     (layerId: Layer['id'], isActive: boolean) =>
-      setActiveLayers(
-        isActive
+      setMapSettings((prev) => ({
+        ...prev,
+        layers: isActive
           ? [...activeLayers, { id: layerId, settings: { expanded: true } }]
-          : activeLayers.filter(({ id }) => id !== layerId)
-      ),
-    [activeLayers, setActiveLayers]
+          : activeLayers.filter(({ id }) => id !== layerId),
+      })),
+    [activeLayers, setMapSettings]
   );
 
   return (

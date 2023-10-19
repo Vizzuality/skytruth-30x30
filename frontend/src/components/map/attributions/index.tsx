@@ -2,13 +2,11 @@ import { FC, useMemo } from 'react';
 
 import { AttributionControl } from 'react-map-gl';
 
-import { useRecoilValue } from 'recoil';
-
 import { LAYERS } from '@/constants/map';
-import { layersAtom } from '@/store/map';
+import { useSyncMapSettings } from '@/containers/map/sync-settings';
 
 const Attributions: FC = () => {
-  const activeLayers = useRecoilValue(layersAtom);
+  const [{ layers: activeLayers = [] }] = useSyncMapSettings();
 
   const customAttributions = useMemo(() => {
     return activeLayers
