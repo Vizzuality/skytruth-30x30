@@ -1,29 +1,32 @@
+import { useSetAtom } from 'jotai';
 import type { GetServerSideProps } from 'next';
-import { useSetRecoilState } from 'recoil';
 
 import Content from '@/containers/data-tool/content';
 import Sidebar from '@/containers/data-tool/sidebar';
 import Layout from '@/layouts/data-tool';
-// import API from '@/services/api';
 import { locationAtom } from '@/store/location';
 import { getLocations } from '@/types/generated/location';
-
-// import Locations from '@/services/cms/locations';
+import { Location } from '@/types/generated/strapi.schemas';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
   const { locationCode } = query;
 
-  const { data: locationsData } = await getLocations();
-  const location = locationsData.find(({ attributes }) => attributes.code === locationCode);
+  const { data: locationsData } = await getLocations({
+    filters: {
+      code: locationCode,
+    },
+  });
+
+  const location = locationsData[0];
 
   if (!location) return { notFound: true };
 
   return { props: { location: location?.attributes } };
 };
 
-export default function Page({ location }) {
-  const setLocation = useSetRecoilState(locationAtom);
+export default function Page({ location }: { location: Location }) {
+  const setLocation = useSetAtom(locationAtom);
 
   setLocation(location);
 

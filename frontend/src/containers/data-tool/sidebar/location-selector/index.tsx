@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useAtomValue } from 'jotai';
 import { Check } from 'lucide-react';
-import { useRecoilValue } from 'recoil';
 
 import {
   Command,
@@ -23,7 +23,7 @@ type LocationSelectorProps = {
 };
 
 const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
-  const location = useRecoilValue(locationAtom);
+  const location = useAtomValue(locationAtom);
   const router = useRouter();
 
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);

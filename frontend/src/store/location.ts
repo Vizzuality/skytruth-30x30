@@ -1,8 +1,10 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
 import type { Location } from '@/types/generated/strapi.schemas';
 
 export const locationAtom = atom<Location>({
-  key: 'location',
-  default: null,
+  code: undefined,
+  name: undefined,
+  totalMarineArea: undefined,
+  type: undefined,
 });

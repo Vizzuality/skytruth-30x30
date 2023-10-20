@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
+import { useAtomValue } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
-import { useRecoilValue } from 'recoil';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -12,7 +12,7 @@ import LocationSelector from './location-selector';
 import Widgets from './widgets';
 
 const DataToolSidebar: React.FC = () => {
-  const location = useRecoilValue(locationAtom);
+  const location = useAtomValue(locationAtom);
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
