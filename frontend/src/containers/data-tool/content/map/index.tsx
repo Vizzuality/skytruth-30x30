@@ -1,32 +1,46 @@
-import { Layer, Source } from 'react-map-gl/maplibre';
+import { useCallback } from 'react';
+
+import { useMap } from 'react-map-gl';
 
 import LayerManager from '@/components/layer-manager';
-import Map, { ZoomControls, LayersDropdown, Legend, Attributions } from '@/components/map';
+import Map, { ZoomControls, LayersDropdown, Legend, Attributions, Drawing } from '@/components/map';
+import { useSyncMapSettings } from '@/containers/map/sync-settings';
 
 const DataToolMap: React.FC = () => {
+  const [{ bbox }, setMapSettings] = useSyncMapSettings();
+  const { default: map } = useMap();
+
+  const handleMoveEnd = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    setMapSettings((prev) => ({
+      ...prev,
+      bbox: map
+        .getBounds()
+        .toArray()
+        .flat()
+        .map((b) => parseFloat(b.toFixed(2))) as typeof bbox,
+    }));
+  }, [map, setMapSettings]);
+
   return (
-    <Map>
-      {() => (
-        <>
-          <div>
-            <LayersDropdown />
-            <Legend />
-          </div>
-          <ZoomControls />
-          <Source
-            id="basemap"
-            type="raster"
-            tiles={['https://tile.openstreetmap.org/{z}/{x}/{y}.png']}
-            attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`}
-            maxzoom={20}
-            tileSize={256}
-          >
-            <Layer id="basemap" type="raster" />
-          </Source>
-          <LayerManager />
-          <Attributions />
-        </>
-      )}
+    <Map
+      initialViewState={{
+        bounds: bbox,
+      }}
+      onMoveEnd={handleMoveEnd}
+      renderWorldCopies={false}
+      attributionControl={false}
+    >
+      <>
+        <div>
+          <LayersDropdown />
+          <Legend />
+        </div>
+        <ZoomControls />
+        <LayerManager />
+        <Drawing />
+        <Attributions />
+      </>
     </Map>
   );
 };
