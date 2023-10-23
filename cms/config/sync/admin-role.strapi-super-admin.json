@@ -204,7 +204,10 @@
           "totalMarineArea",
           "type",
           "groups",
-          "members"
+          "members",
+          "fishing_protection_level_stats",
+          "mpaa_protection_level_stats",
+          "protection_coverage_stats"
         ]
       },
       "conditions": []
@@ -227,7 +230,10 @@
           "totalMarineArea",
           "type",
           "groups",
-          "members"
+          "members",
+          "fishing_protection_level_stats",
+          "mpaa_protection_level_stats",
+          "protection_coverage_stats"
         ]
       },
       "conditions": []
@@ -243,7 +249,10 @@
           "totalMarineArea",
           "type",
           "groups",
-          "members"
+          "members",
+          "fishing_protection_level_stats",
+          "mpaa_protection_level_stats",
+          "protection_coverage_stats"
         ]
       },
       "conditions": []
@@ -311,7 +320,8 @@
           "area",
           "year",
           "mpaa_establishment_stage",
-          "protection_status"
+          "protection_status",
+          "mpa_protection_coverage_stats"
         ]
       },
       "conditions": []
@@ -334,7 +344,8 @@
           "area",
           "year",
           "mpaa_establishment_stage",
-          "protection_status"
+          "protection_status",
+          "mpa_protection_coverage_stats"
         ]
       },
       "conditions": []
@@ -350,7 +361,8 @@
           "area",
           "year",
           "mpaa_establishment_stage",
-          "protection_status"
+          "protection_status",
+          "mpa_protection_coverage_stats"
         ]
       },
       "conditions": []

@@ -43,6 +43,24 @@
       "relation": "manyToMany",
       "target": "api::location.location",
       "inversedBy": "groups"
+    },
+    "fishing_protection_level_stats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::fishing-protection-level-stat.fishing-protection-level-stat",
+      "mappedBy": "location"
+    },
+    "mpaa_protection_level_stats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
+      "mappedBy": "location"
+    },
+    "protection_coverage_stats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::protection-coverage-stat.protection-coverage-stat",
+      "mappedBy": "location"
     }
   }
 }

@@ -724,7 +724,7 @@ export interface ApiFishingProtectionLevelStatFishingProtectionLevelStat
   attributes: {
     location: Attribute.Relation<
       'api::fishing-protection-level-stat.fishing-protection-level-stat',
-      'oneToOne',
+      'manyToOne',
       'api::location.location'
     >;
     fishing_protection_level: Attribute.Relation<
@@ -862,6 +862,21 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'manyToMany',
       'api::location.location'
     >;
+    fishing_protection_level_stats: Attribute.Relation<
+      'api::location.location',
+      'oneToMany',
+      'api::fishing-protection-level-stat.fishing-protection-level-stat'
+    >;
+    mpaa_protection_level_stats: Attribute.Relation<
+      'api::location.location',
+      'oneToMany',
+      'api::mpaa-protection-level-stat.mpaa-protection-level-stat'
+    >;
+    protection_coverage_stats: Attribute.Relation<
+      'api::location.location',
+      'oneToMany',
+      'api::protection-coverage-stat.protection-coverage-stat'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -908,6 +923,11 @@ export interface ApiMpaMpa extends Schema.CollectionType {
       'oneToOne',
       'api::protection-status.protection-status'
     >;
+    mpa_protection_coverage_stats: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToMany',
+      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::mpa.mpa', 'oneToOne', 'admin::user'> &
@@ -924,6 +944,7 @@ export interface ApiMpaProtectionCoverageStatMpaProtectionCoverageStat
     singularName: 'mpa-protection-coverage-stat';
     pluralName: 'mpa-protection-coverage-stats';
     displayName: 'MPA Protection Coverage Stats';
+    description: '';
   };
   options: {
     draftAndPublish: false;
@@ -931,7 +952,7 @@ export interface ApiMpaProtectionCoverageStatMpaProtectionCoverageStat
   attributes: {
     mpa: Attribute.Relation<
       'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'oneToOne',
+      'manyToOne',
       'api::mpa.mpa'
     >;
     fishing_protection_level: Attribute.Relation<
@@ -1096,6 +1117,7 @@ export interface ApiMpaaProtectionLevelStatMpaaProtectionLevelStat
     singularName: 'mpaa-protection-level-stat';
     pluralName: 'mpaa-protection-level-stats';
     displayName: 'MPAA Protection Level Stats';
+    description: '';
   };
   options: {
     draftAndPublish: false;
@@ -1103,7 +1125,7 @@ export interface ApiMpaaProtectionLevelStatMpaaProtectionLevelStat
   attributes: {
     location: Attribute.Relation<
       'api::mpaa-protection-level-stat.mpaa-protection-level-stat',
-      'oneToOne',
+      'manyToOne',
       'api::location.location'
     >;
     mpaa_protection_level: Attribute.Relation<
@@ -1148,7 +1170,7 @@ export interface ApiProtectionCoverageStatProtectionCoverageStat
   attributes: {
     location: Attribute.Relation<
       'api::protection-coverage-stat.protection-coverage-stat',
-      'oneToOne',
+      'manyToOne',
       'api::location.location'
     >;
     protection_status: Attribute.Relation<

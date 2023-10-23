@@ -106,6 +106,51 @@
           "sortable": false
         }
       },
+      "fishing_protection_level_stats": {
+        "edit": {
+          "label": "fishing_protection_level_stats",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "id"
+        },
+        "list": {
+          "label": "fishing_protection_level_stats",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "mpaa_protection_level_stats": {
+        "edit": {
+          "label": "mpaa_protection_level_stats",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "id"
+        },
+        "list": {
+          "label": "mpaa_protection_level_stats",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "protection_coverage_stats": {
+        "edit": {
+          "label": "protection_coverage_stats",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "id"
+        },
+        "list": {
+          "label": "protection_coverage_stats",
+          "searchable": false,
+          "sortable": false
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -202,6 +247,20 @@
         [
           {
             "name": "members",
+            "size": 6
+          },
+          {
+            "name": "fishing_protection_level_stats",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "mpaa_protection_level_stats",
+            "size": 6
+          },
+          {
+            "name": "protection_coverage_stats",
             "size": 6
           }
         ]
