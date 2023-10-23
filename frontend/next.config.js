@@ -42,6 +42,11 @@ const nextConfig = {
         destination: '/dashboard/worldwide',
         permanent: false,
       },
+      {
+        source: '/data-tool',
+        destination: '/data-tool/GLOB',
+        permanent: false,
+      },
     ];
   },
 };
