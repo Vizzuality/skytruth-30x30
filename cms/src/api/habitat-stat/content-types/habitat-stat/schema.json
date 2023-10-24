@@ -33,7 +33,7 @@
       "column": {
         "defaultTo": 0,
         "type": "decimal",
-        "args": [10,2]
+        "args": [12,2]
       }
     },
     "totalArea": {
@@ -43,7 +43,7 @@
       "column": {
         "defaultTo": 0,
         "type": "decimal",
-        "args": [10,2]
+        "args": [12,2]
       }
     }
   }
