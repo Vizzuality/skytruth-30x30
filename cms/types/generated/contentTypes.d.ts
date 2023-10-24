@@ -732,7 +732,11 @@ export interface ApiFishingProtectionLevelStatFishingProtectionLevelStat
       'oneToOne',
       'api::fishing-protection-level.fishing-protection-level'
     >;
-    area: Attribute.Decimal;
+    area: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -908,7 +912,11 @@ export interface ApiMpaMpa extends Schema.CollectionType {
   attributes: {
     wdpaid: Attribute.Integer;
     name: Attribute.String & Attribute.Required;
-    area: Attribute.Decimal;
+    area: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
     year: Attribute.Integer &
       Attribute.SetMinMax<{
         min: 0;
@@ -1189,7 +1197,6 @@ export interface ApiProtectionCoverageStatProtectionCoverageStat
         min: 0;
       }>;
     protectedArea: Attribute.Decimal &
-      Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;
       }>;

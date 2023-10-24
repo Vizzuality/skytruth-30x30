@@ -21,7 +21,14 @@
       "required": true
     },
     "area": {
-      "type": "decimal"
+      "type": "decimal",
+      "required": true,
+      "min": 0,
+      "column": {
+        "defaultTo": 0,
+        "type": "decimal",
+        "args": [10,2]
+      }
     },
     "year": {
       "type": "integer",
