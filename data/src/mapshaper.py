@@ -3,6 +3,9 @@ import logging
 from typing import Union, Optional, List, Literal
 from dataclasses import dataclass
 from pathlib import Path
+from os import sysconf
+from math import floor
+from functools import cached_property
 
 logger = logging.getLogger(__name__)
 
@@ -139,9 +142,18 @@ class JoinKwargs:
 
 
 class Mapshaper:
+    buffer_size: float
     input_sources: List[str] = []
     output_sources: str = ""
     commands: list = []
+
+    def __init__(self, buffer_size: Union[float, None] = None):
+        if not buffer_size:
+            buffer_size = self.__calc_buffer_size
+        self.buffer_size = buffer_size
+        self.commands = []
+        self.input_sources = []
+        self.output_sources = ""
 
     def input(
         self,
@@ -168,7 +180,7 @@ class Mapshaper:
         aux_commands = self.__build_subcommand(kwargs, OutputKwargs)
         output = f"-o {self.output_sources} {' '.join(aux_commands)}"
 
-        self.commands.insert(-1, output)
+        self.commands.append(output)
 
         return self
 
@@ -428,6 +440,11 @@ class Mapshaper:
 
         return subprocess.run(self.__build_command(), shell=True)
 
+    @cached_property
+    def __calc_buffer_size(self) -> int:
+        mem_bytes = sysconf("SC_PAGE_SIZE") * sysconf("SC_PHYS_PAGES")
+        return floor((mem_bytes / (1024.0**3)) * 0.8)  # GiB
+
     def __quiet(self):
         self.commands.append(f"-quiet {input}")
         return self
@@ -451,4 +468,4 @@ class Mapshaper:
         if len(self.commands) == 0:
             raise Exception("No commands provided")
 
-        return f"mapshaper  {' '.join(self.commands)}"
+        return f"mapshaper-xl {str(self.buffer_size)}gb {' '.join(self.commands)}"

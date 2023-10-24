@@ -1,27 +1,51 @@
+from dataclasses import dataclass
 from pathlib import Path
 import subprocess
 import logging
 from typing import Union
+from mapshaper import Mapshaper
 
 
-def simplifyGeometries2Json(source_path: Path) -> Path:
-    """simplify geometries and convert to json file using mapshaper
+@dataclass
+class ExcessParams:
+    input_path: Path
+    output_path: Path
+    update: bool = False
 
-    Args:
-        source_path (Path):  The path to the file.
 
-    Returns:
-        Path: The path to the output file.
-    """
+def simplifyGeometries2Json(
+    source_path: Path, output_path: Union[Path, None] = None, **kwargs: ExcessParams
+) -> Path:
+    if not output_path:
+        output_path = source_path.with_suffix(".json")
 
-    CMD = f'mapshaper {source_path} -clean allow-overlaps rewind -o format=geojson {source_path.with_suffix(".json")} force'
-    subprocess.run(CMD, shell=True, check=True)
+    Mapshaper().input([source_path.as_posix()]).clean(
+        allow_overlaps=True, rewind=True
+    ).output(output_path.as_posix(), format="geojson").execute()
 
-    return source_path.with_suffix(".json")
+    return output_path
+
+
+def json2mbtiles(
+    source_path: Path, output_path: Union[Path, None] = None, **kwargs: ExcessParams
+) -> Path:
+    if not output_path:
+        output_path = source_path.with_suffix(".json")
+    # TODO: create a similar class that the one used with mapshaper in order to allow extra params
+    subprocess.run(
+        f"tippecanoe -zg -f -P -o {output_path} --extend-zooms-if-still-dropping {source_path}",
+        shell=True,
+        check=True,
+    )
+    source_path.unlink()
+    return output_path
 
 
 def mbtileGeneration(
-    data_path: Path, output_path: Union[Path, None] = None, update: bool = False
+    data_path: Path,
+    output_path: Union[Path, None] = None,
+    update: bool = False,
+    **kwargs: ExcessParams,
 ) -> Path:
     """
     generate mbtiles file from geomtry file
@@ -36,28 +60,22 @@ def mbtileGeneration(
 
     """
     try:
-        assert data_path.exists(), "Data path does not exist."
+        if not data_path.exists():
+            raise FileNotFoundError("Data path does not exist.")
 
         if not output_path:
             output_path = data_path.with_suffix(".mbtiles")
 
         if update or not output_path.exists():
             if data_path.suffix != ".json":
-                data_path = simplifyGeometries2Json(data_path)
-
-            assert data_path.suffix == ".json", "Data path must be a json file."
+                data_path = simplifyGeometries2Json(data_path, **kwargs)
+            if data_path.suffix != ".json":
+                raise Exception("Data path must be a json file.")
 
             logging.info("Creating mbtiles file...")
-
-            subprocess.run(
-                f"tippecanoe -zg -f -P -o {output_path} --extend-zooms-if-still-dropping {data_path}",
-                shell=True,
-                check=True,
-            )
-            data_path.unlink(exist_ok=True)
+            json2mbtiles(data_path, output_path, **kwargs)
 
         return output_path
 
     except Exception as e:
-        logging.error(e)
-        return 1
+        raise e
