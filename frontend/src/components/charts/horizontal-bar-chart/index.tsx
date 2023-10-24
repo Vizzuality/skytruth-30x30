@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { format } from 'd3-format';
+
 import { cn } from '@/lib/utils';
 
 const DEFAULT_BAR_COLOR = '#1E1E1E';
@@ -24,12 +26,16 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
   }, []);
 
   const protectedAreaPercentage = useMemo(() => {
-    return ((protectedArea * 100) / totalArea).toFixed(1);
+    return format('.2r')((protectedArea * 100) / totalArea);
   }, [totalArea, protectedArea]);
 
   const barFillPercentage = useMemo(() => {
     return Math.round((protectedArea * DEFAULT_MAX_PERCENTAGE) / totalArea);
   }, [protectedArea, totalArea]);
+
+  const formattedArea = useMemo(() => {
+    return format(',.2r')(totalArea);
+  }, [totalArea]);
 
   return (
     <div className={cn(className)}>
@@ -37,7 +43,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
       <div className="flex justify-between text-xs">
         <span>{title} (i)</span>
         <span>
-          of {totalArea} km<sup>2</sup>
+          of {formattedArea} km<sup>2</sup>
         </span>
       </div>
       <div className="relative my-2 flex h-3">

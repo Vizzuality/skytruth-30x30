@@ -36,7 +36,7 @@ export default function Page({ location }: { location: Location }) {
         <Sidebar />
       </div>
       <Content />
-      <div className="h-1/2 flex-shrink-0 overflow-hidden bg-white p-6 pb-3 md:hidden">
+      <div className="h-1/2 flex-shrink-0 overflow-hidden bg-white md:hidden">
         <Sidebar />
       </div>
     </Layout>

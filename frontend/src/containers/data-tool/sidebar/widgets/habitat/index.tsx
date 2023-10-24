@@ -20,6 +20,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
         code: location.code,
       },
     },
+    'pagination[limit]': -1,
   });
 
   const habitatStatsData = habitatStatsResponse?.data;
@@ -44,7 +45,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
   }, [habitatStatsData]);
 
   // If there is no data for the widget, do not display it.
-  if (!widgetChartData.length) return null;
+  if (!widgetChartData?.length) return null;
 
   return (
     <Widget

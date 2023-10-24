@@ -17,7 +17,11 @@ const DataToolSidebar: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <Collapsible open={sidebarOpen} onOpenChange={setSidebarOpen}>
+    <Collapsible
+      className="h-full overflow-hidden"
+      open={sidebarOpen}
+      onOpenChange={setSidebarOpen}
+    >
       <CollapsibleTrigger asChild>
         <Button
           type="button"
@@ -32,13 +36,15 @@ const DataToolSidebar: React.FC = () => {
           <span className="sr-only">Toggle sidebar</span>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="relative top-0 left-0 z-20 h-full w-[430px] flex-shrink-0 bg-white py-4 fill-mode-none data-[state=closed]:animate-out-absolute data-[state=open]:animate-in-absolute data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left">
-        <div className="border-b border-black px-8 py-2">
-          <h1 className="text-5xl font-black">{location.name}</h1>
-          <LocationSelector className="my-2" />
-        </div>
-        <div className="px-8 py-4">
-          <Widgets />
+      <CollapsibleContent className="relative top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-out-absolute data-[state=open]:animate-in-absolute data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left md:w-[430px]">
+        <div className="h-full w-full overflow-y-scroll">
+          <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
+            <h1 className="text-5xl font-black">{location.name}</h1>
+            <LocationSelector className="my-2" />
+          </div>
+          <div className="h-full">
+            <Widgets />
+          </div>
         </div>
       </CollapsibleContent>
     </Collapsible>
