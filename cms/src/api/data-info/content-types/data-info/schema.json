@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "data_infos",
+  "info": {
+    "singularName": "data-info",
+    "pluralName": "data-infos",
+    "displayName": "Data Info",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "content": {
+      "type": "text",
+      "required": true
+    }
+  }
+}
