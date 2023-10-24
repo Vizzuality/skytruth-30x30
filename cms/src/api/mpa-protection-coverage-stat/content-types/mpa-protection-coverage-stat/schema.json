@@ -4,7 +4,8 @@
   "info": {
     "singularName": "mpa-protection-coverage-stat",
     "pluralName": "mpa-protection-coverage-stats",
-    "displayName": "MPA Protection Coverage Stats"
+    "displayName": "MPA Protection Coverage Stats",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -13,8 +14,9 @@
   "attributes": {
     "mpa": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::mpa.mpa"
+      "relation": "manyToOne",
+      "target": "api::mpa.mpa",
+      "inversedBy": "mpa_protection_coverage_stats"
     },
     "fishing_protection_level": {
       "type": "relation",

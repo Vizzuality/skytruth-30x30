@@ -14,8 +14,9 @@
   "attributes": {
     "location": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::location.location"
+      "relation": "manyToOne",
+      "target": "api::location.location",
+      "inversedBy": "protection_coverage_stats"
     },
     "protection_status": {
       "type": "relation",

@@ -14,8 +14,9 @@
   "attributes": {
     "location": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::location.location"
+      "relation": "manyToOne",
+      "target": "api::location.location",
+      "inversedBy": "fishing_protection_level_stats"
     },
     "fishing_protection_level": {
       "type": "relation",
