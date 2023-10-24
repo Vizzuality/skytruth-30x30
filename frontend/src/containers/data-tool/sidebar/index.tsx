@@ -42,7 +42,7 @@ const DataToolSidebar: React.FC = () => {
             <h1 className="text-5xl font-black">{location.name}</h1>
             <LocationSelector className="my-2" />
           </div>
-          <div className="h-full py-4 px-4 md:px-8">
+          <div className="h-full">
             <Widgets />
           </div>
         </div>
