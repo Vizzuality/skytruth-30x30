@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import DefaultLayout from '@/layouts/default';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/classnames';
 
 const locations = [
   {

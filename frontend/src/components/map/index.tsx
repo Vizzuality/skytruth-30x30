@@ -4,11 +4,12 @@ import ReactMapGL, { ViewState, ViewStateChangeEvent, MapEvent, useMap } from 'r
 
 import { useDebounce } from 'rooks';
 
+import { cn } from '@/lib/classnames';
+
 import { DEFAULT_VIEW_STATE } from './constants';
 import type { CustomMapProps } from './types';
 
 // import env from '@/env.mjs';
-import { cn } from '@/lib/utils';
 
 export const Map: FC<CustomMapProps> = ({
   // * if no id is passed, react-map-gl will store the map reference in a 'default' key:
@@ -131,7 +132,7 @@ export const Map: FC<CustomMapProps> = ({
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
         onMove={handleMapMove}
         onLoad={handleMapLoad}
-        mapStyle="mapbox://styles/skytruth/clnud2d3100nr01pl3b4icpyw"
+        mapStyle="mapbox://styles/skytruth/clnud2d3100nr01pl3b4icpyw/draft"
         {...mapboxProps}
         {...localViewState}
       >

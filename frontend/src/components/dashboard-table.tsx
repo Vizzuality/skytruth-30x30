@@ -7,7 +7,7 @@ import { ArrowDownAZ, ArrowDownUp, ArrowDownZA, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/classnames';
 
 export interface DashboardTableItem {
   location: string;

@@ -6,28 +6,47 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Switch } from '@/components/ui/switch';
-import { LAYERS } from '@/constants/map';
-import { useSyncMapSettings } from '@/containers/map/sync-settings';
-import { cn } from '@/lib/utils';
-import { Layer } from '@/types/layer';
-
-const layers = [...LAYERS].sort((layerA, layerB) => layerA.name.localeCompare(layerB.name));
+import { useSyncMapLayers, useSyncMapLayerSettings } from '@/containers/map/sync-settings';
+import { cn } from '@/lib/classnames';
+import { useGetLayers } from '@/types/generated/layer';
+import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 
 const LayersDropdown: FC<{
   className?: HTMLDivElement['className'];
 }> = ({ className }) => {
   const [opened, setOpened] = useState(false);
-  const [{ layers: activeLayers = [] }, setMapSettings] = useSyncMapSettings();
+  const [activeLayers, setMapLayers] = useSyncMapLayers();
+  const [, setLayerSettings] = useSyncMapLayerSettings();
+
+  const layersQuery = useGetLayers(
+    {
+      sort: 'title:asc',
+    },
+    {
+      query: {
+        select: ({ data }) => data,
+        placeholderData: { data: [] },
+      },
+    }
+  );
 
   const onToggleLayer = useCallback(
-    (layerId: Layer['id'], isActive: boolean) =>
-      setMapSettings((prev) => ({
+    (layerId: LayerResponseDataObject['id'], isActive: boolean) => {
+      setMapLayers(
+        isActive
+          ? [...activeLayers, Number(layerId)]
+          : activeLayers.filter((_layerId) => _layerId !== Number(layerId))
+      );
+
+      setLayerSettings((prev) => ({
         ...prev,
-        layers: isActive
-          ? [...activeLayers, { id: layerId, settings: { expanded: true } }]
-          : activeLayers.filter(({ id }) => id !== layerId),
-      })),
-    [activeLayers, setMapSettings]
+        [layerId]: {
+          ...prev[layerId],
+          expanded: true,
+        },
+      }));
+    },
+    [activeLayers, setLayerSettings, setMapLayers]
   );
 
   return (
@@ -51,8 +70,8 @@ const LayersDropdown: FC<{
         </PopoverTrigger>
         <PopoverContent align="start" className="w-[calc(100vw_-_24px)] max-w-sm">
           <ul className="flex flex-col gap-[26px]">
-            {layers.map((layer) => {
-              const isActive = activeLayers.findIndex(({ id }) => id === layer.id) !== -1;
+            {layersQuery.data.map((layer) => {
+              const isActive = activeLayers.findIndex((layerId) => layerId === layer.id) !== -1;
               const onCheckedChange = onToggleLayer.bind(null, layer.id) as (
                 isActive: boolean
               ) => void;
@@ -65,7 +84,7 @@ const LayersDropdown: FC<{
                     onCheckedChange={onCheckedChange}
                   />
                   <Label htmlFor={`${layer.id}-switch`} className="cursor-pointer">
-                    {layer.name}
+                    {layer.attributes.title}
                   </Label>
                 </li>
               );

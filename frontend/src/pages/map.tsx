@@ -1,11 +1,12 @@
-import { useCallback, useState } from 'react';
+import { ComponentProps, useCallback, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useAtomValue } from 'jotai';
+import dynamic from 'next/dynamic';
+
+import { useAtom, useAtomValue } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
 
-import LayerManager from '@/components/layer-manager';
 import Map, {
   ZoomControls,
   LayersDropdown,
@@ -17,19 +18,50 @@ import Map, {
 import SidebarContent from '@/components/sidebar-content';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import Popup from '@/containers/map/popup';
 import { useSyncMapSettings } from '@/containers/map/sync-settings';
 import FullscreenLayout from '@/layouts/fullscreen';
-import { cn } from '@/lib/utils';
-import { drawStateAtom } from '@/store/map';
+import { cn } from '@/lib/classnames';
+import {
+  drawStateAtom,
+  layersInteractiveAtom,
+  layersInteractiveIdsAtom,
+  popupAtom,
+} from '@/store/map';
+import { useGetLayers } from '@/types/generated/layer';
+import { LayerTyped } from '@/types/layers';
+
+const LayerManager = dynamic(() => import('@/containers/map/layer-manager'), {
+  ssr: false,
+});
 
 const MapPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const drawState = useAtomValue(drawStateAtom);
   const [{ bbox }, setMapSettings] = useSyncMapSettings();
   const { default: map } = useMap();
+  const [, setPopup] = useAtom(popupAtom);
+
+  const layersInteractive = useAtomValue(layersInteractiveAtom);
+  const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
+
+  const { data: layersInteractiveData } = useGetLayers(
+    {
+      filters: {
+        id: {
+          $in: layersInteractive,
+        },
+      },
+    },
+    {
+      query: {
+        enabled: !!layersInteractive.length,
+        select: ({ data }) => data,
+      },
+    }
+  );
 
   const handleMoveEnd = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     setMapSettings((prev) => ({
       ...prev,
       bbox: map
@@ -39,6 +71,23 @@ const MapPage: React.FC = () => {
         .map((b) => parseFloat(b.toFixed(2))) as typeof bbox,
     }));
   }, [map, setMapSettings]);
+
+  const handleMapClick = useCallback(
+    (e: Parameters<ComponentProps<typeof Map>['onClick']>[0]) => {
+      if (
+        layersInteractive.length &&
+        layersInteractiveData.some((l) => {
+          const attributes = l.attributes as LayerTyped;
+          return attributes?.interaction_config?.events.some((ev) => ev.type === 'click');
+        })
+      ) {
+        const p = Object.assign({}, e, { features: e.features ?? [] });
+
+        setPopup(p);
+      }
+    },
+    [layersInteractive, layersInteractiveData, setPopup]
+  );
 
   return (
     <FullscreenLayout title="Map">
@@ -62,11 +111,13 @@ const MapPage: React.FC = () => {
           </CollapsibleContent>
         </Collapsible>
         <Map
+          className="absolute left-0 w-full"
           initialViewState={{
             bounds: bbox,
           }}
+          interactiveLayerIds={layersInteractiveIds}
+          onClick={handleMapClick}
           onMoveEnd={handleMoveEnd}
-          className="absolute left-0 w-full"
           renderWorldCopies={false}
           attributionControl={false}
         >
@@ -76,6 +127,10 @@ const MapPage: React.FC = () => {
                 'hidden md:block': drawState.active,
               })}
             >
+              <LayerManager />
+
+              <Popup />
+
               <LayersDropdown
                 className={cn({
                   'translate-x-[calc(430px+12px)] animate-in-absolute': sidebarOpen,

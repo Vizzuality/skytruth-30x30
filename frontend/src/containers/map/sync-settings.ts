@@ -1,21 +1,30 @@
 import { LngLatBoundsLike } from 'react-map-gl';
 
-import { useQueryState } from 'next-usequerystate';
+import { parseAsArrayOf, parseAsInteger, useQueryState } from 'next-usequerystate';
 import { parseAsJson } from 'next-usequerystate/parsers';
 
-import { Layer, LayerSettings } from '@/types/layer';
+import { LayerSettings } from '@/types/layers';
 
 const DEFAULT_SYNC_MAP_SETTINGS: {
   bbox: LngLatBoundsLike;
-  layers: readonly { id: Layer['id']; settings?: LayerSettings }[];
 } = {
   bbox: null,
-  layers: [],
 };
 
 export const useSyncMapSettings = () => {
   return useQueryState(
     'settings',
     parseAsJson<typeof DEFAULT_SYNC_MAP_SETTINGS>().withDefault(DEFAULT_SYNC_MAP_SETTINGS)
+  );
+};
+
+export const useSyncMapLayers = () => {
+  return useQueryState('layers', parseAsArrayOf(parseAsInteger).withDefault([]));
+};
+
+export const useSyncMapLayerSettings = () => {
+  return useQueryState(
+    'layer-settings',
+    parseAsJson<{ [layerId: number]: Partial<LayerSettings> }>().withDefault({})
   );
 };
