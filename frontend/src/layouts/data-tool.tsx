@@ -23,7 +23,9 @@ const FullscreenLayout: React.FC<PropsWithChildren<FullscreenLayoutProps>> = ({
       <div className="flex-shrink-0">
         <Header />
       </div>
-      <div className="relative flex h-full w-full flex-col md:flex-row">{children}</div>
+      <div className="relative flex h-full w-full flex-col overflow-hidden md:flex-row">
+        {children}
+      </div>
     </div>
   </>
 );
