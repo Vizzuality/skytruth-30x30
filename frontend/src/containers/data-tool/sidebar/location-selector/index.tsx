@@ -51,7 +51,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
                 const { name, code, type } = attributes;
 
                 return (
-                  <CommandItem key={code} value={code} onSelect={handleLocationSelected}>
+                  <CommandItem key={code} value={name} onSelect={() => handleLocationSelected(code)}>
                     <div className="flex w-full cursor-pointer justify-between gap-x-4">
                       <div className="flex font-bold underline">
                         <Check
