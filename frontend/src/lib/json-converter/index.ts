@@ -8,7 +8,7 @@ import { JSONConfiguration, JSONConverter } from '@deck.gl/json/typed';
 //   LegendTypeChoropleth,
 //   LegendTypeGradient,
 // } from '@/components/map/legend/item-types';
-import EEZLayerPopup from '@/containers/map/popup/eez';
+import EEZLayerPopup from '@/containers/data-tool/content/map/popup/eez';
 import FUNCTIONS from '@/lib/utils';
 import { ParamsConfig } from '@/types/layers';
 

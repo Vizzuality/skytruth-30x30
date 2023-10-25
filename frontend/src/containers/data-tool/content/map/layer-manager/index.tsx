@@ -1,8 +1,11 @@
 import { Layer } from 'react-map-gl';
 
 import { DeckMapboxOverlayProvider } from '@/components/map/provider';
-import LayerManagerItem from '@/containers/map/layer-manager/item';
-import { useSyncMapLayerSettings, useSyncMapLayers } from '@/containers/map/sync-settings';
+import LayerManagerItem from '@/containers/data-tool/content/map/layer-manager/item';
+import {
+  useSyncMapLayerSettings,
+  useSyncMapLayers,
+} from '@/containers/data-tool/content/map/sync-settings';
 
 const LayerManager = () => {
   const [activeLayers] = useSyncMapLayers();

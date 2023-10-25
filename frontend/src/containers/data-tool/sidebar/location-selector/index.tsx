@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PAGES } from '@/constants/pages';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/classnames';
 import { locationAtom } from '@/store/location';
 import { useGetLocations } from '@/types/generated/location';
 
@@ -51,7 +51,11 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
                 const { name, code, type } = attributes;
 
                 return (
-                  <CommandItem key={code} value={name} onSelect={() => handleLocationSelected(code)}>
+                  <CommandItem
+                    key={code}
+                    value={name}
+                    onSelect={() => handleLocationSelected(code)}
+                  >
                     <div className="flex w-full cursor-pointer justify-between gap-x-4">
                       <div className="flex font-bold underline">
                         <Check

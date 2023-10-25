@@ -5,7 +5,7 @@ import { ChevronLeft } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/classnames';
 import { locationAtom } from '@/store/location';
 
 import LocationSelector from './location-selector';

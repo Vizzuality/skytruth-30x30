@@ -6,7 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Switch } from '@/components/ui/switch';
-import { useSyncMapLayers, useSyncMapLayerSettings } from '@/containers/map/sync-settings';
+import {
+  useSyncMapLayers,
+  useSyncMapLayerSettings,
+} from '@/containers/data-tool/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
 import { useGetLayers } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
@@ -70,7 +73,7 @@ const LayersDropdown: FC<{
         </PopoverTrigger>
         <PopoverContent align="start" className="w-[calc(100vw_-_24px)] max-w-sm">
           <ul className="flex flex-col gap-[26px]">
-            {layersQuery.data.map((layer) => {
+            {layersQuery.data?.map((layer) => {
               const isActive = activeLayers.findIndex((layerId) => layerId === layer.id) !== -1;
               const onCheckedChange = onToggleLayer.bind(null, layer.id) as (
                 isActive: boolean

@@ -15,7 +15,10 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useSyncMapLayerSettings, useSyncMapLayers } from '@/containers/map/sync-settings';
+import {
+  useSyncMapLayerSettings,
+  useSyncMapLayers,
+} from '@/containers/data-tool/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
 import { useGetLayers } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
@@ -154,13 +157,13 @@ const Legend: FC = () => {
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent className="max-h-[20vh] w-[calc(100vw_-_24px)] max-w-sm overflow-y-auto bg-white p-5 md:max-h-[50vh] md:max-w-[min(calc(100vw_-_430px_-_40px_-_12px_-_16px),_384px)]">
-          {!layersQuery.data.length && (
+          {!layersQuery.data?.length && (
             <p className="text-center">
               Open <span className="text-sm font-black uppercase">Layers</span> to add layers to the
               map
             </p>
           )}
-          {layersQuery.data.length > 0 && (
+          {layersQuery.data?.length > 0 && (
             <Accordion
               type="multiple"
               value={Object.keys(layerSettings).filter((layerId) => {
@@ -168,7 +171,7 @@ const Legend: FC = () => {
               })}
               onValueChange={onToggleAccordion}
             >
-              {layersQuery.data.map(({ id, attributes: { title } }, index) => {
+              {layersQuery.data?.map(({ id, attributes: { title } }, index) => {
                 const isFirst = index === 0;
                 const isLast = index + 1 === layersQuery.data.length;
 
