@@ -246,17 +246,19 @@
           {
             "name": "members",
             "size": 6
-          },
-          {
-            "name": "fishing_protection_level_stats",
-            "size": 6
           }
         ],
         [
           {
-            "name": "mpaa_protection_level_stats",
+            "name": "fishing_protection_level_stats",
             "size": 6
           },
+          {
+            "name": "mpaa_protection_level_stats",
+            "size": 6
+          }
+        ],
+        [
           {
             "name": "protection_coverage_stats",
             "size": 6

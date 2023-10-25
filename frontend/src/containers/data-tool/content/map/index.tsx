@@ -1,11 +1,10 @@
-import { ComponentProps, useCallback, useState } from 'react';
+import { ComponentProps, useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
 import dynamic from 'next/dynamic';
 
 import { useAtomValue, useSetAtom } from 'jotai';
-import { ChevronLeft } from 'lucide-react';
 
 import Map, {
   ZoomControls,
@@ -16,8 +15,6 @@ import Map, {
   Drawing,
 } from '@/components/map';
 import SidebarContent from '@/components/sidebar-content';
-import { Button } from '@/components/ui/button';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 // import Popup from '@/containers/map/popup';
 import { useSyncMapSettings } from '@/containers/data-tool/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
@@ -34,8 +31,7 @@ const LayerManager = dynamic(() => import('@/containers/data-tool/content/map/la
   ssr: false,
 });
 
-const MapPage: React.FC = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+const DataToolMap: React.FC = () => {
   const [{ bbox }, setMapSettings] = useSyncMapSettings();
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
@@ -90,24 +86,6 @@ const MapPage: React.FC = () => {
 
   return (
     <div className="relative flex h-full w-full flex-col md:flex-row">
-      {/* <Collapsible open={sidebarOpen} onOpenChange={setSidebarOpen} className="hidden md:block">
-        <CollapsibleTrigger asChild>
-          <Button
-            type="button"
-            size="icon"
-            className={cn('absolute bottom-3 z-10', {
-              'left-0': !sidebarOpen,
-              'left-[430px] transition-[left] delay-500': sidebarOpen,
-            })}
-          >
-            <ChevronLeft className={cn('h-6 w-6', { 'rotate-180': !sidebarOpen })} aria-hidden />
-            <span className="sr-only">Toggle sidebar</span>
-          </Button>
-        </CollapsibleTrigger>
-        <CollapsibleContent className="relative top-0 left-0 z-20 h-full w-[430px] flex-shrink-0 bg-white p-8 pb-3 fill-mode-none data-[state=closed]:animate-out-absolute data-[state=open]:animate-in-absolute data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left">
-          <SidebarContent />
-        </CollapsibleContent>
-      </Collapsible> */}
       <Map
         className="absolute left-0 w-full"
         initialViewState={{
@@ -129,12 +107,7 @@ const MapPage: React.FC = () => {
 
             {/* <Popup /> */}
 
-            <LayersDropdown
-              className={cn({
-                'translate-x-0 animate-in-absolute': sidebarOpen,
-                'translate-x-0 animate-out-absolute': !sidebarOpen,
-              })}
-            />
+            <LayersDropdown />
             <Legend />
           </div>
           <ZoomControls />
@@ -151,4 +124,4 @@ const MapPage: React.FC = () => {
   );
 };
 
-export default MapPage;
+export default DataToolMap;
