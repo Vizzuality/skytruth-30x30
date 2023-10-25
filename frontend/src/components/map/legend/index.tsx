@@ -5,7 +5,7 @@ import { usePreviousDifferent } from 'rooks';
 
 import {
   Accordion,
-  AccordionContent,
+  // AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
@@ -19,9 +19,9 @@ import { useSyncMapLayerSettings, useSyncMapLayers } from '@/containers/map/sync
 import { cn } from '@/lib/classnames';
 import { useGetLayers } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
-import { LayerTyped } from '@/types/layers';
+// import { LayerTyped } from '@/types/layers';
 
-import LegendItems from './items';
+// import LegendItems from './items';
 
 const Legend: FC = () => {
   const [opened, setOpened] = useState(false);
@@ -101,7 +101,6 @@ const Legend: FC = () => {
 
   const onMoveLayerUp = useCallback(
     (layerId: LayerResponseDataObject['id']) => {
-      // const newActiveLayers = [...activeLayers];
       const layerIndex = activeLayers.findIndex((_layerId) => _layerId === layerId);
       if (layerIndex === -1) {
         return;
@@ -169,7 +168,7 @@ const Legend: FC = () => {
               })}
               onValueChange={onToggleAccordion}
             >
-              {layersQuery.data.map(({ id, attributes: { title, legend_config } }, index) => {
+              {layersQuery.data.map(({ id, attributes: { title } }, index) => {
                 const isFirst = index === 0;
                 const isLast = index + 1 === layersQuery.data.length;
 

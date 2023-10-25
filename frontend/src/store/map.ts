@@ -14,4 +14,4 @@ export const drawStateAtom = atom<{ active: boolean; feature: Feature }>({
 export const layersInteractiveAtom = atom<LayerResponseDataObject['id'][]>([]);
 export const layersInteractiveIdsAtom = atom<string[]>([]);
 
-export const popupAtom = atom<Partial<MapLayerMouseEvent | null>>(null);
+export const popupAtom = atom<Partial<MapLayerMouseEvent | null>>({});

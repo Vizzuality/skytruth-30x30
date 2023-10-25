@@ -11,12 +11,12 @@ export function formatPercentage(value: number, options?: Intl.NumberFormatOptio
 
 export function formatHA(value: number, options?: Intl.NumberFormatOptions) {
   const v = Intl.NumberFormat('en-US', {
-    notation: 'compact',
+    notation: 'standard',
     compactDisplay: 'short',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
+    // minimumFractionDigits: 0,
+    // maximumFractionDigits: 2,
     style: 'unit',
-    unit: 'hectare',
+    unit: 'kilometer',
     unitDisplay: 'short',
     ...options,
   });

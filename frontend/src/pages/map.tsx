@@ -4,7 +4,7 @@ import { useMap } from 'react-map-gl';
 
 import dynamic from 'next/dynamic';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
 
 import Map, {
@@ -18,7 +18,7 @@ import Map, {
 import SidebarContent from '@/components/sidebar-content';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import Popup from '@/containers/map/popup';
+// import Popup from '@/containers/map/popup';
 import { useSyncMapSettings } from '@/containers/map/sync-settings';
 import FullscreenLayout from '@/layouts/fullscreen';
 import { cn } from '@/lib/classnames';
@@ -37,10 +37,10 @@ const LayerManager = dynamic(() => import('@/containers/map/layer-manager'), {
 
 const MapPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const drawState = useAtomValue(drawStateAtom);
   const [{ bbox }, setMapSettings] = useSyncMapSettings();
   const { default: map } = useMap();
-  const [, setPopup] = useAtom(popupAtom);
+  const drawState = useAtomValue(drawStateAtom);
+  const setPopup = useSetAtom(popupAtom);
 
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
@@ -129,7 +129,7 @@ const MapPage: React.FC = () => {
             >
               <LayerManager />
 
-              <Popup />
+              {/* <Popup /> */}
 
               <LayersDropdown
                 className={cn({

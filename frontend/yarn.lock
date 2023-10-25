@@ -11579,9 +11579,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "skytruth-30x30-frontend@workspace:."
   dependencies:
-    "@deck.gl/aggregation-layers": 8.9.31
-    "@deck.gl/core": 8.9.31
-    "@deck.gl/geo-layers": 8.9.31
     "@deck.gl/json": 8.9.31
     "@deck.gl/layers": 8.9.31
     "@deck.gl/mapbox": 8.9.31

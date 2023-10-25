@@ -215,7 +215,7 @@
         "id",
         "code",
         "name",
-        "type"
+        "totalMarineArea"
       ],
       "edit": [
         [
@@ -230,21 +230,19 @@
         ],
         [
           {
+            "name": "totalMarineArea",
+            "size": 4
+          },
+          {
             "name": "type",
             "size": 6
           }
         ],
         [
           {
-            "name": "totalMarineArea",
-            "size": 4
-          },
-          {
             "name": "groups",
             "size": 6
-          }
-        ],
-        [
+          },
           {
             "name": "members",
             "size": 6

@@ -5,6 +5,7 @@ import { useControl } from 'react-map-gl';
 import { MapboxOverlay, MapboxOverlayProps } from '@deck.gl/mapbox/typed';
 
 interface DeckMapboxOverlayContext {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   addLayer: (layer: any) => void;
   removeLayer: (id: string) => void;
 }
@@ -30,6 +31,7 @@ function useMapboxOverlay(
 }
 
 export const DeckMapboxOverlayProvider = ({ children }: PropsWithChildren) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const layersRef = useRef<any[]>([]);
 
   const OVERLAY = useMapboxOverlay({
@@ -37,6 +39,7 @@ export const DeckMapboxOverlayProvider = ({ children }: PropsWithChildren) => {
   });
 
   const addLayer = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (layer: any) => {
       const newLayers = [...layersRef.current.filter((l) => l.id !== layer.id), layer];
 

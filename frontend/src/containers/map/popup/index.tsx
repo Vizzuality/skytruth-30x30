@@ -1,6 +1,6 @@
 import { Popup } from 'react-map-gl';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 
 import PopupItem from '@/containers/map/popup/item';
 import { layersInteractiveAtom, popupAtom } from '@/store/map';
@@ -10,9 +10,9 @@ const PopupContainer = () => {
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const lys = [...layersInteractive].reverse();
 
-  const [, setPopup] = useAtom(popupAtom);
+  const setPopup = useSetAtom(popupAtom);
 
-  if (!popup) return null;
+  if (!Object.keys(popup).length) return null;
 
   return (
     <Popup
@@ -23,7 +23,7 @@ const PopupContainer = () => {
         padding: 0,
       }}
       maxWidth="300px"
-      onClose={() => setPopup(null)}
+      onClose={() => setPopup({})}
     >
       <div className="pointer-events-none absolute left-0 top-0 h-4 w-full bg-gradient-to-b from-white" />
       <div className="max-h-[49vh] space-y-2.5 overflow-y-auto overflow-x-hidden pr-8 text-slate-800 shadow-[0_20px_15px_rgba(0,0,0,0.1)]">

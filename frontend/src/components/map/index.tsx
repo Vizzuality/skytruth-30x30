@@ -132,7 +132,7 @@ export const Map: FC<CustomMapProps> = ({
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
         onMove={handleMapMove}
         onLoad={handleMapLoad}
-        mapStyle="mapbox://styles/skytruth/clnud2d3100nr01pl3b4icpyw/draft"
+        mapStyle="mapbox://styles/skytruth/clnud2d3100nr01pl3b4icpyw"
         {...mapboxProps}
         {...localViewState}
       >

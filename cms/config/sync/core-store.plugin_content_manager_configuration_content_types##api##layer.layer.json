@@ -1,14 +1,14 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::fishing-protection-level-stat.fishing-protection-level-stat",
+  "key": "plugin_content_manager_configuration_content_types::api::layer.layer",
   "value": {
-    "uid": "api::fishing-protection-level-stat.fishing-protection-level-stat",
+    "uid": "api::layer.layer",
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "id",
-      "defaultSortBy": "id",
+      "mainField": "title",
+      "defaultSortBy": "title",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -20,48 +20,102 @@
           "sortable": true
         }
       },
-      "location": {
+      "title": {
         "edit": {
-          "label": "location",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "code"
-        },
-        "list": {
-          "label": "location",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "fishing_protection_level": {
-        "edit": {
-          "label": "fishing_protection_level",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "slug"
-        },
-        "list": {
-          "label": "fishing_protection_level",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "area": {
-        "edit": {
-          "label": "area",
+          "label": "title",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "area",
+          "label": "title",
           "searchable": true,
           "sortable": true
+        }
+      },
+      "type": {
+        "edit": {
+          "label": "type",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "type",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "config": {
+        "edit": {
+          "label": "config",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "config",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "params_config": {
+        "edit": {
+          "label": "params_config",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "params_config",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "legend_config": {
+        "edit": {
+          "label": "legend_config",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "legend_config",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "interaction_config": {
+        "edit": {
+          "label": "interaction_config",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "interaction_config",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "metadata": {
+        "edit": {
+          "label": "metadata",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "metadata",
+          "searchable": false,
+          "sortable": false
         }
       },
       "createdAt": {
@@ -126,25 +180,49 @@
     "layouts": {
       "list": [
         "id",
-        "location",
-        "fishing_protection_level",
-        "area"
+        "title",
+        "type",
+        "metadata"
       ],
       "edit": [
         [
           {
-            "name": "location",
+            "name": "title",
             "size": 6
           },
           {
-            "name": "fishing_protection_level",
+            "name": "type",
             "size": 6
           }
         ],
         [
           {
-            "name": "area",
-            "size": 4
+            "name": "config",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "params_config",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "legend_config",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "interaction_config",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "metadata",
+            "size": 12
           }
         ]
       ]
