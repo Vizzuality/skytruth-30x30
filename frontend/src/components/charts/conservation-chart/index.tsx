@@ -13,7 +13,7 @@ import {
   Line,
 } from 'recharts';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/classnames';
 
 import ChartLegend from './legend';
 

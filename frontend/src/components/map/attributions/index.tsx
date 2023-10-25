@@ -1,31 +1,36 @@
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 
 import { AttributionControl } from 'react-map-gl';
 
-import { LAYERS } from '@/constants/map';
-import { useSyncMapSettings } from '@/containers/map/sync-settings';
+import { useSyncMapLayers } from '@/containers/data-tool/content/map/sync-settings';
+import { useGetLayers } from '@/types/generated/layer';
 
 const Attributions: FC = () => {
-  const [{ layers: activeLayers = [] }] = useSyncMapSettings();
+  const [activeLayers] = useSyncMapLayers();
 
-  const customAttributions = useMemo(() => {
-    return activeLayers
-      .map((layer) => {
-        const layerDef = LAYERS.find(({ id }) => id === layer.id);
-        if (!layerDef) {
-          return;
-        }
-
-        return layerDef.metadata?.attributions;
-      })
-      .filter((attributions) => !!attributions);
-  }, [activeLayers]);
+  const layerQuery = useGetLayers(
+    {
+      filters: {
+        id: {
+          $in: activeLayers,
+        },
+      },
+      populate: 'metadata',
+    },
+    {
+      query: {
+        enabled: !!activeLayers.length,
+        select: ({ data }) =>
+          data.map(({ attributes: { metadata } }) => metadata?.source).filter((source) => !!source),
+      },
+    }
+  );
 
   return (
     <AttributionControl
-      key={customAttributions.join('')}
+      key={layerQuery.data?.join('')}
       compact={false}
-      customAttribution={customAttributions}
+      customAttribution={layerQuery.data}
     />
   );
 };

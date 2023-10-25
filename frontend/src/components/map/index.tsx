@@ -4,11 +4,12 @@ import ReactMapGL, { ViewState, ViewStateChangeEvent, MapEvent, useMap } from 'r
 
 import { useDebounce } from 'rooks';
 
+import { cn } from '@/lib/classnames';
+
 import { DEFAULT_VIEW_STATE } from './constants';
 import type { CustomMapProps } from './types';
 
 // import env from '@/env.mjs';
-import { cn } from '@/lib/utils';
 
 export const Map: FC<CustomMapProps> = ({
   // * if no id is passed, react-map-gl will store the map reference in a 'default' key:

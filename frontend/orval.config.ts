@@ -37,6 +37,7 @@ module.exports = {
           'Protection-status',
           'Fishing-protection-level',
           'Fishing-protection-level-stat',
+          'Layer',
         ],
       },
     },

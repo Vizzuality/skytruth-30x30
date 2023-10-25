@@ -13,7 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 const navigation = [

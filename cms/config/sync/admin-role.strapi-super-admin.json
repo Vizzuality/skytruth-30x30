@@ -239,6 +239,86 @@
     {
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
+      "subject": "api::layer.layer",
+      "properties": {
+        "fields": [
+          "title",
+          "type",
+          "config",
+          "params_config",
+          "legend_config",
+          "interaction_config",
+          "metadata.description",
+          "metadata.citation",
+          "metadata.source",
+          "metadata.resolution",
+          "metadata.content_date",
+          "metadata.license"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::layer.layer",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::layer.layer",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::layer.layer",
+      "properties": {
+        "fields": [
+          "title",
+          "type",
+          "config",
+          "params_config",
+          "legend_config",
+          "interaction_config",
+          "metadata.description",
+          "metadata.citation",
+          "metadata.source",
+          "metadata.resolution",
+          "metadata.content_date",
+          "metadata.license"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::layer.layer",
+      "properties": {
+        "fields": [
+          "title",
+          "type",
+          "config",
+          "params_config",
+          "legend_config",
+          "interaction_config",
+          "metadata.description",
+          "metadata.citation",
+          "metadata.source",
+          "metadata.resolution",
+          "metadata.content_date",
+          "metadata.license"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
       "subject": "api::location.location",
       "properties": {
         "fields": [

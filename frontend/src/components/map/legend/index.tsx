@@ -1,11 +1,11 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 import { ChevronUp, CircleDashed, Eye, EyeOff, MoveUp, X } from 'lucide-react';
 import { usePreviousDifferent } from 'rooks';
 
 import {
   Accordion,
-  AccordionContent,
+  // AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
@@ -15,129 +15,124 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { LAYERS } from '@/constants/map';
-import { useSyncMapSettings } from '@/containers/map/sync-settings';
-import { cn } from '@/lib/utils';
-import { Layer } from '@/types/layer';
+import {
+  useSyncMapLayerSettings,
+  useSyncMapLayers,
+} from '@/containers/data-tool/content/map/sync-settings';
+import { cn } from '@/lib/classnames';
+import { useGetLayers } from '@/types/generated/layer';
+import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
+// import { LayerTyped } from '@/types/layers';
 
-import LegendItems from './items';
+// import LegendItems from './items';
 
 const Legend: FC = () => {
   const [opened, setOpened] = useState(false);
-  const [{ layers: activeLayers = [] }, setMapSettings] = useSyncMapSettings();
+  const [activeLayers, setMapLayers] = useSyncMapLayers();
+  const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
+
   const previousActiveLayers = usePreviousDifferent(activeLayers);
 
-  const activeLayersDef = useMemo(
-    () => activeLayers.map(({ id }) => LAYERS.find((layer) => id === layer.id)).reverse(),
-    [activeLayers]
+  const layersQuery = useGetLayers(
+    {
+      sort: 'title:asc',
+    },
+    {
+      query: {
+        select: ({ data }) =>
+          data
+            .filter(({ id }) => activeLayers.includes(id))
+            .sort((a, b) => {
+              const indexA = activeLayers.indexOf(a.id);
+              const indexB = activeLayers.indexOf(b.id);
+              return indexA - indexB;
+            }),
+        placeholderData: { data: [] },
+        queryKey: ['layers', activeLayers],
+        keepPreviousData: true,
+      },
+    }
   );
 
   const onRemoveLayer = useCallback(
-    (layerId: Layer['id']) =>
-      setMapSettings((prev) => ({
-        ...prev,
-        layers: activeLayers.filter(({ id }) => id !== layerId),
-      })),
-    [activeLayers, setMapSettings]
+    (layerId: LayerResponseDataObject['id']) =>
+      setMapLayers((currentLayers) => {
+        return currentLayers.filter((_layerId) => _layerId !== layerId);
+      }),
+    [setMapLayers]
   );
 
   const onToggleLayerVisibility = useCallback(
-    (layerId: Layer['id'], isVisible: boolean) => {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      setMapSettings((prev) => ({
+    (layerId: LayerResponseDataObject['id'], isVisible: boolean) => {
+      setLayerSettings((prev) => ({
         ...prev,
-        layers: activeLayers.map((layer) => ({
-          ...layer,
-          ...(layer.id === layerId
-            ? {
-                settings: {
-                  ...(layer.settings ?? {}),
-                  visibility: isVisible,
-                },
-              }
-            : {}),
-        })),
+        [layerId]: {
+          ...prev[layerId],
+          visibility: isVisible,
+        },
       }));
     },
-    [activeLayers, setMapSettings]
+    [setLayerSettings]
   );
 
   const onChangeLayerOpacity = useCallback(
-    (layerId: Layer['id'], opacity: number) => {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      setMapSettings((prev) => ({
+    (layerId: LayerResponseDataObject['id'], opacity: number) => {
+      setLayerSettings((prev) => ({
         ...prev,
-        layers: activeLayers.map((layer) => ({
-          ...layer,
-          ...(layer.id === layerId
-            ? {
-                settings: {
-                  ...(layer.settings ?? {}),
-                  opacity,
-                },
-              }
-            : {}),
-        })),
+        [layerId]: {
+          ...prev[layerId],
+          opacity,
+        },
       }));
     },
-    [activeLayers, setMapSettings]
+    [setLayerSettings]
   );
 
   const onMoveLayerDown = useCallback(
-    (layerId: Layer['id']) => {
-      const newActiveLayers = [...activeLayers];
-      const layerIndex = newActiveLayers.findIndex(({ id }) => id === layerId);
+    (layerId: LayerResponseDataObject['id']) => {
+      const layerIndex = activeLayers.findIndex((_layerId) => _layerId === layerId);
       if (layerIndex === -1) {
         return;
       }
 
-      const [layer] = newActiveLayers.splice(layerIndex, 1);
-      newActiveLayers.splice(layerIndex - 1, 0, layer);
-
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      setMapSettings((prev) => ({
-        ...prev,
-        layers: newActiveLayers,
-      }));
+      setMapLayers((prev) => {
+        return prev.toSpliced(layerIndex, 1).toSpliced(layerIndex + 1, 0, layerId);
+      });
     },
-    [activeLayers, setMapSettings]
+    [activeLayers, setMapLayers]
   );
 
   const onMoveLayerUp = useCallback(
-    (layerId: Layer['id']) => {
-      const newActiveLayers = [...activeLayers];
-      const layerIndex = newActiveLayers.findIndex(({ id }) => id === layerId);
+    (layerId: LayerResponseDataObject['id']) => {
+      const layerIndex = activeLayers.findIndex((_layerId) => _layerId === layerId);
       if (layerIndex === -1) {
         return;
       }
 
-      const [layer] = newActiveLayers.splice(layerIndex, 1);
-      newActiveLayers.splice(layerIndex + 1, 0, layer);
-
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      setMapSettings((prev) => ({
-        ...prev,
-        layers: newActiveLayers,
-      }));
+      setMapLayers((prev) => {
+        return prev.toSpliced(layerIndex, 1).toSpliced(layerIndex - 1, 0, layerId);
+      });
     },
-    [activeLayers, setMapSettings]
+    [activeLayers, setMapLayers]
   );
 
   const onToggleAccordion = useCallback(
     (layerStringIds: string[]) => {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      setMapSettings((prev) => ({
+      setLayerSettings((prev) => ({
         ...prev,
-        layers: activeLayers.map((layer) => ({
-          ...layer,
-          settings: {
-            ...(layer.settings ?? {}),
-            expanded: layerStringIds.findIndex((stringId) => stringId === `${layer.id}`) !== -1,
-          },
-        })),
+        ...activeLayers.reduce(
+          (acc, layerId) => ({
+            ...acc,
+            [layerId]: {
+              ...prev[layerId],
+              expanded: layerStringIds.findIndex((stringId) => stringId === `${layerId}`) !== -1,
+            },
+          }),
+          {}
+        ),
       }));
     },
-    [activeLayers, setMapSettings]
+    [activeLayers, setLayerSettings]
   );
 
   // When the user adds the first layer, we open the legend automatically
@@ -162,37 +157,34 @@ const Legend: FC = () => {
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent className="max-h-[20vh] w-[calc(100vw_-_24px)] max-w-sm overflow-y-auto bg-white p-5 md:max-h-[50vh] md:max-w-[min(calc(100vw_-_430px_-_40px_-_12px_-_16px),_384px)]">
-          {!activeLayersDef.length && (
+          {!layersQuery.data?.length && (
             <p className="text-center">
               Open <span className="text-sm font-black uppercase">Layers</span> to add layers to the
               map
             </p>
           )}
-          {activeLayersDef.length > 0 && (
+          {layersQuery.data?.length > 0 && (
             <Accordion
               type="multiple"
-              value={activeLayers
-                .map((activeLayer) =>
-                  activeLayer.settings?.expanded === true ? `${activeLayer.id}` : null
-                )
-                .filter(Number)}
+              value={Object.keys(layerSettings).filter((layerId) => {
+                return layerSettings[layerId].expanded ? layerId.toString() : null;
+              })}
               onValueChange={onToggleAccordion}
             >
-              {activeLayersDef.map((layerDef, reverseIndex) => {
-                const isFirst = reverseIndex === 0;
-                const isLast = reverseIndex + 1 === activeLayersDef.length;
+              {layersQuery.data?.map(({ id, attributes: { title } }, index) => {
+                const isFirst = index === 0;
+                const isLast = index + 1 === layersQuery.data.length;
 
-                const index = activeLayersDef.length - reverseIndex - 1;
-                const isVisible = activeLayers[index].settings?.visibility !== false;
-                const opacity = activeLayers[index].settings?.opacity ?? 1;
+                const isVisible = layerSettings[id]?.visibility !== false;
+                const opacity = layerSettings[id]?.opacity ?? 1;
 
                 return (
                   <AccordionItem
-                    key={layerDef.id}
-                    value={`${layerDef.id}`}
+                    key={id}
+                    value={`${id}`}
                     className={cn({
-                      'pb-3': reverseIndex + 1 < activeLayers.length,
-                      'border-t border-gray-300 pt-3': reverseIndex > 0,
+                      'pb-3': index + 1 < activeLayers.length,
+                      'border-t border-gray-300 pt-3': index > 0,
                     })}
                   >
                     <div className="flex justify-between gap-4">
@@ -206,10 +198,10 @@ const Legend: FC = () => {
                                 })}
                                 aria-hidden
                               />
-                              {layerDef.name}
+                              {title}
                             </AccordionTrigger>
                           </TooltipTrigger>
-                          <TooltipContent>{layerDef.name}</TooltipContent>
+                          <TooltipContent>{title}</TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                       <TooltipProvider>
@@ -221,7 +213,7 @@ const Legend: FC = () => {
                                 variant="ghost"
                                 size="icon-sm"
                                 disabled={isFirst}
-                                onClick={() => onMoveLayerUp(layerDef.id)}
+                                onClick={() => onMoveLayerUp(id)}
                               >
                                 <span className="sr-only">Move up</span>
                                 <MoveUp className="h-4 w-4" aria-hidden />
@@ -236,7 +228,7 @@ const Legend: FC = () => {
                                 variant="ghost"
                                 size="icon-sm"
                                 disabled={isLast}
-                                onClick={() => onMoveLayerDown(layerDef.id)}
+                                onClick={() => onMoveLayerDown(id)}
                               >
                                 <span className="sr-only">Move down</span>
                                 <MoveUp className="h-4 w-4 rotate-180" aria-hidden />
@@ -262,9 +254,7 @@ const Legend: FC = () => {
                                   defaultValue={[opacity]}
                                   max={1}
                                   step={0.1}
-                                  onValueCommit={([value]) =>
-                                    onChangeLayerOpacity(layerDef.id, value)
-                                  }
+                                  onValueCommit={([value]) => onChangeLayerOpacity(id, value)}
                                 />
                               </PopoverContent>
                             </Popover>
@@ -275,7 +265,7 @@ const Legend: FC = () => {
                                 type="button"
                                 variant="ghost"
                                 size="icon-sm"
-                                onClick={() => onToggleLayerVisibility(layerDef.id, !isVisible)}
+                                onClick={() => onToggleLayerVisibility(id, !isVisible)}
                               >
                                 <span className="sr-only">{isVisible ? 'Hide' : 'Show'}</span>
                                 {isVisible && <Eye className="h-4 w-4" aria-hidden />}
@@ -292,8 +282,7 @@ const Legend: FC = () => {
                                 variant="ghost"
                                 size="icon-sm"
                                 onClick={() => {
-                                  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-                                  onRemoveLayer(layerDef.id);
+                                  onRemoveLayer(id);
                                 }}
                               >
                                 <span className="sr-only">Remove</span>
@@ -305,9 +294,9 @@ const Legend: FC = () => {
                         </div>
                       </TooltipProvider>
                     </div>
-                    <AccordionContent className="pt-2">
-                      <LegendItems items={layerDef.legend} />
-                    </AccordionContent>
+                    {/* <AccordionContent className="pt-2">
+                      <LegendItems items={legend_config as LayerTyped['legend_config']} />
+                    </AccordionContent> */}
                   </AccordionItem>
                 );
               })}

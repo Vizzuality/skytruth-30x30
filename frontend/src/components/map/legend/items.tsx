@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import { Layer } from '@/types/layer';
+import { LayerTyped } from '@/types/layers';
 
 export interface LegendItemsProps {
-  items: Layer['legend'];
+  items: LayerTyped['legend_config'];
 }
 
 const LegendItems: FC<LegendItemsProps> = ({ items }) => {

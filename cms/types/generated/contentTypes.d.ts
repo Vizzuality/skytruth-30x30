@@ -867,6 +867,42 @@ export interface ApiHabitatStatHabitatStat extends Schema.CollectionType {
   };
 }
 
+export interface ApiLayerLayer extends Schema.CollectionType {
+  collectionName: 'layers';
+  info: {
+    singularName: 'layer';
+    pluralName: 'layers';
+    displayName: 'Layer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    type: Attribute.Enumeration<['mapbox', 'deckgl', 'carto']>;
+    config: Attribute.JSON & Attribute.Required;
+    params_config: Attribute.JSON & Attribute.Required;
+    legend_config: Attribute.JSON & Attribute.Required;
+    interaction_config: Attribute.JSON;
+    metadata: Attribute.Component<'documentation.metadata'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::layer.layer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::layer.layer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiLocationLocation extends Schema.CollectionType {
   collectionName: 'locations';
   info: {
@@ -1302,6 +1338,7 @@ declare module '@strapi/types' {
       'api::fishing-protection-level-stat.fishing-protection-level-stat': ApiFishingProtectionLevelStatFishingProtectionLevelStat;
       'api::habitat.habitat': ApiHabitatHabitat;
       'api::habitat-stat.habitat-stat': ApiHabitatStatHabitatStat;
+      'api::layer.layer': ApiLayerLayer;
       'api::location.location': ApiLocationLocation;
       'api::mpa.mpa': ApiMpaMpa;
       'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat': ApiMpaProtectionCoverageStatMpaProtectionCoverageStat;

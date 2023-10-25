@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { format } from 'd3-format';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/classnames';
 
 const DEFAULT_BAR_COLOR = '#1E1E1E';
 const DEFAULT_MAX_PERCENTAGE = 55;

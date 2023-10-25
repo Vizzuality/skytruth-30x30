@@ -122,6 +122,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "slug",
+        "name",
+        "info"
+      ],
       "edit": [
         [
           {
@@ -139,12 +145,6 @@
             "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "name",
-        "info",
-        "slug"
       ]
     }
   },

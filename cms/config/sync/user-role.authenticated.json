@@ -4,12 +4,6 @@
   "type": "authenticated",
   "permissions": [
     {
-      "action": "api::location.location.find"
-    },
-    {
-      "action": "api::location.location.findOne"
-    },
-    {
       "action": "plugin::users-permissions.auth.changePassword"
     },
     {
