@@ -30,7 +30,11 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
   }, [totalArea, protectedArea]);
 
   const barFillPercentage = useMemo(() => {
-    return Math.round((protectedArea * DEFAULT_MAX_PERCENTAGE) / totalArea);
+    const totalPercentage = (protectedArea * 100) / totalArea;
+    const relativeToMaxPercentage = (totalPercentage * 100) / DEFAULT_MAX_PERCENTAGE;
+
+    // Prevent overflowing if the bar fill exceeds the set max percentage
+    return relativeToMaxPercentage > DEFAULT_MAX_PERCENTAGE ? 100 : relativeToMaxPercentage;
   }, [protectedArea, totalArea]);
 
   const formattedArea = useMemo(() => {
