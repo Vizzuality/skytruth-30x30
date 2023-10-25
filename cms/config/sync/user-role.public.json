@@ -4,6 +4,12 @@
   "type": "public",
   "permissions": [
     {
+      "action": "api::data-info.data-info.find"
+    },
+    {
+      "action": "api::data-info.data-info.findOne"
+    },
+    {
       "action": "api::fishing-protection-level-stat.fishing-protection-level-stat.find"
     },
     {
