@@ -111,16 +111,15 @@
       "list": [
         "id",
         "slug",
-        "content"
+        "content",
+        "createdAt"
       ],
       "edit": [
         [
           {
             "name": "slug",
             "size": 6
-          }
-        ],
-        [
+          },
           {
             "name": "content",
             "size": 6
