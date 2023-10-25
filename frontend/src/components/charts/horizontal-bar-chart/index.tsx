@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import { cn } from '@/lib/utils';
 
 const DEFAULT_BAR_COLOR = '#1E1E1E';
-const DEFAULT_MAX_PERCENTAGE = 55;
+const DEFAULT_MAX_PERCENTAGE = 100;
 const PROTECTION_TARGET = 30;
 
 type HorizontalBarChartProps = {
