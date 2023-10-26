@@ -11,6 +11,10 @@ type HabitatWidgetProps = {
 };
 
 const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
+  const updatedAtQuery = useGetHabitatStats({
+    sort: 'updatedAt:desc',
+  });
+
   const {
     data: { data: habitatStatsData, meta: habitatStatsMeta },
   } = useGetHabitatStats(
