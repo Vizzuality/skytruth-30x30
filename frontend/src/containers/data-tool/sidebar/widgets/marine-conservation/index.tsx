@@ -13,32 +13,36 @@ type MarineConservationWidgetProps = {
 };
 
 const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ location }) => {
-  const lastUpdated = 'October 2023';
-
-  const { data: protectionStatsResponse } = useGetProtectionCoverageStats({
-    populate: '*',
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    'sort[year]': 'asc',
-    filters: {
-      location: {
-        code: location.code,
+  const {
+    data: { data: protectionStatsData, meta: protectionStatsMeta },
+  } = useGetProtectionCoverageStats(
+    {
+      populate: '*',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      'sort[year]': 'asc',
+      filters: {
+        location: {
+          code: location.code,
+        },
+        // protection_status: {
+        //   slug: 'oecm', // oecm | mpa
+        // },
       },
-      // protection_status: {
-      //   slug: 'oecm', // oecm | mpa
-      // },
+      'pagination[limit]': -1,
     },
-    'pagination[limit]': -1,
-  });
-
-  const protectionStats = useMemo(() => {
-    return protectionStatsResponse?.data || [];
-  }, [protectionStatsResponse?.data]);
+    {
+      query: {
+        select: ({ data, meta }) => ({ data, meta }),
+        placeholderData: { data: [], meta: undefined },
+      },
+    }
+  );
 
   const mergedProtectionStats = useMemo(() => {
-    if (!protectionStats.length) return null;
+    if (!protectionStatsData.length) return null;
 
-    const groupedByYear = groupBy(protectionStats, 'attributes.year');
+    const groupedByYear = groupBy(protectionStatsData, 'attributes.year');
 
     return Object.keys(groupedByYear).map((year) => {
       const entries = groupedByYear[year];
@@ -54,7 +58,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
         protectedArea,
       };
     });
-  }, [protectionStats]);
+  }, [protectionStatsData]);
 
   const stats = useMemo(() => {
     if (!mergedProtectionStats) return null;
@@ -115,7 +119,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   if (!stats || !chartData) return null;
 
   return (
-    <Widget title="Marine Conservation Coverage" lastUpdated={lastUpdated}>
+    <Widget title="Marine Conservation Coverage" lastUpdated={protectionStatsMeta?.updatedAt}>
       <div className="mt-6 mb-4 flex flex-col text-blue">
         <span className="text-5xl font-bold">
           {stats?.protectedPercentage}
