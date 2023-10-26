@@ -4,6 +4,36 @@
   "type": "public",
   "permissions": [
     {
+      "action": "api::data-info.data-info.find"
+    },
+    {
+      "action": "api::data-info.data-info.findOne"
+    },
+    {
+      "action": "api::fishing-protection-level-stat.fishing-protection-level-stat.find"
+    },
+    {
+      "action": "api::fishing-protection-level-stat.fishing-protection-level-stat.findOne"
+    },
+    {
+      "action": "api::fishing-protection-level.fishing-protection-level.find"
+    },
+    {
+      "action": "api::fishing-protection-level.fishing-protection-level.findOne"
+    },
+    {
+      "action": "api::habitat-stat.habitat-stat.find"
+    },
+    {
+      "action": "api::habitat-stat.habitat-stat.findOne"
+    },
+    {
+      "action": "api::habitat.habitat.find"
+    },
+    {
+      "action": "api::habitat.habitat.findOne"
+    },
+    {
       "action": "api::layer.layer.find"
     },
     {
@@ -14,6 +44,54 @@
     },
     {
       "action": "api::location.location.findOne"
+    },
+    {
+      "action": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat.find"
+    },
+    {
+      "action": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat.findOne"
+    },
+    {
+      "action": "api::mpa.mpa.find"
+    },
+    {
+      "action": "api::mpa.mpa.findOne"
+    },
+    {
+      "action": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat.find"
+    },
+    {
+      "action": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat.findOne"
+    },
+    {
+      "action": "api::mpaa-establishment-stage.mpaa-establishment-stage.find"
+    },
+    {
+      "action": "api::mpaa-establishment-stage.mpaa-establishment-stage.findOne"
+    },
+    {
+      "action": "api::mpaa-protection-level-stat.mpaa-protection-level-stat.find"
+    },
+    {
+      "action": "api::mpaa-protection-level-stat.mpaa-protection-level-stat.findOne"
+    },
+    {
+      "action": "api::mpaa-protection-level.mpaa-protection-level.find"
+    },
+    {
+      "action": "api::mpaa-protection-level.mpaa-protection-level.findOne"
+    },
+    {
+      "action": "api::protection-coverage-stat.protection-coverage-stat.find"
+    },
+    {
+      "action": "api::protection-coverage-stat.protection-coverage-stat.findOne"
+    },
+    {
+      "action": "api::protection-status.protection-status.find"
+    },
+    {
+      "action": "api::protection-status.protection-status.findOne"
     },
     {
       "action": "plugin::users-permissions.auth.callback"
