@@ -127,17 +127,13 @@
       "list": [
         "id",
         "location",
-        "fishing_protection_level",
-        "area"
+        "area",
+        "fishing_protection_level"
       ],
       "edit": [
         [
           {
             "name": "location",
-            "size": 6
-          },
-          {
-            "name": "fishing_protection_level",
             "size": 6
           }
         ],
@@ -145,6 +141,10 @@
           {
             "name": "area",
             "size": 4
+          },
+          {
+            "name": "fishing_protection_level",
+            "size": 6
           }
         ]
       ]
