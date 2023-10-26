@@ -154,12 +154,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "mpa",
-        "fishing_protection_level",
-        "mpaa_protection_level"
-      ],
       "edit": [
         [
           {
@@ -187,6 +181,13 @@
             "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "mpa",
+        "fishing_protection_level",
+        "mpaa_protection_level",
+        "location"
       ]
     }
   },

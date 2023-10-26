@@ -166,12 +166,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "location",
-        "protection_status",
-        "year"
-      ],
       "edit": [
         [
           {
@@ -203,6 +197,14 @@
             "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "location",
+        "protection_status",
+        "year",
+        "cumSumProtectedArea",
+        "protectedAreasCount"
       ]
     }
   },

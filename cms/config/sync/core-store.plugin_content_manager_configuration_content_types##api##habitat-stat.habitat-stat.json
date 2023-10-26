@@ -152,12 +152,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "location",
-        "habitat",
-        "year"
-      ],
       "edit": [
         [
           {
@@ -183,6 +177,14 @@
             "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "location",
+        "habitat",
+        "year",
+        "protectedArea",
+        "totalArea"
       ]
     }
   },
