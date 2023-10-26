@@ -11,19 +11,25 @@ type HabitatWidgetProps = {
 };
 
 const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
-  const lastUpdated = 'October 2023';
-
-  const { data: habitatStatsResponse } = useGetHabitatStats({
-    populate: '*',
-    filters: {
-      location: {
-        code: location.code,
+  const {
+    data: { data: habitatStatsData, meta: habitatStatsMeta },
+  } = useGetHabitatStats(
+    {
+      populate: '*',
+      filters: {
+        location: {
+          code: location.code,
+        },
       },
+      'pagination[limit]': -1,
     },
-    'pagination[limit]': -1,
-  });
-
-  const habitatStatsData = habitatStatsResponse?.data;
+    {
+      query: {
+        select: ({ data, meta }) => ({ data, meta }),
+        placeholderData: { data: [], meta: undefined },
+      },
+    }
+  );
 
   const widgetChartData = useMemo(() => {
     if (!habitatStatsData) return [];
@@ -50,7 +56,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
   return (
     <Widget
       title="Proportion of Habitat within Protected and Conserved Areas"
-      lastUpdated={lastUpdated}
+      lastUpdated={habitatStatsMeta?.updatedAt}
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
