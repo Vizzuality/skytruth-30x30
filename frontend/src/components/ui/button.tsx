@@ -20,6 +20,10 @@ const buttonVariants = cva(
         //   'bg-slate-100 text-slate-900 hover:bg-slate-100/80',
         ghost: 'hover:bg-gray-50 hover:text-gray-900 focus-visible:ring-black',
         // link: 'text-slate-900 underline-offset-4 hover:underline',
+        white: 'bg-white border border-black',
+        'sidebar-details':
+          'bg-blue text-black text-black text-sm justify-start text-left text-sm hover:brightness-90 font-bold uppercase md:px-8 focus-visible:ring-black',
+        'text-link': 'text-sm font-semibold uppercase underline focus-visible:ring-black',
       },
       size: {
         default: 'h-10 px-4 py-2',
@@ -27,6 +31,7 @@ const buttonVariants = cva(
         // lg: 'h-11 px-8',
         icon: 'h-10 w-10',
         'icon-sm': 'h-6 w-6',
+        full: 'h-full w-full',
       },
     },
     defaultVariants: {

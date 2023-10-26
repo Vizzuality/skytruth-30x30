@@ -85,7 +85,7 @@ const DataToolMap: React.FC = () => {
   );
 
   return (
-    <div className="relative flex h-full w-full flex-col md:flex-row">
+    <div className="absolute flex h-full w-full flex-col md:flex-row">
       <Map
         className="absolute left-0 w-full"
         initialViewState={{
