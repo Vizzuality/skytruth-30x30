@@ -10,6 +10,12 @@
       "action": "api::data-info.data-info.findOne"
     },
     {
+      "action": "api::data-source.data-source.find"
+    },
+    {
+      "action": "api::data-source.data-source.findOne"
+    },
+    {
       "action": "api::fishing-protection-level-stat.fishing-protection-level-stat.find"
     },
     {

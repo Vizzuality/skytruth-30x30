@@ -1,7 +1,7 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::data-info.data-info",
+  "key": "plugin_content_manager_configuration_content_types::api::data-source.data-source",
   "value": {
-    "uid": "api::data-info.data-info",
+    "uid": "api::data-source.data-source",
     "settings": {
       "bulkable": true,
       "filterable": true,
@@ -34,33 +34,32 @@
           "sortable": true
         }
       },
-      "content": {
+      "title": {
         "edit": {
-          "label": "content",
+          "label": "title",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "content",
+          "label": "title",
           "searchable": true,
           "sortable": true
         }
       },
-      "data_sources": {
+      "url": {
         "edit": {
-          "label": "data_sources",
+          "label": "url",
           "description": "",
           "placeholder": "",
           "visible": true,
-          "editable": true,
-          "mainField": "slug"
+          "editable": true
         },
         "list": {
-          "label": "data_sources",
-          "searchable": false,
-          "sortable": false
+          "label": "url",
+          "searchable": true,
+          "sortable": true
         }
       },
       "createdAt": {
@@ -123,6 +122,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "slug",
+        "title",
+        "url"
+      ],
       "edit": [
         [
           {
@@ -130,22 +135,16 @@
             "size": 6
           },
           {
-            "name": "content",
+            "name": "title",
             "size": 6
           }
         ],
         [
           {
-            "name": "data_sources",
+            "name": "url",
             "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "slug",
-        "content",
-        "data_sources"
       ]
     }
   },
