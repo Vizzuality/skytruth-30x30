@@ -330,7 +330,8 @@
           "members",
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
-          "protection_coverage_stats"
+          "protection_coverage_stats",
+          "bounds"
         ]
       },
       "conditions": []
@@ -356,7 +357,8 @@
           "members",
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
-          "protection_coverage_stats"
+          "protection_coverage_stats",
+          "bounds"
         ]
       },
       "conditions": []
@@ -375,7 +377,8 @@
           "members",
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
-          "protection_coverage_stats"
+          "protection_coverage_stats",
+          "bounds"
         ]
       },
       "conditions": []
