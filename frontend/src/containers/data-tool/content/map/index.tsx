@@ -6,16 +6,10 @@ import dynamic from 'next/dynamic';
 
 import { useAtomValue, useSetAtom } from 'jotai';
 
-import Map, {
-  ZoomControls,
-  LayersDropdown,
-  Legend,
-  Attributions,
-  DrawControls,
-  Drawing,
-} from '@/components/map';
+import Map, { ZoomControls, Attributions, DrawControls, Drawing } from '@/components/map';
 import SidebarContent from '@/components/sidebar-content';
 // import Popup from '@/containers/map/popup';
+import LayersToolbox from '@/containers/data-tool/content/map/layers-toolbox';
 import { useSyncMapSettings } from '@/containers/data-tool/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
 import {
@@ -103,13 +97,9 @@ const DataToolMap: React.FC = () => {
               'hidden md:block': drawState.active,
             })}
           >
-            <LayerManager />
-
             {/* <Popup /> */}
-
-            <LayersDropdown />
-            <Legend />
           </div>
+          <LayersToolbox />
           <ZoomControls />
           <DrawControls />
           <LayerManager />

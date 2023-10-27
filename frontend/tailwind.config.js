@@ -20,8 +20,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        mono: ['"Overpass Mono"', ...defaultTheme.fontFamily.mono],
-        sans: ['"Figtree"', ...defaultTheme.fontFamily.sans],
+        mono: ['var(--font-overpass-mono)', ...defaultTheme.fontFamily.mono],
+        sans: ['var(--font-figtree)', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         black: '#1E1E1E',
