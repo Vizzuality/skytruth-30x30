@@ -8,7 +8,7 @@
 				"name": "MPA",
 				"info": null,
 				"createdAt": "2023-10-09T18:00:35.426Z",
-				"updatedAt": "2023-10-24T11:15:05.514Z",
+				"updatedAt": "2023-10-24T13:27:39.939Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -18,7 +18,7 @@
 				"name": "OECM",
 				"info": null,
 				"createdAt": "2023-10-09T18:00:45.377Z",
-				"updatedAt": "2023-10-24T11:15:05.517Z",
+				"updatedAt": "2023-10-24T13:27:39.964Z",
 				"createdBy": null,
 				"updatedBy": null
 			}
@@ -27,10 +27,10 @@
 			"1": {
 				"id": 1,
 				"year": 2016,
-				"cumSumProtectedArea": 49388.08,
-				"protectedArea": 14016.04,
+				"cumSumProtectedArea": 270000,
+				"protectedArea": 10000,
 				"createdAt": "2023-10-09T18:06:25.069Z",
-				"updatedAt": "2023-10-24T11:15:05.522Z",
+				"updatedAt": "2023-10-25T11:38:33.965Z",
 				"protectedAreasCount": 12,
 				"location": 1,
 				"protection_status": 2,
@@ -40,10 +40,10 @@
 			"2": {
 				"id": 2,
 				"year": 2017,
-				"cumSumProtectedArea": 57086.42,
-				"protectedArea": 7698.34,
+				"cumSumProtectedArea": 300000,
+				"protectedArea": 30000,
 				"createdAt": "2023-10-09T18:07:23.774Z",
-				"updatedAt": "2023-10-24T11:15:05.533Z",
+				"updatedAt": "2023-10-25T11:38:10.622Z",
 				"protectedAreasCount": 18,
 				"location": 1,
 				"protection_status": 2,
@@ -53,10 +53,10 @@
 			"3": {
 				"id": 3,
 				"year": 2018,
-				"cumSumProtectedArea": 73020.52,
-				"protectedArea": 17531.99,
+				"cumSumProtectedArea": 330000,
+				"protectedArea": 30000,
 				"createdAt": "2023-10-09T18:08:11.027Z",
-				"updatedAt": "2023-10-24T11:15:05.543Z",
+				"updatedAt": "2023-10-25T11:37:38.821Z",
 				"protectedAreasCount": 24,
 				"location": 1,
 				"protection_status": 2,
@@ -66,10 +66,10 @@
 			"4": {
 				"id": 4,
 				"year": 2019,
-				"cumSumProtectedArea": 81937.99,
-				"protectedArea": 8917.46,
+				"cumSumProtectedArea": 350000,
+				"protectedArea": 20000,
 				"createdAt": "2023-10-09T18:09:07.222Z",
-				"updatedAt": "2023-10-24T11:15:05.554Z",
+				"updatedAt": "2023-10-25T11:37:05.457Z",
 				"protectedAreasCount": 29,
 				"location": 1,
 				"protection_status": 2,
@@ -79,10 +79,10 @@
 			"5": {
 				"id": 5,
 				"year": 2020,
-				"cumSumProtectedArea": 88077,
-				"protectedArea": 6139.01,
+				"cumSumProtectedArea": 370000,
+				"protectedArea": 20000,
 				"createdAt": "2023-10-09T18:09:53.024Z",
-				"updatedAt": "2023-10-24T11:15:05.570Z",
+				"updatedAt": "2023-10-25T11:36:37.367Z",
 				"protectedAreasCount": 33,
 				"location": 1,
 				"protection_status": 2,
@@ -92,10 +92,10 @@
 			"6": {
 				"id": 6,
 				"year": 2021,
-				"cumSumProtectedArea": 103438.89,
-				"protectedArea": 15361.89,
+				"cumSumProtectedArea": 390000,
+				"protectedArea": 10000,
 				"createdAt": "2023-10-09T18:10:55.677Z",
-				"updatedAt": "2023-10-24T11:15:05.579Z",
+				"updatedAt": "2023-10-25T11:36:08.272Z",
 				"protectedAreasCount": 41,
 				"location": 1,
 				"protection_status": 2,
@@ -105,10 +105,10 @@
 			"7": {
 				"id": 7,
 				"year": 2022,
-				"cumSumProtectedArea": 104821.11,
-				"protectedArea": 1382.22,
+				"cumSumProtectedArea": 400000,
+				"protectedArea": 10000,
 				"createdAt": "2023-10-09T18:11:47.597Z",
-				"updatedAt": "2023-10-24T11:15:05.587Z",
+				"updatedAt": "2023-10-25T11:35:14.054Z",
 				"protectedAreasCount": 46,
 				"location": 1,
 				"protection_status": 2,
@@ -118,11 +118,11 @@
 			"8": {
 				"id": 8,
 				"year": 2023,
-				"cumSumProtectedArea": 119875.35,
-				"protectedArea": 15054.24,
+				"cumSumProtectedArea": 403466,
+				"protectedArea": 3500,
 				"createdAt": "2023-10-09T18:13:05.513Z",
-				"updatedAt": "2023-10-24T11:15:05.595Z",
-				"protectedAreasCount": 50,
+				"updatedAt": "2023-10-25T11:34:54.665Z",
+				"protectedAreasCount": 195,
 				"location": 1,
 				"protection_status": 2,
 				"createdBy": null,
@@ -131,10 +131,10 @@
 			"9": {
 				"id": 9,
 				"year": 2016,
-				"cumSumProtectedArea": 294347.25,
-				"protectedArea": 19770.83,
+				"cumSumProtectedArea": 18000000,
+				"protectedArea": 1000000,
 				"createdAt": "2023-10-09T18:16:58.350Z",
-				"updatedAt": "2023-10-24T11:15:05.605Z",
+				"updatedAt": "2023-10-25T11:32:15.340Z",
 				"protectedAreasCount": 10000,
 				"location": 1,
 				"protection_status": 1,
@@ -144,10 +144,10 @@
 			"10": {
 				"id": 10,
 				"year": 2017,
-				"cumSumProtectedArea": 4067.7,
-				"protectedArea": 1039233,
+				"cumSumProtectedArea": 19000000,
+				"protectedArea": 1000000,
 				"createdAt": "2023-10-09T18:17:35.404Z",
-				"updatedAt": "2023-10-24T11:15:05.612Z",
+				"updatedAt": "2023-10-25T11:31:58.435Z",
 				"protectedAreasCount": 10569,
 				"location": 1,
 				"protection_status": 1,
@@ -157,10 +157,10 @@
 			"11": {
 				"id": 11,
 				"year": 2018,
-				"cumSumProtectedArea": 317505.54,
-				"protectedArea": 19090.58,
+				"cumSumProtectedArea": 20500000,
+				"protectedArea": 1500000,
 				"createdAt": "2023-10-09T18:18:13.921Z",
-				"updatedAt": "2023-10-24T11:15:05.619Z",
+				"updatedAt": "2023-10-25T11:31:25.840Z",
 				"protectedAreasCount": 11178,
 				"location": 1,
 				"protection_status": 1,
@@ -170,10 +170,10 @@
 			"12": {
 				"id": 12,
 				"year": 2019,
-				"cumSumProtectedArea": 333510.37,
-				"protectedArea": 16004.83,
+				"cumSumProtectedArea": 22500000,
+				"protectedArea": 2000000,
 				"createdAt": "2023-10-09T18:18:52.180Z",
-				"updatedAt": "2023-10-24T11:15:05.627Z",
+				"updatedAt": "2023-10-25T11:30:57.925Z",
 				"protectedAreasCount": 12563,
 				"location": 1,
 				"protection_status": 1,
@@ -183,10 +183,10 @@
 			"13": {
 				"id": 13,
 				"year": 2020,
-				"cumSumProtectedArea": 348528.82,
-				"protectedArea": 15018.45,
+				"cumSumProtectedArea": 23500000,
+				"protectedArea": 2000000,
 				"createdAt": "2023-10-09T18:20:00.527Z",
-				"updatedAt": "2023-10-24T11:15:05.632Z",
+				"updatedAt": "2023-10-25T11:30:16.420Z",
 				"protectedAreasCount": 12981,
 				"location": 1,
 				"protection_status": 1,
@@ -196,10 +196,10 @@
 			"14": {
 				"id": 14,
 				"year": 2021,
-				"cumSumProtectedArea": 356396.89,
-				"protectedArea": 7868.07,
+				"cumSumProtectedArea": 25500000,
+				"protectedArea": 2000000,
 				"createdAt": "2023-10-09T18:20:55.327Z",
-				"updatedAt": "2023-10-24T11:15:05.640Z",
+				"updatedAt": "2023-10-25T11:29:52.252Z",
 				"protectedAreasCount": 12002,
 				"location": 1,
 				"protection_status": 1,
@@ -209,10 +209,10 @@
 			"15": {
 				"id": 15,
 				"year": 2022,
-				"cumSumProtectedArea": 372116.52,
-				"protectedArea": 15719.63,
+				"cumSumProtectedArea": 27500000,
+				"protectedArea": 2000000,
 				"createdAt": "2023-10-09T18:21:28.688Z",
-				"updatedAt": "2023-10-24T11:15:05.646Z",
+				"updatedAt": "2023-10-25T11:29:29.251Z",
 				"protectedAreasCount": 13895,
 				"location": 1,
 				"protection_status": 1,
@@ -222,11 +222,11 @@
 			"16": {
 				"id": 16,
 				"year": 2023,
-				"cumSumProtectedArea": 388064.81,
-				"protectedArea": 15948.29,
+				"cumSumProtectedArea": 29587321.87,
+				"protectedArea": 2000000,
 				"createdAt": "2023-10-09T18:22:00.955Z",
-				"updatedAt": "2023-10-24T11:15:05.652Z",
-				"protectedAreasCount": 15000,
+				"updatedAt": "2023-10-25T11:29:05.678Z",
+				"protectedAreasCount": 18638,
 				"location": 1,
 				"protection_status": 1,
 				"createdBy": null,
@@ -238,7 +238,7 @@
 				"cumSumProtectedArea": 971611,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T09:01:00.033Z",
-				"updatedAt": "2023-10-24T11:15:05.662Z",
+				"updatedAt": "2023-10-24T13:27:41.129Z",
 				"protectedAreasCount": 177,
 				"location": 2,
 				"protection_status": 1,
@@ -251,7 +251,7 @@
 				"cumSumProtectedArea": 975719,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T09:01:29.660Z",
-				"updatedAt": "2023-10-24T11:15:05.668Z",
+				"updatedAt": "2023-10-24T13:27:41.187Z",
 				"protectedAreasCount": 170,
 				"location": 2,
 				"protection_status": 1,
@@ -264,7 +264,7 @@
 				"cumSumProtectedArea": 965719,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T09:01:59.705Z",
-				"updatedAt": "2023-10-24T11:15:05.676Z",
+				"updatedAt": "2023-10-24T13:27:41.244Z",
 				"protectedAreasCount": 160,
 				"location": 2,
 				"protection_status": 1,
@@ -277,7 +277,7 @@
 				"cumSumProtectedArea": 951611,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T09:02:37.595Z",
-				"updatedAt": "2023-10-24T11:15:05.683Z",
+				"updatedAt": "2023-10-24T13:27:41.297Z",
 				"protectedAreasCount": 150,
 				"location": 2,
 				"protection_status": 1,
@@ -290,7 +290,7 @@
 				"cumSumProtectedArea": 941611,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T09:03:06.696Z",
-				"updatedAt": "2023-10-24T11:15:05.690Z",
+				"updatedAt": "2023-10-24T13:27:41.356Z",
 				"protectedAreasCount": 140,
 				"location": 2,
 				"protection_status": 1,
@@ -303,7 +303,7 @@
 				"cumSumProtectedArea": 931611,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T09:03:33.793Z",
-				"updatedAt": "2023-10-24T11:15:05.697Z",
+				"updatedAt": "2023-10-24T13:27:41.411Z",
 				"protectedAreasCount": 140,
 				"location": 2,
 				"protection_status": 1,
@@ -316,7 +316,7 @@
 				"cumSumProtectedArea": 921611,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T09:04:03.663Z",
-				"updatedAt": "2023-10-24T11:15:05.705Z",
+				"updatedAt": "2023-10-24T13:27:41.467Z",
 				"protectedAreasCount": 130,
 				"location": 2,
 				"protection_status": 1,
@@ -329,7 +329,7 @@
 				"cumSumProtectedArea": 10000,
 				"protectedArea": 1000,
 				"createdAt": "2023-10-24T09:06:49.641Z",
-				"updatedAt": "2023-10-24T11:15:05.711Z",
+				"updatedAt": "2023-10-24T13:27:41.522Z",
 				"protectedAreasCount": 15,
 				"location": 2,
 				"protection_status": 2,
@@ -342,7 +342,7 @@
 				"cumSumProtectedArea": 9000,
 				"protectedArea": 1000,
 				"createdAt": "2023-10-24T09:07:11.709Z",
-				"updatedAt": "2023-10-24T11:15:05.718Z",
+				"updatedAt": "2023-10-24T13:27:41.611Z",
 				"protectedAreasCount": 14,
 				"location": 2,
 				"protection_status": 2,
@@ -355,7 +355,7 @@
 				"cumSumProtectedArea": 8000,
 				"protectedArea": 1000,
 				"createdAt": "2023-10-24T09:07:35.694Z",
-				"updatedAt": "2023-10-24T11:15:05.727Z",
+				"updatedAt": "2023-10-24T13:27:41.665Z",
 				"protectedAreasCount": 13,
 				"location": 2,
 				"protection_status": 2,
@@ -368,7 +368,7 @@
 				"cumSumProtectedArea": 7000,
 				"protectedArea": 1000,
 				"createdAt": "2023-10-24T09:08:02.278Z",
-				"updatedAt": "2023-10-24T11:15:05.734Z",
+				"updatedAt": "2023-10-24T13:27:41.719Z",
 				"protectedAreasCount": 12,
 				"location": 2,
 				"protection_status": 2,
@@ -381,7 +381,7 @@
 				"cumSumProtectedArea": 6000,
 				"protectedArea": 1000,
 				"createdAt": "2023-10-24T09:08:25.069Z",
-				"updatedAt": "2023-10-24T11:15:05.741Z",
+				"updatedAt": "2023-10-24T13:27:41.784Z",
 				"protectedAreasCount": 11,
 				"location": 2,
 				"protection_status": 2,
@@ -394,7 +394,7 @@
 				"cumSumProtectedArea": 6000,
 				"protectedArea": 1000,
 				"createdAt": "2023-10-24T09:08:47.579Z",
-				"updatedAt": "2023-10-24T11:15:05.748Z",
+				"updatedAt": "2023-10-24T13:27:41.853Z",
 				"protectedAreasCount": 10,
 				"location": 2,
 				"protection_status": 2,
@@ -407,7 +407,7 @@
 				"cumSumProtectedArea": 5000,
 				"protectedArea": 1000,
 				"createdAt": "2023-10-24T09:09:05.929Z",
-				"updatedAt": "2023-10-24T11:15:05.763Z",
+				"updatedAt": "2023-10-24T13:27:41.910Z",
 				"protectedAreasCount": 9,
 				"location": 2,
 				"protection_status": 2,
@@ -420,7 +420,7 @@
 				"cumSumProtectedArea": 301954,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T09:10:49.168Z",
-				"updatedAt": "2023-10-24T11:15:05.771Z",
+				"updatedAt": "2023-10-24T13:27:41.981Z",
 				"protectedAreasCount": 1364,
 				"location": 7,
 				"protection_status": 1,
@@ -433,7 +433,7 @@
 				"cumSumProtectedArea": 4737,
 				"protectedArea": 100,
 				"createdAt": "2023-10-24T09:11:26.901Z",
-				"updatedAt": "2023-10-24T11:15:05.781Z",
+				"updatedAt": "2023-10-24T13:27:42.041Z",
 				"protectedAreasCount": 43,
 				"location": 7,
 				"protection_status": 2,
@@ -446,7 +446,7 @@
 				"cumSumProtectedArea": 132281,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T10:29:14.156Z",
-				"updatedAt": "2023-10-24T11:15:05.789Z",
+				"updatedAt": "2023-10-24T13:27:42.138Z",
 				"protectedAreasCount": 511,
 				"location": 4,
 				"protection_status": 1,
@@ -459,7 +459,7 @@
 				"cumSumProtectedArea": 100,
 				"protectedArea": 10,
 				"createdAt": "2023-10-24T10:29:35.960Z",
-				"updatedAt": "2023-10-24T11:15:05.798Z",
+				"updatedAt": "2023-10-24T13:27:42.199Z",
 				"protectedAreasCount": 6,
 				"location": 4,
 				"protection_status": 2,
@@ -472,7 +472,7 @@
 				"cumSumProtectedArea": 3329627,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T10:30:26.006Z",
-				"updatedAt": "2023-10-24T11:15:05.807Z",
+				"updatedAt": "2023-10-24T13:27:42.268Z",
 				"protectedAreasCount": 37,
 				"location": 8,
 				"protection_status": 1,
@@ -485,7 +485,7 @@
 				"cumSumProtectedArea": 3319627,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T10:32:08.309Z",
-				"updatedAt": "2023-10-24T11:15:05.815Z",
+				"updatedAt": "2023-10-24T13:27:42.328Z",
 				"protectedAreasCount": 33,
 				"location": 8,
 				"protection_status": 1,
@@ -498,7 +498,7 @@
 				"cumSumProtectedArea": 3309627,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T10:32:46.697Z",
-				"updatedAt": "2023-10-24T11:15:05.824Z",
+				"updatedAt": "2023-10-24T13:27:42.382Z",
 				"protectedAreasCount": 30,
 				"location": 8,
 				"protection_status": 1,
@@ -511,7 +511,7 @@
 				"cumSumProtectedArea": 3299627,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T10:33:15.588Z",
-				"updatedAt": "2023-10-24T11:15:05.831Z",
+				"updatedAt": "2023-10-24T13:27:42.447Z",
 				"protectedAreasCount": 28,
 				"location": 8,
 				"protection_status": 1,
@@ -524,7 +524,7 @@
 				"cumSumProtectedArea": 3299627,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T10:33:36.752Z",
-				"updatedAt": "2023-10-24T11:15:05.840Z",
+				"updatedAt": "2023-10-24T13:27:42.509Z",
 				"protectedAreasCount": 25,
 				"location": 8,
 				"protection_status": 1,
@@ -537,7 +537,7 @@
 				"cumSumProtectedArea": 3279627,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T10:33:58.192Z",
-				"updatedAt": "2023-10-24T11:15:05.847Z",
+				"updatedAt": "2023-10-24T13:27:42.566Z",
 				"protectedAreasCount": 22,
 				"location": 8,
 				"protection_status": 1,
@@ -550,7 +550,7 @@
 				"cumSumProtectedArea": 3269627,
 				"protectedArea": 10000,
 				"createdAt": "2023-10-24T10:34:17.789Z",
-				"updatedAt": "2023-10-24T11:15:05.862Z",
+				"updatedAt": "2023-10-24T13:27:42.627Z",
 				"protectedAreasCount": 19,
 				"location": 8,
 				"protection_status": 1,
@@ -563,7 +563,7 @@
 				"id": 1,
 				"area": 80777.16,
 				"createdAt": "2023-10-09T18:04:45.059Z",
-				"updatedAt": "2023-10-24T11:15:05.871Z",
+				"updatedAt": "2023-10-24T13:27:42.684Z",
 				"location": 1,
 				"mpaa_protection_level": 1,
 				"createdBy": null,
@@ -573,7 +573,7 @@
 				"id": 2,
 				"area": 136195.75,
 				"createdAt": "2023-10-09T18:05:00.025Z",
-				"updatedAt": "2023-10-24T11:15:05.880Z",
+				"updatedAt": "2023-10-24T13:27:42.751Z",
 				"location": 1,
 				"mpaa_protection_level": 2,
 				"createdBy": null,
@@ -583,7 +583,7 @@
 				"id": 3,
 				"area": 6.75,
 				"createdAt": "2023-10-24T09:31:03.567Z",
-				"updatedAt": "2023-10-24T11:15:05.888Z",
+				"updatedAt": "2023-10-24T13:27:42.823Z",
 				"location": 7,
 				"mpaa_protection_level": 1,
 				"createdBy": null,
@@ -593,7 +593,7 @@
 				"id": 4,
 				"area": 201619,
 				"createdAt": "2023-10-24T09:31:25.307Z",
-				"updatedAt": "2023-10-24T11:15:05.895Z",
+				"updatedAt": "2023-10-24T13:27:42.883Z",
 				"location": 7,
 				"mpaa_protection_level": 2,
 				"createdBy": null,
@@ -603,7 +603,7 @@
 				"id": 5,
 				"area": 120261,
 				"createdAt": "2023-10-24T09:31:59.230Z",
-				"updatedAt": "2023-10-24T11:15:05.905Z",
+				"updatedAt": "2023-10-24T13:27:42.948Z",
 				"location": 2,
 				"mpaa_protection_level": 1,
 				"createdBy": null,
@@ -613,7 +613,7 @@
 				"id": 6,
 				"area": 851348,
 				"createdAt": "2023-10-24T09:32:30.149Z",
-				"updatedAt": "2023-10-24T11:15:05.914Z",
+				"updatedAt": "2023-10-24T13:27:43.007Z",
 				"location": 2,
 				"mpaa_protection_level": 2,
 				"createdBy": null,
@@ -623,7 +623,7 @@
 				"id": 7,
 				"area": 109286,
 				"createdAt": "2023-10-24T09:32:55.216Z",
-				"updatedAt": "2023-10-24T11:15:05.922Z",
+				"updatedAt": "2023-10-24T13:27:43.071Z",
 				"location": 4,
 				"mpaa_protection_level": 2,
 				"createdBy": null,
@@ -633,7 +633,7 @@
 				"id": 8,
 				"area": 1701246,
 				"createdAt": "2023-10-24T09:34:45.881Z",
-				"updatedAt": "2023-10-24T11:15:05.930Z",
+				"updatedAt": "2023-10-24T13:27:43.162Z",
 				"location": 8,
 				"mpaa_protection_level": 1,
 				"createdBy": null,
@@ -643,7 +643,7 @@
 				"id": 9,
 				"area": 1628381,
 				"createdAt": "2023-10-24T09:35:10.152Z",
-				"updatedAt": "2023-10-24T11:15:05.937Z",
+				"updatedAt": "2023-10-24T13:27:43.236Z",
 				"location": 8,
 				"mpaa_protection_level": 2,
 				"createdBy": null,
@@ -655,7 +655,7 @@
 				"id": 1,
 				"area": 147894.05,
 				"createdAt": "2023-10-09T17:53:51.182Z",
-				"updatedAt": "2023-10-24T11:15:05.945Z",
+				"updatedAt": "2023-10-24T13:27:43.295Z",
 				"location": 1,
 				"fishing_protection_level": 1,
 				"createdBy": null,
@@ -665,7 +665,7 @@
 				"id": 2,
 				"area": 191410.98,
 				"createdAt": "2023-10-09T17:54:09.922Z",
-				"updatedAt": "2023-10-24T11:15:05.953Z",
+				"updatedAt": "2023-10-24T13:27:43.364Z",
 				"location": 1,
 				"fishing_protection_level": 2,
 				"createdBy": null,
@@ -675,7 +675,7 @@
 				"id": 3,
 				"area": 286354.1,
 				"createdAt": "2023-10-09T17:54:26.300Z",
-				"updatedAt": "2023-10-24T11:15:05.965Z",
+				"updatedAt": "2023-10-24T13:27:43.420Z",
 				"location": 1,
 				"fishing_protection_level": 3,
 				"createdBy": null,
@@ -685,7 +685,7 @@
 				"id": 4,
 				"area": 1851423,
 				"createdAt": "2023-10-24T09:19:11.987Z",
-				"updatedAt": "2023-10-24T11:15:05.972Z",
+				"updatedAt": "2023-10-24T13:27:43.484Z",
 				"location": 7,
 				"fishing_protection_level": 1,
 				"createdBy": null,
@@ -695,7 +695,7 @@
 				"id": 5,
 				"area": 458077,
 				"createdAt": "2023-10-24T09:22:31.010Z",
-				"updatedAt": "2023-10-24T11:15:05.981Z",
+				"updatedAt": "2023-10-24T13:27:43.564Z",
 				"location": 7,
 				"fishing_protection_level": 2,
 				"createdBy": null,
@@ -705,7 +705,7 @@
 				"id": 6,
 				"area": 3571155,
 				"createdAt": "2023-10-24T09:24:09.059Z",
-				"updatedAt": "2023-10-24T11:15:05.990Z",
+				"updatedAt": "2023-10-24T13:27:43.626Z",
 				"location": 7,
 				"fishing_protection_level": 3,
 				"createdBy": null,
@@ -715,7 +715,7 @@
 				"id": 7,
 				"area": 119908,
 				"createdAt": "2023-10-24T09:25:54.479Z",
-				"updatedAt": "2023-10-24T11:15:05.997Z",
+				"updatedAt": "2023-10-24T13:27:43.692Z",
 				"location": 2,
 				"fishing_protection_level": 1,
 				"createdBy": null,
@@ -725,7 +725,7 @@
 				"id": 8,
 				"area": 393567,
 				"createdAt": "2023-10-24T09:26:29.363Z",
-				"updatedAt": "2023-10-24T11:15:06.005Z",
+				"updatedAt": "2023-10-24T13:27:43.748Z",
 				"location": 2,
 				"fishing_protection_level": 2,
 				"createdBy": null,
@@ -735,7 +735,7 @@
 				"id": 9,
 				"area": 3164188,
 				"createdAt": "2023-10-24T09:27:20.453Z",
-				"updatedAt": "2023-10-24T11:15:06.012Z",
+				"updatedAt": "2023-10-24T13:27:43.807Z",
 				"location": 2,
 				"fishing_protection_level": 3,
 				"createdBy": null,
@@ -745,7 +745,7 @@
 				"id": 10,
 				"area": 1783,
 				"createdAt": "2023-10-24T09:28:17.239Z",
-				"updatedAt": "2023-10-24T11:15:06.019Z",
+				"updatedAt": "2023-10-24T13:27:43.873Z",
 				"location": 4,
 				"fishing_protection_level": 1,
 				"createdBy": null,
@@ -755,7 +755,7 @@
 				"id": 11,
 				"area": 7312,
 				"createdAt": "2023-10-24T09:28:46.341Z",
-				"updatedAt": "2023-10-24T11:15:06.026Z",
+				"updatedAt": "2023-10-24T13:27:43.944Z",
 				"location": 4,
 				"fishing_protection_level": 2,
 				"createdBy": null,
@@ -765,7 +765,7 @@
 				"id": 12,
 				"area": 1000572,
 				"createdAt": "2023-10-24T09:29:32.063Z",
-				"updatedAt": "2023-10-24T11:15:06.035Z",
+				"updatedAt": "2023-10-24T13:27:44.014Z",
 				"location": 4,
 				"fishing_protection_level": 3,
 				"createdBy": null,
@@ -775,7 +775,7 @@
 				"id": 13,
 				"area": 2640679,
 				"createdAt": "2023-10-24T09:36:22.854Z",
-				"updatedAt": "2023-10-24T11:15:06.042Z",
+				"updatedAt": "2023-10-24T13:27:44.073Z",
 				"location": 8,
 				"fishing_protection_level": 1,
 				"createdBy": null,
@@ -785,7 +785,7 @@
 				"id": 14,
 				"area": 3551477,
 				"createdAt": "2023-10-24T09:36:49.304Z",
-				"updatedAt": "2023-10-24T11:15:06.049Z",
+				"updatedAt": "2023-10-24T13:27:44.134Z",
 				"location": 8,
 				"fishing_protection_level": 2,
 				"createdBy": null,
@@ -795,7 +795,7 @@
 				"id": 15,
 				"area": 215866561,
 				"createdAt": "2023-10-24T10:25:41.412Z",
-				"updatedAt": "2023-10-24T11:15:06.061Z",
+				"updatedAt": "2023-10-24T13:27:44.196Z",
 				"location": 8,
 				"fishing_protection_level": 3,
 				"createdBy": null,
@@ -807,10 +807,16 @@
 				"id": 1,
 				"totalMarineArea": 361000000,
 				"createdAt": "2023-10-09T17:51:13.794Z",
-				"updatedAt": "2023-10-24T11:15:06.069Z",
+				"updatedAt": "2023-10-27T10:40:29.901Z",
 				"code": "GLOB",
 				"name": "Worldwide",
 				"type": "worldwide",
+				"bounds": [
+					-180,
+					-85,
+					180,
+					85
+				],
 				"groups": [],
 				"members": [],
 				"fishing_protection_level_stats": [
@@ -847,10 +853,16 @@
 				"id": 2,
 				"totalMarineArea": 3830955,
 				"createdAt": "2023-10-10T14:02:56.853Z",
-				"updatedAt": "2023-10-24T11:15:06.082Z",
+				"updatedAt": "2023-10-27T10:33:34.541Z",
 				"code": "BRA",
 				"name": "Brasil",
 				"type": "country",
+				"bounds": [
+					-73.9830625,
+					-33.8689056,
+					-28.6289646,
+					5.2693306
+				],
 				"groups": [],
 				"members": [],
 				"fishing_protection_level_stats": [
@@ -885,10 +897,16 @@
 				"id": 3,
 				"totalMarineArea": 8148250,
 				"createdAt": "2023-10-10T14:04:30.833Z",
-				"updatedAt": "2023-10-24T11:15:06.096Z",
+				"updatedAt": "2023-10-27T10:33:02.939Z",
 				"code": "AUS",
 				"name": "Australia",
 				"type": "country",
+				"bounds": [
+					72.2461932,
+					-55.3228175,
+					168.2261259,
+					-9.0880125
+				],
 				"groups": [],
 				"members": [],
 				"fishing_protection_level_stats": [],
@@ -901,10 +919,16 @@
 				"id": 4,
 				"totalMarineArea": 1039233,
 				"createdAt": "2023-10-10T14:05:03.026Z",
-				"updatedAt": "2023-10-24T11:15:06.104Z",
+				"updatedAt": "2023-10-27T10:34:14.740Z",
 				"code": "ESP",
 				"name": "Spain",
 				"type": "country",
+				"bounds": [
+					-18.3936845,
+					27.4335426,
+					4.5918885,
+					43.9933088
+				],
 				"groups": [
 					9
 				],
@@ -928,10 +952,16 @@
 				"id": 5,
 				"totalMarineArea": 600000,
 				"createdAt": "2023-10-10T14:07:27.469Z",
-				"updatedAt": "2023-10-24T11:15:06.115Z",
+				"updatedAt": "2023-10-27T10:32:33.392Z",
 				"code": "KOR",
 				"name": "Korea",
 				"type": "country",
+				"bounds": [
+					124.3727348,
+					32.9104556,
+					132.1467806,
+					38.623477
+				],
 				"groups": [],
 				"members": [],
 				"fishing_protection_level_stats": [],
@@ -944,10 +974,16 @@
 				"id": 6,
 				"totalMarineArea": 11351000,
 				"createdAt": "2023-10-10T14:08:02.385Z",
-				"updatedAt": "2023-10-24T11:15:06.124Z",
+				"updatedAt": "2023-10-27T10:35:04.974Z",
 				"code": "USA",
 				"name": "United States of America",
 				"type": "country",
+				"bounds": [
+					-180,
+					-14.7608358,
+					180,
+					71.6048217
+				],
 				"groups": [],
 				"members": [],
 				"fishing_protection_level_stats": [],
@@ -960,10 +996,16 @@
 				"id": 7,
 				"totalMarineArea": 6805586,
 				"createdAt": "2023-10-10T14:08:38.182Z",
-				"updatedAt": "2023-10-24T11:15:06.132Z",
+				"updatedAt": "2023-10-27T10:34:36.547Z",
 				"code": "GBR",
 				"name": "United Kingdom",
 				"type": "country",
+				"bounds": [
+					-180,
+					-85,
+					180,
+					85
+				],
 				"groups": [
 					9
 				],
@@ -988,10 +1030,16 @@
 				"id": 8,
 				"totalMarineArea": 240666667,
 				"createdAt": "2023-10-10T14:09:44.636Z",
-				"updatedAt": "2023-10-24T11:15:06.145Z",
+				"updatedAt": "2023-10-27T10:39:52.852Z",
 				"code": "ABNJ",
 				"name": "Highseas",
 				"type": "country",
+				"bounds": [
+					-180,
+					-85,
+					180,
+					85
+				],
 				"groups": [],
 				"members": [],
 				"fishing_protection_level_stats": [
@@ -1019,10 +1067,16 @@
 				"id": 9,
 				"totalMarineArea": 10351000,
 				"createdAt": "2023-10-10T14:10:43.898Z",
-				"updatedAt": "2023-10-24T11:15:06.158Z",
+				"updatedAt": "2023-10-27T10:43:20.003Z",
 				"code": "EEE",
 				"name": "Europe",
 				"type": "region",
+				"bounds": [
+					-180,
+					-85,
+					180,
+					85
+				],
 				"groups": [],
 				"members": [
 					4,
@@ -1042,7 +1096,7 @@
 				"name": "Fully / Highly Protected",
 				"info": null,
 				"createdAt": "2023-10-09T18:03:52.299Z",
-				"updatedAt": "2023-10-24T11:15:06.169Z",
+				"updatedAt": "2023-10-24T13:27:45.195Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1052,7 +1106,7 @@
 				"name": "Less Protected / Unknown",
 				"info": null,
 				"createdAt": "2023-10-09T18:04:19.597Z",
-				"updatedAt": "2023-10-24T11:15:06.172Z",
+				"updatedAt": "2023-10-24T13:27:45.214Z",
 				"createdBy": null,
 				"updatedBy": null
 			}
@@ -1064,7 +1118,7 @@
 				"name": "Highly",
 				"info": null,
 				"createdAt": "2023-10-09T17:52:27.434Z",
-				"updatedAt": "2023-10-24T11:15:06.177Z",
+				"updatedAt": "2023-10-24T13:27:45.234Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1074,7 +1128,7 @@
 				"name": "Moderately",
 				"info": null,
 				"createdAt": "2023-10-09T17:52:54.865Z",
-				"updatedAt": "2023-10-24T11:15:06.180Z",
+				"updatedAt": "2023-10-24T13:27:45.253Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1084,7 +1138,7 @@
 				"name": "Less",
 				"info": null,
 				"createdAt": "2023-10-09T17:53:13.011Z",
-				"updatedAt": "2023-10-24T11:15:06.183Z",
+				"updatedAt": "2023-10-24T13:27:45.273Z",
 				"createdBy": null,
 				"updatedBy": null
 			}
@@ -1096,7 +1150,7 @@
 				"name": "Designated / implemented",
 				"info": null,
 				"createdAt": "2023-10-09T17:59:47.613Z",
-				"updatedAt": "2023-10-24T11:15:06.186Z",
+				"updatedAt": "2023-10-24T13:27:45.293Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1106,7 +1160,7 @@
 				"name": "Designated / unimplemented",
 				"info": null,
 				"createdAt": "2023-10-09T18:00:00.776Z",
-				"updatedAt": "2023-10-24T11:15:06.190Z",
+				"updatedAt": "2023-10-24T13:27:45.313Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1116,7 +1170,7 @@
 				"name": "Proposed / committed",
 				"info": null,
 				"createdAt": "2023-10-09T18:00:15.236Z",
-				"updatedAt": "2023-10-24T11:15:06.193Z",
+				"updatedAt": "2023-10-24T13:27:45.334Z",
 				"createdBy": null,
 				"updatedBy": null
 			}
@@ -1127,7 +1181,7 @@
 				"year": 2023,
 				"area": 60932.13,
 				"createdAt": "2023-10-09T18:01:13.948Z",
-				"updatedAt": "2023-10-24T11:15:06.198Z",
+				"updatedAt": "2023-10-24T13:27:45.360Z",
 				"location": 1,
 				"mpaa_establishment_stage": 1,
 				"protection_status": 2,
@@ -1139,7 +1193,7 @@
 				"year": 2023,
 				"area": 56710.02,
 				"createdAt": "2023-10-09T18:01:44.996Z",
-				"updatedAt": "2023-10-24T11:15:06.207Z",
+				"updatedAt": "2023-10-24T13:27:45.418Z",
 				"location": 1,
 				"mpaa_establishment_stage": 2,
 				"protection_status": 2,
@@ -1151,7 +1205,7 @@
 				"year": 2023,
 				"area": 311675.1,
 				"createdAt": "2023-10-09T18:02:13.453Z",
-				"updatedAt": "2023-10-24T11:15:06.213Z",
+				"updatedAt": "2023-10-24T13:27:45.475Z",
 				"location": 1,
 				"mpaa_establishment_stage": 3,
 				"protection_status": 2,
@@ -1163,7 +1217,7 @@
 				"year": 2023,
 				"area": 84461.76,
 				"createdAt": "2023-10-09T18:02:37.147Z",
-				"updatedAt": "2023-10-24T11:15:06.219Z",
+				"updatedAt": "2023-10-24T13:27:45.528Z",
 				"location": 1,
 				"mpaa_establishment_stage": 1,
 				"protection_status": 1,
@@ -1175,7 +1229,7 @@
 				"year": 2023,
 				"area": 164579.41,
 				"createdAt": "2023-10-09T18:02:55.685Z",
-				"updatedAt": "2023-10-24T11:15:06.225Z",
+				"updatedAt": "2023-10-24T13:27:45.587Z",
 				"location": 1,
 				"mpaa_establishment_stage": 2,
 				"protection_status": 1,
@@ -1187,7 +1241,7 @@
 				"year": 2023,
 				"area": 202021.55,
 				"createdAt": "2023-10-09T18:03:18.032Z",
-				"updatedAt": "2023-10-24T11:15:06.231Z",
+				"updatedAt": "2023-10-24T13:27:45.637Z",
 				"location": 1,
 				"mpaa_establishment_stage": 3,
 				"protection_status": 1,
@@ -1200,7 +1254,7 @@
 				"id": 1,
 				"area": 178766,
 				"createdAt": "2023-10-19T14:11:12.562Z",
-				"updatedAt": "2023-10-24T11:15:06.238Z",
+				"updatedAt": "2023-10-24T13:27:45.689Z",
 				"mpa": 2,
 				"fishing_protection_level": 3,
 				"mpaa_protection_level": 2,
@@ -1212,7 +1266,7 @@
 				"id": 2,
 				"area": 67679,
 				"createdAt": "2023-10-19T14:15:18.276Z",
-				"updatedAt": "2023-10-24T11:15:06.248Z",
+				"updatedAt": "2023-10-24T13:27:45.773Z",
 				"mpa": 1,
 				"fishing_protection_level": 1,
 				"mpaa_protection_level": 1,
@@ -1224,7 +1278,7 @@
 				"id": 3,
 				"area": 1606529,
 				"createdAt": "2023-10-19T14:22:00.962Z",
-				"updatedAt": "2023-10-24T11:15:06.256Z",
+				"updatedAt": "2023-10-24T13:27:45.881Z",
 				"mpa": 3,
 				"fishing_protection_level": 1,
 				"mpaa_protection_level": 1,
@@ -1236,7 +1290,7 @@
 				"id": 4,
 				"area": 434800,
 				"createdAt": "2023-10-19T14:23:07.833Z",
-				"updatedAt": "2023-10-24T11:15:06.265Z",
+				"updatedAt": "2023-10-24T13:27:45.966Z",
 				"mpa": 3,
 				"fishing_protection_level": 1,
 				"mpaa_protection_level": 2,
@@ -1248,7 +1302,7 @@
 				"id": 5,
 				"area": 0.15,
 				"createdAt": "2023-10-24T08:55:40.949Z",
-				"updatedAt": "2023-10-24T11:15:06.273Z",
+				"updatedAt": "2023-10-24T13:27:46.051Z",
 				"mpa": 4,
 				"fishing_protection_level": 3,
 				"mpaa_protection_level": 2,
@@ -1264,7 +1318,7 @@
 				"name": "Monumento Natural Das Ilhas de Trindade, Martim Vaz e Do Monte Columbia",
 				"area": 67698,
 				"createdAt": "2023-10-13T12:39:17.944Z",
-				"updatedAt": "2023-10-24T11:15:06.283Z",
+				"updatedAt": "2023-10-24T13:27:46.130Z",
 				"year": 2018,
 				"mpaa_establishment_stage": 1,
 				"protection_status": 1,
@@ -1280,7 +1334,7 @@
 				"name": "Charlie-Gibbs North High Seas Marine Protected Area",
 				"area": 178766,
 				"createdAt": "2023-10-13T12:51:35.526Z",
-				"updatedAt": "2023-10-24T11:15:06.295Z",
+				"updatedAt": "2023-10-24T13:27:46.224Z",
 				"year": 2012,
 				"mpaa_establishment_stage": 1,
 				"protection_status": 1,
@@ -1296,7 +1350,7 @@
 				"name": "Ross Sea Region",
 				"area": 2041330,
 				"createdAt": "2023-10-19T14:20:56.081Z",
-				"updatedAt": "2023-10-24T11:15:06.307Z",
+				"updatedAt": "2023-10-24T13:27:46.285Z",
 				"year": 2017,
 				"mpaa_establishment_stage": 1,
 				"protection_status": 1,
@@ -1313,13 +1367,652 @@
 				"name": "Parque Estadual Da Ilha Anchieta",
 				"area": 0.15,
 				"createdAt": "2023-10-24T08:50:35.738Z",
-				"updatedAt": "2023-10-24T11:15:06.320Z",
+				"updatedAt": "2023-10-24T13:27:46.345Z",
 				"year": 1977,
 				"mpaa_establishment_stage": 1,
 				"protection_status": 1,
 				"mpa_protection_coverage_stats": [
 					5
 				],
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
+		"documentation.metadata": {
+			"1": {
+				"id": 1,
+				"description": "---\n__Advertisement :)__\n\n- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image\n  resize in browser.\n- __[babelfish](https://github.com/nodeca/babelfish/)__ - developer friendly\n  i18n with plurals support and easy syntax.\n\nYou will like those projects!\n\n---\n\n# h1 Heading 8-)\n## h2 Heading\n### h3 Heading\n#### h4 Heading\n##### h5 Heading\n###### h6 Heading\n\n\n## Horizontal Rules\n\n___\n\n---\n\n***\n\n\n## Typographic replacements\n\nEnable typographer option to see result.\n\n(c) (C) (r) (R) (tm) (TM) (p) (P) +-\n\ntest.. test... test..... test?..... test!....\n\n!!!!!! ???? ,,  -- ---\n\n\"Smartypants, double quotes\" and 'single quotes'\n\n\n## Emphasis\n\n**This is bold text**\n\n__This is bold text__\n\n*This is italic text*\n\n_This is italic text_\n\n~~Strikethrough~~\n\n\n## Blockquotes\n\n\n> Blockquotes can also be nested...\n>> ...by using additional greater-than signs right next to each other...\n> > > ...or with spaces between arrows.\n\n\n## Lists\n\nUnordered\n\n+ Create a list by starting a line with `+`, `-`, or `*`\n+ Sub-lists are made by indenting 2 spaces:\n  - Marker character change forces new list start:\n    * Ac tristique libero volutpat at\n    + Facilisis in pretium nisl aliquet\n    - Nulla volutpat aliquam velit\n+ Very easy!\n\nOrdered\n\n1. Lorem ipsum dolor sit amet\n2. Consectetur adipiscing elit\n3. Integer molestie lorem at massa\n\n\n1. You can use sequential numbers...\n1. ...or keep all the numbers as `1.`\n\nStart numbering with offset:\n\n57. foo\n1. bar\n\n\n## Code\n\nInline `code`\n\nIndented code\n\n    // Some comments\n    line 1 of code\n    line 2 of code\n    line 3 of code\n\n\nBlock code \"fences\"\n\n```\nSample text here...\n```\n\nSyntax highlighting\n\n``` js\nvar foo = function (bar) {\n  return bar++;\n};\n\nconsole.log(foo(5));\n```\n\n## Tables\n\n| Option | Description |\n| ------ | ----------- |\n| data   | path to data files to supply the data that will be passed into templates. |\n| engine | engine to be used for processing templates. Handlebars is the default. |\n| ext    | extension to be used for dest files. |\n\nRight aligned columns\n\n| Option | Description |\n| ------:| -----------:|\n| data   | path to data files to supply the data that will be passed into templates. |\n| engine | engine to be used for processing templates. Handlebars is the default. |\n| ext    | extension to be used for dest files. |\n\n\n## Links\n\n[link text](http://dev.nodeca.com)\n\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\n\nAutoconverted link https://github.com/nodeca/pica (enable linkify to see)\n\n\n## Images\n\n![Minion](https://octodex.github.com/images/minion.png)\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\n\nLike links, Images also have a footnote style syntax\n\n![Alt text][id]\n\nWith a reference later in the document defining the URL location:\n\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\n\n\n## Plugins\n\nThe killer feature of `markdown-it` is very effective support of\n[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).\n\n\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\n\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\n>\n> Shortcuts (emoticons): :-) :-( 8-) ;)\n\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\n\n\n### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)\n\n- 19^th^\n- H~2~O\n\n\n### [\\<ins>](https://github.com/markdown-it/markdown-it-ins)\n\n++Inserted text++\n\n\n### [\\<mark>](https://github.com/markdown-it/markdown-it-mark)\n\n==Marked text==\n\n\n### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)\n\nFootnote 1 link[^first].\n\nFootnote 2 link[^second].\n\nInline footnote^[Text of inline footnote] definition.\n\nDuplicated footnote reference[^second].\n\n[^first]: Footnote **can have markup**\n\n    and multiple paragraphs.\n\n[^second]: Footnote text.\n\n\n### [Definition lists](https://github.com/markdown-it/markdown-it-deflist)\n\nTerm 1\n\n:   Definition 1\nwith lazy continuation.\n\nTerm 2 with *inline markup*\n\n:   Definition 2\n\n        { some code, part of Definition 2 }\n\n    Third paragraph of definition 2.\n\n_Compact style:_\n\nTerm 1\n  ~ Definition 1\n\nTerm 2\n  ~ Definition 2a\n  ~ Definition 2b\n\n\n### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)\n\nThis is HTML abbreviation example.\n\nIt converts \"HTML\", but keep intact partial entries like \"xxxHTMLyyy\" and so on.\n\n*[HTML]: Hyper Text Markup Language\n\n### [Custom containers](https://github.com/markdown-it/markdown-it-container)\n\n::: warning\n*here be dragons*\n:::\n",
+				"citation": "_This is a citation_",
+				"source": "_noun_\n1. a place, person, or thing from which something originates or can be obtained.\n\"mackerel is a good source of fish oil\"\n2. _TECHNICAL_ a body or process by which energy or a particular component enters a system.\n\"major sources and sinks exist for atmospheric oxygen\"",
+				"resolution": "I don't know what is this",
+				"content_date": "2023-07-10",
+				"license": "MIT"
+			},
+			"2": {
+				"id": 2,
+				"description": "_The Argentina Gran Chaco, part of the larger Gran Chaco region of South America, has long accommo- dated a mix of uses, including hunting, grazing, and cropping in a region with high endemic biodiversity. Over the last 30 years, however, global demand for soy and beef has driven the destruction of millions of acres of native habitat and forests and led to rapid and large- scale simplification of this vast, complex landscape._\n\nSuch land use conversion — driven largely by demand for soy production — has obvious consequences for biodiversity and climate change but also creates risk for food production. Forest clearing, for example, leads to greater rates of soil erosion, flooding and salinity in croplands. In Argentina, the national government approved a Native Forest Law that limits where land conversion is allowed, but illegal deforestation still occurs in response to strong market demand.\n\nThe adoption of agrosilvopastoral techniques — the combination of growing trees, crop production and grazing cattle — offer the potential to protect Gran Chaco’s traditional mixed-use landscape while still producing its economically important commodities and protecting its globally important biodiversity and carbon storage.\n\nWidespread adoption of policies and practices, including nature-based solutions, to protect the integrity of the Argentina Gran Chaco requires partnership with the agribusinesses sourcing commo-dities from this region. This highlights the greatest challenge and opportunity for the Argentina Gran Chaco region: the development of coordinated policy and incentive systems that simultaneously promote the use of diverse practices to foster positive environmental, economic, and social outcomes across a diverse, complex landscape.\n\n### NBS In Action: Agroforestry\n\nMany crop and grazing systems in foodscapes across the world can accommodate many more trees than they currently do. Agroforestry can complement crops and pasture with a range of products and ecosystem services: in croplands they can help improve soil fertility through nitrogen fixation, for example, and provide fodder and shade for livestock in grazing systems.\n\nThe best agroforestry opportunities in croplands are in intensive production foodscapes, especially western Europe, eastern China and the US Great Plains, but there are also opportunities to expand agroforestry in mixed foodscapes where it is already well established, such as much of sub-Saharan Africa and the southern half of South America.\n",
+				"citation": null,
+				"source": null,
+				"resolution": null,
+				"content_date": null,
+				"license": null
+			},
+			"3": {
+				"id": 3,
+				"description": "---\n__Advertisement :)__\n\n- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image\n  resize in browser.\n- __[babelfish](https://github.com/nodeca/babelfish/)__ - developer friendly\n  i18n with plurals support and easy syntax.\n\nYou will like those projects!\n\n---\n\n# h1 Heading 8-)\n## h2 Heading\n### h3 Heading\n#### h4 Heading\n##### h5 Heading\n###### h6 Heading\n\n\n## Horizontal Rules\n\n___\n\n---\n\n***\n\n\n## Typographic replacements\n\nEnable typographer option to see result.\n\n(c) (C) (r) (R) (tm) (TM) (p) (P) +-\n\ntest.. test... test..... test?..... test!....\n\n!!!!!! ???? ,,  -- ---\n\n\"Smartypants, double quotes\" and 'single quotes'\n\n\n## Emphasis\n\n**This is bold text**\n\n__This is bold text__\n\n*This is italic text*\n\n_This is italic text_\n\n~~Strikethrough~~\n\n\n## Blockquotes\n\n\n> Blockquotes can also be nested...\n>> ...by using additional greater-than signs right next to each other...\n> > > ...or with spaces between arrows.\n\n\n## Lists\n\nUnordered\n\n+ Create a list by starting a line with `+`, `-`, or `*`\n+ Sub-lists are made by indenting 2 spaces:\n  - Marker character change forces new list start:\n    * Ac tristique libero volutpat at\n    + Facilisis in pretium nisl aliquet\n    - Nulla volutpat aliquam velit\n+ Very easy!\n\nOrdered\n\n1. Lorem ipsum dolor sit amet\n2. Consectetur adipiscing elit\n3. Integer molestie lorem at massa\n\n\n1. You can use sequential numbers...\n1. ...or keep all the numbers as `1.`\n\nStart numbering with offset:\n\n57. foo\n1. bar\n\n\n## Code\n\nInline `code`\n\nIndented code\n\n    // Some comments\n    line 1 of code\n    line 2 of code\n    line 3 of code\n\n\nBlock code \"fences\"\n\n```\nSample text here...\n```\n\nSyntax highlighting\n\n``` js\nvar foo = function (bar) {\n  return bar++;\n};\n\nconsole.log(foo(5));\n```\n\n## Tables\n\n| Option | Description |\n| ------ | ----------- |\n| data   | path to data files to supply the data that will be passed into templates. |\n| engine | engine to be used for processing templates. Handlebars is the default. |\n| ext    | extension to be used for dest files. |\n\nRight aligned columns\n\n| Option | Description |\n| ------:| -----------:|\n| data   | path to data files to supply the data that will be passed into templates. |\n| engine | engine to be used for processing templates. Handlebars is the default. |\n| ext    | extension to be used for dest files. |\n\n\n## Links\n\n[link text](http://dev.nodeca.com)\n\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\n\nAutoconverted link https://github.com/nodeca/pica (enable linkify to see)\n\n\n## Images\n\n![Minion](https://octodex.github.com/images/minion.png)\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\n\nLike links, Images also have a footnote style syntax\n\n![Alt text][id]\n\nWith a reference later in the document defining the URL location:\n\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\n\n\n## Plugins\n\nThe killer feature of `markdown-it` is very effective support of\n[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).\n\n\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\n\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\n>\n> Shortcuts (emoticons): :-) :-( 8-) ;)\n\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\n\n\n### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)\n\n- 19^th^\n- H~2~O\n\n\n### [\\<ins>](https://github.com/markdown-it/markdown-it-ins)\n\n++Inserted text++\n\n\n### [\\<mark>](https://github.com/markdown-it/markdown-it-mark)\n\n==Marked text==\n\n\n### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)\n\nFootnote 1 link[^first].\n\nFootnote 2 link[^second].\n\nInline footnote^[Text of inline footnote] definition.\n\nDuplicated footnote reference[^second].\n\n[^first]: Footnote **can have markup**\n\n    and multiple paragraphs.\n\n[^second]: Footnote text.\n\n\n### [Definition lists](https://github.com/markdown-it/markdown-it-deflist)\n\nTerm 1\n\n:   Definition 1\nwith lazy continuation.\n\nTerm 2 with *inline markup*\n\n:   Definition 2\n\n        { some code, part of Definition 2 }\n\n    Third paragraph of definition 2.\n\n_Compact style:_\n\nTerm 1\n  ~ Definition 1\n\nTerm 2\n  ~ Definition 2a\n  ~ Definition 2b\n\n\n### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)\n\nThis is HTML abbreviation example.\n\nIt converts \"HTML\", but keep intact partial entries like \"xxxHTMLyyy\" and so on.\n\n*[HTML]: Hyper Text Markup Language\n\n### [Custom containers](https://github.com/markdown-it/markdown-it-container)\n\n::: warning\n*here be dragons*\n:::\n",
+				"citation": "_This is a citation_",
+				"source": "data source",
+				"resolution": null,
+				"content_date": "2023-07-10",
+				"license": "MIT"
+			}
+		},
+		"api::layer.layer": {
+			"1": {
+				"id": 1,
+				"title": "Test - Mapbox vector layer",
+				"type": "mapbox",
+				"config": {
+					"source": {
+						"id": "vector-mapbox-source",
+						"url": "mapbox://layer-manager.1ecpue1k",
+						"type": "vector",
+						"promoteId": "geoid"
+					},
+					"styles": [
+						{
+							"id": "vector-mapbox-layer",
+							"type": "fill",
+							"paint": {
+								"fill-color": [
+									"match",
+									[
+										"get",
+										"bws_cat"
+									],
+									0,
+									"#f7f7f7",
+									1,
+									"#d9f0a3",
+									2,
+									"#000000",
+									3,
+									"#78c679",
+									4,
+									"#31a354",
+									"#ccc"
+								],
+								"fill-opacity": {
+									"o": "@@#params.opacity",
+									"base": 0.5,
+									"@@function": "setOpacity"
+								}
+							},
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "Indicators"
+						}
+					]
+				},
+				"params_config": [
+					{
+						"key": "opacity",
+						"default": 1
+					},
+					{
+						"key": "visibility",
+						"default": true
+					}
+				],
+				"legend_config": {
+					"type": "basic",
+					"items": [
+						{
+							"color": "#f7f7f7",
+							"value": 0
+						},
+						{
+							"color": "#d9f0a3",
+							"value": 1
+						},
+						{
+							"color": "#000000",
+							"value": 2
+						},
+						{
+							"color": "#78c679",
+							"value": 3
+						},
+						{
+							"color": "#31a354",
+							"value": 4
+						}
+					]
+				},
+				"interaction_config": {
+					"events": [
+						{
+							"type": "click",
+							"values": [
+								{
+									"key": "name"
+								},
+								{
+									"key": "bws",
+									"type": "number",
+									"label": "BWS label",
+									"format": {
+										"id": "formatPercentage"
+									}
+								},
+								{
+									"key": "pop",
+									"type": "number",
+									"label": "Pop",
+									"format": {
+										"id": "formatHA",
+										"options": {}
+									}
+								},
+								{
+									"key": "rfr",
+									"type": "number"
+								}
+							]
+						}
+					],
+					"enabled": true
+				},
+				"createdAt": "2023-06-28T09:14:24.143Z",
+				"updatedAt": "2023-10-25T16:24:20.802Z",
+				"publishedAt": null,
+				"metadata": 1,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"title": "Test - Mapbox raster layer",
+				"type": "mapbox",
+				"config": {
+					"source": {
+						"type": "raster",
+						"tiles": [
+							"https://earthengine.google.org/static/hansen_2013/gain_alpha/{z}/{x}/{y}.png"
+						],
+						"maxzoom": 12,
+						"minzoom": 3,
+						"tileSize": 256
+					},
+					"styles": [
+						{
+							"id": "raster-layer",
+							"type": "raster",
+							"paint": {
+								"raster-opacity": "@@#params.opacity"
+							},
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							}
+						}
+					]
+				},
+				"params_config": [
+					{
+						"key": "opacity",
+						"default": 1
+					},
+					{
+						"key": "visibility",
+						"default": true
+					}
+				],
+				"legend_config": {
+					"type": "basic",
+					"items": [
+						{
+							"color": "#FF0000",
+							"value": {
+								"v": "@@#params.visibility",
+								"@@function": "setVisibility"
+							}
+						},
+						{
+							"color": "#d95000",
+							"value": "Invent 2"
+						},
+						{
+							"color": "#ad5d00",
+							"value": "Invent 3"
+						},
+						{
+							"color": "#785600",
+							"value": "Invent 4"
+						},
+						{
+							"color": "#F15300",
+							"value": "@@#params.opacity"
+						}
+					]
+				},
+				"interaction_config": {},
+				"createdAt": "2023-06-28T09:25:47.107Z",
+				"updatedAt": "2023-10-25T16:24:20.885Z",
+				"publishedAt": "2023-06-28T09:25:49.763Z",
+				"metadata": 2,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"title": "Test - Deckgl ",
+				"type": "deckgl",
+				"config": {
+					"data": "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart-segments.json",
+					"@@type": "LineLayer",
+					"opacity": "@@#params.opacity",
+					"visible": "@@#params.visibility",
+					"getColor": [
+						255,
+						0
+					],
+					"getWidth": 5,
+					"pickable": true,
+					"getSourcePosition": "@@=from.coordinates",
+					"getTargetPosition": "@@=to.coordinates"
+				},
+				"params_config": [
+					{
+						"key": "opacity",
+						"default": 1
+					},
+					{
+						"key": "visibility",
+						"default": true
+					}
+				],
+				"legend_config": {
+					"type": "basic",
+					"items": [
+						{
+							"color": "#ff0000",
+							"value": "Test - Deckgl legend"
+						}
+					]
+				},
+				"interaction_config": {},
+				"createdAt": "2023-06-28T14:00:25.233Z",
+				"updatedAt": "2023-10-25T16:24:20.934Z",
+				"publishedAt": null,
+				"metadata": null,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"4": {
+				"id": 4,
+				"title": "Test - Mapbox vector layer params",
+				"type": "mapbox",
+				"config": {
+					"source": {
+						"id": "vector-mapbox-params-source",
+						"url": "mapbox://layer-manager.1ecpue1k",
+						"type": "vector"
+					},
+					"styles": [
+						{
+							"id": "vector-mapbox-params-layer",
+							"type": "fill",
+							"paint": {
+								"fill-color": "@@#params.color",
+								"fill-opacity": {
+									"o": "@@#params.opacity",
+									"base": 0.75,
+									"@@function": "setOpacity"
+								}
+							},
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "Indicators"
+						}
+					]
+				},
+				"params_config": [
+					{
+						"key": "opacity",
+						"default": 1
+					},
+					{
+						"key": "visibility",
+						"default": true
+					},
+					{
+						"key": "info",
+						"default": true
+					},
+					{
+						"key": "color",
+						"default": [
+							"match",
+							[
+								"get",
+								"bws_cat"
+							],
+							0,
+							"#FF0000",
+							1,
+							"#d95000",
+							2,
+							"#ad5d00",
+							3,
+							"#785600",
+							4,
+							"#F15300",
+							"#ccc"
+						]
+					}
+				],
+				"legend_config": {
+					"info": "Test - Mapbox vector layer info",
+					"type": "gradient",
+					"items": [
+						{
+							"color": "#FF0000",
+							"value": 0
+						},
+						{
+							"color": "#d95000",
+							"value": null
+						},
+						{
+							"color": "#ad5d00",
+							"value": null
+						},
+						{
+							"color": "#785600",
+							"value": null
+						},
+						{
+							"color": "#F15300",
+							"value": 4
+						}
+					]
+				},
+				"interaction_config": {
+					"events": [
+						{
+							"type": "click",
+							"values": [
+								{
+									"key": "name"
+								},
+								{
+									"key": "bws_cat",
+									"type": "number",
+									"label": "BWS category"
+								},
+								{
+									"key": "pop_cat",
+									"type": "number",
+									"label": "Pop category"
+								},
+								{
+									"key": "rfr_cat",
+									"type": "number",
+									"label": "RFR category"
+								}
+							]
+						}
+					],
+					"enabled": true
+				},
+				"createdAt": "2023-06-28T15:27:25.766Z",
+				"updatedAt": "2023-10-25T16:24:20.977Z",
+				"publishedAt": null,
+				"metadata": null,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"5": {
+				"id": 5,
+				"title": "Test - Mapbox vector layer params - 2",
+				"type": "mapbox",
+				"config": {
+					"source": {
+						"id": "vector-mapbox-params-2-source",
+						"url": "mapbox://layer-manager.1ecpue1k",
+						"type": "vector",
+						"promoteId": "geoid"
+					},
+					"styles": [
+						{
+							"id": "vector-mapbox-params-2-layer",
+							"type": "fill",
+							"paint": {
+								"fill-color": "@@#params.color",
+								"fill-opacity": {
+									"o": "@@#params.opacity",
+									"base": 0.25,
+									"@@function": "setOpacity"
+								}
+							},
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "Indicators"
+						}
+					]
+				},
+				"params_config": [
+					{
+						"key": "opacity",
+						"default": 1
+					},
+					{
+						"key": "visibility",
+						"default": true
+					},
+					{
+						"key": "color",
+						"default": [
+							"match",
+							[
+								"get",
+								"bws_cat"
+							],
+							0,
+							"#FF0000",
+							1,
+							"#d95000",
+							2,
+							"#ad5d00",
+							3,
+							"#785600",
+							4,
+							"#F15300",
+							"#ccc"
+						]
+					}
+				],
+				"legend_config": {
+					"type": "choropleth",
+					"items": [
+						{
+							"color": "#FF000040",
+							"value": 0
+						},
+						{
+							"color": "#d9500040",
+							"value": null
+						},
+						{
+							"color": "#ad5d0040",
+							"value": null
+						},
+						{
+							"color": "#78560040",
+							"value": null
+						},
+						{
+							"color": "#F1530040",
+							"value": 4
+						}
+					]
+				},
+				"interaction_config": {
+					"events": [
+						{
+							"type": "hover",
+							"values": [
+								{
+									"key": "name"
+								},
+								{
+									"key": "bws_cat",
+									"type": "number",
+									"label": "BWS category"
+								},
+								{
+									"key": "pop_cat",
+									"type": "number",
+									"label": "Pop category"
+								},
+								{
+									"key": "rfr_cat",
+									"type": "number",
+									"label": "RFR category"
+								}
+							]
+						}
+					],
+					"enabled": true
+				},
+				"createdAt": "2023-06-28T17:45:26.138Z",
+				"updatedAt": "2023-10-25T16:24:21.015Z",
+				"publishedAt": null,
+				"metadata": null,
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"6": {
+				"id": 6,
+				"title": "EEZ",
+				"type": "mapbox",
+				"config": {
+					"source": {
+						"id": "ezz-source",
+						"url": "mapbox://skytruth.eez_v11",
+						"type": "vector",
+						"promoteId": "ISO_SOV1"
+					},
+					"styles": [
+						{
+							"id": "ezz-layer",
+							"type": "fill",
+							"paint": {
+								"fill-color": "#526EFF",
+								"fill-opacity": {
+									"o": "@@#params.opacity",
+									"base": 0.2,
+									"@@function": "setOpacity"
+								}
+							},
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "eez_v11"
+						}
+					]
+				},
+				"params_config": [
+					{
+						"key": "opacity",
+						"default": 1
+					},
+					{
+						"key": "visibility",
+						"default": true
+					}
+				],
+				"legend_config": {
+					"type": "basic",
+					"items": [
+						{
+							"color": "#f7f7f7",
+							"value": 0
+						},
+						{
+							"color": "#d9f0a3",
+							"value": 1
+						},
+						{
+							"color": "#000000",
+							"value": 2
+						},
+						{
+							"color": "#78c679",
+							"value": 3
+						},
+						{
+							"color": "#31a354",
+							"value": 4
+						}
+					]
+				},
+				"interaction_config": {
+					"events": [
+						{
+							"type": "click",
+							"values": [
+								{
+									"key": "name"
+								},
+								{
+									"key": "bws",
+									"type": "number",
+									"label": "BWS label",
+									"format": {
+										"id": "formatPercentage"
+									}
+								},
+								{
+									"key": "pop",
+									"type": "number",
+									"label": "Pop",
+									"format": {
+										"id": "formatHA",
+										"options": {}
+									}
+								},
+								{
+									"key": "rfr",
+									"type": "number"
+								}
+							]
+						}
+					],
+					"enabled": true
+				},
+				"createdAt": "2023-10-25T10:48:52.150Z",
+				"updatedAt": "2023-10-25T16:24:21.071Z",
+				"publishedAt": "2023-10-25T10:56:04.905Z",
+				"metadata": 3,
 				"createdBy": null,
 				"updatedBy": null
 			}
@@ -1331,7 +2024,7 @@
 				"name": "Saltmarshes",
 				"info": null,
 				"createdAt": "2023-10-09T17:54:55.874Z",
-				"updatedAt": "2023-10-24T11:15:06.330Z",
+				"updatedAt": "2023-10-24T13:27:46.405Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1341,7 +2034,7 @@
 				"name": "Seagrasses",
 				"info": null,
 				"createdAt": "2023-10-09T17:55:08.906Z",
-				"updatedAt": "2023-10-24T11:15:06.333Z",
+				"updatedAt": "2023-10-24T13:27:46.428Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1351,7 +2044,7 @@
 				"name": "Warm-water corals",
 				"info": null,
 				"createdAt": "2023-10-09T17:55:31.406Z",
-				"updatedAt": "2023-10-24T11:15:06.336Z",
+				"updatedAt": "2023-10-24T13:27:46.449Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1361,7 +2054,7 @@
 				"name": "Cold-water corals",
 				"info": null,
 				"createdAt": "2023-10-09T17:55:51.134Z",
-				"updatedAt": "2023-10-24T11:15:06.339Z",
+				"updatedAt": "2023-10-24T13:27:46.472Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1371,7 +2064,7 @@
 				"name": "Mangroves",
 				"info": null,
 				"createdAt": "2023-10-09T17:56:06.117Z",
-				"updatedAt": "2023-10-24T11:15:06.342Z",
+				"updatedAt": "2023-10-24T13:27:46.491Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -1381,7 +2074,7 @@
 				"name": "Seamounts",
 				"info": null,
 				"createdAt": "2023-10-09T17:56:21.561Z",
-				"updatedAt": "2023-10-24T11:15:06.345Z",
+				"updatedAt": "2023-10-24T13:27:46.512Z",
 				"createdBy": null,
 				"updatedBy": null
 			}
@@ -1393,7 +2086,7 @@
 				"protectedArea": 111638.25,
 				"totalArea": 224435.08,
 				"createdAt": "2023-10-09T17:57:00.168Z",
-				"updatedAt": "2023-10-24T11:15:06.348Z",
+				"updatedAt": "2023-10-24T13:27:46.538Z",
 				"location": 1,
 				"habitat": 1,
 				"createdBy": null,
@@ -1405,7 +2098,7 @@
 				"protectedArea": 74787.45,
 				"totalArea": 314001.94,
 				"createdAt": "2023-10-09T17:57:24.349Z",
-				"updatedAt": "2023-10-24T11:15:06.363Z",
+				"updatedAt": "2023-10-24T13:27:46.588Z",
 				"location": 1,
 				"habitat": 2,
 				"createdBy": null,
@@ -1417,7 +2110,7 @@
 				"protectedArea": 63259.5,
 				"totalArea": 149886.97,
 				"createdAt": "2023-10-09T17:57:55.786Z",
-				"updatedAt": "2023-10-24T11:15:06.371Z",
+				"updatedAt": "2023-10-24T13:27:46.636Z",
 				"location": 1,
 				"habitat": 3,
 				"createdBy": null,
@@ -1429,7 +2122,7 @@
 				"protectedArea": 4400.14,
 				"totalArea": 15336.98,
 				"createdAt": "2023-10-09T17:58:29.609Z",
-				"updatedAt": "2023-10-24T11:15:06.376Z",
+				"updatedAt": "2023-10-24T13:27:46.684Z",
 				"location": 1,
 				"habitat": 4,
 				"createdBy": null,
@@ -1441,7 +2134,7 @@
 				"protectedArea": 61287.2,
 				"totalArea": 147358.99,
 				"createdAt": "2023-10-09T17:58:54.453Z",
-				"updatedAt": "2023-10-24T11:15:06.381Z",
+				"updatedAt": "2023-10-24T13:27:46.725Z",
 				"location": 1,
 				"habitat": 5,
 				"createdBy": null,
@@ -1453,7 +2146,7 @@
 				"protectedArea": 297168.14,
 				"totalArea": 352349.89,
 				"createdAt": "2023-10-09T17:59:25.804Z",
-				"updatedAt": "2023-10-24T11:15:06.387Z",
+				"updatedAt": "2023-10-24T13:27:46.920Z",
 				"location": 1,
 				"habitat": 6,
 				"createdBy": null,
@@ -1464,90 +2157,126 @@
 			"1": {
 				"id": 1,
 				"slug": "high-seas",
-				"createdAt": "2023-10-24T12:43:33.345Z",
-				"updatedAt": "2023-10-24T13:05:36.641Z",
 				"content": "High Seas refers to all Marine Areas Beyond National Jurisdiction. It is also abbreviated as ABNJ. ",
+				"createdAt": "2023-10-24T12:43:33.345Z",
+				"updatedAt": "2023-10-24T13:27:46.961Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
 			"2": {
 				"id": 2,
 				"slug": "location-type",
-				"createdAt": "2023-10-24T12:56:35.929Z",
-				"updatedAt": "2023-10-24T12:56:35.929Z",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
+				"createdAt": "2023-10-24T12:56:35.929Z",
+				"updatedAt": "2023-10-24T13:27:46.981Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
 			"3": {
 				"id": 3,
 				"slug": "mpas",
-				"createdAt": "2023-10-24T12:57:18.317Z",
-				"updatedAt": "2023-10-24T12:57:18.317Z",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
+				"createdAt": "2023-10-24T12:57:18.317Z",
+				"updatedAt": "2023-10-24T13:27:47.004Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
 			"4": {
 				"id": 4,
 				"slug": "oecms",
-				"createdAt": "2023-10-24T12:57:30.213Z",
-				"updatedAt": "2023-10-24T12:57:30.213Z",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
+				"createdAt": "2023-10-24T12:57:30.213Z",
+				"updatedAt": "2023-10-24T13:27:47.027Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
 			"5": {
 				"id": 5,
 				"slug": "protection-level",
-				"createdAt": "2023-10-24T12:58:26.202Z",
-				"updatedAt": "2023-10-24T12:58:26.202Z",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
+				"createdAt": "2023-10-24T12:58:26.202Z",
+				"updatedAt": "2023-10-24T13:27:47.048Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
 			"6": {
 				"id": 6,
 				"slug": "fishing-protection-level",
-				"createdAt": "2023-10-24T12:58:54.312Z",
-				"updatedAt": "2023-10-24T12:58:54.312Z",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
+				"createdAt": "2023-10-24T12:58:54.312Z",
+				"updatedAt": "2023-10-24T13:27:47.078Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
 			"7": {
 				"id": 7,
 				"slug": "coverage",
-				"createdAt": "2023-10-24T12:59:13.493Z",
-				"updatedAt": "2023-10-24T12:59:13.493Z",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
+				"createdAt": "2023-10-24T12:59:13.493Z",
+				"updatedAt": "2023-10-24T13:27:47.098Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
 			"8": {
 				"id": 8,
 				"slug": "global-contribution",
-				"createdAt": "2023-10-24T12:59:30.211Z",
-				"updatedAt": "2023-10-24T12:59:30.211Z",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
+				"createdAt": "2023-10-24T12:59:30.211Z",
+				"updatedAt": "2023-10-24T13:27:47.122Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
 			"9": {
 				"id": 9,
 				"slug": "establishment-stage",
-				"createdAt": "2023-10-24T13:02:15.344Z",
-				"updatedAt": "2023-10-24T13:02:15.344Z",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
+				"createdAt": "2023-10-24T13:02:15.344Z",
+				"updatedAt": "2023-10-24T13:27:47.145Z",
 				"createdBy": null,
 				"updatedBy": null
 			},
 			"10": {
 				"id": 10,
 				"slug": "30x30-target",
-				"createdAt": "2023-10-24T13:04:28.869Z",
-				"updatedAt": "2023-10-24T13:04:28.869Z",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
+				"createdAt": "2023-10-24T13:04:28.869Z",
+				"updatedAt": "2023-10-24T13:27:47.165Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"11": {
+				"id": 11,
+				"slug": "fully-highly-protected",
+				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.",
+				"createdAt": "2023-10-25T12:27:41.510Z",
+				"updatedAt": "2023-10-25T12:27:41.510Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"12": {
+				"id": 12,
+				"slug": "highly-protected-lfp",
+				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.",
+				"createdAt": "2023-10-25T12:28:15.181Z",
+				"updatedAt": "2023-10-25T12:28:15.181Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"13": {
+				"id": 13,
+				"slug": "protected-area",
+				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.",
+				"createdAt": "2023-10-25T12:32:58.426Z",
+				"updatedAt": "2023-10-25T12:32:58.426Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"14": {
+				"id": 14,
+				"slug": "protected-area-type",
+				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.",
+				"createdAt": "2023-10-25T12:34:03.437Z",
+				"updatedAt": "2023-10-25T12:34:03.437Z",
 				"createdBy": null,
 				"updatedBy": null
 			}
