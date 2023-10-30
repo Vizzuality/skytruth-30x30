@@ -19,7 +19,12 @@
     },
     "content": {
       "type": "text",
-      "required": true
+      "required": false
+    },
+    "data_sources": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::data-source.data-source"
     }
   }
 }

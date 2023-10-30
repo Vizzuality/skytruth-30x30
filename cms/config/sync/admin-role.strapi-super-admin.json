@@ -10,7 +10,8 @@
       "properties": {
         "fields": [
           "slug",
-          "content"
+          "content",
+          "data_sources"
         ]
       },
       "conditions": []
@@ -29,7 +30,8 @@
       "properties": {
         "fields": [
           "slug",
-          "content"
+          "content",
+          "data_sources"
         ]
       },
       "conditions": []
@@ -41,7 +43,54 @@
       "properties": {
         "fields": [
           "slug",
-          "content"
+          "content",
+          "data_sources"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::data-source.data-source",
+      "properties": {
+        "fields": [
+          "slug",
+          "title",
+          "url"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::data-source.data-source",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::data-source.data-source",
+      "properties": {
+        "fields": [
+          "slug",
+          "title",
+          "url"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::data-source.data-source",
+      "properties": {
+        "fields": [
+          "slug",
+          "title",
+          "url"
         ]
       },
       "conditions": []
