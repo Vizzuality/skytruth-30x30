@@ -13,32 +13,51 @@ type MarineConservationWidgetProps = {
 };
 
 const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ location }) => {
-  const lastUpdated = 'October 2023';
-
-  const { data: protectionStatsResponse } = useGetProtectionCoverageStats({
-    populate: '*',
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    'sort[year]': 'asc',
+  const defaultQueryParams = {
     filters: {
       location: {
         code: location.code,
       },
-      // protection_status: {
-      //   slug: 'oecm', // oecm | mpa
-      // },
     },
-    'pagination[limit]': -1,
-  });
+  };
 
-  const protectionStats = useMemo(() => {
-    return protectionStatsResponse?.data || [];
-  }, [protectionStatsResponse?.data]);
+  const { data: dataLastUpdate } = useGetProtectionCoverageStats(
+    {
+      ...defaultQueryParams,
+      sort: 'updatedAt:desc',
+      'pagination[limit]': 1,
+    },
+    {
+      query: {
+        select: ({ data }) => data?.[0]?.attributes?.updatedAt,
+        placeholderData: { data: null },
+      },
+    }
+  );
+
+  const {
+    data: { data: protectionStatsData },
+  } = useGetProtectionCoverageStats(
+    {
+      ...defaultQueryParams,
+      populate: '*',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      'sort[year]': 'asc',
+      'pagination[limit]': -1,
+    },
+    {
+      query: {
+        select: ({ data }) => ({ data }),
+        placeholderData: { data: [] },
+      },
+    }
+  );
 
   const mergedProtectionStats = useMemo(() => {
-    if (!protectionStats.length) return null;
+    if (!protectionStatsData.length) return null;
 
-    const groupedByYear = groupBy(protectionStats, 'attributes.year');
+    const groupedByYear = groupBy(protectionStatsData, 'attributes.year');
 
     return Object.keys(groupedByYear).map((year) => {
       const entries = groupedByYear[year];
@@ -54,7 +73,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
         protectedArea,
       };
     });
-  }, [protectionStats]);
+  }, [protectionStatsData]);
 
   const stats = useMemo(() => {
     if (!mergedProtectionStats) return null;
@@ -115,7 +134,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   if (!stats || !chartData) return null;
 
   return (
-    <Widget title="Marine Conservation Coverage" lastUpdated={lastUpdated}>
+    <Widget title="Marine Conservation Coverage" lastUpdated={dataLastUpdate}>
       <div className="mt-6 mb-4 flex flex-col text-blue">
         <span className="text-5xl font-bold">
           {stats?.protectedPercentage}
