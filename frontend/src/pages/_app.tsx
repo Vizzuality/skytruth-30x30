@@ -9,6 +9,8 @@ import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query
 import 'styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+import { figtree, overpassMono } from '@/styles/fonts';
+
 type PageProps = {
   dehydratedState: unknown;
 };
@@ -19,13 +21,21 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <MapProvider>
-          <Component {...pageProps} />
-        </MapProvider>
-      </Hydrate>
-    </QueryClientProvider>
+    <>
+      <style jsx global>{`
+        :root {
+          --font-overpass-mono: ${overpassMono.style.fontFamily};
+          --font-figtree: ${figtree.style.fontFamily};
+        }
+      `}</style>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <MapProvider>
+            <Component {...pageProps} />
+          </MapProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </>
   );
 };
 

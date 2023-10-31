@@ -2,20 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Overpass Mono';
-  src: url('/fonts/overpass-mono/OverpassMono-VariableFont_wght.ttf') format('truetype');
-  font-weight: 300 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Figtree';
-  src: url('/fonts/figtree/Figtree-VariableFont_wght.ttf') format('truetype');
-  font-weight: 300 900;
-  font-style: normal;
-  font-display: swap;
+.mapboxgl-ctrl-bottom-right {
+  @apply !right-[335px];
 }
 
 .mapboxgl-ctrl-attrib-button {
