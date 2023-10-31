@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { useSyncDataToolContentSettings } from '@/containers/data-tool/sync-settings';
 
 const DetailsButton: React.FC = () => {
-  const [settings, setSettings] = useSyncDataToolContentSettings();
+  const [, setSettings] = useSyncDataToolContentSettings();
 
   const handleButtonClick = () => {
-    setSettings({ ...settings, showDetails: true });
+    setSettings((prevSettings) => ({ ...prevSettings, showDetails: true }));
   };
 
   return (

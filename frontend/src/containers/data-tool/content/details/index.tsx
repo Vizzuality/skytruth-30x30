@@ -5,10 +5,10 @@ import { useSyncDataToolContentSettings } from '@/containers/data-tool/sync-sett
 import { mockedData } from './mocked-data';
 
 const DataToolDetails: React.FC = () => {
-  const [settings, setSettings] = useSyncDataToolContentSettings();
+  const [, setSettings] = useSyncDataToolContentSettings();
 
   const handleOnCloseClick = () => {
-    setSettings({ ...settings, showDetails: false });
+    setSettings((prevSettings) => ({ ...prevSettings, showDetails: false }));
   };
 
   return (
