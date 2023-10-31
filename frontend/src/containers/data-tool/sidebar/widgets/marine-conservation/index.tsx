@@ -13,28 +13,43 @@ type MarineConservationWidgetProps = {
 };
 
 const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ location }) => {
+  const defaultQueryParams = {
+    filters: {
+      location: {
+        code: location.code,
+      },
+    },
+  };
+
+  const { data: dataLastUpdate } = useGetProtectionCoverageStats(
+    {
+      ...defaultQueryParams,
+      sort: 'updatedAt:desc',
+      'pagination[limit]': 1,
+    },
+    {
+      query: {
+        select: ({ data }) => data?.[0]?.attributes?.updatedAt,
+        placeholderData: { data: null },
+      },
+    }
+  );
+
   const {
-    data: { data: protectionStatsData, meta: protectionStatsMeta },
+    data: { data: protectionStatsData },
   } = useGetProtectionCoverageStats(
     {
+      ...defaultQueryParams,
       populate: '*',
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       'sort[year]': 'asc',
-      filters: {
-        location: {
-          code: location.code,
-        },
-        // protection_status: {
-        //   slug: 'oecm', // oecm | mpa
-        // },
-      },
       'pagination[limit]': -1,
     },
     {
       query: {
-        select: ({ data, meta }) => ({ data, meta }),
-        placeholderData: { data: [], meta: undefined },
+        select: ({ data }) => ({ data }),
+        placeholderData: { data: [] },
       },
     }
   );
@@ -119,7 +134,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   if (!stats || !chartData) return null;
 
   return (
-    <Widget title="Marine Conservation Coverage" lastUpdated={protectionStatsMeta?.updatedAt}>
+    <Widget title="Marine Conservation Coverage" lastUpdated={dataLastUpdate}>
       <div className="mt-6 mb-4 flex flex-col text-blue">
         <span className="text-5xl font-bold">
           {stats?.protectedPercentage}
