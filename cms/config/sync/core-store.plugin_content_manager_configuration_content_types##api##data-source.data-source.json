@@ -1,14 +1,14 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::habitat-stat.habitat-stat",
+  "key": "plugin_content_manager_configuration_content_types::api::data-source.data-source",
   "value": {
-    "uid": "api::habitat-stat.habitat-stat",
+    "uid": "api::data-source.data-source",
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "id",
-      "defaultSortBy": "id",
+      "mainField": "slug",
+      "defaultSortBy": "slug",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -20,74 +20,44 @@
           "sortable": true
         }
       },
-      "location": {
+      "slug": {
         "edit": {
-          "label": "location",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "code"
-        },
-        "list": {
-          "label": "location",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "habitat": {
-        "edit": {
-          "label": "habitat",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "slug"
-        },
-        "list": {
-          "label": "habitat",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "year": {
-        "edit": {
-          "label": "year",
+          "label": "slug",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "year",
+          "label": "slug",
           "searchable": true,
           "sortable": true
         }
       },
-      "protectedArea": {
+      "title": {
         "edit": {
-          "label": "protectedArea",
+          "label": "title",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "protectedArea",
+          "label": "title",
           "searchable": true,
           "sortable": true
         }
       },
-      "totalArea": {
+      "url": {
         "edit": {
-          "label": "totalArea",
+          "label": "url",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "totalArea",
+          "label": "url",
           "searchable": true,
           "sortable": true
         }
@@ -152,39 +122,29 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "slug",
+        "title",
+        "url"
+      ],
       "edit": [
         [
           {
-            "name": "location",
+            "name": "slug",
             "size": 6
           },
           {
-            "name": "habitat",
+            "name": "title",
             "size": 6
           }
         ],
         [
           {
-            "name": "year",
-            "size": 4
-          },
-          {
-            "name": "protectedArea",
-            "size": 4
-          },
-          {
-            "name": "totalArea",
-            "size": 4
+            "name": "url",
+            "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "location",
-        "habitat",
-        "year",
-        "protectedArea",
-        "totalArea"
       ]
     }
   },

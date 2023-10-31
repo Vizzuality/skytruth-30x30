@@ -690,7 +690,12 @@ export interface ApiDataInfoDataInfo extends Schema.CollectionType {
   };
   attributes: {
     slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    content: Attribute.Text & Attribute.Required;
+    content: Attribute.Text;
+    data_sources: Attribute.Relation<
+      'api::data-info.data-info',
+      'oneToMany',
+      'api::data-source.data-source'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -701,6 +706,38 @@ export interface ApiDataInfoDataInfo extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::data-info.data-info',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDataSourceDataSource extends Schema.CollectionType {
+  collectionName: 'data_sources';
+  info: {
+    singularName: 'data-source';
+    pluralName: 'data-sources';
+    displayName: 'Data Source';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    slug: Attribute.String & Attribute.Required & Attribute.Unique;
+    title: Attribute.String & Attribute.Required;
+    url: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::data-source.data-source',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::data-source.data-source',
       'oneToOne',
       'admin::user'
     > &
@@ -948,6 +985,7 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'oneToMany',
       'api::protection-coverage-stat.protection-coverage-stat'
     >;
+    bounds: Attribute.JSON;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1334,6 +1372,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::data-info.data-info': ApiDataInfoDataInfo;
+      'api::data-source.data-source': ApiDataSourceDataSource;
       'api::fishing-protection-level.fishing-protection-level': ApiFishingProtectionLevelFishingProtectionLevel;
       'api::fishing-protection-level-stat.fishing-protection-level-stat': ApiFishingProtectionLevelStatFishingProtectionLevelStat;
       'api::habitat.habitat': ApiHabitatHabitat;

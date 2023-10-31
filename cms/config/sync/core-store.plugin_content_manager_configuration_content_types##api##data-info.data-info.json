@@ -48,6 +48,21 @@
           "sortable": true
         }
       },
+      "data_sources": {
+        "edit": {
+          "label": "data_sources",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "slug"
+        },
+        "list": {
+          "label": "data_sources",
+          "searchable": false,
+          "sortable": false
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -108,12 +123,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "slug",
-        "content",
-        "createdAt"
-      ],
       "edit": [
         [
           {
@@ -124,7 +133,19 @@
             "name": "content",
             "size": 6
           }
+        ],
+        [
+          {
+            "name": "data_sources",
+            "size": 6
+          }
         ]
+      ],
+      "list": [
+        "id",
+        "slug",
+        "content",
+        "data_sources"
       ]
     }
   },

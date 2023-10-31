@@ -61,6 +61,9 @@
       "relation": "oneToMany",
       "target": "api::protection-coverage-stat.protection-coverage-stat",
       "mappedBy": "location"
+    },
+    "bounds": {
+      "type": "json"
     }
   }
 }

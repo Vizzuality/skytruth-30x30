@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "data_sources",
+  "info": {
+    "singularName": "data-source",
+    "pluralName": "data-sources",
+    "displayName": "Data Source",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
