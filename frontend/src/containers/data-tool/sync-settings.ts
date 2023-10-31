@@ -2,9 +2,9 @@ import { useQueryState } from 'next-usequerystate';
 import { parseAsJson } from 'next-usequerystate/parsers';
 
 const DEFAULT_SYNC_CONTENT_SETTINGS: {
-  details: boolean;
+  showDetails: boolean;
 } = {
-  details: false,
+  showDetails: false,
 };
 
 export const useSyncDataToolContentSettings = () => {

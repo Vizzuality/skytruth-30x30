@@ -4,12 +4,12 @@ import Details from './details';
 import Map from './map';
 
 const DataToolContent: React.FC = () => {
-  const [{ details }] = useSyncDataToolContentSettings();
+  const [{ showDetails }] = useSyncDataToolContentSettings();
 
   return (
     <div className="relative h-full w-full">
       <Map />
-      {details && <Details />}
+      {showDetails && <Details />}
     </div>
   );
 };

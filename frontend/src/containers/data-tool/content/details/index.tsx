@@ -8,7 +8,7 @@ const DataToolDetails: React.FC = () => {
   const [settings, setSettings] = useSyncDataToolContentSettings();
 
   const handleOnCloseClick = () => {
-    setSettings({ ...settings, details: false });
+    setSettings({ ...settings, showDetails: false });
   };
 
   return (

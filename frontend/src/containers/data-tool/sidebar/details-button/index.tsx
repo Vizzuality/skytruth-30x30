@@ -7,7 +7,7 @@ const DetailsButton: React.FC = () => {
   const [settings, setSettings] = useSyncDataToolContentSettings();
 
   const handleButtonClick = () => {
-    setSettings({ ...settings, details: true });
+    setSettings({ ...settings, showDetails: true });
   };
 
   return (
