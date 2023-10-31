@@ -1,9 +1,16 @@
 import { FC, useCallback } from 'react';
 
-import { ChevronUp, CircleDashed, Eye, EyeOff, MoveUp, X } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
+import { HiEye, HiEyeOff } from 'react-icons/hi';
 
-import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
+import Icon from '@/components/ui/icon';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
@@ -13,11 +20,15 @@ import {
   useSyncMapLayers,
 } from '@/containers/data-tool/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
+import ArrowDownIcon from '@/styles/icons/arrow-down.svg?sprite';
+import ArrowTopIcon from '@/styles/icons/arrow-top.svg?sprite';
+import CloseIcon from '@/styles/icons/close.svg?sprite';
+import OpacityIcon from '@/styles/icons/opacity.svg?sprite';
 import { useGetLayers } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
-// import { LayerTyped } from '@/types/layers';
+import { LayerTyped } from '@/types/layers';
 
-// import LegendItems from './items';
+import LegendItem from './item';
 
 const Legend: FC = () => {
   const [activeLayers, setMapLayers] = useSyncMapLayers();
@@ -140,7 +151,7 @@ const Legend: FC = () => {
           })}
           onValueChange={onToggleAccordion}
         >
-          {layersQuery.data?.map(({ id, attributes: { title } }, index) => {
+          {layersQuery.data?.map(({ id, attributes: { title, legend_config } }, index) => {
             const isFirst = index === 0;
             const isLast = index + 1 === layersQuery.data.length;
 
@@ -175,7 +186,7 @@ const Legend: FC = () => {
                   </TooltipProvider>
                   <TooltipProvider>
                     <div className="flex shrink-0 items-center gap-0.5">
-                      <Tooltip>
+                      <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
                           <Button
                             type="button"
@@ -185,7 +196,7 @@ const Legend: FC = () => {
                             onClick={() => onMoveLayerUp(id)}
                           >
                             <span className="sr-only">Move up</span>
-                            <MoveUp className="h-4 w-4" aria-hidden />
+                            <Icon icon={ArrowTopIcon} className="h-4 w-4 " />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>Move up</TooltipContent>
@@ -200,7 +211,7 @@ const Legend: FC = () => {
                             onClick={() => onMoveLayerDown(id)}
                           >
                             <span className="sr-only">Move down</span>
-                            <MoveUp className="h-4 w-4 rotate-180" aria-hidden />
+                            <Icon icon={ArrowDownIcon} className="h-4 w-4" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>Move down</TooltipContent>
@@ -211,7 +222,7 @@ const Legend: FC = () => {
                             <PopoverTrigger asChild>
                               <Button type="button" variant="ghost" size="icon-sm">
                                 <span className="sr-only">Change opacity</span>
-                                <CircleDashed className="h-4 w-4" aria-hidden />
+                                <Icon icon={OpacityIcon} className="h-4 w-4" />
                               </Button>
                             </PopoverTrigger>
                           </TooltipTrigger>
@@ -237,8 +248,8 @@ const Legend: FC = () => {
                             onClick={() => onToggleLayerVisibility(id, !isVisible)}
                           >
                             <span className="sr-only">{isVisible ? 'Hide' : 'Show'}</span>
-                            {isVisible && <Eye className="h-4 w-4" aria-hidden />}
-                            {!isVisible && <EyeOff className="h-4 w-4" aria-hidden />}
+                            {isVisible && <HiEye className="h-4 w-4" aria-hidden />}
+                            {!isVisible && <HiEyeOff className="h-4 w-4" aria-hidden />}
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>{isVisible ? 'Hide' : 'Show'}</TooltipContent>
@@ -255,7 +266,7 @@ const Legend: FC = () => {
                             }}
                           >
                             <span className="sr-only">Remove</span>
-                            <X className="h-4 w-4" aria-hidden />
+                            <Icon icon={CloseIcon} className="h-3 w-3" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>Remove</TooltipContent>
@@ -263,9 +274,9 @@ const Legend: FC = () => {
                     </div>
                   </TooltipProvider>
                 </div>
-                {/* <AccordionContent className="pt-2">
-                    <LegendItems items={legend_config as LayerTyped['legend_config']} />
-                  </AccordionContent> */}
+                <AccordionContent className="pt-2">
+                  <LegendItem config={legend_config as LayerTyped['legend_config']} />
+                </AccordionContent>
               </AccordionItem>
             );
           })}
