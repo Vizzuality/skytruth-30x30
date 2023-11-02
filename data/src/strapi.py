@@ -57,24 +57,32 @@ class Strapi:
 
     @cached_property
     def getCollections(self):
-        response = self.session.get(f"{self.url}/content-manager/collection-types")
+        response = self.session.get(f"{self.url}/content-manager/content-types")
         response.raise_for_status()
-        data = [
-            response.json().get("data")
-            for collection in response.json()
-            if collection.get("isDisplayed") == True
-        ]
+        data = list(
+            filter(
+                lambda x: x.get("isDisplayed") == True and "api::" in x.get("uid"),
+                response.json().get("data"),
+            )
+        )
         return data
 
-    def getCollectionMetadata(self, collectionName):
-        return list(filter(lambda x: (collectionName in x), self.getCollections))
+    def getCollectionMetadata(self, name):
+        return list(
+            filter(
+                lambda x: (name in x.get("info", {}).values()),
+                self.getCollections,
+            )
+        )
 
-    def getCollectionData(self, collectionName):
-        response = self.session.get(f"{self.url}/api/{collectionName}")
+    def getCollectionData(self, collectionUid: str):
+        response = self.session.get(f"{self.url}/api/{collectionUid}")
         response.raise_for_status()
         return response.json()
 
-    def importCollection(self, collectionName: str, file_path: Path, idField: str):
+    def importCollection(
+        self, collectionApiID: str, file_path: Path, idField: str = "id"
+    ):
         extension = file_path.suffix
 
         with open(file_path, "rb") as f:
@@ -84,7 +92,7 @@ class Strapi:
             f"{self.url}/api/import-export-entries/content/import",
             json={
                 "idField": idField,
-                "slug": f"api::{collectionName}.{collectionName}",
+                "slug": f"api::{collectionApiID}.{collectionApiID}",
                 "data": data,
                 "format": extension,
             },
