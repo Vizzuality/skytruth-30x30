@@ -1,9 +1,10 @@
-import zipfile
 import os
 import requests
 from logging import getLogger
 from pathlib import Path
-from typing import Union
+from typing import Literal, Union
+from google.cloud import storage
+from google.oauth2 import service_account
 
 logger = getLogger(__name__)
 
@@ -77,22 +78,32 @@ def downloadFile(
         raise e
 
 
-def unzipFile(source_path: Path, output_path: Union[Path, None] = None) -> Path:
-    """unzip a file
+def writeReadGCP(
+    credentials: str,
+    bucket_name: str,
+    blob_name: str,
+    file: Path,
+    operation: Literal["w", "r"] = "w",
+):
+    """Write or read a blob from GCS using file-like IO
 
     Args:
-        source_path (Path): The path to the file.
-        output_path (Union[Path, None], optional): The path to the output file. The default is None.
-
-    Returns:
-        Path: The path to the output file.
+        bucket_name (str): The name of the bucket.
+        blob_name (str): The name of the blob.
+        file (io.BytesIO): The file-like object to write or read.
+        operation (Literal["w", "r"], optional): The operation to perform. "w" for write, "r" for read. Defaults to "w".
     """
-    if not output_path:
-        output_path = source_path.parent
+    storage_client = storage.Client(
+        credentials=service_account.Credentials.from_service_account_info(credentials)
+    )
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(blob_name)
 
-    with zipfile.ZipFile(source_path, "r") as zip_ref:
-        zip_ref.extractall(output_path)
-
-    logger.info("Unzip Finish.")
-
-    return output_path.joinpath(source_path.stem)
+    if operation == "w":
+        with open(file, "rb") as f:
+            blob.upload_from_file(f)
+    elif operation == "r":
+        with open(file, "wb") as f:
+            blob.download_to_file(f)
+    else:
+        raise ValueError("operation must be 'w' or 'r'")
