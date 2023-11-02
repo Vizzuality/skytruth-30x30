@@ -1,14 +1,27 @@
 import logging
+from functools import lru_cache
+from typing import Any, Dict
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
 
+@lru_cache()
+def get_settings():
+    return Settings()
+
+
 class Settings(BaseSettings):
+    DATA_DIR: Path
     MAPBOX_USER: str
     MAPBOX_TOKEN: str
-    DATA_DIR: Path
+    STRAPI_URL: str
+    STRAPI_JWT: str
+    NOTIFY_URL: str
+    NOTIFY_JWT: str
+    GCS_BUCKET: str
+    GCS_KEYFILE_JSON: Dict[str, Any]
 
     # model_config = SettingsConfigDict(env_file=".env")
 
