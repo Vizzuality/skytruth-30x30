@@ -57,9 +57,9 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
           style={{ backgroundColor: barColor || DEFAULT_BAR_COLOR, width: `${barFillPercentage}%` }}
         ></span>
         <span
-          className="absolute top-0 bottom-0 border-r-2 border-orange"
+          className="absolute top-0 bottom-0 w-1 border-x border-white bg-orange"
           style={{
-            width: `${targetPositionPercentage}%`,
+            left: `${targetPositionPercentage}%`,
           }}
         >
           <span className="absolute right-0 top-5 whitespace-nowrap text-xs text-orange">
