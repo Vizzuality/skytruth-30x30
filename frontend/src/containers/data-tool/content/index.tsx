@@ -7,7 +7,7 @@ const DataToolContent: React.FC = () => {
   const [{ showDetails }] = useSyncDataToolContentSettings();
 
   return (
-    <div className="relative h-full w-full">
+    <div className="absolute h-full w-full">
       <Map />
       {showDetails && <Details />}
     </div>

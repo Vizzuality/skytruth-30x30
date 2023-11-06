@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 
+import { useParams } from 'next/navigation';
+
 import { useAtom } from 'jotai';
 
 import DeckJsonLayer from '@/components/map/layers/deck-json-layer';
@@ -21,6 +23,7 @@ const LayerManagerItem = ({ id, beforeId, settings }: LayerManagerItemProps) => 
   });
   const [, setLayersInteractive] = useAtom(layersInteractiveAtom);
   const [, setLayersInteractiveIds] = useAtom(layersInteractiveIdsAtom);
+  const { locationCode } = useParams();
 
   const handleAddMapboxLayer = useCallback(
     ({ styles }: Config) => {
@@ -64,7 +67,10 @@ const LayerManagerItem = ({ id, beforeId, settings }: LayerManagerItemProps) => 
     const c = parseConfig<Config>({
       config,
       params_config,
-      settings,
+      settings: {
+        ...settings,
+        location: locationCode,
+      },
     });
 
     if (!c) return null;

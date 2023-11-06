@@ -28,3 +28,18 @@ export const useSyncMapLayerSettings = () => {
     parseAsJson<{ [layerId: number]: Partial<LayerSettings> }>().withDefault({})
   );
 };
+
+export const useDataToolSearchParams = () => {
+  const [settings] = useSyncMapSettings();
+  const [layers] = useSyncMapLayers();
+  const [layerSettings] = useSyncMapLayerSettings();
+  const sp = new URLSearchParams();
+  sp.set('settings', parseAsJson<typeof DEFAULT_SYNC_MAP_SETTINGS>().serialize(settings));
+  sp.set('layers', parseAsArrayOf(parseAsInteger).serialize(layers));
+  sp.set(
+    'layer-settings',
+    parseAsJson<{ [layerId: number]: Partial<LayerSettings> }>().serialize(layerSettings)
+  );
+
+  return sp;
+};

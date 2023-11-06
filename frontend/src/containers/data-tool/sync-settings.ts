@@ -10,6 +10,8 @@ const DEFAULT_SYNC_CONTENT_SETTINGS: {
 export const useSyncDataToolContentSettings = () => {
   return useQueryState(
     'content',
-    parseAsJson<typeof DEFAULT_SYNC_CONTENT_SETTINGS>().withDefault(DEFAULT_SYNC_CONTENT_SETTINGS)
+    parseAsJson<typeof DEFAULT_SYNC_CONTENT_SETTINGS>()
+      .withOptions({ shallow: false })
+      .withDefault(DEFAULT_SYNC_CONTENT_SETTINGS)
   );
 };

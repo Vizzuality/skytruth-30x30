@@ -5,6 +5,9 @@
 .mapboxgl-ctrl-bottom-right {
   @apply !right-[335px];
 }
+.mapboxgl-ctrl-bottom-left {
+  @apply !right-[345px] !bottom-5 !left-auto;
+}
 
 .mapboxgl-ctrl-attrib-button {
   @apply !p-0;

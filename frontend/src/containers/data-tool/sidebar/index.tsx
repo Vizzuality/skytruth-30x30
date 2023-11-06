@@ -1,11 +1,10 @@
-import { useState } from 'react';
-
-import { useAtomValue } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { ChevronLeft } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/classnames';
+import { sidebarAtom } from '@/store/data-tool';
 import { locationAtom } from '@/store/location';
 
 import DetailsButton from './details-button';
@@ -15,12 +14,12 @@ import Widgets from './widgets';
 const DataToolSidebar: React.FC = () => {
   const location = useAtomValue(locationAtom);
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
 
   return (
     <Collapsible
       className="h-full overflow-hidden"
-      open={sidebarOpen}
+      open={isSidebarOpen}
       onOpenChange={setSidebarOpen}
     >
       <CollapsibleTrigger asChild>
@@ -29,11 +28,11 @@ const DataToolSidebar: React.FC = () => {
           variant="white"
           className={cn('absolute bottom-0 z-10 h-12 border-l-0 px-1', {
             'hidden md:flex': true,
-            'left-0': !sidebarOpen,
-            'left-[430px] transition-[left] delay-500': sidebarOpen,
+            'left-0': !isSidebarOpen,
+            'left-[430px] transition-[left] delay-500': isSidebarOpen,
           })}
         >
-          <ChevronLeft className={cn('h-6 w-6', { 'rotate-180': !sidebarOpen })} aria-hidden />
+          <ChevronLeft className={cn('h-6 w-6', { 'rotate-180': !isSidebarOpen })} aria-hidden />
           <span className="sr-only">Toggle sidebar</span>
         </Button>
       </CollapsibleTrigger>
