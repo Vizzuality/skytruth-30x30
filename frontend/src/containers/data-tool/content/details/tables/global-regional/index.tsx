@@ -6,7 +6,6 @@ import { useAtomValue } from 'jotai';
 import Table from '@/containers/data-tool/content/details/table';
 import columns from '@/containers/data-tool/content/details/tables/global-regional/columns';
 import { locationAtom } from '@/store/location';
-// import mockedData from '@/containers/data-tool/content/details/tables/global-regional/mocked-data';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 
