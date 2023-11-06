@@ -153,6 +153,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "location",
+        "mpaa_establishment_stage",
+        "protection_status"
+      ],
       "edit": [
         [
           {
@@ -180,14 +186,6 @@
             "size": 4
           }
         ]
-      ],
-      "list": [
-        "id",
-        "location",
-        "mpaa_establishment_stage",
-        "protection_status",
-        "year",
-        "area"
       ]
     }
   },

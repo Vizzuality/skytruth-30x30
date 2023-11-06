@@ -29,17 +29,25 @@ export const useSyncMapLayerSettings = () => {
   );
 };
 
+// ? there is an issue where NextJS's useSearchParams will not return the update searchParams
+// ? updated via next-usequerystate, so we rely in next-usequerystate to retrieve those searchParams as well
+// ? this might be an issue with next-usequerystate, but for now we can make it work this way.
+// ! if you are using syncing a new state through next-usequerystate in the data-tool's map page, remember to register it here
 export const useDataToolSearchParams = () => {
   const [settings] = useSyncMapSettings();
   const [layers] = useSyncMapLayers();
   const [layerSettings] = useSyncMapLayerSettings();
-  const sp = new URLSearchParams();
-  sp.set('settings', parseAsJson<typeof DEFAULT_SYNC_MAP_SETTINGS>().serialize(settings));
-  sp.set('layers', parseAsArrayOf(parseAsInteger).serialize(layers));
-  sp.set(
+  const currentSearchparams = new URLSearchParams();
+
+  currentSearchparams.set('layers', parseAsArrayOf(parseAsInteger).serialize(layers));
+  currentSearchparams.set(
+    'settings',
+    parseAsJson<typeof DEFAULT_SYNC_MAP_SETTINGS>().serialize(settings)
+  );
+  currentSearchparams.set(
     'layer-settings',
     parseAsJson<{ [layerId: number]: Partial<LayerSettings> }>().serialize(layerSettings)
   );
 
-  return sp;
+  return currentSearchparams;
 };

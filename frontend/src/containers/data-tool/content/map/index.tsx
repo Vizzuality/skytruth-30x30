@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback, useEffect } from 'react';
+import { ComponentProps, useCallback, useEffect, useRef } from 'react';
 
 import { useMap } from 'react-map-gl';
 import { LngLatBoundsLike } from 'react-map-gl';
@@ -39,6 +39,7 @@ const DataToolMap: React.FC = () => {
   const queryClient = useQueryClient();
   const { locationCode } = useParams();
   const isSidebarOpen = useAtomValue(sidebarAtom);
+  const hoveredPolygonId = useRef<string | number | null>(null);
 
   const locationData = queryClient.getQueryData<LocationResponseDataObject>([
     'locations',
@@ -85,12 +86,49 @@ const DataToolMap: React.FC = () => {
         })
       ) {
         const p = Object.assign({}, e, { features: e.features ?? [] });
-
         setPopup(p);
       }
     },
     [layersInteractive, layersInteractiveData, setPopup]
   );
+
+  const handleMouseMove = useCallback(
+    (e: Parameters<ComponentProps<typeof Map>['onMouseOver']>[0]) => {
+      if (e.features.length > 0) {
+        if (hoveredPolygonId.current !== null) {
+          map.setFeatureState(
+            {
+              source: e.features?.[0].source,
+              id: hoveredPolygonId.current,
+              sourceLayer: e.features?.[0].sourceLayer,
+            },
+            { hover: false }
+          );
+        }
+        map.setFeatureState(
+          {
+            source: e.features?.[0].source,
+            id: e.features[0].id,
+            sourceLayer: e.features?.[0].sourceLayer,
+          },
+          { hover: true }
+        );
+
+        hoveredPolygonId.current = e.features[0].id;
+      }
+    },
+    [map, hoveredPolygonId]
+  );
+
+  const handleMouseLeave = useCallback(() => {
+    if (hoveredPolygonId.current !== null) {
+      map.setFeatureState(
+        // ? not a fan of harcoding the sources here, but there is no other way to find out the source
+        { source: 'ezz-source', id: hoveredPolygonId.current, sourceLayer: 'eez_v11' },
+        { hover: false }
+      );
+    }
+  }, [map, hoveredPolygonId]);
 
   const bounds = customBbox ?? (locationData?.attributes?.bounds as LngLatBoundsLike);
 
@@ -141,6 +179,8 @@ const DataToolMap: React.FC = () => {
         interactiveLayerIds={layersInteractiveIds}
         onClick={handleMapClick}
         onMoveEnd={handleMoveEnd}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         renderWorldCopies={false}
         attributionControl={false}
       >

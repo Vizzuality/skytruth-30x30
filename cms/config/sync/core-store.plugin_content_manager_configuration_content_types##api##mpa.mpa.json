@@ -181,6 +181,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "wdpaid",
+        "name",
+        "year"
+      ],
       "edit": [
         [
           {
@@ -220,15 +226,6 @@
             "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "wdpaid",
-        "name",
-        "year",
-        "protection_status",
-        "mpaa_establishment_stage",
-        "area"
       ]
     }
   },

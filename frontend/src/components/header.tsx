@@ -51,7 +51,7 @@ const Header: React.FC = () => (
               <SheetDescription>
                 <div className="mt-6 flow-root">
                   <div className="-my-6 divide-y divide-gray-500/10">
-                    {/* <div className="space-y-2 py-6 font-mono text-sm">
+                    <div className="space-y-2 py-6 font-mono text-sm">
                       {navigation.map(({ name, href, colorClassName }) => (
                         <ActiveLink
                           key={href}
@@ -69,7 +69,7 @@ const Header: React.FC = () => (
                           {name}
                         </ActiveLink>
                       ))}
-                    </div> */}
+                    </div>
                   </div>
                 </div>
               </SheetDescription>
