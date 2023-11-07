@@ -2,6 +2,7 @@ from logging import getLogger
 import shutil
 from pathlib import Path
 import geopandas as gpd
+import pandas as pd
 
 from pipelines.base_pipe import (
     IntermediateBasePipe,
