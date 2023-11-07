@@ -30,7 +30,7 @@ const DataToolDetails: React.FC = () => {
   }, [location]);
 
   return (
-    <div className="absolute h-full w-full overflow-scroll bg-white px-4 py-4 md:px-6">
+    <div className="absolute h-full w-full overflow-none bg-white px-4 py-4 md:px-6">
       <div className="mb-8 flex gap-8 md:justify-between">
         <span className="max-w-lg">
           <h2 className="text-4xl font-extrabold">{table.title}</h2>
