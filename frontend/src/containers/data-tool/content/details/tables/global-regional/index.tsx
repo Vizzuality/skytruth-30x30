@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { format } from 'd3-format';
 import { useAtomValue } from 'jotai';
 
 import Table from '@/containers/data-tool/content/details/table';
@@ -128,18 +127,12 @@ const GlobalRegionalTable: React.FC = () => {
       const mpaaStats = location?.mpaa_protection_level_stats?.data;
       const lfpStats = location?.fishing_protection_level_stats?.data;
 
-      // Capitalize the location type for display on the table.
-      const capitalizedLocationType =
-        location.type.charAt(0).toUpperCase() + location.type.slice(1);
-
       // Coverage calculations
       const protectedArea = coverageStats.reduce(
         (acc, { attributes }) => acc + attributes?.cumSumProtectedArea,
         0
       );
       const coveragePercentage = (protectedArea * 100) / location.totalMarineArea;
-      const formattedCoveragePercentage =
-        format(',.2r')(coveragePercentage) == '0.0' ? '0' : format(',.2r')(coveragePercentage);
 
       // MPAs calculations
       const numMPAs =
@@ -164,13 +157,8 @@ const GlobalRegionalTable: React.FC = () => {
       );
       const fullyHighProtectedAreaPercentage =
         (fullyHighProtectedArea * 100) / globalStats.protectedArea;
-      const formattedHighProtectedAreaPercentage =
-        format(',.2r')(coveragePercentage) == '0.0'
-          ? '0'
-          : format(',.2r')(fullyHighProtectedAreaPercentage);
 
       // Highly Protected LFP calculations
-
       const lfpHighProtected = lfpStats.filter(
         ({ attributes }) =>
           attributes?.fishing_protection_level?.data?.attributes?.slug === 'highly'
@@ -180,28 +168,20 @@ const GlobalRegionalTable: React.FC = () => {
         0
       );
       const lfpHighProtectedPercentage = (lfpHighProtectedArea * 100) / globalStats.protectedArea;
-      const formattedLfpHighProtectedPercentage =
-        format(',.2r')(coveragePercentage) == '0.0'
-          ? '0'
-          : format(',.2r')(lfpHighProtectedPercentage);
 
       // Global contributions calculations
       const globalContributionPercentage = (protectedArea * 100) / globalStats.protectedArea;
-      const formattedGlobalContributionPercentage =
-        format(',.2r')(coveragePercentage) == '0.0'
-          ? '0'
-          : format(',.2r')(globalContributionPercentage);
 
       return {
         location: location.name,
-        coverage: formattedCoveragePercentage,
+        coverage: coveragePercentage,
         area: location.totalMarineArea,
-        locationType: capitalizedLocationType,
+        locationType: location.type,
         mpas: numMPAs,
         oecms: numOEMCs,
-        fullyHighProtected: formattedHighProtectedAreaPercentage,
-        highlyProtectedLFP: formattedLfpHighProtectedPercentage,
-        globalContribution: formattedGlobalContributionPercentage,
+        fullyHighProtected: fullyHighProtectedAreaPercentage,
+        highlyProtectedLFP: lfpHighProtectedPercentage,
+        globalContribution: globalContributionPercentage,
       };
     });
   }, [globalStats, locationsData]);

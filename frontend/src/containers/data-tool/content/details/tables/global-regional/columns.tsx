@@ -50,6 +50,12 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
   {
     accessorKey: 'locationType',
     header: 'Location type',
+    cell: ({ row }) => {
+      const { locationType } = row.original;
+      const capitalizedLocationType = locationType.charAt(0).toUpperCase() + locationType.slice(1);
+
+      return <>{capitalizedLocationType}</>;
+    },
   },
   {
     accessorKey: 'mpas',
@@ -98,12 +104,8 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
     cell: ({ row }) => {
       const { fullyHighProtected: value } = row.original;
       if (!value) return <>No data</>;
-      return (
-        <>
-          {value}
-          <span className="text-xs">%</span>
-        </>
-      );
+      const formattedValue = format(',.2r')(value) == '0.0' ? '0' : format(',.2r')(value);
+      return <span className="text-xs">{formattedValue}%</span>;
     },
   },
   {
@@ -117,12 +119,8 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
     cell: ({ row }) => {
       const { highlyProtectedLFP: value } = row.original;
       if (!value) return <>No data</>;
-      return (
-        <>
-          {value}
-          <span className="text-xs">%</span>
-        </>
-      );
+      const formattedValue = format(',.2r')(value) == '0.0' ? '0' : format(',.2r')(value);
+      return <span className="text-xs">{formattedValue}%</span>;
     },
   },
   {
@@ -136,12 +134,8 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
     cell: ({ row }) => {
       const { globalContribution: value } = row.original;
       if (!value) return <>No data</>;
-      return (
-        <>
-          {value}
-          <span className="text-xs">%</span>
-        </>
-      );
+      const formattedValue = format(',.2r')(value) == '0.0' ? '0' : format(',.2r')(value);
+      return <span className="text-xs">{formattedValue}%</span>;
     },
   },
 ];
