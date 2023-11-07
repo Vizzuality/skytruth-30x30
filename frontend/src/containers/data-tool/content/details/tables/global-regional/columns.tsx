@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { format } from 'd3-format';
 
 import HeaderItem from '@/containers/data-tool/content/details/table/header-item';
+import { cellFormatter } from '@/containers/data-tool/content/details/table/helpers';
 import SortingButton from '@/containers/data-tool/content/details/table/sorting-button';
 
 export type GlobalRegionalTableColumns = {
@@ -37,7 +37,7 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
       const { coverage: value } = row.original;
       if (!value) return <>&mdash;</>;
 
-      const formattedCoverage = format(',.2r')(value) == '0.0' ? '0' : format(',.2r')(value);
+      const formattedCoverage = cellFormatter.percentage(value);
 
       return (
         <span className="text-4xl font-bold">
@@ -51,10 +51,9 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
     accessorKey: 'locationType',
     header: 'Location type',
     cell: ({ row }) => {
-      const { locationType } = row.original;
-      const capitalizedLocationType = locationType.charAt(0).toUpperCase() + locationType.slice(1);
-
-      return <>{capitalizedLocationType}</>;
+      const { locationType: value } = row.original;
+      const formattedValue = cellFormatter.capitalize(value);
+      return <>{formattedValue}</>;
     },
   },
   {
@@ -85,7 +84,7 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
     ),
     cell: ({ row }) => {
       const { area: value } = row.original;
-      const formattedValue = format(',.2r')(value);
+      const formattedValue = cellFormatter.area(value);
       return (
         <span>
           {formattedValue} km<sup>2</sup>
@@ -104,7 +103,7 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
     cell: ({ row }) => {
       const { fullyHighProtected: value } = row.original;
       if (!value) return <>No data</>;
-      const formattedValue = format(',.2r')(value) == '0.0' ? '0' : format(',.2r')(value);
+      const formattedValue = cellFormatter.percentage(value);
       return <span className="text-xs">{formattedValue}%</span>;
     },
   },
@@ -119,7 +118,7 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
     cell: ({ row }) => {
       const { highlyProtectedLFP: value } = row.original;
       if (!value) return <>No data</>;
-      const formattedValue = format(',.2r')(value) == '0.0' ? '0' : format(',.2r')(value);
+      const formattedValue = cellFormatter.percentage(value);
       return <span className="text-xs">{formattedValue}%</span>;
     },
   },
@@ -134,7 +133,7 @@ const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
     cell: ({ row }) => {
       const { globalContribution: value } = row.original;
       if (!value) return <>No data</>;
-      const formattedValue = format(',.2r')(value) == '0.0' ? '0' : format(',.2r')(value);
+      const formattedValue = cellFormatter.percentage(value);
       return <span className="text-xs">{formattedValue}%</span>;
     },
   },
