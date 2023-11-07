@@ -2,20 +2,27 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
+import Link from 'next/link';
+
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 
-import ContentLoader from '@/components/ui/loader';
+import { PAGES } from '@/constants/pages';
 import { format } from '@/lib/utils/formats';
 import { layersInteractiveIdsAtom, popupAtom } from '@/store/map';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { LayerTyped } from '@/types/layers';
 
+import { useDataToolSearchParams } from '../../sync-settings';
+
+const TERMS_CLASSES = 'font-mono uppercase';
+
 const EEZLayerPopup = ({ locationId }) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
+  const searchParams = useDataToolSearchParams();
 
   const popup = useAtomValue(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
@@ -37,7 +44,7 @@ const EEZLayerPopup = ({ locationId }) => {
     }
   );
 
-  const { source, click } = layerQuery.data;
+  const { source } = layerQuery.data;
 
   const DATA = useMemo(() => {
     if (source?.type === 'vector' && rendered && popup && map) {
@@ -97,36 +104,45 @@ const EEZLayerPopup = ({ locationId }) => {
     };
   }, [map, handleMapRender]);
 
+  if (!DATA) return null;
+
   return (
-    <ContentLoader
-      data={locationQuery.data}
-      isFetching={locationQuery.isFetching}
-      isFetched={locationQuery.isFetched}
-      isError={locationQuery.isError}
-      isPlaceholderData={locationQuery.isPlaceholderData}
-      skeletonClassName="h-20 w-[250px]"
-    >
-      <h3 className="text-base font-semibold">{locationQuery.data?.attributes?.name} EEZ</h3>
-      <dl className="space-y-2">
-        {click &&
-          !!locationQuery.data &&
-          click.values.map((v) => {
-            return (
-              <div key={v.key}>
-                <dt className="text-xs font-semibold uppercase">{v.label || v.key}:</dt>
-                <dd className="text-sm">
-                  {format({
-                    id: v.format?.id,
-                    value: locationQuery.data.attributes[v.key],
-                    options: v.format?.options,
-                  })}
-                </dd>
-              </div>
-            );
-          })}
-        {click && !DATA && <div className="text-xs">No data</div>}
-      </dl>
-    </ContentLoader>
+    <>
+      <div className="space-y-2 p-4">
+        <h3 className="text-xl font-semibold">{DATA?.GEONAME}</h3>
+        {locationQuery.isFetching && !locationQuery.isFetched && (
+          <span className="text-sm">Loading...</span>
+        )}
+        {locationQuery.isFetched && !locationQuery.data && (
+          <span className="text-sm">No data available</span>
+        )}
+        {locationQuery.isFetched && locationQuery.data && (
+          <>
+            <dl className="space-y-2">
+              <dt className={TERMS_CLASSES}>Marine conservation coverage</dt>
+              <dd className="font-mono text-6xl tracking-tighter text-blue">
+                39<span className="text-xl">%</span>
+              </dd>
+              <dd className="font-mono text-xl text-blue">
+                {format({
+                  value: locationQuery.data?.attributes?.totalMarineArea,
+                  id: 'formatKM',
+                })}
+                Km<sup>2</sup>
+              </dd>
+            </dl>
+            <Link
+              className="block border border-black p-4 text-center font-mono uppercase"
+              href={`${
+                PAGES.dataTool
+              }/${locationQuery.data?.attributes?.code.toUpperCase()}?${searchParams.toString()}`}
+            >
+              Open country insights
+            </Link>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
