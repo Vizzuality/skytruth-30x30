@@ -1,7 +1,22 @@
-import { format } from 'd3-format';
+import { ColumnDef } from '@tanstack/react-table';
 
-// ! type me
-const columns = [
+import HeaderItem from '@/containers/data-tool/content/details/table/header-item';
+import { cellFormatter } from '@/containers/data-tool/content/details/table/helpers';
+import SortingButton from '@/containers/data-tool/content/details/table/sorting-button';
+
+export type GlobalRegionalTableColumns = {
+  location: string;
+  coverage: number;
+  locationType: string;
+  mpas: number;
+  oecms: number;
+  area: number;
+  fullyHighProtected: number;
+  highlyProtectedLFP: number;
+  globalContribution: number;
+};
+
+const columns: ColumnDef<GlobalRegionalTableColumns>[] = [
   {
     accessorKey: 'location',
     header: 'Location',
@@ -12,13 +27,21 @@ const columns = [
   },
   {
     accessorKey: 'coverage',
-    header: 'Coverage',
+    header: ({ column }) => (
+      <HeaderItem>
+        <SortingButton column={column} />
+        Coverage
+      </HeaderItem>
+    ),
     cell: ({ row }) => {
       const { coverage: value } = row.original;
       if (!value) return <>&mdash;</>;
+
+      const formattedCoverage = cellFormatter.percentage(value);
+
       return (
         <span className="text-4xl font-bold">
-          {value}
+          {formattedCoverage}
           <span className="text-xs">%</span>
         </span>
       );
@@ -27,21 +50,41 @@ const columns = [
   {
     accessorKey: 'locationType',
     header: 'Location type',
+    cell: ({ row }) => {
+      const { locationType: value } = row.original;
+      const formattedValue = cellFormatter.capitalize(value);
+      return <>{formattedValue}</>;
+    },
   },
   {
     accessorKey: 'mpas',
-    header: 'MPAs',
+    header: ({ column }) => (
+      <HeaderItem>
+        <SortingButton column={column} />
+        MPAs
+      </HeaderItem>
+    ),
   },
   {
     accessorKey: 'oecms',
-    header: 'OECMs',
+    header: ({ column }) => (
+      <HeaderItem>
+        <SortingButton column={column} />
+        OECMs
+      </HeaderItem>
+    ),
   },
   {
     accessorKey: 'area',
-    header: 'Area',
+    header: ({ column }) => (
+      <HeaderItem>
+        <SortingButton column={column} />
+        Area
+      </HeaderItem>
+    ),
     cell: ({ row }) => {
       const { area: value } = row.original;
-      const formattedValue = format(',.2r')(value);
+      const formattedValue = cellFormatter.area(value);
       return (
         <span>
           {formattedValue} km<sup>2</sup>
@@ -51,44 +94,47 @@ const columns = [
   },
   {
     accessorKey: 'fullyHighProtected',
-    header: 'Fully/Highly Protected',
+    header: ({ column }) => (
+      <HeaderItem>
+        <SortingButton column={column} />
+        Fully/Highly Protected
+      </HeaderItem>
+    ),
     cell: ({ row }) => {
       const { fullyHighProtected: value } = row.original;
       if (!value) return <>No data</>;
-      return (
-        <>
-          {value}
-          <span className="text-xs">%</span>
-        </>
-      );
+      const formattedValue = cellFormatter.percentage(value);
+      return <span className="text-xs">{formattedValue}%</span>;
     },
   },
   {
     accessorKey: 'highlyProtectedLFP',
-    header: 'Highly Protected LFP',
+    header: ({ column }) => (
+      <HeaderItem>
+        <SortingButton column={column} />
+        Highly Protected LFP
+      </HeaderItem>
+    ),
     cell: ({ row }) => {
       const { highlyProtectedLFP: value } = row.original;
       if (!value) return <>No data</>;
-      return (
-        <>
-          {value}
-          <span className="text-xs">%</span>
-        </>
-      );
+      const formattedValue = cellFormatter.percentage(value);
+      return <span className="text-xs">{formattedValue}%</span>;
     },
   },
   {
     accessorKey: 'globalContribution',
-    header: 'Global contribution',
+    header: ({ column }) => (
+      <HeaderItem>
+        <SortingButton column={column} />
+        Global contribution
+      </HeaderItem>
+    ),
     cell: ({ row }) => {
       const { globalContribution: value } = row.original;
       if (!value) return <>No data</>;
-      return (
-        <>
-          {value}
-          <span className="text-xs">%</span>
-        </>
-      );
+      const formattedValue = cellFormatter.percentage(value);
+      return <span className="text-xs">{formattedValue}%</span>;
     },
   },
 ];
