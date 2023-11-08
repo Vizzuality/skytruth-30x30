@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { ComponentProps, useCallback } from 'react';
 
 import { LuChevronDown, LuChevronUp } from 'react-icons/lu';
 
@@ -8,6 +8,7 @@ import { Switch } from '@/components/ui/switch';
 import {
   useSyncMapLayers,
   useSyncMapLayerSettings,
+  useSyncMapSettings,
 } from '@/containers/data-tool/content/map/sync-settings';
 import { useGetLayers } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
@@ -19,6 +20,7 @@ const TABS_ICONS_CLASSES = 'w-5 h-5 -translate-y-[2px]';
 const LayersDropdown = (): JSX.Element => {
   const [activeLayers, setMapLayers] = useSyncMapLayers();
   const [, setLayerSettings] = useSyncMapLayerSettings();
+  const [{ labels }, setMapSettings] = useSyncMapSettings();
 
   const layersQuery = useGetLayers(
     {
@@ -49,6 +51,16 @@ const LayersDropdown = (): JSX.Element => {
       }));
     },
     [activeLayers, setLayerSettings, setMapLayers]
+  );
+
+  const handleLabelsChange = useCallback(
+    (active: Parameters<ComponentProps<typeof Switch>['onCheckedChange']>[0]) => {
+      setMapSettings((prev) => ({
+        ...prev,
+        labels: active,
+      }));
+    },
+    [setMapSettings]
   );
 
   return (
@@ -83,7 +95,7 @@ const LayersDropdown = (): JSX.Element => {
           </ul>
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible defaultOpen={labels}>
         <CollapsibleTrigger
           className={`${COLLAPSIBLE_TRIGGER_CLASSES} pb-0 data-[state=open]:pb-2`}
         >
@@ -94,11 +106,7 @@ const LayersDropdown = (): JSX.Element => {
         <CollapsibleContent>
           <ul className="my-3 flex flex-col space-y-5">
             <li className="flex items-start gap-2">
-              <Switch
-                id="labels-switch"
-                // checked={isActive}
-                onCheckedChange={() => {}}
-              />
+              <Switch id="labels-switch" checked={labels} onCheckedChange={handleLabelsChange} />
               <Label htmlFor="labels-switch" className="cursor-pointer">
                 Labels
               </Label>
