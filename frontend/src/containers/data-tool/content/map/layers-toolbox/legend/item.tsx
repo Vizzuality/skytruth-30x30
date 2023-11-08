@@ -1,17 +1,36 @@
-import { FC } from 'react';
+import { FC, ReactElement, isValidElement, useMemo } from 'react';
 
-import { LayerTyped } from '@/types/layers';
+import { parseConfig } from '@/lib/json-converter';
+import { LayerTyped, LegendConfig } from '@/types/layers';
 
 export interface LegendItemsProps {
-  items: LayerTyped['legend_config'];
+  config: LayerTyped['legend_config'];
 }
 
-const LegendItems: FC<LegendItemsProps> = ({ items }) => {
-  switch (items.type) {
+const LegendItem: FC<LegendItemsProps> = ({ config }) => {
+  const { type, items } = config;
+
+  const LEGEND_ITEM_COMPONENT = useMemo(() => {
+    const l = parseConfig<LegendConfig | ReactElement | null>({
+      config,
+      params_config: [],
+      settings: {},
+    });
+
+    if (!l) return null;
+
+    if (isValidElement(l)) {
+      return l;
+    }
+
+    return null;
+  }, [config]);
+
+  switch (type) {
     case 'basic':
       return (
         <ul className="flex w-full flex-col space-y-1">
-          {items.items.map(({ value, color }) => (
+          {items.map(({ value, color }) => (
             <li key={`${value}`} className="flex space-x-2 text-xs">
               <div
                 className="mt-0.5 h-3 w-3 flex-shrink-0 border border-gray-300"
@@ -29,12 +48,12 @@ const LegendItems: FC<LegendItemsProps> = ({ items }) => {
       return (
         <>
           <ul className="flex w-full">
-            {items.items.map(({ color }) => (
+            {items.map(({ color }) => (
               <li
                 key={`${color}`}
                 className="h-2 flex-shrink-0"
                 style={{
-                  width: `${100 / items.items.length}%`,
+                  width: `${100 / items.length}%`,
                   backgroundColor: color,
                 }}
               />
@@ -42,12 +61,12 @@ const LegendItems: FC<LegendItemsProps> = ({ items }) => {
           </ul>
 
           <ul className="mt-1 flex w-full">
-            {items.items.map(({ value }) => (
+            {items.map(({ value }) => (
               <li
                 key={`${value}`}
                 className="flex-shrink-0 text-center text-xs"
                 style={{
-                  width: `${100 / items.items.length}%`,
+                  width: `${100 / items.length}%`,
                 }}
               >
                 {value}
@@ -63,14 +82,12 @@ const LegendItems: FC<LegendItemsProps> = ({ items }) => {
           <div
             className="flex h-2 w-full"
             style={{
-              backgroundImage: `linear-gradient(to right, ${items.items
-                .map((i) => i.color)
-                .join(',')})`,
+              backgroundImage: `linear-gradient(to right, ${items.map((i) => i.color).join(',')})`,
             }}
           />
 
           <ul className="mt-1 flex w-full justify-between">
-            {items.items
+            {items
               .filter(({ value }) => typeof value !== 'undefined' && value !== null)
               .map(({ value }) => (
                 <li key={`${value}`} className="flex-shrink-0 text-xs">
@@ -82,8 +99,8 @@ const LegendItems: FC<LegendItemsProps> = ({ items }) => {
       );
 
     default:
-      return null;
+      return LEGEND_ITEM_COMPONENT;
   }
 };
 
-export default LegendItems;
+export default LegendItem;

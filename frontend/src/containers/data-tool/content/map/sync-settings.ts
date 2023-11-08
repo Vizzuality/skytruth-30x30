@@ -7,8 +7,10 @@ import { LayerSettings } from '@/types/layers';
 
 const DEFAULT_SYNC_MAP_SETTINGS: {
   bbox: LngLatBoundsLike;
+  labels: boolean;
 } = {
   bbox: null,
+  labels: true,
 };
 
 export const useSyncMapSettings = () => {

@@ -12,6 +12,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import Map, { ZoomControls, Attributions, DrawControls, Drawing } from '@/components/map';
 import SidebarContent from '@/components/sidebar-content';
 // import Popup from '@/containers/map/popup';
+import LabelsManager from '@/containers/data-tool/content/map/labels-manager';
 import LayersToolbox from '@/containers/data-tool/content/map/layers-toolbox';
 import { useSyncMapSettings } from '@/containers/data-tool/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
@@ -192,6 +193,7 @@ const DataToolMap: React.FC = () => {
           >
             {/* <Popup /> */}
           </div>
+          <LabelsManager />
           <LayersToolbox />
           <ZoomControls />
           <DrawControls />
