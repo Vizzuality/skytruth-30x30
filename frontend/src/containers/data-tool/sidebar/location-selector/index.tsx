@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -18,23 +18,33 @@ import { cn } from '@/lib/classnames';
 import { locationAtom } from '@/store/location';
 import { useGetLocations } from '@/types/generated/location';
 
+import { useDataToolSearchParams } from '../../content/map/sync-settings';
+
 type LocationSelectorProps = {
-  className: string;
+  className: HTMLDivElement['className'];
 };
 
 const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
   const location = useAtomValue(locationAtom);
-  const router = useRouter();
+  const { push } = useRouter();
+  const searchParams = useDataToolSearchParams();
 
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
-  const { data: locationsData } = useGetLocations();
+  const { data: locationsData } = useGetLocations(null, {
+    query: {
+      placeholderData: { data: [] },
+      select: ({ data }) => data,
+    },
+  });
 
-  const locations = locationsData?.data || [];
+  const handleLocationSelected = useCallback(
+    async (locationCode: string) => {
+      setLocationPopoverOpen(false);
 
-  const handleLocationSelected = (locationCode: string) => {
-    setLocationPopoverOpen(false);
-    void router.replace(`${PAGES.dataTool}/${locationCode.toUpperCase()}`);
-  };
+      await push(`${PAGES.dataTool}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
+    },
+    [push, searchParams]
+  );
 
   return (
     <div className={cn(className)}>
@@ -47,7 +57,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
             <CommandInput placeholder="Search country or region" />
             <CommandEmpty>No result</CommandEmpty>
             <CommandGroup className="mt-4 max-h-64 overflow-y-scroll">
-              {locations.map(({ attributes }) => {
+              {locationsData.map(({ attributes }) => {
                 const { name, code, type } = attributes;
 
                 return (

@@ -123,6 +123,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "slug",
+        "content",
+        "createdAt"
+      ],
       "edit": [
         [
           {
@@ -140,12 +146,6 @@
             "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "slug",
-        "content",
-        "data_sources"
       ]
     }
   },

@@ -1,3 +1,4 @@
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 import type { GetServerSideProps } from 'next';
 
@@ -6,11 +7,13 @@ import Sidebar from '@/containers/data-tool/sidebar';
 import Layout from '@/layouts/data-tool';
 import { locationAtom } from '@/store/location';
 import { getLocations } from '@/types/generated/location';
-import { Location } from '@/types/generated/strapi.schemas';
+import { Location, LocationGroupsDataItem } from '@/types/generated/strapi.schemas';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
   const { locationCode } = query;
+
+  const queryClient = new QueryClient();
 
   const { data: locationsData } = await getLocations({
     filters: {
@@ -20,9 +23,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const location = locationsData[0];
 
+  queryClient.setQueryData<LocationGroupsDataItem>(['locations', locationCode], location);
+
   if (!location) return { notFound: true };
 
-  return { props: { location: location?.attributes } };
+  return {
+    props: {
+      location: location?.attributes,
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
 };
 
 export default function Page({ location }: { location: Location }) {
