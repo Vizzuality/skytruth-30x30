@@ -12,7 +12,7 @@ const DetailsButton: React.FC = () => {
 
   return (
     <Button
-      className="flex justify-between"
+      className="flex justify-between px-5 md:px-8"
       variant="sidebar-details"
       size="full"
       onClick={handleButtonClick}
