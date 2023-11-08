@@ -9,13 +9,14 @@ import {
 
 import { cn } from '@/lib/classnames';
 
+// ! todo: type columns,data properly
 const DataToolTable = ({ columns, data }) => {
-  const tableRef = useRef(null);
-  const firstColumnRef = useRef(null);
+  const tableRef = useRef<HTMLTableElement>();
+  const firstColumnRef = useRef<HTMLTableCellElement>(null);
 
   const [tableDimensions, setTableDimensions] = useState<{
-    firstColumnWidth: number;
-    tableWidth: number;
+    firstColumnWidth: HTMLTableCellElement['offsetWidth'];
+    tableWidth: HTMLTableElement['offsetWidth'];
     availableBarWidth: number;
   }>({
     firstColumnWidth: 0,
@@ -23,7 +24,7 @@ const DataToolTable = ({ columns, data }) => {
     availableBarWidth: 0,
   });
 
-  const table = useReactTable({
+  const table = useReactTable<typeof data>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -77,8 +78,6 @@ const DataToolTable = ({ columns, data }) => {
       <tbody>
         {hasData &&
           table.getRowModel().rows.map((row) => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             const coverage = row.original?.coverage || null; // %;
             const offset = tableDimensions.firstColumnWidth;
             const barWidth = (coverage * tableDimensions.availableBarWidth) / 100;
