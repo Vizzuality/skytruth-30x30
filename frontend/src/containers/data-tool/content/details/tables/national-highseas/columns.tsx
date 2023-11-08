@@ -1,5 +1,6 @@
 import { format } from 'd3-format';
 
+// ! type me
 const columns = [
   {
     accessorKey: 'protectedArea',
