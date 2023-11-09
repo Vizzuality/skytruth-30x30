@@ -1920,16 +1920,238 @@
 					},
 					"styles": [
 						{
-							"id": "ezz-layer",
+							"id": "ezz-layer-fill",
 							"type": "fill",
 							"paint": {
 								"fill-color": "#526EFF",
-								"fill-opacity": {
+								"fill-opacity": [
+									"case",
+									[
+										"all",
+										[
+											"!=",
+											[
+												"get",
+												"ISO_SOV1"
+											],
+											"@@#params.location"
+										],
+										[
+											"!=",
+											[
+												"get",
+												"ISO_SOV2"
+											],
+											"@@#params.location"
+										],
+										[
+											"!=",
+											[
+												"get",
+												"ISO_SOV3"
+											],
+											"@@#params.location"
+										]
+									],
+									{
+										"o": "@@#params.opacity",
+										"base": 0.2,
+										"@@function": "setOpacity"
+									},
+									{
+										"o": "@@#params.opacity",
+										"base": 0.5,
+										"@@function": "setOpacity"
+									}
+								]
+							},
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "eez_v11"
+						},
+						{
+							"id": "ezz-layer-line",
+							"type": "line",
+							"paint": {
+								"line-color": "#526EFF",
+								"line-width": [
+									"case",
+									[
+										"boolean",
+										[
+											"feature-state",
+											"hover"
+										],
+										false
+									],
+									2,
+									0
+								],
+								"line-opacity": {
 									"o": "@@#params.opacity",
-									"base": 0.2,
+									"base": 1,
 									"@@function": "setOpacity"
 								}
 							},
+							"filter": [
+								"all",
+								[
+									"!=",
+									[
+										"get",
+										"ISO_SOV1"
+									],
+									"@@#params.location"
+								],
+								[
+									"!=",
+									[
+										"get",
+										"ISO_SOV2"
+									],
+									"@@#params.location"
+								],
+								[
+									"!=",
+									[
+										"get",
+										"ISO_SOV3"
+									],
+									"@@#params.location"
+								],
+								[
+									"!=",
+									[
+										"get",
+										"POL_TYPE"
+									],
+									"Overlapping claim"
+								]
+							],
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "eez_v11"
+						},
+						{
+							"id": "ezz-layer-dashed-line",
+							"type": "line",
+							"paint": {
+								"line-color": "#526EFF",
+								"line-width": 2,
+								"line-opacity": {
+									"o": "@@#params.opacity",
+									"base": 1,
+									"@@function": "setOpacity"
+								}
+							},
+							"filter": [
+								"all",
+								[
+									"any",
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV1"
+										],
+										"@@#params.location"
+									],
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV2"
+										],
+										"@@#params.location"
+									],
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV3"
+										],
+										"@@#params.location"
+									]
+								],
+								[
+									"!=",
+									[
+										"get",
+										"POL_TYPE"
+									],
+									"Overlapping claim"
+								]
+							],
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "eez_v11"
+						},
+						{
+							"id": "ezz-layer-claimed-line",
+							"type": "line",
+							"paint": {
+								"line-color": "#f00",
+								"line-width": 2,
+								"line-opacity": {
+									"o": "@@#params.opacity",
+									"base": 1,
+									"@@function": "setOpacity"
+								},
+								"line-dasharray": [
+									2,
+									2
+								]
+							},
+							"filter": [
+								"all",
+								[
+									"any",
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV1"
+										],
+										"@@#params.location"
+									],
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV2"
+										],
+										"@@#params.location"
+									],
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV3"
+										],
+										"@@#params.location"
+									]
+								],
+								[
+									"==",
+									[
+										"get",
+										"POL_TYPE"
+									],
+									"Overlapping claim"
+								]
+							],
 							"layout": {
 								"visibility": {
 									"v": "@@#params.visibility",
@@ -1948,69 +2170,26 @@
 					{
 						"key": "visibility",
 						"default": true
+					},
+					{
+						"key": "location"
 					}
 				],
 				"legend_config": {
-					"type": "basic",
-					"items": [
-						{
-							"color": "#f7f7f7",
-							"value": 0
-						},
-						{
-							"color": "#d9f0a3",
-							"value": 1
-						},
-						{
-							"color": "#000000",
-							"value": 2
-						},
-						{
-							"color": "#78c679",
-							"value": 3
-						},
-						{
-							"color": "#31a354",
-							"value": 4
-						}
-					]
+					"@@type": "EEZLayerLegend"
 				},
 				"interaction_config": {
+					"@@type": "EEZLayerPopup",
 					"events": [
 						{
 							"type": "click",
-							"values": [
-								{
-									"key": "name"
-								},
-								{
-									"key": "bws",
-									"type": "number",
-									"label": "BWS label",
-									"format": {
-										"id": "formatPercentage"
-									}
-								},
-								{
-									"key": "pop",
-									"type": "number",
-									"label": "Pop",
-									"format": {
-										"id": "formatHA",
-										"options": {}
-									}
-								},
-								{
-									"key": "rfr",
-									"type": "number"
-								}
-							]
+							"values": []
 						}
 					],
 					"enabled": true
 				},
 				"createdAt": "2023-10-25T10:48:52.150Z",
-				"updatedAt": "2023-10-25T16:24:21.071Z",
+				"updatedAt": "2023-11-07T15:49:05.439Z",
 				"publishedAt": "2023-10-25T10:56:04.905Z",
 				"metadata": 3,
 				"createdBy": null,
@@ -2420,6 +2599,16 @@
 				"data_sources": [
 					3
 				],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"17": {
+				"id": 17,
+				"slug": "eez-legend",
+				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ipsum elit, mollis nec est vel, imperdiet tristique lectus. Praesent nulla sem, efficitur sed lobortis auctor, sodales sodales nunc. Suspendisse sit amet lectus ac magna dictum sollicitudin. Nulla id vehicula elit, in gravida nibh. Praesent a convallis justo. ",
+				"createdAt": "2023-11-08T15:56:37.635Z",
+				"updatedAt": "2023-11-08T15:56:37.635Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			}
