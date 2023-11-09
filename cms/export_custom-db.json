@@ -1920,16 +1920,238 @@
 					},
 					"styles": [
 						{
-							"id": "ezz-layer",
+							"id": "ezz-layer-fill",
 							"type": "fill",
 							"paint": {
 								"fill-color": "#526EFF",
-								"fill-opacity": {
+								"fill-opacity": [
+									"case",
+									[
+										"all",
+										[
+											"!=",
+											[
+												"get",
+												"ISO_SOV1"
+											],
+											"@@#params.location"
+										],
+										[
+											"!=",
+											[
+												"get",
+												"ISO_SOV2"
+											],
+											"@@#params.location"
+										],
+										[
+											"!=",
+											[
+												"get",
+												"ISO_SOV3"
+											],
+											"@@#params.location"
+										]
+									],
+									{
+										"o": "@@#params.opacity",
+										"base": 0.2,
+										"@@function": "setOpacity"
+									},
+									{
+										"o": "@@#params.opacity",
+										"base": 0.5,
+										"@@function": "setOpacity"
+									}
+								]
+							},
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "eez_v11"
+						},
+						{
+							"id": "ezz-layer-line",
+							"type": "line",
+							"paint": {
+								"line-color": "#526EFF",
+								"line-width": [
+									"case",
+									[
+										"boolean",
+										[
+											"feature-state",
+											"hover"
+										],
+										false
+									],
+									2,
+									0
+								],
+								"line-opacity": {
 									"o": "@@#params.opacity",
-									"base": 0.2,
+									"base": 1,
 									"@@function": "setOpacity"
 								}
 							},
+							"filter": [
+								"all",
+								[
+									"!=",
+									[
+										"get",
+										"ISO_SOV1"
+									],
+									"@@#params.location"
+								],
+								[
+									"!=",
+									[
+										"get",
+										"ISO_SOV2"
+									],
+									"@@#params.location"
+								],
+								[
+									"!=",
+									[
+										"get",
+										"ISO_SOV3"
+									],
+									"@@#params.location"
+								],
+								[
+									"!=",
+									[
+										"get",
+										"POL_TYPE"
+									],
+									"Overlapping claim"
+								]
+							],
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "eez_v11"
+						},
+						{
+							"id": "ezz-layer-dashed-line",
+							"type": "line",
+							"paint": {
+								"line-color": "#526EFF",
+								"line-width": 2,
+								"line-opacity": {
+									"o": "@@#params.opacity",
+									"base": 1,
+									"@@function": "setOpacity"
+								}
+							},
+							"filter": [
+								"all",
+								[
+									"any",
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV1"
+										],
+										"@@#params.location"
+									],
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV2"
+										],
+										"@@#params.location"
+									],
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV3"
+										],
+										"@@#params.location"
+									]
+								],
+								[
+									"!=",
+									[
+										"get",
+										"POL_TYPE"
+									],
+									"Overlapping claim"
+								]
+							],
+							"layout": {
+								"visibility": {
+									"v": "@@#params.visibility",
+									"@@function": "setVisibility"
+								}
+							},
+							"source-layer": "eez_v11"
+						},
+						{
+							"id": "ezz-layer-claimed-line",
+							"type": "line",
+							"paint": {
+								"line-color": "#f00",
+								"line-width": 2,
+								"line-opacity": {
+									"o": "@@#params.opacity",
+									"base": 1,
+									"@@function": "setOpacity"
+								},
+								"line-dasharray": [
+									2,
+									2
+								]
+							},
+							"filter": [
+								"all",
+								[
+									"any",
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV1"
+										],
+										"@@#params.location"
+									],
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV2"
+										],
+										"@@#params.location"
+									],
+									[
+										"==",
+										[
+											"get",
+											"ISO_SOV3"
+										],
+										"@@#params.location"
+									]
+								],
+								[
+									"==",
+									[
+										"get",
+										"POL_TYPE"
+									],
+									"Overlapping claim"
+								]
+							],
 							"layout": {
 								"visibility": {
 									"v": "@@#params.visibility",
@@ -1948,69 +2170,26 @@
 					{
 						"key": "visibility",
 						"default": true
+					},
+					{
+						"key": "location"
 					}
 				],
 				"legend_config": {
-					"type": "basic",
-					"items": [
-						{
-							"color": "#f7f7f7",
-							"value": 0
-						},
-						{
-							"color": "#d9f0a3",
-							"value": 1
-						},
-						{
-							"color": "#000000",
-							"value": 2
-						},
-						{
-							"color": "#78c679",
-							"value": 3
-						},
-						{
-							"color": "#31a354",
-							"value": 4
-						}
-					]
+					"@@type": "EEZLayerLegend"
 				},
 				"interaction_config": {
+					"@@type": "EEZLayerPopup",
 					"events": [
 						{
 							"type": "click",
-							"values": [
-								{
-									"key": "name"
-								},
-								{
-									"key": "bws",
-									"type": "number",
-									"label": "BWS label",
-									"format": {
-										"id": "formatPercentage"
-									}
-								},
-								{
-									"key": "pop",
-									"type": "number",
-									"label": "Pop",
-									"format": {
-										"id": "formatHA",
-										"options": {}
-									}
-								},
-								{
-									"key": "rfr",
-									"type": "number"
-								}
-							]
+							"values": []
 						}
 					],
 					"enabled": true
 				},
 				"createdAt": "2023-10-25T10:48:52.150Z",
-				"updatedAt": "2023-10-25T16:24:21.071Z",
+				"updatedAt": "2023-11-07T15:49:05.439Z",
 				"publishedAt": "2023-10-25T10:56:04.905Z",
 				"metadata": 3,
 				"createdBy": null,
@@ -2153,6 +2332,98 @@
 				"updatedBy": null
 			}
 		},
+		"api::data-source.data-source": {
+			"1": {
+				"id": 1,
+				"slug": "mpatlas",
+				"title": "Marine Protection Atlas: MPAtlas",
+				"url": "https://mpatlas.org",
+				"createdAt": "2023-10-30T09:53:10.701Z",
+				"updatedAt": "2023-10-30T09:53:10.701Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"2": {
+				"id": 2,
+				"slug": "protected-seas",
+				"title": "ProtectedSeas",
+				"url": "https://navigatormap.org",
+				"createdAt": "2023-10-30T09:54:26.632Z",
+				"updatedAt": "2023-10-30T09:54:26.632Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"3": {
+				"id": 3,
+				"slug": "protected-planet",
+				"title": "Protected Planet",
+				"url": "https://www.protectedplanet.net/en/search-areas?geo_type=site&filters%5Bis_type%5D%5B%5D=marine",
+				"createdAt": "2023-10-30T09:56:51.848Z",
+				"updatedAt": "2023-10-30T09:56:51.848Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"4": {
+				"id": 4,
+				"slug": "ocean-data-viewer-seamounts",
+				"title": "Ocean Data Viewer: Global Distribution of Seamounts & Knolls",
+				"url": "https://data.unep-wcmc.org/datasets/41",
+				"createdAt": "2023-10-30T09:57:40.597Z",
+				"updatedAt": "2023-10-30T09:57:40.597Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"5": {
+				"id": 5,
+				"slug": "ocean-data-viewer-cold-water-corals",
+				"title": "Ocean Data Viewer: Global Distribution of Cold-water Corals",
+				"url": "https://data.unep-wcmc.org/datasets/3",
+				"createdAt": "2023-10-30T09:58:13.226Z",
+				"updatedAt": "2023-10-30T09:58:13.226Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"6": {
+				"id": 6,
+				"slug": "ocean-data-viewer-warm-water-corals",
+				"title": "Ocean Data Viewer: Global Distribution of Coral Reefs",
+				"url": "https://data.unep-wcmc.org/datasets/1",
+				"createdAt": "2023-10-30T09:59:07.253Z",
+				"updatedAt": "2023-10-30T09:59:07.253Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"7": {
+				"id": 7,
+				"slug": "ocean-data-viewer-saltmarshes",
+				"title": "Ocean Data Viewer: Global Distribution of Saltmarshes",
+				"url": "http://data.unep-wcmc.org/datasets/43",
+				"createdAt": "2023-10-30T10:00:11.900Z",
+				"updatedAt": "2023-10-30T10:00:11.900Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"8": {
+				"id": 8,
+				"slug": "ocean-data-viewer-seagrass",
+				"title": "Ocean Data Viewer: Global Distribution of Seagrasses",
+				"url": "https://data.unep-wcmc.org/datasets/7",
+				"createdAt": "2023-10-30T10:00:56.546Z",
+				"updatedAt": "2023-10-30T10:00:56.546Z",
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"9": {
+				"id": 9,
+				"slug": "global-mangrove-watch",
+				"title": "Global Mangrove Watch",
+				"url": "https://www.globalmangrovewatch.org/?category=%22all_datasets%22",
+				"createdAt": "2023-10-30T10:01:48.334Z",
+				"updatedAt": "2023-10-30T10:01:48.334Z",
+				"createdBy": null,
+				"updatedBy": null
+			}
+		},
 		"api::data-info.data-info": {
 			"1": {
 				"id": 1,
@@ -2160,6 +2431,7 @@
 				"content": "High Seas refers to all Marine Areas Beyond National Jurisdiction. It is also abbreviated as ABNJ. ",
 				"createdAt": "2023-10-24T12:43:33.345Z",
 				"updatedAt": "2023-10-24T13:27:46.961Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2169,6 +2441,7 @@
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
 				"createdAt": "2023-10-24T12:56:35.929Z",
 				"updatedAt": "2023-10-24T13:27:46.981Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2178,6 +2451,7 @@
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
 				"createdAt": "2023-10-24T12:57:18.317Z",
 				"updatedAt": "2023-10-24T13:27:47.004Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2187,6 +2461,7 @@
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
 				"createdAt": "2023-10-24T12:57:30.213Z",
 				"updatedAt": "2023-10-24T13:27:47.027Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2195,7 +2470,10 @@
 				"slug": "protection-level",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
 				"createdAt": "2023-10-24T12:58:26.202Z",
-				"updatedAt": "2023-10-24T13:27:47.048Z",
+				"updatedAt": "2023-10-30T10:03:27.324Z",
+				"data_sources": [
+					1
+				],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2204,7 +2482,10 @@
 				"slug": "fishing-protection-level",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
 				"createdAt": "2023-10-24T12:58:54.312Z",
-				"updatedAt": "2023-10-24T13:27:47.078Z",
+				"updatedAt": "2023-10-30T10:05:49.680Z",
+				"data_sources": [
+					2
+				],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2214,6 +2495,7 @@
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
 				"createdAt": "2023-10-24T12:59:13.493Z",
 				"updatedAt": "2023-10-24T13:27:47.098Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2223,6 +2505,7 @@
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
 				"createdAt": "2023-10-24T12:59:30.211Z",
 				"updatedAt": "2023-10-24T13:27:47.122Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2232,6 +2515,7 @@
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
 				"createdAt": "2023-10-24T13:02:15.344Z",
 				"updatedAt": "2023-10-24T13:27:47.145Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2241,6 +2525,7 @@
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.\n\n",
 				"createdAt": "2023-10-24T13:04:28.869Z",
 				"updatedAt": "2023-10-24T13:27:47.165Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2249,7 +2534,10 @@
 				"slug": "fully-highly-protected",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.",
 				"createdAt": "2023-10-25T12:27:41.510Z",
-				"updatedAt": "2023-10-25T12:27:41.510Z",
+				"updatedAt": "2023-10-30T10:03:02.842Z",
+				"data_sources": [
+					1
+				],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2258,7 +2546,10 @@
 				"slug": "highly-protected-lfp",
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.",
 				"createdAt": "2023-10-25T12:28:15.181Z",
-				"updatedAt": "2023-10-25T12:28:15.181Z",
+				"updatedAt": "2023-10-30T10:03:13.013Z",
+				"data_sources": [
+					2
+				],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2268,6 +2559,7 @@
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.",
 				"createdAt": "2023-10-25T12:32:58.426Z",
 				"updatedAt": "2023-10-25T12:32:58.426Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			},
@@ -2277,6 +2569,46 @@
 				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque a velit quis euismod. Nam efficitur pulvinar tincidunt. Duis sollicitudin ligula lacinia pretium scelerisque. Quisque aliquam vel ipsum non porta. Donec sagittis ex sed urna maximus finibus. Pellentesque ac lobortis dui. Donec eget ex volutpat, hendrerit tellus ut, bibendum lacus. Pellentesque mi lorem, dictum in dui vitae, semper vulputate mauris. Phasellus id faucibus mi, a finibus orci. Suspendisse efficitur risus aliquet ex ornare, vitae pellentesque orci consequat.",
 				"createdAt": "2023-10-25T12:34:03.437Z",
 				"updatedAt": "2023-10-25T12:34:03.437Z",
+				"data_sources": [],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"15": {
+				"id": 15,
+				"slug": "habitats-widget",
+				"content": null,
+				"createdAt": "2023-10-30T10:04:13.391Z",
+				"updatedAt": "2023-10-30T10:04:13.391Z",
+				"data_sources": [
+					9,
+					5,
+					7,
+					8,
+					4,
+					6
+				],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"16": {
+				"id": 16,
+				"slug": "coverage-widget",
+				"content": null,
+				"createdAt": "2023-10-30T10:04:33.587Z",
+				"updatedAt": "2023-10-30T10:04:33.587Z",
+				"data_sources": [
+					3
+				],
+				"createdBy": null,
+				"updatedBy": null
+			},
+			"17": {
+				"id": 17,
+				"slug": "eez-legend",
+				"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ipsum elit, mollis nec est vel, imperdiet tristique lectus. Praesent nulla sem, efficitur sed lobortis auctor, sodales sodales nunc. Suspendisse sit amet lectus ac magna dictum sollicitudin. Nulla id vehicula elit, in gravida nibh. Praesent a convallis justo. ",
+				"createdAt": "2023-11-08T15:56:37.635Z",
+				"updatedAt": "2023-11-08T15:56:37.635Z",
+				"data_sources": [],
 				"createdBy": null,
 				"updatedBy": null
 			}
