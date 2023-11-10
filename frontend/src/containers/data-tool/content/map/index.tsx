@@ -10,13 +10,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import Map, { ZoomControls, Attributions, DrawControls, Drawing } from '@/components/map';
-import SidebarContent from '@/components/sidebar-content';
 // import Popup from '@/containers/map/popup';
 import LabelsManager from '@/containers/data-tool/content/map/labels-manager';
 import LayersToolbox from '@/containers/data-tool/content/map/layers-toolbox';
 import { useSyncMapSettings } from '@/containers/data-tool/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
-import { sidebarAtom } from '@/store/data-tool';
 import {
   drawStateAtom,
   layersInteractiveAtom,
@@ -39,7 +37,6 @@ const DataToolMap: React.FC = () => {
   const setPopup = useSetAtom(popupAtom);
   const queryClient = useQueryClient();
   const { locationCode } = useParams();
-  const isSidebarOpen = useAtomValue(sidebarAtom);
   const hoveredPolygonId = useRef<string | number | null>(null);
 
   const locationData = queryClient.getQueryData<LocationResponseDataObject>([
@@ -134,18 +131,6 @@ const DataToolMap: React.FC = () => {
   const bounds = customBbox ?? (locationData?.attributes?.bounds as LngLatBoundsLike);
 
   useEffect(() => {
-    map?.easeTo({
-      padding: {
-        top: 0,
-        bottom: 0,
-        left: isSidebarOpen ? 430 : 0,
-        right: 0,
-      },
-      duration: 500,
-    });
-  }, [isSidebarOpen, map]);
-
-  useEffect(() => {
     const { queryKey } = getGetLocationsQueryOptions();
     const d = queryClient.getQueryData<LocationListResponse>(queryKey);
     if (d) {
@@ -155,17 +140,16 @@ const DataToolMap: React.FC = () => {
         padding: {
           top: 0,
           bottom: 0,
-          left: isSidebarOpen ? 430 : 0,
+          left: 0,
           right: 0,
         },
       });
     }
-  }, [queryClient, locationCode, isSidebarOpen, map]);
+  }, [queryClient, locationCode, map]);
 
   return (
-    <div className="absolute left-0 flex h-full w-full flex-col md:flex-row">
+    <div className="absolute left-0 h-full w-full">
       <Map
-        className="absolute left-0 w-full"
         initialViewState={{
           bounds,
           fitBoundsOptions: {
@@ -202,9 +186,6 @@ const DataToolMap: React.FC = () => {
           <Attributions />
         </>
       </Map>
-      <div className="h-1/2 flex-shrink-0 bg-white p-6 pb-3 md:hidden">
-        <SidebarContent />
-      </div>
     </div>
   );
 };
