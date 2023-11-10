@@ -15,7 +15,6 @@ import LabelsManager from '@/containers/data-tool/content/map/labels-manager';
 import LayersToolbox from '@/containers/data-tool/content/map/layers-toolbox';
 import { useSyncMapSettings } from '@/containers/data-tool/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
-import { sidebarAtom } from '@/store/data-tool';
 import {
   drawStateAtom,
   layersInteractiveAtom,
@@ -38,7 +37,6 @@ const DataToolMap: React.FC = () => {
   const setPopup = useSetAtom(popupAtom);
   const queryClient = useQueryClient();
   const { locationCode } = useParams();
-  const isSidebarOpen = useAtomValue(sidebarAtom);
   const hoveredPolygonId = useRef<string | number | null>(null);
 
   const locationData = queryClient.getQueryData<LocationResponseDataObject>([
@@ -133,18 +131,6 @@ const DataToolMap: React.FC = () => {
   const bounds = customBbox ?? (locationData?.attributes?.bounds as LngLatBoundsLike);
 
   useEffect(() => {
-    map?.easeTo({
-      padding: {
-        top: 0,
-        bottom: 0,
-        left: isSidebarOpen ? 430 : 0,
-        right: 0,
-      },
-      duration: 500,
-    });
-  }, [isSidebarOpen, map]);
-
-  useEffect(() => {
     const { queryKey } = getGetLocationsQueryOptions();
     const d = queryClient.getQueryData<LocationListResponse>(queryKey);
     if (d) {
@@ -154,12 +140,12 @@ const DataToolMap: React.FC = () => {
         padding: {
           top: 0,
           bottom: 0,
-          left: isSidebarOpen ? 430 : 0,
+          left: 0,
           right: 0,
         },
       });
     }
-  }, [queryClient, locationCode, isSidebarOpen, map]);
+  }, [queryClient, locationCode, map]);
 
   return (
     <div className="absolute left-0 h-full w-full">
