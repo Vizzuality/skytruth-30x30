@@ -159,8 +159,6 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
     ];
-
-    return columns;
   }, [filters, onFiltersChange]);
 
   return columns;
