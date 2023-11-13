@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "data_tools",
+  "info": {
+    "singularName": "data-tool",
+    "pluralName": "data-tools",
+    "displayName": "Data Tool",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "site": {
+      "type": "string"
+    },
+    "languages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::data-tool-language.data-tool-language",
+      "mappedBy": "data_tool"
+    },
+    "data_tool_resource_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::data-tool-resource-type.data-tool-resource-type"
+    },
+    "technical_skills": {
+      "type": "text"
+    }
+  }
+}

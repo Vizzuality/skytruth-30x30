@@ -745,6 +745,119 @@ export interface ApiDataSourceDataSource extends Schema.CollectionType {
   };
 }
 
+export interface ApiDataToolDataTool extends Schema.CollectionType {
+  collectionName: 'data_tools';
+  info: {
+    singularName: 'data-tool';
+    pluralName: 'data-tools';
+    displayName: 'Data Tool';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    site: Attribute.String;
+    languages: Attribute.Relation<
+      'api::data-tool.data-tool',
+      'oneToMany',
+      'api::data-tool-language.data-tool-language'
+    >;
+    data_tool_resource_type: Attribute.Relation<
+      'api::data-tool.data-tool',
+      'oneToOne',
+      'api::data-tool-resource-type.data-tool-resource-type'
+    >;
+    technical_skills: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::data-tool.data-tool',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::data-tool.data-tool',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDataToolLanguageDataToolLanguage
+  extends Schema.CollectionType {
+  collectionName: 'data_tool_languages';
+  info: {
+    singularName: 'data-tool-language';
+    pluralName: 'data-tool-languages';
+    displayName: 'Data Tool Language';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    slug: Attribute.String & Attribute.Unique;
+    data_tool: Attribute.Relation<
+      'api::data-tool-language.data-tool-language',
+      'manyToOne',
+      'api::data-tool.data-tool'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::data-tool-language.data-tool-language',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::data-tool-language.data-tool-language',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDataToolResourceTypeDataToolResourceType
+  extends Schema.CollectionType {
+  collectionName: 'data_tool_resource_types';
+  info: {
+    singularName: 'data-tool-resource-type';
+    pluralName: 'data-tool-resource-types';
+    displayName: 'Data Tool Resource Type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::data-tool-resource-type.data-tool-resource-type',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::data-tool-resource-type.data-tool-resource-type',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiFishingProtectionLevelFishingProtectionLevel
   extends Schema.CollectionType {
   collectionName: 'fishing_protection_levels';
@@ -1373,6 +1486,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::data-info.data-info': ApiDataInfoDataInfo;
       'api::data-source.data-source': ApiDataSourceDataSource;
+      'api::data-tool.data-tool': ApiDataToolDataTool;
+      'api::data-tool-language.data-tool-language': ApiDataToolLanguageDataToolLanguage;
+      'api::data-tool-resource-type.data-tool-resource-type': ApiDataToolResourceTypeDataToolResourceType;
       'api::fishing-protection-level.fishing-protection-level': ApiFishingProtectionLevelFishingProtectionLevel;
       'api::fishing-protection-level-stat.fishing-protection-level-stat': ApiFishingProtectionLevelStatFishingProtectionLevelStat;
       'api::habitat.habitat': ApiHabitatHabitat;
