@@ -64,6 +64,8 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({ field, options, values, o
     }
   };
 
+  const noFiltersSelected = filters.length === 0;
+
   return (
     <div>
       <Popover open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
@@ -114,6 +116,9 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({ field, options, values, o
               })}
             </form>
           </div>
+          {noFiltersSelected && (
+            <div className="text-orange">Please, select at least one option</div>
+          )}
         </PopoverContent>
       </Popover>
     </div>
