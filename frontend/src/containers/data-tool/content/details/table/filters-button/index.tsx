@@ -68,7 +68,7 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({ field, options, values, o
     <div>
       <Popover open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
         <PopoverTrigger>
-          <Button size="icon" variant="ghost">
+          <Button className="-ml-4" size="icon" variant="ghost">
             <span className="sr-only">Filter</span>
             <Filter className={ICON_CLASSNAMES} aria-hidden />
           </Button>
