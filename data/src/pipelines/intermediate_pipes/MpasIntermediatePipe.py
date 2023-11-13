@@ -3,6 +3,7 @@ import shutil
 from pathlib import Path
 import geopandas as gpd
 import pandas as pd
+import requests
 
 from pipelines.base_pipe import (
     IntermediateBasePipe,
@@ -17,30 +18,45 @@ from utils import downloadFile, rm_tree
 logger = getLogger(__name__)
 
 
+def calculate_radius(rep_area):
+    return (rep_area / 3.14159265358979323846) ** 0.5
+
+
+def filter_by_methodology(df):
+    return df.loc[
+        df["STATUS"]
+        != "Not Reported" & ~df["DESIG_ENG"].str.contains("MAB", case=False)
+    ]
+
+
+def create_buffer(df):
+    df["geometry"] = (
+        df.to_crs("ESRI:54009")
+        .apply(
+            lambda row: row.geometry.buffer(calculate_radius(row["REP_AREA_m"])), axis=1
+        )
+        .to_crs("EPSG:4326")
+    )
+    return df
+
+
+def transform_points(gdf):
+    if gdf.geometry.geometry.type == "Point":
+        filtered_gdf = gdf.loc[gdf["AREA_KM2"] > 0]
+        return filtered_gdf.pipe(create_buffer)
+    else:
+        return gdf
+
+
 class EEZIntermediatePipe(IntermediateBasePipe):
     pipeline_name = "mpa_intermediate"
     extract_params = ExtractParams(
-        source="https://www.marineregions.org/download_file.php",
-        params={"name": "World_EEZ_v11_20191118.zip"},
-        headers={
-            "content-type": "application/x-www-form-urlencoded",
-            "cookie": "PHPSESSID=29190501b4503e4b33725cd6bd01e2c6; vliz_webc=vliz_webc2; jwplayer.captionLabel=Off",
-            "dnt": "1",
-            "origin": "https://www.marineregions.org",
-            "sec-fetch-dest": "document",
-            "sec-fetch-mode": "navigate",
-            "sec-fetch-site": "same-origin",
-            "sec-fetch-user": "?1",
-            "upgrade-insecure-requests": "1",
-        },
+        source="https://www.protectedplanet.net/downloads",
         body={
-            "name": "Jason",
-            "organisation": "skytruth",
-            "email": "hello@skytruth.com",
-            "country": "Spain",
-            "user_category": "academia",
-            "purpose_category": "Conservation",
-            "agree": "1",
+            "domain": "general",
+            "format": "shp",
+            "token": "marine",
+            "id": 21961,
         },
     )
     transform_params = TransformParams(
@@ -65,12 +81,15 @@ class EEZIntermediatePipe(IntermediateBasePipe):
 
     @watch
     def extract(self):
+        r = requests.get(self.extract_params.source, params=self.extract_params.params)
+        r.raise_for_status()
+
+        downloadUrl = r.json().get("url", None)
+        file_name = r.json().get("filename", None)
+
         downloadFile(
-            self.extract_params.source,
-            self.folder_path,
-            self.extract_params.body,
-            self.extract_params.params,
-            self.extract_params.headers,
+            downloadUrl,
+            f"{self.folder_path}/{file_name}.zip",
             overwrite=self.force_clean,
         )
 
@@ -86,30 +105,27 @@ class EEZIntermediatePipe(IntermediateBasePipe):
         if not self.force_clean and self.load_params.input_path.exists():
             return self
 
-        # unzip file if needed & load data
-        unziped_folders = []
-        for idx, path in enumerate(self.transform_params.input_path):
-            unziped_folder = self.folder_path.joinpath(path.stem)
+        # unzip file twice due how data is provisioned by protected planet & load data
+        shutil.unpack_archive(self.transform_params.input_path, self.folder_path, "zip")
 
-            if self.force_clean:
-                rm_tree(unziped_folder)
-
-            shutil.unpack_archive(
-                path, self.folder_path if idx == 0 else unziped_folder
-            )
-
-            unziped_folders.append(
-                gpd.read_file(unziped_folder.joinpath(self.transform_params.files[idx]))
-            )
+        for file in self.folder_path.glob("*.zip"):
+            shutil.unpack_archive(file, self.folder_path, "zip")
 
         # Transform data using geopandas
+        unziped_folders = []
+        for file in self.folder_path.glob("*.shp"):
+            df = gpd.read_file(file)
+
+            unziped_folders.append(
+                df.pipe(filter_by_methodology).pipe(transform_points)
+            )
 
         # merge datasets
-        df = pd.concat(unziped_folders, ignore_index=True)
+        gdf = pd.concat(unziped_folders, ignore_index=True)
 
-        df.drop(
+        gdf.drop(
             columns=list(
-                set(df.columns) - set([*self.transform_params.columns, "geometry"])
+                set(gdf.columns) - set([*self.transform_params.columns, "geometry"])
             ),
             inplace=True,
         )
@@ -120,7 +136,7 @@ class EEZIntermediatePipe(IntermediateBasePipe):
         )
 
         gpd.GeoDataFrame(
-            df,
+            gdf,
             crs=unziped_folders[0].crs,
         ).to_file(filename=input_folder, driver="ESRI Shapefile")
 

@@ -28,6 +28,14 @@ def load_regions():
     return regions
 
 
+def find_region_iso(iso):
+    regions = load_regions()
+
+    filtered_regions = list(filter(lambda x: iso in x["country_iso_3s"], regions))
+
+    return filtered_regions[0]["region_iso"] if len(filtered_regions) > 0 else None
+
+
 def add_location_iso(df):
     # Create new column "iso" that has the field "ISO_SOV1" for all rows except those in which ISO_SOV2 and ISO_SOV3 are not null. In such cases concatenate ISO_SOV1, ISO_SOV2 and ISO_SOV3
     return df.assign(
@@ -35,14 +43,6 @@ def add_location_iso(df):
             filter(None, (row[["ISO_SOV1", "ISO_SOV2", "ISO_SOV3"]]))
         )
     )
-
-
-def find_region_iso(iso):
-    regions = load_regions()
-
-    filtered_regions = list(filter(lambda x: iso in x["country_iso_3s"], regions))
-
-    return filtered_regions[0]["region_iso"] if len(filtered_regions) > 0 else None
 
 
 def add_region_iso(df):
@@ -103,7 +103,7 @@ class LocationsPipe(PreprocessBasePipe):
     def transform(self):
         self.load_params.input_path = Path(f"{self.folder_path}/{self.pipeline_name}")
         # locations data
-        eez = (
+        locations = (
             gpd.read_file(self.transform_params.input_path)
             .pipe(add_location_iso)
             .pipe(expand_multiple_locations)
@@ -112,14 +112,16 @@ class LocationsPipe(PreprocessBasePipe):
             .pipe(add_location_name)
         )
 
-        eez.drop(
+        locations.drop(
             columns=list(
-                set(eez.columns) - set([*self.transform_params.columns, "geometry"])
+                set(locations.columns)
+                - set([*self.transform_params.columns, "geometry"])
             )
         ).to_csv(
             f"{self.load_params.input_path}/{self.load_params.destination_name[0]}.csv",
             index=False,
         )
+
         # regions_location table
         regions_df = pd.DataFrame(
             [

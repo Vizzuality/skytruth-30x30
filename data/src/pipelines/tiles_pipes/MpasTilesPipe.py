@@ -28,8 +28,8 @@ class MpasTilesPipe(VTBasePipe):
             "NAME",
             "STATUS",
             "STATUS_YR",
+            "REP_M_AREA",
             "PARENT_ISO",
-            "MANG_PLAN",
         ],
     )
     load_params = LoadParams(destination_name="mpas_wdpa")
@@ -50,9 +50,9 @@ class MpasTilesPipe(VTBasePipe):
             else self.transform_params.columns
         )
 
-        Mapshaper(8).input([file.as_posix()]).simplify("dp interval=100").clean(
+        Mapshaper(8).input([file.as_posix()]).filter_fields(fields=keep_fields).clean(
             allow_overlaps=True, rewind=True
-        ).filter_fields(fields=keep_fields).output(
+        ).simplify("dp 50% keep-shapes planar").clean(allow_overlaps=True, rewind=True).output(
             file.as_posix(), force=True
         ).execute()
 
