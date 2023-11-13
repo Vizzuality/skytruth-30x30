@@ -14,6 +14,7 @@ const GlobalRegionalTable: React.FC = () => {
   const location = useAtomValue(locationAtom);
 
   const [filters, setFilters] = useState({
+    // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
     locationType: ['country', 'worldwide', 'highseas', 'region'],
   });
 
@@ -22,7 +23,6 @@ const GlobalRegionalTable: React.FC = () => {
   };
 
   const columns = useColumns({ filters, onFiltersChange: handleOnFiltersChange });
-  // console.log(columns);
 
   // Get worldwide data in order to calculate contributions per location
   const { data: globalData }: { data: LocationListResponseDataItem[] } = useGetLocations(
