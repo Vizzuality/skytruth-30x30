@@ -3,12 +3,15 @@ import { ArrowDownNarrowWide, ArrowUpNarrowWide, ArrowUpDown } from 'lucide-reac
 
 import { Button } from '@/components/ui/button';
 import { GlobalRegionalTableColumns } from '@/containers/data-tool/content/details/tables/global-regional/useColumns';
+import { NationalHighseasTableColumns } from '@/containers/data-tool/content/details/tables/national-highseas/useColumns';
 
 const BUTTON_CLASSNAMES = '-ml-4';
 const ICON_CLASSNAMES = 'h-4 w-4';
 
 type SortingButtonProps = {
-  column: Column<GlobalRegionalTableColumns, unknown>;
+  column:
+    | Column<GlobalRegionalTableColumns, unknown>
+    | Column<NationalHighseasTableColumns, unknown>;
 };
 
 const SortingButton: React.FC<SortingButtonProps> = ({ column }) => {
