@@ -4,13 +4,15 @@
  * DOCUMENTATION
  * OpenAPI spec version: 1.0.0
  */
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery, useMutation } from '@tanstack/react-query';
 import type {
   UseQueryOptions,
+  UseInfiniteQueryOptions,
   UseMutationOptions,
   QueryFunction,
   MutationFunction,
   UseQueryResult,
+  UseInfiniteQueryResult,
   QueryKey,
 } from '@tanstack/react-query';
 import type {
@@ -34,23 +36,22 @@ type SecondParameter<T extends (...args: any) => any> = T extends (
 
 export const getDataTools = (
   params?: GetDataToolsParams,
-  options?: SecondParameter<typeof API>,
-  signal?: AbortSignal
+  options?: SecondParameter<typeof API>
 ) => {
-  return API<DataToolListResponse>({ url: `/data-tools`, method: 'get', params, signal }, options);
+  return API<DataToolListResponse>({ url: `/data-tools`, method: 'get', params }, options);
 };
 
 export const getGetDataToolsQueryKey = (params?: GetDataToolsParams) => {
   return [`/data-tools`, ...(params ? [params] : [])] as const;
 };
 
-export const getGetDataToolsQueryOptions = <
+export const getGetDataToolsInfiniteQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataTools>>,
   TError = ErrorType<Error>
 >(
   params?: GetDataToolsParams,
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getDataTools>>, TError, TData>;
+    query?: UseInfiniteQueryOptions<Awaited<ReturnType<typeof getDataTools>>, TError, TData>;
     request?: SecondParameter<typeof API>;
   }
 ) => {
@@ -58,32 +59,34 @@ export const getGetDataToolsQueryOptions = <
 
   const queryKey = queryOptions?.queryKey ?? getGetDataToolsQueryKey(params);
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getDataTools>>> = ({ signal }) =>
-    getDataTools(params, requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getDataTools>>> = ({ pageParam }) =>
+    getDataTools({ 'pagination[page]': pageParam, ...params }, requestOptions);
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+  return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
     Awaited<ReturnType<typeof getDataTools>>,
     TError,
     TData
   > & { queryKey: QueryKey };
 };
 
-export type GetDataToolsQueryResult = NonNullable<Awaited<ReturnType<typeof getDataTools>>>;
-export type GetDataToolsQueryError = ErrorType<Error>;
+export type GetDataToolsInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getDataTools>>>;
+export type GetDataToolsInfiniteQueryError = ErrorType<Error>;
 
-export const useGetDataTools = <
+export const useGetDataToolsInfinite = <
   TData = Awaited<ReturnType<typeof getDataTools>>,
   TError = ErrorType<Error>
 >(
   params?: GetDataToolsParams,
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getDataTools>>, TError, TData>;
+    query?: UseInfiniteQueryOptions<Awaited<ReturnType<typeof getDataTools>>, TError, TData>;
     request?: SecondParameter<typeof API>;
   }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getGetDataToolsQueryOptions(params, options);
+): UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getGetDataToolsInfiniteQueryOptions(params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
 
   query.queryKey = queryOptions.queryKey;
 
