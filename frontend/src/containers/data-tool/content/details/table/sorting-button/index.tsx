@@ -2,7 +2,7 @@ import { Column } from '@tanstack/react-table';
 import { ArrowDownNarrowWide, ArrowUpNarrowWide, ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { GlobalRegionalTableColumns } from '@/containers/data-tool/content/details/tables/global-regional/columns';
+import { GlobalRegionalTableColumns } from '@/containers/data-tool/content/details/tables/global-regional/useColumns';
 
 const ICON_CLASSNAMES = 'h-4 w-4';
 
