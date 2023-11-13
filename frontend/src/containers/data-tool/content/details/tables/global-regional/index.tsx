@@ -3,7 +3,6 @@ import { useMemo, useState } from 'react';
 import { useAtomValue } from 'jotai';
 
 import Table from '@/containers/data-tool/content/details/table';
-// import columns from '@/containers/data-tool/content/details/tables/global-regional/columns';
 import useColumns from '@/containers/data-tool/content/details/tables/global-regional/useColumns';
 import { locationAtom } from '@/store/location';
 import { useGetLocations } from '@/types/generated/location';
