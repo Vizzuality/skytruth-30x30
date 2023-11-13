@@ -40,10 +40,13 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({ field, options, values, o
   const filters = watch('filters');
 
   useEffect(() => {
-    if (xor(filters, values).length > 0) {
+    const filtersChanged = xor(filters, values).length > 0;
+    const allFiltersSelected = filters.length === allFilterValues.length;
+
+    if (filtersChanged || allFiltersSelected) {
       onChange(field, filters);
     }
-  }, [field, filters, values, onChange]);
+  }, [field, filters, values, onChange, allFilterValues.length]);
 
   const handleSelectAll = () => {
     setValue('filters', allFilterValues);
