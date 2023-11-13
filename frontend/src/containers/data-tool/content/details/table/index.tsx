@@ -31,7 +31,7 @@ const DataToolTable = ({ columns, data }) => {
     getSortedRowModel: getSortedRowModel(),
   });
 
-  const hasData = table.getRowModel().rows?.length;
+  const hasData = table.getRowModel().rows?.length > 0;
 
   const firstColumn = columns[0];
   const lastColumn = columns[columns.length - 1];

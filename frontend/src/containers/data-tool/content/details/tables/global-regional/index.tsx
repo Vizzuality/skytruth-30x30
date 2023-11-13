@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useAtomValue } from 'jotai';
 
 import Table from '@/containers/data-tool/content/details/table';
-import columns from '@/containers/data-tool/content/details/tables/global-regional/columns';
+import useColumns from '@/containers/data-tool/content/details/tables/global-regional/useColumns';
 import { locationAtom } from '@/store/location';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
@@ -12,6 +12,17 @@ const DATA_YEAR = 2023;
 
 const GlobalRegionalTable: React.FC = () => {
   const location = useAtomValue(locationAtom);
+
+  const [filters, setFilters] = useState({
+    // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
+    locationType: ['country', 'worldwide', 'highseas', 'region'],
+  });
+
+  const handleOnFiltersChange = (field, values) => {
+    setFilters({ ...filters, [field]: values });
+  };
+
+  const columns = useColumns({ filters, onFiltersChange: handleOnFiltersChange });
 
   // Get worldwide data in order to calculate contributions per location
   const { data: globalData }: { data: LocationListResponseDataItem[] } = useGetLocations(
@@ -120,7 +131,7 @@ const GlobalRegionalTable: React.FC = () => {
   }, [globalData]);
 
   // Calculate table data
-  const tableData = useMemo(() => {
+  const parsedData = useMemo(() => {
     return locationsData.map(({ attributes: location }) => {
       // Base stats needed for calculations
       const coverageStats = location?.protection_coverage_stats?.data;
@@ -185,6 +196,16 @@ const GlobalRegionalTable: React.FC = () => {
       };
     });
   }, [globalStats, locationsData]);
+
+  const tableData = useMemo(() => {
+    const filteredData = parsedData.filter((item) => {
+      for (const key in filters) {
+        return filters[key].includes(item[key]);
+      }
+      return true;
+    });
+    return filteredData;
+  }, [filters, parsedData]);
 
   return <Table columns={columns} data={tableData} />;
 };
