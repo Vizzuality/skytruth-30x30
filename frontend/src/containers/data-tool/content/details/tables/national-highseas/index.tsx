@@ -12,6 +12,7 @@ const NationalHighseasTable: React.FC = () => {
   const location = useAtomValue(locationAtom);
 
   const [filters, setFilters] = useState({
+    // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
     protectedAreaType: ['mpa', 'oecm'],
     establishmentStage: [
       'designated-implemented',
