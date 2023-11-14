@@ -102,7 +102,7 @@ const NationalHighseasTable: React.FC = () => {
   const tableData = useMemo(() => {
     const filteredData = parsedData.filter((item) => {
       for (const key in filters) {
-        return filters[key].includes(item[key]);
+        if (!filters[key].includes(item[key])) return false;
       }
       return true;
     });
