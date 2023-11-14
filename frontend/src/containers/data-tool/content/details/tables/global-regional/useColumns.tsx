@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 
 import { ColumnDef } from '@tanstack/react-table';
 
-import { LOCATION_TYPES_FILTER_OPTIONS } from '@/containers/data-tool/constants';
 import FiltersButton from '@/containers/data-tool/content/details/table/filters-button';
 import HeaderItem from '@/containers/data-tool/content/details/table/header-item';
 import { cellFormatter } from '@/containers/data-tool/content/details/table/helpers';
 import SortingButton from '@/containers/data-tool/content/details/table/sorting-button';
+import useFiltersOptions from '@/containers/data-tool/content/details/tables/global-regional/useFiltersOptions';
 
 export type GlobalRegionalTableColumns = {
   location: string;
@@ -26,6 +26,8 @@ type UseColumnsProps = {
 };
 
 const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
+  const { locationTypes: locationTypesOptions } = useFiltersOptions();
+
   const columns: ColumnDef<GlobalRegionalTableColumns>[] = useMemo(() => {
     return [
       {
@@ -64,7 +66,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           <HeaderItem>
             <FiltersButton
               field={column.id}
-              options={LOCATION_TYPES_FILTER_OPTIONS}
+              options={locationTypesOptions}
               values={filters[column.id]}
               onChange={onFiltersChange}
             />
