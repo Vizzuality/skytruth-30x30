@@ -35,11 +35,7 @@ const PopupItem = ({ id }: PopupItemProps) => {
     return null;
   }, [interaction_config, params_config, id]);
 
-  return (
-    <div className="p-4">
-      <div className="space-y-3">{INTERACTION_COMPONENT}</div>
-    </div>
-  );
+  return INTERACTION_COMPONENT;
 };
 
 export default PopupItem;

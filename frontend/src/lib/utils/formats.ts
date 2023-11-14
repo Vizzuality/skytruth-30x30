@@ -9,13 +9,10 @@ export function formatPercentage(value: number, options?: Intl.NumberFormatOptio
   return v.format(value);
 }
 
-export function formatHA(value: number, options?: Intl.NumberFormatOptions) {
+export function formatKM(value: number, options?: Intl.NumberFormatOptions) {
   const v = Intl.NumberFormat('en-US', {
     notation: 'standard',
     compactDisplay: 'short',
-    // minimumFractionDigits: 0,
-    // maximumFractionDigits: 2,
-    style: 'unit',
     unit: 'kilometer',
     unitDisplay: 'short',
     ...options,
@@ -26,7 +23,7 @@ export function formatHA(value: number, options?: Intl.NumberFormatOptions) {
 
 const FORMATS = {
   formatPercentage,
-  formatHA,
+  formatKM,
 } as const;
 
 export type FormatProps = {
