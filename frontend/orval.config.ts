@@ -32,6 +32,7 @@ module.exports = {
           'Mpaa-protection-level',
           'Mpaa-protection-level-stat',
           'Mpaa-establishment-stage',
+          'Mpa-protection-coverage-stat',
           'Mpaa-establishment-stage-status',
           'Protection-coverage-stat',
           'Protection-status',
