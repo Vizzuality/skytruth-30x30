@@ -99,8 +99,6 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     }));
   }, [fishingProtectionLevels]);
 
-  // TODO DEBUG FILTERS
-
   // Define columns
   const columns: ColumnDef<NationalHighseasTableColumns>[] = useMemo(() => {
     return [
