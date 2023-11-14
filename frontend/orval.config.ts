@@ -19,6 +19,14 @@ module.exports = {
           useMutation: true,
           signal: true,
         },
+        operations: {
+          'get/data-tools': {
+            query: {
+              useInfinite: true,
+              useInfiniteQueryParam: '"pagination[page]"',
+            },
+          },
+        },
       },
     },
     input: {
@@ -40,6 +48,9 @@ module.exports = {
           'Fishing-protection-level-stat',
           'Layer',
           'Data-info',
+          'Data-tool',
+          'Data-tool-language',
+          'Data-tool-resource-type',
         ],
       },
     },

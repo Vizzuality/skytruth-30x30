@@ -1,0 +1,30 @@
+<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="10" height="6" fill="#F5F5F5"/>
+<g id="Knowledge Hub" clip-path="url(#clip0_610_17111)" filter="url(#filter0_b_610_17111)">
+<rect width="1280" height="2911" transform="translate(-93 -1007)" fill="#FAFAFA"/>
+<g id="Frame 231907">
+<g id="Frame 231906">
+<g id="Frame 231601">
+<g id="Frame 231595">
+<g id="Frame 230813">
+<g id="Frame 230067">
+<path id="Polygon 3" d="M4.77692 0L9.55385 5.4H0L4.77692 0Z" fill="#1E1E1E"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_b_610_17111" x="-97" y="-1011" width="1288" height="2919" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="2"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_610_17111"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_610_17111" result="shape"/>
+</filter>
+<clipPath id="clip0_610_17111">
+<rect width="1280" height="2911" fill="white" transform="translate(-93 -1007)"/>
+</clipPath>
+</defs>
+</svg>

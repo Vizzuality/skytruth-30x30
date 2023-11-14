@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "data_tool_languages",
+  "info": {
+    "singularName": "data-tool-language",
+    "pluralName": "data-tool-languages",
+    "displayName": "Data Tool Language",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "unique": true
+    },
+    "data_tool": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::data-tool.data-tool",
+      "inversedBy": "languages"
+    }
+  }
+}

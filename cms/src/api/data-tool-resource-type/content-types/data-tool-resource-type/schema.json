@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "data_tool_resource_types",
+  "info": {
+    "singularName": "data-tool-resource-type",
+    "pluralName": "data-tool-resource-types",
+    "displayName": "Data Tool Resource Type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "unique": true
+    }
+  }
+}
