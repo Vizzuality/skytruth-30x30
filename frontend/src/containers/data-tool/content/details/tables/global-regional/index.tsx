@@ -8,6 +8,8 @@ import { locationAtom } from '@/store/location';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 
+import { applyFilters } from '@/containers/data-tool/content/details/helpers';
+
 const DATA_YEAR = 2023;
 
 const GlobalRegionalTable: React.FC = () => {
@@ -198,13 +200,7 @@ const GlobalRegionalTable: React.FC = () => {
   }, [globalStats, locationsData]);
 
   const tableData = useMemo(() => {
-    const filteredData = parsedData.filter((item) => {
-      for (const key in filters) {
-        if (!filters[key].includes(item[key])) return false;
-      }
-      return true;
-    });
-    return filteredData;
+    return applyFilters(parsedData, filters);
   }, [filters, parsedData]);
 
   return <Table columns={columns} data={tableData} />;

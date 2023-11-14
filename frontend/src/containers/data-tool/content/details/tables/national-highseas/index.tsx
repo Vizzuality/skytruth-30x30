@@ -7,6 +7,7 @@ import useColumns from '@/containers/data-tool/content/details/tables/national-h
 import { locationAtom } from '@/store/location';
 import { useGetMpaProtectionCoverageStats } from '@/types/generated/mpa-protection-coverage-stat';
 import { MpaProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
+import { applyFilters } from '@/containers/data-tool/content/details/helpers';
 
 const NationalHighseasTable: React.FC = () => {
   const location = useAtomValue(locationAtom);
@@ -101,14 +102,7 @@ const NationalHighseasTable: React.FC = () => {
   }, [coverageData]);
 
   const tableData = useMemo(() => {
-    const filteredData = parsedData.filter((item) => {
-      for (const key in filters) {
-        if (!filters[key].includes(item[key])) return false;
-      }
-      return true;
-    });
-
-    return filteredData;
+    return applyFilters(parsedData, filters);
   }, [filters, parsedData]);
 
   return <Table columns={columns} data={tableData} />;
