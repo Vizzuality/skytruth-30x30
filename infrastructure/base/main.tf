@@ -34,3 +34,25 @@ module "dns" {
   domain = var.domain
   name   = "skytruth"
 }
+
+resource "google_service_account" "data_pipelines_service_account" {
+  project = var.gcp_project_id
+  account_id   = "data-pipelines"
+  display_name = "data-pipelines"
+  description = "Data Pipelines Service Account"
+}
+
+import {
+  id = "projects/x30-399415/serviceAccounts/data-pipelines@x30-399415.iam.gserviceaccount.com"
+  to = google_service_account.data_pipelines_service_account
+}
+
+data "google_storage_bucket" "data_pipelines_bucket" {
+  name = "vector-data-raw"
+}
+
+resource "google_storage_bucket_iam_member" "member" {
+  bucket = data.google_storage_bucket.data_pipelines_bucket.name
+  role = "roles/storage.admin"
+  member = "serviceAccount:${google_service_account.data_pipelines_service_account.email}"
+}
