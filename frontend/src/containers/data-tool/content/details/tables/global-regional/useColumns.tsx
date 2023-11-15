@@ -6,7 +6,9 @@ import FiltersButton from '@/containers/data-tool/content/details/table/filters-
 import HeaderItem from '@/containers/data-tool/content/details/table/header-item';
 import { cellFormatter } from '@/containers/data-tool/content/details/table/helpers';
 import SortingButton from '@/containers/data-tool/content/details/table/sorting-button';
+import TooltipButton from '@/containers/data-tool/content/details/table/tooltip-button';
 import useFiltersOptions from '@/containers/data-tool/content/details/tables/global-regional/useFiltersOptions';
+import useTooltips from '@/containers/data-tool/content/details/tables/global-regional/useTooltips';
 
 export type GlobalRegionalTableColumns = {
   location: string;
@@ -28,6 +30,8 @@ type UseColumnsProps = {
 const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
   const { locationTypes: locationTypesOptions } = useFiltersOptions();
 
+  const tooltips = useTooltips();
+
   const columns: ColumnDef<GlobalRegionalTableColumns>[] = useMemo(() => {
     return [
       {
@@ -44,6 +48,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           <HeaderItem>
             <SortingButton column={column} />
             Coverage
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
@@ -71,6 +76,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               onChange={onFiltersChange}
             />
             Location type
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
@@ -85,6 +91,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           <HeaderItem>
             <SortingButton column={column} />
             MPAs
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
       },
@@ -94,6 +101,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           <HeaderItem>
             <SortingButton column={column} />
             OECMs
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
       },
@@ -121,6 +129,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           <HeaderItem>
             <SortingButton column={column} />
             Fully/Highly Protected
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
@@ -136,6 +145,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           <HeaderItem>
             <SortingButton column={column} />
             Highly Protected LFP
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
@@ -151,6 +161,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           <HeaderItem>
             <SortingButton column={column} />
             Global contribution
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
