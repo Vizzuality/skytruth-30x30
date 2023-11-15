@@ -24,7 +24,7 @@ const KnowledgeHubPage = () => {
         <div className="md:mx-auto md:max-w-7xl md:px-6 lg:px-10">
           <div className="grid grid-rows-2 md:grid-cols-2 md:grid-rows-none">
             <div className="order-2 space-y-20 p-8 md:order-none md:space-y-40 md:pl-0">
-              <h1 className="text-[70px] font-black leading-none  ">
+              <h1 className="text-[70px] font-black leading-none">
                 Resources for 30x30 monitoring, planning and decision making.
               </h1>
               <p className="text-xl">

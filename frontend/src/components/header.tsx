@@ -22,7 +22,7 @@ const navigation = [
   // { name: 'Dashboard', href: '/dashboard', colorClassName: 'text-blue fill-blue' },
   { name: 'Knowledge Hub', href: '/knowledge-hub', colorClassName: 'text-green fill-green' },
   { name: 'About', href: '/about', colorClassName: 'text-black fill-black' },
-  { name: 'Contact', href: '/contact', colorClassName: 'text-black fill-black' },
+  { name: 'Contact', href: '/contact-us', colorClassName: 'text-black fill-black' },
 ];
 
 const Header: React.FC = () => (
