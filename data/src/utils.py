@@ -42,15 +42,13 @@ def downloadFile(
         if not output_path:
             output_path = Path(os.getcwd())
 
-        if not file and "name=" not in url and "name" not in params.keys():
+        if not file and "name=" not in url and (params and "name" not in params.keys()):
             raise ValueError("No file name in url or params")
         if not file:
             file = url.split("=")[-1] if "name=" in url else params["name"]
         output_file = output_path.joinpath(file)
 
-        if (
-            output_file.parent.exists() and overwrite
-        ):  # so we can always start from scratch
+        if output_file.parent.exists() and overwrite:  # so we can always start from scratch
             rm_tree(output_file.parent)
 
         output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -59,9 +57,7 @@ def downloadFile(
             logger.info(f"File {output_file} already exists.")
             return output_file
         if body:
-            r = requests.post(
-                url, params=params, data=body, headers=headers, allow_redirects=True
-            )
+            r = requests.post(url, params=params, data=body, headers=headers, allow_redirects=True)
         else:
             r = requests.get(url, params, headers=headers, allow_redirects=True)
 

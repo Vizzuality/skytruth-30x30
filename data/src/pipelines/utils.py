@@ -1,4 +1,7 @@
 import traceback
+import json
+from functools import lru_cache
+import os
 
 
 def watch(func):
@@ -15,3 +18,19 @@ def watch(func):
             return self
 
     return check
+
+
+@lru_cache()
+def load_iso_mapping():
+    base = os.path.dirname(os.path.abspath(__file__))
+    with open(f"{base}/data_commons/iso_map.json") as f:
+        iso_map = json.load(f)
+    return iso_map
+
+
+@lru_cache()
+def load_regions():
+    base = os.path.dirname(os.path.abspath(__file__))
+    with open(f"{base}/data_commons/regions_data.json") as f:
+        regions = json.load(f)
+    return regions
