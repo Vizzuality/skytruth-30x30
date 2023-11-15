@@ -2,13 +2,12 @@ import { useMemo, useState } from 'react';
 
 import { useAtomValue } from 'jotai';
 
+import { applyFilters } from '@/containers/data-tool/content/details/helpers';
 import Table from '@/containers/data-tool/content/details/table';
 import useColumns from '@/containers/data-tool/content/details/tables/global-regional/useColumns';
 import { locationAtom } from '@/store/location';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
-
-import { applyFilters } from '@/containers/data-tool/content/details/helpers';
 
 const DATA_YEAR = 2023;
 

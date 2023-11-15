@@ -6,7 +6,9 @@ import FiltersButton from '@/containers/data-tool/content/details/table/filters-
 import HeaderItem from '@/containers/data-tool/content/details/table/header-item';
 import { cellFormatter } from '@/containers/data-tool/content/details/table/helpers';
 import SortingButton from '@/containers/data-tool/content/details/table/sorting-button';
+import TooltipButton from '@/containers/data-tool/content/details/table/tooltip-button';
 import useFiltersOptions from '@/containers/data-tool/content/details/tables/national-highseas/useFiltersOptions';
+import useTooltips from '@/containers/data-tool/content/details/tables/national-highseas/useTooltips';
 
 export type NationalHighseasTableColumns = {
   protectedArea: string;
@@ -31,6 +33,8 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     fishingProtectionLevel: fishingProtectionLevelOptions,
   } = useFiltersOptions();
 
+  const tooltips = useTooltips();
+
   // Define columns
   const columns: ColumnDef<NationalHighseasTableColumns>[] = useMemo(() => {
     return [
@@ -48,6 +52,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           <HeaderItem>
             <SortingButton column={column} />
             Coverage
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
@@ -75,6 +80,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               onChange={onFiltersChange}
             />
             Protected Area Type
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
@@ -96,6 +102,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               onChange={onFiltersChange}
             />
             Establishment Stage
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
@@ -117,6 +124,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               onChange={onFiltersChange}
             />
             Protection Level
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
@@ -138,6 +146,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               onChange={onFiltersChange}
             />
             Fishing Protection Level
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
