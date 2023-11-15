@@ -39,7 +39,7 @@ const DataToolDetails: React.FC = () => {
           Close
         </Button>
       </div>
-      <div className="overflow-scroll">
+      <div className="overflow-x-auto overflow-y-auto">
         <div className="mt-4">
           <table.component />
         </div>
