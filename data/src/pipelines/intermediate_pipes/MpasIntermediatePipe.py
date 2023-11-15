@@ -18,29 +18,24 @@ from utils import downloadFile, rm_tree
 logger = getLogger(__name__)
 
 
-def calculate_radius(rep_area):
+def calculate_radius(rep_area: float) -> float:
     return (rep_area / 3.14159265358979323846) ** 0.5
 
 
-def filter_by_methodology(df):
-    return df.loc[
-        df["STATUS"]
-        != "Not Reported" & ~df["DESIG_ENG"].str.contains("MAB", case=False)
-    ]
+def filter_by_methodology(df: pd.DataFrame) -> pd.DataFrame:
+    return df.loc[df["STATUS"] != "Not Reported" & ~df["DESIG_ENG"].str.contains("MAB", case=False)]
 
 
-def create_buffer(df):
+def create_buffer(df: pd.DataFrame) -> pd.DataFrame:
     df["geometry"] = (
         df.to_crs("ESRI:54009")
-        .apply(
-            lambda row: row.geometry.buffer(calculate_radius(row["REP_AREA_m"])), axis=1
-        )
+        .apply(lambda row: row.geometry.buffer(calculate_radius(row["REP_AREA_m"])), axis=1)
         .to_crs("EPSG:4326")
     )
     return df
 
 
-def transform_points(gdf):
+def transform_points(gdf: pd.DataFrame) -> pd.DataFrame:
     if gdf.geometry.geometry.type == "Point":
         filtered_gdf = gdf.loc[gdf["AREA_KM2"] > 0]
         return filtered_gdf.pipe(create_buffer)
@@ -98,9 +93,7 @@ class EEZIntermediatePipe(IntermediateBasePipe):
 
     @watch
     def transform(self):
-        self.load_params.input_path = Path(
-            f"{self.folder_path}/{self.pipeline_name}.zip"
-        )
+        self.load_params.input_path = Path(f"{self.folder_path}/{self.pipeline_name}.zip")
 
         if not self.force_clean and self.load_params.input_path.exists():
             return self
@@ -116,24 +109,18 @@ class EEZIntermediatePipe(IntermediateBasePipe):
         for file in self.folder_path.glob("*.shp"):
             df = gpd.read_file(file)
 
-            unziped_folders.append(
-                df.pipe(filter_by_methodology).pipe(transform_points)
-            )
+            unziped_folders.append(df.pipe(filter_by_methodology).pipe(transform_points))
 
         # merge datasets
         gdf = pd.concat(unziped_folders, ignore_index=True)
 
         gdf.drop(
-            columns=list(
-                set(gdf.columns) - set([*self.transform_params.columns, "geometry"])
-            ),
+            columns=list(set(gdf.columns) - set([*self.transform_params.columns, "geometry"])),
             inplace=True,
         )
 
         # save data
-        input_folder = self.load_params.input_path.parent.joinpath(
-            self.load_params.input_path.stem
-        )
+        input_folder = self.load_params.input_path.parent.joinpath(self.load_params.input_path.stem)
 
         gpd.GeoDataFrame(
             gdf,

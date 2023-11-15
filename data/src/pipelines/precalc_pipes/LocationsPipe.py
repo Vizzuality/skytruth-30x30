@@ -1,31 +1,17 @@
-from functools import lru_cache
 from logging import getLogger
 from pathlib import Path
 import pandas as pd
 import geopandas as gpd
-import json
+
 from pipelines.base_pipe import (
     PreprocessBasePipe,
     ExtractParams,
     TransformParams,
     LoadParams,
 )
+from pipelines.utils import load_iso_mapping, load_regions
 
 logger = getLogger(__name__)
-
-
-@lru_cache()
-def load_iso_mapping():
-    with open("data/src/pipelines/data_commons/iso_map.json") as f:
-        iso_map = json.load(f)
-    return iso_map
-
-
-@lru_cache()
-def load_regions():
-    with open("data/src/pipelines/data_commons/regions_data.json") as f:
-        regions = json.load(f)
-    return regions
 
 
 def find_region_iso(iso):
@@ -39,9 +25,7 @@ def find_region_iso(iso):
 def add_location_iso(df):
     # Create new column "iso" that has the field "ISO_SOV1" for all rows except those in which ISO_SOV2 and ISO_SOV3 are not null. In such cases concatenate ISO_SOV1, ISO_SOV2 and ISO_SOV3
     return df.assign(
-        iso=lambda row: ";".join(
-            filter(None, (row[["ISO_SOV1", "ISO_SOV2", "ISO_SOV3"]]))
-        )
+        iso=lambda row: ";".join(filter(None, (row[["ISO_SOV1", "ISO_SOV2", "ISO_SOV3"]])))
     )
 
 
@@ -64,10 +48,7 @@ def calculate_area(df):
         "location_type": "worldwide",
     }
     marine_areas = (
-        df.groupby(["iso"])
-        .agg({"AREA_KM2": "sum"})
-        .reset_index()
-        .assign(location_type="country")
+        df.groupby(["iso"]).agg({"AREA_KM2": "sum"}).reset_index().assign(location_type="country")
     )
     regions_areas = (
         df.groupby(["region"])
@@ -113,10 +94,7 @@ class LocationsPipe(PreprocessBasePipe):
         )
 
         locations.drop(
-            columns=list(
-                set(locations.columns)
-                - set([*self.transform_params.columns, "geometry"])
-            )
+            columns=list(set(locations.columns) - set([*self.transform_params.columns, "geometry"]))
         ).to_csv(
             f"{self.load_params.input_path}/{self.load_params.destination_name[0]}.csv",
             index=False,
@@ -130,6 +108,7 @@ class LocationsPipe(PreprocessBasePipe):
                 for iso in data["country_iso_3s"]
             ]
         )
+
         regions_df.to_csv(
             f"{self.load_params.input_path}/{self.load_params.destination_name[1]}.csv",
             index=False,
