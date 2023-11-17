@@ -13,7 +13,7 @@ from logging import getLogger
 logger = getLogger(__name__)
 
 
-class MpasTilesPipe(VTBasePipe):
+class ProtectedSeasTilesPipe(VTBasePipe):
     pipeline_name = "protectedseas_tiles"
     depends_on = ["protectedseas_intermediate"]
     extract_params = ExtractParams(
@@ -25,11 +25,8 @@ class MpasTilesPipe(VTBasePipe):
         columns=[
             "site_id",
             "site_name",
-            "country",
-            "wdpa_id",
             "total_area",
             "geometry",
-            "parent_iso",
             "FPS_cat",
         ],
     )
@@ -50,10 +47,14 @@ class MpasTilesPipe(VTBasePipe):
             if isinstance(self.transform_params.columns, list)
             else self.transform_params.columns
         )
-
-        Mapshaper(8).input([file.as_posix()]).filter_fields(fields=keep_fields).clean(
+        # simplify and clean the data for visual purposes
+        Mapshaper(16).input([file.as_posix()]).filter_fields(fields=keep_fields).clean(
             allow_overlaps=True, rewind=True
-        ).clean(allow_overlaps=True, rewind=True).output(file.as_posix(), force=True).execute()
+        ).clean(allow_overlaps=True, rewind=True).simplify("dp 10% keep-shapes planar").clean(
+            allow_overlaps=True
+        ).output(
+            file.as_posix(), force=True
+        ).execute()
 
         self.output_params.input_path = mbtileGeneration(file)
         return self

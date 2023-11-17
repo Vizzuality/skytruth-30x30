@@ -29,6 +29,14 @@ def load_iso_mapping():
 
 
 @lru_cache()
+def load_country_mapping():
+    base = os.path.dirname(os.path.abspath(__file__))
+    with open(f"{base}/data_commons/country_map.json") as f:
+        iso_map = json.load(f)
+    return iso_map
+
+
+@lru_cache()
 def load_regions():
     base = os.path.dirname(os.path.abspath(__file__))
     with open(f"{base}/data_commons/regions_data.json") as f:

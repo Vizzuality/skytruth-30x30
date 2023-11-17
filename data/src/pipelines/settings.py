@@ -1,7 +1,7 @@
 import logging
 from functools import lru_cache
 from typing import Any, Dict
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -21,9 +21,8 @@ class Settings(BaseSettings):
     NOTIFY_URL: str
     NOTIFY_JWT: str
     GCS_BUCKET: str
+    GCS_PATH: str
     GCS_KEYFILE_JSON: Dict[str, Any]
-
-    # model_config = SettingsConfigDict(env_file=".env")
 
     def validate_config(self):
         if not self.MAPBOX_USER:

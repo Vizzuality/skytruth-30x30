@@ -1,4 +1,5 @@
 import os
+import shutil
 import requests
 from logging import getLogger
 from pathlib import Path
@@ -42,10 +43,12 @@ def downloadFile(
         if not output_path:
             output_path = Path(os.getcwd())
 
-        if not file and "name=" not in url and (params and "name" not in params.keys()):
-            raise ValueError("No file name in url or params")
         if not file:
-            file = url.split("=")[-1] if "name=" in url else params["name"]
+            if isinstance(params, dict) and "name" in params.keys():
+                file = params.get("name")
+            else:
+                raise ValueError("No file name in url or params")
+
         output_file = output_path.joinpath(file)
 
         if output_file.parent.exists() and overwrite:  # so we can always start from scratch
@@ -103,3 +106,11 @@ def writeReadGCP(
             blob.download_to_file(f)
     else:
         raise ValueError("operation must be 'w' or 'r'")
+
+
+def make_archive(source: Path, destination: Path) -> None:
+    base_name = destination.parent.joinpath(destination.stem)
+    fmt = destination.suffix.replace(".", "")
+    root_dir = source.parent
+    base_dir = source.name
+    shutil.make_archive(str(base_name), fmt, root_dir, base_dir)
