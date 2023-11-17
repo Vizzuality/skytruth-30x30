@@ -13,7 +13,7 @@ from logging import getLogger
 logger = getLogger(__name__)
 
 
-class MpasTilesPipe(VTBasePipe):
+class MpaAtlasTilesPipe(VTBasePipe):
     pipeline_name = "mpaatlas_tiles"
     depends_on = ["mpaatlas_intermediate"]
     extract_params = ExtractParams(

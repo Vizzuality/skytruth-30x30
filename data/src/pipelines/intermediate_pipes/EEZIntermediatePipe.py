@@ -11,7 +11,7 @@ from pipelines.base_pipe import (
     LoadParams,
 )
 from pipelines.utils import watch
-from utils import downloadFile, rm_tree
+from utils import downloadFile, rm_tree, make_archive
 
 
 logger = getLogger(__name__)
@@ -82,13 +82,17 @@ class EEZIntermediatePipe(IntermediateBasePipe):
         ],
         rename={"name": "GEONAME", "area_km2": "AREA_KM2", "mrgid": "MRGID"},
     )
-    load_params = LoadParams(destination_name=f"eez/{pipeline_name}.zip")
+    load_params = LoadParams()
 
     def __init__(self, force_clean: bool = False) -> None:
         super().__init__()
         self.folder_path = self.settings.DATA_DIR.joinpath(self.pipeline_name)
         self.force_clean = force_clean
         self.settings.validate_config()
+        self.load_params.input_path = self.folder_path.joinpath(f"{self.pipeline_name}.zip")
+        self.load_params.destination_name = (
+            f"{self.settings.GCS_PATH}/{self.pipeline_name}/{self.load_params.input_path.stem}.zip"
+        )
 
     @watch
     def extract(self):
@@ -114,9 +118,7 @@ class EEZIntermediatePipe(IntermediateBasePipe):
 
     @watch
     def transform(self):
-        self.load_params.input_path = Path(
-            f"{self.folder_path}/{self.pipeline_name}.zip"
-        )
+        self.load_params.input_path = Path(f"{self.folder_path}/{self.pipeline_name}.zip")
 
         if not self.force_clean and self.load_params.input_path.exists():
             return self
@@ -129,9 +131,7 @@ class EEZIntermediatePipe(IntermediateBasePipe):
             if self.force_clean:
                 rm_tree(unziped_folder)
 
-            shutil.unpack_archive(
-                path, self.folder_path if idx == 0 else unziped_folder
-            )
+            shutil.unpack_archive(path, self.folder_path if idx == 0 else unziped_folder)
 
             unziped_folders.append(
                 gpd.read_file(unziped_folder.joinpath(self.transform_params.files[idx]))
@@ -153,23 +153,19 @@ class EEZIntermediatePipe(IntermediateBasePipe):
         df = pd.concat(unziped_folders, ignore_index=True)
 
         df.drop(
-            columns=list(
-                set(df.columns) - set([*self.transform_params.columns, "geometry"])
-            ),
+            columns=list(set(df.columns) - set([*self.transform_params.columns, "geometry"])),
             inplace=True,
         )
 
         # save data
-        input_folder = self.load_params.input_path.parent.joinpath(
-            self.load_params.input_path.stem
-        )
+        input_folder = self.load_params.input_path.parent.joinpath(self.load_params.input_path.stem)
 
         gpd.GeoDataFrame(
             df,
             crs=unziped_folders[0].crs,
         ).to_file(filename=input_folder, driver="ESRI Shapefile")
 
-        shutil.make_archive(input_folder, "zip")
+        make_archive(input_folder, self.load_params.input_path)
 
         # clean unzipped files
         rm_tree(input_folder)

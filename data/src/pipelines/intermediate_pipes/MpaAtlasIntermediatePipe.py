@@ -76,13 +76,17 @@ class MpaAtlasIntermediatePipe(IntermediateBasePipe):
         ],
         rename={"sovereign": "location_id", "wdpa_pid": "wdpa_id"},
     )
-    load_params = LoadParams(destination_name=f"eez/{pipeline_name}.zip")
+    load_params = LoadParams()
 
     def __init__(self, force_clean: bool = False) -> None:
         super().__init__()
         self.folder_path = self.settings.DATA_DIR.joinpath(self.pipeline_name)
         self.force_clean = force_clean
         self.settings.validate_config()
+        self.load_params.input_path = self.folder_path.joinpath(f"{self.pipeline_name}.zip")
+        self.load_params.destination_name = (
+            f"{self.settings.GCS_PATH}/{self.pipeline_name}/{self.load_params.input_path.stem}.zip"
+        )
 
     @watch
     def extract(self):
@@ -125,7 +129,6 @@ class MpaAtlasIntermediatePipe(IntermediateBasePipe):
         shutil.make_archive(input_folder.as_posix(), "zip")
 
         # clean unzipped files
-        # rm_tree(input_folder)
-        # rm_tree(self.folder_path.joinpath(self.transform_params.input_path.stem))
+        rm_tree(input_folder)
 
         return self
