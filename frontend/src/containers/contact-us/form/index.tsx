@@ -18,7 +18,29 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+
+const CATEGORY_OPTIONS = [
+  {
+    label: 'Feedback',
+    value: 'Feedback',
+  },
+  {
+    label: 'Data update request',
+    value: 'Data update request',
+  },
+  {
+    label: 'Bug reporting',
+    value: 'Bug reporting',
+  },
+];
 
 const ContactUsSchema = z.object({
   name: z
@@ -33,6 +55,11 @@ const ContactUsSchema = z.object({
     .email({ message: 'Invalid email format' })
     .min(1),
   country: z.string().optional(),
+  category: z
+    .string({
+      required_error: 'This field is mandatory.',
+    })
+    .min(1),
   message: z
     .string({
       required_error: 'The message cannot be empty.',
@@ -54,6 +81,7 @@ const ContactUsForm = (): JSX.Element => {
   });
 
   const onSubmit = useCallback(async (values: ContactUsInput) => {
+    console.log(values);
     await axios.put('/api/contact-us', values);
   }, []);
 
@@ -108,6 +136,35 @@ const ContactUsForm = (): JSX.Element => {
               <FormLabel>Country</FormLabel>
               <FormControl>
                 <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Reason*</FormLabel>
+              <FormControl>
+                <Select
+                  {...field}
+                  onValueChange={(v) => {
+                    field.onChange(v);
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Please, select a contact reason" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CATEGORY_OPTIONS.map(({ label, value }) => (
+                      <SelectItem key={value} value={value}>
+                        {label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>
