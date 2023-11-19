@@ -74,7 +74,7 @@ const StaticPageLayout: React.FC<PropsWithChildren<StaticPageLayoutProps>> = ({
         <Header />
       </div>
       {hero && <>{hero}</>}
-      <div className="flex w-full flex-col gap-6 py-0 md:mx-auto md:max-w-7xl md:flex-row md:py-24 md:pl-8">
+      <div className="flex w-full flex-col gap-6 py-0 md:mx-auto md:max-w-7xl md:flex-row md:pt-24 md:pl-8">
         {children}
       </div>
       {bottom && <>{bottom}</>}

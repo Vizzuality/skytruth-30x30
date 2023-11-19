@@ -29,7 +29,7 @@ export type SectionProps = PropsWithChildren<{
 const Section = forwardRef<HTMLDivElement, SectionProps>(({ borderTop = true, children }, ref) => (
   <div
     ref={ref}
-    className={cn('w-full border-black py-6 md:mx-auto md:max-w-7xl', {
+    className={cn('w-full border-black py-6 md:mx-auto md:mb-20 md:max-w-7xl', {
       'border-t': borderTop,
     })}
   >
