@@ -32,14 +32,14 @@ export type StatsImageProps = VariantProps<typeof statsImageVariants> & {
 };
 
 const StatsImage: React.FC<StatsImageProps> = ({ value, description, color, image = 'stats3' }) => (
-  <div className="mt-20 flex flex-row gap-8 pb-10">
-    <div className="flex w-[32%] flex-col items-center justify-end gap-5 pt-5 text-center font-mono">
-      <div className="flex max-w-[240px] flex-col">
+  <div className="flex flex-row gap-8 pb-10 md:mt-20">
+    <div className="flex w-full flex-col items-center justify-end gap-5 pt-5 text-center font-mono md:w-[32%]">
+      <div className="flex flex-col md:max-w-[240px]">
         <span className={cn('text-6xl font-bold', statsImageVariants({ color }))}>{value}</span>
         <span className="mt-5 text-xs">{description}</span>
       </div>
     </div>
-    <div className="flex w-[68%] justify-end">
+    <div className="hidden justify-end md:flex md:w-[68%]">
       <Image
         className="h-auto w-full max-w-4xl"
         src={IMAGES[image]}

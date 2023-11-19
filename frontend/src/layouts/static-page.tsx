@@ -3,8 +3,8 @@ import { MutableRefObject, PropsWithChildren, ReactNode } from 'react';
 import Head from 'next/head';
 
 import Header from '@/components/header';
-// import Icon from '@/components/ui/icon';
-// import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
+import Icon from '@/components/ui/icon';
+import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 type SidebarProps = {
   sections: {
@@ -24,7 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
   };
 
   return (
-    <div className="min-w-[200px]">
+    <div className="mb-4 min-w-[200px] md:mb-0">
       <nav className="sticky top-10 bottom-3 mt-10 flex flex-col gap-3 font-mono text-sm">
         {Object.entries(sections).map(([key, { name }]) => {
           return (
@@ -34,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
               type="button"
               onClick={() => handleClick(key)}
             >
-              {/* <Icon icon={ArrowRight} className="h-6 fill-black" /> */}
+              <Icon icon={ArrowRight} className="h-6 fill-black" />
               <span className="pt-1">{name}</span>
             </button>
           );
@@ -74,7 +74,9 @@ const StaticPageLayout: React.FC<PropsWithChildren<StaticPageLayoutProps>> = ({
         <Header />
       </div>
       {hero && <>{hero}</>}
-      <div className="flex w-full gap-6 py-24 pl-8 md:mx-auto md:max-w-7xl">{children}</div>
+      <div className="flex w-full flex-col gap-6 py-0 md:mx-auto md:max-w-7xl md:flex-row md:py-24 md:pl-8">
+        {children}
+      </div>
       {bottom && <>{bottom}</>}
     </div>
   </>

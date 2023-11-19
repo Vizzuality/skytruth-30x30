@@ -10,7 +10,7 @@ type IntroProps = {
 
 const Intro: React.FC<IntroProps> = ({ onScrollClick }) => (
   <div className="border-t border-white bg-black">
-    <div className="flex text-white md:mx-auto md:max-w-7xl">
+    <div className="flex flex-col text-white md:mx-auto md:max-w-7xl md:flex-row">
       <div className="mt-6 mb-2 flex flex-1 flex-col gap-10 px-8 pt-10">
         <div className="relative">
           <Image
@@ -22,7 +22,7 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => (
             sizes="100vw"
           />
         </div>
-        <div className="pr-10 text-6xl font-extrabold leading-tight">
+        <div className="pr-10 text-5xl font-extrabold leading-tight md:text-6xl">
           Protect 30% of land and ocean by 2030
         </div>
         <div className="mt-16 flex">
@@ -48,7 +48,7 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => (
           {/* <div>Social</div> */}
         </div>
       </div>
-      <div className="w-[40%] border-l ">
+      <div className="border-l border-t border-white md:w-[40%] md:border-t-0">
         <div className="flex h-full flex-col">
           <SidebarItem percentage={6} text="Current global ocean protected area" icon="icon1" />
           <SidebarItem percentage={9} text="Current global ocean protected area" icon="icon2" />

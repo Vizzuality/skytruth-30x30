@@ -5,7 +5,7 @@ import { cn } from '@/lib/classnames';
 export type SubSectionTitleProps = PropsWithChildren;
 
 const SubSectionTitle: React.FC<SubSectionTitleProps> = ({ children }) => (
-  <h3 className="my-6 mb-8 mt-2 text-3xl font-extrabold">{children}</h3>
+  <h3 className="my-6 mb-8 mt-3 text-3xl font-extrabold md:mt-2">{children}</h3>
 );
 
 export type SubSectionDescriptionProps = PropsWithChildren;
@@ -20,8 +20,8 @@ export type SubSectionContentProps = PropsWithChildren<{
 
 const SubSectionContent: React.FC<SubSectionContentProps> = ({ isNumbered = false, children }) => (
   <div
-    className={cn('flex w-[50%] justify-center', {
-      'mt-16': isNumbered,
+    className={cn('flex max-h-[280px] w-full justify-center md:max-h-full md:w-[50%]', {
+      'md:mt-16': isNumbered,
     })}
   >
     {children}
@@ -49,15 +49,15 @@ const TwoColSubSection: React.FC<TwoColSubSection> = ({
   const isNumbered = itemNum && itemTotal ? true : false;
 
   return (
-    <div className="mt-20 flex flex-row gap-8">
-      <div className="flex w-[50%] flex-col pt-5">
+    <div className="mt-0 flex flex-col gap-8 md:mt-20 md:flex-row">
+      <div className="flex w-full flex-col pt-5 md:w-[50%]">
         {isNumbered && (
-          <span className="mb-6 font-mono text-xl">
+          <span className="mb-2 font-mono text-xl md:mb-6">
             <span className="text-black">{minTwoDigits(itemNum)}</span>
             <span className="opacity-20">-{minTwoDigits(itemTotal)}</span>
           </span>
         )}
-        <div className="border-t border-black pt-3.5">
+        <div className="border-t border-black md:pt-3.5">
           <SubSectionTitle>{title}</SubSectionTitle>
           {description && <SubSectionDescription>{description}</SubSectionDescription>}
         </div>

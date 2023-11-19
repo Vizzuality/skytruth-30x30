@@ -5,7 +5,9 @@ import { cn } from '@/lib/classnames';
 export type SectionTitleProps = PropsWithChildren;
 
 const SectionTitle: React.FC<SectionTitleProps> = ({ children }) => (
-  <h2 className="my-6 mb-8 mt-2 max-w-[610px] text-5xl font-extrabold">{children}</h2>
+  <h2 className="my-6 mt-2 max-w-[610px] text-4xl font-extrabold md:mb-8 md:text-5xl">
+    {children}
+  </h2>
 );
 
 export type SectionDescriptionProps = PropsWithChildren;

@@ -21,7 +21,7 @@ export type HighlightedTextProps = PropsWithChildren<VariantProps<typeof highlig
 const HighlightedText: React.FC<HighlightedTextProps> = ({ color, children }) => (
   <div
     className={cn(
-      'mt-20 mb-16 max-w-[720px] text-5xl font-extrabold leading-tight',
+      'mt:14 mb-8 max-w-[720px] text-4xl font-extrabold leading-tight md:mb-16 md:mt-20 md:text-5xl',
       highlightedTextVariants({ color })
     )}
   >
