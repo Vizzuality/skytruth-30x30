@@ -43,7 +43,10 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
 
   return (
     <div className={cn(className)}>
-      <div className="flex justify-end text-3xl font-bold">{protectedAreaPercentage}%</div>
+      <div className="flex items-end justify-end text-3xl font-bold">
+        {protectedAreaPercentage}
+        <span className="pb-1.5 pl-1.5 text-xs">%</span>
+      </div>
       <div className="flex justify-between text-xs">
         <span>{title} (i)</span>
         <span>
