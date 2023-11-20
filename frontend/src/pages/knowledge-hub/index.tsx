@@ -32,7 +32,7 @@ const KnowledgeHubPage = () => {
           description="Do you want to contribute to the Knowledge Hub and add a tool?"
           button={{
             text: 'Get in touch',
-            link: PAGES.dataTool,
+            link: PAGES.contact,
           }}
           color="green"
           image="cta2"
