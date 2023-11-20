@@ -91,15 +91,20 @@ Please note: when provisioning for the first time in a clean project, amend the 
 In case you need to access the Postgres database for the app, running in Cloud SQL, you can follow these steps.
 This is a slimmed down version of [this guide](https://medium.com/google-cloud/cloud-sql-with-private-ip-only-the-good-the-bad-and-the-ugly-de4ac23ce98a)
 
-- user needs to have IAP-secured Tunnel User role
-- (one time per user) Run `gcloud compute ssh x30-dev-bastion` to SSH into the bastion host
-- (one time per bastion host) Inside the bastion host, download
-  the [Cloud SQL Auth proxy](https://cloud.google.com/sql/docs/postgres/sql-proxy),
-  apply `chmod a+x` and make sure it's in an executable path.
+You will need the following information from the Google Cloud console:
+- <bastion-instance-name> - name of the bastion host VM instance in Compute Engine
+- <sql instance connection name> - connection name of the Cloud SQL instance
+- database password - secrets manager
+
+You will also need to ensure that the user has IAP-secured Tunnel User role.
+
+Steps:
+- (one time per user) Run `gcloud compute ssh <bastion instance name>` to SSH into the bastion host
+- (one time per bastion host) Inside the bastion host, follow the [steps to download and install
+  the Cloud SQL Auth proxy](https://cloud.google.com/sql/docs/postgres/sql-proxy#install)
 - (when connecting) Run `gcloud compute start-iap-tunnel <bastion instance name> 22 --local-host-port=localhost:4226` locally. This will start a tunnel, which you must keep open for the duration of your access to the SQL database
-- (when connecting) Run `ssh -L 3306:localhost:3306 -i ~/.ssh/google_compute_engine -p 4226 localhost -- cloud_sql_proxy -instances=<sql instance connection name>=tcp:3306`
-  locally. This will start a 2nd tunnel, which you must also keep open for the duration of your access to the SQL database
-- The remote Postgres database is now reachable on `localhost:3306`
+- (when connecting) Run `ssh -L 5433:localhost:5433 -i ~/.ssh/google_compute_engine -p 4226 localhost -- ./cloud-sql-proxy <sql instance connection name> --port=5433 --private-ip` locally. This will start a 2nd tunnel, which you must also keep open for the duration of your access to the SQL database
+- The remote Postgres database is now reachable on a local port 5433: `psql -h 127.0.0.1 -p 5433 -U db_user -W db_name`
 
 ## Backups
 
