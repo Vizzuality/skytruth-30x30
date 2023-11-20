@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { getCookie } from 'cookies-next';
 import * as z from 'zod';
 
 import { Checkbox } from '@/components/ui/checkbox';
@@ -43,7 +44,7 @@ const CATEGORY_OPTIONS = [
 ];
 
 const ContactUsSchema = z.object({
-  name: z
+  full_name: z
     .string({
       required_error: 'This field is mandatory.',
     })
@@ -54,8 +55,9 @@ const ContactUsSchema = z.object({
     })
     .email({ message: 'Invalid email format' })
     .min(1),
+  organization: z.string().optional(),
   country: z.string().optional(),
-  category: z
+  contact_reason: z
     .string({
       required_error: 'This field is mandatory.',
     })
@@ -65,7 +67,7 @@ const ContactUsSchema = z.object({
       required_error: 'The message cannot be empty.',
     })
     .min(1),
-  privacyPolicy: z
+  privacy_policy_consent: z
     .boolean()
     .refine((v) => v, {
       message: 'You must agree with the privacy policy.',
@@ -79,13 +81,32 @@ const ContactUsForm = (): JSX.Element => {
   const form = useForm<ContactUsInput>({
     resolver: zodResolver(ContactUsSchema),
   });
+  const [responseStatus, setResponseStatus] = useState<number | null>(null);
 
   const onSubmit = useCallback(async (values: ContactUsInput) => {
-    console.log(values);
-    await axios.put('/api/contact-us', values);
+    const { status } = await axios.post(
+      'https://api.hsforms.com/submissions/v3/integration/secure/submit/44434484/85194fe7-a207-425f-81b3-2311bace0b04',
+      {
+        fields: Object.keys(values).map((key) => ({
+          objectTypeId: '0-1',
+          name: key,
+          value: values[key],
+        })),
+        context: {
+          hutk: getCookie('hubspotutk'),
+        },
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUBSPOT_TOKEN}`,
+        },
+      }
+    );
+    setResponseStatus(status);
   }, []);
 
-  if (form.formState.isSubmitSuccessful) {
+  if (responseStatus === 200) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-8">
         <p>Thanks for your message. We will get back to you as soon as possible.</p>
@@ -104,7 +125,7 @@ const ContactUsForm = (): JSX.Element => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-4">
         <FormField
           control={form.control}
-          name="name"
+          name="full_name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>First and last names*</FormLabel>
@@ -130,6 +151,19 @@ const ContactUsForm = (): JSX.Element => {
         />
         <FormField
           control={form.control}
+          name="organization"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Organization</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="country"
           render={({ field }) => (
             <FormItem>
@@ -143,32 +177,37 @@ const ContactUsForm = (): JSX.Element => {
         />
         <FormField
           control={form.control}
-          name="category"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Reason*</FormLabel>
-              <FormControl>
-                <Select
-                  {...field}
-                  onValueChange={(v) => {
-                    field.onChange(v);
-                  }}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Please, select a contact reason" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CATEGORY_OPTIONS.map(({ label, value }) => (
-                      <SelectItem key={value} value={value}>
-                        {label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          name="contact_reason"
+          render={({ field }) => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { ref, ...restField } = field;
+
+            return (
+              <FormItem>
+                <FormLabel>Reason*</FormLabel>
+                <FormControl>
+                  <Select
+                    {...restField}
+                    onValueChange={(v) => {
+                      field.onChange(v);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Please, select a contact reason" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {CATEGORY_OPTIONS.map(({ label, value }) => (
+                        <SelectItem key={value} value={value}>
+                          {label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
         <FormField
           control={form.control}
@@ -191,7 +230,7 @@ const ContactUsForm = (): JSX.Element => {
         />
         <FormField
           control={form.control}
-          name="privacyPolicy"
+          name="privacy_policy_consent"
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -200,7 +239,7 @@ const ContactUsForm = (): JSX.Element => {
                     {...field}
                     onCheckedChange={field.onChange}
                     defaultChecked={field.value}
-                    value="privacyPolicy"
+                    value="privacy_policy_consent"
                   />
                   <FormLabel>
                     By submitting this form you agree with processing your personal data in
