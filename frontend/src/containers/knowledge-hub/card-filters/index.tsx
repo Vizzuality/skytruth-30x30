@@ -10,6 +10,7 @@ import FilterIcon from '@/styles/icons/filter.svg?sprite';
 import ArrowDown from '@/styles/icons/triangle-down.svg?sprite';
 import ArrowUp from '@/styles/icons/triangle-up.svg?sprite';
 
+import CardFiltersEcosystems from './ecosystems';
 import CardFiltersLanguages from './languages';
 import CardFiltersResourceTypes from './resource-types';
 
@@ -32,7 +33,7 @@ const CardFilters = (): JSX.Element => {
             type="button"
             className="flex items-center space-x-1 font-mono text-xs uppercase underline"
           >
-            Change resource type
+            Change resource category
           </button>
         </PopoverTrigger>
         <PopoverContent>
@@ -65,6 +66,17 @@ const CardFilters = (): JSX.Element => {
             </PopoverTrigger>
             <PopoverContent>
               <CardFiltersLanguages />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger asChild>
+              <button type="button" className="flex items-center space-x-1 font-mono text-xs">
+                <span>Filter by ecosystem</span>
+                <Icon icon={FilterIcon} className="h-3 w-3" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <CardFiltersEcosystems />
             </PopoverContent>
           </Popover>
         </div>

@@ -1,5 +1,4 @@
 import Icon from '@/components/ui/icon';
-import { cn } from '@/lib/classnames';
 import ExternalLinkIcon from '@/styles/icons/external-link.svg?sprite';
 import ListIcon from '@/styles/icons/list.svg?sprite';
 import StarIcon from '@/styles/icons/star.svg?sprite';
@@ -7,7 +6,7 @@ import WorldIcon from '@/styles/icons/world.svg?sprite';
 import { DataToolListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 const CIRCLE_ICON_CLASSES =
-  'flex h-7 w-7 items-center justify-center rounded-full border border-black fill-black';
+  'flex h-7 min-h-[28px] w-7 min-w-[28px] items-center justify-center rounded-full border border-black fill-black';
 
 const CardItem = ({ data }: { data: DataToolListResponseDataItem }): JSX.Element => {
   return (
@@ -34,29 +33,40 @@ const CardItem = ({ data }: { data: DataToolListResponseDataItem }): JSX.Element
                 <Icon icon={ListIcon} className="h-4 w-4" />
               </div>
               <div className="col-span-1">
-                <h5 className="font-bold">Resource type</h5>
+                <h5 className="font-bold">Resource category</h5>
                 <span>{data.attributes.data_tool_resource_type.data.attributes.name}</span>
               </div>
             </li>
           )}
-          {data.attributes.technical_skills && (
+          {data.attributes.geography && (
             <li className="flex gap-4">
               <div className={CIRCLE_ICON_CLASSES}>
                 <Icon icon={StarIcon} className="h-4 w-4" />
               </div>
               <div className="grow">
-                <h5 className="font-bold">Technical Skills</h5>
-                <span>{data.attributes.technical_skills}</span>
+                <h5 className="font-bold">Geography</h5>
+                <span>{data.attributes.geography}</span>
+              </div>
+            </li>
+          )}
+          {data.attributes.data_tool_ecosystems.data?.length > 0 && (
+            <li className="flex gap-4">
+              <div className={CIRCLE_ICON_CLASSES}>
+                <Icon icon={WorldIcon} className="h-4 w-4" />
+              </div>
+              <div className="columns-auto">
+                <h5 className="font-bold ">Ecosystems</h5>
+                <span>
+                  {data.attributes.data_tool_ecosystems.data
+                    .map(({ attributes: { name } }) => name)
+                    .join(', ')}
+                </span>
               </div>
             </li>
           )}
           {data.attributes.languages.data?.length > 0 && (
             <li className="flex gap-4">
-              <div
-                className={cn({
-                  [CIRCLE_ICON_CLASSES]: true,
-                })}
-              >
+              <div className={CIRCLE_ICON_CLASSES}>
                 <Icon icon={WorldIcon} className="h-4 w-4" />
               </div>
               <div className="columns-auto">
