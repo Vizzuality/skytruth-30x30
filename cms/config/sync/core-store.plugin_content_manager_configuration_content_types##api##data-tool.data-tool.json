@@ -92,18 +92,33 @@
           "sortable": true
         }
       },
-      "technical_skills": {
+      "geography": {
         "edit": {
-          "label": "technical_skills",
+          "label": "geography",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "technical_skills",
+          "label": "geography",
           "searchable": true,
           "sortable": true
+        }
+      },
+      "data_tool_ecosystems": {
+        "edit": {
+          "label": "data_tool_ecosystems",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "data_tool_ecosystems",
+          "searchable": false,
+          "sortable": false
         }
       },
       "createdAt": {
@@ -199,7 +214,13 @@
             "size": 6
           },
           {
-            "name": "technical_skills",
+            "name": "geography",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "data_tool_ecosystems",
             "size": 6
           }
         ]
