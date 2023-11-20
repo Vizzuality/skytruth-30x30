@@ -1,6 +1,6 @@
 import Script from 'next/script';
 
-import ContactUsForm from '@/containers/contact-us/form';
+import ContactUsForm from '@/containers/contact/form';
 import Layout from '@/layouts/fullscreen';
 
 const ContactUsPage = () => {

@@ -72,7 +72,7 @@ const KnowledgeHubPage = () => {
               </h3>
               <p>Do you want to contribute to the Knowledge Hub and add a tool?</p>
               <Link
-                href="/contact-us"
+                href="/contact"
                 className="flex self-start bg-black px-8 py-4 font-mono uppercase text-white"
               >
                 Get in touch

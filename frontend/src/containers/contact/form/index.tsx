@@ -83,7 +83,7 @@ const ContactUsForm = (): JSX.Element => {
   const [responseStatus, setResponseStatus] = useState<number | null>(null);
 
   const onSubmit = useCallback(async (values: ContactUsInput) => {
-    const { status } = await axios.post('/api/contact-us', values);
+    const { status } = await axios.post('/api/contact', values);
     setResponseStatus(status);
   }, []);
 

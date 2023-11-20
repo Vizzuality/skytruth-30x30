@@ -2,12 +2,12 @@ import { useMemo, useState } from 'react';
 
 import { useAtomValue } from 'jotai';
 
+import { applyFilters } from '@/containers/data-tool/content/details/helpers';
 import Table from '@/containers/data-tool/content/details/table';
 import useColumns from '@/containers/data-tool/content/details/tables/national-highseas/useColumns';
 import { locationAtom } from '@/store/location';
 import { useGetMpaProtectionCoverageStats } from '@/types/generated/mpa-protection-coverage-stat';
 import { MpaProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
-import { applyFilters } from '@/containers/data-tool/content/details/helpers';
 
 const NationalHighseasTable: React.FC = () => {
   const location = useAtomValue(locationAtom);
