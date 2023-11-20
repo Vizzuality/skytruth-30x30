@@ -33,8 +33,13 @@
       "relation": "oneToOne",
       "target": "api::data-tool-resource-type.data-tool-resource-type"
     },
-    "technical_skills": {
+    "geography": {
       "type": "text"
+    },
+    "data_tool_ecosystems": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::data-tool-ecosystem.data-tool-ecosystem"
     }
   }
 }

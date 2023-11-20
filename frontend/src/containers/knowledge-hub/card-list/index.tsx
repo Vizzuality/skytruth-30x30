@@ -21,6 +21,11 @@ const CardList = (): JSX.Element => {
             name: filters.resourceType,
           },
         }),
+        ...(filters.ecosystem && {
+          data_tool_ecosystems: {
+            name: filters.ecosystem,
+          },
+        }),
       },
       populate: '*',
       'pagination[pageSize]': 3,

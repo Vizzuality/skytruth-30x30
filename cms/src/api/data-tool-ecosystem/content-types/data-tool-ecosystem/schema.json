@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "data_tool_ecosystems",
+  "info": {
+    "singularName": "data-tool-ecosystem",
+    "pluralName": "data-tool-ecosystems",
+    "displayName": "Data Tool Ecosystem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

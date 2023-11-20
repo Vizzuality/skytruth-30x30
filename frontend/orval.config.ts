@@ -51,6 +51,7 @@ module.exports = {
           'Data-tool',
           'Data-tool-language',
           'Data-tool-resource-type',
+          'Data-tool-ecosystem',
         ],
       },
     },

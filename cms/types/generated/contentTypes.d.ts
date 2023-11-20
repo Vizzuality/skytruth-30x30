@@ -770,7 +770,12 @@ export interface ApiDataToolDataTool extends Schema.CollectionType {
       'oneToOne',
       'api::data-tool-resource-type.data-tool-resource-type'
     >;
-    technical_skills: Attribute.Text;
+    geography: Attribute.Text;
+    data_tool_ecosystems: Attribute.Relation<
+      'api::data-tool.data-tool',
+      'oneToMany',
+      'api::data-tool-ecosystem.data-tool-ecosystem'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -782,6 +787,38 @@ export interface ApiDataToolDataTool extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::data-tool.data-tool',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDataToolEcosystemDataToolEcosystem
+  extends Schema.CollectionType {
+  collectionName: 'data_tool_ecosystems';
+  info: {
+    singularName: 'data-tool-ecosystem';
+    pluralName: 'data-tool-ecosystems';
+    displayName: 'Data Tool Ecosystem';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::data-tool-ecosystem.data-tool-ecosystem',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::data-tool-ecosystem.data-tool-ecosystem',
       'oneToOne',
       'admin::user'
     > &
@@ -1487,6 +1524,7 @@ declare module '@strapi/types' {
       'api::data-info.data-info': ApiDataInfoDataInfo;
       'api::data-source.data-source': ApiDataSourceDataSource;
       'api::data-tool.data-tool': ApiDataToolDataTool;
+      'api::data-tool-ecosystem.data-tool-ecosystem': ApiDataToolEcosystemDataToolEcosystem;
       'api::data-tool-language.data-tool-language': ApiDataToolLanguageDataToolLanguage;
       'api::data-tool-resource-type.data-tool-resource-type': ApiDataToolResourceTypeDataToolResourceType;
       'api::fishing-protection-level.fishing-protection-level': ApiFishingProtectionLevelFishingProtectionLevel;
