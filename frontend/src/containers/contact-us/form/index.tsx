@@ -6,7 +6,6 @@ import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { getCookie } from 'cookies-next';
 import * as z from 'zod';
 
 import { Checkbox } from '@/components/ui/checkbox';
@@ -84,25 +83,7 @@ const ContactUsForm = (): JSX.Element => {
   const [responseStatus, setResponseStatus] = useState<number | null>(null);
 
   const onSubmit = useCallback(async (values: ContactUsInput) => {
-    const { status } = await axios.post(
-      'https://api.hsforms.com/submissions/v3/integration/secure/submit/44434484/85194fe7-a207-425f-81b3-2311bace0b04',
-      {
-        fields: Object.keys(values).map((key) => ({
-          objectTypeId: '0-1',
-          name: key,
-          value: values[key],
-        })),
-        context: {
-          hutk: getCookie('hubspotutk'),
-        },
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUBSPOT_TOKEN}`,
-        },
-      }
-    );
+    const { status } = await axios.post('/api/contact-us', values);
     setResponseStatus(status);
   }, []);
 
