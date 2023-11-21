@@ -6,10 +6,10 @@ import { groupBy } from 'lodash-es';
 import ConservationChart from '@/components/charts/conservation-chart';
 import Widget from '@/components/widget';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
-import type { Location } from '@/types/generated/strapi.schemas';
+import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 type MarineConservationWidgetProps = {
-  location: Location;
+  location: LocationGroupsDataItemAttributes;
 };
 
 const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ location }) => {

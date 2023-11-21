@@ -1,13 +1,11 @@
 import { QueryClient, dehydrate } from '@tanstack/react-query';
-import { useSetAtom } from 'jotai';
 import type { GetServerSideProps } from 'next';
 
 import Content from '@/containers/data-tool/content';
 import Sidebar from '@/containers/data-tool/sidebar';
 import Layout from '@/layouts/data-tool';
-import { locationAtom } from '@/store/location';
 import { getLocations } from '@/types/generated/location';
-import { Location, LocationGroupsDataItem } from '@/types/generated/strapi.schemas';
+import { Location, LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -21,25 +19,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
 
-  const location = locationsData[0];
-
-  queryClient.setQueryData<LocationGroupsDataItem>(['locations', locationCode], location);
+  const location = locationsData?.[0];
 
   if (!location) return { notFound: true };
 
+  queryClient.setQueryData<LocationGroupsDataItemAttributes>(
+    ['locations', locationCode],
+    location.attributes
+  );
+
   return {
     props: {
-      location: location?.attributes,
+      location: location.attributes,
       dehydratedState: dehydrate(queryClient),
     },
   };
 };
 
 export default function Page({ location }: { location: Location }) {
-  const setLocation = useSetAtom(locationAtom);
-
-  setLocation(location);
-
   return (
     <Layout title={location.name}>
       <div className="hidden md:block">

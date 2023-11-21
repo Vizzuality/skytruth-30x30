@@ -4,10 +4,10 @@ import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { HABITAT_CHART_COLORS } from '@/constants/habitat-chart-colors';
 import { useGetHabitatStats } from '@/types/generated/habitat-stat';
-import type { Location } from '@/types/generated/strapi.schemas';
+import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 type HabitatWidgetProps = {
-  location: Location;
+  location: LocationGroupsDataItemAttributes;
 };
 
 const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {

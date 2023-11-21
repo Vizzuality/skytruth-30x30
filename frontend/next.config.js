@@ -39,7 +39,7 @@ const nextConfig = {
     return [
       {
         source: '/dashboard',
-        destination: '/dashboard/worldwide',
+        destination: '/dashboard/GLOB',
         permanent: false,
       },
       {
