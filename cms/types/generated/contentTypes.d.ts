@@ -1104,7 +1104,7 @@ export interface ApiLocationLocation extends Schema.CollectionType {
   attributes: {
     code: Attribute.String & Attribute.Required & Attribute.Unique;
     name: Attribute.String & Attribute.Required;
-    totalMarineArea: Attribute.Integer &
+    totalMarineArea: Attribute.Decimal &
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;

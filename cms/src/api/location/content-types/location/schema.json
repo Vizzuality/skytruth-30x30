@@ -23,10 +23,18 @@
       "required": true
     },
     "totalMarineArea": {
-      "type": "integer",
+      "type": "decimal",
       "description": "Total marine area in km2",
       "required": true,
-      "min": 0
+      "min": 0,
+      "column": {
+        "defaultTo": 0,
+        "type": "decimal",
+        "args": [
+          12,
+          2
+        ]
+      }
     },
     "type": {
       "type": "string",
