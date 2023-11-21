@@ -18,7 +18,7 @@ module "staging" {
   frontend_min_scale  = 0
   backend_min_scale   = 0
   frontend_max_scale  = 1
-  backend_max_scale   = 1
+  backend_max_scale   = 2
   dns_zone_name       = module.dns.dns_zone_name
   domain              = var.domain
   subdomain           = "30x30"
