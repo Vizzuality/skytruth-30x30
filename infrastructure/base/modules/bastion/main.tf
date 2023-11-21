@@ -23,7 +23,8 @@ resource "google_compute_instance" "bastion" {
   lifecycle {
     ignore_changes = [
       boot_disk,
-      labels
+      labels,
+      metadata # SSH keys added via gcloud compute ssh
     ]
   }
 }
