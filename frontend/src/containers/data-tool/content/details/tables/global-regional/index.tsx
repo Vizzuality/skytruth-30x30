@@ -1,18 +1,31 @@
 import { useMemo, useState } from 'react';
 
-import { useAtomValue } from 'jotai';
+import { useRouter } from 'next/router';
+
+import { useQueryClient } from '@tanstack/react-query';
 
 import { applyFilters } from '@/containers/data-tool/content/details/helpers';
 import Table from '@/containers/data-tool/content/details/table';
 import useColumns from '@/containers/data-tool/content/details/tables/global-regional/useColumns';
-import { locationAtom } from '@/store/location';
 import { useGetLocations } from '@/types/generated/location';
-import type { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
+import type {
+  LocationGroupsDataItemAttributes,
+  LocationListResponseDataItem,
+} from '@/types/generated/strapi.schemas';
 
 const DATA_YEAR = 2023;
 
 const GlobalRegionalTable: React.FC = () => {
-  const location = useAtomValue(locationAtom);
+  const {
+    query: { locationCode },
+  } = useRouter();
+
+  const queryClient = useQueryClient();
+
+  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
+    'locations',
+    locationCode,
+  ]);
 
   const [filters, setFilters] = useState({
     // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
@@ -65,7 +78,7 @@ const GlobalRegionalTable: React.FC = () => {
           ? {
               groups: {
                 code: {
-                  $eq: location.code,
+                  $eq: location?.code,
                 },
               },
             }
@@ -135,9 +148,9 @@ const GlobalRegionalTable: React.FC = () => {
   const parsedData = useMemo(() => {
     return locationsData.map(({ attributes: location }) => {
       // Base stats needed for calculations
-      const coverageStats = location?.protection_coverage_stats?.data;
-      const mpaaStats = location?.mpaa_protection_level_stats?.data;
-      const lfpStats = location?.fishing_protection_level_stats?.data;
+      const coverageStats = location.protection_coverage_stats?.data;
+      const mpaaStats = location.mpaa_protection_level_stats?.data;
+      const lfpStats = location.fishing_protection_level_stats?.data;
 
       // Coverage calculations
       const protectedArea = coverageStats.reduce(

@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useAtomValue } from 'jotai';
+import { useQueryClient } from '@tanstack/react-query';
 import { Check } from 'lucide-react';
 
 import {
@@ -15,8 +15,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PAGES } from '@/constants/pages';
 import { cn } from '@/lib/classnames';
-import { locationAtom } from '@/store/location';
 import { useGetLocations } from '@/types/generated/location';
+import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 import { useDataToolSearchParams } from '../../content/map/sync-settings';
 
@@ -25,20 +25,35 @@ type LocationSelectorProps = {
 };
 
 const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
-  const location = useAtomValue(locationAtom);
-  const { push } = useRouter();
+  const {
+    query: { locationCode },
+    push,
+  } = useRouter();
+
+  const queryClient = useQueryClient();
+
+  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
+    'locations',
+    locationCode,
+  ]);
   const searchParams = useDataToolSearchParams();
 
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
-  const { data: locationsData } = useGetLocations(null, {
-    query: {
-      placeholderData: { data: [] },
-      select: ({ data }) => data,
+  const { data: locationsData } = useGetLocations(
+    {
+      'pagination[limit]': -1,
+      sort: 'name:asc',
     },
-  });
+    {
+      query: {
+        placeholderData: { data: [] },
+        select: ({ data }) => data,
+      },
+    }
+  );
 
   const handleLocationSelected = useCallback(
-    async (locationCode: string) => {
+    async (locationCode: LocationGroupsDataItemAttributes['code']) => {
       setLocationPopoverOpen(false);
 
       await push(`${PAGES.dataTool}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
@@ -56,7 +71,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
           <Command label="Search country or region">
             <CommandInput placeholder="Search country or region" />
             <CommandEmpty>No result</CommandEmpty>
-            <CommandGroup className="mt-4 max-h-64 overflow-y-scroll">
+            <CommandGroup className="mt-4 max-h-64 overflow-y-auto">
               {locationsData.map(({ attributes }) => {
                 const { name, code, type } = attributes;
 
@@ -71,7 +86,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
                         <Check
                           className={cn(
                             'relative top-1 mr-2 inline-block h-4 w-4 flex-shrink-0',
-                            location.code === code ? 'opacity-100' : 'opacity-0'
+                            location?.code === code ? 'opacity-100' : 'opacity-0'
                           )}
                         />
                         {name}

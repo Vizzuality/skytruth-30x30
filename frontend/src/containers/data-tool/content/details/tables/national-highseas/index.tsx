@@ -1,16 +1,29 @@
 import { useMemo, useState } from 'react';
 
-import { useAtomValue } from 'jotai';
+import { useRouter } from 'next/router';
+
+import { useQueryClient } from '@tanstack/react-query';
 
 import { applyFilters } from '@/containers/data-tool/content/details/helpers';
 import Table from '@/containers/data-tool/content/details/table';
 import useColumns from '@/containers/data-tool/content/details/tables/national-highseas/useColumns';
-import { locationAtom } from '@/store/location';
 import { useGetMpaProtectionCoverageStats } from '@/types/generated/mpa-protection-coverage-stat';
-import { MpaProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
+import {
+  LocationGroupsDataItemAttributes,
+  MpaProtectionCoverageStatListResponseDataItem,
+} from '@/types/generated/strapi.schemas';
 
 const NationalHighseasTable: React.FC = () => {
-  const location = useAtomValue(locationAtom);
+  const {
+    query: { locationCode },
+  } = useRouter();
+
+  const queryClient = useQueryClient();
+
+  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
+    'locations',
+    locationCode,
+  ]);
 
   const [filters, setFilters] = useState({
     // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
@@ -36,7 +49,7 @@ const NationalHighseasTable: React.FC = () => {
         filters: {
           location: {
             code: {
-              $eq: location.code,
+              $eq: location?.code,
             },
           },
         },

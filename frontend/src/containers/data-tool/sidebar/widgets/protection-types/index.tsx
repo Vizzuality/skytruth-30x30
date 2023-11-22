@@ -4,10 +4,10 @@ import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { PROTECTION_TYPES_CHART_COLORS } from '@/constants/protection-types-chart-colors';
 import { useGetMpaaProtectionLevelStats } from '@/types/generated/mpaa-protection-level-stat';
-import type { Location } from '@/types/generated/strapi.schemas';
+import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 type ProtectionTypesWidgetProps = {
-  location: Location;
+  location: LocationGroupsDataItemAttributes;
 };
 
 const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location }) => {

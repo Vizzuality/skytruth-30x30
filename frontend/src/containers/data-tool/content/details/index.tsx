@@ -1,32 +1,45 @@
 import { useMemo } from 'react';
 
-import { useAtomValue } from 'jotai';
+import { useRouter } from 'next/router';
+
+import { useQueryClient } from '@tanstack/react-query';
 
 import { Button } from '@/components/ui/button';
 import tablesSettings from '@/containers/data-tool/content/details/tables-settings';
 import { useSyncDataToolContentSettings } from '@/containers/data-tool/sync-settings';
-import { locationAtom } from '@/store/location';
+import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 const DataToolDetails: React.FC = () => {
   const [, setSettings] = useSyncDataToolContentSettings();
-  const location = useAtomValue(locationAtom);
+  const {
+    query: { locationCode },
+  } = useRouter();
+
+  const queryClient = useQueryClient();
+
+  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
+    'locations',
+    locationCode,
+  ]);
 
   const handleOnCloseClick = () => {
     setSettings((prevSettings) => ({ ...prevSettings, showDetails: false }));
   };
 
   const table = useMemo(() => {
-    // TODO: Improve to support more entries (although not needed right now)
-    const tableSettings = tablesSettings.worldwideRegion.locationTypes.includes(location.type)
-      ? tablesSettings.worldwideRegion
-      : tablesSettings.countryHighseas;
+    if (location) {
+      // TODO: Improve to support more entries (although not needed right now)
+      const tableSettings = tablesSettings.worldwideRegion.locationTypes.includes(location.type)
+        ? tablesSettings.worldwideRegion
+        : tablesSettings.countryHighseas;
 
-    const parsedTitle = tableSettings.title[location.type].replace('{location}', location.name);
+      const parsedTitle = tableSettings.title[location.type].replace('{location}', location.name);
 
-    return {
-      title: parsedTitle,
-      component: tableSettings.component,
-    };
+      return {
+        title: parsedTitle,
+        component: tableSettings.component,
+      };
+    }
   }, [location]);
 
   return (

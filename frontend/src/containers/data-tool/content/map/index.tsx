@@ -22,8 +22,7 @@ import {
   popupAtom,
 } from '@/store/map';
 import { useGetLayers } from '@/types/generated/layer';
-import { getGetLocationsQueryOptions } from '@/types/generated/location';
-import { LocationListResponse, LocationResponseDataObject } from '@/types/generated/strapi.schemas';
+import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
 const LayerManager = dynamic(() => import('@/containers/data-tool/content/map/layer-manager'), {
@@ -39,7 +38,7 @@ const DataToolMap: React.FC = () => {
   const { locationCode } = useParams();
   const hoveredPolygonId = useRef<string | number | null>(null);
 
-  const locationData = queryClient.getQueryData<LocationResponseDataObject>([
+  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
     'locations',
     locationCode,
   ]);
@@ -128,15 +127,11 @@ const DataToolMap: React.FC = () => {
     }
   }, [map, hoveredPolygonId]);
 
-  const bounds = customBbox ?? (locationData?.attributes?.bounds as LngLatBoundsLike);
+  const bounds = customBbox ?? (location?.bounds as LngLatBoundsLike);
 
   useEffect(() => {
-    const { queryKey } = getGetLocationsQueryOptions();
-    const d = queryClient.getQueryData<LocationListResponse>(queryKey);
-    if (d) {
-      const location = d.data.find(({ attributes }) => attributes.code === locationCode);
-
-      map?.fitBounds(location.attributes.bounds as LngLatBoundsLike, {
+    if (location && map) {
+      map.fitBounds(location.bounds as LngLatBoundsLike, {
         padding: {
           top: 0,
           bottom: 0,
@@ -145,7 +140,7 @@ const DataToolMap: React.FC = () => {
         },
       });
     }
-  }, [queryClient, locationCode, map]);
+  }, [location, map]);
 
   return (
     <div className="absolute left-0 h-full w-full">
