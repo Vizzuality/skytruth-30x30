@@ -4,6 +4,8 @@ While the application can be deployed in any server configuration that supports 
 - a [Terraform](https://www.terraform.io/) project that you can use to easily and quickly provision the resources and deploy the code using [Google Cloud Platform](https://cloud.google.com/),
 - and a GH Actions workflow to deploy code updates.
 
+![GCP infrastructure - GH Actions drawio](https://github.com/Vizzuality/skytruth-30x30/assets/134055/c20e52d4-89f0-42e2-be25-e6b76a3a4fe6)
+
 ## Dependencies
 
 Here is the list of technical dependencies for deploying the SkyTruth 30x30 Dashboard app using these infrastructure resources. Note that these requirements are for this particular deployment strategy, and not dependencies of the SkyTruth 30x30 Dashboard application itself - which can be deployed to other infrastructures.
