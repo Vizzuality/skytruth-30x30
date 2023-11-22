@@ -21,7 +21,7 @@ export const useSyncMapSettings = () => {
 };
 
 export const useSyncMapLayers = () => {
-  return useQueryState('layers', parseAsArrayOf(parseAsInteger).withDefault([]));
+  return useQueryState('layers', parseAsArrayOf(parseAsInteger).withDefault([6, 10]));
 };
 
 export const useSyncMapLayerSettings = () => {
