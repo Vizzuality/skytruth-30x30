@@ -23,7 +23,7 @@ class ProtectedAreaExtentSchema(pa.DataFrameModel):
     cumSumProtectedArea: Series[float] = pa.Field(ge=0, coerce=True)
     protectedArea: Series[float] = pa.Field(ge=0, coerce=True)
     protectedAreasCount: Series[int] = pa.Field(ge=0, coerce=True)
-    year: Series[int] = pa.Field(gt=1900, coerce=True)
+    year: Series[int] = pa.Field(ge=2000, coerce=True)
 
 
 class ProtectionLevelSchema(pa.DataFrameModel):

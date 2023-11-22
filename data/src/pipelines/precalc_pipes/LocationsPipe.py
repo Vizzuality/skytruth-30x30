@@ -112,7 +112,7 @@ def calculate_area(df: pd.DataFrame) -> pd.DataFrame:
 def add_groups_and_members(df: pd.DataFrame) -> pd.DataFrame:
     return df.assign(
         groups=lambda row: row[["region", "location_type"]].apply(
-            lambda x: np.where(df.iso == x["region"])[0].tolist()
+            lambda x: (np.where(df.iso == x["region"])[0] + 1).tolist()
             if x["location_type"] == "country"
             else [],
             axis=1,
@@ -175,8 +175,8 @@ class LocationsPipe(PreprocessBasePipe):
         output = {
             "version": 2,
             "data": {
-                "api::location.location": json.loads(
-                    LocationSchema(pd.DataFrame(locations)).to_json(orient="index")
+                "api::location.location": LocationSchema(pd.DataFrame(locations)).to_dict(
+                    orient="index"
                 )
             },
         }
