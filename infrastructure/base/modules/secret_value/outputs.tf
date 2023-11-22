@@ -9,3 +9,7 @@ output "secret_id" {
 output "secret_value" {
   value = google_secret_manager_secret_version.backend_app_secret.secret_data
 }
+
+output "latest_version" {
+  value = data.google_secret_manager_secret_version.latest.version
+}

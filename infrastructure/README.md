@@ -1,15 +1,16 @@
 # Infrastructure
 
-While the application can be deployed in any server configuration that supports the application's dependencies, this project includes a [Terraform](https://www.terraform.io/) project that you can use to easily and quickly deploy it using
-[Google Cloud Platform](https://cloud.google.com/).
+While the application can be deployed in any server configuration that supports the application's dependencies, this project includes:
+- a [Terraform](https://www.terraform.io/) project that you can use to easily and quickly provision the resources and deploy the code using [Google Cloud Platform](https://cloud.google.com/),
+- and a GH Actions workflow to deploy code updates.
+
+![GCP infrastructure - GH Actions drawio](https://github.com/Vizzuality/skytruth-30x30/assets/134055/c20e52d4-89f0-42e2-be25-e6b76a3a4fe6)
 
 ## Dependencies
 
-Here is the list of technical dependencies for deploying the SkyTruth 30x30 Dashboard app using these infrastructure
-resources. Note that these requirements are for this particular deployment strategy, and not dependencies of the SkyTruth 30x30 Dashboard application itself - which can be deployed to other infrastructures.
+Here is the list of technical dependencies for deploying the SkyTruth 30x30 Dashboard app using these infrastructure resources. Note that these requirements are for this particular deployment strategy, and not dependencies of the SkyTruth 30x30 Dashboard application itself - which can be deployed to other infrastructures.
 
-Before proceeding, be sure you are familiar with all of these tools, as these instructions
-will skip over the basics, and assume you are conformable using all of them.
+Before proceeding, be sure you are familiar with all of these tools, as these instructions will skip over the basics, and assume you are conformable using all of them.
 
 - [Google Cloud Platform](https://cloud.google.com)
 - [Terraform](https://www.terraform.io/)
@@ -19,14 +20,13 @@ will skip over the basics, and assume you are conformable using all of them.
 - DNS management
 - A purchased domain
 
-## Structure
+### Terraform project
 
-This project has 2 main sections, each of which with a folder named after it. Each of these sections has a Terraform project, that logically depends on their predecessors. There is a 3rd component to this architecture, which is handled by Github Actions.
+This project (in the inrastructure directory) has 2 main sections, each of which with a folder named after it. Each of these sections has a Terraform project, that logically depends on their predecessors. There is a 3rd component to this architecture, which is handled by Github Actions.
 
 #### Remote state
 
-Creates a [GCP Storage Bucket](https://cloud.google.com/storage/docs/json_api/v1/buckets)
-that will store the Terraform remote state.
+Creates a [GCP Storage Bucket](https://cloud.google.com/storage/docs/json_api/v1/buckets), which will store the Terraform remote state.
 
 #### Base
 
@@ -36,14 +36,16 @@ These resources include, but are not limited to:
 
 - Google Compute instance - bastion host to access the GCP infrastructure
 - Artifact Registry, for docker image storage
-- Cloud Run, to host the live applications
+- Cloud Run, to host the client application and the API/CMS
+- Cloud Functions, for serving the analysis results
 - Cloud SQL, for relational data storage
 - Networking resources
 - Uptime monitoring
 - Error reporting
+- Service accounts and permissions
+- GH Secrets
 
-To apply this project, you will need the following GCP permissions. These could probably be further fleshed out to a
-more restrictive set of permissions/roles, but this combination is know to work:
+To apply this project, you will need the following GCP permissions. These could probably be further fleshed out to a more restrictive set of permissions/roles, but this combination is know to work:
 
 - "Editor" role
 - "Secret Manager Admin" role
@@ -53,36 +55,71 @@ more restrictive set of permissions/roles, but this combination is know to work:
 
 The output values include access data for some of the resources above.
 
-Please note, there are some actions that need to be carried out manually - you'll get a promt from terraform with links to follow to complete the actions:
+Please note, there are some actions that might to be carried out manually - you'll get a promt from terraform with links to follow to complete the actions, e.g.:
 - Compute Engine API needs to be enabled
 
-#### Github Actions
-
-As part of this infrastructure, Github Actions are used to automatically build and push Docker images to [Artifact Registry](https://cloud.google.com/artifact-registry), and to deploy those images to CloudRun once they are pushed. Access by Github to GCP is configured through special authorization rules, automatically set up by the Terraform `base` project above.
-These permissions are necessary for the service account that runs the deployment:
-- "roles/iam.serviceAccountTokenCreator",
-- "roles/iam.serviceAccountUser",
-- "roles/run.developer",
-- "roles/artifactregistry.reader",
-- "roles/artifactregistry.writer"
-
-There are 2 CloudRun instances, one for the client application and one for the API. Github Secrets are used to provide environment secrets to these instances. Some of the secrets are managed by terraform when provisioning resources (e.g. database credentials for the API). To make it clear, the respective GH Secrets are suffixed "TF_MANAGED".
-
-## How to deploy
+#### How to run
 
 Deploying the included Terraform project is done in steps:
 
-- Terraform `apply` the `Remote State` project.
-- Terraform `apply` the `Base` project.
+- Terraform `apply` the `Remote State` project. This needs to be done once, before applying the base project.
+- Terraform `apply` the `Base` project. This needs to be repeated after any changes in the base project.
 
 For both commands, please use `-var-file=vars/terraform.tfvars`` to provide the necessary terraform variables.
 
-For the latter step, you will also need to set 2 environment variables:
+For the second command, you will also need to set 2 environment variables:
 - GITHUB_TOKEN (your GH token)
 - GITHUB_OWNER (Vizzuality)
 to allow terraform to write to GH Secrets.
 
 Please note: when provisioning for the first time in a clean project, amend the `cloudrun` module by uncommenting the image setting to be used for first time deployment, which deploys a dummy "hello" image (because actual application images are going to be available in GAR only once the infrastructure is provisioned and the GH Actions deployment passed)
+
+### Github Actions
+
+As part of this infrastructure, Github Actions are used to automatically apply code updates for the client application, API/CMS and the cloud functions.
+
+#### Building new code versions
+
+Deployment to the CloudRun instances is accomplished by building Docker images are built and pushing to [Artifact Registry](https://cloud.google.com/artifact-registry). When building the images, environment secrets are injected from GH Secrets as follows:
+- for the client application:
+  - the following secrets set by terraform in STAGING_CLIENT_ENV_TF_MANAGED (in the format of an .env file):
+    - NEXT_PUBLIC_URL
+    - NEXT_PUBLIC_API_URL
+    - NEXT_PUBLIC_ANALYSIS_CF_URL
+    - NEXT_PUBLIC_ENVIRONMENT
+    - LOG_LEVEL
+  - additional secrets set manually in STAGING_CLIENT_ENV (copy to be managed in LastPass)
+- for the CMS/API application
+  - the following secrets set by terraform in STAGING_CMS_ENV_TF_MANAGED (in the format of an .env file):
+    - HOST
+    - PORT
+    - APP_KEYS
+    - API_TOKEN_SALT
+    - ADMIN_JWT_SECRET
+    - TRANSFER_TOKEN_SALT
+    - JWT_SECRET
+    - CMS_URL
+    - DATABASE_CLIENT
+    - DATABASE_HOST
+    - DATABASE_NAME
+    - DATABASE_USERNAME
+    - DATABASE_PASSWORD
+    - DATABASE_SSL
+
+Deployment to the cloud function is accomplished by pushing the source code. Secrets and env vars are set via terraform.
+
+The workflow is currently set up to deploy to the staging instance when merging to develop.
+
+#### Service account permissions
+
+Access by Github to GCP is configured through special authorization rules, automatically set up by the Terraform `base` project above.
+These permissions are necessary for the service account that runs the deployment:
+- "roles/iam.serviceAccountTokenCreator",
+- "roles/iam.serviceAccountUser",
+- "roles/run.developer",
+- "roles/artifactregistry.reader",
+- "roles/artifactregistry.writer",
+- "roles/cloudfunctions.developer"
 
 ## Maintenance
 

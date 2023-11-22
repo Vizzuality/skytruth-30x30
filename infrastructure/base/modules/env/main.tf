@@ -147,22 +147,35 @@ locals {
     ADMIN_JWT_SECRET    = random_password.admin_jwt_secret.result
     TRANSFER_TOKEN_SALT = random_password.transfer_token_salt.result
     JWT_SECRET          = random_password.jwt_secret.result
-    # CMS_URL             = "${module.backend_cloudrun.cloudrun_service_url}/"
     CMS_URL = "https://${local.domain}/${var.backend_path_prefix}/"
 
     DATABASE_CLIENT   = "postgres"
     DATABASE_HOST     = module.database.database_host
-    DATABASE_NAME     = module.database.database_name     # var.database_name
-    DATABASE_USERNAME = module.database.database_user     # var.database_user
-    DATABASE_PASSWORD = module.database.database_password # module.postgres_application_user_password.secret_name
+    DATABASE_NAME     = module.database.database_name
+    DATABASE_USERNAME = module.database.database_user
+    DATABASE_PASSWORD = module.database.database_password
     DATABASE_SSL      = false
   }
   client_env = {
     NEXT_PUBLIC_URL         = "https://${local.domain}"
     NEXT_PUBLIC_API_URL     = "https://${local.domain}/${var.backend_path_prefix}/api/"
+    NEXT_PUBLIC_ANALYSIS_CF_URL = module.analysis_cloud_function.function_uri
     NEXT_PUBLIC_ENVIRONMENT = "production"
     LOG_LEVEL               = "info"
   }
+  analysis_cloud_function_env = {
+    DATABASE_CLIENT   = "postgres"
+    DATABASE_HOST     = module.database.database_host
+    DATABASE_NAME     = module.database.database_name
+    DATABASE_USERNAME = module.database.database_user
+    DATABASE_SSL      = false
+  }
+  analysis_cloud_function_secrets = [{
+    key        = "DATABASE_PASSWORD"
+    project_id = var.gcp_project_id
+    secret     = module.postgres_application_user_password.secret_name
+    version    = module.postgres_application_user_password.latest_version
+  }]
 }
 
 locals {
@@ -174,6 +187,7 @@ locals {
   client_repository = "${upper(var.environment)}_CLIENT_REPOSITORY"
   cms_service       = "${upper(var.environment)}_CMS_SERVICE"
   client_service    = "${upper(var.environment)}_CLIENT_SERVICE"
+  analysis_cf_name = "${upper(var.environment)}_ANALYSIS_CF_NAME"
 }
 
 module "github_values" {
@@ -188,6 +202,7 @@ module "github_values" {
     (local.client_repository) = module.frontend_gcr.repository_name
     (local.cms_service)       = module.backend_cloudrun.name
     (local.client_service)    = module.frontend_cloudrun.name
+    (local.analysis_cf_name)  = module.analysis_cloud_function.function_name
     (local.cms_env_file)      = join("\n", [for key, value in local.cms_env : "${key}=${value}"])
     (local.client_env_file)   = join("\n", [for key, value in local.client_env : "${key}=${value}"])
   }
@@ -219,7 +234,8 @@ variable "roles" {
     "roles/iam.serviceAccountUser",
     "roles/run.developer",
     "roles/artifactregistry.reader",
-    "roles/artifactregistry.writer"
+    "roles/artifactregistry.writer",
+    "roles/cloudfunctions.developer"
   ]
 }
 
@@ -239,4 +255,19 @@ module "load_balancer" {
   subdomain               = var.subdomain
   dns_managed_zone_name   = var.dns_zone_name
   backend_path_prefix     = var.backend_path_prefix
+}
+
+module "analysis_cloud_function" {
+  source                        = "../cloudfunction"
+  region                        = var.gcp_region
+  vpc_connector_name            = module.network.vpc_access_connector_name
+  function_name                 = "${var.project_name}-analysis"
+  description                   = "Analysis Cloud Function"
+  source_dir                    = "${path.root}/../../cloud_functions/analysis"
+  runtime                       = "python312"
+  entry_point                   = "index"
+  runtime_environment_variables = local.analysis_cloud_function_env
+  secrets                       = local.analysis_cloud_function_secrets
+
+  depends_on = [module.postgres_application_user_password]
 }
