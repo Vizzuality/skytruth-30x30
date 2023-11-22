@@ -4,6 +4,8 @@ import { format } from 'd3-format';
 
 import { cn } from '@/lib/classnames';
 
+import TooltipButton from '../chart-tooltip-button';
+
 import { BAR_BACKGROUNDS } from './constants';
 
 const DEFAULT_BAR_COLOR = 'white';
@@ -18,11 +20,12 @@ type HorizontalBarChartProps = {
     title: string;
     totalArea: number;
     protectedArea: number;
+    info?: string;
   };
 };
 
 const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data }) => {
-  const { title, barColor, barBackground, totalArea, protectedArea } = data;
+  const { title, barColor, barBackground, totalArea, protectedArea, info } = data;
 
   const targetPositionPercentage = useMemo(() => {
     return (PROTECTION_TARGET * 100) / DEFAULT_MAX_PERCENTAGE;
@@ -51,7 +54,10 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
         <span className="pb-1.5 pl-1.5 text-xs">%</span>
       </div>
       <div className="flex justify-between text-xs">
-        <span>{title} (i)</span>
+        <span className="flex items-center">
+          {title}
+          {info && <TooltipButton className="mt-1" text={info} />}
+        </span>
         <span>
           of {formattedArea} km<sup>2</sup>
         </span>

@@ -62,6 +62,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
         barColor: HABITAT_CHART_COLORS[habitat.slug],
         totalArea: stats.totalArea,
         protectedArea: stats.protectedArea,
+        info: habitat?.info,
       };
     });
 
@@ -70,6 +71,8 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
 
   // If there is no data for the widget, do not display it.
   if (!widgetChartData?.length) return null;
+
+  // console.log({ widgetChartData })
 
   return (
     <Widget
