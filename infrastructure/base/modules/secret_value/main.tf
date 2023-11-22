@@ -29,3 +29,7 @@ resource "google_secret_manager_secret_version" "backend_app_secret" {
 
   secret_data = var.use_random_value ? random_password.secret_value[0].result : var.value
 }
+
+data "google_secret_manager_secret_version" "latest" {
+  secret = google_secret_manager_secret.secret.id
+}

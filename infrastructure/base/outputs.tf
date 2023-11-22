@@ -6,6 +6,10 @@ output "staging_api_url" {
   value = module.staging.api_url
 }
 
+output "staging_analysis_cloud_function_url" {
+  value = module.staging.analysis_cloud_function_url
+}
+
 output "dns_name_servers" {
   value = module.dns.dns_name_servers
 }
@@ -16,4 +20,8 @@ output "dns_name_servers" {
 
 # output "production_api_url" {
 #   value = module.production.api_url
+# }
+
+# output "production_analysis_cloud_function_url" {
+#   value = module.production.analysis_cloud_function_url
 # }
