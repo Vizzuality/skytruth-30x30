@@ -6,10 +6,10 @@ import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { ESTABLISHMENT_STAGES_CHART_BAR_BACKGROUNDS } from '@/constants/establishment-stages-chart-bar-backgrounds';
 import { useGetMpaaEstablishmentStageStats } from '@/types/generated/mpaa-establishment-stage-stat';
-import type { Location } from '@/types/generated/strapi.schemas';
+import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 type EstablishmentStagesWidgetProps = {
-  location: Location;
+  location: LocationGroupsDataItemAttributes;
 };
 
 const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ location }) => {
