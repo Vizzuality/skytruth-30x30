@@ -72,8 +72,6 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
   // If there is no data for the widget, do not display it.
   if (!widgetChartData?.length) return null;
 
-  // console.log({ widgetChartData })
-
   return (
     <Widget
       title="Proportion of Habitat within Protected and Conserved Areas"
