@@ -4,22 +4,28 @@ import { format } from 'd3-format';
 
 import { cn } from '@/lib/classnames';
 
-const DEFAULT_BAR_COLOR = '#1E1E1E';
+import TooltipButton from '../chart-tooltip-button';
+
+import { BAR_BACKGROUNDS } from './constants';
+
+const DEFAULT_BAR_COLOR = 'white';
 const DEFAULT_MAX_PERCENTAGE = 100;
 const PROTECTION_TARGET = 30;
 
 type HorizontalBarChartProps = {
   className: string;
   data: {
-    barColor: string;
+    barColor?: string;
+    barBackground?: keyof typeof BAR_BACKGROUNDS;
     title: string;
     totalArea: number;
     protectedArea: number;
+    info?: string;
   };
 };
 
 const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data }) => {
-  const { title, barColor, totalArea, protectedArea } = data;
+  const { title, barColor, barBackground, totalArea, protectedArea, info } = data;
 
   const targetPositionPercentage = useMemo(() => {
     return (PROTECTION_TARGET * 100) / DEFAULT_MAX_PERCENTAGE;
@@ -48,16 +54,28 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
         <span className="pb-1.5 pl-1.5 text-xs">%</span>
       </div>
       <div className="flex justify-between text-xs">
-        <span>{title} (i)</span>
+        <span className="flex items-center">
+          {title}
+          {info && <TooltipButton className="mt-1" text={info} />}
+        </span>
         <span>
           of {formattedArea} km<sup>2</sup>
         </span>
       </div>
-      <div className="relative my-2 flex h-3">
+      <div
+        className={cn('relative my-2 flex', {
+          'h-3': !!barColor,
+          'h-3.5': !barColor,
+        })}
+      >
         <span className="absolute top-1/2 h-px w-full border-b border-dashed border-black"></span>
         <span
-          className="absolute top-0 bottom-0 left-0"
-          style={{ backgroundColor: barColor || DEFAULT_BAR_COLOR, width: `${barFillPercentage}%` }}
+          className={cn('absolute top-0 bottom-0 left-0', { 'border border-black': !barColor })}
+          style={{
+            backgroundColor: barColor || DEFAULT_BAR_COLOR,
+            width: `${barFillPercentage}%`,
+            ...(barBackground && { backgroundImage: `url(${BAR_BACKGROUNDS[barBackground]})` }),
+          }}
         ></span>
         <span
           className="absolute top-0 bottom-0 w-1 border-x border-white bg-orange"

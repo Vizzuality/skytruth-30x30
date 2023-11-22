@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
+import EstablishmentStagesWidget from './establishment-stages';
 import HabitatWidget from './habitat';
 import MarineConservationWidget from './marine-conservation';
 import ProtectionTypesWidget from './protection-types';
@@ -24,6 +25,7 @@ const DataToolWidgets: React.FC = () => {
     <div className="flex flex-col divide-y-[1px] divide-black font-mono">
       <MarineConservationWidget location={location} />
       <ProtectionTypesWidget location={location} />
+      <EstablishmentStagesWidget location={location} />
       <HabitatWidget location={location} />
     </div>
   );
