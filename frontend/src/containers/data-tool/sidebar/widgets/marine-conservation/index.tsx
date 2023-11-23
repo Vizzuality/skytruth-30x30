@@ -61,15 +61,13 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
 
     return Object.keys(groupedByYear).map((year) => {
       const entries = groupedByYear[year];
-      const totalArea = entries.reduce(
+      const protectedArea = entries.reduce(
         (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
         0
       );
-      const protectedArea = entries.reduce((acc, entry) => acc + entry.attributes.protectedArea, 0);
 
       return {
         year: Number(year),
-        totalArea,
         protectedArea,
       };
     });
@@ -78,8 +76,9 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   const stats = useMemo(() => {
     if (!mergedProtectionStats) return null;
 
+    const totalArea = location.totalMarineArea;
     const lastYearData = mergedProtectionStats[mergedProtectionStats.length - 1];
-    const { protectedArea, totalArea } = lastYearData;
+    const { protectedArea } = lastYearData;
     const percentageFormatted = format('.1r')((protectedArea * 100) / totalArea);
     const totalAreaFormatted = format(',.2r')(totalArea);
 
@@ -87,14 +86,15 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       protectedPercentage: percentageFormatted,
       totalArea: totalAreaFormatted,
     };
-  }, [mergedProtectionStats]);
+  }, [location, mergedProtectionStats]);
 
   const chartData = useMemo(() => {
     if (!mergedProtectionStats?.length) return [];
 
+    const totalArea = location.totalMarineArea;
     const parsedData = mergedProtectionStats.map((entry, index) => {
       const isLastYear = index === mergedProtectionStats.length - 1;
-      const { year, totalArea, protectedArea } = entry;
+      const { year, protectedArea } = entry;
       const percentage = Math.round((protectedArea * 100) / totalArea);
 
       return {
@@ -129,7 +129,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
 
     // Cap results to the least 20 entries, or chart will be too big
     return mergedData.slice(-20);
-  }, [mergedProtectionStats]);
+  }, [location, mergedProtectionStats]);
 
   if (!stats || !chartData) return null;
 
