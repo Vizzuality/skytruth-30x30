@@ -13,8 +13,6 @@ import type {
   LocationListResponseDataItem,
 } from '@/types/generated/strapi.schemas';
 
-const DATA_YEAR = 2023;
-
 const GlobalRegionalTable: React.FC = () => {
   const {
     query: { locationCode },
@@ -22,7 +20,7 @@ const GlobalRegionalTable: React.FC = () => {
 
   const queryClient = useQueryClient();
 
-  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
+  const dataToolLocation = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
     'locations',
     locationCode,
   ]);
@@ -38,47 +36,15 @@ const GlobalRegionalTable: React.FC = () => {
 
   const columns = useColumns({ filters, onFiltersChange: handleOnFiltersChange });
 
-  // Get worldwide data in order to calculate contributions per location
-  const { data: globalData }: { data: LocationListResponseDataItem[] } = useGetLocations(
-    {
-      filters: {
-        type: {
-          $eq: ['worldwide'],
-        },
-      },
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      fields: ['code', 'name', 'type', 'totalMarineArea'],
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      populate: {
-        protection_coverage_stats: {
-          fields: ['cumSumProtectedArea', 'protectedAreasCount', 'year'],
-          filters: {
-            year: {
-              $eq: DATA_YEAR,
-            },
-          },
-        },
-      },
-    },
-    {
-      query: {
-        select: ({ data }) => data,
-        placeholderData: { data: [] },
-      },
-    }
-  );
-
   // Get location data and calculate data to display on the table
   const { data: locationsData }: { data: LocationListResponseDataItem[] } = useGetLocations(
     {
       filters:
-        location?.type === 'region'
+        dataToolLocation?.type === 'region'
           ? {
               groups: {
                 code: {
-                  $eq: location?.code,
+                  $eq: dataToolLocation?.code,
                 },
               },
             }
@@ -100,11 +66,6 @@ const GlobalRegionalTable: React.FC = () => {
               fields: ['slug', 'name'],
             },
           },
-          filters: {
-            year: {
-              $eq: DATA_YEAR,
-            },
-          },
         },
         mpaa_protection_level_stats: {
           fields: ['area'],
@@ -123,6 +84,8 @@ const GlobalRegionalTable: React.FC = () => {
           },
         },
       },
+      // populate: '*',
+      'pagination[limit]': -1,
     },
     {
       query: {
@@ -132,27 +95,23 @@ const GlobalRegionalTable: React.FC = () => {
     }
   );
 
-  // Calculate global stats
-  const globalStats = useMemo(() => {
-    const coverageStats = globalData[0]?.attributes?.protection_coverage_stats?.data || [];
-
-    const protectedArea = coverageStats.reduce(
-      (acc, { attributes }) => acc + attributes?.cumSumProtectedArea,
-      0
-    );
-
-    return { protectedArea };
-  }, [globalData]);
-
   // Calculate table data
   const parsedData = useMemo(() => {
     return locationsData.map(({ attributes: location }) => {
       // Base stats needed for calculations
-      const coverageStats = location.protection_coverage_stats?.data;
+      const allCoverageStats = location.protection_coverage_stats?.data;
       const mpaaStats = location.mpaa_protection_level_stats?.data;
       const lfpStats = location.fishing_protection_level_stats?.data;
 
-      // Coverage calculations
+      // Find coverage stats data for the last available year in the data
+      const lastCoverageDataYear = Math.max(
+        ...allCoverageStats.map(({ attributes }) => attributes.year)
+      );
+      const coverageStats = allCoverageStats.filter(
+        ({ attributes }) => attributes.year === lastCoverageDataYear
+      );
+
+      // Coverage calculations (MPA + OECM)
       const protectedArea = coverageStats.reduce(
         (acc, { attributes }) => acc + attributes?.cumSumProtectedArea,
         0
@@ -172,16 +131,16 @@ const GlobalRegionalTable: React.FC = () => {
         )?.length || 0;
 
       // Fully/Highly Protected calculations
-      const fullyHighProtected = mpaaStats.filter(
+      const fullyHighlyProtected = mpaaStats.filter(
         ({ attributes }) =>
           attributes?.mpaa_protection_level?.data?.attributes?.slug === 'fully-highly-protected'
       );
-      const fullyHighProtectedArea = fullyHighProtected.reduce(
+      const fullyHighlyProtectedArea = fullyHighlyProtected.reduce(
         (acc, { attributes }) => acc + attributes?.area,
         0
       );
-      const fullyHighProtectedAreaPercentage =
-        (fullyHighProtectedArea * 100) / globalStats.protectedArea;
+      const fullyHighlyProtectedAreaPercentage =
+        (fullyHighlyProtectedArea * 100) / location.totalMarineArea;
 
       // Highly Protected LFP calculations
       const lfpHighProtected = lfpStats.filter(
@@ -192,10 +151,10 @@ const GlobalRegionalTable: React.FC = () => {
         (acc, { attributes }) => acc + attributes?.area,
         0
       );
-      const lfpHighProtectedPercentage = (lfpHighProtectedArea * 100) / globalStats.protectedArea;
+      const lfpHighProtectedPercentage = (lfpHighProtectedArea * 100) / location.totalMarineArea;
 
       // Global contributions calculations
-      const globalContributionPercentage = (protectedArea * 100) / globalStats.protectedArea;
+      const globalContributionPercentage = (protectedArea * 100) / dataToolLocation.totalMarineArea;
 
       return {
         location: location.name,
@@ -204,12 +163,12 @@ const GlobalRegionalTable: React.FC = () => {
         locationType: location.type,
         mpas: numMPAs,
         oecms: numOEMCs,
-        fullyHighProtected: fullyHighProtectedAreaPercentage,
-        highlyProtectedLFP: lfpHighProtectedPercentage,
+        fullyHighlyProtected: fullyHighlyProtectedAreaPercentage,
+        highlyProtectedLfp: lfpHighProtectedPercentage,
         globalContribution: globalContributionPercentage,
       };
     });
-  }, [globalStats, locationsData]);
+  }, [dataToolLocation, locationsData]);
 
   const tableData = useMemo(() => {
     return applyFilters(parsedData, filters);
