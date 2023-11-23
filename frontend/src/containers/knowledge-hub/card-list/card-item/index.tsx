@@ -10,7 +10,7 @@ const CIRCLE_ICON_CLASSES =
 
 const CardItem = ({ data }: { data: DataToolListResponseDataItem }): JSX.Element => {
   return (
-    <div className="h-full divide-y divide-black border border-black p-5 shadow-[4px_4px_0_0_black]">
+    <div className="h-full divide-y divide-black border border-black p-5 transition-shadow hover:shadow-[4px_4px_0_0_black]">
       <div className="space-y-2">
         <h4 className="text-[20px] font-black">{data.attributes.name}</h4>
         {data.attributes.site && (
