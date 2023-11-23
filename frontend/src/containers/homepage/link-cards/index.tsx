@@ -7,7 +7,7 @@ const LinkCards: React.FC = () => (
       title="Data Tool"
       subtitle="An interactive tool for tracking 30x30 progress and drawing new protected areas"
       description="This tool allows users to understand global progress toward 30x30 at a glance, draw new potential protected areas, and illustrate the effects of those proposed areas on national and global progress toward 30x30."
-      image="clock"
+      image="computer2"
       link={PAGES.dataTool}
       linkLabel="Go to the Data Tool"
     />
@@ -15,6 +15,7 @@ const LinkCards: React.FC = () => (
       title="Knowledge Hub"
       subtitle="A navigation hub guiding users toward other helpful 30x30 resources"
       description="The Knowledge Hub will link users to other 30x30 focused organizations and efforts, making it easier for stakeholders at all levels to discover and make use of advanced resources for monitoring, planning, and decision making."
+      image="magnifyingGlass"
       color="green"
       link={PAGES.knowledgeHub}
       linkLabel="Go to the Knowledge Hub"
