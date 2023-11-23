@@ -10,9 +10,9 @@ const Logo: React.FC<LogoProps> = ({ logo: logoKey }) => {
   const { logo, alt, dimensions } = LOGOS[logoKey];
 
   return (
-    <div>
+    <span>
       <Image src={`${LOGOS_PATH}${logo}`} alt={alt} width={dimensions[0]} height={dimensions[1]} />
-    </div>
+    </span>
   );
 };
 
