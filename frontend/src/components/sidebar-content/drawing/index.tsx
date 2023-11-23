@@ -6,7 +6,7 @@ import { AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { drawStateAtom } from '@/store/map';
+import { drawStateAtom } from '@/containers/data-tool/store';
 
 import { convertFilesToGeojson, supportedFileformats } from './helpers';
 

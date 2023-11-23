@@ -5,7 +5,7 @@ import { useResetAtom } from 'jotai/utils';
 
 import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { cardFiltersAtom } from '@/store/knowledge-hub';
+import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
 import FilterIcon from '@/styles/icons/filter.svg?sprite';
 import ArrowDown from '@/styles/icons/triangle-down.svg?sprite';
 import ArrowUp from '@/styles/icons/triangle-up.svg?sprite';

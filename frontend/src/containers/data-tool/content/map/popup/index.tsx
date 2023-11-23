@@ -3,7 +3,7 @@ import { Popup } from 'react-map-gl';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import PopupItem from '@/containers/data-tool/content/map/popup/item';
-import { layersInteractiveAtom, popupAtom } from '@/store/map';
+import { layersInteractiveAtom, popupAtom } from '@/containers/data-tool/store';
 
 const PopupContainer = () => {
   const popup = useAtomValue(popupAtom);

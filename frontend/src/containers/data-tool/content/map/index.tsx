@@ -1,28 +1,29 @@
-import { ComponentProps, useCallback, useEffect, useRef } from 'react';
+import { ComponentProps, useCallback, useMemo, useRef } from 'react';
 
 import { useMap } from 'react-map-gl';
-import { LngLatBoundsLike } from 'react-map-gl';
 
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import Map, { ZoomControls, Attributions, DrawControls, Drawing } from '@/components/map';
+import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
 import LabelsManager from '@/containers/data-tool/content/map/labels-manager';
 import LayersToolbox from '@/containers/data-tool/content/map/layers-toolbox';
 import Popup from '@/containers/data-tool/content/map/popup';
 import { useSyncMapSettings } from '@/containers/data-tool/content/map/sync-settings';
-import { cn } from '@/lib/classnames';
+import { sidebarAtom } from '@/containers/data-tool/store';
 import {
+  bboxLocation,
   drawStateAtom,
   layersInteractiveAtom,
   layersInteractiveIdsAtom,
   popupAtom,
-} from '@/store/map';
+} from '@/containers/data-tool/store';
+import { cn } from '@/lib/classnames';
 import { useGetLayers } from '@/types/generated/layer';
-import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
+import { useGetLocations } from '@/types/generated/location';
 import { LayerTyped } from '@/types/layers';
 
 const LayerManager = dynamic(() => import('@/containers/data-tool/content/map/layer-manager'), {
@@ -30,18 +31,25 @@ const LayerManager = dynamic(() => import('@/containers/data-tool/content/map/la
 });
 
 const DataToolMap: React.FC = () => {
-  const [{ bbox: customBbox }, setMapSettings] = useSyncMapSettings();
+  const [{ bbox: URLBbox }, setMapSettings] = useSyncMapSettings();
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
+  const isSidebarOpen = useAtomValue(sidebarAtom);
   const setPopup = useSetAtom(popupAtom);
-  const queryClient = useQueryClient();
   const { locationCode } = useParams();
   const hoveredPolygonId = useRef<string | number | null>(null);
+  const locationBbox = useAtomValue(bboxLocation);
 
-  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
-    'locations',
-    locationCode,
-  ]);
+  const locationsQuery = useGetLocations(
+    {},
+    {
+      query: {
+        queryKey: ['locations', locationCode],
+        staleTime: Infinity,
+        select: ({ data }) => data?.[0]?.attributes,
+      },
+    }
+  );
 
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
@@ -69,7 +77,7 @@ const DataToolMap: React.FC = () => {
         .getBounds()
         .toArray()
         .flat()
-        .map((b) => parseFloat(b.toFixed(2))) as typeof customBbox,
+        .map((b) => parseFloat(b.toFixed(2))) as typeof URLBbox,
     }));
   }, [map, setMapSettings]);
 
@@ -127,35 +135,53 @@ const DataToolMap: React.FC = () => {
     }
   }, [map, hoveredPolygonId]);
 
-  const bounds = customBbox ?? (location?.bounds as LngLatBoundsLike);
+  const initialViewState: ComponentProps<typeof Map>['initialViewState'] = useMemo(() => {
+    if (URLBbox) {
+      return {
+        ...DEFAULT_VIEW_STATE,
+        bounds: URLBbox as ComponentProps<typeof Map>['initialViewState']['bounds'],
+      };
+    }
 
-  useEffect(() => {
-    if (location && map) {
-      map.fitBounds(location.bounds as LngLatBoundsLike, {
+    if (locationsQuery.data && locationsQuery.data?.code !== 'GLOB') {
+      return {
+        ...DEFAULT_VIEW_STATE,
+        bounds: locationsQuery.data?.bounds as ComponentProps<
+          typeof Map
+        >['initialViewState']['bounds'],
         padding: {
           top: 0,
           bottom: 0,
-          left: 0,
+          left: isSidebarOpen ? 430 : 0,
           right: 0,
         },
-      });
+      };
     }
-  }, [location, map]);
+
+    return DEFAULT_VIEW_STATE;
+  }, [URLBbox, isSidebarOpen, locationsQuery.data]);
+
+  const bounds: ComponentProps<typeof Map>['bounds'] = useMemo(() => {
+    if (!locationBbox) return null;
+
+    return {
+      bbox: locationBbox as ComponentProps<typeof Map>['bounds']['bbox'],
+      options: {
+        padding: {
+          top: 0,
+          bottom: 0,
+          left: isSidebarOpen ? 430 : 0,
+          right: 0,
+        },
+      },
+    };
+  }, [locationBbox, isSidebarOpen]);
 
   return (
     <div className="absolute left-0 h-full w-full">
       <Map
-        initialViewState={{
-          bounds,
-          fitBoundsOptions: {
-            padding: {
-              top: 0,
-              bottom: 0,
-              left: customBbox ? 0 : 430,
-              right: 0,
-            },
-          },
-        }}
+        initialViewState={initialViewState}
+        bounds={bounds}
         interactiveLayerIds={layersInteractiveIds}
         onClick={handleMapClick}
         onMoveEnd={handleMoveEnd}

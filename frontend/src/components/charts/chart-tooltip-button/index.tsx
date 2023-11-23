@@ -18,7 +18,7 @@ const TooltipButton: React.FC<ChartTooltipButtonProps> = ({ className, text }) =
 
   return (
     <Popover open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         <Button className={cn('h-auto w-auto pl-1.5', className)} size="icon" variant="ghost">
           <span className="sr-only">Info</span>
           <Info className="h-4 w-4" aria-hidden="true" />
