@@ -1,7 +1,8 @@
-export type LogoType = {
+import { ImageProps } from 'next/image';
+
+export type LogoType = Pick<ImageProps, 'alt' | 'width' | 'height'> & {
   logo: string;
   alt: string;
-  dimensions: [number, number];
 };
 
 export type LogosType = {

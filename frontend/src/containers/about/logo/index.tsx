@@ -7,11 +7,11 @@ type LogoProps = {
 };
 
 const Logo: React.FC<LogoProps> = ({ logo: logoKey }) => {
-  const { logo, alt, dimensions } = LOGOS[logoKey];
+  const { logo, alt, width, height } = LOGOS[logoKey];
 
   return (
     <span>
-      <Image src={`${LOGOS_PATH}${logo}`} alt={alt} width={dimensions[0]} height={dimensions[1]} />
+      <Image src={`${LOGOS_PATH}${logo}`} alt={alt} width={width} height={height} />
     </span>
   );
 };
