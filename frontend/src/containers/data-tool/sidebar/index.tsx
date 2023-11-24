@@ -6,8 +6,8 @@ import { ChevronLeft } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { sidebarAtom } from '@/containers/data-tool/store';
 import { cn } from '@/lib/classnames';
-import { sidebarAtom } from '@/store/data-tool';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 import DetailsButton from './details-button';

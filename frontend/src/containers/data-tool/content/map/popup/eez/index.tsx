@@ -8,8 +8,8 @@ import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 
 import { PAGES } from '@/constants/pages';
+import { layersInteractiveIdsAtom, popupAtom } from '@/containers/data-tool/store';
 import { format } from '@/lib/utils/formats';
-import { layersInteractiveIdsAtom, popupAtom } from '@/store/map';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { LayerTyped } from '@/types/layers';

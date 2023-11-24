@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useAtom } from 'jotai';
 
 import Icon from '@/components/ui/icon';
-import { cardFiltersAtom } from '@/store/knowledge-hub';
+import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
 import CheckIcon from '@/styles/icons/check.svg?sprite';
 import { useGetDataToolResourceTypes } from '@/types/generated/data-tool-resource-type';
 import { DataToolResourceType } from 'types/generated/strapi.schemas';

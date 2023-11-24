@@ -1,12 +1,11 @@
-import { LngLatBoundsLike } from 'react-map-gl';
-
 import { parseAsArrayOf, parseAsInteger, useQueryState } from 'next-usequerystate';
 import { parseAsJson } from 'next-usequerystate/parsers';
 
+import { CustomMapProps } from '@/components/map/types';
 import { LayerSettings } from '@/types/layers';
 
 const DEFAULT_SYNC_MAP_SETTINGS: {
-  bbox: LngLatBoundsLike;
+  bbox: CustomMapProps['initialViewState']['bounds'];
   labels: boolean;
 } = {
   bbox: null,

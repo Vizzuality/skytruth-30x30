@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 
-import { cardFiltersAtom } from '@/store/knowledge-hub';
+import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
 import { useGetDataToolsInfinite } from '@/types/generated/data-tool';
 
 import CardItem from './card-item';

@@ -6,8 +6,8 @@ import { useAtom } from 'jotai';
 
 import DeckJsonLayer from '@/components/map/layers/deck-json-layer';
 import MapboxLayer from '@/components/map/layers/mapbox-layer';
+import { layersInteractiveAtom, layersInteractiveIdsAtom } from '@/containers/data-tool/store';
 import { parseConfig } from '@/lib/json-converter';
-import { layersInteractiveAtom, layersInteractiveIdsAtom } from '@/store/map';
 import { useGetLayersId } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 import { Config, LayerTyped } from '@/types/layers';

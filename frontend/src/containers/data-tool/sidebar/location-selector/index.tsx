@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { useSetAtom } from 'jotai';
 import { Check } from 'lucide-react';
 
 import {
@@ -14,6 +15,7 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PAGES } from '@/constants/pages';
+import { bboxLocation } from '@/containers/data-tool/store';
 import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
@@ -29,6 +31,8 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     query: { locationCode },
     push,
   } = useRouter();
+  // @ts-expect-error to work properly, strict mode should be enabled
+  const setLocationBBox = useSetAtom(bboxLocation);
 
   const queryClient = useQueryClient();
 
@@ -48,6 +52,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
       query: {
         placeholderData: { data: [] },
         select: ({ data }) => data,
+        staleTime: Infinity,
       },
     }
   );
@@ -56,9 +61,16 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     async (locationCode: LocationGroupsDataItemAttributes['code']) => {
       setLocationPopoverOpen(false);
 
-      await push(`${PAGES.dataTool}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
+      const selectedLocation = locationsData.find(
+        ({ attributes: { code } }) => code === locationCode
+      );
+
+      if (selectedLocation) {
+        setLocationBBox(selectedLocation?.attributes.bounds);
+        await push(`${PAGES.dataTool}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
+      }
     },
-    [push, searchParams]
+    [push, searchParams, setLocationBBox, locationsData]
   );
 
   return (
