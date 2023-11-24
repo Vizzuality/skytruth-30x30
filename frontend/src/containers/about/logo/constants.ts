@@ -6,16 +6,19 @@ export const LOGOS = {
   protectedPlanet: {
     logo: 'protected-planet.png',
     alt: 'Protected Planet logo',
-    dimensions: [237, 84],
+    width: 237,
+    height: 84,
   },
   marineProtectionAtlas: {
     logo: 'mpa.png',
     alt: 'Marine Protection Atlas logo',
-    dimensions: [224, 132],
+    width: 224,
+    height: 132,
   },
   protectedSeas: {
     logo: 'protected-seas.png',
     alt: 'Protected Seas logo',
-    dimensions: [251, 95],
+    width: 251,
+    height: 95,
   },
 } satisfies LogosType;
