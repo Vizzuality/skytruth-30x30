@@ -10,6 +10,8 @@ import { JSONConfiguration, JSONConverter } from '@deck.gl/json/typed';
 // } from '@/components/map/legend/item-types';
 import EEZLayerLegend from '@/containers/data-tool/content/map/layers-toolbox/legend/eez';
 import EEZLayerPopup from '@/containers/data-tool/content/map/popup/eez';
+import GenericPopup from '@/containers/data-tool/content/map/popup/generic';
+import ProtectedAreaPopup from '@/containers/data-tool/content/map/popup/protected-area';
 import FUNCTIONS from '@/lib/utils';
 import { ParamsConfig } from '@/types/layers';
 
@@ -26,6 +28,8 @@ export const JSON_CONFIGURATION = new JSONConfiguration({
   reactComponents: {
     EEZLayerPopup,
     EEZLayerLegend,
+    GenericPopup,
+    ProtectedAreaPopup,
     // LegendTypeBasic,
     // LegendTypeChoropleth,
     // LegendTypeGradient,

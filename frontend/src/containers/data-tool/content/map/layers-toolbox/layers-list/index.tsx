@@ -30,6 +30,7 @@ const LayersDropdown = (): JSX.Element => {
       query: {
         select: ({ data }) => data,
         placeholderData: { data: [] },
+        keepPreviousData: true,
       },
     }
   );

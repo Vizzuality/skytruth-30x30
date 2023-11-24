@@ -37,8 +37,8 @@ const DataToolMap: React.FC = () => {
   const isSidebarOpen = useAtomValue(sidebarAtom);
   const setPopup = useSetAtom(popupAtom);
   const { locationCode } = useParams();
-  const hoveredPolygonId = useRef<string | number | null>(null);
   const locationBbox = useAtomValue(bboxLocation);
+  const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
 
   const locationsQuery = useGetLocations(
     {},
@@ -104,7 +104,7 @@ const DataToolMap: React.FC = () => {
           map.setFeatureState(
             {
               source: e.features?.[0].source,
-              id: hoveredPolygonId.current,
+              id: hoveredPolygonId.current.id,
               sourceLayer: e.features?.[0].sourceLayer,
             },
             { hover: false }
@@ -119,7 +119,7 @@ const DataToolMap: React.FC = () => {
           { hover: true }
         );
 
-        hoveredPolygonId.current = e.features[0].id;
+        hoveredPolygonId.current = e.features[0];
       }
     },
     [map, hoveredPolygonId]
@@ -129,7 +129,11 @@ const DataToolMap: React.FC = () => {
     if (hoveredPolygonId.current !== null) {
       map.setFeatureState(
         // ? not a fan of harcoding the sources here, but there is no other way to find out the source
-        { source: 'ezz-source', id: hoveredPolygonId.current, sourceLayer: 'eez_v11' },
+        {
+          source: hoveredPolygonId.current.source,
+          id: hoveredPolygonId.current.id,
+          sourceLayer: hoveredPolygonId.current.sourceLayer,
+        },
         { hover: false }
       );
     }

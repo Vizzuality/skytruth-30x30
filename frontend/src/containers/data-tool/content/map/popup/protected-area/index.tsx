@@ -2,27 +2,22 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import Link from 'next/link';
-
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 
-import { PAGES } from '@/constants/pages';
-import { layersInteractiveIdsAtom, popupAtom } from '@/containers/data-tool/store';
+import { cn } from '@/lib/classnames';
 import { format } from '@/lib/utils/formats';
+import { layersInteractiveIdsAtom, popupAtom } from '@/store/map';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { LayerTyped } from '@/types/layers';
 
-import { useDataToolSearchParams } from '../../sync-settings';
-
 const TERMS_CLASSES = 'font-mono uppercase';
 
-const EEZLayerPopup = ({ locationId }) => {
+const ProtectedAreaPopup = ({ locationId }: { locationId: number }) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
-  const searchParams = useDataToolSearchParams();
 
   const popup = useAtomValue(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
@@ -77,24 +72,18 @@ const EEZLayerPopup = ({ locationId }) => {
     return DATA_REF.current;
   }, [popup, source, layersInteractiveIds, map, rendered]);
 
-  const locationsQuery = useGetLocations(
+  const locationQuery = useGetLocations(
     {
       filters: {
-        code: {
-          $in: ['GLOB', DATA?.ISO_SOV1],
-        },
+        code: 'GLOB',
       },
     },
     {
       query: {
-        enabled: !!DATA?.ISO_SOV1,
-        select: ({ data }) => data,
+        select: ({ data }) => data[0],
       },
     }
   );
-
-  const worldLocation = locationsQuery.data?.find(({ attributes: { code } }) => code === 'GLOB');
-  const currentLocation = locationsQuery.data?.find(({ attributes: { code } }) => code !== 'GLOB');
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -113,45 +102,41 @@ const EEZLayerPopup = ({ locationId }) => {
 
   if (!DATA) return null;
 
-  const coverage =
-    currentLocation?.attributes?.totalMarineArea / worldLocation?.attributes?.totalMarineArea;
+  const globalCoverage = DATA.REP_M_AREA / locationQuery.data?.attributes?.totalMarineArea;
+
+  const classNameByMPAType = cn({
+    'text-green': DATA?.PA_DEF === '1',
+    'text-violet': DATA?.PA_DEF === '0',
+  });
 
   return (
     <>
       <div className="space-y-2">
-        <h3 className="text-xl font-semibold">{DATA?.GEONAME}</h3>
-        {locationsQuery.isFetching && !locationsQuery.isFetched && (
+        <h3 className="text-xl font-semibold">{DATA?.NAME}</h3>
+        {locationQuery.isFetching && !locationQuery.isFetched && (
           <span className="text-sm">Loading...</span>
         )}
-        {locationsQuery.isFetched && !locationsQuery.data && (
+        {locationQuery.isFetched && !locationQuery.data && (
           <span className="text-sm">No data available</span>
         )}
-        {locationsQuery.isFetched && locationsQuery.data && (
+        {locationQuery.isFetched && locationQuery.data && (
           <>
             <dl className="space-y-2">
-              <dt className={TERMS_CLASSES}>Marine conservation coverage</dt>
-              <dd className="font-mono text-6xl tracking-tighter text-blue">
+              <dt className={TERMS_CLASSES}>Global coverage</dt>
+              <dd className={`font-mono text-6xl tracking-tighter ${classNameByMPAType}`}>
                 {format({
-                  value: coverage,
+                  value: globalCoverage,
                   id: 'formatPercentage',
                 })}
               </dd>
-              <dd className="font-mono text-xl text-blue">
+              <dd className={`font-mono text-xl ${classNameByMPAType}`}>
                 {format({
-                  value: currentLocation?.attributes?.totalMarineArea,
+                  value: DATA?.REP_M_AREA,
                   id: 'formatKM',
                 })}
                 Km<sup>2</sup>
               </dd>
             </dl>
-            <Link
-              className="block border border-black p-4 text-center font-mono uppercase"
-              href={`${
-                PAGES.dataTool
-              }/${currentLocation?.attributes?.code.toUpperCase()}?${searchParams.toString()}`}
-            >
-              Open country insights
-            </Link>
           </>
         )}
       </div>
@@ -159,4 +144,4 @@ const EEZLayerPopup = ({ locationId }) => {
   );
 };
 
-export default EEZLayerPopup;
+export default ProtectedAreaPopup;
