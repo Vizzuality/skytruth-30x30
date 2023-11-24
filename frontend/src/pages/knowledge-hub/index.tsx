@@ -23,6 +23,7 @@ const KnowledgeHubPage = () => {
           title="Resources for 30x30 monitoring, planning and decision making."
           description="We intend to provide an entry point that is accessible and relevant to stakeholders at various levels, democratizing the conversation around 30x30 so everyone can participate in the process from a common starting point."
           color="green"
+          image="magnifyingGlass"
           onScrollClick={handleIntroScrollClick}
         />
       }
