@@ -1,7 +1,10 @@
 import { useMemo } from 'react';
 
+import Link from 'next/link';
+
 import { ColumnDef } from '@tanstack/react-table';
 
+import { PAGES } from '@/constants/pages';
 import FiltersButton from '@/containers/data-tool/content/details/table/filters-button';
 import HeaderItem from '@/containers/data-tool/content/details/table/header-item';
 import { cellFormatter } from '@/containers/data-tool/content/details/table/helpers';
@@ -9,9 +12,11 @@ import SortingButton from '@/containers/data-tool/content/details/table/sorting-
 import TooltipButton from '@/containers/data-tool/content/details/table/tooltip-button';
 import useFiltersOptions from '@/containers/data-tool/content/details/tables/global-regional/useFiltersOptions';
 import useTooltips from '@/containers/data-tool/content/details/tables/global-regional/useTooltips';
+import { useDataToolSearchParams } from '@/containers/data-tool/content/map/sync-settings';
 
 export type GlobalRegionalTableColumns = {
   location: string;
+  locationCode: string;
   coverage: number;
   locationType: string;
   mpas: number;
@@ -28,6 +33,7 @@ type UseColumnsProps = {
 };
 
 const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
+  const searchParams = useDataToolSearchParams();
   const { locationTypes: locationTypesOptions } = useFiltersOptions();
 
   const tooltips = useTooltips();
@@ -38,8 +44,15 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         accessorKey: 'location',
         header: 'Location',
         cell: ({ row }) => {
-          const { location } = row.original;
-          return <span className="underline">{location}</span>;
+          const { location, locationCode } = row.original;
+          return (
+            <Link
+              className="underline"
+              href={`${PAGES.dataTool}/${locationCode}?${searchParams.toString()}`}
+            >
+              {location}
+            </Link>
+          );
         },
       },
       {
