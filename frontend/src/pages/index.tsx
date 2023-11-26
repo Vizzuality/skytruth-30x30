@@ -37,6 +37,8 @@ const Home: React.FC = () => {
 
   return (
     <Layout
+      theme="dark"
+      hideLogo={true}
       hero={<Intro onScrollClick={handleIntroScrollClick} />}
       bottom={
         <Cta

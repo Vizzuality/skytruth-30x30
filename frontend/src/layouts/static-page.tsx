@@ -2,7 +2,8 @@ import { MutableRefObject, PropsWithChildren, ReactNode } from 'react';
 
 import Head from 'next/head';
 
-import Header from '@/components/header';
+import Footer from '@/components/footer';
+import Header, { HeaderProps } from '@/components/header';
 import Icon from '@/components/ui/icon';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
@@ -14,6 +15,7 @@ type SidebarProps = {
     };
   };
 };
+
 const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
   if (!sections) return null;
 
@@ -25,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
 
   return (
     <div className="mb-4 min-w-[200px] md:mb-0">
-      <nav className="sticky top-10 bottom-3 mt-10 flex flex-col gap-3 font-mono text-sm">
+      <nav className="sticky top-10 bottom-3 my-10 flex flex-col gap-3 font-mono text-sm">
         {Object.entries(sections).map(([key, { name }]) => {
           return (
             <button
@@ -57,13 +59,9 @@ export interface StaticPageLayoutProps {
   bottom?: ReactNode;
 }
 
-const StaticPageLayout: React.FC<PropsWithChildren<StaticPageLayoutProps>> = ({
-  title,
-  description,
-  hero,
-  bottom,
-  children,
-}) => (
+const StaticPageLayout: React.FC<
+  PropsWithChildren<StaticPageLayoutProps & Pick<HeaderProps, 'theme' | 'hideLogo'>>
+> = ({ title, description, hero, bottom, children, theme, hideLogo }) => (
   <>
     <Head>
       <title>{`${title ? `${title} | ` : ''}Skytruth 30x30`}</title>
@@ -71,13 +69,16 @@ const StaticPageLayout: React.FC<PropsWithChildren<StaticPageLayoutProps>> = ({
     </Head>
     <div className="flex h-screen w-full flex-col">
       <div className="flex-shrink-0">
-        <Header />
+        <Header theme={theme} hideLogo={hideLogo} />
       </div>
-      {hero && <>{hero}</>}
-      <div className="flex w-full flex-col gap-6 py-0 md:mx-auto md:max-w-7xl md:flex-row md:pt-24 md:pl-8">
-        {children}
+      <div className="border-x border-black">{hero && <>{hero}</>}</div>
+      <div className="border border-black">
+        <div className="flex w-full flex-col gap-6 py-0 md:mx-auto md:max-w-7xl md:flex-row md:pt-24 md:pl-8">
+          {children}
+        </div>
       </div>
-      {bottom && <>{bottom}</>}
+      <span className="border-x border-black">{bottom && <>{bottom}</>}</span>
+      <Footer />
     </div>
   </>
 );

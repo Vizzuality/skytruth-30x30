@@ -46,6 +46,7 @@ const About: React.FC = () => {
 
   return (
     <Layout
+      title="About"
       hero={
         <Intro
           title="A global movement to protect 30% of the world’s lands and waters by 2030."

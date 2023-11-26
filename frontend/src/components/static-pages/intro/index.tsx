@@ -38,7 +38,7 @@ const Intro: React.FC<IntroProps> = ({
   image = 'computer',
   onScrollClick,
 }) => (
-  <div className={cn('border-b border-black bg-black', introVariants({ color }))}>
+  <div className={cn('bg-black', introVariants({ color }))}>
     <div className="flex flex-col md:mx-auto md:max-w-7xl md:flex-row">
       <div className="mt-6 mb-2 flex flex-1 flex-col px-8">
         <div className="pr-10 text-5xl font-extrabold leading-tight md:text-6xl">{title}</div>

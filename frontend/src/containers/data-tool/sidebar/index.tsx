@@ -49,7 +49,7 @@ const DataToolSidebar: React.FC = () => {
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent className="relative top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-out-absolute data-[state=open]:animate-in-absolute data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left md:w-[430px]">
-        <div className="h-full w-full overflow-y-scroll border-r border-black pb-12">
+        <div className="h-full w-full overflow-y-scroll border-x border-black pb-12">
           <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
             <h1 className="text-5xl font-black">{location?.name}</h1>
             <LocationSelector className="my-2" />

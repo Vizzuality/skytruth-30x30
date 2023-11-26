@@ -10,7 +10,7 @@ const DataToolContent: React.FC = () => {
     <>
       <Map />
       {showDetails && (
-        <div className="relative h-full w-full">
+        <div className="relative h-full w-full border-b border-r border-black">
           <Details />
         </div>
       )}

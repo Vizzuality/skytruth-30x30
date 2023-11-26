@@ -24,7 +24,9 @@ module.exports = {
         sans: ['var(--font-figtree)', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        black: '#1E1E1E',
+        black: '#000000',
+        'black-300': '#666666',
+        'black-400': '#333333',
         blue: '#3C70FF',
         green: '#02B07C',
         orange: '#FD8E28',
