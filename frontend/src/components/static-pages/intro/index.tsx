@@ -49,7 +49,7 @@ const Intro: React.FC<IntroProps> = ({
       <div className="w-full border-l border-black md:w-[40%]">
         <div className="flex h-full flex-col">
           <span
-            className="aspect-square max-h-[200px] border-b border-black bg-cover bg-center bg-no-repeat md:max-h-full mix-blend-multiply"
+            className="aspect-square max-h-[200px] border-b border-black bg-cover bg-center bg-no-repeat mix-blend-multiply md:max-h-full"
             style={{
               backgroundImage: `url(${BACKGROUND_IMAGES[image]})`,
             }}
