@@ -1,9 +1,17 @@
-import DefaultLayout from '@/layouts/default';
+import Section, { SectionDescription, SectionTitle } from '@/components/static-pages/section';
+import DefaultLayout, { Content } from '@/layouts/static-page';
 
-const Home: React.FC = () => (
+const PrivacyPolicy: React.FC = () => (
   <DefaultLayout title="Privacy Policy">
-    <p>Hello world!</p>
+    <Content>
+      <Section>
+        <SectionTitle>Privacy policy</SectionTitle>
+        <SectionDescription>
+          On this page you will find our Privacy Policy and Cookie Policy.
+        </SectionDescription>
+      </Section>
+    </Content>
   </DefaultLayout>
 );
 
-export default Home;
+export default PrivacyPolicy;

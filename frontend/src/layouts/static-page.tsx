@@ -2,6 +2,7 @@ import { MutableRefObject, PropsWithChildren, ReactNode } from 'react';
 
 import Head from 'next/head';
 
+import Footer from '@/components/footer';
 import Header from '@/components/header';
 import Icon from '@/components/ui/icon';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
@@ -78,6 +79,7 @@ const StaticPageLayout: React.FC<PropsWithChildren<StaticPageLayoutProps>> = ({
         {children}
       </div>
       {bottom && <>{bottom}</>}
+      <Footer />
     </div>
   </>
 );
