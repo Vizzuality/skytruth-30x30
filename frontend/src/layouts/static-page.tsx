@@ -27,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
 
   return (
     <div className="mb-4 min-w-[200px] md:mb-0">
-      <nav className="sticky top-10 bottom-3 mt-10 flex flex-col gap-3 font-mono text-sm">
+      <nav className="sticky top-10 bottom-3 my-10 flex flex-col gap-3 font-mono text-sm">
         {Object.entries(sections).map(([key, { name }]) => {
           return (
             <button
