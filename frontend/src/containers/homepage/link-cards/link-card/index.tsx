@@ -7,8 +7,8 @@ import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 const BACKGROUND_IMAGES = {
-  computer2: '/images/static-pages/bg-images/card-3.png',
-  magnifyingGlass: '/images/static-pages/bg-images/card-4.png',
+  computer: '/images/static-pages/bg-images/card-1.png',
+  magnifyingGlass: '/images/static-pages/bg-images/card-2.png',
 };
 
 const linkCardVariants = cva('', {
@@ -39,7 +39,7 @@ const LinkCard: React.FC<LinkCardProps> = ({
   color,
   link,
   linkLabel,
-  image = 'computer2',
+  image = 'computer',
 }) => (
   <div className={cn('flex flex-col border border-black md:flex-row', linkCardVariants({ color }))}>
     <div className="flex w-full flex-col gap-4 border-r border-black p-6 md:w-[50%]">
@@ -49,7 +49,7 @@ const LinkCard: React.FC<LinkCardProps> = ({
     </div>
     <div className="flex flex-1 flex-col">
       <span
-        className="aspect-square max-h-[160px] border-b border-t border-black bg-cover bg-center bg-no-repeat md:max-h-full md:border-t-0"
+        className="aspect-square max-h-[160px] border-b border-t border-black bg-cover bg-center bg-no-repeat mix-blend-multiply md:max-h-full md:border-t-0"
         style={{
           backgroundImage: `url(${BACKGROUND_IMAGES[image]})`,
         }}

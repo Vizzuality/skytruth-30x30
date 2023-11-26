@@ -50,6 +50,7 @@ const About: React.FC = () => {
         <Intro
           title="A global movement to protect 30% of the world’s lands and waters by 2030."
           color="purple"
+          image="tablet"
           onScrollClick={handleIntroScrollClick}
         />
       }
