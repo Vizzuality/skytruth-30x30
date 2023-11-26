@@ -28,7 +28,7 @@ const NAVIGATION_ITEMS = [
 const headerVariants = cva('', {
   variants: {
     theme: {
-      normal: 'border-black bg-white text-black',
+      normal: 'border border-black bg-white text-black',
       dark: 'border-white bg-black text-white',
     },
   },

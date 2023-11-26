@@ -71,11 +71,13 @@ const StaticPageLayout: React.FC<
       <div className="flex-shrink-0">
         <Header theme={theme} hideLogo={hideLogo} />
       </div>
-      {hero && <>{hero}</>}
-      <div className="flex w-full flex-col gap-6 py-0 md:mx-auto md:max-w-7xl md:flex-row md:pt-24 md:pl-8">
-        {children}
+      <div className="border-x border-black">{hero && <>{hero}</>}</div>
+      <div className="border border-black">
+        <div className="flex w-full flex-col gap-6 py-0 md:mx-auto md:max-w-7xl md:flex-row md:pt-24 md:pl-8">
+          {children}
+        </div>
       </div>
-      {bottom && <>{bottom}</>}
+      <span className="border-x border-black">{bottom && <>{bottom}</>}</span>
       <Footer />
     </div>
   </>
