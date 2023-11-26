@@ -1,4 +1,5 @@
 export const PAGES = {
+  homepage: '/',
   dataTool: '/data-tool',
   knowledgeHub: '/knowledge-hub',
   contact: '/contact',

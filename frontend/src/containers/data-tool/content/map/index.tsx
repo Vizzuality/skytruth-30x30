@@ -178,7 +178,7 @@ const DataToolMap: React.FC = () => {
   }, [locationBbox, isSidebarOpen]);
 
   return (
-    <div className="absolute left-0 h-full w-full border-r border-black border-b">
+    <div className="absolute left-0 h-full w-full border-r border-b border-black">
       <Map
         initialViewState={initialViewState}
         bounds={bounds}
