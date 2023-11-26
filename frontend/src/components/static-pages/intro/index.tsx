@@ -7,8 +7,9 @@ import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 const BACKGROUND_IMAGES = {
-  computer2: '/images/static-pages/bg-images/card-1.png',
-  magnifyingGlass: '/images/static-pages/bg-images/card-4.png',
+  computer: '/images/static-pages/bg-images/card-1.png',
+  magnifyingGlass: '/images/static-pages/bg-images/card-2.png',
+  tablet: '/images/static-pages/bg-images/card-3.png',
 };
 
 const introVariants = cva('', {
@@ -34,7 +35,7 @@ const Intro: React.FC<IntroProps> = ({
   title,
   description,
   color,
-  image = 'computer2',
+  image = 'computer',
   onScrollClick,
 }) => (
   <div className={cn('bg-black', introVariants({ color }))}>
@@ -48,7 +49,7 @@ const Intro: React.FC<IntroProps> = ({
       <div className="w-full border-l border-black md:w-[40%]">
         <div className="flex h-full flex-col">
           <span
-            className="aspect-square max-h-[200px] border-b border-black bg-cover bg-center bg-no-repeat md:max-h-full"
+            className="aspect-square max-h-[200px] border-b border-black bg-cover bg-center bg-no-repeat mix-blend-multiply md:max-h-full"
             style={{
               backgroundImage: `url(${BACKGROUND_IMAGES[image]})`,
             }}

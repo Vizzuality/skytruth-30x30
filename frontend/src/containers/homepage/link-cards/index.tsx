@@ -7,7 +7,7 @@ const LinkCards: React.FC = () => (
       title="Data Tool"
       subtitle="An interactive tool for tracking 30x30 progress and drawing new protected areas"
       description="This tool allows users to understand global progress toward 30x30 at a glance, draw new potential protected areas, and illustrate the effects of those proposed areas on national and global progress toward 30x30."
-      image="computer2"
+      image="computer"
       link={PAGES.dataTool}
       linkLabel="Go to the Data Tool"
     />
