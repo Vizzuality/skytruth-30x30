@@ -22,8 +22,8 @@ export type GlobalRegionalTableColumns = {
   mpas: number;
   oecms: number;
   area: number;
-  fullyHighProtected: number;
-  highlyProtectedLFP: number;
+  fullyHighlyProtected: number;
+  highlyProtectedLfp: number;
   globalContribution: number;
 };
 
@@ -66,8 +66,6 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         ),
         cell: ({ row }) => {
           const { coverage: value } = row.original;
-          if (!value) return <>&mdash;</>;
-
           const formattedCoverage = cellFormatter.percentage(value);
 
           return (
@@ -137,7 +135,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
       {
-        accessorKey: 'fullyHighProtected',
+        accessorKey: 'fullyHighlyProtected',
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
@@ -146,14 +144,13 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           </HeaderItem>
         ),
         cell: ({ row }) => {
-          const { fullyHighProtected: value } = row.original;
-          if (!value) return <>No data</>;
+          const { fullyHighlyProtected: value } = row.original;
           const formattedValue = cellFormatter.percentage(value);
           return <span className="text-xs">{formattedValue}%</span>;
         },
       },
       {
-        accessorKey: 'highlyProtectedLFP',
+        accessorKey: 'highlyProtectedLfp',
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
@@ -162,7 +159,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           </HeaderItem>
         ),
         cell: ({ row }) => {
-          const { highlyProtectedLFP: value } = row.original;
+          const { highlyProtectedLfp: value } = row.original;
           if (!value) return <>No data</>;
           const formattedValue = cellFormatter.percentage(value);
           return <span className="text-xs">{formattedValue}%</span>;

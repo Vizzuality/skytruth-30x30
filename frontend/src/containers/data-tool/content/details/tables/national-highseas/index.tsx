@@ -20,7 +20,7 @@ const NationalHighseasTable: React.FC = () => {
 
   const queryClient = useQueryClient();
 
-  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
+  const dataToolLocation = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
     'locations',
     locationCode,
   ]);
@@ -29,9 +29,12 @@ const NationalHighseasTable: React.FC = () => {
     // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
     protectedAreaType: ['mpa', 'oecm'],
     establishmentStage: [
-      'designated-implemented',
+      'actively-managed',
+      'designated',
       'designated-unimplemented',
+      'implemented',
       'proposed-committed',
+      'unknown',
     ],
     protectionLevel: ['fully-highly-protected', 'less-protected-unknown'],
     fishingProtectionLevel: ['highly', 'moderately', 'less'],
@@ -49,7 +52,7 @@ const NationalHighseasTable: React.FC = () => {
         filters: {
           location: {
             code: {
-              $eq: location?.code,
+              $eq: dataToolLocation?.code,
             },
           },
         },
@@ -80,6 +83,7 @@ const NationalHighseasTable: React.FC = () => {
             fields: ['slug', 'name'],
           },
         },
+        'pagination[limit]': -1,
       },
       {
         query: {
@@ -96,20 +100,18 @@ const NationalHighseasTable: React.FC = () => {
       const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
       const mpaaProtectionLevel = coverageStats?.mpaa_protection_level?.data?.attributes;
       const fishingProtectionLevel = coverageStats?.fishing_protection_level?.data?.attributes;
-      const coverageArea = coverageStats?.area;
-      const location = coverageStats?.location?.data?.attributes;
 
       // Calculate coverage percentage
-      const coveragePercentage = (coverageArea / location?.totalMarineArea) * 100;
+      const coveragePercentage = (coverageStats.area / mpa?.area) * 100;
 
       return {
-        protectedArea: mpa.name,
+        protectedArea: mpa?.name,
         coverage: coveragePercentage,
         protectedAreaType: protectionStatus?.slug,
         establishmentStage: establishmentStage?.slug,
         protectionLevel: mpaaProtectionLevel?.slug,
         fishingProtectionLevel: fishingProtectionLevel?.slug,
-        area: coverageArea,
+        area: mpa?.area,
       };
     });
   }, [coverageData]);
