@@ -1,0 +1,83 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_448_461)">
+<mask id="mask0_448_461" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-31" y="-6" width="84" height="31">
+<mask id="mask1_448_461" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-34" y="-6" width="91" height="31">
+<rect x="2" width="1" height="1" fill="black"/>
+<rect x="5" width="1" height="1" fill="black"/>
+<rect x="8" width="1" height="1" fill="black"/>
+<rect x="11" width="1" height="1" fill="black"/>
+<rect x="14" width="1" height="1" fill="black"/>
+<rect x="17" width="1" height="1" fill="black"/>
+<rect x="20" width="1" height="1" fill="black"/>
+<rect x="23" width="1" height="1" fill="black"/>
+<rect x="2" y="3" width="1" height="1" fill="black"/>
+<rect x="5" y="3" width="1" height="1" fill="black"/>
+<rect x="8" y="3" width="1" height="1" fill="black"/>
+<rect x="11" y="3" width="1" height="1" fill="black"/>
+<rect x="14" y="3" width="1" height="1" fill="black"/>
+<rect x="17" y="3" width="1" height="1" fill="black"/>
+<rect x="20" y="3" width="1" height="1" fill="black"/>
+<rect x="23" y="3" width="1" height="1" fill="black"/>
+<rect x="2" y="6" width="1" height="1" fill="black"/>
+<rect x="5" y="6" width="1" height="1" fill="black"/>
+<rect x="8" y="6" width="1" height="1" fill="black"/>
+<rect x="11" y="6" width="1" height="1" fill="black"/>
+<rect x="14" y="6" width="1" height="1" fill="black"/>
+<rect x="17" y="6" width="1" height="1" fill="black"/>
+<rect x="20" y="6" width="1" height="1" fill="black"/>
+<rect x="23" y="6" width="1" height="1" fill="black"/>
+<rect x="2" y="9" width="1" height="1" fill="black"/>
+<rect x="5" y="9" width="1" height="1" fill="black"/>
+<rect x="8" y="9" width="1" height="1" fill="black"/>
+<rect x="11" y="9" width="1" height="1" fill="black"/>
+<rect x="14" y="9" width="1" height="1" fill="black"/>
+<rect x="17" y="9" width="1" height="1" fill="black"/>
+<rect x="20" y="9" width="1" height="1" fill="black"/>
+<rect x="23" y="9" width="1" height="1" fill="black"/>
+<rect x="2" y="12" width="1" height="1" fill="black"/>
+<rect x="5" y="12" width="1" height="1" fill="black"/>
+<rect x="8" y="12" width="1" height="1" fill="black"/>
+<rect x="11" y="12" width="1" height="1" fill="black"/>
+<rect x="14" y="12" width="1" height="1" fill="black"/>
+<rect x="17" y="12" width="1" height="1" fill="black"/>
+<rect x="20" y="12" width="1" height="1" fill="black"/>
+<rect x="23" y="12" width="1" height="1" fill="black"/>
+<rect x="2" y="15" width="1" height="1" fill="black"/>
+<rect x="5" y="15" width="1" height="1" fill="black"/>
+<rect x="8" y="15" width="1" height="1" fill="black"/>
+<rect x="11" y="15" width="1" height="1" fill="black"/>
+<rect x="14" y="15" width="1" height="1" fill="black"/>
+<rect x="17" y="15" width="1" height="1" fill="black"/>
+<rect x="20" y="15" width="1" height="1" fill="black"/>
+<rect x="23" y="15" width="1" height="1" fill="black"/>
+<rect x="2" y="18" width="1" height="1" fill="black"/>
+<rect x="5" y="18" width="1" height="1" fill="black"/>
+<rect x="8" y="18" width="1" height="1" fill="black"/>
+<rect x="11" y="18" width="1" height="1" fill="black"/>
+<rect x="14" y="18" width="1" height="1" fill="black"/>
+<rect x="17" y="18" width="1" height="1" fill="black"/>
+<rect x="20" y="18" width="1" height="1" fill="black"/>
+<rect x="23" y="18" width="1" height="1" fill="black"/>
+<rect x="2" y="21" width="1" height="1" fill="black"/>
+<rect x="5" y="21" width="1" height="1" fill="black"/>
+<rect x="8" y="21" width="1" height="1" fill="black"/>
+<rect x="11" y="21" width="1" height="1" fill="black"/>
+<rect x="14" y="21" width="1" height="1" fill="black"/>
+<rect x="17" y="21" width="1" height="1" fill="black"/>
+<rect x="20" y="21" width="1" height="1" fill="black"/>
+<rect x="23" y="21" width="1" height="1" fill="black"/>
+</mask>
+<g mask="url(#mask1_448_461)">
+<rect x="-31" y="-6" width="84" height="31" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask0_448_461)">
+<circle cx="12" cy="12" r="12" fill="black"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_448_461">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>
