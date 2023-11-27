@@ -1,23 +1,34 @@
+import { ComponentProps, useCallback } from 'react';
+
 import { ArrowRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useSyncDataToolContentSettings } from '@/containers/data-tool/sync-settings';
+import { cn } from '@/lib/classnames';
 
 const DetailsButton: React.FC = () => {
-  const [, setSettings] = useSyncDataToolContentSettings();
+  const [{ showDetails }, setSettings] = useSyncDataToolContentSettings();
 
-  const handleButtonClick = () => {
-    setSettings((prevSettings) => ({ ...prevSettings, showDetails: true }));
-  };
+  const handleButtonClick = useCallback(() => {
+    setSettings((prevSettings) => ({ ...prevSettings, showDetails: !prevSettings.showDetails }));
+  }, [setSettings]);
 
   return (
     <Button
-      className="flex justify-between px-5 md:px-8"
+      className={cn('h-12 border-t border-black', {
+        'border-r !px-2': showDetails,
+        'flex justify-between px-5 md:px-8': !showDetails,
+      })}
       variant="sidebar-details"
-      size="full"
+      size={
+        cn({
+          default: showDetails,
+          full: !showDetails,
+        }) as ComponentProps<typeof Button>['size']
+      }
       onClick={handleButtonClick}
     >
-      <span className="pt-1">Marine Conservation Details</span>
+      {!showDetails && <span className="pt-1 font-mono">Marine Conservation Details</span>}
       <ArrowRight aria-hidden />
     </Button>
   );

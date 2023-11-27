@@ -10,6 +10,8 @@ import { sidebarAtom } from '@/containers/data-tool/store';
 import { cn } from '@/lib/classnames';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
+import { useSyncDataToolContentSettings } from '../sync-settings';
+
 import DetailsButton from './details-button';
 import LocationSelector from './location-selector';
 import Widgets from './widgets';
@@ -18,8 +20,8 @@ const DataToolSidebar: React.FC = () => {
   const {
     query: { locationCode },
   } = useRouter();
-
   const queryClient = useQueryClient();
+  const [{ showDetails }] = useSyncDataToolContentSettings();
 
   const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
     'locations',
@@ -38,7 +40,7 @@ const DataToolSidebar: React.FC = () => {
         <Button
           type="button"
           variant="white"
-          className={cn('absolute bottom-0 z-10 h-12 border-l-0 px-1', {
+          className={cn('absolute bottom-0 z-10 h-12 border-l-0 px-1 !py-3', {
             'hidden md:flex': true,
             'left-0': !isSidebarOpen,
             'left-[430px] transition-[left] delay-500': isSidebarOpen,
@@ -54,11 +56,13 @@ const DataToolSidebar: React.FC = () => {
             <h1 className="text-5xl font-black">{location?.name}</h1>
             <LocationSelector className="my-2" />
           </div>
-          <div className="">
-            <Widgets />
-          </div>
+          <Widgets />
         </div>
-        <div className="absolute bottom-0 left-0 right-px h-12 border-y border-black">
+        <div
+          className={cn('absolute bottom-0 left-px', {
+            'right-px': !showDetails,
+          })}
+        >
           <DetailsButton />
         </div>
       </CollapsibleContent>
