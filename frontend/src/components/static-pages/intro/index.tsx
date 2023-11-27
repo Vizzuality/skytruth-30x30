@@ -46,7 +46,7 @@ const Intro: React.FC<IntroProps> = ({
           {description && <div className="pr-[20%] text-xl">{description}</div>}
         </div>
       </div>
-      <div className="w-full border-l border-black md:w-[40%]">
+      <div className="w-full border-l border-r border-black md:w-[40%]">
         <div className="flex h-full flex-col">
           <span
             className="aspect-square max-h-[200px] border-b border-black bg-cover bg-center bg-no-repeat mix-blend-multiply md:max-h-full"

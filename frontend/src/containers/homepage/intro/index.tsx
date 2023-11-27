@@ -103,7 +103,7 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
           </div>
         </div>
         <div className="border-l border-t border-white md:w-[40%] md:border-t-0">
-          <div className="flex h-full flex-col">
+          <div className="flex h-full flex-col border-r">
             <SidebarItem
               percentage={formattedOceanProtectedAreaPercentage}
               text="Current global ocean protected area"
