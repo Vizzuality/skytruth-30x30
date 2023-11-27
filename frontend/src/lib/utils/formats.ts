@@ -1,7 +1,6 @@
 export function formatPercentage(value: number, options?: Intl.NumberFormatOptions) {
   const v = Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 3,
     style: 'percent',
     ...options,
   });
@@ -15,6 +14,7 @@ export function formatKM(value: number, options?: Intl.NumberFormatOptions) {
     compactDisplay: 'short',
     unit: 'kilometer',
     unitDisplay: 'short',
+    maximumSignificantDigits: 3,
     ...options,
   });
 
