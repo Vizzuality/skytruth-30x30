@@ -193,12 +193,12 @@ const About: React.FC = () => {
 
           <TwoColSubsection title="Team" />
           <SectionContent>
-            <LogosGrid type="team" />
+            <LogosGrid type="team" columns={4} />
           </SectionContent>
 
           <TwoColSubsection title="Funders" />
           <SectionContent>
-            <LogosGrid type="funders" />
+            <LogosGrid type="funders" columns={2} />
           </SectionContent>
         </Section>
       </Content>

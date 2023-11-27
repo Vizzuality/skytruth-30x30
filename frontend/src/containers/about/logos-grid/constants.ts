@@ -42,8 +42,8 @@ export const LOGOS = {
       logo: 'bloomberg.png',
       alt: 'Bloomberg Philanthropies Ocean Initiative logo',
       link: 'https://www.bloomberg.org/environment/protecting-the-oceans/bloomberg-ocean/',
-      width: 171,
-      height: 62,
+      width: 384,
+      height: 49,
     },
   ],
 } satisfies LogosType;

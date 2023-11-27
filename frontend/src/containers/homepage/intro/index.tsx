@@ -80,7 +80,7 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
             Protect 30% of land and ocean by 2030
           </div>
           <div className="mt-16 flex">
-            <div className="mb-6 flex flex-grow gap-4 text-xs">
+            <div className="mb-6 flex flex-grow items-center gap-4 text-xs">
               <span>
                 <Image
                   src="/images/static-pages/logos/skytruth-white.png"
@@ -94,8 +94,8 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
                 <Image
                   src="/images/static-pages/logos/bloomberg-white.png"
                   alt="Bloomberg Philanthropies Ocean Initiative logo"
-                  width={92}
-                  height={33}
+                  width={247}
+                  height={29}
                 />
               </span>
             </div>
