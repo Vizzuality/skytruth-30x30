@@ -143,7 +143,13 @@ const Home: React.FC = () => {
             description={
               <>
                 Of the Earth’s CO2 are estimated to be stored and cycled by marine ecosystems.{' '}
-                <u>Source</u>
+                <a
+                  className="inline underline"
+                  href="https://www.eea.europa.eu/publications/carbon-stocks-and-sequestration-rates"
+                  target="_blank"
+                >
+                  Source
+                </a>
               </>
             }
             image="stats2"
@@ -175,7 +181,14 @@ const Home: React.FC = () => {
             description={
               <>
                 Of healthy and productive land were degraded between 2015 and 2019, impacting the
-                lives of 1.3 billion people. <u>Source</u>
+                lives of 1.3 billion people.{' '}
+                <a
+                  className="inline underline"
+                  href="https://www.un.org/sustainabledevelopment/biodiversity/"
+                  target="_blank"
+                >
+                  Source
+                </a>
               </>
             }
             image="stats3"

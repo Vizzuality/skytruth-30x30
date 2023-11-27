@@ -1,13 +1,29 @@
 import Image from 'next/image';
 
+import { VariantProps, cva } from 'class-variance-authority';
+
+import { cn } from '@/lib/classnames';
+
 import { LOGOS, LOGOS_PATH } from './constants';
 
-type LogosGridProps = {
+const logosGridVariants = cva('', {
+  variants: {
+    columns: {
+      2: 'md:grid-cols-2',
+      4: 'md:grid-cols-4',
+    },
+  },
+  defaultVariants: {
+    columns: 4,
+  },
+});
+
+type LogosGridProps = VariantProps<typeof logosGridVariants> & {
   type: 'team' | 'funders';
 };
 
-const LogosGrid: React.FC<LogosGridProps> = ({ type }) => (
-  <div className="grid gap-4 md:grid-cols-4">
+const LogosGrid: React.FC<LogosGridProps> = ({ type, columns }) => (
+  <div className={cn('grid gap-4 md:grid-cols-2', logosGridVariants({ columns }))}>
     {LOGOS[type].map(({ logo, alt, link, description, width, height }) => (
       <div key={logo} className="flex flex-col gap-4 pr-4">
         <span className="flex flex-1 items-center justify-center md:justify-start">
