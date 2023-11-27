@@ -178,8 +178,20 @@ const About: React.FC = () => {
           </SectionContent>
 
           <StatsImage
-            value="1M"
-            description="Lorem ipsum dolor sit amet consectetur."
+            value="17%"
+            description={
+              <span className="block px-2">
+                Of terrestrial and inland waters are protected by 276,847 Protected Areas and 675
+                OECMs.{' '}
+                <a
+                  className="inline underline"
+                  href="https://www.protectedplanet.net/en"
+                  target="_blank"
+                >
+                  Source
+                </a>
+              </span>
+            }
             image="stats4"
             color="purple"
           />
@@ -187,8 +199,8 @@ const About: React.FC = () => {
         <Section ref={sections.teamAndFunders.ref}>
           <SectionTitle>Who is behind this project?</SectionTitle>
           <SectionDescription>
-            Lorem ipsum dolor sit amet consectetur. Rhoncus consectetur ultricies vestibulum proin
-            suspendisse interdum. Lectus nulla vulputate neque malesuada.
+            Discover our team and trusted partner companies. At the core of our accomplishments are
+            the dedicated individuals who bring expertise and commitment to the 30x30 Project
           </SectionDescription>
 
           <TwoColSubsection title="Team" />
