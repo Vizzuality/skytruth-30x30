@@ -10,7 +10,12 @@ type WidgetProps = {
   source?: string;
 };
 
-const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ title, lastUpdated, source, children }) => {
+const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
+  title,
+  lastUpdated,
+  source,
+  children,
+}) => {
   const formattedLastUpdated = useMemo(
     () => timeFormat('%B %Y')(new Date(lastUpdated)),
     [lastUpdated]

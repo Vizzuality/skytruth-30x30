@@ -134,7 +134,11 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   if (!stats || !chartData) return null;
 
   return (
-    <Widget title="Marine Conservation Coverage" lastUpdated={dataLastUpdate}>
+    <Widget
+      title="Marine Conservation Coverage"
+      lastUpdated={dataLastUpdate}
+      source="marine-conservation-widget"
+    >
       <div className="mt-6 mb-4 flex flex-col text-blue">
         <span className="text-5xl font-bold">
           {stats?.protectedPercentage}
