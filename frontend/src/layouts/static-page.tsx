@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Footer from '@/components/footer';
 import Header, { HeaderProps } from '@/components/header';
 import Icon from '@/components/ui/icon';
+import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 type SidebarProps = {
@@ -72,7 +73,7 @@ const StaticPageLayout: React.FC<
         <Header theme={theme} hideLogo={hideLogo} />
       </div>
       <div className="border-x border-black">{hero && <>{hero}</>}</div>
-      <div className="border border-black">
+      <div className={cn('border-black', { border: !!hero, 'border-x': !hero })}>
         <div className="flex w-full flex-col gap-6 py-0 md:mx-auto md:max-w-7xl md:flex-row md:pt-24 md:pl-8">
           {children}
         </div>
