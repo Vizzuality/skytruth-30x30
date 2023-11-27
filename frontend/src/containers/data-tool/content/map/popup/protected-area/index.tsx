@@ -5,9 +5,9 @@ import { useMap } from 'react-map-gl';
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 
+import { layersInteractiveIdsAtom, popupAtom } from '@/containers/data-tool/store';
 import { cn } from '@/lib/classnames';
 import { format } from '@/lib/utils/formats';
-import { layersInteractiveIdsAtom, popupAtom } from '@/store/map';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { LayerTyped } from '@/types/layers';
