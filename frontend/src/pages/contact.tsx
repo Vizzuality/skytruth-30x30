@@ -12,7 +12,7 @@ const ContactUsPage = () => {
       <Layout title="Contact Us">
         <div className="px-6 md:mx-auto md:max-w-7xl md:px-6 lg:px-10">
           <div className="my-8 grid grid-rows-1 gap-10 md:grid-cols-2 md:grid-rows-none">
-            <div className="space-y-2">
+            <div className="space-y-2 md:bg-[url('/images/static-pages/bg-images/cta-3.png')] md:bg-left md:bg-no-repeat">
               <h2 className="text-[70px] font-black leading-none">
                 Want to <br />
                 know more?
