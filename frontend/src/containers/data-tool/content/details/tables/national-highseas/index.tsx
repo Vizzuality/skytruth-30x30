@@ -36,8 +36,6 @@ const NationalHighseasTable: React.FC = () => {
       'proposed-committed',
       'unknown',
     ],
-    protectionLevel: ['fully-highly-protected', 'less-protected-unknown'],
-    fishingProtectionLevel: ['highly', 'moderately', 'less'],
   });
 
   const handleOnFiltersChange = (field, values) => {
