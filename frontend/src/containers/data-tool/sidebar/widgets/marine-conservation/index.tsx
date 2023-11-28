@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { format } from 'd3-format';
 import { groupBy } from 'lodash-es';
 
 import ConservationChart from '@/components/charts/conservation-chart';
@@ -41,8 +40,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     {
       ...defaultQueryParams,
       populate: '*',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error this is an issue with Orval typing
       'sort[year]': 'asc',
       'pagination[limit]': -1,
     },
@@ -79,8 +77,13 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     const totalArea = location.totalMarineArea;
     const lastYearData = mergedProtectionStats[mergedProtectionStats.length - 1];
     const { protectedArea } = lastYearData;
-    const percentageFormatted = format('.1r')((protectedArea * 100) / totalArea);
-    const totalAreaFormatted = format(',.2r')(totalArea);
+    const formatter = Intl.NumberFormat('en-US', {
+      maximumFractionDigits: 2,
+    });
+    const percentageFormatted = formatter.format((protectedArea / totalArea) * 100);
+    const totalAreaFormatted = Intl.NumberFormat('en-US', {
+      notation: 'standard',
+    }).format(totalArea);
 
     return {
       protectedPercentage: percentageFormatted,
@@ -140,12 +143,15 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       source="marine-conservation-widget"
     >
       <div className="mt-6 mb-4 flex flex-col text-blue">
-        <span className="text-5xl font-bold">
-          {stats?.protectedPercentage}
-          <span className="pl-1 text-lg">%</span>
+        <span className="space-x-1">
+          <span className="text-[64px] font-bold leading-[80%]">{stats.protectedPercentage}</span>
+          <span className="text-lg">%</span>
         </span>
-        <span className="text-lg">
-          {stats?.totalArea} km<sup>2</sup>
+        <span className="space-x-1 text-lg  ">
+          <span>{stats.totalArea}</span>
+          <span>
+            km<sup>2</sup>
+          </span>
         </span>
       </div>
       <ConservationChart className="-ml-8 aspect-[16/10]" data={chartData} />

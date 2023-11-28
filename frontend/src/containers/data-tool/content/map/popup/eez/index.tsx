@@ -8,15 +8,13 @@ import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 
 import { PAGES } from '@/constants/pages';
+import { useDataToolSearchParams } from '@/containers/data-tool/content/map/sync-settings';
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/data-tool/store';
-import { format } from '@/lib/utils/formats';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
+import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
+import { ProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
-
-import { useDataToolSearchParams } from '../../sync-settings';
-
-const TERMS_CLASSES = 'font-mono uppercase';
 
 const EEZLayerPopup = ({ locationId }) => {
   const [rendered, setRendered] = useState(false);
@@ -80,21 +78,70 @@ const EEZLayerPopup = ({ locationId }) => {
   const locationsQuery = useGetLocations(
     {
       filters: {
-        code: {
-          $in: ['GLOB', DATA?.ISO_SOV1],
-        },
+        code: DATA?.ISO_SOV1,
       },
     },
     {
       query: {
         enabled: !!DATA?.ISO_SOV1,
-        select: ({ data }) => data,
+        select: ({ data }) => data?.[0]?.attributes,
       },
     }
   );
 
-  const worldLocation = locationsQuery.data?.find(({ attributes: { code } }) => code === 'GLOB');
-  const currentLocation = locationsQuery.data?.find(({ attributes: { code } }) => code !== 'GLOB');
+  // ? I had to type the data ad hoc because the generated type is wrong when we are adding
+  // ? the `sort` query param
+  const { data: protectionCoverageStats }: { data: ProtectionCoverageStatListResponseDataItem[] } =
+    useGetProtectionCoverageStats(
+      {
+        filters: {
+          location: {
+            code: DATA?.ISO_SOV1,
+          },
+        },
+        populate: '*',
+        // @ts-expect-error this is an issue with Orval typing
+        'sort[year]': 'desc',
+        'pagination[limit]': -1,
+      },
+      {
+        query: {
+          select: ({ data }) => data,
+        },
+      }
+    );
+
+  const latestYearAvailable = useMemo(() => {
+    if (protectionCoverageStats) {
+      return protectionCoverageStats[0].attributes.year;
+    }
+  }, [protectionCoverageStats]);
+
+  const latestProtectionCoverageStats = useMemo(() => {
+    if (latestYearAvailable) {
+      return protectionCoverageStats.filter((d) => d.attributes.year === latestYearAvailable);
+    }
+    return [];
+  }, [protectionCoverageStats, latestYearAvailable]);
+
+  const coveragePercentage = useMemo(() => {
+    if (latestProtectionCoverageStats.length && locationsQuery.data) {
+      const totalCumSumProtectedArea = latestProtectionCoverageStats.reduce(
+        (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
+        0
+      );
+
+      const formatter = Intl.NumberFormat('en-US', {
+        maximumFractionDigits: 2,
+      });
+
+      return formatter.format(
+        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100
+      );
+    }
+
+    return '-';
+  }, [latestProtectionCoverageStats, locationsQuery.data]);
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -113,49 +160,45 @@ const EEZLayerPopup = ({ locationId }) => {
 
   if (!DATA) return null;
 
-  const coverage =
-    currentLocation?.attributes?.totalMarineArea / worldLocation?.attributes?.totalMarineArea;
-
   return (
-    <>
-      <div className="space-y-2">
-        <h3 className="text-xl font-semibold">{DATA?.GEONAME}</h3>
-        {locationsQuery.isFetching && !locationsQuery.isFetched && (
-          <span className="text-sm">Loading...</span>
-        )}
-        {locationsQuery.isFetched && !locationsQuery.data && (
-          <span className="text-sm">No data available</span>
-        )}
-        {locationsQuery.isFetched && locationsQuery.data && (
-          <>
-            <dl className="space-y-2">
-              <dt className={TERMS_CLASSES}>Marine conservation coverage</dt>
-              <dd className="font-mono text-6xl tracking-tighter text-blue">
-                {format({
-                  value: coverage,
-                  id: 'formatPercentage',
-                })}
-              </dd>
-              <dd className="font-mono text-xl text-blue">
-                {format({
-                  value: currentLocation?.attributes?.totalMarineArea,
-                  id: 'formatKM',
-                })}
-                Km<sup>2</sup>
-              </dd>
-            </dl>
-            <Link
-              className="block border border-black p-4 text-center font-mono uppercase"
-              href={`${
-                PAGES.dataTool
-              }/${currentLocation?.attributes?.code.toUpperCase()}?${searchParams.toString()}`}
-            >
-              Open country insights
-            </Link>
-          </>
-        )}
-      </div>
-    </>
+    <div className="space-y-2">
+      <h3 className="text-xl font-semibold">{DATA?.GEONAME}</h3>
+      {locationsQuery.isFetching && !locationsQuery.isFetched && (
+        <span className="text-sm">Loading...</span>
+      )}
+      {locationsQuery.isFetched && !locationsQuery.data && (
+        <span className="text-sm">No data available</span>
+      )}
+      {locationsQuery.isFetched && locationsQuery.data && (
+        <>
+          <div className="space-y-2">
+            <div className="font-mono uppercase">Marine conservation coverage</div>
+            <div className="space-x-1 font-mono tracking-tighter text-blue">
+              <span className="text-[64px] font-bold leading-[80%]">{coveragePercentage}</span>
+              {coveragePercentage !== '-' && <span className="text-lg">%</span>}
+            </div>
+            <div className="space-x-1 font-mono text-xl text-blue">
+              <span>
+                {Intl.NumberFormat('en-US', {
+                  notation: 'standard',
+                }).format(locationsQuery.data.totalMarineArea)}
+              </span>
+              <span>
+                km<sup>2</sup>
+              </span>
+            </div>
+          </div>
+          <Link
+            className="block border border-black p-4 text-center font-mono uppercase"
+            href={`${
+              PAGES.dataTool
+            }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`}
+          >
+            Open country insights
+          </Link>
+        </>
+      )}
+    </div>
   );
 };
 
