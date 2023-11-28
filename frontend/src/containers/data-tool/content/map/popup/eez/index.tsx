@@ -4,7 +4,6 @@ import { useMap } from 'react-map-gl';
 
 import Link from 'next/link';
 
-import { format } from 'd3-format';
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 
@@ -14,7 +13,7 @@ import { layersInteractiveIdsAtom, popupAtom } from '@/containers/data-tool/stor
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
-import { ProtectionCoverageStat } from '@/types/generated/strapi.schemas';
+import { ProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
 const EEZLayerPopup = ({ locationId }) => {
@@ -92,7 +91,7 @@ const EEZLayerPopup = ({ locationId }) => {
 
   // ? I had to type the data ad hoc because the generated type is wrong when we are adding
   // ? the `sort` query param
-  const { data: latestProtectionCoverageStats }: { data: ProtectionCoverageStat } =
+  const { data: protectionCoverageStats }: { data: ProtectionCoverageStatListResponseDataItem[] } =
     useGetProtectionCoverageStats(
       {
         filters: {
@@ -107,10 +106,42 @@ const EEZLayerPopup = ({ locationId }) => {
       },
       {
         query: {
-          select: ({ data }) => data?.[0]?.attributes,
+          select: ({ data }) => data,
         },
       }
     );
+
+  const latestYearAvailable = useMemo(() => {
+    if (protectionCoverageStats) {
+      return protectionCoverageStats[0].attributes.year;
+    }
+  }, [protectionCoverageStats]);
+
+  const latestProtectionCoverageStats = useMemo(() => {
+    if (latestYearAvailable) {
+      return protectionCoverageStats.filter((d) => d.attributes.year === latestYearAvailable);
+    }
+    return [];
+  }, [protectionCoverageStats, latestYearAvailable]);
+
+  const coveragePercentage = useMemo(() => {
+    if (latestProtectionCoverageStats.length && locationsQuery.data) {
+      const totalCumSumProtectedArea = latestProtectionCoverageStats.reduce(
+        (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
+        0
+      );
+
+      const formatter = Intl.NumberFormat('en-US', {
+        maximumFractionDigits: 2,
+      });
+
+      return formatter.format(
+        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100
+      );
+    }
+
+    return '-';
+  }, [latestProtectionCoverageStats, locationsQuery.data]);
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -127,50 +158,47 @@ const EEZLayerPopup = ({ locationId }) => {
     };
   }, [map, handleMapRender]);
 
-  const protectedPercentage = useMemo(() => {
-    if (!latestProtectionCoverageStats || !locationsQuery?.data) return '-';
-
-    return format('.1r')(
-      (latestProtectionCoverageStats.protectedArea * 100) / locationsQuery.data.totalMarineArea
-    );
-  }, [latestProtectionCoverageStats, locationsQuery.data]);
-
   if (!DATA) return null;
 
   return (
-    <>
-      <div className="space-y-2">
-        <h3 className="text-xl font-semibold">{DATA?.GEONAME}</h3>
-        {locationsQuery.isFetching && !locationsQuery.isFetched && (
-          <span className="text-sm">Loading...</span>
-        )}
-        {locationsQuery.isFetched && !locationsQuery.data && (
-          <span className="text-sm">No data available</span>
-        )}
-        {locationsQuery.isFetched && locationsQuery.data && (
-          <>
-            <dl className="space-y-2">
-              <dt className="font-mono uppercase">Marine conservation coverage</dt>
-              <dd className="space-x-1 font-mono text-6xl tracking-tighter text-blue">
-                <span>{protectedPercentage}</span>
-                {protectedPercentage !== '-' && <span className="text-lg">%</span>}
-              </dd>
-              <dd className="font-mono text-xl text-blue">
-                {format(',.2r')(locationsQuery.data.totalMarineArea)} km<sup>2</sup>
-              </dd>
-            </dl>
-            <Link
-              className="block border border-black p-4 text-center font-mono uppercase"
-              href={`${
-                PAGES.dataTool
-              }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`}
-            >
-              Open country insights
-            </Link>
-          </>
-        )}
-      </div>
-    </>
+    <div className="space-y-2">
+      <h3 className="text-xl font-semibold">{DATA?.GEONAME}</h3>
+      {locationsQuery.isFetching && !locationsQuery.isFetched && (
+        <span className="text-sm">Loading...</span>
+      )}
+      {locationsQuery.isFetched && !locationsQuery.data && (
+        <span className="text-sm">No data available</span>
+      )}
+      {locationsQuery.isFetched && locationsQuery.data && (
+        <>
+          <div className="space-y-2">
+            <div className="font-mono uppercase">Marine conservation coverage</div>
+            <div className="space-x-1 font-mono tracking-tighter text-blue">
+              <span className="text-[64px] font-bold leading-[80%]">{coveragePercentage}</span>
+              {coveragePercentage !== '-' && <span className="text-lg">%</span>}
+            </div>
+            <div className="space-x-1 font-mono text-xl text-blue">
+              <span>
+                {Intl.NumberFormat('en-US', {
+                  notation: 'standard',
+                }).format(locationsQuery.data.totalMarineArea)}
+              </span>
+              <span>
+                km<sup>2</sup>
+              </span>
+            </div>
+          </div>
+          <Link
+            className="block border border-black p-4 text-center font-mono uppercase"
+            href={`${
+              PAGES.dataTool
+            }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`}
+          >
+            Open country insights
+          </Link>
+        </>
+      )}
+    </div>
   );
 };
 
