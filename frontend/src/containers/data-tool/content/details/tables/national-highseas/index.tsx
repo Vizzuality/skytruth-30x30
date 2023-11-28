@@ -100,7 +100,7 @@ const NationalHighseasTable: React.FC = () => {
       const fishingProtectionLevel = coverageStats?.fishing_protection_level?.data?.attributes;
 
       // Calculate coverage percentage
-      const coveragePercentage = (coverageStats.area / mpa?.area) * 100;
+      const coveragePercentage = (coverageStats.area / dataToolLocation.totalMarineArea) * 100;
 
       return {
         protectedArea: mpa?.name,
@@ -112,7 +112,7 @@ const NationalHighseasTable: React.FC = () => {
         area: mpa?.area,
       };
     });
-  }, [coverageData]);
+  }, [coverageData, dataToolLocation]);
 
   const tableData = useMemo(() => {
     return applyFilters(parsedData, filters);
