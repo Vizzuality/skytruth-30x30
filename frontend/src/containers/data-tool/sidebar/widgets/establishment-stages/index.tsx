@@ -4,12 +4,18 @@ import { groupBy } from 'lodash-es';
 
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
-import { ESTABLISHMENT_STAGES_CHART_BAR_BACKGROUNDS } from '@/constants/establishment-stages-chart-bar-backgrounds';
 import { useGetMpaaEstablishmentStageStats } from '@/types/generated/mpaa-establishment-stage-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 type EstablishmentStagesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
+};
+
+const PATTERNS = {
+  'proposed-committed': '/images/data-tool/chart-bgs/dots.svg',
+  implemented: '/images/data-tool/chart-bgs/crosses.svg',
+  'actively-managed': '/images/data-tool/chart-bgs/dashes.svg',
+  designated: '/images/data-tool/chart-bgs/arrows.svg',
 };
 
 const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ location }) => {
@@ -83,18 +89,16 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
   const widgetChartData = useMemo(() => {
     if (!mergedEstablishmentStagesStats.length) return [];
 
-    const parsedData = mergedEstablishmentStagesStats.map((establishmentStage) => {
+    return mergedEstablishmentStagesStats.map((establishmentStage) => {
       return {
         title: establishmentStage.name,
         slug: establishmentStage.slug,
-        barBackground: ESTABLISHMENT_STAGES_CHART_BAR_BACKGROUNDS[establishmentStage.slug],
+        background: `border-box #fff url(${PATTERNS[establishmentStage.slug]})`,
         totalArea: location.totalMarineArea,
         protectedArea: establishmentStage.area,
         info: establishmentStage.info,
       };
     });
-
-    return parsedData;
   }, [location, mergedEstablishmentStagesStats]);
 
   // If there's no widget data, don't display the widget

@@ -63,7 +63,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       return {
         title: protectionLevel.name,
         slug: protectionLevel.slug,
-        barColor: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
+        background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
         totalArea: location.totalMarineArea,
         protectedArea: stats.area,
         info: protectionLevel.info,

@@ -59,7 +59,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
       return {
         title: habitat.name,
         slug: habitat.slug,
-        barColor: HABITAT_CHART_COLORS[habitat.slug],
+        background: HABITAT_CHART_COLORS[habitat.slug],
         totalArea: stats.totalArea,
         protectedArea: stats.protectedArea,
         info: habitat?.info,
