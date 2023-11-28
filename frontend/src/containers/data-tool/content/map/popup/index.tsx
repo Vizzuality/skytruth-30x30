@@ -28,7 +28,7 @@ const PopupContainer = () => {
 
   const setPopup = useSetAtom(popupAtom);
 
-  const availableSources = popup?.features?.map(({ source }) => source);
+  const availableSources = Array.from(new Set(popup?.features?.map(({ source }) => source)));
 
   const { data: layersInteractiveData } = useGetLayers(
     {
