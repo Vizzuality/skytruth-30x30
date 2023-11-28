@@ -56,7 +56,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
       <div className="flex justify-between text-xs">
         <span className="flex items-center">
           {title}
-          {info && <TooltipButton className="mt-1" text={info} />}
+          {info && <TooltipButton text={info} />}
         </span>
         <span>
           of {formattedArea} km<sup>2</sup>
