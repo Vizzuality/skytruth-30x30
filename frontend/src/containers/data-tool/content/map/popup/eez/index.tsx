@@ -4,19 +4,18 @@ import { useMap } from 'react-map-gl';
 
 import Link from 'next/link';
 
+import { format } from 'd3-format';
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 
 import { PAGES } from '@/constants/pages';
+import { useDataToolSearchParams } from '@/containers/data-tool/content/map/sync-settings';
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/data-tool/store';
-import { format } from '@/lib/utils/formats';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
+import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
+import { ProtectionCoverageStat } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
-
-import { useDataToolSearchParams } from '../../sync-settings';
-
-const TERMS_CLASSES = 'font-mono uppercase';
 
 const EEZLayerPopup = ({ locationId }) => {
   const [rendered, setRendered] = useState(false);
@@ -80,21 +79,38 @@ const EEZLayerPopup = ({ locationId }) => {
   const locationsQuery = useGetLocations(
     {
       filters: {
-        code: {
-          $in: ['GLOB', DATA?.ISO_SOV1],
-        },
+        code: DATA?.ISO_SOV1,
       },
     },
     {
       query: {
         enabled: !!DATA?.ISO_SOV1,
-        select: ({ data }) => data,
+        select: ({ data }) => data?.[0]?.attributes,
       },
     }
   );
 
-  const worldLocation = locationsQuery.data?.find(({ attributes: { code } }) => code === 'GLOB');
-  const currentLocation = locationsQuery.data?.find(({ attributes: { code } }) => code !== 'GLOB');
+  // ? I had to type the data ad hoc because the generated type is wrong when we are adding
+  // ? the `sort` query param
+  const { data: latestProtectionCoverageStats }: { data: ProtectionCoverageStat } =
+    useGetProtectionCoverageStats(
+      {
+        filters: {
+          location: {
+            code: DATA?.ISO_SOV1,
+          },
+        },
+        populate: '*',
+        // @ts-expect-error this is an issue with Orval typing
+        'sort[year]': 'desc',
+        'pagination[limit]': -1,
+      },
+      {
+        query: {
+          select: ({ data }) => data?.[0]?.attributes,
+        },
+      }
+    );
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -111,10 +127,15 @@ const EEZLayerPopup = ({ locationId }) => {
     };
   }, [map, handleMapRender]);
 
-  if (!DATA) return null;
+  const protectedPercentage = useMemo(() => {
+    if (!latestProtectionCoverageStats || !locationsQuery?.data) return '-';
 
-  const coverage =
-    currentLocation?.attributes?.totalMarineArea / worldLocation?.attributes?.totalMarineArea;
+    return format('.1r')(
+      (latestProtectionCoverageStats.protectedArea * 100) / locationsQuery.data.totalMarineArea
+    );
+  }, [latestProtectionCoverageStats, locationsQuery.data]);
+
+  if (!DATA) return null;
 
   return (
     <>
@@ -129,26 +150,20 @@ const EEZLayerPopup = ({ locationId }) => {
         {locationsQuery.isFetched && locationsQuery.data && (
           <>
             <dl className="space-y-2">
-              <dt className={TERMS_CLASSES}>Marine conservation coverage</dt>
-              <dd className="font-mono text-6xl tracking-tighter text-blue">
-                {format({
-                  value: coverage,
-                  id: 'formatPercentage',
-                })}
+              <dt className="font-mono uppercase">Marine conservation coverage</dt>
+              <dd className="space-x-1 font-mono text-6xl tracking-tighter text-blue">
+                <span>{protectedPercentage}</span>
+                {protectedPercentage !== '-' && <span className="text-lg">%</span>}
               </dd>
               <dd className="font-mono text-xl text-blue">
-                {format({
-                  value: currentLocation?.attributes?.totalMarineArea,
-                  id: 'formatKM',
-                })}
-                Km<sup>2</sup>
+                {format(',.2r')(locationsQuery.data.totalMarineArea)} km<sup>2</sup>
               </dd>
             </dl>
             <Link
               className="block border border-black p-4 text-center font-mono uppercase"
               href={`${
                 PAGES.dataTool
-              }/${currentLocation?.attributes?.code.toUpperCase()}?${searchParams.toString()}`}
+              }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`}
             >
               Open country insights
             </Link>
