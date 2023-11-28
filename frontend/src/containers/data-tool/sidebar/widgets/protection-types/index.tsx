@@ -32,6 +32,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
         query: {
           select: ({ data }) => data?.[0]?.attributes?.updatedAt,
           placeholderData: { data: null },
+          refetchOnWindowFocus: false,
         },
       }
     );
@@ -50,6 +51,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       query: {
         select: ({ data }) => ({ data }),
         placeholderData: { data: [] },
+        refetchOnWindowFocus: false,
       },
     }
   );

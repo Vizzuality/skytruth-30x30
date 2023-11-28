@@ -29,6 +29,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
       query: {
         select: ({ data }) => data?.[0]?.attributes?.updatedAt,
         placeholderData: { data: null },
+        refetchOnWindowFocus: false,
       },
     }
   );
@@ -46,6 +47,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
       query: {
         select: ({ data }) => ({ data }),
         placeholderData: { data: [] },
+        refetchOnWindowFocus: false,
       },
     }
   );

@@ -31,6 +31,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
         query: {
           select: ({ data }) => data?.[0]?.attributes?.updatedAt,
           placeholderData: { data: null },
+          refetchOnWindowFocus: false,
         },
       }
     );
@@ -50,6 +51,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       query: {
         select: ({ data }) => ({ data }),
         placeholderData: { data: [] },
+        refetchOnWindowFocus: false,
       },
     }
   );
