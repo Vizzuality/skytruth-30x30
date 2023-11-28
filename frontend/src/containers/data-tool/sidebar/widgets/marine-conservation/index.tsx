@@ -79,8 +79,8 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     const totalArea = location.totalMarineArea;
     const lastYearData = mergedProtectionStats[mergedProtectionStats.length - 1];
     const { protectedArea } = lastYearData;
-    const percentageFormatted = format('.1r')((protectedArea * 100) / totalArea);
-    const totalAreaFormatted = format(',.2r')(totalArea);
+    const percentageFormatted = format('.0r')((protectedArea * 100) / totalArea);
+    const totalAreaFormatted = format(',.0f')(totalArea);
 
     return {
       protectedPercentage: percentageFormatted,
