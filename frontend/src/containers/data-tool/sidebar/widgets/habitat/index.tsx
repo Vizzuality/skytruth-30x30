@@ -19,7 +19,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
     },
   };
 
-  const { data: dataLastUpdate, isFetched: isFetchedDataLastUpdate } = useGetHabitatStats(
+  const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } = useGetHabitatStats(
     {
       ...defaultQueryParams,
       sort: 'updatedAt:desc',
@@ -35,7 +35,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
 
   const {
     data: { data: habitatStatsData },
-    isFetched: isFetchedHabitatStatsData,
+    isFetching: isFetchingHabitatStatsData,
   } = useGetHabitatStats(
     {
       ...defaultQueryParams,
@@ -71,7 +71,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
   }, [habitatStatsData]);
 
   const noData = !widgetChartData.length;
-  const loading = !isFetchedHabitatStatsData || !isFetchedDataLastUpdate;
+  const loading = !isFetchingHabitatStatsData || !isFetchingDataLastUpdate;
 
   return (
     <Widget

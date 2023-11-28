@@ -29,7 +29,7 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
   };
 
   // Find last updated in order to display the last data update
-  const { data: dataLastUpdate, isFetched: isFetchedDataLastUpdate } =
+  const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } =
     useGetMpaaEstablishmentStageStats(
       {
         ...defaultQueryParams,
@@ -47,7 +47,7 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
   // Get establishment stages by location
   const {
     data: { data: establishmentStagesData },
-    isFetched: isFetchedEstablishmentStagesData,
+    isFetching: isFetchingEstablishmentStagesData,
   } = useGetMpaaEstablishmentStageStats(
     {
       ...defaultQueryParams,
@@ -104,7 +104,7 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
   }, [location, mergedEstablishmentStagesStats]);
 
   const noData = !widgetChartData.length;
-  const loading = !isFetchedEstablishmentStagesData || !isFetchedDataLastUpdate;
+  const loading = !isFetchingEstablishmentStagesData || !isFetchingDataLastUpdate;
 
   return (
     <Widget

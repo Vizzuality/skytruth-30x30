@@ -20,7 +20,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     },
   };
 
-  const { data: dataLastUpdate, isFetched: isFetchedDataLastUpdate } =
+  const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } =
     useGetProtectionCoverageStats(
       {
         ...defaultQueryParams,
@@ -37,7 +37,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
 
   const {
     data: { data: protectionStatsData },
-    isFetched: isFetchedProtectionStatsData,
+    isFetching: isFetchingProtectionStatsData,
   } = useGetProtectionCoverageStats(
     {
       ...defaultQueryParams,
@@ -137,7 +137,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   }, [location, mergedProtectionStats]);
 
   const noData = !chartData.length;
-  const loading = !isFetchedProtectionStatsData || !isFetchedDataLastUpdate;
+  const loading = !isFetchingProtectionStatsData || !isFetchingDataLastUpdate;
 
   return (
     <Widget

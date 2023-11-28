@@ -21,7 +21,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   };
 
   // Find last updated in order to display the last data update
-  const { data: dataLastUpdate, isFetched: isFetchedDataLastUpdate } =
+  const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } =
     useGetMpaaProtectionLevelStats(
       {
         ...defaultQueryParams,
@@ -39,7 +39,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   // Get protection levels by location
   const {
     data: { data: protectionLevelStatsData },
-    isFetched: isFetchedProtectionStatsData,
+    isFetching: isFetchingProtectionStatsData,
   } = useGetMpaaProtectionLevelStats(
     {
       ...defaultQueryParams,
@@ -76,7 +76,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   }, [location, protectionLevelStatsData]);
 
   const noData = !widgetChartData.length;
-  const loading = !isFetchedProtectionStatsData || !isFetchedDataLastUpdate;
+  const loading = !isFetchingProtectionStatsData || !isFetchingDataLastUpdate;
 
   return (
     <Widget
