@@ -77,7 +77,11 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   if (!widgetChartData.length) return null;
 
   return (
-    <Widget title="Marine Conservation Protection Types" lastUpdated={dataLastUpdate}>
+    <Widget
+      title="Marine Conservation Protection Types"
+      lastUpdated={dataLastUpdate}
+      source="protection-types-widget"
+    >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
       ))}

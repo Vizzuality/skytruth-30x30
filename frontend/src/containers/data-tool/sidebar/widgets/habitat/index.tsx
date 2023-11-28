@@ -76,6 +76,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
     <Widget
       title="Proportion of Habitat within Protected and Conserved Areas"
       lastUpdated={dataLastUpdate}
+      source="habitats-widget"
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
