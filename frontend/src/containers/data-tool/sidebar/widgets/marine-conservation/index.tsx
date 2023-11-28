@@ -139,7 +139,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   }, [location, mergedProtectionStats]);
 
   const noData = !chartData.length;
-  const loading = !isFetchingProtectionStatsData || !isFetchingDataLastUpdate;
+  const loading = isFetchingProtectionStatsData || isFetchingDataLastUpdate;
 
   return (
     <Widget

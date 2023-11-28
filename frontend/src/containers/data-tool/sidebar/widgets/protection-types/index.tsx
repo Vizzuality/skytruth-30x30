@@ -78,7 +78,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   }, [location, protectionLevelStatsData]);
 
   const noData = !widgetChartData.length;
-  const loading = !isFetchingProtectionStatsData || !isFetchingDataLastUpdate;
+  const loading = isFetchingProtectionStatsData || isFetchingDataLastUpdate;
 
   return (
     <Widget

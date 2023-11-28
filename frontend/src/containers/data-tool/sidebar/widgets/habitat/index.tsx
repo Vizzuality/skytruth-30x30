@@ -73,7 +73,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
   }, [habitatStatsData]);
 
   const noData = !widgetChartData.length;
-  const loading = !isFetchingHabitatStatsData || !isFetchingDataLastUpdate;
+  const loading = isFetchingHabitatStatsData || isFetchingDataLastUpdate;
 
   return (
     <Widget

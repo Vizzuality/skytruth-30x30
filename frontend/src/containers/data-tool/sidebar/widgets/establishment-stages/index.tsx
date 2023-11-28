@@ -106,7 +106,7 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
   }, [location, mergedEstablishmentStagesStats]);
 
   const noData = !widgetChartData.length;
-  const loading = !isFetchingEstablishmentStagesData || !isFetchingDataLastUpdate;
+  const loading = isFetchingEstablishmentStagesData || isFetchingDataLastUpdate;
 
   return (
     <Widget
