@@ -31,14 +31,14 @@ const LegendItem: FC<LegendItemsProps> = ({ config }) => {
       return (
         <ul className="flex w-full flex-col space-y-1">
           {items.map(({ value, color }) => (
-            <li key={`${value}`} className="flex space-x-2 text-xs">
+            <li key={`${value}`} className="flex items-center space-x-2 p-1 text-xs">
               <div
-                className="mt-0.5 h-3 w-3 flex-shrink-0 border border-gray-300"
+                className={'h-6 w-6 flex-shrink-0 rounded-full'}
                 style={{
                   backgroundColor: color,
                 }}
               />
-              <div>{value}</div>
+              <span className="font-mono">{value}</span>
             </li>
           ))}
         </ul>

@@ -12,7 +12,7 @@ type SidebarItemProps = {
 };
 
 const SidebarItem: React.FC<SidebarItemProps> = ({ text, percentage, icon = 'icon1' }) => (
-  <div className="flex flex-row gap-4 border-b border-white px-10 py-6">
+  <div className="flex flex-row gap-6 border-b border-white px-10 py-6">
     <div className="flex flex-1 flex-col gap-2 font-mono">
       <span className="text-6xl font-light">{percentage}%</span>
       <span className="text-xs">{text}</span>

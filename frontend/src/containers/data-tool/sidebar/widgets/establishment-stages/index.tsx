@@ -101,7 +101,11 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
   if (!widgetChartData.length) return null;
 
   return (
-    <Widget title="Marine Conservation Establishment Stages" lastUpdated={dataLastUpdate}>
+    <Widget
+      title="Marine Conservation Establishment Stages"
+      lastUpdated={dataLastUpdate}
+      source="establishment-stages-widget"
+    >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
       ))}

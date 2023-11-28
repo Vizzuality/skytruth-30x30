@@ -6,6 +6,9 @@ import { Minus, Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 
+const BUTTON_CLASSES = 'group bg-white';
+const ICON_CLASSES = 'h-6 w-6 text-black group-hover:text-white';
+
 const ZoomControls: FC = () => {
   const {
     current: { getZoom, zoomTo, getMinZoom, getMaxZoom },
@@ -16,14 +19,15 @@ const ZoomControls: FC = () => {
   const maxZoom = getMaxZoom();
 
   return (
-    <div className="absolute top-3 right-3 z-10 flex flex-col">
+    <div className="absolute top-0 right-0 z-10 flex flex-col border border-t-0 border-r-0 border-black">
       <Button
         type="button"
         size="icon"
         disabled={zoom === maxZoom}
         onClick={() => zoomTo(Math.round(Math.min(zoom + 1, maxZoom)), { duration: 250 })}
+        className={BUTTON_CLASSES}
       >
-        <Plus className="h-6 w-6" aria-hidden />
+        <Plus className={ICON_CLASSES} aria-hidden />
         <span className="sr-only">Zoom in</span>
       </Button>
       <Button
@@ -31,8 +35,9 @@ const ZoomControls: FC = () => {
         size="icon"
         onClick={() => zoomTo(Math.round(Math.max(zoom - 1, minZoom)), { duration: 250 })}
         disabled={zoom === minZoom}
+        className={BUTTON_CLASSES}
       >
-        <Minus className="h-6 w-6" aria-hidden />
+        <Minus className={ICON_CLASSES} aria-hidden />
         <span className="sr-only">Zoom out</span>
       </Button>
     </div>

@@ -103,13 +103,17 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
           </div>
         </div>
         <div className="border-l border-t border-white md:w-[40%] md:border-t-0">
-          <div className="flex h-full flex-col">
+          <div className="flex h-full flex-col border-r">
             <SidebarItem
               percentage={formattedOceanProtectedAreaPercentage}
               text="Current global ocean protected area"
               icon="icon1"
             />
-            <SidebarItem percentage={9} text="Current global land protected area" icon="icon2" />
+            <SidebarItem
+              percentage={16}
+              text="Current global land and inland waters protected area"
+              icon="icon2"
+            />
             <div className="flex h-full w-full justify-center">
               <button type="button" onClick={onScrollClick}>
                 <Icon icon={ArrowRight} className="h-[50%] rotate-90 fill-black" />
