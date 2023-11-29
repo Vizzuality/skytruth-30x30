@@ -8,6 +8,8 @@ const tablesSettings = {
     title: {
       worldwide: 'Marine Conservation at National and Regional Levels',
       region: 'Marine Conservation for {location}',
+      // Fallback to use in case the slug/code isn't defined, in order to prevent crashes
+      fallback: 'Marine Conservation',
     },
   },
   countryHighseas: {
@@ -16,6 +18,8 @@ const tablesSettings = {
     title: {
       country: 'Marine Conservation for {location}',
       highseas: 'Marine Conservation for High Seas',
+      // Fallback to use in case the slug/code isn't defined, in order to prevent crashes
+      fallback: 'Marine Conservation',
     },
   },
 };
