@@ -13,6 +13,7 @@ import EstablishmentLayerLegend from '@/containers/data-tool/content/map/layers-
 import EEZLayerPopup from '@/containers/data-tool/content/map/popup/eez';
 import GenericPopup from '@/containers/data-tool/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/data-tool/content/map/popup/protected-area';
+import RegionsPopup from '@/containers/data-tool/content/map/popup/regions';
 import FUNCTIONS from '@/lib/utils';
 import { ParamsConfig } from '@/types/layers';
 
@@ -31,6 +32,7 @@ export const JSON_CONFIGURATION = new JSONConfiguration({
     EEZLayerLegend,
     GenericPopup,
     ProtectedAreaPopup,
+    RegionsPopup,
     EstablishmentLayerLegend,
     // LegendTypeBasic,
     // LegendTypeChoropleth,

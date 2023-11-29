@@ -75,6 +75,10 @@ const PopupContainer = () => {
   }, [layersInteractive, closePopup]);
 
   useEffect(() => {
+    setPopup({});
+  }, [layersInteractive, setPopup]);
+
+  useEffect(() => {
     if (layersInteractiveData?.[0]?.value) {
       setSelectedLayerId(Number(layersInteractiveData[0].value));
     }
