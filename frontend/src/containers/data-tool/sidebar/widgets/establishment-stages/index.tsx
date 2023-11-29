@@ -29,23 +29,26 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
   };
 
   // Find last updated in order to display the last data update
-  const { data: dataLastUpdate } = useGetMpaaEstablishmentStageStats(
-    {
-      ...defaultQueryParams,
-      sort: 'updatedAt:desc',
-      'pagination[limit]': 1,
-    },
-    {
-      query: {
-        select: ({ data }) => data?.[0]?.attributes?.updatedAt,
-        placeholderData: { data: null },
+  const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } =
+    useGetMpaaEstablishmentStageStats(
+      {
+        ...defaultQueryParams,
+        sort: 'updatedAt:desc',
+        'pagination[limit]': 1,
       },
-    }
-  );
+      {
+        query: {
+          select: ({ data }) => data?.[0]?.attributes?.updatedAt,
+          placeholderData: { data: null },
+          refetchOnWindowFocus: false,
+        },
+      }
+    );
 
   // Get establishment stages by location
   const {
     data: { data: establishmentStagesData },
+    isFetching: isFetchingEstablishmentStagesData,
   } = useGetMpaaEstablishmentStageStats(
     {
       ...defaultQueryParams,
@@ -56,6 +59,7 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
       query: {
         select: ({ data }) => ({ data }),
         placeholderData: { data: [] },
+        refetchOnWindowFocus: false,
       },
     }
   );
@@ -101,14 +105,16 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
     });
   }, [location, mergedEstablishmentStagesStats]);
 
-  // If there's no widget data, don't display the widget
-  if (!widgetChartData.length) return null;
+  const noData = !widgetChartData.length;
+  const loading = isFetchingEstablishmentStagesData || isFetchingDataLastUpdate;
 
   return (
     <Widget
       title="Marine Conservation Establishment Stages"
       lastUpdated={dataLastUpdate}
       source="establishment-stages-widget"
+      noData={noData}
+      loading={loading}
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />

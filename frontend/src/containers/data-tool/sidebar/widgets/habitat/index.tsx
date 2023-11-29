@@ -19,7 +19,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
     },
   };
 
-  const { data: dataLastUpdate } = useGetHabitatStats(
+  const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } = useGetHabitatStats(
     {
       ...defaultQueryParams,
       sort: 'updatedAt:desc',
@@ -29,12 +29,14 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
       query: {
         select: ({ data }) => data?.[0]?.attributes?.updatedAt,
         placeholderData: { data: null },
+        refetchOnWindowFocus: false,
       },
     }
   );
 
   const {
     data: { data: habitatStatsData },
+    isFetching: isFetchingHabitatStatsData,
   } = useGetHabitatStats(
     {
       ...defaultQueryParams,
@@ -45,6 +47,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
       query: {
         select: ({ data }) => ({ data }),
         placeholderData: { data: [] },
+        refetchOnWindowFocus: false,
       },
     }
   );
@@ -69,14 +72,16 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
     return parsedData.reverse();
   }, [habitatStatsData]);
 
-  // If there is no data for the widget, do not display it.
-  if (!widgetChartData?.length) return null;
+  const noData = !widgetChartData.length;
+  const loading = isFetchingHabitatStatsData || isFetchingDataLastUpdate;
 
   return (
     <Widget
       title="Proportion of Habitat within Protected and Conserved Areas"
       lastUpdated={dataLastUpdate}
       source="habitats-widget"
+      noData={noData}
+      loading={loading}
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />

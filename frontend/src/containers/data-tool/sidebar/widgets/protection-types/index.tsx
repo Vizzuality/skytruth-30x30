@@ -21,23 +21,26 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   };
 
   // Find last updated in order to display the last data update
-  const { data: dataLastUpdate } = useGetMpaaProtectionLevelStats(
-    {
-      ...defaultQueryParams,
-      sort: 'updatedAt:desc',
-      'pagination[limit]': 1,
-    },
-    {
-      query: {
-        select: ({ data }) => data?.[0]?.attributes?.updatedAt,
-        placeholderData: { data: null },
+  const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } =
+    useGetMpaaProtectionLevelStats(
+      {
+        ...defaultQueryParams,
+        sort: 'updatedAt:desc',
+        'pagination[limit]': 1,
       },
-    }
-  );
+      {
+        query: {
+          select: ({ data }) => data?.[0]?.attributes?.updatedAt,
+          placeholderData: { data: null },
+          refetchOnWindowFocus: false,
+        },
+      }
+    );
 
   // Get protection levels by location
   const {
     data: { data: protectionLevelStatsData },
+    isFetching: isFetchingProtectionStatsData,
   } = useGetMpaaProtectionLevelStats(
     {
       ...defaultQueryParams,
@@ -48,6 +51,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       query: {
         select: ({ data }) => ({ data }),
         placeholderData: { data: [] },
+        refetchOnWindowFocus: false,
       },
     }
   );
@@ -73,14 +77,16 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     return parsedData;
   }, [location, protectionLevelStatsData]);
 
-  // If there's no widget data, don't display the widget
-  if (!widgetChartData.length) return null;
+  const noData = !widgetChartData.length;
+  const loading = isFetchingProtectionStatsData || isFetchingDataLastUpdate;
 
   return (
     <Widget
       title="Marine Conservation Protection Types"
       lastUpdated={dataLastUpdate}
       source="protection-types-widget"
+      noData={noData}
+      loading={loading}
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
