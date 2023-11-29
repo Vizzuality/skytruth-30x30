@@ -31,14 +31,14 @@ const Footer: React.FC = () => (
         <div className="flex py-2">
           <Copyright className="mr-2 h-3.5 w-3.5" aria-hidden="true" /> SkyTruth 2023
         </div>
-        <nav className="flex gap-6">
+        {/* <nav className="flex gap-6">
           <Link className="py-2" href={PAGES.privacyPolicy}>
             Privacy policy
           </Link>
           <Link className="py-2" href={PAGES.termsOfUse}>
             Terms of use
           </Link>
-        </nav>
+        </nav> */}
       </div>
       <span
         className="block h-[12vw] w-full bg-contain bg-bottom bg-no-repeat opacity-10 sm:mt-2 md:mx-auto md:mt-4 md:max-w-7xl xl:-mt-8"
