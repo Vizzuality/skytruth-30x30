@@ -5,6 +5,7 @@ import { useMap } from 'react-map-gl';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import Map, { ZoomControls, Attributions, DrawControls, Drawing } from '@/components/map';
@@ -23,7 +24,7 @@ import {
 } from '@/containers/data-tool/store';
 import { cn } from '@/lib/classnames';
 import { useGetLayers } from '@/types/generated/layer';
-import { useGetLocations } from '@/types/generated/location';
+import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
 const LayerManager = dynamic(() => import('@/containers/data-tool/content/map/layer-manager'), {
@@ -39,17 +40,12 @@ const DataToolMap: React.FC = () => {
   const { locationCode } = useParams();
   const locationBbox = useAtomValue(bboxLocation);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
+  const queryClient = useQueryClient();
 
-  const locationsQuery = useGetLocations(
-    {},
-    {
-      query: {
-        queryKey: ['locations', locationCode],
-        staleTime: Infinity,
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
-  );
+  const locationsQuery = queryClient.getQueryState<LocationGroupsDataItemAttributes>([
+    'locations',
+    locationCode,
+  ]);
 
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
