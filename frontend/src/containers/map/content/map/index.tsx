@@ -8,8 +8,10 @@ import { useParams } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtomValue, useSetAtom } from 'jotai';
 
-import Map, { ZoomControls, Attributions, DrawControls, Drawing } from '@/components/map';
+import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
+import Analysis from '@/containers/map/content/map/analysis';
+import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
 import Popup from '@/containers/map/content/map/popup';
@@ -22,7 +24,6 @@ import {
   layersInteractiveIdsAtom,
   popupAtom,
 } from '@/containers/map/store';
-import { cn } from '@/lib/classnames';
 import { useGetLayers } from '@/types/generated/layer';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
@@ -79,6 +80,8 @@ const MainMap: React.FC = () => {
 
   const handleMapClick = useCallback(
     (e: Parameters<ComponentProps<typeof Map>['onClick']>[0]) => {
+      if (drawState.active) return null;
+
       if (
         layersInteractive.length &&
         layersInteractiveData.some((l) => {
@@ -90,7 +93,7 @@ const MainMap: React.FC = () => {
         setPopup(p);
       }
     },
-    [layersInteractive, layersInteractiveData, setPopup]
+    [layersInteractive, layersInteractiveData, setPopup, drawState]
   );
 
   const handleMouseMove = useCallback(
@@ -124,7 +127,6 @@ const MainMap: React.FC = () => {
   const handleMouseLeave = useCallback(() => {
     if (hoveredPolygonId.current !== null) {
       map.setFeatureState(
-        // ? not a fan of harcoding the sources here, but there is no other way to find out the source
         {
           source: hoveredPolygonId.current.source,
           id: hoveredPolygonId.current.id,
@@ -191,19 +193,13 @@ const MainMap: React.FC = () => {
         attributionControl={false}
       >
         <>
-          <div
-            className={cn({
-              'hidden md:block': drawState.active,
-            })}
-          >
-            <Popup />
-          </div>
+          <Popup />
           <LabelsManager />
           <LayersToolbox />
           <ZoomControls />
           <DrawControls />
           <LayerManager />
-          <Drawing />
+          <Analysis />
           <Attributions />
         </>
       </Map>
