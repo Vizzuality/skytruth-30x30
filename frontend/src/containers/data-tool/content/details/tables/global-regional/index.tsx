@@ -120,15 +120,15 @@ const GlobalRegionalTable: React.FC = () => {
 
       // MPAs calculations
       const numMPAs =
-        coverageStats.filter(
+        coverageStats.find(
           ({ attributes }) => attributes?.protection_status?.data?.attributes?.slug === 'mpa'
-        )?.length || 0;
+        )?.attributes?.protectedAreasCount || 0;
 
       // OECMs calculations
-      const numOEMCs =
-        coverageStats.filter(
+      const numOECMs =
+        coverageStats.find(
           ({ attributes }) => attributes?.protection_status?.data?.attributes?.slug === 'oecm'
-        )?.length || 0;
+        )?.attributes?.protectedAreasCount || 0;
 
       // Fully/Highly Protected calculations
       const fullyHighlyProtected = mpaaStats.filter(
@@ -163,7 +163,7 @@ const GlobalRegionalTable: React.FC = () => {
         area: location.totalMarineArea,
         locationType: location.type,
         mpas: numMPAs,
-        oecms: numOEMCs,
+        oecms: numOECMs,
         fullyHighlyProtected: fullyHighlyProtectedAreaPercentage,
         highlyProtectedLfp: lfpHighProtectedPercentage,
         globalContribution: globalContributionPercentage,

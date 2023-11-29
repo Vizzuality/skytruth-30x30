@@ -132,7 +132,7 @@ const EEZLayerPopup = ({ locationId }) => {
       );
 
       const formatter = Intl.NumberFormat('en-US', {
-        maximumFractionDigits: 2,
+        maximumFractionDigits: 0,
       });
 
       return formatter.format(

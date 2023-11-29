@@ -117,21 +117,14 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         accessorKey: 'protectionLevel',
         header: ({ column }) => (
           <HeaderItem>
-            <FiltersButton
-              field={column.id}
-              options={protectionLevelOptions}
-              values={filters[column.id]}
-              onChange={onFiltersChange}
-            />
             Protection Level
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { protectionLevel: value } = row.original;
-          const formattedValue = protectionLevelOptions.find(
-            (entry) => value === entry?.value
-          )?.name;
+          const formattedValue =
+            protectionLevelOptions.find((entry) => value === entry?.value)?.name || 'N/A';
           return <>{formattedValue}</>;
         },
       },
@@ -139,21 +132,14 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         accessorKey: 'fishingProtectionLevel',
         header: ({ column }) => (
           <HeaderItem>
-            <FiltersButton
-              field={column.id}
-              options={fishingProtectionLevelOptions}
-              values={filters[column.id]}
-              onChange={onFiltersChange}
-            />
             Fishing Protection Level
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { fishingProtectionLevel: value } = row.original;
-          const formattedValue = fishingProtectionLevelOptions.find(
-            (entry) => value === entry?.value
-          )?.name;
+          const formattedValue =
+            fishingProtectionLevelOptions.find((entry) => value === entry?.value)?.name || 'N/A';
           return <>{formattedValue}</>;
         },
       },

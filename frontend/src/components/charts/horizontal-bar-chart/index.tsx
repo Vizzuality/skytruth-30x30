@@ -28,7 +28,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
   }, []);
 
   const protectedAreaPercentage = useMemo(() => {
-    return format('.2r')((protectedArea * 100) / totalArea);
+    return format('.0f')((protectedArea * 100) / totalArea);
   }, [totalArea, protectedArea]);
 
   const barFillPercentage = useMemo(() => {
@@ -40,7 +40,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
   }, [protectedArea, totalArea]);
 
   const formattedArea = useMemo(() => {
-    return format(',.2r')(totalArea);
+    return format(',.0f')(totalArea);
   }, [totalArea]);
 
   return (
@@ -52,7 +52,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
       <div className="flex justify-between text-xs">
         <span className="flex items-center">
           {title}
-          {info && <TooltipButton className="mt-1" text={info} />}
+          {info && <TooltipButton text={info} />}
         </span>
         <span>
           of {formattedArea} km<sup>2</sup>
