@@ -28,7 +28,7 @@ const CardList = (): JSX.Element => {
         }),
       },
       populate: '*',
-      'pagination[pageSize]': 3,
+      'pagination[pageSize]': 9,
     },
     {
       query: {
