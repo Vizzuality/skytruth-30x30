@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { xor } from 'lodash-es';
 import { Filter } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -39,15 +38,6 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({ field, options, values, o
 
   const filters = watch('filters');
 
-  useEffect(() => {
-    const filtersChanged = xor(filters, values).length > 0;
-    const allFiltersSelected = filters.length === allFilterValues.length;
-
-    if (filtersChanged || allFiltersSelected) {
-      onChange(field, filters);
-    }
-  }, [field, filters, values, onChange, allFilterValues.length]);
-
   const handleSelectAll = () => {
     setValue('filters', allFilterValues);
   };
@@ -58,12 +48,13 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({ field, options, values, o
 
   const handleOnCheckedChange = (type, checked) => {
     if (checked) {
-      setValue('filters', [...filters, type]);
+      const filtersValues = [...filters, type];
+      setValue('filters', filtersValues);
+      onChange(field, filtersValues);
     } else {
-      setValue(
-        'filters',
-        filters.filter((entry) => entry !== type)
-      );
+      const filtersValues = filters.filter((entry) => entry !== type);
+      setValue('filters', filtersValues);
+      onChange(field, filtersValues);
     }
   };
 

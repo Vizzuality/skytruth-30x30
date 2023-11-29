@@ -182,9 +182,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
     ];
-    // ! If we add dependencies, the columns will re-render and the popovers will close on updates / act funny
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [filters, locationTypesOptions, onFiltersChange, searchParams, tooltips]);
 
   return columns;
 };

@@ -162,9 +162,10 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
     ];
-    // ! If we add the filters dependency, the columns will re-render and the popovers will close on updates / act funny
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    filters,
+    onFiltersChange,
+    tooltips,
     protectionStatusOptions,
     establishmentStageOptions,
     protectionLevelOptions,
