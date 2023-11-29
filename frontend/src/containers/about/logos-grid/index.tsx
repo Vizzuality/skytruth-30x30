@@ -19,11 +19,12 @@ const logosGridVariants = cva('', {
 });
 
 type LogosGridProps = VariantProps<typeof logosGridVariants> & {
+  className?: string;
   type: 'team' | 'funders';
 };
 
-const LogosGrid: React.FC<LogosGridProps> = ({ type, columns }) => (
-  <div className={cn('grid gap-4 md:grid-cols-2', logosGridVariants({ columns }))}>
+const LogosGrid: React.FC<LogosGridProps> = ({ className, type, columns }) => (
+  <div className={cn(className, 'grid gap-4 md:grid-cols-2', logosGridVariants({ columns }))}>
     {LOGOS[type].map(({ logo, alt, link, description, width, height }) => (
       <div key={logo} className="flex flex-col gap-4 pr-4">
         <span className="flex flex-1 items-center justify-center md:justify-start">
