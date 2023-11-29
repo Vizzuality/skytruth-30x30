@@ -126,7 +126,9 @@ const About: React.FC = () => {
             >
               <Logo logo="protectedPlanet" />
             </TwoColSubsection>
+          </SectionContent>
 
+          <SectionContent>
             <TwoColSubsection
               itemNum={2}
               itemTotal={3}
@@ -143,7 +145,9 @@ const About: React.FC = () => {
             >
               <Logo logo="marineProtectionAtlas" />
             </TwoColSubsection>
+          </SectionContent>
 
+          <SectionContent>
             <TwoColSubsection
               itemNum={3}
               itemTotal={3}
@@ -203,14 +207,14 @@ const About: React.FC = () => {
             the dedicated individuals who bring expertise and commitment to the 30x30 Project
           </SectionDescription>
 
-          <TwoColSubsection title="Team" />
           <SectionContent>
-            <LogosGrid type="team" columns={4} />
+            <TwoColSubsection title="Team" />
+            <LogosGrid className="md:mt-8" type="team" columns={4} />
           </SectionContent>
 
-          <TwoColSubsection title="Funders" />
           <SectionContent>
-            <LogosGrid type="funders" columns={2} />
+            <TwoColSubsection title="Funders" />
+            <LogosGrid className="md:mt-8" type="funders" columns={2} />
           </SectionContent>
         </Section>
       </Content>
