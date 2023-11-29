@@ -3,7 +3,7 @@ from typing import Dict, Union
 from pathlib import Path
 import pandas as pd
 import geopandas as gpd
-from time import now
+import time
 
 from pipelines.utils import load_regions
 from pipelines.output_schemas import ProtectedAreaExtentSchema
@@ -129,7 +129,7 @@ class PACoveragePipe(PreprocessBasePipe):
     pipeline_name = "mpa_coverage_precalc"
     depends_on = ["mpa_intermediate"]
     extract_params = ExtractParams(
-        source="mpas/mpas_intermediate.zip",
+        source="",
         output_path="data/mpas_intermediate",
     )
     transform_params = TransformParams(
@@ -138,11 +138,17 @@ class PACoveragePipe(PreprocessBasePipe):
     )
     load_params = LoadParams(destination_name=["locations", "region_locations"])
 
+    def __init__(self) -> None:
+        super().__init__()
+        self.extract_params.source = (
+            f"{self.settings.GCS_PATH}/{self.depends_on[0]}/{self.depends_on[0]}.zip",
+        )
+
     def transform(self):
         self.load_params.input_path = Path(f"{self.folder_path}/{self.pipeline_name}")
         dissolved_folder = self.load_params.input_path.joinpath("timeseries")
         dissolved_folder.mkdir(parents=True, exist_ok=True)
-        years_rage = range(2000, now().year)
+        years_rage = range(2000, time.localtime().tm_year + 1)
         # dissolve Mpas subtables
         data = []
         for year in years_rage:

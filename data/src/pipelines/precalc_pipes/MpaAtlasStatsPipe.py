@@ -3,7 +3,7 @@ from typing import Dict, Union
 from pathlib import Path
 import pandas as pd
 import geopandas as gpd
-from time import now
+
 
 from pipelines.utils import load_regions
 from pipelines.output_schemas import ProtectedAreaExtentSchema

@@ -17,9 +17,9 @@ from mapshaper import Mapshaper
 logger = getLogger(__name__)
 
 
-class LFPStatsPipe(PreprocessBasePipe):
-    pipeline_name = "lfp_precalc"
-    depends_on = ["protectedseas_intermediate"]
+class MpaAtlasStatsPipe(PreprocessBasePipe):
+    pipeline_name = "MpaAtlas_stats_precalc"
+    depends_on = ["mpa_intermediate"]
     extract_params = ExtractParams(
         source="mpas/mpas_intermediate.zip",
         output_path="data/mpas_intermediate",
