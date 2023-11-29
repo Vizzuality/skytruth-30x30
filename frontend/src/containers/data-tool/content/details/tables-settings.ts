@@ -15,7 +15,7 @@ const tablesSettings = {
     component: NationalHighSeasTable,
     title: {
       country: 'Marine Conservation for {location}',
-      highSeas: 'Marine Conservation for High Seas',
+      highseas: 'Marine Conservation for High Seas',
     },
   },
 };
