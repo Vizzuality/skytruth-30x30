@@ -132,6 +132,7 @@ class LocationsPipe(PreprocessBasePipe):
     pipeline_name = "eez_locations_precalc"
     depends_on = ["eez_intermediate"]
     extract_params = ExtractParams(
+        source="",
         output_path="data/eez_intermediate",
     )
     transform_params = TransformParams(

@@ -12,7 +12,7 @@ from pipelines.base_pipe import (
     LoadParams,
 )
 from pipelines.utils import watch
-from utils import downloadFile, rm_tree
+from utils import downloadFile, rm_tree, make_archive
 
 
 logger = getLogger(__name__)
@@ -69,8 +69,9 @@ class MpaAtlasIntermediatePipe(IntermediateBasePipe):
             "wdpa_id",
             "name",
             "designation",
-            "location_id",
+            "sovereign",
             "establishment_stage",
+            "protection_mpaguide_level",
             "protection_level",
             "year",
         ],
@@ -124,9 +125,9 @@ class MpaAtlasIntermediatePipe(IntermediateBasePipe):
         gpd.GeoDataFrame(
             df,
             crs=gdf.crs,
-        ).to_file(filename=input_folder.as_posix(), driver="ESRI Shapefile")
+        ).to_file(filename=input_folder.as_posix(), driver="ESRI Shapefile", encoding="utf-8")
 
-        shutil.make_archive(input_folder.as_posix(), "zip")
+        make_archive(input_folder, self.load_params.input_path)
 
         # clean unzipped files
         rm_tree(input_folder)
