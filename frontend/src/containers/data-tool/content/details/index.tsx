@@ -33,7 +33,9 @@ const DataToolDetails: React.FC = () => {
         ? tablesSettings.worldwideRegion
         : tablesSettings.countryHighseas;
 
-      const parsedTitle = tableSettings.title[location.type].replace('{location}', location.name);
+      const parsedTitle =
+        tableSettings.title[location.type]?.replace('{location}', location.name) ||
+        tableSettings.title.fallback;
 
       return {
         title: parsedTitle,
