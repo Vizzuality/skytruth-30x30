@@ -1,7 +1,7 @@
 import { useGetDataInfos } from '@/types/generated/data-info';
 
 const TOOLTIP_MAPPING = {
-  coverage: 'coverage',
+  coverage: 'coverage-wdpa',
   protectedAreaType: 'protected-area-type',
   establishmentStage: 'establishment-stage',
   protectionLevel: 'protection-level',
