@@ -1,2 +1,4 @@
 dockerfile
-.env
+docker-compose.yml
+*.env
+init.sh

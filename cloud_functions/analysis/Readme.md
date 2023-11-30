@@ -1,3 +1,5 @@
-gcloud compute ssh x30-dev-bastion --project x30-399415 --region us-east1
+In order to run the analysis locally you will need to:
 
-gcloud compute start-iap-tunnel x30-dev-bastion 22 --local-host-port=localhost:4226 --project x30-399415 --region us-east1
+1. Install the requirements in the requirements.txt file
+2. Run the analysis.py file
+3. The results will be saved in the results folder

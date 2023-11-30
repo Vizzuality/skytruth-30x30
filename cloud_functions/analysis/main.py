@@ -32,4 +32,4 @@ def get_locations_stats(db: sqlalchemy.engine.base.Engine, geojson) -> dict:
         regions_count = conn.execute(stmt, parameters={"type": "region"}).scalar()
         countries_count = conn.execute(stmt, parameters={"type": "country"}).scalar()
 
-    return {"regions_count": regions_count, "countries_count": countries_count}
+    return {"FRA": 2342341, "USA": 234234, "total_area": 234234}

@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  skytruth-cloud-functions:
+    container_name: skytruth_cloud_functions
+    build:
+      context: .
+    volumes:
+      - ./:/application
+    ports:
+      - 3001:8080
+    env_file: .env
+    depends_on:
+      - skytruth-db
+  skytruth-db:
+    image: postgis/postgis:14-3.4
+    container_name: skytruth_cf_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: skytruth
+    restart: on-failure
+    ports:
+      - 5433:5432
+  skytruth-db-init:
+    image: ghcr.io/osgeo/gdal:alpine-small-latest
+    container_name: skytruth_cf_db_init
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: skytruth
+    restart: "no"
+    volumes:
+      - ./init.sh:/init.sh
+    entrypoint: sh -c "/init.sh"
+    depends_on:
+      - skytruth-db
