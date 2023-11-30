@@ -46,7 +46,7 @@ const Home: React.FC = () => {
           description="Do you want to contribute to the Knowledge Hub and add a tool?"
           button={{
             text: 'Go to the map',
-            link: PAGES.dataTool,
+            link: PAGES.map,
           }}
         />
       }

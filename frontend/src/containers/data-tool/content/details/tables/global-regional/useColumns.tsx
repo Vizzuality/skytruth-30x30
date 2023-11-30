@@ -48,7 +48,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           return (
             <Link
               className="underline"
-              href={`${PAGES.dataTool}/${locationCode}?${searchParams.toString()}`}
+              href={`${PAGES.map}/${locationCode}?${searchParams.toString()}`}
             >
               {location}
             </Link>

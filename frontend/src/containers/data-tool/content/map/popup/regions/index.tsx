@@ -192,7 +192,7 @@ const EEZLayerPopup = ({ locationId }) => {
           <Link
             className="block border border-black p-4 text-center font-mono uppercase"
             href={`${
-              PAGES.dataTool
+              PAGES.map
             }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`}
           >
             Open country insights
