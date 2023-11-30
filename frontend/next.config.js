@@ -38,11 +38,6 @@ const nextConfig = {
   redirects() {
     return [
       {
-        source: '/dashboard',
-        destination: '/dashboard/GLOB',
-        permanent: false,
-      },
-      {
         source: '/map',
         destination: '/map/GLOB',
         permanent: false,
