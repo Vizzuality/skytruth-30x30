@@ -31,7 +31,7 @@ const LayerManager = dynamic(() => import('@/containers/map/content/map/layer-ma
   ssr: false,
 });
 
-const DataToolMap: React.FC = () => {
+const MainMap: React.FC = () => {
   const [{ bbox: URLBbox }, setMapSettings] = useSyncMapSettings();
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
@@ -211,4 +211,4 @@ const DataToolMap: React.FC = () => {
   );
 };
 
-export default DataToolMap;
+export default MainMap;

@@ -3,11 +3,11 @@ import { ComponentProps, useCallback } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { useSyncDataToolContentSettings } from '@/containers/map/sync-settings';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
 
 const DetailsButton: React.FC = () => {
-  const [{ showDetails }, setSettings] = useSyncDataToolContentSettings();
+  const [{ showDetails }, setSettings] = useSyncMapContentSettings();
 
   const handleButtonClick = useCallback(() => {
     setSettings((prevSettings) => ({ ...prevSettings, showDetails: !prevSettings.showDetails }));

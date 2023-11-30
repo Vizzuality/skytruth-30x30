@@ -7,7 +7,7 @@ const DEFAULT_SYNC_CONTENT_SETTINGS: {
   showDetails: false,
 };
 
-export const useSyncDataToolContentSettings = () => {
+export const useSyncMapContentSettings = () => {
   return useQueryState(
     'content',
     parseAsJson<typeof DEFAULT_SYNC_CONTENT_SETTINGS>().withDefault(DEFAULT_SYNC_CONTENT_SETTINGS)

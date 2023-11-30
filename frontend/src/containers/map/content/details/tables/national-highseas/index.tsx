@@ -20,7 +20,7 @@ const NationalHighseasTable: React.FC = () => {
 
   const queryClient = useQueryClient();
 
-  const dataToolLocation = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
+  const mapLocation = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
     'locations',
     locationCode,
   ]);
@@ -50,7 +50,7 @@ const NationalHighseasTable: React.FC = () => {
         filters: {
           location: {
             code: {
-              $eq: dataToolLocation?.code,
+              $eq: mapLocation?.code,
             },
           },
         },
@@ -100,7 +100,7 @@ const NationalHighseasTable: React.FC = () => {
       const fishingProtectionLevel = coverageStats?.fishing_protection_level?.data?.attributes;
 
       // Calculate coverage percentage
-      const coveragePercentage = (coverageStats.area / dataToolLocation.totalMarineArea) * 100;
+      const coveragePercentage = (coverageStats.area / mapLocation.totalMarineArea) * 100;
 
       return {
         protectedArea: mpa?.name,
@@ -112,7 +112,7 @@ const NationalHighseasTable: React.FC = () => {
         area: mpa?.area,
       };
     });
-  }, [coverageData, dataToolLocation]);
+  }, [coverageData, mapLocation]);
 
   const tableData = useMemo(() => {
     return applyFilters(parsedData, filters);

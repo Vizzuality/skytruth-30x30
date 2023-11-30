@@ -8,7 +8,7 @@ import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 
 import { PAGES } from '@/constants/pages';
-import { useDataToolSearchParams } from '@/containers/map/content/map/sync-settings';
+import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
@@ -20,7 +20,7 @@ const EEZLayerPopup = ({ locationId }) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
-  const searchParams = useDataToolSearchParams();
+  const searchParams = useMapSearchParams();
 
   const popup = useAtomValue(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);

@@ -3,7 +3,7 @@ import type { GetServerSideProps } from 'next';
 
 import Content from '@/containers/map/content';
 import Sidebar from '@/containers/map/sidebar';
-import Layout from '@/layouts/data-tool';
+import Layout from '@/layouts/map';
 import { getLocations } from '@/types/generated/location';
 import { Location, LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 

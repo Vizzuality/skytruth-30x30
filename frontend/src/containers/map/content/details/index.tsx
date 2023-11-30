@@ -6,11 +6,11 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { Button } from '@/components/ui/button';
 import tablesSettings from '@/containers/map/content/details/tables-settings';
-import { useSyncDataToolContentSettings } from '@/containers/map/sync-settings';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
-const DataToolDetails: React.FC = () => {
-  const [, setSettings] = useSyncDataToolContentSettings();
+const MapDetails: React.FC = () => {
+  const [, setSettings] = useSyncMapContentSettings();
   const {
     query: { locationCode },
   } = useRouter();
@@ -63,4 +63,4 @@ const DataToolDetails: React.FC = () => {
   );
 };
 
-export default DataToolDetails;
+export default MapDetails;

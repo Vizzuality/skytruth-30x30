@@ -12,7 +12,7 @@ import SortingButton from '@/containers/map/content/details/table/sorting-button
 import TooltipButton from '@/containers/map/content/details/table/tooltip-button';
 import useFiltersOptions from '@/containers/map/content/details/tables/global-regional/useFiltersOptions';
 import useTooltips from '@/containers/map/content/details/tables/global-regional/useTooltips';
-import { useDataToolSearchParams } from '@/containers/map/content/map/sync-settings';
+import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 
 export type GlobalRegionalTableColumns = {
   location: string;
@@ -33,7 +33,7 @@ type UseColumnsProps = {
 };
 
 const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
-  const searchParams = useDataToolSearchParams();
+  const searchParams = useMapSearchParams();
   const { locationTypes: locationTypesOptions } = useFiltersOptions();
 
   const tooltips = useTooltips();

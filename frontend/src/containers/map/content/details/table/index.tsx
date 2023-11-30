@@ -10,7 +10,7 @@ import {
 import { cn } from '@/lib/classnames';
 
 // ! todo: type columns,data properly
-const DataToolTable = ({ columns, data }) => {
+const MapTable = ({ columns, data }) => {
   const tableRef = useRef<HTMLTableElement>();
   const firstColumnRef = useRef<HTMLTableCellElement>(null);
 
@@ -125,4 +125,4 @@ const DataToolTable = ({ columns, data }) => {
   );
 };
 
-export default DataToolTable;
+export default MapTable;

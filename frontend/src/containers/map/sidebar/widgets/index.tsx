@@ -9,7 +9,7 @@ import HabitatWidget from './habitat';
 import MarineConservationWidget from './marine-conservation';
 import ProtectionTypesWidget from './protection-types';
 
-const DataToolWidgets: React.FC = () => {
+const MapWidgets: React.FC = () => {
   const {
     query: { locationCode },
   } = useRouter();
@@ -31,4 +31,4 @@ const DataToolWidgets: React.FC = () => {
   );
 };
 
-export default DataToolWidgets;
+export default MapWidgets;

@@ -10,18 +10,18 @@ import { sidebarAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
-import { useSyncDataToolContentSettings } from '../sync-settings';
+import { useSyncMapContentSettings } from '../sync-settings';
 
 import DetailsButton from './details-button';
 import LocationSelector from './location-selector';
 import Widgets from './widgets';
 
-const DataToolSidebar: React.FC = () => {
+const MapSidebar: React.FC = () => {
   const {
     query: { locationCode },
   } = useRouter();
   const queryClient = useQueryClient();
-  const [{ showDetails }] = useSyncDataToolContentSettings();
+  const [{ showDetails }] = useSyncMapContentSettings();
 
   const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
     'locations',
@@ -70,4 +70,4 @@ const DataToolSidebar: React.FC = () => {
   );
 };
 
-export default DataToolSidebar;
+export default MapSidebar;

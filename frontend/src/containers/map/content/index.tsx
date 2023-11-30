@@ -1,10 +1,10 @@
-import { useSyncDataToolContentSettings } from '@/containers/map/sync-settings';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 
 import Details from './details';
 import Map from './map';
 
-const DataToolContent: React.FC = () => {
-  const [{ showDetails }] = useSyncDataToolContentSettings();
+const MapContent: React.FC = () => {
+  const [{ showDetails }] = useSyncMapContentSettings();
 
   return (
     <>
@@ -18,4 +18,4 @@ const DataToolContent: React.FC = () => {
   );
 };
 
-export default DataToolContent;
+export default MapContent;

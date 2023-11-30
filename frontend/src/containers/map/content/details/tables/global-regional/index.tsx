@@ -20,7 +20,7 @@ const GlobalRegionalTable: React.FC = () => {
 
   const queryClient = useQueryClient();
 
-  const dataToolLocation = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
+  const mapLocation = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
     'locations',
     locationCode,
   ]);
@@ -40,11 +40,11 @@ const GlobalRegionalTable: React.FC = () => {
   const { data: locationsData }: { data: LocationListResponseDataItem[] } = useGetLocations(
     {
       filters:
-        dataToolLocation?.type === 'region'
+        mapLocation?.type === 'region'
           ? {
               groups: {
                 code: {
-                  $eq: dataToolLocation?.code,
+                  $eq: mapLocation?.code,
                 },
               },
             }
@@ -154,7 +154,7 @@ const GlobalRegionalTable: React.FC = () => {
       const lfpHighProtectedPercentage = (lfpHighProtectedArea * 100) / location.totalMarineArea;
 
       // Global contributions calculations
-      const globalContributionPercentage = (protectedArea * 100) / dataToolLocation.totalMarineArea;
+      const globalContributionPercentage = (protectedArea * 100) / mapLocation.totalMarineArea;
 
       return {
         location: location.name,
@@ -169,7 +169,7 @@ const GlobalRegionalTable: React.FC = () => {
         globalContribution: globalContributionPercentage,
       };
     });
-  }, [dataToolLocation, locationsData]);
+  }, [mapLocation, locationsData]);
 
   const tableData = useMemo(() => {
     return applyFilters(parsedData, filters);

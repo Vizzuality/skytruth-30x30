@@ -34,7 +34,7 @@ export const useSyncMapLayerSettings = () => {
 // ? updated via next-usequerystate, so we rely in next-usequerystate to retrieve those searchParams as well
 // ? this might be an issue with next-usequerystate, but for now we can make it work this way.
 // ! if you are using syncing a new state through next-usequerystate in the data-tool's map page, remember to register it here
-export const useDataToolSearchParams = () => {
+export const useMapSearchParams = () => {
   const [settings] = useSyncMapSettings();
   const [layers] = useSyncMapLayers();
   const [layerSettings] = useSyncMapLayerSettings();

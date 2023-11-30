@@ -20,7 +20,7 @@ import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
-import { useDataToolSearchParams } from '../../content/map/sync-settings';
+import { useMapSearchParams } from '../../content/map/sync-settings';
 
 type LocationSelectorProps = {
   className: HTMLDivElement['className'];
@@ -40,7 +40,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     'locations',
     locationCode,
   ]);
-  const searchParams = useDataToolSearchParams();
+  const searchParams = useMapSearchParams();
 
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
   const { data: locationsData } = useGetLocations(
