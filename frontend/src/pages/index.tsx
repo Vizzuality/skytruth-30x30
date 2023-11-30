@@ -115,7 +115,11 @@ const Home: React.FC = () => {
             }
           />
 
-          <StatsImage value="1M" description="Species threatened with extinction." image="stats1" />
+          <StatsImage
+            value="More than 42,000"
+            description="Species threatened with extinction."
+            image="stats1"
+          />
 
           <TwoColSubsection
             title="Climate"

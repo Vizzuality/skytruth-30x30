@@ -1,12 +1,14 @@
+import { useCallback } from 'react';
+
 import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
-import { ChevronLeft } from 'lucide-react';
+import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { sidebarAtom } from '@/containers/map/store';
+import { sidebarAtom, drawStateAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
@@ -29,6 +31,14 @@ const MapSidebar: React.FC = () => {
   ]);
 
   const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
+  const [{ active: isDrawingActive }, setDrawState] = useAtom(drawStateAtom);
+
+  const onClickDrawing = useCallback(() => {
+    setDrawState((prevState) => ({
+      ...prevState,
+      active: true,
+    }));
+  }, [setDrawState]);
 
   return (
     <Collapsible
@@ -36,6 +46,24 @@ const MapSidebar: React.FC = () => {
       open={isSidebarOpen}
       onOpenChange={setSidebarOpen}
     >
+      {process.env.NEXT_PUBLIC_FEATURE_FLAG_ANALYSIS === 'true' && !isDrawingActive && (
+        <Button
+          type="button"
+          variant="white"
+          className={cn(
+            'absolute top-0 z-10 flex h-12 items-center space-x-2 border-l-0 border-t-0 px-6 py-3 font-mono text-xs',
+            {
+              'hidden md:flex': true,
+              'left-0': !isSidebarOpen,
+              'left-[430px] transition-[left] delay-500': isSidebarOpen,
+            }
+          )}
+          onClick={onClickDrawing}
+        >
+          <span>Marine Conservation Modelling</span>
+          <LuChevronRight className="h-6 w-6 -translate-y-[1px]" />
+        </Button>
+      )}
       <CollapsibleTrigger asChild>
         <Button
           type="button"
@@ -46,7 +74,7 @@ const MapSidebar: React.FC = () => {
             'left-[430px] transition-[left] delay-500': isSidebarOpen,
           })}
         >
-          <ChevronLeft className={cn('h-6 w-6', { 'rotate-180': !isSidebarOpen })} aria-hidden />
+          <LuChevronLeft className={cn('h-6 w-6', { 'rotate-180': !isSidebarOpen })} aria-hidden />
           <span className="sr-only">Toggle sidebar</span>
         </Button>
       </CollapsibleTrigger>
