@@ -8,12 +8,12 @@ import { JSONConfiguration, JSONConverter } from '@deck.gl/json/typed';
 //   LegendTypeChoropleth,
 //   LegendTypeGradient,
 // } from '@/components/map/legend/item-types';
-import EEZLayerLegend from '@/containers/data-tool/content/map/layers-toolbox/legend/eez';
-import EstablishmentLayerLegend from '@/containers/data-tool/content/map/layers-toolbox/legend/establishment';
-import EEZLayerPopup from '@/containers/data-tool/content/map/popup/eez';
-import GenericPopup from '@/containers/data-tool/content/map/popup/generic';
-import ProtectedAreaPopup from '@/containers/data-tool/content/map/popup/protected-area';
-import RegionsPopup from '@/containers/data-tool/content/map/popup/regions';
+import EEZLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/eez';
+import EstablishmentLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/establishment';
+import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
+import GenericPopup from '@/containers/map/content/map/popup/generic';
+import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
+import RegionsPopup from '@/containers/map/content/map/popup/regions';
 import FUNCTIONS from '@/lib/utils';
 import { ParamsConfig } from '@/types/layers';
 

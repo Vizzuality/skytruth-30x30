@@ -5,7 +5,7 @@ import { Source, Layer, LngLatBoundsLike, useMap } from 'react-map-gl';
 import { bbox } from '@turf/turf';
 import { useAtomValue } from 'jotai';
 
-import { drawStateAtom } from '@/containers/data-tool/store';
+import { drawStateAtom } from '@/containers/map/store';
 
 import { DRAW_STYLES } from '../draw-controls/hooks';
 

@@ -5,7 +5,7 @@ import { Trash2 } from 'lucide-react';
 
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import { Button } from '@/components/ui/button';
-import { drawStateAtom } from '@/containers/data-tool/store';
+import { drawStateAtom } from '@/containers/map/store';
 
 import { useMapboxDraw, UseMapboxDrawProps } from './hooks';
 

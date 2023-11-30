@@ -43,8 +43,8 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: '/data-tool',
-        destination: '/data-tool/GLOB',
+        source: '/map',
+        destination: '/map/GLOB',
         permanent: false,
       },
     ];
