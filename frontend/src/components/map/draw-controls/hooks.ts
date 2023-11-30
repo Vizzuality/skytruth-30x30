@@ -24,7 +24,7 @@ export const DRAW_STYLES: (
       'line-join': 'round',
     },
     paint: {
-      'line-color': '#000',
+      'line-color': '#02B07C',
       'line-width': 2,
     },
   },
@@ -34,8 +34,8 @@ export const DRAW_STYLES: (
     type: 'fill',
     filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']],
     paint: {
-      'fill-color': '#000',
-      'fill-outline-color': '#000',
+      'fill-color': '#02B07C',
+      'fill-outline-color': '#02B07C',
       'fill-opacity': 0.2,
     },
   },
@@ -60,7 +60,7 @@ export const DRAW_STYLES: (
       'line-join': 'round',
     },
     paint: {
-      'line-color': '#000',
+      'line-color': '#02B07C',
       'line-width': 2,
     },
   },
@@ -71,7 +71,7 @@ export const DRAW_STYLES: (
     filter: ['all', ['!=', 'mode', 'static']],
     paint: {
       'circle-radius': 6,
-      'circle-color': '#000',
+      'circle-color': '#02B07C',
     },
   },
   // vertex point halos

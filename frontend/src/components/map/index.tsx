@@ -145,5 +145,3 @@ export const Map: FC<CustomMapProps> = ({
 export default Map;
 export { default as ZoomControls } from './zoom-controls';
 export { default as Attributions } from './attributions';
-export { default as DrawControls } from './draw-controls';
-export { default as Drawing } from './drawing';
