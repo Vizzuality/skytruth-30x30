@@ -5,7 +5,7 @@ import Content from '@/containers/map/content';
 import Sidebar from '@/containers/map/sidebar';
 import Layout from '@/layouts/map';
 import { getLocations } from '@/types/generated/location';
-import { Location, LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
+import { Location, LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -19,18 +19,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
 
-  const location = locationsData?.[0];
+  if (!locationsData) return { notFound: true };
 
-  if (!location) return { notFound: true };
-
-  queryClient.setQueryData<LocationGroupsDataItemAttributes>(
-    ['locations', locationCode],
-    location.attributes
-  );
+  queryClient.setQueryData<{ data: LocationListResponseDataItem[] }>(['locations', locationCode], {
+    data: locationsData,
+  });
 
   return {
     props: {
-      location: location.attributes,
+      location: locationsData[0].attributes,
       dehydratedState: dehydrate(queryClient),
     },
   };
