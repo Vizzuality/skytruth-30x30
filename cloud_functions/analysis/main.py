@@ -5,6 +5,7 @@ from connect_tcp import connect_tcp_socket
 
 db = connect_tcp_socket()
 
+
 @functions_framework.http
 def index(request):
     """HTTP Cloud Function.
@@ -20,17 +21,15 @@ def index(request):
         Functions, see the `Writing HTTP functions` page.
         <https://cloud.google.com/functions/docs/writing/http#http_frameworks>
     """
-    return get_locations_stats(db)
+    geometry = request.args.get("geometry")
 
-def get_locations_stats(db: sqlalchemy.engine.base.Engine) -> dict:
+    return get_locations_stats(db, geometry)
+
+
+def get_locations_stats(db: sqlalchemy.engine.base.Engine, geojson) -> dict:
     with db.connect() as conn:
-        stmt = sqlalchemy.text(
-            "SELECT COUNT(*) FROM locations WHERE type=:type"
-        )
+        stmt = sqlalchemy.text("SELECT COUNT(*) FROM locations WHERE type=:type")
         regions_count = conn.execute(stmt, parameters={"type": "region"}).scalar()
         countries_count = conn.execute(stmt, parameters={"type": "country"}).scalar()
 
-    return {
-        "regions_count": regions_count,
-        "countries_count": countries_count
-    }
+    return {"regions_count": regions_count, "countries_count": countries_count}
