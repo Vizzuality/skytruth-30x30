@@ -19,7 +19,7 @@ import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 const NAVIGATION_ITEMS = [
-  { name: 'Data tool', href: PAGES.dataTool, colorClassName: 'text-blue fill-blue' },
+  { name: 'Map', href: PAGES.dataTool, colorClassName: 'text-blue fill-blue' },
   { name: 'Knowledge Hub', href: PAGES.knowledgeHub, colorClassName: 'text-green fill-green' },
   { name: 'About', href: PAGES.about, colorClassName: 'text-black fill-black' },
   { name: 'Contact', href: PAGES.contact, colorClassName: 'text-black fill-black' },
