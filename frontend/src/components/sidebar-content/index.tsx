@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { useAtomValue } from 'jotai';
 
-import { drawStateAtom } from '@/containers/data-tool/store';
+import { drawStateAtom } from '@/containers/map/store';
 
 import AnalysisStateContent from './analysis';
 import DrawingStateContent from './drawing';

@@ -11,8 +11,8 @@ const PrivacyPolicy: React.FC = () => (
         title="Take action."
         description="Do you want to contribute to the Knowledge Hub and add a tool?"
         button={{
-          text: 'Go to data tool',
-          link: PAGES.dataTool,
+          text: 'Go to the map',
+          link: PAGES.map,
         }}
       />
     }

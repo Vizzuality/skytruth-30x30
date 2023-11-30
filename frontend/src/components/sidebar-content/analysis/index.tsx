@@ -1,7 +1,7 @@
 import { useSetAtom } from 'jotai';
 
 import { Button } from '@/components/ui/button';
-import { drawStateAtom } from '@/containers/data-tool/store';
+import { drawStateAtom } from '@/containers/map/store';
 
 const AnalysisStateContent = {
   Content: () => {

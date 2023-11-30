@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { AttributionControl } from 'react-map-gl';
 
-import { useSyncMapLayers } from '@/containers/data-tool/content/map/sync-settings';
+import { useSyncMapLayers } from '@/containers/map/content/map/sync-settings';
 import { useGetLayers } from '@/types/generated/layer';
 
 const Attributions: FC = () => {
