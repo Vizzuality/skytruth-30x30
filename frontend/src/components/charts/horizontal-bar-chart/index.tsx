@@ -2,9 +2,8 @@ import { useMemo } from 'react';
 
 import { format } from 'd3-format';
 
+import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
-
-import TooltipButton from '../chart-tooltip-button';
 
 const DEFAULT_MAX_PERCENTAGE = 100;
 const PROTECTION_TARGET = 30;
@@ -13,14 +12,21 @@ type HorizontalBarChartProps = {
   className: string;
   data: {
     background: string;
-    title: string;
+    title?: string;
     totalArea: number;
     protectedArea: number;
     info?: string;
   };
+  showLegend?: boolean;
+  showTarget?: boolean;
 };
 
-const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data }) => {
+const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
+  className,
+  data,
+  showLegend = true,
+  showTarget = true,
+}) => {
   const { title, background, totalArea, protectedArea, info } = data;
 
   const targetPositionPercentage = useMemo(() => {
@@ -44,14 +50,14 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
   }, [totalArea]);
 
   return (
-    <div className={cn(className)}>
+    <div className={cn('font-mono', className)}>
       <div className="flex items-end justify-end text-3xl font-bold">
         {protectedAreaPercentage}
         <span className="pb-1.5 pl-1.5 text-xs">%</span>
       </div>
       <div className="flex justify-between text-xs">
         <span className="flex items-center">
-          {title}
+          {title && title}
           {info && <TooltipButton text={info} />}
         </span>
         <span>
@@ -66,22 +72,26 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ className, data
             background,
             width: `${barFillPercentage}%`,
           }}
-        ></span>
-        <span
-          className="absolute top-0 bottom-0 w-1 border-x border-white bg-orange"
-          style={{
-            left: `${targetPositionPercentage}%`,
-          }}
-        >
-          <span className="absolute right-0 top-5 whitespace-nowrap text-xs text-orange">
-            30% target
+        />
+        {showTarget && (
+          <span
+            className="absolute top-0 bottom-0 w-1 border-x border-white bg-orange"
+            style={{
+              left: `${targetPositionPercentage}%`,
+            }}
+          >
+            <span className="absolute right-0 top-5 whitespace-nowrap text-xs text-orange">
+              30% target
+            </span>
           </span>
-        </span>
+        )}
       </div>
-      <div className="flex justify-between text-xs">
-        <span>0%</span>
-        <span>{DEFAULT_MAX_PERCENTAGE}%</span>
-      </div>
+      {showLegend && (
+        <div className="flex justify-between text-xs">
+          <span>0%</span>
+          <span>{DEFAULT_MAX_PERCENTAGE}%</span>
+        </div>
+      )}
     </div>
   );
 };

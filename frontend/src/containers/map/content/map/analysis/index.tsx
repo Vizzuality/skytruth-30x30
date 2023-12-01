@@ -14,10 +14,11 @@ const fetchAnalysis = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        data: {
-          locations_area: [{ FRA: 23856, USA: 502367 }],
-          total_area: 736000,
-        },
+        locations_area: [
+          { code: 'FRA', protected_area: 2385406 },
+          { code: 'USA', protected_area: 5000367 },
+        ],
+        total_area: 73600000,
       });
     }, 2500);
   });
