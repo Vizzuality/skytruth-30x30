@@ -33,12 +33,14 @@ const statsImageVariants = cva('', {
 export type StatsImageProps = VariantProps<typeof statsImageVariants> & {
   value: string | ReactNode;
   description: string | ReactNode;
+  sourceLink?: string;
   image?: keyof typeof IMAGES;
 };
 
 const StatsImage: React.FC<StatsImageProps> = ({
   value,
   description,
+  sourceLink,
   color,
   valueSize,
   image = 'stats3',
@@ -47,7 +49,14 @@ const StatsImage: React.FC<StatsImageProps> = ({
     <div className="flex w-full flex-col items-center justify-end gap-5 pt-5 text-center font-mono md:w-[32%]">
       <div className="flex flex-col md:max-w-[240px]">
         <span className={cn('font-bold', statsImageVariants({ color, valueSize }))}>{value}</span>
-        <span className="mt-5 text-xs">{description}</span>
+        <span className="mt-5 text-xs">
+          {description}
+          {sourceLink && (
+            <a href={sourceLink} className="pl-1 underline" target="_blank">
+              Source
+            </a>
+          )}
+        </span>
       </div>
     </div>
     <div className="hidden justify-end md:flex md:w-[68%]">

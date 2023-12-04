@@ -122,6 +122,7 @@ const Home: React.FC = () => {
               </>
             }
             description="Species threatened with extinction."
+            sourceLink="https://www.iucnredlist.org/"
             image="stats1"
             valueSize="small"
           />
@@ -149,18 +150,8 @@ const Home: React.FC = () => {
 
           <StatsImage
             value="93%"
-            description={
-              <>
-                Of the Earth’s CO2 are estimated to be stored and cycled by marine ecosystems.{' '}
-                <a
-                  className="inline underline"
-                  href="https://www.eea.europa.eu/publications/carbon-stocks-and-sequestration-rates"
-                  target="_blank"
-                >
-                  Source
-                </a>
-              </>
-            }
+            description="Of the Earth’s CO2 are estimated to be stored and cycled by marine ecosystems."
+            sourceLink="https://www.eea.europa.eu/publications/carbon-stocks-and-sequestration-rates"
             image="stats2"
           />
 
@@ -187,19 +178,8 @@ const Home: React.FC = () => {
 
           <StatsImage
             value="100M"
-            description={
-              <>
-                Of healthy and productive land were degraded between 2015 and 2019, impacting the
-                lives of 1.3 billion people.{' '}
-                <a
-                  className="inline underline"
-                  href="https://www.un.org/sustainabledevelopment/biodiversity/"
-                  target="_blank"
-                >
-                  Source
-                </a>
-              </>
-            }
+            description="lives of 1.3 billion people."
+            sourceLink="https://www.un.org/sustainabledevelopment/biodiversity/"
             image="stats3"
           />
         </Section>
