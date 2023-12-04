@@ -25,7 +25,7 @@ const TooltipButton: React.FC<TooltipButtonProps> = ({ column, tooltips }) => {
   return (
     <Popover open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
       <PopoverTrigger asChild>
-        <Button className="mt-1 h-auto w-auto pl-2" size="icon" variant="ghost">
+        <Button className="h-auto w-auto pl-2" size="icon" variant="ghost">
           <span className="sr-only">Info</span>
           <Info className="h-4 w-4" aria-hidden="true" />
         </Button>
