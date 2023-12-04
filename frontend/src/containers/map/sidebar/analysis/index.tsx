@@ -14,7 +14,9 @@ const SidebarAnalysis: React.FC = () => {
   return (
     <div className="h-full w-full overflow-y-scroll border-x border-black pb-12">
       <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
-        <h1 className="text-5xl font-black">Marine Conservation Modelling</h1>
+        <h1 className="text-5xl font-black">
+          {showIntro ? 'Marine Conservation Modelling' : 'Custom Area'}
+        </h1>
         <div className="my-2">
           <AnalysisButtons />
         </div>
