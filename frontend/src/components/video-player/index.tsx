@@ -6,14 +6,39 @@ import VideoPlay from '@/styles/icons/video-play.svg?sprite';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import Icon from '../ui/icon';
 
-type VideoPlayerProps = {
-  className?: string;
+type VideoProps = {
   source: string;
-  stillImage: string;
   type: string;
+  controls?: boolean;
 };
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ className, source, type, stillImage }) => {
+const Video: React.FC<VideoProps> = ({ source, type, controls = false }) => (
+  <video className="h-auto w-auto" controls={controls} autoPlay loop={true}>
+    <source src={source} type={type} />
+  </video>
+);
+
+type VideoPlayerProps = VideoProps & {
+  className?: string;
+  stillImage: string;
+  openInModal?: boolean;
+};
+
+const VideoPlayer: React.FC<VideoPlayerProps> = ({
+  className,
+  source,
+  type,
+  stillImage,
+  openInModal = false,
+}) => {
+  if (!openInModal) {
+    return (
+      <div className={cn(className)}>
+        <Video source={source} type={type} controls={openInModal} />
+      </div>
+    );
+  }
+
   return (
     <div className={cn(className)}>
       <Dialog>
@@ -37,9 +62,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ className, source, type, stil
           </span>
         </DialogTrigger>
         <DialogContent className="h-auto max-h-[90vh] w-auto max-w-[90vw]">
-          <video className="h-auto w-auto" controls autoPlay loop={true}>
-            <source src={source} type={type} />
-          </video>
+          <Video source={source} type={type} controls={openInModal} />
         </DialogContent>
       </Dialog>
     </div>
