@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { VariantProps, cva } from 'class-variance-authority';
 import { useAtom } from 'jotai';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
@@ -18,7 +19,22 @@ import DetailsButton from './details-button';
 import LocationSelector from './location-selector';
 import Widgets from './widgets';
 
-const MapSidebar: React.FC = () => {
+const mapSidebarVariants = cva('', {
+  variants: {
+    layout: {
+      desktop:
+        'absolute data-[state=closed]:animate-out-absolute data-[state=open]:animate-in-absolute data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
+      mobile: 'relative',
+    },
+  },
+  defaultVariants: {
+    layout: 'desktop',
+  },
+});
+
+type MapSideBarProps = VariantProps<typeof mapSidebarVariants>;
+
+const MapSidebar: React.FC<MapSideBarProps> = ({ layout }) => {
   const {
     query: { locationCode },
   } = useRouter();
@@ -78,7 +94,12 @@ const MapSidebar: React.FC = () => {
           <span className="sr-only">Toggle sidebar</span>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="relative top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-out-absolute data-[state=open]:animate-in-absolute data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left md:w-[430px]">
+      <CollapsibleContent
+        className={cn(
+          'top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none md:w-[430px]',
+          mapSidebarVariants({ layout })
+        )}
+      >
         <div className="h-full w-full overflow-y-scroll border-x border-black pb-12">
           <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
             <h1 className="text-5xl font-black">{location?.name}</h1>
