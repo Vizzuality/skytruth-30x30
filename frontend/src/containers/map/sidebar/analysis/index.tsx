@@ -10,6 +10,7 @@ const SidebarAnalysis: React.FC = () => {
   const { status: analysisStatus } = useAtomValue(analysisAtom);
 
   const showIntro = analysisStatus === 'idle';
+  const showButtons = ['success', 'error'].includes(analysisStatus);
 
   return (
     <div className="h-full w-full overflow-y-scroll border-x border-black pb-12">
@@ -17,9 +18,7 @@ const SidebarAnalysis: React.FC = () => {
         <h1 className="text-5xl font-black">
           {showIntro ? 'Marine Conservation Modelling' : 'Custom Area'}
         </h1>
-        <div className="my-2">
-          <AnalysisButtons />
-        </div>
+        <div className="my-2">{showButtons && <AnalysisButtons />}</div>
       </div>
       {showIntro && <AnalysisIntro />}
       {!showIntro && <AnalysisWidget />}
