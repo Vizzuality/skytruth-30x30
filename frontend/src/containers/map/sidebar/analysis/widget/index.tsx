@@ -9,6 +9,8 @@ import { analysisAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 
+import useTooltips from '../useTooltips';
+
 const DEFAULT_ENTRY_CLASSNAMES = 'border-t border-black py-6';
 
 const DEFAULT_CHART_DATA = {
@@ -42,6 +44,9 @@ const AnalysisWidget: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { status: analysisStatus, data: analysisData = any } = useAtomValue(analysisAtom);
+
+  // Tooltips with mapping
+  const tooltips = useTooltips();
 
   // Get all locations in order to get country names for analysis data
   const { data: locationsData } = useGetLocations(
@@ -113,19 +118,28 @@ const AnalysisWidget: React.FC = () => {
     >
       <div className="flex flex-col">
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES, 'flex justify-between border-t-0')}>
-          <WidgetSectionWidgetTitle title="Administrative boundary" tooltip="Lorem ipsum" />
+          <WidgetSectionWidgetTitle
+            title="Administrative boundary"
+            tooltip={tooltips?.['administrativeBoundary']}
+          />
           <span className="font-mono text-xs font-bold underline">
             {administrativeBoundaries?.[0]} +{administrativeBoundaries?.length - 1}
           </span>
         </div>
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>
-          <WidgetSectionWidgetTitle title="Contribution details" tooltip="Lorem ipsum" />
+          <WidgetSectionWidgetTitle
+            title="Contribution details"
+            tooltip={tooltips?.['contributionDetails']}
+          />
           {contributionDetailsData?.map((entry) => (
             <HorizontalBarChart key={entry.title} data={entry} {...chartsProps} />
           ))}
         </div>
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>
-          <WidgetSectionWidgetTitle title="Global contribution" tooltip="Lorem ipsum" />
+          <WidgetSectionWidgetTitle
+            title="Global contribution"
+            tooltip={tooltips?.['globalContribution']}
+          />
           <HorizontalBarChart data={globalContributionData} {...chartsProps} />
         </div>
       </div>
