@@ -26,9 +26,11 @@ export const drawStateAtom = atomWithReset<{
 
 // ? analysis state
 export const analysisAtom = atomWithReset<{
+  active: boolean;
   status: 'idle' | 'running' | 'success' | 'error';
   data: unknown;
 }>({
+  active: false,
   status: 'idle',
   data: null,
 });

@@ -6,7 +6,7 @@ import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { drawStateAtom, sidebarAtom } from '@/containers/map/store';
+import { analysisAtom, sidebarAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 
 import { useSyncMapContentSettings } from '../sync-settings';
@@ -31,19 +31,19 @@ type MapSideBarProps = VariantProps<typeof mapSidebarVariants>;
 
 const MapSidebar: React.FC<MapSideBarProps> = ({ layout }) => {
   const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
-  const [{ active: isDrawingActive }, setDrawState] = useAtom(drawStateAtom);
+  const [{ active: isAnalysisActive }, setAnalysisActive] = useAtom(analysisAtom);
   const [{ showDetails }] = useSyncMapContentSettings();
 
-  const onClickDrawing = useCallback(() => {
-    setDrawState((prevState) => ({
+  const onClickAnalysis = useCallback(() => {
+    setAnalysisActive((prevState) => ({
       ...prevState,
       active: true,
     }));
-  }, [setDrawState]);
+  }, [setAnalysisActive]);
 
   const analysisFeatureActive = process.env.NEXT_PUBLIC_FEATURE_FLAG_ANALYSIS === 'true';
-  const showAnalysisButton = analysisFeatureActive && !isDrawingActive && !showDetails;
-  const showAnalysisSidebar = analysisFeatureActive && isDrawingActive;
+  const showAnalysisButton = analysisFeatureActive && !isAnalysisActive && !showDetails;
+  const showAnalysisSidebar = analysisFeatureActive && isAnalysisActive;
   const showDetailsSidebar = !showAnalysisSidebar;
 
   return (
@@ -64,7 +64,7 @@ const MapSidebar: React.FC<MapSideBarProps> = ({ layout }) => {
               'left-[430px] transition-[left] delay-500': isSidebarOpen,
             }
           )}
-          onClick={onClickDrawing}
+          onClick={onClickAnalysis}
         >
           <span>Marine Conservation Modelling</span>
           <LuChevronRight className="h-6 w-6 -translate-y-[1px]" />

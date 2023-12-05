@@ -7,22 +7,20 @@ import { Button } from '@/components/ui/button';
 import { analysisAtom, drawStateAtom } from '@/containers/map/store';
 
 const AnalysisButtons: React.FC = () => {
-  const setDrawState = useSetAtom(drawStateAtom);
+  const setAnalysis = useSetAtom(analysisAtom);
   const resetAnalysis = useResetAtom(analysisAtom);
   const resetDrawState = useResetAtom(drawStateAtom);
 
-  const resetAnalysisAndDrawing = useCallback(() => {
+  const onClickClearAnalysis = useCallback(() => {
     resetDrawState();
     resetAnalysis();
   }, [resetAnalysis, resetDrawState]);
 
-  const clearDrawFeature = useCallback(() => {
-    setDrawState(() => ({
-      active: true,
-      status: 'idle',
-      feature: null,
-    }));
-  }, [setDrawState]);
+  const onClickRedraw = useCallback(() => {
+    resetDrawState();
+    resetAnalysis();
+    setAnalysis((prevState) => ({ ...prevState, active: true }));
+  }, [resetAnalysis, resetDrawState, setAnalysis]);
 
   return (
     <div className="mt-4 flex gap-4 py-1 font-mono text-sm font-semibold uppercase underline">
@@ -31,7 +29,7 @@ const AnalysisButtons: React.FC = () => {
         className="m-0 p-0"
         variant="text-link"
         size="sm"
-        onClick={resetAnalysisAndDrawing}
+        onClick={onClickClearAnalysis}
       >
         Clear analysis
       </Button>
@@ -40,7 +38,7 @@ const AnalysisButtons: React.FC = () => {
         className="m-0 p-0"
         variant="text-link"
         size="sm"
-        onClick={clearDrawFeature}
+        onClick={onClickRedraw}
       >
         Re-draw
       </Button>
