@@ -8,7 +8,6 @@ import AnalysisWidget from './widget';
 
 const SidebarAnalysis: React.FC = () => {
   const { status: analysisStatus } = useAtomValue(analysisAtom);
-  // console.log(analysisStatus);
 
   const showIntro = analysisStatus === 'idle';
 
