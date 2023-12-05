@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 
 import { VariantProps, cva } from 'class-variance-authority';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { drawStateAtom, sidebarAtom, analysisAtom } from '@/containers/map/store';
+import { drawStateAtom, sidebarAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 
 import { useSyncMapContentSettings } from '../sync-settings';
@@ -32,7 +32,6 @@ type MapSideBarProps = VariantProps<typeof mapSidebarVariants>;
 const MapSidebar: React.FC<MapSideBarProps> = ({ layout }) => {
   const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
   const [{ active: isDrawingActive }, setDrawState] = useAtom(drawStateAtom);
-  const { status: analysisStatus } = useAtomValue(analysisAtom);
   const [{ showDetails }] = useSyncMapContentSettings();
 
   const onClickDrawing = useCallback(() => {
@@ -44,8 +43,7 @@ const MapSidebar: React.FC<MapSideBarProps> = ({ layout }) => {
 
   const analysisFeatureActive = process.env.NEXT_PUBLIC_FEATURE_FLAG_ANALYSIS === 'true';
   const showAnalysisButton = analysisFeatureActive && !isDrawingActive && !showDetails;
-  const showAnalysisSidebar =
-    analysisFeatureActive && (isDrawingActive || analysisStatus !== 'idle');
+  const showAnalysisSidebar = analysisFeatureActive && isDrawingActive;
   const showDetailsSidebar = !showAnalysisSidebar;
 
   return (

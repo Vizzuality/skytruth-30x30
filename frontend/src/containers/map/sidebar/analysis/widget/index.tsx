@@ -99,9 +99,7 @@ const AnalysisWidget: React.FC = () => {
     };
   }, [analysisData, locationsData]);
 
-  if (!contributionDetailsData) return null;
-
-  const administrativeBoundaries = contributionDetailsData.map(({ title }) => title);
+  const administrativeBoundaries = contributionDetailsData?.map(({ title }) => title);
 
   const loading = analysisStatus === 'running';
   const error = analysisStatus === 'error';
@@ -117,12 +115,12 @@ const AnalysisWidget: React.FC = () => {
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES, 'flex justify-between border-t-0')}>
           <WidgetSectionWidgetTitle title="Administrative boundary" tooltip="Lorem ipsum" />
           <span className="font-mono text-xs font-bold underline">
-            {administrativeBoundaries[0]} +{administrativeBoundaries.length - 1}
+            {administrativeBoundaries?.[0]} +{administrativeBoundaries?.length - 1}
           </span>
         </div>
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>
           <WidgetSectionWidgetTitle title="Contribution details" tooltip="Lorem ipsum" />
-          {contributionDetailsData.map((entry) => (
+          {contributionDetailsData?.map((entry) => (
             <HorizontalBarChart key={entry.title} data={entry} {...chartsProps} />
           ))}
         </div>

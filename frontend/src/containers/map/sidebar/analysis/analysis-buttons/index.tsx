@@ -9,10 +9,17 @@ import { analysisAtom, drawStateAtom } from '@/containers/map/store';
 const AnalysisButtons: React.FC = () => {
   const setDrawState = useSetAtom(drawStateAtom);
   const resetAnalysis = useResetAtom(analysisAtom);
+  const resetDrawState = useResetAtom(drawStateAtom);
 
-  const resetDrawing = useCallback(() => {
-    setDrawState((prevState) => ({
-      ...prevState,
+  const resetAnalysisAndDrawing = useCallback(() => {
+    resetDrawState();
+    resetAnalysis();
+  }, [resetAnalysis, resetDrawState]);
+
+  const clearDrawFeature = useCallback(() => {
+    setDrawState(() => ({
+      active: true,
+      status: 'idle',
       feature: null,
     }));
   }, [setDrawState]);
@@ -24,7 +31,7 @@ const AnalysisButtons: React.FC = () => {
         className="m-0 p-0"
         variant="text-link"
         size="sm"
-        onClick={resetAnalysis}
+        onClick={resetAnalysisAndDrawing}
       >
         Clear analysis
       </Button>
@@ -33,7 +40,7 @@ const AnalysisButtons: React.FC = () => {
         className="m-0 p-0"
         variant="text-link"
         size="sm"
-        onClick={resetDrawing}
+        onClick={clearDrawFeature}
       >
         Re-draw
       </Button>
