@@ -33,7 +33,7 @@ const statsImageVariants = cva('', {
 export type StatsImageProps = VariantProps<typeof statsImageVariants> & {
   value: string | ReactNode;
   description: string | ReactNode;
-  sourceLink?: string;
+  sourceLink?: HTMLAnchorElement['href'];
   image?: keyof typeof IMAGES;
 };
 
@@ -52,7 +52,12 @@ const StatsImage: React.FC<StatsImageProps> = ({
         <span className="mt-5 text-xs">
           {description}
           {sourceLink && (
-            <a href={sourceLink} className="pl-1 underline" target="_blank" rel="noopener noreferrer">
+            <a
+              href={sourceLink}
+              className="pl-1 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Source
             </a>
           )}
