@@ -52,7 +52,7 @@ const StatsImage: React.FC<StatsImageProps> = ({
         <span className="mt-5 text-xs">
           {description}
           {sourceLink && (
-            <a href={sourceLink} className="pl-1 underline" target="_blank">
+            <a href={sourceLink} className="pl-1 underline" target="_blank" rel="noopener noreferrer">
               Source
             </a>
           )}
