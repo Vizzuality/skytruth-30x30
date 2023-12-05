@@ -183,19 +183,8 @@ const About: React.FC = () => {
 
           <StatsImage
             value="17%"
-            description={
-              <span className="block px-2">
-                Of terrestrial and inland waters are protected by 276,847 Protected Areas and 675
-                OECMs.{' '}
-                <a
-                  className="inline underline"
-                  href="https://www.protectedplanet.net/en"
-                  target="_blank"
-                >
-                  Source
-                </a>
-              </span>
-            }
+            description="Of terrestrial and inland waters are protected by 276,847 Protected Areas and 675 OECMs."
+            sourceLink="https://www.protectedplanet.net/en"
             image="stats4"
             color="purple"
           />
