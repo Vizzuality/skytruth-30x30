@@ -40,11 +40,11 @@ export default function Page({ location }: { location: Location }) {
   return (
     <Layout title={location.name}>
       <div className="hidden md:block">
-        <Sidebar layout="desktop" />
+        <Sidebar />
       </div>
       <Content />
       <div className="h-1/2 flex-shrink-0 overflow-hidden bg-white md:hidden">
-        <Sidebar layout="mobile" />
+        <Sidebar />
       </div>
     </Layout>
   );
