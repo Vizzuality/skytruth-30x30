@@ -23,14 +23,19 @@ def index(request):
     return get_locations_stats(db)
 
 def get_locations_stats(db: sqlalchemy.engine.base.Engine) -> dict:
-    with db.connect() as conn:
-        stmt = sqlalchemy.text(
-            "SELECT COUNT(*) FROM locations WHERE type=:type"
-        )
-        regions_count = conn.execute(stmt, parameters={"type": "region"}).scalar()
-        countries_count = conn.execute(stmt, parameters={"type": "country"}).scalar()
+    # just an example of a query
+    # with db.connect() as conn:
+    #     stmt = sqlalchemy.text(
+    #         "SELECT COUNT(*) FROM locations WHERE type=:type"
+    #     )
+    #     regions_count = conn.execute(stmt, parameters={"type": "region"}).scalar()
+    #     countries_count = conn.execute(stmt, parameters={"type": "country"}).scalar()
 
+    # mock response
     return {
-        "regions_count": regions_count,
-        "countries_count": countries_count
+        "locations_area": [
+            {"code": "FRA", "protected_area": 2385406},
+            {"code": "USA", "protected_area": 5000367}
+        ],
+        "total_area": 73600000,
     }
