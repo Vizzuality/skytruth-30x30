@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { useQueryClient } from '@tanstack/react-query';
-
-import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
+import { useGetLocations } from '@/types/generated/location';
 
 import EstablishmentStagesWidget from './establishment-stages';
 import HabitatWidget from './habitat';
@@ -14,19 +12,26 @@ const MapWidgets: React.FC = () => {
     query: { locationCode },
   } = useRouter();
 
-  const queryClient = useQueryClient();
-
-  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
-    'locations',
-    locationCode,
-  ]);
+  const locationsQuery = useGetLocations(
+    {
+      filters: {
+        code: locationCode,
+      },
+    },
+    {
+      query: {
+        queryKey: ['locations', locationCode],
+        select: ({ data }) => data?.[0]?.attributes,
+      },
+    }
+  );
 
   return (
     <div className="flex flex-col divide-y-[1px] divide-black font-mono">
-      <MarineConservationWidget location={location} />
-      <ProtectionTypesWidget location={location} />
-      <EstablishmentStagesWidget location={location} />
-      <HabitatWidget location={location} />
+      <MarineConservationWidget location={locationsQuery.data} />
+      <ProtectionTypesWidget location={locationsQuery.data} />
+      <EstablishmentStagesWidget location={locationsQuery.data} />
+      <HabitatWidget location={locationsQuery.data} />
     </div>
   );
 };
