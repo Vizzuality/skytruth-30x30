@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 
-import { VariantProps, cva } from 'class-variance-authority';
 import { useAtom } from 'jotai';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
@@ -14,22 +13,7 @@ import { useSyncMapContentSettings } from '../sync-settings';
 import Analysis from './analysis';
 import Details from './details';
 
-const mapSidebarVariants = cva('', {
-  variants: {
-    layout: {
-      desktop:
-        'absolute data-[state=closed]:animate-out-absolute data-[state=open]:animate-in-absolute data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
-      mobile: 'relative',
-    },
-  },
-  defaultVariants: {
-    layout: 'desktop',
-  },
-});
-
-type MapSideBarProps = VariantProps<typeof mapSidebarVariants>;
-
-const MapSidebar: React.FC<MapSideBarProps> = ({ layout }) => {
+const MapSidebar: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
   const [{ active: isAnalysisActive }, setAnalysisActive] = useAtom(analysisAtom);
   const [{ showDetails }] = useSyncMapContentSettings();
@@ -84,12 +68,7 @@ const MapSidebar: React.FC<MapSideBarProps> = ({ layout }) => {
           <span className="sr-only">Toggle sidebar</span>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent
-        className={cn(
-          'top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none md:w-[430px]',
-          mapSidebarVariants({ layout })
-        )}
-      >
+      <CollapsibleContent className="relative top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none md:w-[430px]">
         {showAnalysisSidebar && <Analysis />}
         {showDetailsSidebar && <Details />}
       </CollapsibleContent>
