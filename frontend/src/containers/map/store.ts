@@ -5,6 +5,7 @@ import { atom } from 'jotai';
 import { atomWithReset } from 'jotai/utils';
 
 import { CustomMapProps } from '@/components/map/types';
+import type { AnalysisData } from '@/types/analysis';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 
 export const sidebarAtom = atom(true);
@@ -28,7 +29,7 @@ export const drawStateAtom = atomWithReset<{
 export const analysisAtom = atomWithReset<{
   active: boolean;
   status: 'idle' | 'running' | 'success' | 'error';
-  data: unknown;
+  data: AnalysisData;
 }>({
   active: false,
   status: 'idle',

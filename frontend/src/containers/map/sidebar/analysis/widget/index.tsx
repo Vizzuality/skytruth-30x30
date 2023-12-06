@@ -43,7 +43,7 @@ const AnalysisWidget: React.FC = () => {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { status: analysisStatus, data: analysisData = any } = useAtomValue(analysisAtom);
+  const { status: analysisStatus, data: analysisData } = useAtomValue(analysisAtom);
 
   // Tooltips with mapping
   const tooltips = useTooltips();
