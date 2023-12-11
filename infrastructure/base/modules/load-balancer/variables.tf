@@ -43,3 +43,19 @@ variable "backend_path_prefix" {
   type        = string
   description = "Path prefix for the backend service"
 }
+
+variable "analysis_function_name" {
+  type        = string
+  description = "Name of the analysis Cloud Function"
+}
+
+variable "functions_path_prefix" {
+  type        = string
+  description = "Path prefix for the functions services"
+}
+
+variable "analysis_function_path_prefix" {
+  type        = string
+  description = "Path prefix for the analysis function"
+}
+

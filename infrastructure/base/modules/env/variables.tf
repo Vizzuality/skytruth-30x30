@@ -106,3 +106,13 @@ variable "backend_path_prefix" {
   type        = string
   description = "Path prefix for the backend service"
 }
+
+variable "functions_path_prefix" {
+  type        = string
+  description = "Path prefix for the functions services"
+}
+
+variable "analysis_function_path_prefix" {
+  type        = string
+  description = "Path prefix for the analysis function"
+}
