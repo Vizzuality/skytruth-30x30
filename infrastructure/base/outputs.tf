@@ -14,6 +14,16 @@ output "dns_name_servers" {
   value = module.dns.dns_name_servers
 }
 
+output "staging_client_env" {
+  value     = module.staging.client_env
+  sensitive = true
+}
+
+output "staging_cms_env" {
+  value     = module.staging.cms_env
+  sensitive = true
+}
+
 # output "production_site_url" {
 #   value = module.production.site_url
 # }

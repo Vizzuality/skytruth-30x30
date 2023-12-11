@@ -85,6 +85,16 @@ resource "google_compute_url_map" "load-balancer-url-map" {
         }
       }
     }
+
+    path_rule {
+      paths   = ["/${var.functions_path_prefix}/${var.analysis_function_path_prefix}/*"]
+      service = google_compute_backend_service.analysis_service.id
+      route_action {
+        url_rewrite {
+          path_prefix_rewrite = "/"
+        }
+      }
+    }
   }
 }
 
@@ -108,6 +118,15 @@ resource "google_compute_region_network_endpoint_group" "cloudrun_frontend_neg" 
   }
 }
 
+resource "google_compute_region_network_endpoint_group" "function_analysis_neg" {
+  name                  = "${var.name}-analysis-neg"
+  network_endpoint_type = "SERVERLESS"
+  region                = var.region
+  cloud_function {
+    function = var.analysis_function_name
+  }
+}
+
 resource "google_compute_backend_service" "backend_service" {
   name        = "${var.name}-backend-service"
   description = "${var.name} backend service"
@@ -115,7 +134,6 @@ resource "google_compute_backend_service" "backend_service" {
   backend {
     group = google_compute_region_network_endpoint_group.cloudrun_backend_neg.id
   }
-
 }
 
 resource "google_compute_backend_service" "frontend_service" {
@@ -125,7 +143,15 @@ resource "google_compute_backend_service" "frontend_service" {
   backend {
     group = google_compute_region_network_endpoint_group.cloudrun_frontend_neg.id
   }
+}
 
+resource "google_compute_backend_service" "analysis_service" {
+  name        = "${var.name}-analysis-service"
+  description = "${var.name} analysis service"
+
+  backend {
+    group = google_compute_region_network_endpoint_group.function_analysis_neg.id
+  }
 }
 
 # DNS record
