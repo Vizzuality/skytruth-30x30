@@ -6,10 +6,10 @@ import type { Feature } from 'geojson';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import { analysisAtom, drawStateAtom } from '@/containers/map/store';
+import { AnalysisData } from '@/types/analysis';
 
 const fetchAnalysis = async (feature: Feature) => {
-  const analysisEndpoint = process.env.NEXT_PUBLIC_ANALYSIS_CF_URL;
-  return axios.post(analysisEndpoint, feature);
+  return axios.post<AnalysisData>(process.env.NEXT_PUBLIC_ANALYSIS_CF_URL, feature);
 };
 
 const Analysis = () => {
@@ -21,13 +21,14 @@ const Analysis = () => {
     () => fetchAnalysis(feature),
     {
       enabled: Boolean(feature),
+      select: ({ data }) => data,
     }
   );
 
   useEffect(() => {
     setAnalysisState((prevState) => ({
       ...prevState,
-      ...(isSuccess && { status: 'success', data: data?.data }),
+      ...(isSuccess && { status: 'success', data }),
       ...(isFetching && { status: 'running' }),
       ...(isError && { status: 'error' }),
     }));

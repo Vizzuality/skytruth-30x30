@@ -37,12 +37,9 @@ const WidgetSectionWidgetTitle: React.FC<WidgetSectionWidgetTitleProps> = ({ tit
   );
 };
 
-// TODO: Revise calculations for analysis
 const AnalysisWidget: React.FC = () => {
   const chartsProps = DEFAULT_CHART_PROPS;
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   const { status: analysisStatus, data: analysisData } = useAtomValue(analysisAtom);
 
   // Tooltips with mapping
