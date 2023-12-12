@@ -1,44 +1,34 @@
 import { useCallback } from 'react';
 
-import { useRouter } from 'next/router';
-
-import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { sidebarAtom, drawStateAtom } from '@/containers/map/store';
+import { analysisAtom, sidebarAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
-import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 import { useSyncMapContentSettings } from '../sync-settings';
 
-import DetailsButton from './details-button';
-import LocationSelector from './location-selector';
-import Widgets from './widgets';
+import Analysis from './analysis';
+import Details from './details';
 
 const MapSidebar: React.FC = () => {
-  const {
-    query: { locationCode },
-  } = useRouter();
-  const queryClient = useQueryClient();
+  const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
+  const [{ active: isAnalysisActive }, setAnalysisActive] = useAtom(analysisAtom);
   const [{ showDetails }] = useSyncMapContentSettings();
 
-  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
-    'locations',
-    locationCode,
-  ]);
-
-  const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
-  const [{ active: isDrawingActive }, setDrawState] = useAtom(drawStateAtom);
-
-  const onClickDrawing = useCallback(() => {
-    setDrawState((prevState) => ({
+  const onClickAnalysis = useCallback(() => {
+    setAnalysisActive((prevState) => ({
       ...prevState,
       active: true,
     }));
-  }, [setDrawState]);
+  }, [setAnalysisActive]);
+
+  const analysisFeatureActive = process.env.NEXT_PUBLIC_FEATURE_FLAG_ANALYSIS === 'true';
+  const showAnalysisButton = analysisFeatureActive && !isAnalysisActive && !showDetails;
+  const showAnalysisSidebar = analysisFeatureActive && isAnalysisActive;
+  const showDetailsSidebar = !showAnalysisSidebar;
 
   return (
     <Collapsible
@@ -46,7 +36,7 @@ const MapSidebar: React.FC = () => {
       open={isSidebarOpen}
       onOpenChange={setSidebarOpen}
     >
-      {process.env.NEXT_PUBLIC_FEATURE_FLAG_ANALYSIS === 'true' && !isDrawingActive && (
+      {showAnalysisButton && (
         <Button
           type="button"
           variant="white"
@@ -58,7 +48,7 @@ const MapSidebar: React.FC = () => {
               'left-[430px] transition-[left] delay-500': isSidebarOpen,
             }
           )}
-          onClick={onClickDrawing}
+          onClick={onClickAnalysis}
         >
           <span>Marine Conservation Modelling</span>
           <LuChevronRight className="h-6 w-6 -translate-y-[1px]" />
@@ -78,21 +68,9 @@ const MapSidebar: React.FC = () => {
           <span className="sr-only">Toggle sidebar</span>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="relative z-20 h-full flex-shrink-0 bg-white fill-mode-none md:w-[430px]">
-        <div className="h-full w-full overflow-y-scroll border-x border-black pb-12">
-          <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
-            <h1 className="text-5xl font-black">{location?.name}</h1>
-            <LocationSelector className="my-2" />
-          </div>
-          <Widgets />
-        </div>
-        <div
-          className={cn('absolute bottom-0 left-px', {
-            'right-px': !showDetails,
-          })}
-        >
-          <DetailsButton />
-        </div>
+      <CollapsibleContent className="relative top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none md:w-[430px]">
+        {showAnalysisSidebar && <Analysis />}
+        {showDetailsSidebar && <Details />}
       </CollapsibleContent>
     </Collapsible>
   );

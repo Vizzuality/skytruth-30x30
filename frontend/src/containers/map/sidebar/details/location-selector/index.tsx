@@ -20,7 +20,7 @@ import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
-import { useMapSearchParams } from '../../content/map/sync-settings';
+import { useMapSearchParams } from '../../../content/map/sync-settings';
 
 type LocationSelectorProps = {
   className: HTMLDivElement['className'];

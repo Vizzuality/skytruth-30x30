@@ -1,26 +1,15 @@
 import { useEffect } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
-// import axios from 'axios';
-// import { Feature } from 'geojson';
+import axios from 'axios';
+import type { Feature } from 'geojson';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import { analysisAtom, drawStateAtom } from '@/containers/map/store';
+import { AnalysisData } from '@/types/analysis';
 
-const fetchAnalysis = async () => {
-  // todo: prepare feature for analysis
-  // return axios.post('https://analysis.skytruth.org', feature);
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          locations_area: [{ FRA: 23856, USA: 502367 }],
-          total_area: 736000,
-        },
-      });
-    }, 2500);
-  });
+const fetchAnalysis = async (feature: Feature) => {
+  return axios.post<AnalysisData>(process.env.NEXT_PUBLIC_ANALYSIS_CF_URL, feature);
 };
 
 const Analysis = () => {
@@ -29,9 +18,10 @@ const Analysis = () => {
 
   const { isFetching, isSuccess, data, isError } = useQuery(
     ['analysis', feature],
-    () => fetchAnalysis(),
+    () => fetchAnalysis(feature),
     {
       enabled: Boolean(feature),
+      select: ({ data }) => data,
     }
   );
 
