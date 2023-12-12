@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback, useMemo, useRef } from 'react';
+import { ComponentProps, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -40,6 +40,7 @@ const MainMap: React.FC = () => {
   const { locationCode } = useParams();
   const locationBbox = useAtomValue(bboxLocation);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
+  const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
 
   const locationsQuery = useGetLocations(
     {
@@ -106,6 +107,10 @@ const MainMap: React.FC = () => {
   const handleMouseMove = useCallback(
     (e: Parameters<ComponentProps<typeof Map>['onMouseOver']>[0]) => {
       if (e.features.length > 0) {
+        if (!drawState.active) {
+          setCursor('pointer');
+        }
+
         if (hoveredPolygonId.current !== null) {
           map.setFeatureState(
             {
@@ -126,9 +131,13 @@ const MainMap: React.FC = () => {
         );
 
         hoveredPolygonId.current = e.features[0];
+      } else {
+        if (!drawState.active) {
+          setCursor('grab');
+        }
       }
     },
-    [map, hoveredPolygonId]
+    [map, hoveredPolygonId, drawState.active]
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -186,6 +195,10 @@ const MainMap: React.FC = () => {
     };
   }, [locationBbox, isSidebarOpen]);
 
+  useEffect(() => {
+    setCursor(drawState.active ? 'crosshair' : 'grab');
+  }, [drawState.active]);
+
   return (
     <div className="absolute left-0 h-full w-full border-r border-b border-black">
       <Map
@@ -198,6 +211,7 @@ const MainMap: React.FC = () => {
         onMouseLeave={handleMouseLeave}
         renderWorldCopies={false}
         attributionControl={false}
+        cursor={cursor}
       >
         <>
           <Popup />
@@ -205,7 +219,7 @@ const MainMap: React.FC = () => {
           <LayersToolbox />
           <ZoomControls />
           <DrawControls />
-          <LayerManager />
+          <LayerManager cursor={cursor} />
           <Analysis />
           <Attributions />
         </>

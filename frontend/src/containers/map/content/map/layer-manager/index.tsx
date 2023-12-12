@@ -1,18 +1,19 @@
 import { Layer } from 'react-map-gl';
 
 import { DeckMapboxOverlayProvider } from '@/components/map/provider';
+import { CustomMapProps } from '@/components/map/types';
 import LayerManagerItem from '@/containers/map/content/map/layer-manager/item';
 import {
   useSyncMapLayerSettings,
   useSyncMapLayers,
 } from '@/containers/map/content/map/sync-settings';
 
-const LayerManager = () => {
+const LayerManager = ({ cursor }: { cursor: CustomMapProps['cursor'] }) => {
   const [activeLayers] = useSyncMapLayers();
   const [layersSettings] = useSyncMapLayerSettings();
 
   return (
-    <DeckMapboxOverlayProvider>
+    <DeckMapboxOverlayProvider cursor={cursor}>
       <>
         {/*
           Generate all transparent backgrounds to be able to sort by layers without an error

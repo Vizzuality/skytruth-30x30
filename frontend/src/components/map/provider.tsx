@@ -4,6 +4,8 @@ import { useControl } from 'react-map-gl';
 
 import { MapboxOverlay, MapboxOverlayProps } from '@deck.gl/mapbox/typed';
 
+import { CustomMapProps } from '@/components/map/types';
+
 interface DeckMapboxOverlayContext {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   addLayer: (layer: any) => void;
@@ -30,12 +32,16 @@ function useMapboxOverlay(
   return overlay;
 }
 
-export const DeckMapboxOverlayProvider = ({ children }: PropsWithChildren) => {
+export const DeckMapboxOverlayProvider = ({
+  children,
+  cursor = 'auto',
+}: PropsWithChildren<{ cursor?: CustomMapProps['cursor'] }>) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const layersRef = useRef<any[]>([]);
 
   const OVERLAY = useMapboxOverlay({
     interleaved: true,
+    getCursor: () => cursor,
   });
 
   const addLayer = useCallback(
