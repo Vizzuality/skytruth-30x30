@@ -55,7 +55,6 @@ const AnalysisWidget: React.FC = () => {
       query: {
         placeholderData: { data: [] },
         select: ({ data }) => data,
-        staleTime: Infinity,
       },
     }
   );

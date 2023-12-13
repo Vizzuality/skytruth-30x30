@@ -2,28 +2,30 @@ import { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useQueryClient } from '@tanstack/react-query';
-
 import { applyFilters } from '@/containers/map/content/details/helpers';
 import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/global-regional/useColumns';
 import { useGetLocations } from '@/types/generated/location';
-import type {
-  LocationGroupsDataItemAttributes,
-  LocationListResponseDataItem,
-} from '@/types/generated/strapi.schemas';
+import type { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 const GlobalRegionalTable: React.FC = () => {
   const {
     query: { locationCode },
   } = useRouter();
 
-  const queryClient = useQueryClient();
-
-  const mapLocation = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
-    'locations',
-    locationCode,
-  ]);
+  const locationsQuery = useGetLocations(
+    {
+      filters: {
+        code: locationCode,
+      },
+    },
+    {
+      query: {
+        queryKey: ['locations', locationCode],
+        select: ({ data }) => data?.[0]?.attributes,
+      },
+    }
+  );
 
   const [filters, setFilters] = useState({
     // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
@@ -40,11 +42,11 @@ const GlobalRegionalTable: React.FC = () => {
   const { data: locationsData }: { data: LocationListResponseDataItem[] } = useGetLocations(
     {
       filters:
-        mapLocation?.type === 'region'
+        locationsQuery.data?.type === 'region'
           ? {
               groups: {
                 code: {
-                  $eq: mapLocation?.code,
+                  $eq: locationsQuery.data?.code,
                 },
               },
             }
@@ -154,7 +156,8 @@ const GlobalRegionalTable: React.FC = () => {
       const lfpHighProtectedPercentage = (lfpHighProtectedArea * 100) / location.totalMarineArea;
 
       // Global contributions calculations
-      const globalContributionPercentage = (protectedArea * 100) / mapLocation.totalMarineArea;
+      const globalContributionPercentage =
+        (protectedArea * 100) / locationsQuery.data?.totalMarineArea;
 
       return {
         location: location.name,
@@ -169,7 +172,7 @@ const GlobalRegionalTable: React.FC = () => {
         globalContribution: globalContributionPercentage,
       };
     });
-  }, [mapLocation, locationsData]);
+  }, [locationsQuery.data, locationsData]);
 
   const tableData = useMemo(() => {
     return applyFilters(parsedData, filters);

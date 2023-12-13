@@ -1,10 +1,8 @@
 import { useRouter } from 'next/router';
 
-import { useQueryClient } from '@tanstack/react-query';
-
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
-import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
+import { useGetLocations } from '@/types/generated/location';
 
 import DetailsButton from './details-button';
 import LocationSelector from './location-selector';
@@ -14,19 +12,27 @@ const SidebarDetails: React.FC = () => {
   const {
     query: { locationCode },
   } = useRouter();
-  const queryClient = useQueryClient();
   const [{ showDetails }] = useSyncMapContentSettings();
 
-  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
-    'locations',
-    locationCode,
-  ]);
+  const locationsQuery = useGetLocations(
+    {
+      filters: {
+        code: locationCode,
+      },
+    },
+    {
+      query: {
+        queryKey: ['locations', locationCode],
+        select: ({ data }) => data?.[0]?.attributes,
+      },
+    }
+  );
 
   return (
     <>
       <div className="h-full w-full overflow-y-scroll border-x border-black pb-12">
         <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
-          <h1 className="text-5xl font-black">{location?.name}</h1>
+          <h1 className="text-5xl font-black">{locationsQuery.data?.name}</h1>
           <LocationSelector className="my-2" />
         </div>
         <DetailsWidgets />
