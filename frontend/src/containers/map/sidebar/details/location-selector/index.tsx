@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 import { Check } from 'lucide-react';
 
@@ -34,12 +33,20 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
   // @ts-expect-error to work properly, strict mode should be enabled
   const setLocationBBox = useSetAtom(bboxLocation);
 
-  const queryClient = useQueryClient();
+  const locationsQuery = useGetLocations(
+    {
+      filters: {
+        code: locationCode,
+      },
+    },
+    {
+      query: {
+        queryKey: ['locations', locationCode],
+        select: ({ data }) => data?.[0]?.attributes,
+      },
+    }
+  );
 
-  const location = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
-    'locations',
-    locationCode,
-  ]);
   const searchParams = useMapSearchParams();
 
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
@@ -52,7 +59,6 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
       query: {
         placeholderData: { data: [] },
         select: ({ data }) => data,
-        staleTime: Infinity,
       },
     }
   );
@@ -98,7 +104,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
                         <Check
                           className={cn(
                             'relative top-1 mr-2 inline-block h-4 w-4 flex-shrink-0',
-                            location?.code === code ? 'opacity-100' : 'opacity-0'
+                            locationsQuery.data?.code === code ? 'opacity-100' : 'opacity-0'
                           )}
                         />
                         {name}

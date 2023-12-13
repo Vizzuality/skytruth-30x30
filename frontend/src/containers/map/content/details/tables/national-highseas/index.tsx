@@ -2,28 +2,31 @@ import { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useQueryClient } from '@tanstack/react-query';
-
 import { applyFilters } from '@/containers/map/content/details/helpers';
 import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/national-highseas/useColumns';
+import { useGetLocations } from '@/types/generated/location';
 import { useGetMpaProtectionCoverageStats } from '@/types/generated/mpa-protection-coverage-stat';
-import {
-  LocationGroupsDataItemAttributes,
-  MpaProtectionCoverageStatListResponseDataItem,
-} from '@/types/generated/strapi.schemas';
+import { MpaProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 const NationalHighseasTable: React.FC = () => {
   const {
     query: { locationCode },
   } = useRouter();
 
-  const queryClient = useQueryClient();
-
-  const mapLocation = queryClient.getQueryData<LocationGroupsDataItemAttributes>([
-    'locations',
-    locationCode,
-  ]);
+  const locationsQuery = useGetLocations(
+    {
+      filters: {
+        code: locationCode,
+      },
+    },
+    {
+      query: {
+        queryKey: ['locations', locationCode],
+        select: ({ data }) => data?.[0]?.attributes,
+      },
+    }
+  );
 
   const [filters, setFilters] = useState({
     // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
@@ -50,7 +53,7 @@ const NationalHighseasTable: React.FC = () => {
         filters: {
           location: {
             code: {
-              $eq: mapLocation?.code,
+              $eq: locationsQuery.data?.code,
             },
           },
         },
@@ -100,7 +103,7 @@ const NationalHighseasTable: React.FC = () => {
       const fishingProtectionLevel = coverageStats?.fishing_protection_level?.data?.attributes;
 
       // Calculate coverage percentage
-      const coveragePercentage = (coverageStats.area / mapLocation.totalMarineArea) * 100;
+      const coveragePercentage = (coverageStats.area / locationsQuery.data?.totalMarineArea) * 100;
 
       return {
         protectedArea: mpa?.name,
@@ -112,7 +115,7 @@ const NationalHighseasTable: React.FC = () => {
         area: mpa?.area,
       };
     });
-  }, [coverageData, mapLocation]);
+  }, [coverageData, locationsQuery.data]);
 
   const tableData = useMemo(() => {
     return applyFilters(parsedData, filters);
