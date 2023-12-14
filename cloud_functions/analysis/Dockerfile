@@ -1,4 +1,4 @@
-FROM python:3.7-slim as builder
+FROM python:3.12-slim as builder
 ENV APP_HOME /application
 WORKDIR $APP_HOME
 RUN pip install functions-framework
@@ -9,7 +9,6 @@ RUN pip install --upgrade pip && \
 FROM builder as runner
 WORKDIR $APP_HOME
 COPY main.py ./main.py
-COPY ./connect_tcp.py ./connect_tcp.py
-RUN pwd && ls -la
+COPY ./src ./src
 
-ENTRYPOINT ["functions-framework", "--target=index"]
+ENTRYPOINT ["functions-framework", "--target=index", "--debug", "--port=8080"]

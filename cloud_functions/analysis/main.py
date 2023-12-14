@@ -1,8 +1,13 @@
 import functions_framework
-import sqlalchemy
+from flask.logging import default_handler
+import logging
 
-from connect_tcp import connect_tcp_socket
+from src.connect_tcp import connect_tcp_socket
+from src.analysis import get_locations_stats
 
+logger = logging.getLogger(__name__)
+logger.addHandler(default_handler)
+logger.setLevel(logging.DEBUG)
 db = connect_tcp_socket()
 
 
@@ -21,15 +26,15 @@ def index(request):
         Functions, see the `Writing HTTP functions` page.
         <https://cloud.google.com/functions/docs/writing/http#http_frameworks>
     """
-    geometry = request.args.get("geometry")
+    try:
+        geometry = ({**request.args, **request.get_json()}).get("geometry", None)
+        if not geometry:
+            raise ValueError("geometry is required")
 
-    return get_locations_stats(db, geometry)
-
-
-def get_locations_stats(db: sqlalchemy.engine.base.Engine, geojson) -> dict:
-    with db.connect() as conn:
-        stmt = sqlalchemy.text("SELECT COUNT(*) FROM locations WHERE type=:type")
-        regions_count = conn.execute(stmt, parameters={"type": "region"}).scalar()
-        countries_count = conn.execute(stmt, parameters={"type": "country"}).scalar()
-
-    return {"FRA": 2342341, "USA": 234234, "total_area": 234234}
+        return get_locations_stats(db, geometry)
+    except ValueError as e:
+        logger.exception(str(e))
+        return {"error": str(e)}, 400
+    except Exception as e:
+        logger.exception(str(e))
+        return {"error": str(e)}, 500
