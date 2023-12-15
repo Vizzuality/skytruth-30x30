@@ -57,4 +57,4 @@ def get_locations_stats(db: sqlalchemy.engine.base.Engine, geojson: JSON) -> dic
             stmt, parameters={"geometry": get_geojson(geojson)}
         ).all()
 
-    return serialize_response(data_response), 200
+    return serialize_response(data_response)
