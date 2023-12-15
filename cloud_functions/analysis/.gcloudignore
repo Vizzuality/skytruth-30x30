@@ -1,4 +1,7 @@
-dockerfile
+Dockerfile
 docker-compose.yml
 *.env
 init.sh
+.gitignore
+.dockerignore
+README.md
