@@ -1,6 +1,6 @@
 export const PAGES = {
   homepage: '/',
-  dataTool: '/data-tool',
+  map: '/map',
   knowledgeHub: '/knowledge-hub',
   contact: '/contact',
   about: '/about',

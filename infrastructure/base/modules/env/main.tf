@@ -133,6 +133,10 @@ resource "random_password" "app_key" {
 }
 
 locals {
+  frontend_lb_url    = "https://${local.domain}"
+  cms_lb_url         = "https://${local.domain}/${var.backend_path_prefix}/"
+  api_lb_url         = "https://${local.domain}/${var.backend_path_prefix}/api/"
+  analysis_cf_lb_url = "https://${local.domain}/${var.functions_path_prefix}/${var.analysis_function_path_prefix}/"
   cms_env = {
     HOST = "0.0.0.0"
     PORT = 1337
@@ -147,7 +151,7 @@ locals {
     ADMIN_JWT_SECRET    = random_password.admin_jwt_secret.result
     TRANSFER_TOKEN_SALT = random_password.transfer_token_salt.result
     JWT_SECRET          = random_password.jwt_secret.result
-    CMS_URL = "https://${local.domain}/${var.backend_path_prefix}/"
+    CMS_URL             = local.cms_lb_url
 
     DATABASE_CLIENT   = "postgres"
     DATABASE_HOST     = module.database.database_host
@@ -157,11 +161,11 @@ locals {
     DATABASE_SSL      = false
   }
   client_env = {
-    NEXT_PUBLIC_URL         = "https://${local.domain}"
-    NEXT_PUBLIC_API_URL     = "https://${local.domain}/${var.backend_path_prefix}/api/"
-    NEXT_PUBLIC_ANALYSIS_CF_URL = module.analysis_cloud_function.function_uri
-    NEXT_PUBLIC_ENVIRONMENT = "production"
-    LOG_LEVEL               = "info"
+    NEXT_PUBLIC_URL             = local.frontend_lb_url
+    NEXT_PUBLIC_API_URL         = local.api_lb_url
+    NEXT_PUBLIC_ANALYSIS_CF_URL = local.analysis_cf_lb_url
+    NEXT_PUBLIC_ENVIRONMENT     = "production"
+    LOG_LEVEL                   = "info"
   }
   analysis_cloud_function_env = {
     DATABASE_CLIENT   = "postgres"
@@ -187,7 +191,7 @@ locals {
   client_repository = "${upper(var.environment)}_CLIENT_REPOSITORY"
   cms_service       = "${upper(var.environment)}_CMS_SERVICE"
   client_service    = "${upper(var.environment)}_CLIENT_SERVICE"
-  analysis_cf_name = "${upper(var.environment)}_ANALYSIS_CF_NAME"
+  analysis_cf_name  = "${upper(var.environment)}_ANALYSIS_CF_NAME"
 }
 
 module "github_values" {
@@ -245,16 +249,19 @@ resource "google_project_service" "iam_service" {
 }
 
 module "load_balancer" {
-  source                  = "../load-balancer"
-  region                  = var.gcp_region
-  project                 = var.gcp_project_id
-  name                    = var.project_name
-  backend_cloud_run_name  = module.backend_cloudrun.name
-  frontend_cloud_run_name = module.frontend_cloudrun.name
-  domain                  = var.domain
-  subdomain               = var.subdomain
-  dns_managed_zone_name   = var.dns_zone_name
-  backend_path_prefix     = var.backend_path_prefix
+  source                        = "../load-balancer"
+  region                        = var.gcp_region
+  project                       = var.gcp_project_id
+  name                          = var.project_name
+  backend_cloud_run_name        = module.backend_cloudrun.name
+  frontend_cloud_run_name       = module.frontend_cloudrun.name
+  analysis_function_name        = module.analysis_cloud_function.function_name
+  domain                        = var.domain
+  subdomain                     = var.subdomain
+  dns_managed_zone_name         = var.dns_zone_name
+  backend_path_prefix           = var.backend_path_prefix
+  functions_path_prefix         = var.functions_path_prefix
+  analysis_function_path_prefix = var.analysis_function_path_prefix
 }
 
 module "analysis_cloud_function" {

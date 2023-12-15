@@ -19,24 +19,49 @@ const statsImageVariants = cva('', {
       orange: 'text-orange',
       purple: 'text-purple-500',
     },
+    valueSize: {
+      small: 'text-4xl',
+      large: 'text-6xl',
+    },
   },
   defaultVariants: {
     color: 'orange',
+    valueSize: 'large',
   },
 });
 
 export type StatsImageProps = VariantProps<typeof statsImageVariants> & {
-  value: string;
+  value: string | ReactNode;
   description: string | ReactNode;
+  sourceLink?: HTMLAnchorElement['href'];
   image?: keyof typeof IMAGES;
 };
 
-const StatsImage: React.FC<StatsImageProps> = ({ value, description, color, image = 'stats3' }) => (
+const StatsImage: React.FC<StatsImageProps> = ({
+  value,
+  description,
+  sourceLink,
+  color,
+  valueSize,
+  image = 'stats3',
+}) => (
   <div className="flex flex-row gap-8 pb-10 md:mt-20">
     <div className="flex w-full flex-col items-center justify-end gap-5 pt-5 text-center font-mono md:w-[32%]">
       <div className="flex flex-col md:max-w-[240px]">
-        <span className={cn('text-6xl font-bold', statsImageVariants({ color }))}>{value}</span>
-        <span className="mt-5 text-xs">{description}</span>
+        <span className={cn('font-bold', statsImageVariants({ color, valueSize }))}>{value}</span>
+        <span className="mt-5 text-xs">
+          {description}
+          {sourceLink && (
+            <a
+              href={sourceLink}
+              className="pl-1 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Source
+            </a>
+          )}
+        </span>
       </div>
     </div>
     <div className="hidden justify-end md:flex md:w-[68%]">
