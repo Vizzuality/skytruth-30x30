@@ -11,7 +11,20 @@ services:
     ports:
       - 8887:8888
     env_file: .env
-  # ntfy:
+  # skytruth-notebooks-spark:
+  #   container_name: skytruth_notebooks-spark
+  #   image: apache/sedona:latest
+  #   volumes:
+  #     - ./data:/opt/workspace/data
+  #     - ./notebooks:/opt/workspace/notebooks
+  #     - ./src:/opt/workspace/src
+  #   ports:
+  #     - 8886:8888
+  #     - 8080:8080
+  #     - 8081:8081
+  #     - 4040:4040
+  #   env_file: .env
+  # # ntfy:
   #   image: binwiederhier/ntfy
   #   container_name: ntfy
   #   command:

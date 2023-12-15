@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  skytruth-cloud-functions:
+    container_name: skytruth_cloud_functions
+    build:
+      context: .
+    volumes:
+      - ./:/application
+    ports:
+      - 3001:8080
+    env_file: .env
+    restart: on-failure
+    depends_on:
+      - skytruth-db
+  skytruth-db:
+    image: postgis/postgis:14-3.4
+    container_name: skytruth_cf_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: skytruth
+    restart: on-failure
+    ports:
+      - 5434:5432
+  skytruth-db-init:
+    profiles:
+      - feed_data_to_db
+    image: ghcr.io/osgeo/gdal:ubuntu-small-latest
+    container_name: skytruth_cf_db_init
+    environment:
+      GRANT_SUDO: "yes"
+    env_file: .env
+    restart: "no"
+    volumes:
+      - ./init.sh:/usr/share/init.sh
+    entrypoint: bash -c "chmod +x /usr/share/init.sh && /usr/share/init.sh"
+    network_mode: "host"
+    extra_hosts:
+      - docker.host:0.0.0.0

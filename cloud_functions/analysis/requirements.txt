@@ -1,3 +1,4 @@
-functions-framework
+functions-framework==3.*
 sqlalchemy
 pg8000
+geojson

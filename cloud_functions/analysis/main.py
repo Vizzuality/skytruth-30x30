@@ -1,9 +1,15 @@
 import functions_framework
-import sqlalchemy
+from flask.logging import default_handler
+import logging
 
-from connect_tcp import connect_tcp_socket
+from src.connect_tcp import connect_tcp_socket
+from src.analysis import get_locations_stats
 
+logger = logging.getLogger(__name__)
+logger.addHandler(default_handler)
+logger.setLevel(logging.DEBUG)
 db = connect_tcp_socket()
+
 
 @functions_framework.http
 def index(request):
@@ -20,42 +26,33 @@ def index(request):
         Functions, see the `Writing HTTP functions` page.
         <https://cloud.google.com/functions/docs/writing/http#http_frameworks>
     """
+    try:
+        # For more information about CORS and CORS preflight requests, see:
+        # https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
 
-    # For more information about CORS and CORS preflight requests, see:
-    # https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
+        # Set CORS headers for the preflight request
+        if request.method == "OPTIONS":
+            # Allows GET requests from any origin with the Content-Type
+            # header and caches preflight response for an 3600s
+            headers = {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, PUT, POST, HEAD",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Max-Age": "3600",
+            }
 
-    # Set CORS headers for the preflight request
-    if request.method == "OPTIONS":
-        # Allows GET requests from any origin with the Content-Type
-        # header and caches preflight response for an 3600s
-        headers = {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, PUT, POST, HEAD",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Max-Age": "3600",
-        }
+            return ("", 204, headers)
 
-        return ("", 204, headers)
+        # Set CORS headers for the main request
+        headers = {"Access-Control-Allow-Origin": "*"}
+        geometry = ({**request.args, **request.get_json()}).get("geometry", None)
+        if not geometry:
+            raise ValueError("geometry is required")
 
-    # Set CORS headers for the main request
-    headers = {"Access-Control-Allow-Origin": "*"}
-
-    return (get_locations_stats(db), 200, headers)
-
-def get_locations_stats(db: sqlalchemy.engine.base.Engine) -> dict:
-    # just an example of a query
-    # with db.connect() as conn:
-    #     stmt = sqlalchemy.text(
-    #         "SELECT COUNT(*) FROM locations WHERE type=:type"
-    #     )
-    #     regions_count = conn.execute(stmt, parameters={"type": "region"}).scalar()
-    #     countries_count = conn.execute(stmt, parameters={"type": "country"}).scalar()
-
-    # mock response
-    return {
-        "locations_area": [
-            {"code": "FRA", "protected_area": 2385406},
-            {"code": "USA", "protected_area": 5000367}
-        ],
-        "total_area": 73600000,
-    }
+        return (get_locations_stats(db, geometry), 200, headers)
+    except ValueError as e:
+        logger.exception(str(e))
+        return {"error": str(e)}, 400, headers
+    except Exception as e:
+        logger.exception(str(e))
+        return {"error": str(e)}, 500, headers

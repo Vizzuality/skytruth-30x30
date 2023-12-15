@@ -1,0 +1,5 @@
+docker-compose.yml
+Dockerfile
+.gcloudignore
+.env
+Readme.md
