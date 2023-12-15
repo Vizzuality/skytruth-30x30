@@ -42,7 +42,7 @@ def get_locations_stats(db: sqlalchemy.engine.base.Engine, geojson: JSON) -> dic
             """
         with user_data as (select ST_GeomFromGeoJSON(:geometry) as geom),
 	            user_data_stats as (select *, round((st_area(st_transform(geom, 'ESRI:54009'))/1e6)) user_area_km2 from user_data)
-            select area_km2, iso_sov1, iso_sov2, iso_sov3, round((st_area(st_transform(st_makevalid(st_intersection(the_geom, user_data_stats.geom)), 'ESRI:54009'))/1e6)) portion_area_km2, user_data_stats.user_area_km2 from analysis.eez_minus_mpa emm, user_data_stats 
+            select area_km2, iso_sov1, iso_sov2, iso_sov3, round((st_area(st_transform(st_makevalid(st_intersection(the_geom, user_data_stats.geom)), 'ESRI:54009'))/1e6)) portion_area_km2, user_data_stats.user_area_km2 from data.eez_minus_mpa emm, user_data_stats 
             where st_intersects(the_geom, user_data_stats.geom)
             """
         )

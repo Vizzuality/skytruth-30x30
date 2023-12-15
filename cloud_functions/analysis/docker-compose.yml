@@ -21,24 +21,19 @@ services:
       POSTGRES_DB: skytruth
     restart: on-failure
     ports:
-      - 5433:5432
+      - 5434:5432
   skytruth-db-init:
     profiles:
-      - donotstart
+      - feed_data_to_db
     image: ghcr.io/osgeo/gdal:ubuntu-small-latest
     container_name: skytruth_cf_db_init
-    env_file: .env
     environment:
       GRANT_SUDO: "yes"
-      POSTGRES_HOST: skytruth-db
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: skytruth
-      POSTGRES_SCHEMA: analysis
+    env_file: .env
     restart: "no"
     volumes:
       - ./init.sh:/usr/share/init.sh
     entrypoint: bash -c "chmod +x /usr/share/init.sh && /usr/share/init.sh"
-    depends_on:
-      - skytruth-db
+    network_mode: "host"
+    extra_hosts:
+      - docker.host:0.0.0.0

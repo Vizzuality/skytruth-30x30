@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 URL='vector-data-raw/vizzuality_processed_data/analysis_data/eez_minus_mpa.zip'
 
 ogr2ogr -progress \
