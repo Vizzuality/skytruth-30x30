@@ -19,8 +19,10 @@ def serialize_response(data: dict) -> dict:
     """
     result = {"total_area": data[0][5]}
     sub_result = {}
+    total_protected_area = 0
     for row in data:
         for iso in filter(lambda item: item is not None, row[1:4]):
+            total_protected_area += row[4]
             if iso not in sub_result:
                 sub_result[iso] = {
                     "code": iso,
@@ -31,7 +33,12 @@ def serialize_response(data: dict) -> dict:
                 sub_result[iso]["protected_area"] += row[4]
                 sub_result[iso]["area"] += row[0]
 
-    result.update({"locations_area": list(sub_result.values())})
+    result.update(
+        {
+            "locations_area": list(sub_result.values()),
+            "total_protected_area": total_protected_area,
+        }
+    )
 
     return result
 
