@@ -45,6 +45,7 @@ def index(request):
 
         # Set CORS headers for the main request
         headers = {"Access-Control-Allow-Origin": "*"}
+
         geometry = ({**request.args, **request.get_json()}).get("geometry", None)
         if not geometry:
             raise ValueError("geometry is required")
