@@ -34,7 +34,12 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   }, []);
 
   const protectedAreaPercentage = useMemo(() => {
-    return format('.0f')((protectedArea * 100) / totalArea);
+    if (!totalArea || !protectedArea) return format('.0%')(0);
+
+    if (protectedArea / totalArea < 0.01) return format('.3%')(protectedArea / totalArea);
+    if (protectedArea / totalArea < 0.1) return format('.2%')(protectedArea / totalArea);
+
+    return format('.0%')(protectedArea / totalArea);
   }, [totalArea, protectedArea]);
 
   const barFillPercentage = useMemo(() => {
