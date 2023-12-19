@@ -22,6 +22,7 @@ const DrawControls: FC = () => {
     ({ features }) => {
       setDrawState((prevState) => ({
         ...prevState,
+        active: false,
         status: 'success',
         feature: features[0],
       }));
