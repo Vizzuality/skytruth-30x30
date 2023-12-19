@@ -90,13 +90,15 @@ resource "google_cloudfunctions2_function" "function" {
   }
 
   service_config {
-    vpc_connector         = var.vpc_connector_name
-    max_instance_count    = var.max_instance_count
-    min_instance_count    = var.min_instance_count
-    available_memory      = var.available_memory
-    available_cpu         = var.available_cpu
-    timeout_seconds       = var.timeout_seconds
-    environment_variables = var.runtime_environment_variables
+    vpc_connector                    = var.vpc_connector_name
+    vpc_connector_egress_settings    = "PRIVATE_RANGES_ONLY"
+    max_instance_count               = var.max_instance_count
+    min_instance_count               = var.min_instance_count
+    max_instance_request_concurrency = var.max_instance_request_concurrency
+    available_memory                 = var.available_memory
+    available_cpu                    = var.available_cpu
+    timeout_seconds                  = var.timeout_seconds
+    environment_variables            = var.runtime_environment_variables
     dynamic "secret_environment_variables" {
       # for each secret in the list of secrets, create a secret_environment_variable
       for_each = toset(var.secrets)

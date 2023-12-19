@@ -33,7 +33,9 @@ resource "google_sql_database_instance" "db-main" {
   project          = var.project_id
 
   settings {
-    tier = var.sql-database-instance-tier
+    tier                        = var.sql-database-instance-tier
+    deletion_protection_enabled = true
+
     ip_configuration {
       ipv4_enabled                                  = false
       private_network                               = var.network_id
@@ -44,6 +46,7 @@ resource "google_sql_database_instance" "db-main" {
       enabled                        = var.enable_backups
       start_time                     = "05:00"
       point_in_time_recovery_enabled = true
+      location                       = "us"
 
       backup_retention_settings {
         retained_backups = 30
