@@ -6,4 +6,5 @@ export type AnalysisLocationArea = {
 export type AnalysisData = {
   locations_area: AnalysisLocationArea[];
   total_area: number;
+  total_protected_area: number;
 };

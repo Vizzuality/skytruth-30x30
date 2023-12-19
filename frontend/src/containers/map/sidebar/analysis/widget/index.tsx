@@ -95,7 +95,7 @@ const AnalysisWidget: React.FC = () => {
 
     return {
       ...DEFAULT_CHART_DATA,
-      protectedArea: analysisData?.total_area,
+      protectedArea: analysisData?.total_protected_area,
       totalArea: location?.totalMarineArea,
     };
   }, [analysisData, locationsData]);
