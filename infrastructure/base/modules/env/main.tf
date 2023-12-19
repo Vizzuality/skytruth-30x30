@@ -59,14 +59,15 @@ module "backend_cloudrun" {
 }
 
 module "database" {
-  source            = "../sql"
-  name              = var.project_name
-  project_id        = var.gcp_project_id
-  region            = var.gcp_region
-  database_name     = var.database_name
-  database_user     = var.database_user
-  database_password = module.postgres_application_user_password.secret_value
-  network_id        = module.network.network_id
+  source                     = "../sql"
+  name                       = var.project_name
+  project_id                 = var.gcp_project_id
+  region                     = var.gcp_region
+  database_name              = var.database_name
+  database_user              = var.database_user
+  database_password          = module.postgres_application_user_password.secret_value
+  network_id                 = module.network.network_id
+  sql-database-instance-tier = "db-custom-1-3840"
 
   # explicit dependency for:
   # Error, failed to create instance because the network doesn't have at least 1 private services connection.
@@ -265,16 +266,21 @@ module "load_balancer" {
 }
 
 module "analysis_cloud_function" {
-  source                        = "../cloudfunction"
-  region                        = var.gcp_region
-  vpc_connector_name            = module.network.vpc_access_connector_name
-  function_name                 = "${var.project_name}-analysis"
-  description                   = "Analysis Cloud Function"
-  source_dir                    = "${path.root}/../../cloud_functions/analysis"
-  runtime                       = "python312"
-  entry_point                   = "index"
-  runtime_environment_variables = local.analysis_cloud_function_env
-  secrets                       = local.analysis_cloud_function_secrets
+  source                           = "../cloudfunction"
+  region                           = var.gcp_region
+  vpc_connector_name               = module.network.vpc_access_connector_name
+  function_name                    = "${var.project_name}-analysis"
+  description                      = "Analysis Cloud Function"
+  source_dir                       = "${path.root}/../../cloud_functions/analysis"
+  runtime                          = "python312"
+  entry_point                      = "index"
+  runtime_environment_variables    = local.analysis_cloud_function_env
+  secrets                          = local.analysis_cloud_function_secrets
+  timeout_seconds                  = var.analysis_function_timeout_seconds
+  available_memory                 = var.analysis_function_available_memory
+  available_cpu                    = var.analysis_function_available_cpu
+  max_instance_count               = var.analysis_function_max_instance_count
+  max_instance_request_concurrency = var.analysis_function_max_instance_request_concurrency
 
   depends_on = [module.postgres_application_user_password]
 }

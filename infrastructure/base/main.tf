@@ -8,27 +8,31 @@ terraform {
 }
 
 module "staging" {
-  source                        = "./modules/env"
-  gcp_project_id                = var.gcp_project_id
-  gcp_region                    = var.gcp_region
-  github_org                    = var.github_org
-  github_project                = var.github_project
-  github_branch                 = "develop"
-  project_name                  = var.staging_project_name
-  frontend_min_scale            = 0
-  backend_min_scale             = 0
-  frontend_max_scale            = 1
-  backend_max_scale             = 2
-  dns_zone_name                 = module.dns.dns_zone_name
-  domain                        = var.domain
-  subdomain                     = "30x30"
-  backend_path_prefix           = "cms"
-  functions_path_prefix         = "functions"
-  analysis_function_path_prefix = "analysis"
-  uptime_alert_email            = var.uptime_alert_email
-  environment                   = "staging"
-  database_name                 = "strapi"
-  database_user                 = "strapi"
+  source                                             = "./modules/env"
+  gcp_project_id                                     = var.gcp_project_id
+  gcp_region                                         = var.gcp_region
+  github_org                                         = var.github_org
+  github_project                                     = var.github_project
+  github_branch                                      = "develop"
+  project_name                                       = var.staging_project_name
+  frontend_min_scale                                 = 0
+  backend_min_scale                                  = 0
+  frontend_max_scale                                 = 1
+  backend_max_scale                                  = 2
+  dns_zone_name                                      = module.dns.dns_zone_name
+  domain                                             = var.domain
+  subdomain                                          = "30x30"
+  backend_path_prefix                                = "cms"
+  functions_path_prefix                              = "functions"
+  analysis_function_path_prefix                      = "analysis"
+  analysis_function_timeout_seconds                  = 600
+  analysis_function_max_instance_count               = 2
+  analysis_function_max_instance_request_concurrency = 10
+  analysis_function_available_memory                 = "512M"
+  uptime_alert_email                                 = var.uptime_alert_email
+  environment                                        = "staging"
+  database_name                                      = "strapi"
+  database_user                                      = "strapi"
 }
 
 module "dns" {
