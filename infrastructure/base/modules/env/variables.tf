@@ -116,3 +116,33 @@ variable "analysis_function_path_prefix" {
   type        = string
   description = "Path prefix for the analysis function"
 }
+
+variable "analysis_function_timeout_seconds" {
+  type        = number
+  default     = 180
+  description = "Timeout for the analysis function"
+}
+
+variable "analysis_function_available_memory" {
+  type        = string
+  default     = "256M"
+  description = "Available memory for the analysis function"
+}
+
+variable "analysis_function_available_cpu" {
+  type        = number
+  default     = 1
+  description = "Available cpu for the analysis function"
+}
+
+variable "analysis_function_max_instance_count" {
+  type        = number
+  default     = 1
+  description = "Max instance count for the analysis function"
+}
+
+variable "analysis_function_max_instance_request_concurrency" {
+  type        = number
+  default     = 80
+  description = "Max instance request concurrency for the analysis function"
+}
