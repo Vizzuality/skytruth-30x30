@@ -12,26 +12,18 @@ const MapWidgets: React.FC = () => {
     query: { locationCode },
   } = useRouter();
 
-  const locationsQuery = useGetLocations(
-    {
-      filters: {
-        code: locationCode,
-      },
+  const { data: locationsData } = useGetLocations({
+    filters: {
+      code: locationCode,
     },
-    {
-      query: {
-        queryKey: ['locations', locationCode],
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
-  );
+  });
 
   return (
     <div className="flex flex-col divide-y-[1px] divide-black font-mono">
-      <MarineConservationWidget location={locationsQuery.data} />
-      <ProtectionTypesWidget location={locationsQuery.data} />
-      <EstablishmentStagesWidget location={locationsQuery.data} />
-      <HabitatWidget location={locationsQuery.data} />
+      <MarineConservationWidget location={locationsData?.data[0]?.attributes} />
+      <ProtectionTypesWidget location={locationsData?.data[0]?.attributes} />
+      <EstablishmentStagesWidget location={locationsData?.data[0]?.attributes} />
+      <HabitatWidget location={locationsData?.data[0]?.attributes} />
     </div>
   );
 };

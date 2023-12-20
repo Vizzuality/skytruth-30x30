@@ -204,12 +204,11 @@ const MainMap: React.FC = () => {
       <Map
         initialViewState={initialViewState}
         bounds={bounds}
-        interactiveLayerIds={layersInteractiveIds}
+        interactiveLayerIds={!drawState.active && !drawState.feature ? layersInteractiveIds : []}
         onClick={handleMapClick}
         onMoveEnd={handleMoveEnd}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        renderWorldCopies={false}
         attributionControl={false}
         cursor={cursor}
       >

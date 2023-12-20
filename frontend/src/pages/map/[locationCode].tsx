@@ -4,8 +4,8 @@ import type { GetServerSideProps } from 'next';
 import Content from '@/containers/map/content';
 import Sidebar from '@/containers/map/sidebar';
 import Layout from '@/layouts/map';
-import { getLocations } from '@/types/generated/location';
-import { Location, LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
+import { getGetLocationsQueryKey, getGetLocationsQueryOptions } from '@/types/generated/location';
+import { Location, LocationListResponse } from '@/types/generated/strapi.schemas';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -13,21 +13,30 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const queryClient = new QueryClient();
 
-  const { data: locationsData } = await getLocations({
-    filters: {
-      code: locationCode,
-    },
+  await queryClient.prefetchQuery({
+    ...getGetLocationsQueryOptions({
+      filters: {
+        code: locationCode,
+      },
+    }),
   });
 
-  if (!locationsData) return { notFound: true };
+  const locationsData = queryClient.getQueryData<LocationListResponse>(
+    getGetLocationsQueryKey({
+      filters: {
+        code: locationCode,
+      },
+    })
+  );
 
-  queryClient.setQueryData<{ data: LocationListResponseDataItem[] }>(['locations', locationCode], {
-    data: locationsData,
-  });
+  if (!locationsData || !locationsData.data) return { notFound: true };
 
   return {
     props: {
-      location: locationsData[0].attributes,
+      location: locationsData.data[0].attributes || {
+        code: 'GLOB',
+        name: 'Global',
+      },
       dehydratedState: dehydrate(queryClient),
     },
   };

@@ -97,7 +97,9 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
       return {
         title: establishmentStage.name,
         slug: establishmentStage.slug,
-        background: `border-box #fff url(${PATTERNS[establishmentStage.slug]})`,
+        ...(PATTERNS[establishmentStage.slug] && {
+          background: `border-box #fff url(${PATTERNS[establishmentStage.slug]})`,
+        }),
         totalArea: location.totalMarineArea,
         protectedArea: establishmentStage.area,
         info: establishmentStage.info,

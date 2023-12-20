@@ -118,8 +118,9 @@ const AnalysisWidget: React.FC = () => {
             title="Administrative boundary"
             tooltip={tooltips?.['administrativeBoundary']}
           />
-          <span className="font-mono text-xs font-bold underline">
-            {administrativeBoundaries?.[0]} +{administrativeBoundaries?.length - 1}
+          <span className="text-right font-mono text-xs font-bold underline">
+            {administrativeBoundaries?.[0]}{' '}
+            {administrativeBoundaries?.length > 1 && `+${administrativeBoundaries?.length - 1}`}
           </span>
         </div>
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>

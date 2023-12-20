@@ -14,25 +14,17 @@ const SidebarDetails: React.FC = () => {
   } = useRouter();
   const [{ showDetails }] = useSyncMapContentSettings();
 
-  const locationsQuery = useGetLocations(
-    {
-      filters: {
-        code: locationCode,
-      },
+  const { data: locationsData } = useGetLocations({
+    filters: {
+      code: locationCode,
     },
-    {
-      query: {
-        queryKey: ['locations', locationCode],
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
-  );
+  });
 
   return (
     <>
       <div className="h-full w-full overflow-y-scroll border-x border-black pb-12">
         <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
-          <h1 className="text-5xl font-black">{locationsQuery.data?.name}</h1>
+          <h1 className="text-5xl font-black">{locationsData.data[0]?.attributes?.name}</h1>
           <LocationSelector className="my-2" />
         </div>
         <DetailsWidgets />
