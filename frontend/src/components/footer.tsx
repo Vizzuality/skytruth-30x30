@@ -19,7 +19,7 @@ const Footer: React.FC = () => (
             </Link>
           </div>
           <address className="my-4 flex flex-col gap-0.5 pt-6 text-xs not-italic text-black-300 md:my-8">
-            <span>30x30 Skytruth</span>
+            <span>30x30 SkyTruth</span>
             <span>140–142 St No Street, New York, EC1V XXX, US</span>
             <a href="tel:+1 (0)23 0000 0000">+1 (0)23 0000 0000</a>
             <a href="mailto:info@example.com">info@example</a>

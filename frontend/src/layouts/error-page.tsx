@@ -19,7 +19,7 @@ const ErrorPageLayout: React.FC<ErrorPageLayoutProps> = ({
 }) => (
   <>
     <Head>
-      <title>{`${pageTitle ? `${pageTitle} | ` : ''}Skytruth 30x30`}</title>
+      <title>{`${pageTitle ? `${pageTitle} | ` : ''}SkyTruth 30x30`}</title>
       {description && <meta name="description" content={description} />}
     </Head>
     <div className="flex h-screen w-full flex-col">

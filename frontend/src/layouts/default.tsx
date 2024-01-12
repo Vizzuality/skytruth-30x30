@@ -17,7 +17,7 @@ const DefaultLayout: React.FC<PropsWithChildren<DefaultLayoutProps>> = ({
 }) => (
   <>
     <Head>
-      <title>{`${title ? `${title} | ` : ''}Skytruth 30x30`}</title>
+      <title>{`${title ? `${title} | ` : ''}SkyTruth 30x30`}</title>
       {description && <meta name="description" content={description} />}
     </Head>
     <Header />

@@ -65,7 +65,7 @@ const StaticPageLayout: React.FC<
 > = ({ title, description, hero, bottom, children, theme, hideLogo }) => (
   <>
     <Head>
-      <title>{`${title ? `${title} | ` : ''}Skytruth 30x30`}</title>
+      <title>{`${title ? `${title} | ` : ''}SkyTruth 30x30`}</title>
       {description && <meta name="description" content={description} />}
     </Head>
     <div className="flex h-screen w-full flex-col">
