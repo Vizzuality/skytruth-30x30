@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import {
   flexRender,
@@ -14,16 +14,6 @@ const MapTable = ({ columns, data }) => {
   const tableRef = useRef<HTMLTableElement>();
   const firstColumnRef = useRef<HTMLTableCellElement>(null);
 
-  const [tableDimensions, setTableDimensions] = useState<{
-    firstColumnWidth: HTMLTableCellElement['offsetWidth'];
-    tableWidth: HTMLTableElement['offsetWidth'];
-    availableBarWidth: number;
-  }>({
-    firstColumnWidth: 0,
-    tableWidth: 0,
-    availableBarWidth: 0,
-  });
-
   const table = useReactTable<typeof data>({
     data,
     columns,
@@ -35,18 +25,6 @@ const MapTable = ({ columns, data }) => {
 
   const firstColumn = columns[0];
   const lastColumn = columns[columns.length - 1];
-
-  useLayoutEffect(() => {
-    const tableWidth = tableRef.current?.offsetWidth;
-    const firstColumnWidth = firstColumnRef.current?.offsetWidth;
-    const availableBarWidth = tableWidth - firstColumnWidth;
-
-    setTableDimensions({
-      firstColumnWidth,
-      tableWidth,
-      availableBarWidth,
-    });
-  }, [data]);
 
   return (
     <table ref={tableRef} className="whitespace-nowrap font-mono text-xs">
@@ -78,19 +56,8 @@ const MapTable = ({ columns, data }) => {
       <tbody>
         {hasData &&
           table.getRowModel().rows.map((row) => {
-            const coverage = row.original?.coverage || null; // %;
-            const offset = tableDimensions.firstColumnWidth;
-            const barWidth = (coverage * tableDimensions.availableBarWidth) / 100;
-
             return (
-              <tr
-                key={row.id}
-                className="border-b border-t border-black"
-                style={{
-                  backgroundImage: `linear-gradient(to right, rgb(72, 121, 255) ${barWidth}px, transparent ${barWidth}px)`,
-                  backgroundPositionX: `${offset}px`,
-                }}
-              >
+              <tr key={row.id} className="border-b border-t border-black">
                 {row.getVisibleCells().map((cell) => {
                   const { column } = cell;
                   const isFirstColumn = column.id === firstColumn.accessorKey;
