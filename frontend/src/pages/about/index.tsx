@@ -62,7 +62,7 @@ const About: React.FC = () => {
           color="purple"
           image="cta1"
           button={{
-            text: 'Contact us',
+            text: 'Get in touch',
             link: PAGES.contact,
           }}
         />
