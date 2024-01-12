@@ -49,7 +49,7 @@ const LinkCard: React.FC<LinkCardProps> = ({
     </div>
     <div className="flex flex-1 flex-col">
       <span
-        className="aspect-square max-h-[160px] border-b border-t border-black bg-cover bg-center bg-no-repeat mix-blend-multiply md:max-h-full md:border-t-0"
+        className="aspect-square max-h-[160px] w-full flex-shrink-0 border-b border-t border-black bg-cover bg-center bg-no-repeat mix-blend-multiply md:max-h-[70%] md:border-t-0"
         style={{
           backgroundImage: `url(${BACKGROUND_IMAGES[image]})`,
         }}
