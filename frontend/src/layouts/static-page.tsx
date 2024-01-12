@@ -1,8 +1,7 @@
 import { MutableRefObject, PropsWithChildren, ReactNode } from 'react';
 
-import Head from 'next/head';
-
 import Footer from '@/components/footer';
+import Head from '@/components/head';
 import Header, { HeaderProps } from '@/components/header';
 import Icon from '@/components/ui/icon';
 import { cn } from '@/lib/classnames';
@@ -64,10 +63,7 @@ const StaticPageLayout: React.FC<
   PropsWithChildren<StaticPageLayoutProps & Pick<HeaderProps, 'theme' | 'hideLogo'>>
 > = ({ title, description, hero, bottom, children, theme, hideLogo }) => (
   <>
-    <Head>
-      <title>{`${title ? `${title} | ` : ''}SkyTruth 30x30`}</title>
-      {description && <meta name="description" content={description} />}
-    </Head>
+    <Head title={title} description={description} />
     <div className="flex h-screen w-full flex-col">
       <div className="flex-shrink-0">
         <Header theme={theme} hideLogo={hideLogo} />

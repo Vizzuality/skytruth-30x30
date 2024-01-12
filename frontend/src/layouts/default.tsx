@@ -1,8 +1,7 @@
 import { PropsWithChildren } from 'react';
 
-import Head from 'next/head';
-
 import Footer from '@/components/footer';
+import Head from '@/components/head';
 import Header from '@/components/header';
 
 export interface DefaultLayoutProps {
@@ -16,10 +15,7 @@ const DefaultLayout: React.FC<PropsWithChildren<DefaultLayoutProps>> = ({
   description,
 }) => (
   <>
-    <Head>
-      <title>{`${title ? `${title} | ` : ''}SkyTruth 30x30`}</title>
-      {description && <meta name="description" content={description} />}
-    </Head>
+    <Head title={title} description={description} />
     <Header />
     <div className="mx-auto my-8 max-w-7xl px-6 lg:px-10">{children}</div>
     <Footer />
