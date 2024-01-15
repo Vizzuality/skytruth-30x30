@@ -13,7 +13,7 @@ const NoData: React.FC<NoDataProps> = ({ error = false }) => {
       </div>
       <p className="text-xs">
         {error && <>The current widget is not visible due to an error.</>}
-        {!error && <>The current widget is not visible because of data unavailability.</>}
+        {!error && <>Data not available</>}
       </p>
     </div>
   );
