@@ -124,13 +124,17 @@ const EEZLayerPopup = ({ locationId }) => {
     return [];
   }, [protectionCoverageStats, latestYearAvailable]);
 
-  const coveragePercentage = useMemo(() => {
-    if (latestProtectionCoverageStats.length && locationsQuery.data) {
-      const totalCumSumProtectedArea = latestProtectionCoverageStats.reduce(
-        (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
-        0
-      );
+  const totalCumSumProtectedArea = useMemo(() => {
+    if (!latestProtectionCoverageStats.length) return 0;
 
+    return latestProtectionCoverageStats.reduce(
+      (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
+      0
+    );
+  }, [latestProtectionCoverageStats]);
+
+  const coveragePercentage = useMemo(() => {
+    if (locationsQuery.data) {
       const formatter = Intl.NumberFormat('en-US', {
         maximumFractionDigits: 0,
       });
@@ -141,7 +145,7 @@ const EEZLayerPopup = ({ locationId }) => {
     }
 
     return '-';
-  }, [latestProtectionCoverageStats, locationsQuery.data]);
+  }, [totalCumSumProtectedArea, locationsQuery.data]);
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -181,7 +185,7 @@ const EEZLayerPopup = ({ locationId }) => {
               <span>
                 {Intl.NumberFormat('en-US', {
                   notation: 'standard',
-                }).format(locationsQuery.data.totalMarineArea)}
+                }).format(totalCumSumProtectedArea)}
               </span>
               <span>
                 km<sup>2</sup>
