@@ -115,8 +115,12 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
               icon="icon2"
             />
             <div className="flex h-full w-full justify-center">
-              <button type="button" onClick={onScrollClick}>
-                <Icon icon={ArrowRight} className="h-[50%] rotate-90 fill-black" />
+              <button
+                type="button"
+                className="my-6 flex aspect-square min-h-[140px] items-center justify-center md:w-auto"
+                onClick={onScrollClick}
+              >
+                <Icon icon={ArrowRight} className="h-[60%] rotate-90 fill-black" />
               </button>
             </div>
           </div>

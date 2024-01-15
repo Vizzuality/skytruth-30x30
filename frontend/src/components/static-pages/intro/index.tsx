@@ -49,14 +49,14 @@ const Intro: React.FC<IntroProps> = ({
       <div className="w-full border-l border-r border-black md:w-[40%]">
         <div className="flex h-full flex-col">
           <span
-            className="aspect-square max-h-[200px] border-b border-black bg-cover bg-center bg-no-repeat mix-blend-multiply md:max-h-full"
+            className="aspect-[1.8] max-h-[160px] w-full flex-shrink-0 border-b border-t border-black bg-cover bg-center bg-no-repeat mix-blend-multiply md:max-h-[70%] md:border-t-0"
             style={{
               backgroundImage: `url(${BACKGROUND_IMAGES[image]})`,
             }}
           />
-          <div className="flex h-full max-h-[140px] w-full justify-center py-6 md:max-h-[50%] md:min-h-0">
+          <div className="flex aspect-[1.8] h-full max-h-[140px] w-full justify-center md:max-h-[50%] md:min-h-0">
             <button
-              className="flex w-full items-center justify-center md:w-auto"
+              className="my-6 flex aspect-square items-center justify-center md:w-auto"
               type="button"
               onClick={onScrollClick}
             >
