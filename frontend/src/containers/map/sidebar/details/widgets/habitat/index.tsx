@@ -84,7 +84,12 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
       loading={loading}
     >
       {widgetChartData.map((chartData) => (
-        <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
+        <HorizontalBarChart
+          key={chartData.slug}
+          className="py-2"
+          data={chartData}
+          showTarget={false}
+        />
       ))}
     </Widget>
   );
