@@ -1,6 +1,6 @@
-import Head from 'next/head';
 import Link from 'next/link';
 
+import Head from '@/components/head';
 import Header from '@/components/header';
 import { PAGES } from '@/constants/pages';
 
@@ -18,10 +18,7 @@ const ErrorPageLayout: React.FC<ErrorPageLayoutProps> = ({
   description,
 }) => (
   <>
-    <Head>
-      <title>{`${pageTitle ? `${pageTitle} | ` : ''}Skytruth 30x30`}</title>
-      {description && <meta name="description" content={description} />}
-    </Head>
+    <Head title={pageTitle} description={description} />
     <div className="flex h-screen w-full flex-col">
       <div className="flex-shrink-0">
         <Header />
