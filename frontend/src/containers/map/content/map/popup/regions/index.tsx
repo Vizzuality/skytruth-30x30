@@ -2,14 +2,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import type { Feature } from 'geojson';
-import { useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
-import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
+import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
@@ -21,8 +21,11 @@ const EEZLayerPopup = ({ locationId }) => {
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
+  const { push } = useRouter();
+  // @ts-expect-error to work properly, strict mode should be enabled
+  const setLocationBBox = useSetAtom(bboxLocation);
+  const [popup, setPopup] = useAtom(popupAtom);
 
-  const popup = useAtomValue(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
   const layerQuery = useGetLayersId(
@@ -113,7 +116,7 @@ const EEZLayerPopup = ({ locationId }) => {
     );
 
   const latestYearAvailable = useMemo(() => {
-    if (protectionCoverageStats) {
+    if (protectionCoverageStats?.[0]) {
       return protectionCoverageStats[0].attributes.year;
     }
   }, [protectionCoverageStats]);
@@ -148,6 +151,12 @@ const EEZLayerPopup = ({ locationId }) => {
   const handleMapRender = useCallback(() => {
     setRendered(map?.loaded() && map?.areTilesLoaded());
   }, [map]);
+
+  const handleLocationSelected = useCallback(async () => {
+    await push(`${PAGES.map}/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`);
+    setLocationBBox(locationsQuery.data.bounds);
+    setPopup({});
+  }, [push, searchParams, setLocationBBox, locationsQuery.data, setPopup]);
 
   useEffect(() => {
     map?.on('render', handleMapRender);
@@ -189,14 +198,13 @@ const EEZLayerPopup = ({ locationId }) => {
               </span>
             </div>
           </div>
-          <Link
-            className="block border border-black p-4 text-center font-mono uppercase"
-            href={`${
-              PAGES.map
-            }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`}
+          <button
+            type="button"
+            className="block w-full border border-black p-4 text-center font-mono uppercase"
+            onClick={handleLocationSelected}
           >
             Open country insights
-          </Link>
+          </button>
         </>
       )}
     </div>
