@@ -4,6 +4,7 @@ import { groupBy } from 'lodash-es';
 
 import ConservationChart from '@/components/charts/conservation-chart';
 import Widget from '@/components/widget';
+import { formatPercentage } from '@/lib/utils/formats';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
@@ -81,10 +82,9 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     const totalArea = location.totalMarineArea;
     const lastYearData = mergedProtectionStats[mergedProtectionStats.length - 1];
     const { protectedArea } = lastYearData;
-    const formatter = Intl.NumberFormat('en-US', {
-      maximumFractionDigits: 1,
+    const percentageFormatted = formatPercentage((protectedArea / totalArea) * 100, {
+      displayPercentageSign: false,
     });
-    const percentageFormatted = formatter.format((protectedArea / totalArea) * 100);
     const totalAreaFormatted = Intl.NumberFormat('en-US', {
       notation: 'standard',
     }).format(totalArea);
