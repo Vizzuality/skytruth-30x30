@@ -102,7 +102,8 @@ const ProtectedAreaPopup = ({ locationId }: { locationId: number }) => {
 
   if (!DATA) return null;
 
-  const globalCoveragePercentage = (DATA.REP_M_AREA / locationQuery.data?.attributes?.totalMarineArea) * 100;
+  const globalCoveragePercentage =
+    (DATA.REP_M_AREA / locationQuery.data?.attributes?.totalMarineArea) * 100;
 
   const classNameByMPAType = cn({
     'text-green': DATA?.PA_DEF === '1',
