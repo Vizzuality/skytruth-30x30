@@ -1,7 +1,9 @@
 import { format } from 'd3-format';
 
+import { formatPercentage } from '@/lib/utils/formats';
+
 const percentage = (value: number) => {
-  return format(',.2r')(value) == '0.0' ? '0' : format(',.2r')(value);
+  return formatPercentage(value, { displayPercentageSign: false });
 };
 
 const area = (value: number) => {
