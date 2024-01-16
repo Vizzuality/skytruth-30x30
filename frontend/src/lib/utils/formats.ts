@@ -4,6 +4,10 @@ export function formatPercentage(
 ) {
   const { displayPercentageSign = true, ...intlNumberFormatOptions } = options || {};
 
+  if (value < 0.1 && value > 0) {
+    return displayPercentageSign ? '<0.1%' : '<0.1';
+  }
+
   const v = Intl.NumberFormat('en-US', {
     maximumFractionDigits: 1,
     style: displayPercentageSign ? 'percent' : 'decimal',
