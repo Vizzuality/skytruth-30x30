@@ -82,7 +82,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     const lastYearData = mergedProtectionStats[mergedProtectionStats.length - 1];
     const { protectedArea } = lastYearData;
     const formatter = Intl.NumberFormat('en-US', {
-      maximumFractionDigits: 0,
+      maximumFractionDigits: 1,
     });
     const percentageFormatted = formatter.format((protectedArea / totalArea) * 100);
     const totalAreaFormatted = Intl.NumberFormat('en-US', {
