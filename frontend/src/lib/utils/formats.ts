@@ -1,11 +1,16 @@
-export function formatPercentage(value: number, options?: Intl.NumberFormatOptions) {
+export function formatPercentage(
+  value: number,
+  options?: Intl.NumberFormatOptions & { displayPercentageSign?: boolean }
+) {
+  const { displayPercentageSign = true, ...intlNumberFormatOptions } = options || {};
+
   const v = Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 3,
-    style: 'percent',
-    ...options,
+    maximumFractionDigits: 1,
+    style: displayPercentageSign ? 'percent' : 'decimal',
+    ...intlNumberFormatOptions,
   });
 
-  return v.format(value);
+  return v.format(displayPercentageSign ? value / 100 : value);
 }
 
 export function formatKM(value: number, options?: Intl.NumberFormatOptions) {
