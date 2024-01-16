@@ -102,7 +102,7 @@ const ProtectedAreaPopup = ({ locationId }: { locationId: number }) => {
 
   if (!DATA) return null;
 
-  const globalCoverage = DATA.REP_M_AREA / locationQuery.data?.attributes?.totalMarineArea;
+  const globalCoveragePercentage = (DATA.REP_M_AREA / locationQuery.data?.attributes?.totalMarineArea) * 100;
 
   const classNameByMPAType = cn({
     'text-green': DATA?.PA_DEF === '1',
@@ -125,7 +125,7 @@ const ProtectedAreaPopup = ({ locationId }: { locationId: number }) => {
               <dt className={TERMS_CLASSES}>Global coverage</dt>
               <dd className={`font-mono text-6xl tracking-tighter ${classNameByMPAType}`}>
                 {format({
-                  value: globalCoverage,
+                  value: globalCoveragePercentage,
                   id: 'formatPercentage',
                 })}
               </dd>
