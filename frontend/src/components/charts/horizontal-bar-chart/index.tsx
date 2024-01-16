@@ -4,6 +4,7 @@ import { format } from 'd3-format';
 
 import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
+import { formatPercentage } from '@/lib/utils/formats';
 
 const DEFAULT_MAX_PERCENTAGE = 100;
 const PROTECTION_TARGET = 30;
@@ -34,12 +35,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   }, []);
 
   const protectedAreaPercentage = useMemo(() => {
-    if (!totalArea || !protectedArea) return format('.0%')(0);
-
-    if (protectedArea / totalArea < 0.01) return format('.3%')(protectedArea / totalArea);
-    if (protectedArea / totalArea < 0.1) return format('.2%')(protectedArea / totalArea);
-
-    return format('.0%')(protectedArea / totalArea);
+    return formatPercentage((protectedArea / totalArea) * 100, { displayPercentageSign: false });
   }, [totalArea, protectedArea]);
 
   const barFillPercentage = useMemo(() => {
