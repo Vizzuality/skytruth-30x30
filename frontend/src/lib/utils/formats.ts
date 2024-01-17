@@ -8,6 +8,12 @@ export function formatPercentage(
     return displayPercentageSign ? '<0.1%' : '<0.1';
   }
 
+  // Sanity check to prevent the display of percentages over 100.
+  // This should never be true, but data can be wonky hence this last resort check.
+  if (value > 100) {
+    return displayPercentageSign ? '100%' : '100';
+  }
+
   const v = Intl.NumberFormat('en-US', {
     maximumFractionDigits: 1,
     style: displayPercentageSign ? 'percent' : 'decimal',
