@@ -133,6 +133,9 @@ const ProtectedAreaPopup = ({ locationId }: { locationId: number }) => {
                 {format({
                   value: DATA?.REP_M_AREA,
                   id: 'formatKM',
+                  options: {
+                    maximumSignificantDigits: 3,
+                  },
                 })}
                 Km<sup>2</sup>
               </dd>
