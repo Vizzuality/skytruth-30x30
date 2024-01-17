@@ -7,7 +7,7 @@ const ICONS = {
 
 type SidebarItemProps = {
   text: string;
-  percentage: number;
+  percentage: string | number;
   icon?: keyof typeof ICONS;
 };
 
