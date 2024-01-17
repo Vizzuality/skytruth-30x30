@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PAGES } from '@/constants/pages';
-import { bboxLocation } from '@/containers/map/store';
+import { bboxLocation, popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
@@ -32,6 +32,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
   } = useRouter();
   // @ts-expect-error to work properly, strict mode should be enabled
   const setLocationBBox = useSetAtom(bboxLocation);
+  const setPopup = useSetAtom(popupAtom);
 
   const locationsQuery = useGetLocations(
     {
@@ -66,6 +67,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
   const handleLocationSelected = useCallback(
     async (locationCode: LocationGroupsDataItemAttributes['code']) => {
       setLocationPopoverOpen(false);
+      setPopup({});
 
       const selectedLocation = locationsData.find(
         ({ attributes: { code } }) => code === locationCode
@@ -76,7 +78,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
         await push(`${PAGES.map}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
       }
     },
-    [push, searchParams, setLocationBBox, locationsData]
+    [push, searchParams, setLocationBBox, locationsData, setPopup]
   );
 
   return (
