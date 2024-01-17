@@ -14,7 +14,7 @@ export function formatKM(value: number, options?: Intl.NumberFormatOptions) {
     compactDisplay: 'short',
     unit: 'kilometer',
     unitDisplay: 'short',
-    maximumSignificantDigits: 3,
+    maximumFractionDigits: 0,
     ...options,
   });
 
