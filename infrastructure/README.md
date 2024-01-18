@@ -10,19 +10,25 @@ While the application can be deployed in any server configuration that supports 
 
 Here is the list of technical dependencies for deploying the SkyTruth 30x30 Dashboard app using these infrastructure resources. Note that these requirements are for this particular deployment strategy, and not dependencies of the SkyTruth 30x30 Dashboard application itself - which can be deployed to other infrastructures.
 
-Before proceeding, be sure you are familiar with all of these tools, as these instructions will skip over the basics, and assume you are conformable using all of them.
+Before proceeding, be sure you are familiar with all of these tools, as these instructions will skip over the basics, and assume you are comfortable using all of them.
 
-- [Google Cloud Platform](https://cloud.google.com)
+- [Google Cloud Platform](https://cloud.google.com) and [gcloud CLI tool](https://cloud.google.com/sdk/docs/install)
 - [Terraform](https://www.terraform.io/)
 - [Docker](https://www.docker.com/)
-- [Github](https://github.com)
-- [Github Actions](https://github.com/features/actions)
+- [GitHub](https://github.com)
+- [GitHub Actions](https://github.com/features/actions)
 - DNS management
 - A purchased domain
 
-### Terraform project
+## Infrastructure project files
 
-This project (in the inrastructure directory) has 2 main sections, each of which with a folder named after it. Each of these sections has a Terraform project, that logically depends on their predecessors. There is a 3rd component to this architecture, which is handled by Github Actions.
+There are 2 terraform projects in the infrastructure directory, placed in subdirectories:
+1. remote-state
+2. base - depends on remote-state
+
+Also, there is a GH Actions workflow file in the `.github` directory in the top-level project directory.
+
+### Terraform
 
 #### Remote state
 
@@ -60,27 +66,40 @@ Please note, there are some actions that might to be carried out manually - you'
 
 #### How to run
 
-Deploying the included Terraform project is done in steps:
+First, authenticate with GCP. The easiest way to do this is to run `gcloud auth application-default login`.
 
-- Terraform `apply` the `Remote State` project. This needs to be done once, before applying the base project.
-- Terraform `apply` the `Base` project. This needs to be repeated after any changes in the base project.
+Next, check and adapt if necessary the contents of `infrastructure/base/vars/terraform.tfvars`.
 
-For both commands, please use `-var-file=vars/terraform.tfvars`` to provide the necessary terraform variables.
+You will need to initialize both terraform projects by running:
+`terraform init`
 
-For the second command, you will also need to set 2 environment variables:
-- GITHUB_TOKEN (your GH token)
-- GITHUB_OWNER (Vizzuality)
-to allow terraform to write to GH Secrets.
+in their respective directories.
 
-Please note: when provisioning for the first time in a clean project, amend the `cloudrun` module by uncommenting the image setting to be used for first time deployment, which deploys a dummy "hello" image (because actual application images are going to be available in GAR only once the infrastructure is provisioned and the GH Actions deployment passed)
+Deploying the Terraform project is done in steps:
 
-### Github Actions
+1. Apply the `Remote State` project first. This needs to be done once.
 
-As part of this infrastructure, Github Actions are used to automatically apply code updates for the client application, API/CMS and the cloud functions.
+While in `infrastructure/remote-state` directory:
+
+`terraform apply`
+
+2. Apply the `Base` project. This needs to be repeated after any changes in the base project.
+
+_Please note: when doing this for the first time in a clean project, temporarily change the `cloudrun` module (`infrastructure/base/modules/cloudrun/main.tf`) by uncommenting the default image setting, so that it deploys a dummy "hello" image. This is to work around the fact that actual application images are going to be available in the image repository only once the infrastructure is provisioned and the GH Actions deployment passed._
+
+While in `infrastructure/base` directory:
+
+`GITHUB_TOKEN=... GITHUB_OWNER=.. terraform apply -var-file=vars/terraform.tfvars`
+
+The GH env vars are needed for Terraform to be able to set GH Actions Secrets & Variables.
+
+### GitHub Actions
+
+As part of this infrastructure, GitHub Actions are used to automatically apply code updates for the client application, API/CMS and the cloud functions.
 
 #### Building new code versions
 
-Deployment to the CloudRun instances is accomplished by building Docker images are built and pushing to [Artifact Registry](https://cloud.google.com/artifact-registry). When building the images, environment secrets are injected from GH Secrets as follows:
+Deployment to the CloudRun instances is accomplished by building Docker images and pushing them to [Artifact Registry](https://cloud.google.com/artifact-registry). When building the images, environment secrets are injected from GH Secrets as follows:
 - for the client application:
   - the following secrets set by terraform in STAGING_CLIENT_ENV_TF_MANAGED (in the format of an .env file):
     - NEXT_PUBLIC_URL
@@ -106,13 +125,13 @@ Deployment to the CloudRun instances is accomplished by building Docker images a
     - DATABASE_PASSWORD
     - DATABASE_SSL
 
-Deployment to the cloud function is accomplished by pushing the source code. Secrets and env vars are set via terraform.
+Deployment to the cloud function is accomplished by pushing the source code. Secrets and env vars are set via Terraform.
 
-The workflow is currently set up to deploy to the staging instance when merging to develop.
+The workflow is currently set up to deploy to the staging instance when merging to `develop``.
 
 #### Service account permissions
 
-Access by Github to GCP is configured through special authorization rules, automatically set up by the Terraform `base` project above.
+Access by GitHub to GCP is configured through special authorization rules, automatically set up by the Terraform `base` project above.
 These permissions are necessary for the service account that runs the deployment:
 - "roles/iam.serviceAccountTokenCreator",
 - "roles/iam.serviceAccountUser",
@@ -136,12 +155,12 @@ You will need the following information from the Google Cloud console:
 You will also need to ensure that the user has IAP-secured Tunnel User role.
 
 Steps:
-- (one time per user) Run `gcloud compute ssh <bastion instance name>` to SSH into the bastion host
-- (one time per bastion host) Inside the bastion host, follow the [steps to download and install
+1. (one time per user) Run `gcloud compute ssh <bastion instance name>` to SSH into the bastion host
+2. (one time per user) Inside the bastion host, follow the [steps to download and install
   the Cloud SQL Auth proxy](https://cloud.google.com/sql/docs/postgres/sql-proxy#install)
-- (when connecting) Run `gcloud compute start-iap-tunnel <bastion instance name> 22 --local-host-port=localhost:4226` locally. This will start a tunnel, which you must keep open for the duration of your access to the SQL database
-- (when connecting) Run `ssh -L 5433:localhost:5433 -i ~/.ssh/google_compute_engine -p 4226 localhost -- ./cloud-sql-proxy <sql instance connection name> --port=5433 --private-ip` locally. This will start a 2nd tunnel, which you must also keep open for the duration of your access to the SQL database
-- The remote Postgres database is now reachable on a local port 5433: `psql -h 127.0.0.1 -p 5433 -U db_user -W db_name`
+3. (when connecting) Run `gcloud compute start-iap-tunnel <bastion instance name> 22 --local-host-port=localhost:4226` locally. This will start a tunnel, which you must keep open for the duration of your access to the SQL database
+4. (when connecting) Run `ssh -L 5433:localhost:5433 -i ~/.ssh/google_compute_engine -p 4226 localhost -- ./cloud-sql-proxy <sql instance connection name> --port=5433 --private-ip` locally. This will start a 2nd tunnel, which you must also keep open for the duration of your access to the SQL database
+5. The remote Postgres database is now reachable on a local port 5433: `psql -h 127.0.0.1 -p 5433 -U db_user -W db_name`
 
 ## Backups
 
