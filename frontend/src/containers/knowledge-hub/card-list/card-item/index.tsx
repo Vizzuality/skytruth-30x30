@@ -22,7 +22,9 @@ const CardItem = ({ data }: { data: DataToolListResponseDataItem }): JSX.Element
           </div>
         )}
         {data.attributes.description && (
-          <p className="line-clamp-5">{data.attributes.description}</p>
+          <p title={data.attributes.description} className="line-clamp-5">
+            {data.attributes.description}
+          </p>
         )}
       </div>
       <div className="mt-5 pt-5">
