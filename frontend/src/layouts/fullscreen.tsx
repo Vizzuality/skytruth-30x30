@@ -19,7 +19,9 @@ const FullscreenLayout: React.FC<PropsWithChildren<FullscreenLayoutProps>> = ({
       <div className="flex-shrink-0">
         <Header />
       </div>
-      <div className="h-full border-x border-b border-black">{children}</div>
+      <div className="relative border-x border-b border-black md:h-full md:overflow-hidden">
+        {children}
+      </div>
     </div>
   </>
 );
