@@ -765,9 +765,9 @@ export interface ApiDataToolDataTool extends Schema.CollectionType {
       'oneToMany',
       'api::data-tool-language.data-tool-language'
     >;
-    data_tool_resource_type: Attribute.Relation<
+    data_tool_resource_types: Attribute.Relation<
       'api::data-tool.data-tool',
-      'oneToOne',
+      'oneToMany',
       'api::data-tool-resource-type.data-tool-resource-type'
     >;
     geography: Attribute.Text;

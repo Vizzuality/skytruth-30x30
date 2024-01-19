@@ -28,9 +28,9 @@
       "target": "api::data-tool-language.data-tool-language",
       "mappedBy": "data_tool"
     },
-    "data_tool_resource_type": {
+    "data_tool_resource_types": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::data-tool-resource-type.data-tool-resource-type"
     },
     "geography": {
