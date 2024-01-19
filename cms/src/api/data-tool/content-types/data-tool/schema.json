@@ -28,6 +28,11 @@
       "target": "api::data-tool-language.data-tool-language",
       "mappedBy": "data_tool"
     },
+    "data_tool_resource_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::data-tool-resource-type.data-tool-resource-type"
+    },
     "data_tool_resource_types": {
       "type": "relation",
       "relation": "oneToMany",
