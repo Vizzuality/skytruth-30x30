@@ -29,14 +29,16 @@ const CardItem = ({ data }: { data: DataToolListResponseDataItem }): JSX.Element
       </div>
       <div className="mt-5 pt-5">
         <ul className="space-y-4">
-          {data.attributes.data_tool_resource_type.data && (
+          {data.attributes.data_tool_resource_types.data && (
             <li className="flex gap-4">
               <div className={CIRCLE_ICON_CLASSES}>
                 <Icon icon={ListIcon} className="h-4 w-4" />
               </div>
               <div className="col-span-1">
                 <h5 className="font-bold">Resource category</h5>
-                <span>{data.attributes.data_tool_resource_type.data.attributes.name}</span>
+                {data.attributes.data_tool_resource_types.data
+                  .map(({ attributes: { name } }) => name)
+                  .join(', ')}
               </div>
             </li>
           )}
