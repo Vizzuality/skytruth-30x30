@@ -17,7 +17,7 @@ const CardList = (): JSX.Element => {
           },
         }),
         ...(filters.resourceType && {
-          data_tool_resource_type: {
+          data_tool_resource_types: {
             name: filters.resourceType,
           },
         }),
