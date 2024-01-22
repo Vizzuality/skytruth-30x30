@@ -1,4 +1,4 @@
-import cx from 'clsx';
+import { cn } from '@/lib/classnames';
 
 interface BrowserSpriteSymbol {
   id: string;
@@ -20,7 +20,7 @@ export interface IconProps {
 
 const Icon = ({ icon, className, style }: IconProps) => (
   <svg
-    className={cx({
+    className={cn({
       'fill-current': true,
       [className]: !!className,
     })}
