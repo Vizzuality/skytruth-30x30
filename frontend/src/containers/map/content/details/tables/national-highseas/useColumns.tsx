@@ -40,7 +40,13 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     return [
       {
         accessorKey: 'protectedArea',
-        header: 'Protected Area',
+        header: ({ column }) => (
+          <HeaderItem>
+            <SortingButton column={column} />
+            Name
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
         cell: ({ row }) => {
           const { protectedArea } = row.original;
           return <span className="underline">{protectedArea}</span>;
@@ -70,6 +76,25 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
       {
+        accessorKey: 'area',
+        header: ({ column }) => (
+          <HeaderItem>
+            <SortingButton column={column} />
+            Area
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
+        cell: ({ row }) => {
+          const { area: value } = row.original;
+          const formattedValue = cellFormatter.area(value);
+          return (
+            <span>
+              {formattedValue} km<sup>2</sup>
+            </span>
+          );
+        },
+      },
+      {
         accessorKey: 'protectedAreaType',
         header: ({ column }) => (
           <HeaderItem>
@@ -79,7 +104,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               values={filters[column.id]}
               onChange={onFiltersChange}
             />
-            Protected Area Type
+            Type
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
@@ -141,24 +166,6 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           const formattedValue =
             fishingProtectionLevelOptions.find((entry) => value === entry?.value)?.name || 'N/A';
           return <>{formattedValue}</>;
-        },
-      },
-      {
-        accessorKey: 'area',
-        header: ({ column }) => (
-          <HeaderItem>
-            <SortingButton column={column} />
-            Area
-          </HeaderItem>
-        ),
-        cell: ({ row }) => {
-          const { area: value } = row.original;
-          const formattedValue = cellFormatter.area(value);
-          return (
-            <span>
-              {formattedValue} km<sup>2</sup>
-            </span>
-          );
         },
       },
     ];

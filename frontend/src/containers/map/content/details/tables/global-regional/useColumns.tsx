@@ -42,37 +42,24 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     return [
       {
         accessorKey: 'location',
-        header: 'Location',
-        cell: ({ row }) => {
-          const { location, locationCode } = row.original;
-          return (
-            <Link
-              className="underline"
-              href={`${PAGES.map}/${locationCode}?${searchParams.toString()}`}
-            >
-              {location}
-            </Link>
-          );
-        },
-      },
-      {
-        accessorKey: 'coverage',
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Coverage
+            Name
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
-          const { coverage: value } = row.original;
-          const formattedCoverage = cellFormatter.percentage(value);
-
+          const { location, locationCode } = row.original;
           return (
-            <span className="text-4xl font-bold">
-              {formattedCoverage}
-              <span className="text-xs">%</span>
-            </span>
+            <HeaderItem>
+              <Link
+                className="underline"
+                href={`${PAGES.map}/${locationCode}?${searchParams.toString()}`}
+              >
+                {location}
+              </Link>
+            </HeaderItem>
           );
         },
       },
@@ -97,24 +84,25 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
       {
-        accessorKey: 'mpas',
+        accessorKey: 'coverage',
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            MPAs
+            Coverage
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
-      },
-      {
-        accessorKey: 'oecms',
-        header: ({ column }) => (
-          <HeaderItem>
-            <SortingButton column={column} />
-            OECMs
-            <TooltipButton column={column} tooltips={tooltips} />
-          </HeaderItem>
-        ),
+        cell: ({ row }) => {
+          const { coverage: value } = row.original;
+          const formattedCoverage = cellFormatter.percentage(value);
+
+          return (
+            <span className="text-4xl font-bold">
+              {formattedCoverage}
+              <span className="text-xs">%</span>
+            </span>
+          );
+        },
       },
       {
         accessorKey: 'area',
@@ -122,6 +110,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           <HeaderItem>
             <SortingButton column={column} />
             Area
+            <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
@@ -132,6 +121,40 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               {formattedValue} km<sup>2</sup>
             </span>
           );
+        },
+      },
+      {
+        accessorKey: 'mpas',
+        header: ({ column }) => (
+          <HeaderItem>
+            <SortingButton column={column} />
+            MPAs
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
+        cell: ({ row }) => {
+          const { mpas: value } = row.original;
+          if (Number.isNaN(value)) return 'N/A';
+
+          const formattedValue = cellFormatter.percentage(value);
+          return <span className="text-xs">{formattedValue}%</span>;
+        },
+      },
+      {
+        accessorKey: 'oecms',
+        header: ({ column }) => (
+          <HeaderItem>
+            <SortingButton column={column} />
+            OECMs
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
+        cell: ({ row }) => {
+          const { oecms: value } = row.original;
+          if (Number.isNaN(value)) return 'N/A';
+
+          const formattedValue = cellFormatter.percentage(value);
+          return <span className="text-xs">{formattedValue}%</span>;
         },
       },
       {

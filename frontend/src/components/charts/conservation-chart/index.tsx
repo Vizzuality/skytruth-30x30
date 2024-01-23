@@ -13,7 +13,9 @@ import {
   Line,
 } from 'recharts';
 
+import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
+import { useGetDataInfos } from '@/types/generated/data-info';
 
 import ChartLegend from './legend';
 
@@ -64,6 +66,20 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
     { year: lastYearData.year, percentage: projectedPercentage },
   ];
 
+  const { data: dataInfo } = useGetDataInfos(
+    {
+      filters: {
+        slug: '30x30-target',
+      },
+    },
+    {
+      query: {
+        select: ({ data }) => data?.[0],
+        placeholderData: { data: [] },
+      },
+    }
+  );
+
   return (
     <div className={cn(className, 'text-xs text-black')}>
       <ResponsiveContainer>
@@ -72,7 +88,28 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
           <ReferenceLine
             xAxisId={1}
             y={30}
-            label={{ position: 'insideBottomLeft', value: '30x30 Target', fill: '#FD8E28' }}
+            label={(props) => {
+              const { viewBox } = props;
+              return (
+                <g>
+                  <text {...viewBox} x={viewBox.x + 5} y={viewBox.y - 2}>
+                    30x30 Target
+                  </text>
+                  <foreignObject
+                    {...viewBox}
+                    x={viewBox.x + 90}
+                    y={viewBox.y - 17}
+                    width="160"
+                    height="160"
+                  >
+                    <TooltipButton
+                      text={dataInfo?.attributes.content}
+                      className="hover:bg-transparent"
+                    />
+                  </foreignObject>
+                </g>
+              );
+            }}
             stroke="#FD8E28"
             strokeDasharray="3 3"
           />

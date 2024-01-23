@@ -1,10 +1,12 @@
 import { useGetDataInfos } from '@/types/generated/data-info';
 
 const TOOLTIP_MAPPING = {
+  location: 'name-country',
   coverage: 'coverage',
   locationType: 'location-type',
   mpas: 'mpas',
   oecms: 'oecms',
+  area: 'protected-area',
   fullyHighlyProtected: 'fully-highly-protected',
   highlyProtectedLfp: 'highly-protected-lfp',
   globalContribution: 'global-contribution',
