@@ -4,6 +4,8 @@
 
 The client needs to be configured with settings for accessig the API and external services. Please check the `.env.default` file for required environment variables. Those are set partially by Terraform in GH Secrets, and then passed into the docker images during deployment by GH Actions. Some are managed manually in GH Secrets. Please refer to [infrastructure documentation](../infrastructure/README.md) for details.
 
+See [HubSpot configuration details](../hubspot.md).
+
 ## Run locally
 
 ### Install

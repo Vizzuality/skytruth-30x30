@@ -12,7 +12,11 @@ SkyTruth 30x30 Tracker is a compelling online experience that builds momentum to
 
 - *Data Pipelines*: Data pipelines are responsible for feeding structured data into the SQL database and layers into Mapbox.
 
+External services:
+
 - *Mapbox*: used for serving layers for the map
+
+- *HubSpot*: used for the contact form, see [configuration instructions](hubspot.md)
 
 This repository contains all the code and documentation necessary to set up and deploy the project. It is organised in 5 main subdirectories, with accompanying documentation inside each.
 
