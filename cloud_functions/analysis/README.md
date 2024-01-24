@@ -22,8 +22,21 @@ locally: `http://0.0.0.0:3001`
 ```
 
 ### Development instructions
+# Analysis Cloud Function
 
-#### local development
+## Config
+
+The cloud function needs to be configured with PostgreSQL instance connection details. It expects the following environment variables / secrets:
+- `DATABASE_HOST`
+- `DATABASE_USERNAME`
+- `DATABASE_PASSWORD`
+- `DATABASE_NAME`
+
+Those are set in GCP by Terraform, please refer to [infrastructure documentation](../infrastructure/README.md).
+
+## Run locally
+
+### Natively
 
 In order to run the analysis locally you will need to:
 
@@ -32,7 +45,7 @@ In order to run the analysis locally you will need to:
 3.- Set the environment variables.
 4.- Run the cloud function locally using the command `functions-framework --target=analysis --debug`
 
-#### using docker & docker-compose
+### Using docker & docker-compose
 
 Prerequisites:
 install docker and docker-compose

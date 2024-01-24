@@ -9,5 +9,7 @@ staging_project_name    = "x30-dev"
 production_project_name = "x30-prod"
 
 domain = "skytruth.org"
+staging_subdomain    = "30x30"
+production_subdomain = "30x30-TBD"
 
 uptime_alert_email = "agnieszka.figiel@vizzuality.com"
