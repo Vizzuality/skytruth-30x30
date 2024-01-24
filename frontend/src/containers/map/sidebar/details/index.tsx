@@ -22,19 +22,26 @@ const SidebarDetails: React.FC = () => {
 
   return (
     <>
-      <div className="h-full w-full overflow-y-scroll border-x border-black pb-12">
-        <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
+      <div className="h-full w-full border-x border-black">
+        <div className="sticky border-b border-black px-4 pt-4 pb-2 md:px-8">
           <h1 className="text-5xl font-black">{locationsData.data[0]?.attributes?.name}</h1>
           <LocationSelector className="my-2" />
         </div>
-        <DetailsWidgets />
-      </div>
-      <div
-        className={cn('absolute bottom-0 left-px', {
-          'right-px': !showDetails,
-        })}
-      >
-        <DetailsButton />
+        <div
+          className={cn({
+            'h-[calc(100%-161px)] overflow-y-auto': true,
+            'h-full': showDetails,
+          })}
+        >
+          <DetailsWidgets />
+        </div>
+        <div
+          className={cn('absolute bottom-0 left-px ', {
+            'right-px': !showDetails,
+          })}
+        >
+          <DetailsButton />
+        </div>
       </div>
     </>
   );
