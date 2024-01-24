@@ -2,10 +2,9 @@ import { useMemo } from 'react';
 
 import Image from 'next/image';
 
-import { format } from 'd3-format';
-
 import Icon from '@/components/ui/icon';
 import SidebarItem from '@/containers/homepage/intro/sidebar-item';
+import { formatPercentage } from '@/lib/utils/formats';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 
@@ -59,7 +58,7 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
 
     if (Number.isNaN(coveragePercentage)) return null;
 
-    return format(',.0r')(coveragePercentage);
+    return formatPercentage(coveragePercentage, { displayPercentageSign: false });
   }, [protectionStatsData]);
 
   return (
@@ -110,7 +109,7 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
               icon="icon1"
             />
             <SidebarItem
-              percentage={16}
+              percentage={17.2}
               text="Current global land and inland waters protected area"
               icon="icon2"
             />
