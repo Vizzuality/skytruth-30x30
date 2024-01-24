@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import tablesSettings from '@/containers/map/content/details/tables-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
-import { useGetLocations } from '@/types/generated/location';
+import { getGetLocationsQueryOptions, useGetLocations } from '@/types/generated/location';
 
 const MapDetails: React.FC = () => {
   const [, setSettings] = useSyncMapContentSettings();
@@ -21,8 +21,18 @@ const MapDetails: React.FC = () => {
     },
     {
       query: {
-        queryKey: ['locations', locationCode],
-        select: ({ data }) => data?.[0]?.attributes,
+        ...getGetLocationsQueryOptions(
+          {
+            filters: {
+              code: locationCode,
+            },
+          },
+          {
+            query: {
+              select: ({ data }) => data?.[0]?.attributes,
+            },
+          }
+        ),
       },
     }
   );
@@ -32,25 +42,23 @@ const MapDetails: React.FC = () => {
   };
 
   const table = useMemo(() => {
-    if (location) {
-      // TODO: Improve to support more entries (although not needed right now)
-      const tableSettings = tablesSettings.worldwideRegion.locationTypes.includes(
-        locationsQuery.data?.type
-      )
-        ? tablesSettings.worldwideRegion
-        : tablesSettings.countryHighseas;
+    // TODO: Improve to support more entries (although not needed right now)
+    const tableSettings = tablesSettings.worldwideRegion.locationTypes.includes(
+      locationsQuery.data?.type
+    )
+      ? tablesSettings.worldwideRegion
+      : tablesSettings.countryHighseas;
 
-      const parsedTitle =
-        tableSettings.title[locationsQuery.data?.type]?.replace(
-          '{location}',
-          locationsQuery.data?.name
-        ) || tableSettings.title.fallback;
+    const parsedTitle =
+      tableSettings.title[locationsQuery.data?.type]?.replace(
+        '{location}',
+        locationsQuery.data?.name
+      ) || tableSettings.title.fallback;
 
-      return {
-        title: parsedTitle,
-        component: tableSettings.component,
-      };
-    }
+    return {
+      title: parsedTitle,
+      component: tableSettings.component,
+    };
   }, [locationsQuery.data]);
 
   return (
