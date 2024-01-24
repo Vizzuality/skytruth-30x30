@@ -62,8 +62,8 @@ const MapDetails: React.FC = () => {
   }, [locationsQuery.data]);
 
   return (
-    <div className="absolute h-full w-full overflow-x-hidden overflow-y-scroll bg-white px-4 py-4 md:px-6">
-      <div className="mb-8 flex gap-8 md:justify-between">
+    <div className="absolute h-full w-full overflow-scroll bg-white px-4 py-4 md:px-6">
+      <div className="sticky left-0 mb-8 flex gap-8 md:justify-between">
         <span className="max-w-lg">
           <h2 className="text-4xl font-extrabold">{table.title}</h2>
         </span>
@@ -71,10 +71,8 @@ const MapDetails: React.FC = () => {
           Close
         </Button>
       </div>
-      <div className="overflow-x-auto overflow-y-auto">
-        <div className="mt-4">
-          <table.component />
-        </div>
+      <div className="mt-4">
+        <table.component />
       </div>
     </div>
   );

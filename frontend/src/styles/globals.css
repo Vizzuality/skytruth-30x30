@@ -38,3 +38,6 @@
   @apply !border-r-black
 }
 
+.details-table-first-column-border {
+  border-right: 1px dashed;
+}

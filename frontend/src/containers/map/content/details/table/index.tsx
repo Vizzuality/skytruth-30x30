@@ -27,8 +27,11 @@ const MapTable = ({ columns, data }) => {
   const lastColumn = columns[columns.length - 1];
 
   return (
-    <table ref={tableRef} className="whitespace-nowrap font-mono text-xs">
-      <thead className="text-left">
+    <table
+      ref={tableRef}
+      className="relative border-separate border-spacing-0 whitespace-nowrap pr-6 font-mono text-xs"
+    >
+      <thead className="sticky -top-4 z-10 bg-white text-left">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
@@ -41,8 +44,8 @@ const MapTable = ({ columns, data }) => {
                   key={id}
                   ref={isFirstColumn ? firstColumnRef : null}
                   className={cn({
-                    'h-10 py-3 pl-6 pr-16': true,
-                    'border-r border-dashed border-black pl-0 pr-5': isFirstColumn,
+                    'h-10 border-b border-black py-3 pl-6 pr-16': true,
+                    'details-table-first-column-border border-black pl-0 pr-5': isFirstColumn,
                     'pr-0': isLastColumn,
                   })}
                 >
@@ -67,8 +70,8 @@ const MapTable = ({ columns, data }) => {
                     <td
                       key={cell.id}
                       className={cn({
-                        'h-16 py-3 pl-6 pr-16': true,
-                        'border-r border-dashed border-black pl-0 pr-5': isFirstColumn,
+                        'h-16 border-b border-black py-3 pl-6 pr-16': true,
+                        'details-table-first-column-border border-black pl-0 pr-5': isFirstColumn,
                         'pr-0': isLastColumn,
                       })}
                     >
