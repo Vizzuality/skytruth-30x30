@@ -1,5 +1,5 @@
 import Icon from '@/components/ui/icon';
-import ExternalLinkIcon from '@/styles/icons/external-link.svg?sprite';
+import ExternalLinkIcon from '@/styles/icons/external-link-square.svg';
 import ListIcon from '@/styles/icons/list.svg?sprite';
 import StarIcon from '@/styles/icons/star.svg?sprite';
 import WorldIcon from '@/styles/icons/world.svg?sprite';
