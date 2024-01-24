@@ -3,7 +3,7 @@ import { useGetDataInfos } from '@/types/generated/data-info';
 const TOOLTIP_MAPPING = {
   administrativeBoundary: 'administrative-boundary',
   contributionDetails: 'contribution-details',
-  globalContribution: 'global-contribution',
+  globalContribution: 'global-contribution-model',
 };
 
 const useTooltips = () => {

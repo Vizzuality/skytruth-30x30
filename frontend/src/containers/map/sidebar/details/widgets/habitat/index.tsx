@@ -65,7 +65,6 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
         background: HABITAT_CHART_COLORS[habitat.slug],
         totalArea: stats.totalArea,
         protectedArea: stats.protectedArea,
-        info: habitat?.info,
       };
     });
 

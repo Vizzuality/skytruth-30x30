@@ -82,7 +82,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   return (
     <Widget
-      title="Marine Conservation Protection Types"
+      title="Marine Conservation Protection Levels"
       lastUpdated={dataLastUpdate}
       source="protection-types-widget"
       noData={noData}

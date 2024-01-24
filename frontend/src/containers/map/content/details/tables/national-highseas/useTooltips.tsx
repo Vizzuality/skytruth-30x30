@@ -1,11 +1,13 @@
 import { useGetDataInfos } from '@/types/generated/data-info';
 
 const TOOLTIP_MAPPING = {
+  protectedArea: 'name-pa',
   coverage: 'coverage-wdpa',
   protectedAreaType: 'protected-area-type',
   establishmentStage: 'establishment-stage',
   protectionLevel: 'protection-level',
   fishingProtectionLevel: 'fishing-protection-level',
+  area: 'protected-area',
 };
 
 const useTooltips = () => {
