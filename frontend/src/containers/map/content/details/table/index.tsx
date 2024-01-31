@@ -24,16 +24,21 @@ const MapTable = ({ columns, data }) => {
   const hasData = table.getRowModel().rows?.length > 0;
 
   const firstColumn = columns[0];
+  const secondColumn = columns[1];
   const lastColumn = columns[columns.length - 1];
 
   return (
-    <table ref={tableRef} className="whitespace-nowrap font-mono text-xs">
-      <thead className="text-left">
+    <table
+      ref={tableRef}
+      className="relative border-spacing-0 whitespace-nowrap pr-6 font-mono text-xs"
+    >
+      <thead className="sticky -top-4 z-10 bg-white text-left">
         {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
+          <tr key={headerGroup.id} className="shadow-[0_2px_0_-1px_rgb(0,0,0)]">
             {headerGroup.headers.map((header) => {
-              const { id, column } = header;
+              const { id, column, index } = header;
               const isFirstColumn = id === firstColumn.accessorKey;
+              const isSecondColumn = index === 1;
               const isLastColumn = id === lastColumn.accessorKey;
 
               return (
@@ -42,7 +47,8 @@ const MapTable = ({ columns, data }) => {
                   ref={isFirstColumn ? firstColumnRef : null}
                   className={cn({
                     'h-10 py-3 pl-6 pr-16': true,
-                    'border-r border-dashed border-black pl-0 pr-5': isFirstColumn,
+                    'pl-0 pr-5': isFirstColumn,
+                    'border-l border-dashed border-black': isSecondColumn,
                     'pr-0': isLastColumn,
                   })}
                 >
@@ -57,10 +63,17 @@ const MapTable = ({ columns, data }) => {
         {hasData &&
           table.getRowModel().rows.map((row) => {
             return (
-              <tr key={row.id} className="border-b border-t border-black">
+              <tr
+                key={row.id}
+                className={cn({
+                  'border-b border-t border-black': true,
+                  'border-t-0': row.index === 0,
+                })}
+              >
                 {row.getVisibleCells().map((cell) => {
                   const { column } = cell;
                   const isFirstColumn = column.id === firstColumn.accessorKey;
+                  const isSecondColumn = column.id === secondColumn.accessorKey;
                   const isLastColumn = column.id === lastColumn.accessorKey;
 
                   return (
@@ -68,7 +81,8 @@ const MapTable = ({ columns, data }) => {
                       key={cell.id}
                       className={cn({
                         'h-16 py-3 pl-6 pr-16': true,
-                        'border-r border-dashed border-black pl-0 pr-5': isFirstColumn,
+                        'pl-0 pr-5': isFirstColumn,
+                        'border-l border-dashed border-black': isSecondColumn,
                         'pr-0': isLastColumn,
                       })}
                     >
