@@ -7,11 +7,20 @@ type LogoProps = {
 };
 
 const Logo: React.FC<LogoProps> = ({ logo: logoKey }) => {
-  const { logo, alt, width, height } = LOGOS[logoKey];
+  const { logo, link, alt, width, height } = LOGOS[logoKey];
 
   return (
     <span>
-      <Image src={`${LOGOS_PATH}${logo}`} alt={alt} width={width} height={height} />
+      {link && (
+        <a target="_blank" href={link} rel="noopener noreferrer">
+          <Image src={`${LOGOS_PATH}${logo}`} alt={alt} width={width} height={height} />
+        </a>
+      )}
+      {!link && (
+        <span>
+          <Image src={`${LOGOS_PATH}${logo}`} alt={alt} width={width} height={height} />
+        </span>
+      )}
     </span>
   );
 };
