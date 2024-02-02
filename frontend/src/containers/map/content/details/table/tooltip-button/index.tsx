@@ -1,8 +1,8 @@
 import { Column } from '@tanstack/react-table';
 
 import TooltipButton from '@/components/tooltip-button';
-import { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/useColumns';
-import { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/useColumns';
+import type { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/useColumns';
+import type { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/useColumns';
 
 type TableTooltipButtonProps = {
   column:
