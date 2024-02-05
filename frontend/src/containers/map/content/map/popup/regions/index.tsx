@@ -10,6 +10,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
+import { formatPercentage } from '@/lib/utils/formats';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
@@ -135,12 +136,11 @@ const EEZLayerPopup = ({ locationId }) => {
         0
       );
 
-      const formatter = Intl.NumberFormat('en-US', {
-        maximumFractionDigits: 2,
-      });
-
-      return formatter.format(
-        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100
+      return formatPercentage(
+        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100,
+        {
+          displayPercentageSign: false,
+        }
       );
     }
 
