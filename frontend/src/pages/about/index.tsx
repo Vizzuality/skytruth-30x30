@@ -122,8 +122,8 @@ const About: React.FC = () => {
           <SectionTitle>Who are our data partners?</SectionTitle>
           <SectionDescription>
             We depend on the expertise and efforts of key data partners to power our maps and
-            dashboards. Each of the datasets represents a great amount of effort to assess and
-            measure the effectiveness of ecosystem protections globally, and is critical to the
+            dashboards. Each of these datasets represents a tremendous amount of effort to assess
+            and measure the effectiveness of ecosystem protections globally, and is critical to the
             success of 30x30.
           </SectionDescription>
 
