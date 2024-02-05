@@ -34,7 +34,7 @@ const TooltipButton: React.FC<TooltipButtonProps> = ({ className, text }) => {
           <Linkify
             componentDecorator={(href, text, key) => (
               <a
-                className="break-all"
+                className="break-all underline"
                 href={href}
                 key={key}
                 target="_blank"
