@@ -90,9 +90,18 @@ const About: React.FC = () => {
         <Section ref={sections.problem.ref}>
           <SectionTitle>Why build a 30x30 hub?</SectionTitle>
           <SectionDescription>
-            We are building the 30x30 hub to unify critical conservation tools and information
-            streams in a single location that provides an entry point for getting informed and
-            engaged in 30x30.
+            <p>
+              With only a few years left between now and 2030, the world is pushing hard to preserve
+              our critical ecosystems. Biodiversity conservation is moving faster than ever, and a
+              host of new organizations, tools, and campaigns are emerging every day. Even for
+              conservation professionals, it can be hard to keep up. And for anyone new to 30x30, it
+              can be hard to know where to start or how to get involved.
+            </p>
+            <p className="mt-4 font-bold">
+              We are building the 30x30 hub to unify these critical tools and information streams in
+              a single location that provides an accessible entry point for getting informed and
+              engaged in 30x30.
+            </p>
           </SectionDescription>
 
           <SectionContent>
