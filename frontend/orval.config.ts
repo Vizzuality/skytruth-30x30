@@ -54,6 +54,7 @@ module.exports = {
           'Data-tool-resource-type',
           'Data-tool-ecosystem',
           'Data-source',
+          'Static-indicator',
         ],
       },
     },
