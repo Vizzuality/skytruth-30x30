@@ -129,22 +129,32 @@ const EEZLayerPopup = ({ locationId }) => {
     return [];
   }, [protectionCoverageStats, latestYearAvailable]);
 
-  const coveragePercentage = useMemo(() => {
+  const coverageStats = useMemo(() => {
     if (latestProtectionCoverageStats.length && locationsQuery.data) {
       const totalCumSumProtectedArea = latestProtectionCoverageStats.reduce(
         (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
         0
       );
 
-      return formatPercentage(
+      const percentage = formatPercentage(
         (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100,
         {
           displayPercentageSign: false,
         }
       );
+
+      const protectedArea = formatKM(totalCumSumProtectedArea);
+
+      return {
+        percentage,
+        protectedArea,
+      };
     }
 
-    return '-';
+    return {
+      percentage: '-',
+      protectedArea: '-',
+    };
   }, [latestProtectionCoverageStats, locationsQuery.data]);
 
   // handle renderer
@@ -184,11 +194,13 @@ const EEZLayerPopup = ({ locationId }) => {
           <div className="space-y-2">
             <div className="font-mono uppercase">Marine conservation coverage</div>
             <div className="space-x-1 font-mono tracking-tighter text-blue">
-              <span className="text-[64px] font-bold leading-[80%]">{coveragePercentage}</span>
-              {coveragePercentage !== '-' && <span className="text-lg">%</span>}
+              <span className="text-[64px] font-bold leading-[80%]">
+                {coverageStats.percentage}
+              </span>
+              {coverageStats.percentage !== '-' && <span className="text-lg">%</span>}
             </div>
             <div className="space-x-1 font-mono text-xl text-blue">
-              <span>{formatKM(locationsQuery.data.totalMarineArea)}</span>
+              <span>{coverageStats.protectedArea}</span>
               <span>
                 km<sup>2</sup>
               </span>
