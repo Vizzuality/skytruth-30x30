@@ -10,7 +10,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
-import { formatPercentage } from '@/lib/utils/formats';
+import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
@@ -188,11 +188,7 @@ const EEZLayerPopup = ({ locationId }) => {
               {coveragePercentage !== '-' && <span className="text-lg">%</span>}
             </div>
             <div className="space-x-1 font-mono text-xl text-blue">
-              <span>
-                {Intl.NumberFormat('en-US', {
-                  notation: 'standard',
-                }).format(locationsQuery.data.totalMarineArea)}
-              </span>
+              <span>{formatKM(locationsQuery.data.totalMarineArea)}</span>
               <span>
                 km<sup>2</sup>
               </span>
