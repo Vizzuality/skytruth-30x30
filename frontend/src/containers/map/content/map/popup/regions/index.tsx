@@ -211,7 +211,7 @@ const EEZLayerPopup = ({ locationId }) => {
             className="block w-full border border-black p-4 text-center font-mono uppercase"
             onClick={handleLocationSelected}
           >
-            Open country insights
+            Open region insights
           </button>
         </>
       )}
