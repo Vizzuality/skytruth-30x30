@@ -188,14 +188,14 @@ const About: React.FC = () => {
           <SectionTitle>What’s next for the 30x30 hub?</SectionTitle>
           <SectionDescription>
             This web portal was built with support from the <u>Bloomberg Ocean Initiative</u>, so we
-            started by focusing on marine protection, with the goal of creating a one-stop entry
-            point for getting engaged and informed on 30x30.
+            started by focusing on marine protection.
           </SectionDescription>
 
           <SectionContent>
             <HighlightedText>
               Next, we&apos;re extending the hub to include{' '}
-              <span className="text-black">terrestrial ecosystems</span>.
+              <span className="text-black">terrestrial ecosystems</span>. With the goal of creating
+              a one-stop entry point for getting engaged and informed on 30x30.
             </HighlightedText>
           </SectionContent>
 
