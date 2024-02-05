@@ -57,8 +57,8 @@ const About: React.FC = () => {
       }
       bottom={
         <Cta
-          title="Get involved."
-          description="If you have questions, feedback, or interest in partnering on this project, get in touch at our contact page."
+          title="How can I get involved?"
+          description="If you have questions, feedback, or interest in partnering on this project, please get in touch at our contact page."
           color="purple"
           image="cta1"
           button={{
