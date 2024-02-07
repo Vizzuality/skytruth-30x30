@@ -10,6 +10,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
+import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
@@ -128,23 +129,32 @@ const EEZLayerPopup = ({ locationId }) => {
     return [];
   }, [protectionCoverageStats, latestYearAvailable]);
 
-  const coveragePercentage = useMemo(() => {
+  const coverageStats = useMemo(() => {
     if (latestProtectionCoverageStats.length && locationsQuery.data) {
       const totalCumSumProtectedArea = latestProtectionCoverageStats.reduce(
         (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
         0
       );
 
-      const formatter = Intl.NumberFormat('en-US', {
-        maximumFractionDigits: 2,
-      });
-
-      return formatter.format(
-        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100
+      const percentage = formatPercentage(
+        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100,
+        {
+          displayPercentageSign: false,
+        }
       );
+
+      const protectedArea = formatKM(totalCumSumProtectedArea);
+
+      return {
+        percentage,
+        protectedArea,
+      };
     }
 
-    return '-';
+    return {
+      percentage: '-',
+      protectedArea: '-',
+    };
   }, [latestProtectionCoverageStats, locationsQuery.data]);
 
   // handle renderer
@@ -184,15 +194,13 @@ const EEZLayerPopup = ({ locationId }) => {
           <div className="space-y-2">
             <div className="font-mono uppercase">Marine conservation coverage</div>
             <div className="space-x-1 font-mono tracking-tighter text-blue">
-              <span className="text-[64px] font-bold leading-[80%]">{coveragePercentage}</span>
-              {coveragePercentage !== '-' && <span className="text-lg">%</span>}
+              <span className="text-[64px] font-bold leading-[80%]">
+                {coverageStats.percentage}
+              </span>
+              {coverageStats.percentage !== '-' && <span className="text-lg">%</span>}
             </div>
             <div className="space-x-1 font-mono text-xl text-blue">
-              <span>
-                {Intl.NumberFormat('en-US', {
-                  notation: 'standard',
-                }).format(locationsQuery.data.totalMarineArea)}
-              </span>
+              <span>{coverageStats.protectedArea}</span>
               <span>
                 km<sup>2</sup>
               </span>
@@ -203,7 +211,7 @@ const EEZLayerPopup = ({ locationId }) => {
             className="block w-full border border-black p-4 text-center font-mono uppercase"
             onClick={handleLocationSelected}
           >
-            Open country insights
+            Open region insights
           </button>
         </>
       )}
