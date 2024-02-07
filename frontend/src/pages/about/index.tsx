@@ -165,7 +165,7 @@ const About: React.FC = () => {
                 <>
                   <a href="https://protectedseas.net" target="_blank" rel="noopener noreferrer">
                     <u>ProtectedSeas</u>
-                  </a>
+                  </a>{' '}
                   maintains the world’s largest database of regulatory information for MPAs, with
                   information on over 21,000 marine and coastal protected areas around the world.
                   ProtectedSeas data powers our Level of Fishing Protection (LFP) score, which
