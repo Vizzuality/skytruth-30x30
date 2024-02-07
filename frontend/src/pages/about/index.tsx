@@ -116,11 +116,18 @@ const About: React.FC = () => {
               title="The World Database on Protected Areas (WDPA)"
               description={
                 <>
-                  <u>The World Database on Protected Areas (WDPA)</u>, maintained by Protected
-                  Planet, provides a comprehensive global inventory of the world&apos;s marine and
-                  terrestrial protected areas. The WDPA provides official protected area boundaries
-                  that have been self-reported by 245 countries around the world. WDPA data powers
-                  our statistics on total area protected per country and globally.
+                  <a
+                    href="https://www.protectedplanet.net"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <u>The World Database on Protected Areas (WDPA)</u>
+                  </a>
+                  , maintained by Protected Planet, provides a comprehensive global inventory of the
+                  world&apos;s marine and terrestrial protected areas. The WDPA provides official
+                  protected area boundaries that have been self-reported by 245 countries around the
+                  world. WDPA data powers our statistics on total area protected per country and
+                  globally.
                 </>
               }
             >
@@ -135,11 +142,13 @@ const About: React.FC = () => {
               title="The Marine Protection Atlas (MPAtlas)"
               description={
                 <>
-                  <u>The Marine Protection Atlas (MPAtlas)</u>, which is produced by the Marine
-                  Conservation Institute, builds on the WDPA dataset to provide a science-based,
-                  independent assessment of the Stage of Establishment and Level of Protection per
-                  marine protected area (MPA). MPAtlas data powers our statistics on Level of
-                  Protection per MPA.
+                  <a href="https://mpatlas.org" target="_blank" rel="noopener noreferrer">
+                    <u>The Marine Protection Atlas (MPAtlas)</u>
+                  </a>
+                  , which is produced by the Marine Conservation Institute, builds on the WDPA
+                  dataset to provide a science-based, independent assessment of the Stage of
+                  Establishment and Level of Protection per marine protected area (MPA). MPAtlas
+                  data powers our statistics on Level of Protection per MPA.
                 </>
               }
             >
@@ -154,11 +163,13 @@ const About: React.FC = () => {
               title="ProtectedSeas"
               description={
                 <>
-                  <u>ProtectedSeas</u> maintains the world’s largest database of regulatory
-                  information for MPAs, with information on over 21,000 marine and coastal protected
-                  areas around the world. ProtectedSeas data powers our Level of Fishing Protection
-                  (LFP) score, which describes the degree to which fishing activity has been
-                  restricted in MPAs.
+                  <a href="https://protectedseas.net" target="_blank" rel="noopener noreferrer">
+                    <u>ProtectedSeas</u>
+                  </a>
+                  maintains the world’s largest database of regulatory information for MPAs, with
+                  information on over 21,000 marine and coastal protected areas around the world.
+                  ProtectedSeas data powers our Level of Fishing Protection (LFP) score, which
+                  describes the degree to which fishing activity has been restricted in MPAs.
                 </>
               }
             >
@@ -169,9 +180,16 @@ const About: React.FC = () => {
         <Section ref={sections.futureObjectives.ref}>
           <SectionTitle>What’s next for the 30x30 hub?</SectionTitle>
           <SectionDescription>
-            This web portal was built with support from the <u>Bloomberg Ocean Initiative</u>, so we
-            started by focusing on marine protection, with the goal of creating a one-stop entry
-            point for getting engaged and informed on 30x30.
+            This web portal was built with support from the{' '}
+            <a
+              href="https://www.bloomberg.org/environment/protecting-the-oceans/bloomberg-ocean/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <u>Bloomberg Ocean Initiative</u>
+            </a>
+            , so we started by focusing on marine protection, with the goal of creating a one-stop
+            entry point for getting engaged and informed on 30x30.
           </SectionDescription>
 
           <SectionContent>
