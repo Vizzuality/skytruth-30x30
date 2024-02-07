@@ -124,6 +124,12 @@
       "action": "api::protection-status.protection-status.findOne"
     },
     {
+      "action": "api::static-indicator.static-indicator.find"
+    },
+    {
+      "action": "api::static-indicator.static-indicator.findOne"
+    },
+    {
       "action": "plugin::users-permissions.auth.callback"
     },
     {
