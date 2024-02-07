@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      staticIndicators: staticIndicatorsData,
+      staticIndicators: staticIndicatorsData || { data: [] },
       dehydratedState: dehydrate(queryClient),
     },
   };

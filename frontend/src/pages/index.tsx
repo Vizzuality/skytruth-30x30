@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      staticIndicators: staticIndicatorsData,
+      staticIndicators: staticIndicatorsData || { data: [] },
       dehydratedState: dehydrate(queryClient),
     },
   };
@@ -76,7 +76,7 @@ const Home: React.FC = ({
     const indicators: { [key: string]: StaticIndicator } = {};
 
     Object.entries(STATIC_INDICATOR_MAPPING).map(([key, value]) => {
-      const indicator = staticIndicators?.data.find(
+      const indicator = staticIndicators?.data?.find(
         ({ attributes }) => attributes.slug === value
       )?.attributes;
 
