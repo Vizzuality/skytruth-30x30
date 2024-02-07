@@ -1,43 +1,18 @@
-import { useState } from 'react';
-
 import { Column } from '@tanstack/react-table';
-import { Info } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/useColumns';
-import { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/useColumns';
+import TooltipButton from '@/components/tooltip-button';
+import type { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/useColumns';
+import type { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/useColumns';
 
-type TooltipButtonProps = {
+type TableTooltipButtonProps = {
   column:
     | Column<GlobalRegionalTableColumns, unknown>
     | Column<NationalHighseasTableColumns, unknown>;
-  tooltips: { [key: string]: string[] };
+  tooltips: { [key: string]: string };
 };
 
-const TooltipButton: React.FC<TooltipButtonProps> = ({ column, tooltips }) => {
-  const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(false);
-
-  const tooltip = tooltips[column.id];
-
-  if (!tooltip) return null;
-
-  return (
-    <Popover open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
-      <PopoverTrigger asChild>
-        <Button className="h-auto w-auto pl-2" size="icon" variant="ghost">
-          <span className="sr-only">Info</span>
-          <Info className="h-4 w-4" aria-hidden="true" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        align="center"
-        className="flex max-w-[300px] flex-col gap-6 font-mono text-xs"
-      >
-        {tooltip}
-      </PopoverContent>
-    </Popover>
-  );
+const TableTooltipButton: React.FC<TableTooltipButtonProps> = ({ column, tooltips }) => {
+  return <TooltipButton text={tooltips[column.id]} />;
 };
 
-export default TooltipButton;
+export default TableTooltipButton;

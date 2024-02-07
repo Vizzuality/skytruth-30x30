@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import Linkify from 'react-linkify';
+
 import { Info } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -28,7 +30,23 @@ const TooltipButton: React.FC<TooltipButtonProps> = ({ className, text }) => {
         align="center"
         className="flex max-w-[300px] flex-col gap-6 font-mono text-xs"
       >
-        {text}
+        <span>
+          <Linkify
+            componentDecorator={(href, text, key) => (
+              <a
+                className="break-all underline"
+                href={href}
+                key={key}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {text}
+              </a>
+            )}
+          >
+            {text}
+          </Linkify>
+        </span>
       </PopoverContent>
     </Popover>
   );
