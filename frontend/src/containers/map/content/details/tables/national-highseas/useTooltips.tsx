@@ -7,7 +7,7 @@ const TOOLTIP_MAPPING = {
   establishmentStage: 'establishment-stage',
   protectionLevel: 'protection-level',
   fishingProtectionLevel: 'fishing-protection-level',
-  area: 'protected-area',
+  area: 'protected-area-mpa',
 };
 
 const useTooltips = () => {
