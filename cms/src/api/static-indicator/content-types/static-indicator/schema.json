@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "static_indicators",
+  "info": {
+    "singularName": "static-indicator",
+    "pluralName": "static-indicators",
+    "displayName": "Static Indicators"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

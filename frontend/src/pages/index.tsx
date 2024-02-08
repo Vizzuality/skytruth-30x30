@@ -1,4 +1,7 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
+
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import { GetServerSideProps } from 'next';
 
 import Cta from '@/components/static-pages/cta';
 import Section, {
@@ -14,8 +17,42 @@ import InteractiveMap from '@/containers/homepage/interactive-map';
 import Intro from '@/containers/homepage/intro';
 import LinkCards from '@/containers/homepage/link-cards';
 import Layout, { Content, Sidebar } from '@/layouts/static-page';
+import {
+  getGetStaticIndicatorsQueryKey,
+  getGetStaticIndicatorsQueryOptions,
+} from '@/types/generated/static-indicator';
+import { StaticIndicator, StaticIndicatorListResponse } from '@/types/generated/strapi.schemas';
 
-const Home: React.FC = () => {
+const STATIC_INDICATOR_MAPPING = {
+  biodiversity: 'species-threatened-with-extinction',
+  climate: 'earth-co2-stored-cycled',
+  livesLivelihoods: 'lives-impact',
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    ...getGetStaticIndicatorsQueryOptions(),
+  });
+
+  const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
+    getGetStaticIndicatorsQueryKey()
+  );
+
+  return {
+    props: {
+      staticIndicators: staticIndicatorsData || { data: [] },
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
+const Home: React.FC = ({
+  staticIndicators,
+}: {
+  staticIndicators: StaticIndicatorListResponse;
+}) => {
   const sections = {
     services: {
       name: 'Services',
@@ -34,6 +71,21 @@ const Home: React.FC = () => {
   const handleIntroScrollClick = () => {
     sections.services?.ref?.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const indicators = useMemo(() => {
+    const indicators: { [key: string]: StaticIndicator } = {};
+
+    Object.entries(STATIC_INDICATOR_MAPPING).map(([key, value]) => {
+      const indicator = staticIndicators?.data?.find(
+        ({ attributes }) => attributes.slug === value
+      )?.attributes;
+
+      if (!indicator) return;
+      indicators[key] = indicator;
+    });
+
+    return indicators;
+  }, [staticIndicators]);
 
   return (
     <Layout
@@ -116,13 +168,9 @@ const Home: React.FC = () => {
           />
 
           <StatsImage
-            value={
-              <>
-                More than <br /> 42,000
-              </>
-            }
-            description="Species threatened with extinction."
-            sourceLink="https://www.iucnredlist.org/"
+            value={indicators?.biodiversity?.value}
+            description={indicators?.biodiversity?.description}
+            sourceLink={indicators?.biodiversity?.source}
             image="stats1"
             valueSize="small"
           />
@@ -149,9 +197,9 @@ const Home: React.FC = () => {
           />
 
           <StatsImage
-            value="93%"
-            description="Of the Earth’s CO2 are estimated to be stored and cycled by marine ecosystems."
-            sourceLink="https://www.eea.europa.eu/publications/carbon-stocks-and-sequestration-rates"
+            value={indicators?.climate?.value}
+            description={indicators?.climate?.description}
+            sourceLink={indicators?.climate?.source}
             image="stats2"
           />
 
@@ -177,9 +225,9 @@ const Home: React.FC = () => {
           />
 
           <StatsImage
-            value="100M"
-            description="lives of 1.3 billion people."
-            sourceLink="https://www.un.org/sustainabledevelopment/biodiversity/"
+            value={indicators?.livesLivelihoods?.value}
+            description={indicators?.livesLivelihoods?.description}
+            sourceLink={indicators?.livesLivelihoods?.source}
             image="stats3"
           />
         </Section>

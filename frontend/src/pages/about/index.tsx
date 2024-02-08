@@ -1,4 +1,7 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
+
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import { GetServerSideProps } from 'next';
 
 import Cta from '@/components/static-pages/cta';
 import Intro from '@/components/static-pages/intro';
@@ -15,8 +18,36 @@ import Logo from '@/containers/about/logo';
 import LogosGrid from '@/containers/about/logos-grid';
 import QuestionsList from '@/containers/about/questions-list';
 import Layout, { Sidebar, Content } from '@/layouts/static-page';
+import {
+  getGetStaticIndicatorsQueryKey,
+  getGetStaticIndicatorsQueryOptions,
+} from '@/types/generated/static-indicator';
+import { StaticIndicator, StaticIndicatorListResponse } from '@/types/generated/strapi.schemas';
 
-const About: React.FC = () => {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    ...getGetStaticIndicatorsQueryOptions(),
+  });
+
+  const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
+    getGetStaticIndicatorsQueryKey()
+  );
+
+  return {
+    props: {
+      staticIndicators: staticIndicatorsData || { data: [] },
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
+const About: React.FC = ({
+  staticIndicators,
+}: {
+  staticIndicators: StaticIndicatorListResponse;
+}) => {
   const sections = {
     definition: {
       name: 'Definition',
@@ -43,6 +74,12 @@ const About: React.FC = () => {
   const handleIntroScrollClick = () => {
     sections.definition?.ref?.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const protectedWatersIndicator: StaticIndicator = useMemo(() => {
+    return staticIndicators?.data?.find(
+      ({ attributes }) => attributes.slug === 'terrestrial-inland-areas-protected'
+    )?.attributes;
+  }, [staticIndicators]);
 
   return (
     <Layout
@@ -200,9 +237,9 @@ const About: React.FC = () => {
           </SectionContent>
 
           <StatsImage
-            value="17%"
-            description="Of terrestrial and inland waters are protected by 276,847 Protected Areas and 675 OECMs."
-            sourceLink="https://www.protectedplanet.net/en"
+            value={protectedWatersIndicator?.value}
+            description={protectedWatersIndicator?.description}
+            sourceLink={protectedWatersIndicator?.source}
             image="stats4"
             color="purple"
           />

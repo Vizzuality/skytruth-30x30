@@ -1505,6 +1505,40 @@ export interface ApiProtectionStatusProtectionStatus
   };
 }
 
+export interface ApiStaticIndicatorStaticIndicator
+  extends Schema.CollectionType {
+  collectionName: 'static_indicators';
+  info: {
+    singularName: 'static-indicator';
+    pluralName: 'static-indicators';
+    displayName: 'Static Indicators';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    slug: Attribute.String;
+    source: Attribute.String;
+    value: Attribute.String;
+    description: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::static-indicator.static-indicator',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::static-indicator.static-indicator',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1541,6 +1575,7 @@ declare module '@strapi/types' {
       'api::mpaa-protection-level-stat.mpaa-protection-level-stat': ApiMpaaProtectionLevelStatMpaaProtectionLevelStat;
       'api::protection-coverage-stat.protection-coverage-stat': ApiProtectionCoverageStatProtectionCoverageStat;
       'api::protection-status.protection-status': ApiProtectionStatusProtectionStatus;
+      'api::static-indicator.static-indicator': ApiStaticIndicatorStaticIndicator;
     }
   }
 }
