@@ -110,9 +110,17 @@ const About: React.FC = ({
         <Section ref={sections.definition.ref}>
           <SectionTitle>What is 30x30</SectionTitle>
           <SectionDescription>
-            The 30x30 target has been <u>formally adopted by nearly every country</u> on earth, and
-            ecosystem protection is being advanced and monitored by governments, NGOs, and local
-            communities around the world.
+            The 30x30 target has been{' '}
+            <a
+              className="underline"
+              href="https://www.nytimes.com/2022/12/19/climate/biodiversity-cop15-montreal-30x30.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              formally adopted by nearly every country
+            </a>{' '}
+            on earth, and ecosystem protection is being advanced and monitored by governments, NGOs,
+            and local communities around the world.
           </SectionDescription>
         </Section>
         <Section ref={sections.problem.ref}>
