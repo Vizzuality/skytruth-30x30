@@ -84,7 +84,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
   return (
     <div className={cn(className)}>
       <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
-        <PopoverTrigger className="text-sm font-semibold uppercase underline ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
+        <PopoverTrigger className="font-mono text-xs font-semibold uppercase underline ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
           Change Location
         </PopoverTrigger>
         <PopoverContent className="w-96 max-w-screen" align="start">
