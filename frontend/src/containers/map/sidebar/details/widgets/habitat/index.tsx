@@ -78,7 +78,6 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
     <Widget
       title="Proportion of Habitat within Protected and Conserved Areas"
       lastUpdated={dataLastUpdate}
-      source="habitats-widget"
       noData={noData}
       loading={loading}
     >
