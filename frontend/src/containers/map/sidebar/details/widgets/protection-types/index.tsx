@@ -38,8 +38,8 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   // Get fully or highly protected
   const {
-    data: { data: protectionLevelStatsData },
-    isFetching: isFetchingProtectionStatsData,
+    data: { data: mpaaProtectionLevelStatsData },
+    isFetching: isFetchingMpaaProtectionStatsData,
   } = useGetMpaaProtectionLevelStats(
     {
       filters: {
@@ -86,40 +86,36 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   // Parse data to display in the chart
   const widgetChartData = useMemo(() => {
-    const parsedMpaaProtectionLevelData = protectionLevelStatsData.map((entry) => {
-      const stats = entry?.attributes;
-      const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
-
+    const parsedProtectionLevel = (protectionLevel, stats) => {
       return {
         title: protectionLevel.name,
         slug: protectionLevel.slug,
         background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
         totalArea: location.totalMarineArea,
-        protectedArea: stats.area,
+        protectedArea: stats?.area,
         info: protectionLevel.info,
       };
+    };
+
+    const parsedMpaaProtectionLevelData = mpaaProtectionLevelStatsData.map((entry) => {
+      const stats = entry?.attributes;
+      const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
+      return parsedProtectionLevel(protectionLevel, stats);
     });
 
     const parsedFishingProtectionLevelData = fishingProtectionLevelStatsData.map((entry) => {
       const stats = entry?.attributes;
       const protectionLevel = stats?.fishing_protection_level?.data.attributes;
-
-      return {
-        title: protectionLevel.name,
-        slug: protectionLevel.slug,
-        background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
-        totalArea: location.totalMarineArea,
-        protectedArea: stats.area,
-        info: protectionLevel.info,
-      };
+      return parsedProtectionLevel(protectionLevel, stats);
     });
 
     return [...parsedMpaaProtectionLevelData, ...parsedFishingProtectionLevelData];
-  }, [location, protectionLevelStatsData, fishingProtectionLevelStatsData]);
+  }, [location, mpaaProtectionLevelStatsData, fishingProtectionLevelStatsData]);
 
   const noData = !widgetChartData.length;
+
   const loading =
-    isFetchingProtectionStatsData ||
+    isFetchingMpaaProtectionStatsData ||
     isFetchingFishingProtectionStatsData ||
     isFetchingDataLastUpdate;
 
