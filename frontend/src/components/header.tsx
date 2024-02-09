@@ -21,7 +21,7 @@ import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 const NAVIGATION_ITEMS = [
   { name: 'Map', href: PAGES.map, colorClassName: 'text-blue fill-blue' },
   { name: 'Knowledge Hub', href: PAGES.knowledgeHub, colorClassName: 'text-green fill-green' },
-  { name: 'About', href: PAGES.about, colorClassName: 'text-black fill-black' },
+  { name: 'About', href: PAGES.about, colorClassName: 'text-violet fill-violet' },
   { name: 'Contact', href: PAGES.contact, colorClassName: 'text-black fill-black' },
 ];
 
