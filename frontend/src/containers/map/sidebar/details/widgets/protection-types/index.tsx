@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { PROTECTION_TYPES_CHART_COLORS } from '@/constants/protection-types-chart-colors';
+import { useGetFishingProtectionLevelStats } from '@/types/generated/fishing-protection-level-stat';
 import { useGetMpaaProtectionLevelStats } from '@/types/generated/mpaa-protection-level-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
@@ -11,12 +12,10 @@ type ProtectionTypesWidgetProps = {
 };
 
 const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location }) => {
-  // Default params: filter by location
-  const defaultQueryParams = {
-    filters: {
-      location: {
-        code: location.code,
-      },
+  // Default filter by location
+  const defaultFilters = {
+    location: {
+      code: location.code,
     },
   };
 
@@ -24,7 +23,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } =
     useGetMpaaProtectionLevelStats(
       {
-        ...defaultQueryParams,
+        filters: defaultFilters,
         sort: 'updatedAt:desc',
         'pagination[limit]': 1,
       },
@@ -37,13 +36,42 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       }
     );
 
-  // Get protection levels by location
+  // Get fully or highly protected
   const {
     data: { data: protectionLevelStatsData },
     isFetching: isFetchingProtectionStatsData,
   } = useGetMpaaProtectionLevelStats(
     {
-      ...defaultQueryParams,
+      filters: {
+        ...defaultFilters,
+        mpaa_protection_level: {
+          slug: 'fully-highly-protected',
+        },
+      },
+      populate: '*',
+      'pagination[limit]': -1,
+    },
+    {
+      query: {
+        select: ({ data }) => ({ data }),
+        placeholderData: { data: [] },
+        refetchOnWindowFocus: false,
+      },
+    }
+  );
+
+  // Get highly protected from fishing
+  const {
+    data: { data: fishingProtectionLevelStatsData },
+    isFetching: isFetchingFishingProtectionStatsData,
+  } = useGetFishingProtectionLevelStats(
+    {
+      filters: {
+        ...defaultFilters,
+        fishing_protection_level: {
+          slug: 'highly',
+        },
+      },
       populate: '*',
       'pagination[limit]': -1,
     },
@@ -58,9 +86,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   // Parse data to display in the chart
   const widgetChartData = useMemo(() => {
-    if (!protectionLevelStatsData.length) return [];
-
-    const parsedData = protectionLevelStatsData.map((entry) => {
+    const parsedMpaaProtectionLevelData = protectionLevelStatsData.map((entry) => {
       const stats = entry?.attributes;
       const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
 
@@ -74,11 +100,28 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       };
     });
 
-    return parsedData;
-  }, [location, protectionLevelStatsData]);
+    const parsedFishingProtectionLevelData = fishingProtectionLevelStatsData.map((entry) => {
+      const stats = entry?.attributes;
+      const protectionLevel = stats?.fishing_protection_level?.data.attributes;
+
+      return {
+        title: protectionLevel.name,
+        slug: protectionLevel.slug,
+        background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
+        totalArea: location.totalMarineArea,
+        protectedArea: stats.area,
+        info: protectionLevel.info,
+      };
+    });
+
+    return [...parsedMpaaProtectionLevelData, ...parsedFishingProtectionLevelData];
+  }, [location, protectionLevelStatsData, fishingProtectionLevelStatsData]);
 
   const noData = !widgetChartData.length;
-  const loading = isFetchingProtectionStatsData || isFetchingDataLastUpdate;
+  const loading =
+    isFetchingProtectionStatsData ||
+    isFetchingFishingProtectionStatsData ||
+    isFetchingDataLastUpdate;
 
   return (
     <Widget
