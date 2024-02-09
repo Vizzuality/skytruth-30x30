@@ -59,9 +59,9 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
 
-    const parsedProtectionLevel = (protectionLevel, stats) => {
+    const parsedProtectionLevel = (label, protectionLevel, stats) => {
       return {
-        title: protectionLevel.name,
+        title: label,
         slug: protectionLevel.slug,
         background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
         totalArea: location.totalMarineArea,
@@ -74,14 +74,14 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.map((entry) => {
         const stats = entry?.attributes;
         const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
-        return parsedProtectionLevel(protectionLevel, stats);
+        return parsedProtectionLevel('Fully or highly protected', protectionLevel, stats);
       });
 
     const parsedFishingProtectionLevelData =
       protectionLevelsData[0]?.attributes?.fishing_protection_level_stats?.data?.map((entry) => {
         const stats = entry?.attributes;
         const protectionLevel = stats?.fishing_protection_level?.data.attributes;
-        return parsedProtectionLevel(protectionLevel, stats);
+        return parsedProtectionLevel('Highly protected from fishing', protectionLevel, stats);
       });
 
     return [...parsedMpaaProtectionLevelData, ...parsedFishingProtectionLevelData];
