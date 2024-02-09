@@ -4,6 +4,9 @@
   "type": "public",
   "permissions": [
     {
+      "action": "api::contact-detail.contact-detail.find"
+    },
+    {
       "action": "api::data-info.data-info.find"
     },
     {

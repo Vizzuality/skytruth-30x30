@@ -677,6 +677,41 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiContactDetailContactDetail extends Schema.SingleType {
+  collectionName: 'contact_details';
+  info: {
+    singularName: 'contact-detail';
+    pluralName: 'contact-details';
+    displayName: 'Contact Details';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    address: Attribute.String;
+    phone: Attribute.String;
+    email: Attribute.String;
+    registration: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::contact-detail.contact-detail',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::contact-detail.contact-detail',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDataInfoDataInfo extends Schema.CollectionType {
   collectionName: 'data_infos';
   info: {
@@ -1555,6 +1590,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::contact-detail.contact-detail': ApiContactDetailContactDetail;
       'api::data-info.data-info': ApiDataInfoDataInfo;
       'api::data-source.data-source': ApiDataSourceDataSource;
       'api::data-tool.data-tool': ApiDataToolDataTool;
