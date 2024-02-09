@@ -133,7 +133,7 @@ const Home: React.FC = ({
           </SectionContent>
 
           <TwoColSubsection
-            title="How big is 30% the ocean?"
+            title="How big is 30% of the ocean?"
             description="Thirty percent (30%) of the ocean is the equivalent of South America, North America,
               Europe and Russia combined. This means 70 million square kilometres."
           />
