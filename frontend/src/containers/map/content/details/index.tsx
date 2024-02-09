@@ -67,7 +67,11 @@ const MapDetails: React.FC = () => {
         <span className="max-w-lg">
           <h2 className="text-4xl font-extrabold">{table.title}</h2>
         </span>
-        <Button variant="text-link" className="m-0 cursor-pointer p-0" onClick={handleOnCloseClick}>
+        <Button
+          variant="text-link"
+          className="m-0 cursor-pointer p-0 font-mono text-xs"
+          onClick={handleOnCloseClick}
+        >
           Close
         </Button>
       </div>
