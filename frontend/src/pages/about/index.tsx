@@ -94,8 +94,8 @@ const About: React.FC = ({
       }
       bottom={
         <Cta
-          title="Get involved."
-          description="If you have questions, feedback, or interest in partnering on this project, get in touch at our contact page."
+          title="How can I get involved?"
+          description="If you have questions, feedback, or interest in partnering on this project, please get in touch at our contact page."
           color="purple"
           image="cta1"
           button={{
@@ -110,10 +110,11 @@ const About: React.FC = ({
         <Section ref={sections.definition.ref}>
           <SectionTitle>What is 30x30</SectionTitle>
           <SectionDescription>
-            The 30x30 target has been{' '}
+            30x30 is a global movement to <b>protect 30% of the world’s lands and waters by 2030</b>
+            . This target has been{' '}
             <a
               className="underline"
-              href="https://www.nytimes.com/2022/12/19/climate/biodiversity-cop15-montreal-30x30.html"
+              href="https://www.google.com/url?q=https://www.nytimes.com/2022/12/19/climate/biodiversity-cop15-montreal-30x30.html&sa=D&source=docs&ust=1707145082556030&usg=AOvVaw2LgZhM993iNNP-D3QR7CvL"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -126,9 +127,18 @@ const About: React.FC = ({
         <Section ref={sections.problem.ref}>
           <SectionTitle>Why build a 30x30 hub?</SectionTitle>
           <SectionDescription>
-            We are building the 30x30 hub to unify critical conservation tools and information
-            streams in a single location that provides an entry point for getting informed and
-            engaged in 30x30.
+            <p>
+              With only a few years left between now and 2030, the world is pushing hard to preserve
+              our critical ecosystems. Biodiversity conservation is moving faster than ever, and a
+              host of new organizations, tools, and campaigns are emerging every day. Even for
+              conservation professionals, it can be hard to keep up. And for anyone new to 30x30, it
+              can be hard to know where to start or how to get involved.
+            </p>
+            <p className="mt-4 font-bold">
+              We are building the 30x30 hub to unify these critical tools and information streams in
+              a single location that provides an accessible entry point for getting informed and
+              engaged in 30x30.
+            </p>
           </SectionDescription>
 
           <SectionContent>
@@ -149,8 +159,8 @@ const About: React.FC = ({
           <SectionTitle>Who are our data partners?</SectionTitle>
           <SectionDescription>
             We depend on the expertise and efforts of key data partners to power our maps and
-            dashboards. Each of the datasets represents a great amount of effort to assess and
-            measure the effectiveness of ecosystem protections globally, and is critical to the
+            dashboards. Each of these datasets represents a tremendous amount of effort to assess
+            and measure the effectiveness of ecosystem protections globally, and is critical to the
             success of 30x30.
           </SectionDescription>
 
@@ -241,6 +251,10 @@ const About: React.FC = ({
             <HighlightedText>
               Next, we&apos;re extending the hub to include{' '}
               <span className="text-black">terrestrial ecosystems</span>.
+            </HighlightedText>
+            <HighlightedText>
+              Our goal of creating a <span className="text-black">one-stop entry point</span> for
+              getting engaged and informed on 30x30.
             </HighlightedText>
           </SectionContent>
 
