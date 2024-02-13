@@ -7,6 +7,7 @@ import SidebarItem from '@/containers/homepage/intro/sidebar-item';
 import { formatPercentage } from '@/lib/utils/formats';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
+import { useGetStaticIndicators } from '@/types/generated/static-indicator';
 
 type IntroProps = {
   onScrollClick: () => void;
@@ -31,6 +32,20 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
     {
       query: {
         select: ({ data }) => ({ data }),
+        placeholderData: { data: [] },
+      },
+    }
+  );
+
+  const { data: protectedTerrestrialInlandAreasData } = useGetStaticIndicators(
+    {
+      filters: {
+        slug: 'protected-land-area-percentage',
+      },
+    },
+    {
+      query: {
+        select: ({ data }) => data?.[0],
         placeholderData: { data: [] },
       },
     }
@@ -109,7 +124,7 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
               icon="icon1"
             />
             <SidebarItem
-              percentage={17.2}
+              percentage={protectedTerrestrialInlandAreasData?.attributes?.value}
               text="Current global land and inland waters protected area"
               icon="icon2"
             />
