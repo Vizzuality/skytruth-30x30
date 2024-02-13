@@ -27,6 +27,9 @@ const STATIC_INDICATOR_MAPPING = {
   biodiversity: 'species-threatened-with-extinction',
   climate: 'earth-co2-stored-cycled',
   livesLivelihoods: 'lives-impact',
+  biodiversityTextNumber: 'species-threathened-number',
+  biodiversityTextOcean: 'protected-world-ocean-percentage',
+  biodiversityTextLand: 'protected-land-area-percentage',
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -153,10 +156,35 @@ const Home: React.FC = ({
             description={
               <>
                 <p>
-                  Today, 8 percent of the world’s ocean and 15 percent of its land area are
-                  protected. Wildlife populations - mammals, birds, fish, and other species - have{' '}
-                  <u>decreased by nearly 70% since 1970</u>, with up to{' '}
-                  <u>1 million species threatened with extinction</u>.
+                  Today,{' '}
+                  <a
+                    className="underline"
+                    href={indicators?.biodiversityTextOcean?.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {indicators?.biodiversityTextOcean?.value} percent of the world’s ocean
+                  </a>{' '}
+                  and{' '}
+                  <a
+                    className="underline"
+                    href={indicators?.biodiversityTextLand?.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {indicators?.biodiversityTextLand?.value} percent of its land area
+                  </a>{' '}
+                  are protected . Wildlife populations - mammals, birds, fish, and other species -
+                  have decreased by nearly 70% since 1970, with up to{' '}
+                  <a
+                    className="underline"
+                    href={indicators?.biodiversity?.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {indicators?.biodiversity?.value} species threatened with extinction
+                  </a>
+                  .
                 </p>
                 <p className="mt-4 font-bold">
                   Protecting 30 percent of the world’s land and ocean habitats by 2030 will help
