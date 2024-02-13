@@ -14,7 +14,7 @@
 }
 
 .mapboxgl-ctrl-attrib-inner {
-  @apply px-2 max-w-[100vw] md:max-w-[calc(100vw_-_430px_-_40px_-_16px)] py-1 overflow-hidden font-sans text-xs text-left whitespace-nowrap text-ellipsis;
+  @apply px-2 max-w-[100vw] md:max-w-[calc(100vw_-_460px_-_40px_-_16px)] py-1 overflow-hidden font-sans text-xs text-left whitespace-nowrap text-ellipsis;
 }
 
 .mapboxgl-popup-content {
