@@ -6,13 +6,11 @@ import { cn } from '@/lib/classnames';
 
 import Loading from './loading';
 import NoData from './no-data';
-import SourceButton from './source-button';
 
 type WidgetProps = {
   className?: string;
   title?: string;
   lastUpdated?: string;
-  source?: string;
   noData?: boolean;
   loading?: boolean;
   error?: boolean;
@@ -22,7 +20,6 @@ const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
   className,
   title,
   lastUpdated,
-  source,
   noData = false,
   loading = false,
   error = false,
@@ -40,7 +37,6 @@ const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
       <div className="pt-2">
         <span className="flex justify-between">
           {title && <h2 className="font-sans text-xl font-bold">{title}</h2>}
-          {!showNoData && <SourceButton source={source} />}
         </span>
         {!showNoData && lastUpdated && (
           <span className="text-xs">Data last updated: {formattedLastUpdated}</span>

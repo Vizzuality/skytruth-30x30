@@ -26,3 +26,5 @@ const Logo: React.FC<LogoProps> = ({ logo: logoKey }) => {
 };
 
 export default Logo;
+
+export { LOGOS };

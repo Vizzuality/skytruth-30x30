@@ -10,6 +10,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
+import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
@@ -138,12 +139,11 @@ const EEZLayerPopup = ({ locationId }) => {
 
   const coveragePercentage = useMemo(() => {
     if (locationsQuery.data) {
-      const formatter = Intl.NumberFormat('en-US', {
-        maximumFractionDigits: 0,
-      });
-
-      return formatter.format(
-        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100
+      return formatPercentage(
+        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100,
+        {
+          displayPercentageSign: false,
+        }
       );
     }
 
@@ -185,17 +185,13 @@ const EEZLayerPopup = ({ locationId }) => {
       {locationsQuery.isFetched && locationsQuery.data && (
         <>
           <div className="space-y-2">
-            <div className="font-mono uppercase">Marine conservation coverage</div>
+            <div className="my-4 max-w-[95%] font-mono">Marine Conservation Coverage</div>
             <div className="space-x-1 font-mono tracking-tighter text-blue">
               <span className="text-[64px] font-bold leading-[80%]">{coveragePercentage}</span>
               {coveragePercentage !== '-' && <span className="text-lg">%</span>}
             </div>
             <div className="space-x-1 font-mono text-xl text-blue">
-              <span>
-                {Intl.NumberFormat('en-US', {
-                  notation: 'standard',
-                }).format(totalCumSumProtectedArea)}
-              </span>
+              <span>{formatKM(totalCumSumProtectedArea)}</span>
               <span>
                 km<sup>2</sup>
               </span>

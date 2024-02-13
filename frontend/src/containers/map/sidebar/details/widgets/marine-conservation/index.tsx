@@ -144,7 +144,6 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     <Widget
       title="Marine Conservation Coverage"
       lastUpdated={dataLastUpdate}
-      source="marine-conservation-widget"
       noData={noData}
       loading={loading}
     >

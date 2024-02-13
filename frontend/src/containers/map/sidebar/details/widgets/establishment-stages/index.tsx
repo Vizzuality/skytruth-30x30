@@ -114,7 +114,6 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
     <Widget
       title="Marine Conservation Establishment Stages"
       lastUpdated={dataLastUpdate}
-      source="establishment-stages-widget"
       noData={noData}
       loading={loading}
     >

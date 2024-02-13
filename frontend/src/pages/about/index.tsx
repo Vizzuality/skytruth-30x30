@@ -1,4 +1,7 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
+
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import { GetServerSideProps } from 'next';
 
 import Cta from '@/components/static-pages/cta';
 import Intro from '@/components/static-pages/intro';
@@ -15,8 +18,36 @@ import Logo from '@/containers/about/logo';
 import LogosGrid from '@/containers/about/logos-grid';
 import QuestionsList from '@/containers/about/questions-list';
 import Layout, { Sidebar, Content } from '@/layouts/static-page';
+import {
+  getGetStaticIndicatorsQueryKey,
+  getGetStaticIndicatorsQueryOptions,
+} from '@/types/generated/static-indicator';
+import { StaticIndicator, StaticIndicatorListResponse } from '@/types/generated/strapi.schemas';
 
-const About: React.FC = () => {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    ...getGetStaticIndicatorsQueryOptions(),
+  });
+
+  const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
+    getGetStaticIndicatorsQueryKey()
+  );
+
+  return {
+    props: {
+      staticIndicators: staticIndicatorsData || { data: [] },
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
+const About: React.FC = ({
+  staticIndicators,
+}: {
+  staticIndicators: StaticIndicatorListResponse;
+}) => {
   const sections = {
     definition: {
       name: 'Definition',
@@ -43,6 +74,12 @@ const About: React.FC = () => {
   const handleIntroScrollClick = () => {
     sections.definition?.ref?.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const protectedWatersIndicator: StaticIndicator = useMemo(() => {
+    return staticIndicators?.data?.find(
+      ({ attributes }) => attributes.slug === 'terrestrial-inland-areas-protected'
+    )?.attributes;
+  }, [staticIndicators]);
 
   return (
     <Layout
@@ -134,11 +171,18 @@ const About: React.FC = () => {
               title="The World Database on Protected Areas (WDPA)"
               description={
                 <>
-                  <u>The World Database on Protected Areas (WDPA)</u>, maintained by Protected
-                  Planet, provides a comprehensive global inventory of the world&apos;s marine and
-                  terrestrial protected areas. The WDPA provides official protected area boundaries
-                  that have been self-reported by 245 countries around the world. WDPA data powers
-                  our statistics on total area protected per country and globally.
+                  <a
+                    href="https://www.protectedplanet.net"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <u>The World Database on Protected Areas (WDPA)</u>
+                  </a>
+                  , maintained by Protected Planet, provides a comprehensive global inventory of the
+                  world&apos;s marine and terrestrial protected areas. The WDPA provides official
+                  protected area boundaries that have been self-reported by 245 countries around the
+                  world. WDPA data powers our statistics on total area protected per country and
+                  globally.
                 </>
               }
             >
@@ -153,11 +197,13 @@ const About: React.FC = () => {
               title="The Marine Protection Atlas (MPAtlas)"
               description={
                 <>
-                  <u>The Marine Protection Atlas (MPAtlas)</u>, which is produced by the Marine
-                  Conservation Institute, builds on the WDPA dataset to provide a science-based,
-                  independent assessment of the Stage of Establishment and Level of Protection per
-                  marine protected area (MPA). MPAtlas data powers our statistics on Level of
-                  Protection per MPA.
+                  <a href="https://mpatlas.org" target="_blank" rel="noopener noreferrer">
+                    <u>The Marine Protection Atlas (MPAtlas)</u>
+                  </a>
+                  , which is produced by the Marine Conservation Institute, builds on the WDPA
+                  dataset to provide a science-based, independent assessment of the Stage of
+                  Establishment and Level of Protection per marine protected area (MPA). MPAtlas
+                  data powers our statistics on Level of Protection per MPA.
                 </>
               }
             >
@@ -172,11 +218,13 @@ const About: React.FC = () => {
               title="ProtectedSeas"
               description={
                 <>
-                  <u>ProtectedSeas</u> maintains the world’s largest database of regulatory
-                  information for MPAs, with information on over 21,000 marine and coastal protected
-                  areas around the world. ProtectedSeas data powers our Level of Fishing Protection
-                  (LFP) score, which describes the degree to which fishing activity has been
-                  restricted in MPAs.
+                  <a href="https://protectedseas.net" target="_blank" rel="noopener noreferrer">
+                    <u>ProtectedSeas</u>
+                  </a>{' '}
+                  maintains the world’s largest database of regulatory information for MPAs, with
+                  information on over 21,000 marine and coastal protected areas around the world.
+                  ProtectedSeas data powers our Level of Fishing Protection (LFP) score, which
+                  describes the degree to which fishing activity has been restricted in MPAs.
                 </>
               }
             >
@@ -187,8 +235,16 @@ const About: React.FC = () => {
         <Section ref={sections.futureObjectives.ref}>
           <SectionTitle>What’s next for the 30x30 hub?</SectionTitle>
           <SectionDescription>
-            This web portal was built with support from the <u>Bloomberg Ocean Initiative</u>, so we
-            started by focusing on marine protection.
+            This web portal was built with support from the{' '}
+            <a
+              href="https://www.bloomberg.org/environment/protecting-the-oceans/bloomberg-ocean/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <u>Bloomberg Ocean Initiative</u>
+            </a>
+            , so we started by focusing on marine protection, with the goal of creating a one-stop
+            entry point for getting engaged and informed on 30x30.
           </SectionDescription>
 
           <SectionContent>
@@ -200,9 +256,9 @@ const About: React.FC = () => {
           </SectionContent>
 
           <StatsImage
-            value="17%"
-            description="Of terrestrial and inland waters are protected by 276,847 Protected Areas and 675 OECMs."
-            sourceLink="https://www.protectedplanet.net/en"
+            value={protectedWatersIndicator?.value}
+            description={protectedWatersIndicator?.description}
+            sourceLink={protectedWatersIndicator?.source}
             image="stats4"
             color="purple"
           />
