@@ -3,15 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useSetAtom } from 'jotai';
-import { Check } from 'lucide-react';
 
-import {
-  Command,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandEmpty,
-} from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PAGES } from '@/constants/pages';
 import { bboxLocation, popupAtom } from '@/containers/map/store';
@@ -21,6 +13,7 @@ import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schem
 
 import { useMapSearchParams } from '../../../content/map/sync-settings';
 
+import LocationDropdown from './location-dropdown';
 import LocationTypeToggle from './type-toggle';
 
 const FILTERS = {
@@ -33,32 +26,17 @@ type LocationSelectorProps = {
 };
 
 const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
-  const {
-    query: { locationCode },
-    push,
-  } = useRouter();
+  const { push } = useRouter();
+
   // @ts-expect-error to work properly, strict mode should be enabled
   const setLocationBBox = useSetAtom(bboxLocation);
   const setPopup = useSetAtom(popupAtom);
-
-  const locationsQuery = useGetLocations(
-    {
-      filters: {
-        code: locationCode,
-      },
-    },
-    {
-      query: {
-        queryKey: ['locations', locationCode],
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
-  );
 
   const searchParams = useMapSearchParams();
 
   const [locationsFilter, setLocationsFilter] = useState('');
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
+
   const { data: locationsData } = useGetLocations(
     {
       'pagination[limit]': -1,
@@ -113,36 +91,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
             className="mb-4"
             onChange={handleLocationsFilterChange}
           />
-          <Command label="Search country or region">
-            <CommandInput placeholder="Search country or region" />
-            <CommandEmpty>No result</CommandEmpty>
-            <CommandGroup className="mt-4 max-h-64 overflow-y-auto">
-              {filteredLocations.map(({ attributes }) => {
-                const { name, code, type } = attributes;
-
-                return (
-                  <CommandItem
-                    key={code}
-                    value={name}
-                    onSelect={() => handleLocationSelected(code)}
-                  >
-                    <div className="flex w-full cursor-pointer justify-between gap-x-4">
-                      <div className="flex font-bold underline">
-                        <Check
-                          className={cn(
-                            'relative top-1 mr-2 inline-block h-4 w-4 flex-shrink-0',
-                            locationsQuery.data?.code === code ? 'opacity-100' : 'opacity-0'
-                          )}
-                        />
-                        {name}
-                      </div>
-                      <span className="flex-shrink-0 capitalize text-gray-400">{type}</span>
-                    </div>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-          </Command>
+          <LocationDropdown locations={filteredLocations} onSelected={handleLocationSelected} />
         </PopoverContent>
       </Popover>
     </div>
