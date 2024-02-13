@@ -55,6 +55,7 @@ module.exports = {
           'Data-tool-ecosystem',
           'Data-source',
           'Static-indicator',
+          'Contact-detail',
         ],
       },
     },
