@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -20,6 +20,13 @@ import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 import { useMapSearchParams } from '../../../content/map/sync-settings';
+
+import LocationTypeToggle from './type-toggle';
+
+const FILTERS = {
+  countryHighseas: ['country', 'highseas'],
+  regions: ['region'],
+};
 
 type LocationSelectorProps = {
   className: HTMLDivElement['className'];
@@ -50,6 +57,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
 
   const searchParams = useMapSearchParams();
 
+  const [locationsFilter, setLocationsFilter] = useState('');
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
   const { data: locationsData } = useGetLocations(
     {
@@ -63,6 +71,10 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
       },
     }
   );
+
+  const handleLocationsFilterChange = (value) => {
+    setLocationsFilter(value);
+  };
 
   const handleLocationSelected = useCallback(
     async (locationCode: LocationGroupsDataItemAttributes['code']) => {
@@ -81,6 +93,14 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     [push, searchParams, setLocationBBox, locationsData, setPopup]
   );
 
+  const filteredLocations = useMemo(() => {
+    if (!locationsFilter) return locationsData;
+
+    return locationsData.filter(({ attributes }) =>
+      FILTERS[locationsFilter].includes(attributes.type)
+    );
+  }, [locationsData, locationsFilter]);
+
   return (
     <div className={cn(className)}>
       <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
@@ -88,11 +108,16 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
           Change Location
         </PopoverTrigger>
         <PopoverContent className="w-96 max-w-screen" align="start">
+          <LocationTypeToggle
+            value={locationsFilter}
+            className="mb-4"
+            onChange={handleLocationsFilterChange}
+          />
           <Command label="Search country or region">
             <CommandInput placeholder="Search country or region" />
             <CommandEmpty>No result</CommandEmpty>
             <CommandGroup className="mt-4 max-h-64 overflow-y-auto">
-              {locationsData.map(({ attributes }) => {
+              {filteredLocations.map(({ attributes }) => {
                 const { name, code, type } = attributes;
 
                 return (
