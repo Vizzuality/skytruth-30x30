@@ -16,7 +16,7 @@ export const LOGOS = {
       logo: 'vizzuality.png',
       alt: 'Vizzuality logo',
       link: 'https://www.vizzuality.com/',
-      description: 'Leads the design and development of the 30x30 hub',
+      description: 'Leads design and development',
       width: 186,
       height: 47,
     },
