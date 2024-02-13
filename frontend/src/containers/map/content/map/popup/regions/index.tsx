@@ -192,7 +192,7 @@ const EEZLayerPopup = ({ locationId }) => {
       {locationsQuery.isFetched && locationsQuery.data && (
         <>
           <div className="space-y-2">
-            <div className="font-mono uppercase">Marine conservation coverage</div>
+            <div className="font-mono">Marine Conservation Coverage</div>
             <div className="space-x-1 font-mono tracking-tighter text-blue">
               <span className="text-[64px] font-bold leading-[80%]">
                 {coverageStats.percentage}
