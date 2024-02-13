@@ -253,8 +253,8 @@ const About: React.FC = ({
               <span className="text-black">terrestrial ecosystems</span>.
             </HighlightedText>
             <HighlightedText>
-              Our goal of creating a <span className="text-black">one-stop entry point</span>{' '}
-              for getting engaged and informed on 30x30.
+              Our goal of creating a <span className="text-black">one-stop entry point</span> for
+              getting engaged and informed on 30x30.
             </HighlightedText>
           </SectionContent>
 
