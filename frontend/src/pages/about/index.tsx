@@ -250,8 +250,11 @@ const About: React.FC = ({
           <SectionContent>
             <HighlightedText>
               Next, we&apos;re extending the hub to include{' '}
-              <span className="text-black">terrestrial ecosystems</span>. With the goal of creating
-              a one-stop entry point for getting engaged and informed on 30x30.
+              <span className="text-black">terrestrial ecosystems</span>.
+            </HighlightedText>
+            <HighlightedText>
+              Our goal of creating a <span className="text-black">one-stop entry point</span>{' '}
+              for getting engaged and informed on 30x30.
             </HighlightedText>
           </SectionContent>
 
