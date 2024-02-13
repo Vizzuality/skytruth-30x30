@@ -27,6 +27,9 @@ const STATIC_INDICATOR_MAPPING = {
   biodiversity: 'species-threatened-with-extinction',
   climate: 'earth-co2-stored-cycled',
   livesLivelihoods: 'lives-impact',
+  biodiversityTextNumber: 'species-threathened-number',
+  biodiversityTextOcean: 'protected-world-ocean-percentage',
+  biodiversityTextLand: 'protected-land-area-percentage',
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -156,30 +159,30 @@ const Home: React.FC = ({
                   Today,{' '}
                   <a
                     className="underline"
-                    href="https://www.protectedplanet.net/en"
+                    href={indicators?.biodiversityTextOcean?.source}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    8.1 percent of the world’s ocean
+                    {indicators?.biodiversityTextOcean?.value} percent of the world’s ocean
                   </a>{' '}
                   and{' '}
                   <a
                     className="underline"
-                    href="https://www.protectedplanet.net/en"
+                    href={indicators?.biodiversityTextLand?.source}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    17.2 percent of its land area
+                    {indicators?.biodiversityTextLand?.value} percent of its land area
                   </a>{' '}
                   are protected . Wildlife populations - mammals, birds, fish, and other species -
                   have decreased by nearly 70% since 1970, with up to{' '}
                   <a
                     className="underline"
-                    href="https://www.iucnredlist.org/"
+                    href={indicators?.biodiversity?.source}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    44,000 species threatened with extinction
+                    {indicators?.biodiversity?.value} species threatened with extinction
                   </a>
                   .
                 </p>
