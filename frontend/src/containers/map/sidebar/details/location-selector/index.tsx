@@ -16,7 +16,7 @@ import { useMapSearchParams } from '../../../content/map/sync-settings';
 import LocationDropdown from './location-dropdown';
 import LocationTypeToggle from './type-toggle';
 
-const FILTERS = {
+export const FILTERS = {
   countryHighseas: ['country', 'highseas'],
   regions: ['region'],
 };
@@ -34,7 +34,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
 
   const searchParams = useMapSearchParams();
 
-  const [locationsFilter, setLocationsFilter] = useState('');
+  const [locationsFilter, setLocationsFilter] = useState<keyof typeof FILTERS>(null);
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
 
   const { data: locationsData } = useGetLocations(

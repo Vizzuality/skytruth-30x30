@@ -10,8 +10,8 @@ import {
   CommandEmpty,
 } from '@/components/ui/command';
 import { cn } from '@/lib/classnames';
-import { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 import { useGetLocations } from '@/types/generated/location';
+import { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 type LocationDropdownProps = {
   className?: HTMLDivElement['className'];
