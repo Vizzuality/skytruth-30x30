@@ -153,10 +153,35 @@ const Home: React.FC = ({
             description={
               <>
                 <p>
-                  Today, 8 percent of the world’s ocean and 15 percent of its land area are
-                  protected. Wildlife populations - mammals, birds, fish, and other species - have{' '}
-                  <u>decreased by nearly 70% since 1970</u>, with up to{' '}
-                  <u>1 million species threatened with extinction</u>.
+                  Today,{' '}
+                  <a
+                    className="underline"
+                    href="https://www.protectedplanet.net/en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    8.1 percent of the world’s ocean
+                  </a>{' '}
+                  and{' '}
+                  <a
+                    className="underline"
+                    href="https://www.protectedplanet.net/en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    17.2 percent of its land area
+                  </a>{' '}
+                  are protected . Wildlife populations - mammals, birds, fish, and other species -
+                  have decreased by nearly 70% since 1970, with up to{' '}
+                  <a
+                    className="underline"
+                    href="https://www.iucnredlist.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    44,000 species threatened with extinction
+                  </a>
+                  .
                 </p>
                 <p className="mt-4 font-bold">
                   Protecting 30 percent of the world’s land and ocean habitats by 2030 will help
