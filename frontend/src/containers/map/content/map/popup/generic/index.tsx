@@ -10,8 +10,6 @@ import { format } from '@/lib/utils/formats';
 import { useGetLayersId } from '@/types/generated/layer';
 import { LayerTyped, InteractionConfig } from '@/types/layers';
 
-const TERMS_CLASSES = 'font-mono font-bold uppercase';
-
 const GenericPopup = ({
   locationId,
   ...restConfig
@@ -80,6 +78,13 @@ const GenericPopup = ({
     setRendered(map?.loaded() && map?.areTilesLoaded());
   }, [map]);
 
+  const formatLabel = (label) =>
+    label
+      .toLowerCase()
+      .split(' ')
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(' ');
+
   useEffect(() => {
     map?.on('render', handleMapRender);
 
@@ -94,7 +99,12 @@ const GenericPopup = ({
 
   const values = events.find((ev) => ev.type === 'click')?.values;
   const name = values?.find((v) => v.label === 'Name');
-  const restValues = values?.filter((v) => v.label !== 'Name') ?? [];
+  const restValues = (values?.filter((v) => v.label !== 'Name') ?? []).map(
+    ({ label, ...rest }) => ({
+      label: formatLabel(label),
+      ...rest,
+    })
+  );
 
   return (
     <>
@@ -103,7 +113,7 @@ const GenericPopup = ({
         <dl className="space-y-2">
           {restValues.map(({ key, label, format: customFormat }) => (
             <div key={key}>
-              <dt className={TERMS_CLASSES}>{label}</dt>
+              <dt className="mt-4 font-mono">{label}</dt>
               <dd className="font-mono first-letter:uppercase">
                 {customFormat && format({ value: DATA[key], ...customFormat })}
                 {!customFormat && DATA[key]}
