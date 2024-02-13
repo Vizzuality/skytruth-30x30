@@ -45,7 +45,7 @@ const MapSidebar: React.FC = () => {
             {
               'hidden md:flex': true,
               'left-0': !isSidebarOpen,
-              'left-[430px] transition-[left] delay-500': isSidebarOpen,
+              'left-[460px] transition-[left] delay-500': isSidebarOpen,
             }
           )}
           onClick={onClickAnalysis}
@@ -61,14 +61,14 @@ const MapSidebar: React.FC = () => {
           className={cn('absolute bottom-0 z-10 h-12 border-l-0 px-1 !py-3', {
             'hidden md:flex': true,
             'left-0': !isSidebarOpen,
-            'left-[430px] transition-[left] delay-500': isSidebarOpen,
+            'left-[460px] transition-[left] delay-500': isSidebarOpen,
           })}
         >
           <LuChevronLeft className={cn('h-6 w-6', { 'rotate-180': !isSidebarOpen })} aria-hidden />
           <span className="sr-only">Toggle sidebar</span>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="relative top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none md:w-[430px]">
+      <CollapsibleContent className="relative top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none md:w-[460px]">
         {showAnalysisSidebar && <Analysis />}
         {showDetailsSidebar && <Details />}
       </CollapsibleContent>
