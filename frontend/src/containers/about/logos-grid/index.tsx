@@ -39,7 +39,7 @@ const LogosGrid: React.FC<LogosGridProps> = ({ className, type, columns }) => (
             </span>
           )}
         </span>
-        <span className="min-h-[60px] text-center md:text-left">{description}</span>
+        <span className="min-h-[60px] max-w-[250px] text-center md:text-left">{description}</span>
       </div>
     ))}
   </div>
