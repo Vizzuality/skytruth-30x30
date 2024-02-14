@@ -31,7 +31,7 @@ const AnalysisButtons: React.FC = () => {
         size="sm"
         onClick={onClickClearAnalysis}
       >
-        Clear analysis
+        Clear model
       </Button>
       <Button
         type="button"
