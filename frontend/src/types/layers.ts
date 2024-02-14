@@ -20,6 +20,7 @@ export type LegendConfig = {
   items: {
     value: string;
     color: string;
+    description?: string;
   }[];
 };
 
