@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { useAtom } from 'jotai';
-import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
+import { LuChevronLeft } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -51,7 +51,6 @@ const MapSidebar: React.FC = () => {
           onClick={onClickModelling}
         >
           <span>Marine Conservation Modelling</span>
-          <LuChevronRight className="h-6 w-6 -translate-y-[1px]" />
         </Button>
       )}
       <CollapsibleTrigger asChild>
