@@ -9,7 +9,7 @@ import VideoPlayer from '@/components/video-player';
 import { drawStateAtom } from '@/containers/map/store';
 import Graph from '@/styles/icons/graph.svg?sprite';
 
-const AnalysisIntro: React.FC = () => {
+const ModellingIntro: React.FC = () => {
   const [{ active: isDrawStateActive }, setDrawState] = useAtom(drawStateAtom);
   const resetDrawState = useResetAtom(drawStateAtom);
 
@@ -58,4 +58,4 @@ const AnalysisIntro: React.FC = () => {
   );
 };
 
-export default AnalysisIntro;
+export default ModellingIntro;

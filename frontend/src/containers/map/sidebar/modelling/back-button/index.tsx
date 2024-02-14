@@ -4,16 +4,16 @@ import { useResetAtom } from 'jotai/utils';
 import { LuChevronLeft } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
-import { analysisAtom, drawStateAtom } from '@/containers/map/store';
+import { modellingAtom, drawStateAtom } from '@/containers/map/store';
 
 const BackButton: React.FC = () => {
-  const resetAnalysis = useResetAtom(analysisAtom);
+  const resetModelling = useResetAtom(modellingAtom);
   const resetDrawState = useResetAtom(drawStateAtom);
 
   const onClickBack = useCallback(() => {
     resetDrawState();
-    resetAnalysis();
-  }, [resetAnalysis, resetDrawState]);
+    resetModelling();
+  }, [resetModelling, resetDrawState]);
 
   return (
     <Button

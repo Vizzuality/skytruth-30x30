@@ -4,23 +4,23 @@ import { useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 
 import { Button } from '@/components/ui/button';
-import { analysisAtom, drawStateAtom } from '@/containers/map/store';
+import { modellingAtom, drawStateAtom } from '@/containers/map/store';
 
-const AnalysisButtons: React.FC = () => {
-  const setAnalysis = useSetAtom(analysisAtom);
-  const resetAnalysis = useResetAtom(analysisAtom);
+const ModellingButtons: React.FC = () => {
+  const setModelling = useSetAtom(modellingAtom);
+  const resetModelling = useResetAtom(modellingAtom);
   const resetDrawState = useResetAtom(drawStateAtom);
 
-  const onClickClearAnalysis = useCallback(() => {
+  const onClickClearModelling = useCallback(() => {
     resetDrawState();
-    resetAnalysis();
-  }, [resetAnalysis, resetDrawState]);
+    resetModelling();
+  }, [resetModelling, resetDrawState]);
 
   const onClickRedraw = useCallback(() => {
     resetDrawState();
-    resetAnalysis();
-    setAnalysis((prevState) => ({ ...prevState, active: true }));
-  }, [resetAnalysis, resetDrawState, setAnalysis]);
+    resetModelling();
+    setModelling((prevState) => ({ ...prevState, active: true }));
+  }, [resetModelling, resetDrawState, setModelling]);
 
   return (
     <div className="mt-4 flex gap-4 py-1 font-mono text-sm font-semibold uppercase underline">
@@ -29,7 +29,7 @@ const AnalysisButtons: React.FC = () => {
         className="m-0 p-0"
         variant="text-link"
         size="sm"
-        onClick={onClickClearAnalysis}
+        onClick={onClickClearModelling}
       >
         Clear model
       </Button>
@@ -46,4 +46,4 @@ const AnalysisButtons: React.FC = () => {
   );
 };
 
-export default AnalysisButtons;
+export default ModellingButtons;

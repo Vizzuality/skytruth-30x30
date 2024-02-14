@@ -5,30 +5,30 @@ import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { analysisAtom, sidebarAtom } from '@/containers/map/store';
+import { modellingAtom, sidebarAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 
 import { useSyncMapContentSettings } from '../sync-settings';
 
-import Analysis from './analysis';
 import Details from './details';
+import Modelling from './modelling';
 
 const MapSidebar: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
-  const [{ active: isAnalysisActive }, setAnalysisActive] = useAtom(analysisAtom);
+  const [{ active: isModellingActive }, setModellingActive] = useAtom(modellingAtom);
   const [{ showDetails }] = useSyncMapContentSettings();
 
-  const onClickAnalysis = useCallback(() => {
-    setAnalysisActive((prevState) => ({
+  const onClickModelling = useCallback(() => {
+    setModellingActive((prevState) => ({
       ...prevState,
       active: true,
     }));
-  }, [setAnalysisActive]);
+  }, [setModellingActive]);
 
-  const analysisFeatureActive = process.env.NEXT_PUBLIC_FEATURE_FLAG_ANALYSIS === 'true';
-  const showAnalysisButton = analysisFeatureActive && !isAnalysisActive && !showDetails;
-  const showAnalysisSidebar = analysisFeatureActive && isAnalysisActive;
-  const showDetailsSidebar = !showAnalysisSidebar;
+  const modellingFeatureActive = process.env.NEXT_PUBLIC_FEATURE_FLAG_ANALYSIS === 'true';
+  const showModellingButton = modellingFeatureActive && !isModellingActive && !showDetails;
+  const showModellingSidebar = modellingFeatureActive && isModellingActive;
+  const showDetailsSidebar = !showModellingSidebar;
 
   return (
     <Collapsible
@@ -36,7 +36,7 @@ const MapSidebar: React.FC = () => {
       open={isSidebarOpen}
       onOpenChange={setSidebarOpen}
     >
-      {showAnalysisButton && (
+      {showModellingButton && (
         <Button
           type="button"
           variant="white"
@@ -48,7 +48,7 @@ const MapSidebar: React.FC = () => {
               'left-[460px] transition-[left] delay-500': isSidebarOpen,
             }
           )}
-          onClick={onClickAnalysis}
+          onClick={onClickModelling}
         >
           <span>Marine Conservation Modelling</span>
           <LuChevronRight className="h-6 w-6 -translate-y-[1px]" />
@@ -69,7 +69,7 @@ const MapSidebar: React.FC = () => {
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent className="relative top-0 left-0 z-20 h-full flex-shrink-0 bg-white fill-mode-none md:w-[460px]">
-        {showAnalysisSidebar && <Analysis />}
+        {showModellingSidebar && <Modelling />}
         {showDetailsSidebar && <Details />}
       </CollapsibleContent>
     </Collapsible>
