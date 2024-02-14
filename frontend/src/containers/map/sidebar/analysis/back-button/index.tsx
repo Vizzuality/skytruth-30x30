@@ -22,7 +22,7 @@ const BackButton: React.FC = () => {
       onClick={onClickBack}
     >
       <LuChevronLeft className="-ml-2 mr-2 h-5 w-5 -translate-y-[1px]" />
-      Back
+      Back to dashboard
     </Button>
   );
 };
