@@ -15,7 +15,7 @@ const PATTERNS = {
   implemented: ImplementedIcon,
 };
 
-const EEZLayerLegend = (config: {
+const EstablishmentLayerLegend = (config: {
   items: { label: string; pattern: string; description?: string }[];
 }) => {
   const { items } = config;
@@ -35,4 +35,4 @@ const EEZLayerLegend = (config: {
   );
 };
 
-export default EEZLayerLegend;
+export default EstablishmentLayerLegend;
