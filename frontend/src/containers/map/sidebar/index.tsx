@@ -41,7 +41,7 @@ const MapSidebar: React.FC = () => {
           type="button"
           variant="white"
           className={cn(
-            'absolute top-0 z-10 flex h-12 items-center space-x-2 border-l-0 border-t-0 px-6 py-3 font-mono text-xs',
+            'absolute top-0 z-10 flex h-10 items-center space-x-2 border-l-0 border-t-0 px-6 py-3 font-mono text-xs',
             {
               'hidden md:flex': true,
               'left-0': !isSidebarOpen,
