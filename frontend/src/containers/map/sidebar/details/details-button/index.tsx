@@ -1,11 +1,10 @@
-import { ComponentProps, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
-import { cn } from '@/lib/classnames';
 
 const DetailsButton: React.FC = () => {
-  const [{ showDetails }, setSettings] = useSyncMapContentSettings();
+  const [, setSettings] = useSyncMapContentSettings();
 
   const handleButtonClick = useCallback(() => {
     setSettings((prevSettings) => ({ ...prevSettings, showDetails: !prevSettings.showDetails }));
@@ -13,20 +12,12 @@ const DetailsButton: React.FC = () => {
 
   return (
     <Button
-      className={cn('h-12 border-t border-black', {
-        'border-r !px-2': showDetails,
-        'flex justify-between px-5 md:px-8': !showDetails,
-      })}
+      className="flex h-12 justify-between border-t border-black px-5 md:px-8"
       variant="sidebar-details"
-      size={
-        cn({
-          default: showDetails,
-          full: !showDetails,
-        }) as ComponentProps<typeof Button>['size']
-      }
+      size="full"
       onClick={handleButtonClick}
     >
-      {!showDetails && <span className="pt-1 font-mono">Marine Conservation Details</span>}
+      <span className="pt-1 font-mono">Marine Conservation Details</span>
     </Button>
   );
 };
