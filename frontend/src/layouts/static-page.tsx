@@ -7,12 +7,6 @@ import Icon from '@/components/ui/icon';
 import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
-const ARROW_COLORS = {
-  black: 'black',
-  orange: 'orange',
-  purple: 'purple-400',
-};
-
 type SidebarProps = {
   sections: {
     [key: string]: {
@@ -46,7 +40,14 @@ const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, arrowColor =
               onClick={() => handleClick(key)}
             >
               {id === activeSection && (
-                <Icon icon={ArrowRight} className={`h-6 text-${ARROW_COLORS[arrowColor]}`} />
+                <Icon
+                  icon={ArrowRight}
+                  className={cn('h-6', {
+                    'text-black': arrowColor === 'black',
+                    'text-orange': arrowColor === 'orange',
+                    'text-purple-400': arrowColor === 'purple',
+                  })}
+                />
               )}
               <span className={cn('pt-1 hover:font-bold', { 'font-bold': id === activeSection })}>
                 {name}
