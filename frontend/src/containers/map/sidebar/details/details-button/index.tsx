@@ -1,7 +1,5 @@
 import { ComponentProps, useCallback } from 'react';
 
-import { ArrowRight } from 'lucide-react';
-
 import { Button } from '@/components/ui/button';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
@@ -29,7 +27,6 @@ const DetailsButton: React.FC = () => {
       onClick={handleButtonClick}
     >
       {!showDetails && <span className="pt-1 font-mono">Marine Conservation Details</span>}
-      <ArrowRight aria-hidden />
     </Button>
   );
 };
