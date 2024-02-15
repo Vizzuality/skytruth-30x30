@@ -1,13 +1,10 @@
-import { ComponentProps, useCallback } from 'react';
-
-import { ArrowRight } from 'lucide-react';
+import { useCallback } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
-import { cn } from '@/lib/classnames';
 
 const DetailsButton: React.FC = () => {
-  const [{ showDetails }, setSettings] = useSyncMapContentSettings();
+  const [, setSettings] = useSyncMapContentSettings();
 
   const handleButtonClick = useCallback(() => {
     setSettings((prevSettings) => ({ ...prevSettings, showDetails: !prevSettings.showDetails }));
@@ -15,21 +12,12 @@ const DetailsButton: React.FC = () => {
 
   return (
     <Button
-      className={cn('h-12 border-t border-black', {
-        'border-r !px-2': showDetails,
-        'flex justify-between px-5 md:px-8': !showDetails,
-      })}
+      className="flex h-10 justify-between border-t border-black px-5 md:px-8"
       variant="sidebar-details"
-      size={
-        cn({
-          default: showDetails,
-          full: !showDetails,
-        }) as ComponentProps<typeof Button>['size']
-      }
+      size="full"
       onClick={handleButtonClick}
     >
-      {!showDetails && <span className="pt-1 font-mono">Marine Conservation Details</span>}
-      <ArrowRight aria-hidden />
+      <span className="w-full pt-1 font-mono text-xs">Marine Conservation Details</span>
     </Button>
   );
 };
