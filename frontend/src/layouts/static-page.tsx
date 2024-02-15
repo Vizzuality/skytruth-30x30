@@ -10,13 +10,15 @@ import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 type SidebarProps = {
   sections: {
     [key: string]: {
+      id: string;
       name: string;
       ref: MutableRefObject<HTMLDivElement>;
     };
   };
+  activeSection?: string;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
+const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection }) => {
   if (!sections) return null;
 
   const handleClick = (key) => {
@@ -28,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
   return (
     <div className="-mb-6 min-w-[200px] px-8 md:mb-0 md:px-0">
       <nav className="sticky top-10 bottom-3 my-10 flex flex-col gap-3 font-mono text-sm">
-        {Object.entries(sections).map(([key, { name }]) => {
+        {Object.entries(sections).map(([key, { id, name }]) => {
           return (
             <button
               key={key}
@@ -37,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
               onClick={() => handleClick(key)}
             >
               <Icon icon={ArrowRight} className="h-6 fill-black" />
-              <span className="pt-1">{name}</span>
+              <span className={cn('pt-1', { 'font-bold': id === activeSection })}>{name}</span>
             </button>
           );
         })}
