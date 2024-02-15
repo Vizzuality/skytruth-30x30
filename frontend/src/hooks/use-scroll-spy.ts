@@ -11,7 +11,7 @@ type ScrollSpyOptions = {
 
 const DEFAULT_OPTIONS = {
   overBounds: true,
-  thresholdPercentage: 50,
+  thresholdPercentage: 20,
 };
 
 const useScrollSpy = (items: ScrollSpyItem[], options?: ScrollSpyOptions) => {
