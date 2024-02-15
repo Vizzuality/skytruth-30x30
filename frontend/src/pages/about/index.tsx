@@ -17,6 +17,7 @@ import HighlightedText from '@/containers/about/highlighted-text';
 import Logo from '@/containers/about/logo';
 import LogosGrid from '@/containers/about/logos-grid';
 import QuestionsList from '@/containers/about/questions-list';
+import useScrollSpy from '@/hooks/use-scroll-spy';
 import Layout, { Sidebar, Content } from '@/layouts/static-page';
 import {
   getGetStaticIndicatorsQueryKey,
@@ -50,26 +51,33 @@ const About: React.FC = ({
 }) => {
   const sections = {
     definition: {
+      id: 'definition',
       name: 'Definition',
       ref: useRef<HTMLDivElement>(null),
     },
     problem: {
+      id: 'problem',
       name: 'Problem',
       ref: useRef<HTMLDivElement>(null),
     },
     dataPartners: {
+      id: 'data-partners',
       name: 'Data Partners',
       ref: useRef<HTMLDivElement>(null),
     },
     futureObjectives: {
+      id: 'future-objectives',
       name: 'Future Objectives',
       ref: useRef<HTMLDivElement>(null),
     },
     teamAndFunders: {
+      id: 'teams-and-funders',
       name: 'Team & Funders',
       ref: useRef<HTMLDivElement>(null),
     },
   };
+
+  const scrollActiveId = useScrollSpy(Object.values(sections).map(({ id, ref }) => ({ id, ref })));
 
   const handleIntroScrollClick = () => {
     sections.definition?.ref?.current?.scrollIntoView({ behavior: 'smooth' });
@@ -105,7 +113,7 @@ const About: React.FC = ({
         />
       }
     >
-      <Sidebar sections={sections} />
+      <Sidebar sections={sections} activeSection={scrollActiveId} />
       <Content>
         <Section ref={sections.definition.ref}>
           <SectionTitle>What is 30x30</SectionTitle>
