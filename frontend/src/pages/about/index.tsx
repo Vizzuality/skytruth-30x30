@@ -113,7 +113,7 @@ const About: React.FC = ({
         />
       }
     >
-      <Sidebar sections={sections} activeSection={scrollActiveId} />
+      <Sidebar sections={sections} activeSection={scrollActiveId} arrowColor="purple" />
       <Content>
         <Section ref={sections.definition.ref}>
           <SectionTitle>What is 30x30</SectionTitle>

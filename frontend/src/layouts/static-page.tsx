@@ -7,6 +7,12 @@ import Icon from '@/components/ui/icon';
 import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
+const ARROW_COLORS = {
+  black: 'black',
+  orange: 'orange',
+  purple: 'purple-400',
+};
+
 type SidebarProps = {
   sections: {
     [key: string]: {
@@ -16,9 +22,10 @@ type SidebarProps = {
     };
   };
   activeSection?: string;
+  arrowColor?: 'black' | 'orange' | 'purple';
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection }) => {
+const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, arrowColor = 'black' }) => {
   if (!sections) return null;
 
   const handleClick = (key) => {
@@ -38,7 +45,9 @@ const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection }) => {
               type="button"
               onClick={() => handleClick(key)}
             >
-              <Icon icon={ArrowRight} className="h-6 fill-black" />
+              {id === activeSection && (
+                <Icon icon={ArrowRight} className={`h-6 text-${ARROW_COLORS[arrowColor]}`} />
+              )}
               <span className={cn('pt-1', { 'font-bold': id === activeSection })}>{name}</span>
             </button>
           );

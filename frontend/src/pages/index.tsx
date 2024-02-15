@@ -112,7 +112,7 @@ const Home: React.FC = ({
         />
       }
     >
-      <Sidebar sections={sections} activeSection={scrollActiveId} />
+      <Sidebar sections={sections} activeSection={scrollActiveId} arrowColor={'orange'} />
       <Content>
         <Section ref={sections.services.ref}>
           <SectionTitle>An entry point for 30x30</SectionTitle>
