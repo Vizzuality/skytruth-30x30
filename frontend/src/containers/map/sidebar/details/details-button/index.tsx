@@ -17,7 +17,7 @@ const DetailsButton: React.FC = () => {
       size="full"
       onClick={handleButtonClick}
     >
-      <span className="pt-1 font-mono">Marine Conservation Details</span>
+      <span className="w-full pt-1 font-mono text-xs">Marine Conservation Details</span>
     </Button>
   );
 };
