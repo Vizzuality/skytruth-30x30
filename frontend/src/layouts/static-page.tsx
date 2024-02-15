@@ -48,7 +48,9 @@ const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, arrowColor =
               {id === activeSection && (
                 <Icon icon={ArrowRight} className={`h-6 text-${ARROW_COLORS[arrowColor]}`} />
               )}
-              <span className={cn('pt-1 hover:font-bold', { 'font-bold': id === activeSection })}>{name}</span>
+              <span className={cn('pt-1 hover:font-bold', { 'font-bold': id === activeSection })}>
+                {name}
+              </span>
             </button>
           );
         })}
