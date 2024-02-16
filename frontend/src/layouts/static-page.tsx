@@ -10,13 +10,16 @@ import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 type SidebarProps = {
   sections: {
     [key: string]: {
+      id: string;
       name: string;
       ref: MutableRefObject<HTMLDivElement>;
     };
   };
+  activeSection?: string;
+  arrowColor?: 'black' | 'orange' | 'purple';
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
+const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, arrowColor = 'black' }) => {
   if (!sections) return null;
 
   const handleClick = (key) => {
@@ -28,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
   return (
     <div className="-mb-6 min-w-[200px] px-8 md:mb-0 md:px-0">
       <nav className="sticky top-10 bottom-3 my-10 flex flex-col gap-3 font-mono text-sm">
-        {Object.entries(sections).map(([key, { name }]) => {
+        {Object.entries(sections).map(([key, { id, name }]) => {
           return (
             <button
               key={key}
@@ -36,8 +39,19 @@ const Sidebar: React.FC<SidebarProps> = ({ sections }) => {
               type="button"
               onClick={() => handleClick(key)}
             >
-              <Icon icon={ArrowRight} className="h-6 fill-black" />
-              <span className="pt-1">{name}</span>
+              {id === activeSection && (
+                <Icon
+                  icon={ArrowRight}
+                  className={cn('h-6', {
+                    'text-black': arrowColor === 'black',
+                    'text-orange': arrowColor === 'orange',
+                    'text-purple-400': arrowColor === 'purple',
+                  })}
+                />
+              )}
+              <span className={cn('pt-1 hover:font-bold', { 'font-bold': id === activeSection })}>
+                {name}
+              </span>
             </button>
           );
         })}

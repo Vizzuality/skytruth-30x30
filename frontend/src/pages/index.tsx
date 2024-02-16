@@ -16,6 +16,7 @@ import EarthSurfaceCoverage from '@/containers/homepage/earth-surface-coverage';
 import InteractiveMap from '@/containers/homepage/interactive-map';
 import Intro from '@/containers/homepage/intro';
 import LinkCards from '@/containers/homepage/link-cards';
+import useScrollSpy from '@/hooks/use-scroll-spy';
 import Layout, { Content, Sidebar } from '@/layouts/static-page';
 import {
   getGetStaticIndicatorsQueryKey,
@@ -58,18 +59,23 @@ const Home: React.FC = ({
 }) => {
   const sections = {
     services: {
+      id: 'services',
       name: 'Services',
       ref: useRef<HTMLDivElement>(null),
     },
     context: {
+      id: 'context',
       name: 'Context',
       ref: useRef<HTMLDivElement>(null),
     },
     impact: {
+      id: 'impact',
       name: 'Impact',
       ref: useRef<HTMLDivElement>(null),
     },
   };
+
+  const scrollActiveId = useScrollSpy(Object.values(sections).map(({ id, ref }) => ({ id, ref })));
 
   const handleIntroScrollClick = () => {
     sections.services?.ref?.current?.scrollIntoView({ behavior: 'smooth' });
@@ -106,7 +112,7 @@ const Home: React.FC = ({
         />
       }
     >
-      <Sidebar sections={sections} />
+      <Sidebar sections={sections} activeSection={scrollActiveId} arrowColor={'orange'} />
       <Content>
         <Section ref={sections.services.ref}>
           <SectionTitle>An entry point for 30x30</SectionTitle>
