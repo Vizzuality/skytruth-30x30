@@ -4,10 +4,11 @@ import TooltipButton from '@/components/tooltip-button';
 import Icon from '@/components/ui/icon';
 import { parseConfig } from '@/lib/json-converter';
 import EEZIcon from '@/styles/icons/eez.svg?sprite';
+import MPAIcon from '@/styles/icons/mpa.svg?sprite';
+import OECMIcon from '@/styles/icons/oecm.svg?sprite';
 import EEZSelectedIcon from '@/styles/icons/selected-eez.svg?sprite';
 import EEZMultipleIcon from '@/styles/icons/several-eez.svg?sprite';
 import { LayerTyped, LegendConfig } from '@/types/layers';
-
 export interface LegendItemsProps {
   config: LayerTyped['legend_config'];
 }
@@ -16,6 +17,8 @@ const ICONS_MAPPING = {
   eez: EEZIcon,
   'eez-selected': EEZSelectedIcon,
   'eez-multiple': EEZMultipleIcon,
+  oecm: OECMIcon,
+  mpa: MPAIcon,
 };
 
 const LegendItem: FC<LegendItemsProps> = ({ config }) => {
