@@ -1,12 +1,22 @@
 import { FC, ReactElement, isValidElement, useMemo } from 'react';
 
 import TooltipButton from '@/components/tooltip-button';
+import Icon from '@/components/ui/icon';
 import { parseConfig } from '@/lib/json-converter';
+import EEZIcon from '@/styles/icons/eez.svg?sprite';
+import EEZSelectedIcon from '@/styles/icons/selected-eez.svg?sprite';
+import EEZMultipleIcon from '@/styles/icons/several-eez.svg?sprite';
 import { LayerTyped, LegendConfig } from '@/types/layers';
 
 export interface LegendItemsProps {
   config: LayerTyped['legend_config'];
 }
+
+const ICONS_MAPPING = {
+  eez: EEZIcon,
+  'eez-selected': EEZSelectedIcon,
+  'eez-multiple': EEZMultipleIcon,
+};
 
 const LegendItem: FC<LegendItemsProps> = ({ config }) => {
   const { type, items } = config;
@@ -40,6 +50,23 @@ const LegendItem: FC<LegendItemsProps> = ({ config }) => {
                 }}
               />
               <span className="flex">
+                <span className="font-mono">{value}</span>
+                {description && <TooltipButton className="-my-1" text={description} />}
+              </span>
+            </li>
+          ))}
+        </ul>
+      );
+
+    case 'icon':
+      return (
+        <ul className="flex w-full flex-col space-y-1">
+          {items.map(({ value, icon, description }) => (
+            <li key={`${value}`} className="flex space-x-2 p-1">
+              <span className="h-7 w-7">
+                <Icon icon={ICONS_MAPPING[icon]} className="h-7 w-7" />
+              </span>
+              <span className="flex items-center text-xs">
                 <span className="font-mono">{value}</span>
                 {description && <TooltipButton className="-my-1" text={description} />}
               </span>
