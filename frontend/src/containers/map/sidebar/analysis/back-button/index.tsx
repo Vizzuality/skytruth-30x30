@@ -17,7 +17,7 @@ const BackButton: React.FC = () => {
 
   return (
     <Button
-      className="flex h-12 justify-between border-l-0 px-5 md:px-8"
+      className="flex h-12 justify-between border-l-0 px-5 font-mono md:px-8 text-xs"
       variant="blue"
       onClick={onClickBack}
     >
