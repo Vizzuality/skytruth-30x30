@@ -37,7 +37,7 @@ const SidebarDetails: React.FC = () => {
         </div>
         <div
           className={cn('absolute bottom-0 left-px ', {
-            'right-px': !showDetails,
+            'right-px': true,
           })}
         >
           <DetailsButton />
