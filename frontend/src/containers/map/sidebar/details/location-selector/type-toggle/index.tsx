@@ -9,20 +9,30 @@ const TOGGLE_CLASSES =
 
 type LocationTypeToggleProps = {
   className?: HTMLDivElement['className'];
+  defaultValue: keyof typeof FILTERS;
   value: keyof typeof FILTERS;
   onChange: (value: keyof typeof FILTERS) => void;
 };
 
-const LocationTypeToggle: React.FC<LocationTypeToggleProps> = ({ className, value, onChange }) => (
+const LocationTypeToggle: React.FC<LocationTypeToggleProps> = ({
+  className,
+  defaultValue,
+  value,
+  onChange,
+}) => (
   <ToggleGroup.Root
     className={cn(
       className,
       'grid w-full grid-cols-3 items-center justify-center border border-black'
     )}
     type="single"
-    defaultValue={value}
+    defaultValue={defaultValue}
     aria-label="Locations filter"
-    onValueChange={onChange}
+    value={value}
+    onValueChange={(value: keyof typeof FILTERS) => {
+      if (!value) return;
+      onChange(value);
+    }}
   >
     <ToggleGroup.Item className={TOGGLE_CLASSES} value="all" aria-label="All">
       All

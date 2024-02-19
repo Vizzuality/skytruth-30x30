@@ -41,7 +41,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
 
   const searchParams = useMapSearchParams();
 
-  const [locationsFilter, setLocationsFilter] = useState<keyof typeof FILTERS>(null);
+  const [locationsFilter, setLocationsFilter] = useState<keyof typeof FILTERS>('all');
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
 
   const { data: locationsData } = useGetLocations(
@@ -94,6 +94,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
         </PopoverTrigger>
         <PopoverContent className="w-96 max-w-screen" align="start">
           <LocationTypeToggle
+            defaultValue={locationsFilter}
             value={locationsFilter}
             className="mb-4"
             onChange={handleLocationsFilterChange}
