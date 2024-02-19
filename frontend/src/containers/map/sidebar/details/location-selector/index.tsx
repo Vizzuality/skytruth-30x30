@@ -80,7 +80,9 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
 
   const reorderedLocations = useMemo(() => {
     const globalLocation = locationsData.find(({ attributes }) => attributes.type === 'worldwide');
-    return [globalLocation, ...locationsData.filter(({ id }) => id !== globalLocation.id)];
+    return [globalLocation, ...locationsData.filter(({ id }) => id !== globalLocation.id)].filter(
+      Boolean
+    );
   }, [locationsData]);
 
   const filteredLocations = useMemo(() => {
