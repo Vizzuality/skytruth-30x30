@@ -23,7 +23,7 @@ export const FILTERS_SEARCH_LABELS = {
 };
 
 export const FILTERS = {
-  all: ['country', 'highseas', 'region'],
+  all: ['country', 'highseas', 'region', 'worldwide'],
   countryHighseas: ['country', 'highseas'],
   regions: ['region'],
 };
@@ -78,13 +78,18 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     [push, searchParams, setLocationBBox, locationsData, setPopup]
   );
 
-  const filteredLocations = useMemo(() => {
-    if (!locationsFilter) return locationsData;
+  const reorderedLocations = useMemo(() => {
+    const globalLocation = locationsData.find(({ attributes }) => attributes.type === 'worldwide');
+    return [globalLocation, ...locationsData.filter(({ id }) => id !== globalLocation.id)];
+  }, [locationsData]);
 
-    return locationsData.filter(({ attributes }) =>
+  const filteredLocations = useMemo(() => {
+    if (!locationsFilter) return reorderedLocations;
+
+    return reorderedLocations.filter(({ attributes }) =>
       FILTERS[locationsFilter].includes(attributes.type)
     );
-  }, [locationsData, locationsFilter]);
+  }, [locationsFilter, reorderedLocations]);
 
   return (
     <div className={cn(className)}>
