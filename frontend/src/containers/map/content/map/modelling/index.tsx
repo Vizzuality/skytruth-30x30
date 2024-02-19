@@ -5,20 +5,20 @@ import axios from 'axios';
 import type { Feature } from 'geojson';
 import { useAtomValue, useSetAtom } from 'jotai';
 
-import { analysisAtom, drawStateAtom } from '@/containers/map/store';
-import { AnalysisData } from '@/types/analysis';
+import { modellingAtom, drawStateAtom } from '@/containers/map/store';
+import { ModellingData } from '@/types/modelling';
 
-const fetchAnalysis = async (feature: Feature) => {
-  return axios.post<AnalysisData>(process.env.NEXT_PUBLIC_ANALYSIS_CF_URL, feature);
+const fetchModelling = async (feature: Feature) => {
+  return axios.post<ModellingData>(process.env.NEXT_PUBLIC_ANALYSIS_CF_URL, feature);
 };
 
-const Analysis = () => {
+const Modelling = () => {
   const { feature } = useAtomValue(drawStateAtom);
-  const setAnalysisState = useSetAtom(analysisAtom);
+  const setModellingState = useSetAtom(modellingAtom);
 
   const { isFetching, isSuccess, data, isError } = useQuery(
-    ['analysis', feature],
-    () => fetchAnalysis(feature),
+    ['modelling', feature],
+    () => fetchModelling(feature),
     {
       enabled: Boolean(feature),
       select: ({ data }) => data,
@@ -26,15 +26,15 @@ const Analysis = () => {
   );
 
   useEffect(() => {
-    setAnalysisState((prevState) => ({
+    setModellingState((prevState) => ({
       ...prevState,
       ...(isSuccess && { status: 'success', data }),
       ...(isFetching && { status: 'running' }),
       ...(isError && { status: 'error' }),
     }));
-  }, [setAnalysisState, isFetching, isSuccess, data, isError]);
+  }, [setModellingState, isFetching, isSuccess, data, isError]);
 
   return null;
 };
 
-export default Analysis;
+export default Modelling;
