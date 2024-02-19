@@ -15,12 +15,14 @@ import { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 type LocationDropdownProps = {
   className?: HTMLDivElement['className'];
+  searchPlaceholder?: string;
   locations: LocationListResponseDataItem[];
   onSelected: (code: string) => void;
 };
 
 const LocationDropdown: React.FC<LocationDropdownProps> = ({
   className,
+  searchPlaceholder = 'Search',
   locations,
   onSelected,
 }) => {
@@ -44,7 +46,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
 
   return (
     <Command label="Search country or region" className={cn(className)}>
-      <CommandInput placeholder="Search Country or Region" />
+      <CommandInput placeholder={searchPlaceholder} />
       <CommandEmpty>No result</CommandEmpty>
       <CommandGroup className="mt-4 max-h-64 overflow-y-auto">
         {locations.map(({ attributes }) => {

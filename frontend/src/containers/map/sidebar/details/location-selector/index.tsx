@@ -16,6 +16,12 @@ import { useMapSearchParams } from '../../../content/map/sync-settings';
 import LocationDropdown from './location-dropdown';
 import LocationTypeToggle from './type-toggle';
 
+export const FILTERS_SEARCH_LABELS = {
+  all: 'Search Country or Region',
+  countryHighseas: 'Search Country or Highseas',
+  regions: 'Search Region',
+};
+
 export const FILTERS = {
   all: ['country', 'highseas', 'region'],
   countryHighseas: ['country', 'highseas'],
@@ -92,7 +98,11 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
             className="mb-4"
             onChange={handleLocationsFilterChange}
           />
-          <LocationDropdown locations={filteredLocations} onSelected={handleLocationSelected} />
+          <LocationDropdown
+            searchPlaceholder={FILTERS_SEARCH_LABELS[locationsFilter]}
+            locations={filteredLocations}
+            onSelected={handleLocationSelected}
+          />
         </PopoverContent>
       </Popover>
     </div>
