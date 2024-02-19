@@ -44,7 +44,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
 
   return (
     <Command label="Search country or region" className={cn(className)}>
-      <CommandInput placeholder="Search country or region" />
+      <CommandInput placeholder="Search Country or Region" />
       <CommandEmpty>No result</CommandEmpty>
       <CommandGroup className="mt-4 max-h-64 overflow-y-auto">
         {locations.map(({ attributes }) => {
@@ -53,16 +53,15 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
           return (
             <CommandItem key={code} value={name} onSelect={() => onSelected(code)}>
               <div className="flex w-full cursor-pointer justify-between gap-x-4">
-                <div className="flex font-bold underline">
-                  <Check
-                    className={cn(
-                      'relative top-1 mr-2 inline-block h-4 w-4 flex-shrink-0',
-                      locationsQuery.data?.code === code ? 'opacity-100' : 'opacity-0'
-                    )}
-                  />
+                <div className="flex text-base font-bold">
+                  {locationsQuery.data?.code === code && (
+                    <Check className="relative top-1 mr-1 inline-block h-4 w-4 flex-shrink-0" />
+                  )}
                   {name}
                 </div>
-                <span className="flex-shrink-0 capitalize text-gray-400">{type}</span>
+                <span className="flex-shrink-0 font-mono text-xs capitalize text-gray-300">
+                  {type}
+                </span>
               </div>
             </CommandItem>
           );
