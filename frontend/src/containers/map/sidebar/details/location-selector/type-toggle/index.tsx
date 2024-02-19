@@ -21,6 +21,9 @@ const LocationTypeToggle: React.FC<LocationTypeToggleProps> = ({ className, valu
     aria-label="Locations filter"
     onValueChange={onChange}
   >
+    <ToggleGroup.Item className={TOGGLE_CLASSES} value="all" aria-label="All">
+      All
+    </ToggleGroup.Item>
     <ToggleGroup.Item
       className={TOGGLE_CLASSES}
       value="countryHighseas"

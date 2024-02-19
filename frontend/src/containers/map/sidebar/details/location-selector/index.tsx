@@ -17,6 +17,7 @@ import LocationDropdown from './location-dropdown';
 import LocationTypeToggle from './type-toggle';
 
 export const FILTERS = {
+  all: ['country', 'highseas', 'region'],
   countryHighseas: ['country', 'highseas'],
   regions: ['region'],
 };
