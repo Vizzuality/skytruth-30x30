@@ -61,7 +61,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
                   )}
                   {name}
                 </div>
-                <span className="flex-shrink-0 font-mono text-xs capitalize text-gray-300">
+                <span className="flex flex-shrink-0 items-center font-mono text-xs capitalize text-gray-300">
                   {type}
                 </span>
               </div>
