@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { useSetAtom } from 'jotai';
 
+import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PAGES } from '@/constants/pages';
 import { bboxLocation, popupAtom } from '@/containers/map/store';
@@ -28,12 +29,18 @@ export const FILTERS = {
   regions: ['region'],
 };
 
+const BUTTON_CLASSES =
+  'font-mono text-xs px-0 font-semibold uppercase underline ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2';
+
 type LocationSelectorProps = {
-  className: HTMLDivElement['className'];
+  className?: HTMLDivElement['className'];
 };
 
 const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
-  const { push } = useRouter();
+  const {
+    push,
+    query: { locationCode },
+  } = useRouter();
 
   // @ts-expect-error to work properly, strict mode should be enabled
   const setLocationBBox = useSetAtom(bboxLocation);
@@ -94,10 +101,12 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
   }, [locationsFilter, reorderedLocations]);
 
   return (
-    <div className={cn(className)}>
+    <div className={cn('flex gap-3.5', className)}>
       <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
-        <PopoverTrigger className="font-mono text-xs font-semibold uppercase underline ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
-          Change Location
+        <PopoverTrigger>
+          <Button className={BUTTON_CLASSES} type="button" variant="text-link">
+            Change Location
+          </Button>
         </PopoverTrigger>
         <PopoverContent className="w-96 max-w-screen" align="start">
           <LocationTypeToggle
@@ -113,6 +122,16 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
           />
         </PopoverContent>
       </Popover>
+      {locationCode !== 'GLOB' && (
+        <Button
+          className={BUTTON_CLASSES}
+          type="button"
+          variant="text-link"
+          onClick={() => handleLocationSelected('GLOB')}
+        >
+          Global view
+        </Button>
+      )}
     </div>
   );
 };
