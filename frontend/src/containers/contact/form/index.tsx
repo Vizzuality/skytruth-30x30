@@ -137,7 +137,7 @@ const ContactUsForm = (): JSX.Element => {
             <FormItem>
               <FormLabel>Organization</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input placeholder="Your organization" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -150,7 +150,7 @@ const ContactUsForm = (): JSX.Element => {
             <FormItem>
               <FormLabel>Country</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input placeholder="Your country" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
