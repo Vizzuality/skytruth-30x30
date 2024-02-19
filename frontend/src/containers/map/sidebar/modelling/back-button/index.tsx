@@ -17,12 +17,12 @@ const BackButton: React.FC = () => {
 
   return (
     <Button
-      className="flex h-12 justify-between border-l-0 px-5 md:px-8"
+      className="flex h-10 justify-between border-l-0 px-5 font-mono text-xs md:px-8"
       variant="blue"
       onClick={onClickBack}
     >
       <LuChevronLeft className="-ml-2 mr-2 h-5 w-5 -translate-y-[1px]" />
-      Back
+      Back to dashboard
     </Button>
   );
 };
