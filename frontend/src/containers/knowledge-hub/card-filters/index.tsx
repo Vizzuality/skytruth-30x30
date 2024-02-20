@@ -57,17 +57,7 @@ const CardFilters = (): JSX.Element => {
             {filters.name === 'name:asc' && <Icon icon={ArrowUp} className="h-2 w-2" />}
             {filters.name === 'name:desc' && <Icon icon={ArrowDown} className="h-2 w-2" />}
           </button>
-          <Popover>
-            <PopoverTrigger asChild>
-              <button type="button" className="flex items-center space-x-1 font-mono text-xs">
-                <span>Filter by language</span>
-                <Icon icon={FilterIcon} className="h-3 w-3" />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent>
-              <CardFiltersLanguages />
-            </PopoverContent>
-          </Popover>
+          <CardFiltersLanguages />
           <Popover>
             <PopoverTrigger asChild>
               <button type="button" className="flex items-center space-x-1 font-mono text-xs">

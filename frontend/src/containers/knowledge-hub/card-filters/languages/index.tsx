@@ -1,15 +1,11 @@
-import { useCallback } from 'react';
-
 import { useAtom } from 'jotai';
 
-import Icon from '@/components/ui/icon';
+import FiltersButton from '@/components/filters-button';
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
-import CheckIcon from '@/styles/icons/check.svg?sprite';
 import { useGetDataToolLanguages } from '@/types/generated/data-tool-language';
-import { DataToolLanguage } from 'types/generated/strapi.schemas';
 
 const CardFiltersLanguages = (): JSX.Element => {
-  const [filters, setFilters] = useAtom(cardFiltersAtom);
+  const [, setFilters] = useAtom(cardFiltersAtom);
 
   const languagesQuery = useGetDataToolLanguages(
     {},
@@ -20,29 +16,27 @@ const CardFiltersLanguages = (): JSX.Element => {
     }
   );
 
-  const onSelectLanguage = useCallback(
-    (language: DataToolLanguage['name']) => {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        language: prevFilters.language === language ? null : language,
-      }));
-    },
-    [setFilters]
-  );
+  const options =
+    languagesQuery?.data?.map((language) => ({ name: language, value: language })) || [];
+  const values = languagesQuery?.data || [];
+
+  const handleFiltersChange = (field, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [field]: value,
+    }));
+  };
 
   return (
-    <ul className="space-y-1">
-      {languagesQuery.data?.map((language) => (
-        <li
-          key={language}
-          className="flex cursor-pointer items-center space-x-1 text-base font-black hover:underline"
-          onClick={() => onSelectLanguage(language)}
-        >
-          {filters.language === language && <Icon icon={CheckIcon} className="h-3 w-3" />}
-          <span>{language}</span>
-        </li>
-      ))}
-    </ul>
+    <div className="flex items-center font-mono text-xs font-semibold">
+      <FiltersButton
+        field="language"
+        options={options}
+        values={values}
+        onChange={handleFiltersChange}
+      />
+      <span>Filter by language</span>
+    </div>
   );
 };
 
