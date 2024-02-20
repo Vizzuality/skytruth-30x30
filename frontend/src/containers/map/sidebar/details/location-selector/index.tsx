@@ -1,17 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
 import { useSetAtom } from 'jotai';
-import { Check } from 'lucide-react';
 
-import {
-  Command,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandEmpty,
-} from '@/components/ui/command';
+import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PAGES } from '@/constants/pages';
 import { bboxLocation, popupAtom } from '@/containers/map/store';
@@ -21,36 +14,43 @@ import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schem
 
 import { useMapSearchParams } from '../../../content/map/sync-settings';
 
+import LocationDropdown from './location-dropdown';
+import LocationTypeToggle from './type-toggle';
+
+export const FILTERS_SEARCH_LABELS = {
+  all: 'Search Country or Region',
+  countryHighseas: 'Search Country or Highseas',
+  regions: 'Search Region',
+};
+
+export const FILTERS = {
+  all: ['country', 'highseas', 'region', 'worldwide'],
+  countryHighseas: ['country', 'highseas'],
+  regions: ['region'],
+};
+
+const BUTTON_CLASSES =
+  'font-mono text-xs px-0 font-semibold uppercase underline ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2';
+
 type LocationSelectorProps = {
-  className: HTMLDivElement['className'];
+  className?: HTMLDivElement['className'];
 };
 
 const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
   const {
-    query: { locationCode },
     push,
+    query: { locationCode },
   } = useRouter();
+
   // @ts-expect-error to work properly, strict mode should be enabled
   const setLocationBBox = useSetAtom(bboxLocation);
   const setPopup = useSetAtom(popupAtom);
 
-  const locationsQuery = useGetLocations(
-    {
-      filters: {
-        code: locationCode,
-      },
-    },
-    {
-      query: {
-        queryKey: ['locations', locationCode],
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
-  );
-
   const searchParams = useMapSearchParams();
 
+  const [locationsFilter, setLocationsFilter] = useState<keyof typeof FILTERS>('all');
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
+
   const { data: locationsData } = useGetLocations(
     {
       'pagination[limit]': -1,
@@ -63,6 +63,10 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
       },
     }
   );
+
+  const handleLocationsFilterChange = (value) => {
+    setLocationsFilter(value);
+  };
 
   const handleLocationSelected = useCallback(
     async (locationCode: LocationGroupsDataItemAttributes['code']) => {
@@ -81,45 +85,53 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     [push, searchParams, setLocationBBox, locationsData, setPopup]
   );
 
+  const reorderedLocations = useMemo(() => {
+    const globalLocation = locationsData.find(({ attributes }) => attributes.type === 'worldwide');
+    return [globalLocation, ...locationsData.filter(({ id }) => id !== globalLocation.id)].filter(
+      Boolean
+    );
+  }, [locationsData]);
+
+  const filteredLocations = useMemo(() => {
+    if (!locationsFilter) return reorderedLocations;
+
+    return reorderedLocations.filter(({ attributes }) =>
+      FILTERS[locationsFilter].includes(attributes.type)
+    );
+  }, [locationsFilter, reorderedLocations]);
+
   return (
-    <div className={cn(className)}>
+    <div className={cn('flex gap-3.5', className)}>
       <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
-        <PopoverTrigger className="font-mono text-xs font-semibold uppercase underline ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
-          Change Location
+        <PopoverTrigger>
+          <Button className={BUTTON_CLASSES} type="button" variant="text-link">
+            Change Location
+          </Button>
         </PopoverTrigger>
         <PopoverContent className="w-96 max-w-screen" align="start">
-          <Command label="Search country or region">
-            <CommandInput placeholder="Search country or region" />
-            <CommandEmpty>No result</CommandEmpty>
-            <CommandGroup className="mt-4 max-h-64 overflow-y-auto">
-              {locationsData.map(({ attributes }) => {
-                const { name, code, type } = attributes;
-
-                return (
-                  <CommandItem
-                    key={code}
-                    value={name}
-                    onSelect={() => handleLocationSelected(code)}
-                  >
-                    <div className="flex w-full cursor-pointer justify-between gap-x-4">
-                      <div className="flex font-bold underline">
-                        <Check
-                          className={cn(
-                            'relative top-1 mr-2 inline-block h-4 w-4 flex-shrink-0',
-                            locationsQuery.data?.code === code ? 'opacity-100' : 'opacity-0'
-                          )}
-                        />
-                        {name}
-                      </div>
-                      <span className="flex-shrink-0 capitalize text-gray-400">{type}</span>
-                    </div>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-          </Command>
+          <LocationTypeToggle
+            defaultValue={locationsFilter}
+            value={locationsFilter}
+            className="mb-4"
+            onChange={handleLocationsFilterChange}
+          />
+          <LocationDropdown
+            searchPlaceholder={FILTERS_SEARCH_LABELS[locationsFilter]}
+            locations={filteredLocations}
+            onSelected={handleLocationSelected}
+          />
         </PopoverContent>
       </Popover>
+      {locationCode !== 'GLOB' && (
+        <Button
+          className={BUTTON_CLASSES}
+          type="button"
+          variant="text-link"
+          onClick={() => handleLocationSelected('GLOB')}
+        >
+          Global view
+        </Button>
+      )}
     </div>
   );
 };
