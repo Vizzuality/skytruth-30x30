@@ -17,6 +17,7 @@ type FiltersButtonProps = {
     value: string;
   }[];
   values: string[];
+  headerButtons?: boolean;
   onChange: (field: string, values: string[]) => void;
 };
 
@@ -24,7 +25,13 @@ type FormValues = {
   filters: string[];
 };
 
-const FiltersButton: React.FC<FiltersButtonProps> = ({ field, options, values, onChange }) => {
+const FiltersButton: React.FC<FiltersButtonProps> = ({
+  field,
+  options,
+  values,
+  headerButtons = false,
+  onChange,
+}) => {
   const allFilterValues = useMemo(() => options.map(({ value }) => value), [options]);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
@@ -70,24 +77,26 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({ field, options, values, o
           </Button>
         </PopoverTrigger>
         <PopoverContent align="start" className="flex flex-col gap-6 font-mono text-xs">
-          <div className="space-between flex gap-6">
-            <Button
-              className="p-0 font-bold normal-case underline hover:bg-transparent"
-              variant="ghost"
-              size="sm"
-              onClick={handleSelectAll}
-            >
-              Select all
-            </Button>
-            <Button
-              className="p-0 font-bold normal-case text-slate-400 hover:bg-transparent hover:text-slate-400"
-              variant="ghost"
-              size="sm"
-              onClick={handleClearAll}
-            >
-              Clear all (None selected)
-            </Button>
-          </div>
+          {headerButtons && (
+            <div className="space-between flex gap-6">
+              <Button
+                className="p-0 font-bold normal-case underline hover:bg-transparent"
+                variant="ghost"
+                size="sm"
+                onClick={handleSelectAll}
+              >
+                Select all
+              </Button>
+              <Button
+                className="p-0 font-bold normal-case text-slate-400 hover:bg-transparent hover:text-slate-400"
+                variant="ghost"
+                size="sm"
+                onClick={handleClearAll}
+              >
+                Clear all (None selected)
+              </Button>
+            </div>
+          )}
           <div className="mb-1 flex flex-col gap-5 py-2">
             <form className="flex flex-col gap-5">
               {options.map(({ name, value }) => {
