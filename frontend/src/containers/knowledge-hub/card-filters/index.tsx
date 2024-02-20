@@ -47,12 +47,6 @@ const CardFilters = (): JSX.Element => {
             onClick={handleSortByName}
           >
             <span>Name</span>
-            {/* {!filters.name && (
-              <div className="flex flex-col justify-center">
-                <Icon icon={ArrowUp} className="h-2 w-2" />
-                <Icon icon={ArrowDown} className="h-2 w-2" />
-              </div>
-            )} */}
             {filters.name === 'name:asc' && <Icon icon={ArrowUp} className="h-2 w-2" />}
             {filters.name === 'name:desc' && <Icon icon={ArrowDown} className="h-2 w-2" />}
           </button>
