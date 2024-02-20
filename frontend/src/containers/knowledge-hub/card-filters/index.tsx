@@ -6,7 +6,6 @@ import { useResetAtom } from 'jotai/utils';
 import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
-import FilterIcon from '@/styles/icons/filter.svg?sprite';
 import ArrowDown from '@/styles/icons/triangle-down.svg?sprite';
 import ArrowUp from '@/styles/icons/triangle-up.svg?sprite';
 
@@ -58,17 +57,7 @@ const CardFilters = (): JSX.Element => {
             {filters.name === 'name:desc' && <Icon icon={ArrowDown} className="h-2 w-2" />}
           </button>
           <CardFiltersLanguages />
-          <Popover>
-            <PopoverTrigger asChild>
-              <button type="button" className="flex items-center space-x-1 font-mono text-xs">
-                <span>Filter by ecosystem</span>
-                <Icon icon={FilterIcon} className="h-3 w-3" />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent>
-              <CardFiltersEcosystems />
-            </PopoverContent>
-          </Popover>
+          <CardFiltersEcosystems />
         </div>
         <button
           type="button"
