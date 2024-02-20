@@ -18,6 +18,7 @@ type FiltersButtonProps = {
   }[];
   values: string[];
   headerButtons?: boolean;
+  showNoFiltersError?: boolean;
   onChange: (field: string, values: string[]) => void;
 };
 
@@ -30,6 +31,7 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
   options,
   values,
   headerButtons = false,
+  showNoFiltersError = false,
   onChange,
 }) => {
   const allFilterValues = useMemo(() => options.map(({ value }) => value), [options]);
@@ -119,7 +121,7 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
               })}
             </form>
           </div>
-          {noFiltersSelected && (
+          {noFiltersSelected && showNoFiltersError && (
             <div className="text-orange">Please, select at least one option</div>
           )}
         </PopoverContent>
