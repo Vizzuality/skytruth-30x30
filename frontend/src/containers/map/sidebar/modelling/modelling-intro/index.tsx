@@ -24,14 +24,17 @@ const ModellingIntro: React.FC = () => {
     <div className="flex flex-col gap-4 py-4 px-4 md:px-8">
       <span className="flex items-center font-bold">
         <Icon icon={Graph} className="mr-2.5 inline h-4 w-5 fill-black" />
-        Start modelling yor own <span className="ml-1.5 text-blue">custom area</span>.
+        Build conservation scenarios with custom areas.
       </span>
       <VideoPlayer
         source="/videos/modelling-instructions.mp4"
         stillImage="/images/video-stills/modelling-instructions.png"
         type="video/mp4"
       />
-      <p>Draw in the map the area you want to model through on-the-fly calculations.</p>
+      <p>
+        Draw in the map the area you want to build and asses conservation scenarios with, through
+        on-the-fly calculations.
+      </p>
       <span>
         {isDrawStateActive && (
           <Button
