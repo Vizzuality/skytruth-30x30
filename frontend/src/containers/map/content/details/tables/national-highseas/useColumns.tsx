@@ -157,7 +157,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         accessorKey: 'fishingProtectionLevel',
         header: ({ column }) => (
           <HeaderItem>
-            Fishing Protection Level
+            Level of Fishing Protection
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
