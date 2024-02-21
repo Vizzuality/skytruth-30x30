@@ -5,7 +5,7 @@ import { useAtomValue } from 'jotai';
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import TooltipButton from '@/components/tooltip-button';
 import Widget from '@/components/widget';
-import { analysisAtom } from '@/containers/map/store';
+import { modellingAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 
@@ -37,15 +37,15 @@ const WidgetSectionWidgetTitle: React.FC<WidgetSectionWidgetTitleProps> = ({ tit
   );
 };
 
-const AnalysisWidget: React.FC = () => {
+const ModellingWidget: React.FC = () => {
   const chartsProps = DEFAULT_CHART_PROPS;
 
-  const { status: analysisStatus, data: analysisData } = useAtomValue(analysisAtom);
+  const { status: modellingStatus, data: modellingData } = useAtomValue(modellingAtom);
 
   // Tooltips with mapping
   const tooltips = useTooltips();
 
-  // Get all locations in order to get country names for analysis data
+  // Get all locations in order to get country names for modelling data
   const { data: locationsData } = useGetLocations(
     {
       'pagination[limit]': -1,
@@ -61,13 +61,13 @@ const AnalysisWidget: React.FC = () => {
 
   // Build contribution details details for the charts
   const contributionDetailsData = useMemo(() => {
-    if (!locationsData.length || !analysisData) return null;
+    if (!locationsData.length || !modellingData) return null;
 
-    const analysisLocations = analysisData?.locations_area;
+    const modellingLocations = modellingData?.locations_area;
 
-    const chartData = analysisLocations.map((analysisLocation) => {
+    const chartData = modellingLocations.map((modellingLocation) => {
       const location = locationsData?.find(
-        ({ attributes }) => analysisLocation.code === attributes?.code
+        ({ attributes }) => modellingLocation.code === attributes?.code
       )?.attributes;
 
       if (!location) return null;
@@ -77,13 +77,13 @@ const AnalysisWidget: React.FC = () => {
       return {
         ...DEFAULT_CHART_DATA,
         title: name,
-        protectedArea: analysisLocation.protected_area,
+        protectedArea: modellingLocation.protected_area,
         totalArea: totalMarineArea,
       };
     });
 
     return chartData;
-  }, [analysisData, locationsData]);
+  }, [modellingData, locationsData]);
 
   // Build global contribution details for the charts
   const globalContributionData = useMemo(() => {
@@ -95,15 +95,15 @@ const AnalysisWidget: React.FC = () => {
 
     return {
       ...DEFAULT_CHART_DATA,
-      protectedArea: analysisData?.total_protected_area,
+      protectedArea: modellingData?.total_protected_area,
       totalArea: location?.totalMarineArea,
     };
-  }, [analysisData, locationsData]);
+  }, [modellingData, locationsData]);
 
   const administrativeBoundaries = contributionDetailsData?.map(({ title }) => title);
 
-  const loading = analysisStatus === 'running';
-  const error = analysisStatus === 'error';
+  const loading = modellingStatus === 'running';
+  const error = modellingStatus === 'error';
 
   return (
     <Widget
@@ -144,4 +144,4 @@ const AnalysisWidget: React.FC = () => {
   );
 };
 
-export default AnalysisWidget;
+export default ModellingWidget;

@@ -9,10 +9,10 @@ import { useAtomValue, useSetAtom } from 'jotai';
 
 import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
-import Analysis from '@/containers/map/content/map/analysis';
 import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
+import Modelling from '@/containers/map/content/map/modelling';
 import Popup from '@/containers/map/content/map/popup';
 import { useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
 import { sidebarAtom } from '@/containers/map/store';
@@ -219,7 +219,7 @@ const MainMap: React.FC = () => {
           <ZoomControls />
           <DrawControls />
           <LayerManager cursor={cursor} />
-          <Analysis />
+          <Modelling />
           <Attributions />
         </>
       </Map>
