@@ -5,7 +5,7 @@ import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
 import { useGetDataToolEcosystems } from '@/types/generated/data-tool-ecosystem';
 
 const CardFiltersEcosystems = (): JSX.Element => {
-  const [, setFilters] = useAtom(cardFiltersAtom);
+  const [filters, setFilters] = useAtom(cardFiltersAtom);
 
   const ecosystemsQuery = useGetDataToolEcosystems(
     {},
@@ -18,7 +18,6 @@ const CardFiltersEcosystems = (): JSX.Element => {
 
   const options =
     ecosystemsQuery?.data?.map((ecosystem) => ({ name: ecosystem, value: ecosystem })) || [];
-  const values = ecosystemsQuery?.data || [];
 
   const handleFiltersChange = (field, value) => {
     setFilters((prevFilters) => ({
@@ -32,7 +31,7 @@ const CardFiltersEcosystems = (): JSX.Element => {
       <FiltersButton
         field="ecosystem"
         options={options}
-        values={values}
+        values={filters?.ecosystem}
         onChange={handleFiltersChange}
       />
       <span>Filter by ecosystem</span>

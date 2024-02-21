@@ -5,7 +5,7 @@ import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
 import { useGetDataToolLanguages } from '@/types/generated/data-tool-language';
 
 const CardFiltersLanguages = (): JSX.Element => {
-  const [, setFilters] = useAtom(cardFiltersAtom);
+  const [filters, setFilters] = useAtom(cardFiltersAtom);
 
   const languagesQuery = useGetDataToolLanguages(
     {},
@@ -18,7 +18,6 @@ const CardFiltersLanguages = (): JSX.Element => {
 
   const options =
     languagesQuery?.data?.map((language) => ({ name: language, value: language })) || [];
-  const values = languagesQuery?.data || [];
 
   const handleFiltersChange = (field, value) => {
     setFilters((prevFilters) => ({
@@ -32,7 +31,7 @@ const CardFiltersLanguages = (): JSX.Element => {
       <FiltersButton
         field="language"
         options={options}
-        values={values}
+        values={filters?.language}
         onChange={handleFiltersChange}
       />
       <span>Filter by language</span>

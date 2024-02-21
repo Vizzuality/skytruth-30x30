@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -46,6 +46,10 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
   });
 
   const filters = watch('filters');
+
+  useEffect(() => {
+    setValue('filters', values);
+  }, [setValue, values]);
 
   const handleSelectAll = () => {
     setValue('filters', allFilterValues);

@@ -9,8 +9,8 @@ import {
 export const cardFiltersAtom = atomWithReset<{
   name: 'name:asc' | 'name:desc' | null;
   resourceType: DataToolResourceType['name'];
-  language: DataToolLanguage['name'][] | string;
-  ecosystem: DataToolEcosystem['name'][] | string;
+  language: DataToolLanguage['name'][];
+  ecosystem: DataToolEcosystem['name'][];
 }>({
   name: 'name:asc',
   resourceType: null,
