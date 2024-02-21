@@ -78,8 +78,6 @@ const useFiltersOptions = () => {
     }));
   }, [fishingProtectionLevels]);
 
-  console.log({fishingProtectionLevelOptions})
-
   return {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
