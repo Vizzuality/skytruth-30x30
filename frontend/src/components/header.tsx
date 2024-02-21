@@ -56,7 +56,7 @@ export type HeaderProps = VariantProps<typeof headerVariants> & {
 const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => (
   <header className={cn('border-b font-mono text-sm', headerVariants({ theme }))}>
     <nav
-      className="mx-auto flex items-center justify-between p-6 py-2.5 md:py-4 lg:px-10"
+      className="mx-auto flex items-center justify-between p-6 py-2.5 md:py-3 lg:px-10"
       aria-label="Global"
     >
       <span className="flex">
@@ -68,8 +68,8 @@ const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => (
             <Image
               src="/images/skytruth-30-30-logo.svg"
               alt="SkyTruth 30x30"
-              width={37}
-              height={37}
+              width={25}
+              height={25}
             />
           </Link>
         )}

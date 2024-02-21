@@ -1,3 +1,4 @@
+import TooltipButton from '@/components/tooltip-button';
 import Icon from '@/components/ui/icon';
 import DesignatedIcon from '@/styles/icons/designated.svg?sprite';
 import ImplementedIcon from '@/styles/icons/implemented.svg?sprite';
@@ -14,19 +15,24 @@ const PATTERNS = {
   implemented: ImplementedIcon,
 };
 
-const EEZLayerLegend = (config: { items: { label: string; pattern: string }[] }) => {
+const EstablishmentLayerLegend = (config: {
+  items: { label: string; pattern: string; description?: string }[];
+}) => {
   const { items } = config;
 
   return (
     <ul className="space-y-3 font-mono text-xs">
-      {items.map(({ label, pattern }) => (
+      {items.map(({ label, pattern, description }) => (
         <li key={pattern} className={ITEM_LIST_CLASSES}>
           <Icon icon={PATTERNS[pattern]} className={ICON_CLASSES} />
-          <span>{label}</span>
+          <span className="flex">
+            <span className="font-mono">{label}</span>
+            {description && <TooltipButton className="-my-1" text={description} />}
+          </span>
         </li>
       ))}
     </ul>
   );
 };
 
-export default EEZLayerLegend;
+export default EstablishmentLayerLegend;

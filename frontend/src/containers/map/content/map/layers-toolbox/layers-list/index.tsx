@@ -2,6 +2,7 @@ import { ComponentProps, useCallback } from 'react';
 
 import { LuChevronDown, LuChevronUp } from 'react-icons/lu';
 
+import TooltipButton from '@/components/tooltip-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
@@ -25,6 +26,7 @@ const LayersDropdown = (): JSX.Element => {
   const layersQuery = useGetLayers(
     {
       sort: 'title:asc',
+      populate: 'metadata',
     },
     {
       query: {
@@ -79,17 +81,23 @@ const LayersDropdown = (): JSX.Element => {
               const onCheckedChange = onToggleLayer.bind(null, layer.id) as (
                 isActive: boolean
               ) => void;
+              const metadata = layer?.attributes?.metadata;
 
               return (
-                <li key={layer.id} className="flex items-start gap-2">
-                  <Switch
-                    id={`${layer.id}-switch`}
-                    checked={isActive}
-                    onCheckedChange={onCheckedChange}
-                  />
-                  <Label htmlFor={`${layer.id}-switch`} className="cursor-pointer">
-                    {layer.attributes.title}
-                  </Label>
+                <li key={layer.id} className="flex items-center">
+                  <span className="flex gap-2">
+                    <Switch
+                      id={`${layer.id}-switch`}
+                      checked={isActive}
+                      onCheckedChange={onCheckedChange}
+                    />
+                    <Label htmlFor={`${layer.id}-switch`} className="cursor-pointer">
+                      {layer.attributes.title}
+                    </Label>
+                  </span>
+                  {metadata?.description && (
+                    <TooltipButton className="-my-1" text={metadata?.description} />
+                  )}
                 </li>
               );
             })}
