@@ -57,7 +57,7 @@ const MapSidebar: React.FC = () => {
         <Button
           type="button"
           variant="white"
-          className={cn('absolute bottom-0 z-10 h-12 border-l-0 px-1 !py-3', {
+          className={cn('absolute bottom-0 z-10 h-10 border-l-0 px-1 !py-3', {
             'hidden md:flex': true,
             'left-0': !isSidebarOpen,
             'left-[460px] transition-[left] delay-500': isSidebarOpen,
