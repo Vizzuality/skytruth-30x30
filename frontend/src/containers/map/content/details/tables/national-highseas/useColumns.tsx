@@ -142,6 +142,12 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         accessorKey: 'protectionLevel',
         header: ({ column }) => (
           <HeaderItem>
+            <FiltersButton
+              field={column.id}
+              options={protectionLevelOptions}
+              values={filters[column.id]}
+              onChange={onFiltersChange}
+            />
             Protection Level
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
@@ -157,6 +163,12 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         accessorKey: 'fishingProtectionLevel',
         header: ({ column }) => (
           <HeaderItem>
+            <FiltersButton
+              field={column.id}
+              options={fishingProtectionLevelOptions}
+              values={filters[column.id]}
+              onChange={onFiltersChange}
+            />
             Level of Fishing Protection
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
