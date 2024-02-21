@@ -2,12 +2,10 @@ import { useCallback } from 'react';
 
 import { useAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
+import { ArrowDownNarrowWide, ArrowUpNarrowWide } from 'lucide-react';
 
-import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
-import ArrowDown from '@/styles/icons/triangle-down.svg?sprite';
-import ArrowUp from '@/styles/icons/triangle-up.svg?sprite';
 
 import CardFiltersEcosystems from './ecosystems';
 import CardFiltersLanguages from './languages';
@@ -41,15 +39,19 @@ const CardFilters = (): JSX.Element => {
       </Popover>
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-8">
-          <button
-            type="button"
-            className="flex items-center space-x-2 font-mono text-xs"
-            onClick={handleSortByName}
-          >
-            <span>Name</span>
-            {filters.name === 'name:asc' && <Icon icon={ArrowUp} className="h-2 w-2" />}
-            {filters.name === 'name:desc' && <Icon icon={ArrowDown} className="h-2 w-2" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="flex items-center space-x-2"
+              onClick={handleSortByName}
+            >
+              {filters.name === 'name:asc' && <ArrowUpNarrowWide className="h-4 w-4" aria-hidden />}
+              {filters.name === 'name:desc' && (
+                <ArrowDownNarrowWide className="h-4 w-4" aria-hidden />
+              )}
+            </button>
+            <span className="font-mono text-xs font-semibold">Name</span>
+          </div>
           <CardFiltersLanguages />
           <CardFiltersEcosystems />
         </div>
