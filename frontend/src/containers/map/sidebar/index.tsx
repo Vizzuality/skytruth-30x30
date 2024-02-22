@@ -50,7 +50,7 @@ const MapSidebar: React.FC = () => {
           )}
           onClick={onClickModelling}
         >
-          <span>Marine Conservation Modelling</span>
+          <span>Conservation Scenario Builder</span>
         </Button>
       )}
       <CollapsibleTrigger asChild>
