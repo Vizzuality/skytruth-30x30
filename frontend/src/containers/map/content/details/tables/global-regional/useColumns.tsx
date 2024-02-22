@@ -5,12 +5,10 @@ import Link from 'next/link';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { PAGES } from '@/constants/pages';
-import FiltersButton from '@/containers/map/content/details/table/filters-button';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
 import { cellFormatter } from '@/containers/map/content/details/table/helpers';
 import SortingButton from '@/containers/map/content/details/table/sorting-button';
 import TooltipButton from '@/containers/map/content/details/table/tooltip-button';
-import useFiltersOptions from '@/containers/map/content/details/tables/global-regional/useFiltersOptions';
 import useTooltips from '@/containers/map/content/details/tables/global-regional/useTooltips';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 
@@ -27,15 +25,8 @@ export type GlobalRegionalTableColumns = {
   globalContribution: number;
 };
 
-type UseColumnsProps = {
-  filters: { [key: string]: string[] };
-  onFiltersChange: (field: string, values: string[]) => void;
-};
-
-const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
+const useColumns = () => {
   const searchParams = useMapSearchParams();
-  const { locationTypes: locationTypesOptions } = useFiltersOptions();
-
   const tooltips = useTooltips();
 
   const columns: ColumnDef<GlobalRegionalTableColumns>[] = useMemo(() => {
@@ -61,26 +52,6 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               </Link>
             </HeaderItem>
           );
-        },
-      },
-      {
-        accessorKey: 'locationType',
-        header: ({ column }) => (
-          <HeaderItem>
-            <FiltersButton
-              field={column.id}
-              options={locationTypesOptions}
-              values={filters[column.id]}
-              onChange={onFiltersChange}
-            />
-            Location type
-            <TooltipButton column={column} tooltips={tooltips} />
-          </HeaderItem>
-        ),
-        cell: ({ row }) => {
-          const { locationType: value } = row.original;
-          const formattedValue = cellFormatter.capitalize(value);
-          return <>{formattedValue}</>;
         },
       },
       {
@@ -205,7 +176,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
     ];
-  }, [filters, locationTypesOptions, onFiltersChange, searchParams, tooltips]);
+  }, [searchParams, tooltips]);
 
   return columns;
 };

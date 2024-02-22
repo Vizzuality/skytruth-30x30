@@ -1,8 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { applyFilters } from '@/containers/map/content/details/helpers';
 import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/global-regional/useColumns';
 import { useGetLocations } from '@/types/generated/location';
@@ -27,16 +26,7 @@ const GlobalRegionalTable: React.FC = () => {
     }
   );
 
-  const [filters, setFilters] = useState({
-    // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
-    locationType: ['country', 'worldwide', 'highseas', 'region'],
-  });
-
-  const handleOnFiltersChange = (field, values) => {
-    setFilters({ ...filters, [field]: values });
-  };
-
-  const columns = useColumns({ filters, onFiltersChange: handleOnFiltersChange });
+  const columns = useColumns();
 
   // Get location data and calculate data to display on the table
   const { data: locationsData }: { data: LocationListResponseDataItem[] } = useGetLocations(
@@ -177,9 +167,7 @@ const GlobalRegionalTable: React.FC = () => {
     });
   }, [locationsQuery.data, locationsData]);
 
-  const tableData = useMemo(() => {
-    return applyFilters(parsedData, filters);
-  }, [filters, parsedData]);
+  const tableData = parsedData;
 
   return <Table columns={columns} data={tableData} />;
 };
