@@ -26,6 +26,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { EXTERNAL_LINKS } from '@/constants/external-links';
 
 const CATEGORY_OPTIONS = [
   {
@@ -226,7 +227,7 @@ const ContactUsForm = (): JSX.Element => {
                     By submitting this form you agree with processing your personal data in
                     accordance with the{' '}
                     <Link
-                      href="/privacy-policy"
+                      href={EXTERNAL_LINKS.privacyPolicy}
                       className="underline"
                       target="_blank"
                       rel="noopener noreferrer"
