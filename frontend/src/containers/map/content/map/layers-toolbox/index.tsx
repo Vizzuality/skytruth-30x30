@@ -16,7 +16,7 @@ const LayersToolbox = (): JSX.Element => {
 
   return (
     <Tabs
-      className="absolute bottom-0 right-0 flex w-[335px] flex-col items-end"
+      className="absolute bottom-0 right-0 flex max-h-[calc(100%-100px)] w-[335px] flex-col items-end"
       defaultValue={activeLayers.length ? 'legend' : 'layers-list'}
     >
       <TabsList className="h-auto rounded-none bg-white p-0">
@@ -39,7 +39,7 @@ const LayersToolbox = (): JSX.Element => {
           /> */}
         </TabsTrigger>
       </TabsList>
-      <div className="w-full border border-black bg-white py-3 px-6">
+      <div className="w-full overflow-y-scroll border border-black bg-white py-3 px-6">
         <TabsContent value="layers-list" className="m-0">
           <LayersDropdown />
         </TabsContent>
