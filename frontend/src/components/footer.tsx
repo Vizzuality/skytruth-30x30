@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { Copyright } from 'lucide-react';
 
+import { EXTERNAL_LINKS } from '@/constants/external-links';
 import { PAGES } from '@/constants/pages';
 import { useGetContactDetail } from '@/types/generated/contact-detail';
 
@@ -50,10 +51,20 @@ const Footer: React.FC = () => {
             <Copyright className="mr-2 h-3.5 w-3.5" aria-hidden="true" /> SkyTruth {currentYear}
           </div>
           <nav className="flex gap-6">
-            <Link className="py-2" href={PAGES.privacyPolicy}>
+            <Link
+              className="py-2"
+              href={EXTERNAL_LINKS.privacyPolicy}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Privacy policy
             </Link>
-            <Link className="py-2" href={PAGES.termsOfUse}>
+            <Link
+              className="py-2"
+              href={EXTERNAL_LINKS.termsOfUse}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Terms of use
             </Link>
           </nav>
