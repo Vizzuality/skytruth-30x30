@@ -1,12 +1,8 @@
-import { useCallback } from 'react';
-
 import { useAtom } from 'jotai';
 
-import Icon from '@/components/ui/icon';
+import FiltersButton from '@/components/filters-button';
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
-import CheckIcon from '@/styles/icons/check.svg?sprite';
 import { useGetDataToolEcosystems } from '@/types/generated/data-tool-ecosystem';
-import { DataToolEcosystem } from 'types/generated/strapi.schemas';
 
 const CardFiltersEcosystems = (): JSX.Element => {
   const [filters, setFilters] = useAtom(cardFiltersAtom);
@@ -20,29 +16,26 @@ const CardFiltersEcosystems = (): JSX.Element => {
     }
   );
 
-  const onSelectLanguage = useCallback(
-    (ecosystem: DataToolEcosystem['name']) => {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        ecosystem: prevFilters.ecosystem === ecosystem ? null : ecosystem,
-      }));
-    },
-    [setFilters]
-  );
+  const options =
+    ecosystemsQuery?.data?.map((ecosystem) => ({ name: ecosystem, value: ecosystem })) || [];
+
+  const handleFiltersChange = (field, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [field]: value,
+    }));
+  };
 
   return (
-    <ul className="space-y-1">
-      {ecosystemsQuery.data?.map((ecosystem) => (
-        <li
-          key={ecosystem}
-          className="flex cursor-pointer items-center space-x-1 text-base font-black hover:underline"
-          onClick={() => onSelectLanguage(ecosystem)}
-        >
-          {filters.ecosystem === ecosystem && <Icon icon={CheckIcon} className="h-3 w-3" />}
-          <span>{ecosystem}</span>
-        </li>
-      ))}
-    </ul>
+    <div className="flex items-center font-mono text-xs font-semibold">
+      <FiltersButton
+        field="ecosystem"
+        options={options}
+        values={filters?.ecosystem}
+        onChange={handleFiltersChange}
+      />
+      <span>Filter by ecosystem</span>
+    </div>
   );
 };
 

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { ColumnDef } from '@tanstack/react-table';
 
-import FiltersButton from '@/containers/map/content/details/table/filters-button';
+import FiltersButton from '@/components/filters-button';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
 import { cellFormatter } from '@/containers/map/content/details/table/helpers';
 import SortingButton from '@/containers/map/content/details/table/sorting-button';

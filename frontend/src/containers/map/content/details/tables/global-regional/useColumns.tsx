@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { ColumnDef } from '@tanstack/react-table';
 
+import FiltersButton from '@/components/filters-button';
 import { PAGES } from '@/constants/pages';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
 import { cellFormatter } from '@/containers/map/content/details/table/helpers';

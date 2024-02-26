@@ -14,7 +14,7 @@ const CardItem = ({ data }: { data: DataToolListResponseDataItem }): JSX.Element
       <div className="space-y-2">
         <h4 className="text-[20px] font-black">{data.attributes.name}</h4>
         {data.attributes.site && (
-          <div className="flex space-x-2">
+          <div className="flex items-center space-x-2">
             <Icon icon={ExternalLinkIcon} className="h-4 w-4 fill-black" />
             <a href={data.attributes.site} target="_blank" rel="noreferrer" className="underline">
               Website
