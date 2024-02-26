@@ -29,18 +29,10 @@ const NationalHighseasTable: React.FC = () => {
   );
 
   const [filters, setFilters] = useState({
-    // ! This shouldn't be hardcoded. The setup needs to be able to work the same without any default filters here.
-    protectedAreaType: ['mpa', 'oecm'],
-    establishmentStage: [
-      'actively-managed',
-      'designated',
-      'designated-unimplemented',
-      'implemented',
-      'proposed-committed',
-      'unknown',
-    ],
-    protectionLevel: ['fully-highly-protected', 'less-protected-unknown'],
-    fishingProtectionLevel: ['highly', 'less', 'moderately'],
+    protectedAreaType: [],
+    establishmentStage: [],
+    protectionLevel: [],
+    fishingProtectionLevel: [],
   });
 
   const handleOnFiltersChange = (field, values) => {
