@@ -125,7 +125,7 @@ const LayersDropdown = (): JSX.Element => {
           <LuChevronUp className={`hidden group-data-[state=closed]:block ${TABS_ICONS_CLASSES}`} />
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <ul className="my-3 flex flex-col space-y-5">
+          <ul className="my-3 flex flex-col space-y-5 overflow-y-hidden">
             <li className="flex items-start gap-2">
               <Switch id="labels-switch" checked={labels} onCheckedChange={handleLabelsChange} />
               <Label htmlFor="labels-switch" className="cursor-pointer">
