@@ -5,7 +5,7 @@ import { useMap } from 'react-map-gl';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
@@ -36,7 +36,7 @@ const MainMap: React.FC = () => {
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
   const isSidebarOpen = useAtomValue(sidebarAtom);
-  const setPopup = useSetAtom(popupAtom);
+  const [popup, setPopup] = useAtom(popupAtom);
   const { locationCode } = useParams();
   const locationBbox = useAtomValue(bboxLocation);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
@@ -106,6 +106,8 @@ const MainMap: React.FC = () => {
 
   const handleMouseMove = useCallback(
     (e: Parameters<ComponentProps<typeof Map>['onMouseOver']>[0]) => {
+      if (popup?.features?.length) return;
+
       if (e.features.length > 0) {
         if (!drawState.active) {
           setCursor('pointer');
@@ -137,10 +139,11 @@ const MainMap: React.FC = () => {
         }
       }
     },
-    [map, hoveredPolygonId, drawState.active]
+    [map, hoveredPolygonId, drawState.active, popup]
   );
 
   const handleMouseLeave = useCallback(() => {
+    if (popup?.features?.length) return;
     if (hoveredPolygonId.current !== null) {
       map.setFeatureState(
         {
@@ -151,7 +154,7 @@ const MainMap: React.FC = () => {
         { hover: false }
       );
     }
-  }, [map, hoveredPolygonId]);
+  }, [map, hoveredPolygonId, popup]);
 
   const initialViewState: ComponentProps<typeof Map>['initialViewState'] = useMemo(() => {
     if (URLBbox) {
