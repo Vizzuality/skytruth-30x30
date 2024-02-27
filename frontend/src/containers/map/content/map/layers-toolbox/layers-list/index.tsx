@@ -83,8 +83,10 @@ const LayersDropdown = (): JSX.Element => {
       <Collapsible defaultOpen={Boolean(activeLayers.length)}>
         <CollapsibleTrigger className={COLLAPSIBLE_TRIGGER_CLASSES}>
           <span>Data Layers</span>
-          <LuChevronDown className={`hidden group-data-[state=open]:block ${TABS_ICONS_CLASSES}`} />
-          <LuChevronUp className={`hidden group-data-[state=closed]:block ${TABS_ICONS_CLASSES}`} />
+          <LuChevronDown
+            className={`hidden group-data-[state=closed]:block ${TABS_ICONS_CLASSES}`}
+          />
+          <LuChevronUp className={`hidden group-data-[state=open]:block ${TABS_ICONS_CLASSES}`} />
         </CollapsibleTrigger>
         <CollapsibleContent className="border-b border-dashed border-black/20">
           <ul className="my-3 flex flex-col space-y-5">
@@ -121,8 +123,10 @@ const LayersDropdown = (): JSX.Element => {
           className={`${COLLAPSIBLE_TRIGGER_CLASSES} pb-0 data-[state=open]:pb-2`}
         >
           <span>basemap Layers</span>
-          <LuChevronDown className={`hidden group-data-[state=open]:block ${TABS_ICONS_CLASSES}`} />
-          <LuChevronUp className={`hidden group-data-[state=closed]:block ${TABS_ICONS_CLASSES}`} />
+          <LuChevronDown
+            className={`hidden group-data-[state=closed]:block ${TABS_ICONS_CLASSES}`}
+          />
+          <LuChevronUp className={`hidden group-data-[state=open]:block ${TABS_ICONS_CLASSES}`} />
         </CollapsibleTrigger>
         <CollapsibleContent>
           <ul className="my-3 flex flex-col space-y-5 overflow-y-hidden">
