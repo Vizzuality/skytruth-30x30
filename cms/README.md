@@ -78,11 +78,15 @@ Layers for the map:
 
 - layer
 
+Static data for the homepage:
+- static_indicators
+- contact_details
+
 Tooltips and dictionary values for the dashboard:
 
 - data-info
 - data-source
-- fishing-protection-leel
+- fishing-protection-level
 - habitat
 - location
 - mpa
