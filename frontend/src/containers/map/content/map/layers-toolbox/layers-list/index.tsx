@@ -20,7 +20,7 @@ const TABS_ICONS_CLASSES = 'w-5 h-5 -translate-y-[2px]';
 
 const LayersDropdown = (): JSX.Element => {
   const [activeLayers, setMapLayers] = useSyncMapLayers();
-  const [, setLayerSettings] = useSyncMapLayerSettings();
+  const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
   const [{ labels }, setMapSettings] = useSyncMapSettings();
 
   const layersQuery = useGetLayers(
@@ -45,7 +45,19 @@ const LayersDropdown = (): JSX.Element => {
           : activeLayers.filter((_layerId) => _layerId !== Number(layerId))
       );
 
+      // If we don't have layerSettings entries, the view is in its default state; we wish to
+      // show all legend accordion items expanded by default.
+      const initialSettings = (() => {
+        const layerSettingsKeys = Object.keys(layerSettings);
+        if (layerSettingsKeys.length) return {};
+        return Object.assign(
+          {},
+          ...activeLayers.map((layerId) => ({ [layerId]: { expanded: true } }))
+        );
+      })();
+
       setLayerSettings((prev) => ({
+        ...initialSettings,
         ...prev,
         [layerId]: {
           ...prev[layerId],
@@ -53,7 +65,7 @@ const LayersDropdown = (): JSX.Element => {
         },
       }));
     },
-    [activeLayers, setLayerSettings, setMapLayers]
+    [activeLayers, layerSettings, setLayerSettings, setMapLayers]
   );
 
   const handleLabelsChange = useCallback(
