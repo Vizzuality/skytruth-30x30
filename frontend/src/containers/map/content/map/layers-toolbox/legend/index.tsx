@@ -179,7 +179,7 @@ const Legend: FC = () => {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <AccordionTrigger className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-bold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 [&_svg]:aria-[expanded=true]:rotate-180">
+                        <AccordionTrigger className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-bold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 [&_svg]:aria-[expanded=false]:rotate-180">
                           <ChevronDown className="mr-2 inline-block h-4 w-4" aria-hidden />
                           {title}
                         </AccordionTrigger>
