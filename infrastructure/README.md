@@ -97,6 +97,17 @@ The GH env vars are needed for Terraform to be able to set GH Actions Secrets & 
 
 As part of this infrastructure, GitHub Actions are used to automatically apply code updates for the client application, API/CMS and the cloud functions.
 
+#### Service account permissions
+
+Access by GitHub to GCP is configured through special authorization rules, automatically set up by the Terraform `base` project above.
+These permissions are necessary for the service account that runs the deployment:
+- "roles/iam.serviceAccountTokenCreator",
+- "roles/iam.serviceAccountUser",
+- "roles/run.developer",
+- "roles/artifactregistry.reader",
+- "roles/artifactregistry.writer",
+- "roles/cloudfunctions.developer"
+
 #### Building new code versions
 
 Deployment to the CloudRun instances is accomplished by building Docker images and pushing them to [Artifact Registry](https://cloud.google.com/artifact-registry). When building the images, environment secrets are injected from GH Secrets as follows:
@@ -127,18 +138,9 @@ Deployment to the CloudRun instances is accomplished by building Docker images a
 
 Deployment to the cloud function is accomplished by pushing the source code. Secrets and env vars are set via Terraform.
 
-The workflow is currently set up to deploy to the staging instance when merging to `develop``.
-
-#### Service account permissions
-
-Access by GitHub to GCP is configured through special authorization rules, automatically set up by the Terraform `base` project above.
-These permissions are necessary for the service account that runs the deployment:
-- "roles/iam.serviceAccountTokenCreator",
-- "roles/iam.serviceAccountUser",
-- "roles/run.developer",
-- "roles/artifactregistry.reader",
-- "roles/artifactregistry.writer",
-- "roles/cloudfunctions.developer"
+The workflow is currently set up to **deploy automatically**:
+- to the production instance when merging to `main` branch,
+- to staging when merging to `develop` branch.
 
 ## Maintenance
 
