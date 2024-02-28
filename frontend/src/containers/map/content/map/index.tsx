@@ -90,6 +90,20 @@ const MainMap: React.FC = () => {
     (e: Parameters<ComponentProps<typeof Map>['onClick']>[0]) => {
       if (drawState.active) return null;
 
+      if (popup?.features?.length && hoveredPolygonId.current !== null) {
+        map.setFeatureState(
+          {
+            source: hoveredPolygonId.current.source,
+            id: hoveredPolygonId.current.id,
+            sourceLayer: hoveredPolygonId.current.sourceLayer,
+          },
+          { hover: false }
+        );
+
+        setPopup({});
+        return null;
+      }
+
       if (
         layersInteractive.length &&
         layersInteractiveData.some((l) => {
@@ -101,7 +115,7 @@ const MainMap: React.FC = () => {
         setPopup(p);
       }
     },
-    [layersInteractive, layersInteractiveData, setPopup, drawState]
+    [layersInteractive, layersInteractiveData, setPopup, drawState, popup, map]
   );
 
   const handleMouseMove = useCallback(
