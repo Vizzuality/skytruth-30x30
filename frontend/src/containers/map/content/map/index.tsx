@@ -202,6 +202,19 @@ const MainMap: React.FC = () => {
     setCursor(drawState.active ? 'crosshair' : 'grab');
   }, [drawState.active]);
 
+  useEffect(() => {
+    if (!popup?.features?.length && hoveredPolygonId.current !== null) {
+      map.setFeatureState(
+        {
+          source: hoveredPolygonId.current.source,
+          id: hoveredPolygonId.current.id,
+          sourceLayer: hoveredPolygonId.current.sourceLayer,
+        },
+        { hover: false }
+      );
+    }
+  }, [map, popup]);
+
   return (
     <div className="absolute left-0 h-full w-full border-r border-b border-black">
       <Map
