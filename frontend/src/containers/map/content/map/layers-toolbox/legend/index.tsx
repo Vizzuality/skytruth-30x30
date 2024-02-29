@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 
 import { ChevronDown } from 'lucide-react';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
@@ -136,6 +136,20 @@ const Legend: FC = () => {
     [activeLayers, setLayerSettings]
   );
 
+  const accordionValue = useMemo(() => {
+    // If we don't have layerSettings entries, the view is in its default state; we wish to
+    // show all legend accordion items expanded by default.
+    const layerSettingsKeys = Object.keys(layerSettings);
+    if (!layerSettingsKeys.length) {
+      return activeLayers.map((layerId) => layerId.toString());
+    }
+
+    // We have layerSettings entries; let's use those to define which accordion items are expanded.
+    return layerSettingsKeys.filter((layerId) =>
+      layerSettings[layerId].expanded ? layerId.toString() : null
+    );
+  }, [activeLayers, layerSettings]);
+
   return (
     <>
       {!layersQuery.data?.length && (
@@ -144,13 +158,7 @@ const Legend: FC = () => {
         </p>
       )}
       {layersQuery.data?.length > 0 && (
-        <Accordion
-          type="multiple"
-          value={Object.keys(layerSettings).filter((layerId) => {
-            return layerSettings[layerId].expanded ? layerId.toString() : null;
-          })}
-          onValueChange={onToggleAccordion}
-        >
+        <Accordion type="multiple" value={accordionValue} onValueChange={onToggleAccordion}>
           {layersQuery.data?.map(({ id, attributes: { title, legend_config } }, index) => {
             const isFirst = index === 0;
             const isLast = index + 1 === layersQuery.data.length;
