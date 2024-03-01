@@ -67,7 +67,7 @@ module "database" {
   database_user              = var.database_user
   database_password          = module.postgres_application_user_password.secret_value
   network_id                 = module.network.network_id
-  sql-database-instance-tier = "db-custom-1-3840"
+  sql-database-instance-tier = "db-custom-2-3840"
 
   # explicit dependency for:
   # Error, failed to create instance because the network doesn't have at least 1 private services connection.
