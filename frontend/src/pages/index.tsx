@@ -18,11 +18,20 @@ import Intro from '@/containers/homepage/intro';
 import LinkCards from '@/containers/homepage/link-cards';
 import useScrollSpy from '@/hooks/use-scroll-spy';
 import Layout, { Content, Sidebar } from '@/layouts/static-page';
+import { formatPercentage } from '@/lib/utils/formats';
+import {
+  getGetProtectionCoverageStatsQueryKey,
+  getGetProtectionCoverageStatsQueryOptions,
+} from '@/types/generated/protection-coverage-stat';
 import {
   getGetStaticIndicatorsQueryKey,
   getGetStaticIndicatorsQueryOptions,
 } from '@/types/generated/static-indicator';
-import { StaticIndicator, StaticIndicatorListResponse } from '@/types/generated/strapi.schemas';
+import {
+  StaticIndicator,
+  StaticIndicatorListResponse,
+  ProtectionCoverageStatListResponse,
+} from '@/types/generated/strapi.schemas';
 
 const STATIC_INDICATOR_MAPPING = {
   biodiversity: 'species-threatened-with-extinction',
@@ -36,17 +45,39 @@ const STATIC_INDICATOR_MAPPING = {
 export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = new QueryClient();
 
+  const protectionCoverageStatsQueryParams = {
+    filters: {
+      location: {
+        code: 'GLOB',
+      },
+    },
+    populate: '*',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    'sort[year]': 'desc',
+    'pagination[limit]': -1,
+  };
+
   await queryClient.prefetchQuery({
     ...getGetStaticIndicatorsQueryOptions(),
+  });
+
+  await queryClient.prefetchQuery({
+    ...getGetProtectionCoverageStatsQueryOptions(protectionCoverageStatsQueryParams),
   });
 
   const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
     getGetStaticIndicatorsQueryKey()
   );
 
+  const protectionCoverageStatsData = queryClient.getQueryData<ProtectionCoverageStatListResponse>(
+    getGetProtectionCoverageStatsQueryKey(protectionCoverageStatsQueryParams)
+  );
+
   return {
     props: {
       staticIndicators: staticIndicatorsData || { data: [] },
+      protectionCoverageStats: protectionCoverageStatsData || { data: [] },
       dehydratedState: dehydrate(queryClient),
     },
   };
@@ -54,8 +85,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const Home: React.FC = ({
   staticIndicators,
+  protectionCoverageStats,
 }: {
   staticIndicators: StaticIndicatorListResponse;
+  protectionCoverageStats: ProtectionCoverageStatListResponse;
 }) => {
   const sections = {
     services: {
@@ -95,6 +128,33 @@ const Home: React.FC = ({
 
     return indicators;
   }, [staticIndicators]);
+
+  const protectedOceanPercentage = useMemo(() => {
+    const protectionCoverageStatsData = protectionCoverageStats?.data;
+
+    if (!protectionCoverageStatsData) return null;
+
+    const lastProtectionDataYear = Math.max(
+      ...protectionCoverageStatsData.map(({ attributes }) => attributes.year)
+    );
+
+    const protectionStats = protectionCoverageStatsData.filter(
+      ({ attributes }) => attributes.year === lastProtectionDataYear
+    );
+
+    const totalMarineArea =
+      protectionStats[0]?.attributes?.location?.data?.attributes?.totalMarineArea;
+
+    const protectedArea = protectionStats.reduce(
+      (acc, { attributes }) => acc + attributes?.cumSumProtectedArea,
+      0
+    );
+    const coveragePercentage = (protectedArea * 100) / totalMarineArea;
+
+    if (Number.isNaN(coveragePercentage)) return null;
+
+    return formatPercentage(coveragePercentage, { displayPercentageSign: false });
+  }, [protectionCoverageStats]);
 
   return (
     <Layout
@@ -162,16 +222,7 @@ const Home: React.FC = ({
             description={
               <>
                 <p>
-                  Today,{' '}
-                  <a
-                    className="underline"
-                    href={indicators?.biodiversityTextOcean?.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {indicators?.biodiversityTextOcean?.value} percent of the world’s ocean
-                  </a>{' '}
-                  and{' '}
+                  Today, {protectedOceanPercentage} percent of the world&apos;s ocean and{' '}
                   <a
                     className="underline"
                     href={indicators?.biodiversityTextLand?.source}
