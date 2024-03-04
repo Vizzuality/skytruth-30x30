@@ -35,6 +35,15 @@ module "staging" {
   database_user                                      = "strapi"
 }
 
+module "github_values" {
+  source    = "./modules/github_values"
+  repo_name = var.github_project
+  secret_map = {
+    GCP_PROJECT_ID = var.gcp_project_id
+    GCP_REGION     = var.gcp_region
+  }
+}
+
 module "dns" {
   source = "./modules/dns"
   domain = var.domain

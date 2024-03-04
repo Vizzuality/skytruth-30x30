@@ -199,8 +199,6 @@ module "github_values" {
   source    = "../github_values"
   repo_name = var.github_project
   secret_map = {
-    GCP_PROJECT_ID            = var.gcp_project_id
-    GCP_REGION                = var.gcp_region
     (local.gcp_sa_key)        = base64decode(google_service_account_key.deploy_service_account_key.private_key)
     (local.project_name)      = var.project_name
     (local.cms_repository)    = module.backend_gcr.repository_name
