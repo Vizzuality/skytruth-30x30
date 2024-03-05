@@ -41,6 +41,11 @@ variable "domain" {
   description = "Base domain for the DNS zone"
 }
 
+variable "tmp_domain" {
+  type        = string
+  description = "Base domain for the temporary DNS zone"
+}
+
 variable "staging_subdomain" {
   type        = string
   description = "Subdomain for the staging environment"

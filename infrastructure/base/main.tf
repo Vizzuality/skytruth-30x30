@@ -21,7 +21,7 @@ module "staging" {
   backend_max_scale                                  = 2
   dns_zone_name                                      = module.dns.dns_zone_name
   domain                                             = var.domain
-  subdomain                                          = "30x30"
+  subdomain                                          = var.staging_subdomain
   backend_path_prefix                                = "cms"
   functions_path_prefix                              = "functions"
   analysis_function_path_prefix                      = "analysis"
@@ -31,6 +31,34 @@ module "staging" {
   analysis_function_available_memory                 = "256M"
   uptime_alert_email                                 = var.uptime_alert_email
   environment                                        = "staging"
+  database_name                                      = "strapi"
+  database_user                                      = "strapi"
+}
+
+module "production" {
+  source                                             = "./modules/env"
+  gcp_project_id                                     = var.gcp_project_id
+  gcp_region                                         = var.gcp_region
+  github_org                                         = var.github_org
+  github_project                                     = var.github_project
+  github_branch                                      = "main"
+  project_name                                       = var.production_project_name
+  frontend_min_scale                                 = 0
+  backend_min_scale                                  = 0
+  frontend_max_scale                                 = 1
+  backend_max_scale                                  = 2
+  dns_zone_name                                      = module.tmp_dns.dns_zone_name
+  domain                                             = var.tmp_domain
+  subdomain                                          = var.production_subdomain
+  backend_path_prefix                                = "cms"
+  functions_path_prefix                              = "functions"
+  analysis_function_path_prefix                      = "analysis"
+  analysis_function_timeout_seconds                  = 600
+  analysis_function_max_instance_count               = 2
+  analysis_function_max_instance_request_concurrency = 10
+  analysis_function_available_memory                 = "256M"
+  uptime_alert_email                                 = var.uptime_alert_email
+  environment                                        = "production"
   database_name                                      = "strapi"
   database_user                                      = "strapi"
 }
@@ -48,6 +76,12 @@ module "dns" {
   source = "./modules/dns"
   domain = var.domain
   name   = "skytruth"
+}
+
+module "tmp_dns" {
+  source = "./modules/dns"
+  domain = var.tmp_domain
+  name   = "dev-vizzuality"
 }
 
 resource "google_service_account" "data_pipelines_service_account" {
