@@ -10,6 +10,7 @@ import 'styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { figtree, overpassMono } from '@/styles/fonts';
+import Analytics from '@/components/analytics';
 
 type PageProps = {
   dehydratedState: unknown;
@@ -31,6 +32,7 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <MapProvider>
+            <Analytics />
             <Component {...pageProps} />
           </MapProvider>
         </Hydrate>
