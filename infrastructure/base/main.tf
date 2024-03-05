@@ -28,7 +28,7 @@ module "staging" {
   analysis_function_timeout_seconds                  = 600
   analysis_function_max_instance_count               = 2
   analysis_function_max_instance_request_concurrency = 10
-  analysis_function_available_memory                 = "512M"
+  analysis_function_available_memory                 = "256M"
   uptime_alert_email                                 = var.uptime_alert_email
   environment                                        = "staging"
   database_name                                      = "strapi"
