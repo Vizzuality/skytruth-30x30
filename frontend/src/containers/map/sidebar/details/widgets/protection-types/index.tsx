@@ -99,7 +99,12 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       loading={loading}
     >
       {widgetChartData.map((chartData) => (
-        <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
+        <HorizontalBarChart
+          key={chartData.slug}
+          className="py-2"
+          data={chartData}
+          areaToDisplay="protected-area"
+        />
       ))}
     </Widget>
   );
