@@ -108,7 +108,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
           key={chartData.slug}
           className="py-2"
           data={chartData}
-          areaToDisplay="protected-area"
+          areaToDisplay="indicator-area"
         />
       ))}
     </Widget>
