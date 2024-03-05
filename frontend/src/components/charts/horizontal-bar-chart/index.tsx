@@ -20,6 +20,7 @@ type HorizontalBarChartProps = {
   };
   showLegend?: boolean;
   showTarget?: boolean;
+  areaToDisplay?: 'total-area' | 'protected-area';
 };
 
 const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
@@ -27,6 +28,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   data,
   showLegend = true,
   showTarget = true,
+  areaToDisplay = 'total-area',
 }) => {
   const { title, background, totalArea, protectedArea, info } = data;
 
@@ -47,8 +49,9 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   }, [protectedArea, totalArea]);
 
   const formattedArea = useMemo(() => {
-    return format(',.0f')(totalArea);
-  }, [totalArea]);
+    const area = areaToDisplay === 'total-area' ? totalArea : protectedArea;
+    return format(',.0f')(area);
+  }, [areaToDisplay, protectedArea, totalArea]);
 
   return (
     <div className={cn('font-mono', className)}>
@@ -62,7 +65,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
           {info && <TooltipButton text={info} />}
         </span>
         <span>
-          of {formattedArea} km<sup>2</sup>
+          {areaToDisplay === 'total-area' && 'of'} {formattedArea} km<sup>2</sup>
         </span>
       </div>
       <div className="relative my-2 flex h-3.5">
