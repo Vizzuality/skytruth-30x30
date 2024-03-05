@@ -169,7 +169,7 @@ const GlobalRegionalTable: React.FC = () => {
         location: location.name,
         locationCode: location.code,
         coverage: coveragePercentage,
-        area: location.totalMarineArea,
+        area: protectedArea,
         locationType: location.type,
         mpas: percentageMPAs,
         oecms: percentageOECMs,
