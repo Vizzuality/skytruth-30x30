@@ -118,7 +118,7 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
       loading={loading}
     >
       {widgetChartData.map((chartData) => (
-        <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
+        <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} areaToDisplay='protected-area' />
       ))}
     </Widget>
   );
