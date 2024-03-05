@@ -49,7 +49,10 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
 
-    const parsedProtectionLevel = (label, property, data) => {
+    const parsedProtectionLevel = (label, property, filter, protectionData) => {
+      const data = protectionData[0]?.attributes?.[property + '_stats']?.data?.filter(
+        (entry) => entry?.attributes?.[property]?.data?.attributes?.slug === filter
+      );
       const attributes = data[0]?.attributes;
       const propertyData = attributes[property].data?.attributes;
 
@@ -66,20 +69,18 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     const parsedMpaaProtectionLevelData = parsedProtectionLevel(
       'Fully or highly protected',
       'mpaa_protection_level',
-      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.filter(
-        (entry) =>
-          entry?.attributes?.mpaa_protection_level?.data?.attributes?.slug ===
-          'fully-highly-protected'
-      )
+      'fully-highly-protected',
+      protectionLevelsData
     );
 
     const parsedHighlyProtectedFromFishingData = parsedProtectionLevel(
       'Highly protected from fishing',
       'fishing_protection_level',
-      protectionLevelsData[0]?.attributes?.fishing_protection_level_stats?.data?.filter(
-        (entry) => entry?.attributes?.fishing_protection_level?.data?.attributes?.slug === 'highly'
-      )
+      'highly',
+      protectionLevelsData
     );
+
+    // Debug
     return [parsedMpaaProtectionLevelData, parsedHighlyProtectedFromFishingData];
   }, [location, protectionLevelsData]);
 
