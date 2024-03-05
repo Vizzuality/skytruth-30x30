@@ -50,9 +50,18 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     if (!protectionLevelsData.length) return [];
 
     const parsedProtectionLevel = (label, property, filter, protectionData) => {
-      const data = protectionData[0]?.attributes?.[property + '_stats']?.data?.filter(
+      const protectionDataAttributes = protectionData?.[0]?.attributes;
+      const protectionDataStatsEntries = protectionDataAttributes?.[property + '_stats']?.data;
+
+      const cumulativeIndicatorProtectedArea = protectionDataStatsEntries.reduce(
+        (protectedArea, { attributes }) => protectedArea + attributes?.area,
+        0
+      );
+
+      const data = protectionDataStatsEntries.filter(
         (entry) => entry?.attributes?.[property]?.data?.attributes?.slug === filter
       );
+
       const attributes = data[0]?.attributes;
       const propertyData = attributes[property].data?.attributes;
 
@@ -61,6 +70,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
         slug: propertyData?.slug,
         background: PROTECTION_TYPES_CHART_COLORS[propertyData?.slug],
         totalArea: location.totalMarineArea,
+        indicatorArea: cumulativeIndicatorProtectedArea,
         protectedArea: attributes.area,
         info: propertyData?.info,
       };
@@ -80,9 +90,8 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       protectionLevelsData
     );
 
-    // Debug
     return [parsedMpaaProtectionLevelData, parsedHighlyProtectedFromFishingData];
-  }, [location, protectionLevelsData]);
+  }, [location.totalMarineArea, protectionLevelsData]);
 
   const noData = !widgetChartData.length;
   const loading = isFetchingProtectionLevelsData;
