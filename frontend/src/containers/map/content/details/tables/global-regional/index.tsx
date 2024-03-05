@@ -12,6 +12,19 @@ const GlobalRegionalTable: React.FC = () => {
     query: { locationCode },
   } = useRouter();
 
+  const globalLocationQuery = useGetLocations(
+    {
+      filters: {
+        code: 'GLOB',
+      },
+    },
+    {
+      query: {
+        select: ({ data }) => data?.[0]?.attributes,
+      },
+    }
+  );
+
   const locationsQuery = useGetLocations(
     {
       filters: {
@@ -150,7 +163,7 @@ const GlobalRegionalTable: React.FC = () => {
 
       // Global contributions calculations
       const globalContributionPercentage =
-        (protectedArea * 100) / locationsQuery.data?.totalMarineArea;
+        (protectedArea * 100) / globalLocationQuery?.data?.totalMarineArea;
 
       return {
         location: location.name,
@@ -165,7 +178,7 @@ const GlobalRegionalTable: React.FC = () => {
         globalContribution: globalContributionPercentage,
       };
     });
-  }, [locationsQuery.data, locationsData]);
+  }, [globalLocationQuery?.data, locationsData]);
 
   const tableData = parsedData;
 
