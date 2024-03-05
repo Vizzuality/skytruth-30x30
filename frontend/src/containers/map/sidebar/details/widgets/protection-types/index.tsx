@@ -24,21 +24,11 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       // @ts-ignore
       populate: {
         mpaa_protection_level_stats: {
-          filters: {
-            mpaa_protection_level: {
-              slug: 'fully-highly-protected',
-            },
-          },
           populate: {
             mpaa_protection_level: '*',
           },
         },
         fishing_protection_level_stats: {
-          filters: {
-            fishing_protection_level: {
-              slug: 'highly',
-            },
-          },
           populate: {
             fishing_protection_level: '*',
           },
@@ -59,36 +49,41 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
 
-    const parsedProtectionLevel = (label, protectionLevel, stats) => {
+    const parsedProtectionLevel = (label, property, data) => {
+      const attributes = data[0]?.attributes;
+      const propertyData = attributes[property].data?.attributes;
+
       return {
         title: label,
-        slug: protectionLevel.slug,
-        background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
+        slug: propertyData?.slug,
+        background: PROTECTION_TYPES_CHART_COLORS[propertyData?.slug],
         totalArea: location.totalMarineArea,
-        protectedArea: stats?.area,
-        info: protectionLevel.info,
+        protectedArea: attributes.area,
+        info: propertyData?.info,
       };
     };
 
-    const parsedMpaaProtectionLevelData =
-      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.map((entry) => {
-        const stats = entry?.attributes;
-        const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
-        return parsedProtectionLevel('Fully or highly protected', protectionLevel, stats);
-      });
+    const parsedMpaaProtectionLevelData = parsedProtectionLevel(
+      'Fully or highly protected',
+      'mpaa_protection_level',
+      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.filter(
+        (entry) =>
+          entry?.attributes?.mpaa_protection_level?.data?.attributes?.slug ===
+          'fully-highly-protected'
+      )
+    );
 
-    const parsedFishingProtectionLevelData =
-      protectionLevelsData[0]?.attributes?.fishing_protection_level_stats?.data?.map((entry) => {
-        const stats = entry?.attributes;
-        const protectionLevel = stats?.fishing_protection_level?.data.attributes;
-        return parsedProtectionLevel('Highly protected from fishing', protectionLevel, stats);
-      });
-
-    return [...parsedMpaaProtectionLevelData, ...parsedFishingProtectionLevelData];
+    const parsedHighlyProtectedFromFishingData = parsedProtectionLevel(
+      'Highly protected from fishing',
+      'fishing_protection_level',
+      protectionLevelsData[0]?.attributes?.fishing_protection_level_stats?.data?.filter(
+        (entry) => entry?.attributes?.fishing_protection_level?.data?.attributes?.slug === 'highly'
+      )
+    );
+    return [parsedMpaaProtectionLevelData, parsedHighlyProtectedFromFishingData];
   }, [location, protectionLevelsData]);
 
   const noData = !widgetChartData.length;
-
   const loading = isFetchingProtectionLevelsData;
 
   return (
