@@ -8,11 +8,6 @@ variable "github_project" {
   description = "Github project name"
 }
 
-variable "github_branch" {
-  type        = string
-  description = "Github project branch"
-}
-
 variable "project_name" {
   type        = string
   description = "Name of the project"

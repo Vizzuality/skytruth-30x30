@@ -13,7 +13,6 @@ module "staging" {
   gcp_region                                         = var.gcp_region
   github_org                                         = var.github_org
   github_project                                     = var.github_project
-  github_branch                                      = "develop"
   project_name                                       = var.staging_project_name
   frontend_min_scale                                 = 0
   backend_min_scale                                  = 0
@@ -41,7 +40,6 @@ module "production" {
   gcp_region                                         = var.gcp_region
   github_org                                         = var.github_org
   github_project                                     = var.github_project
-  github_branch                                      = "main"
   project_name                                       = var.production_project_name
   frontend_min_scale                                 = 0
   backend_min_scale                                  = 0
