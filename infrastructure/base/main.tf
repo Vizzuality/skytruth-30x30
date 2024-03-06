@@ -46,8 +46,8 @@ module "production" {
   backend_min_scale                                  = 0
   frontend_max_scale                                 = 1
   backend_max_scale                                  = 2
-  dns_zone_name                                      = module.tmp_dns.dns_zone_name
-  domain                                             = var.tmp_domain
+  dns_zone_name                                      = module.dns.dns_zone_name
+  domain                                             = var.domain
   subdomain                                          = var.production_subdomain
   backend_path_prefix                                = "cms"
   functions_path_prefix                              = "functions"
@@ -76,12 +76,6 @@ module "dns" {
   source = "./modules/dns"
   domain = var.domain
   name   = "skytruth"
-}
-
-module "tmp_dns" {
-  source = "./modules/dns"
-  domain = var.tmp_domain
-  name   = "dev-vizzuality"
 }
 
 resource "google_service_account" "data_pipelines_service_account" {
