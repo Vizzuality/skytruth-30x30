@@ -15,7 +15,7 @@ type HorizontalBarChartProps = {
     background: string;
     title?: string;
     totalArea: number;
-    indicatorArea: number;
+    indicatorArea?: number;
     protectedArea: number;
     info?: string;
   };
@@ -71,7 +71,8 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
           {info && <TooltipButton text={info} />}
         </span>
         <span>
-          {areaToDisplay === 'total-area' || areaToDisplay === 'indicator-area' && 'of'} {formattedArea} km<sup>2</sup>
+          {areaToDisplay === 'total-area' || (areaToDisplay === 'indicator-area' && 'of')}{' '}
+          {formattedArea} km<sup>2</sup>
         </span>
       </div>
       <div className="relative my-2 flex h-3.5">
