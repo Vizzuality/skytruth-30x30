@@ -33,10 +33,38 @@ type ConservationChartProps = {
   }[];
 };
 
+const TARGET_YEAR = 2030;
+
 const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }) => {
-  const firstYearData = data[0];
-  const lastYearData = data[data?.length - 1];
-  const activeYearData = data.find(({ active }) => active);
+  const barChartData = useMemo(() => {
+    // Last year of data available
+    const lastEntryYear = data[data.length - 1]?.year;
+
+    // Add bogus values from the last year to the target year (2030) to the array, so that the chart
+    // displays years from the beginning of the historical data, until the target year (projection).
+    const missingYearsArr = [...Array(TARGET_YEAR - lastEntryYear).keys()].map(
+      (i) => i + lastEntryYear + 1
+    );
+
+    const missingYearsData = missingYearsArr.map((year) => {
+      return {
+        percentage: 0,
+        year: year,
+        active: false,
+        totalArea: null,
+        protectedArea: null,
+        future: true,
+      };
+    });
+
+    // Cap results to the least 20 entries, or chart will be too big
+    return [...data, ...missingYearsData].slice(-20);
+  }, [data]);
+
+  // Not using useMEmo as it may not be worth the overhead, performance wise
+  const firstYearData = barChartData[0];
+  const lastYearData = barChartData[barChartData?.length - 1];
+  const activeYearData = barChartData.find(({ active }) => active);
   const xAxisTicks = [firstYearData.year, activeYearData.year, lastYearData.year];
 
   const historicalLineData = [
@@ -83,7 +111,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
   return (
     <div className={cn(className, 'text-xs text-black')}>
       <ResponsiveContainer>
-        <ComposedChart data={data}>
+        <ComposedChart data={barChartData}>
           <CartesianGrid vertical={false} strokeDasharray="3 3" />
           <ReferenceLine
             xAxisId={1}
@@ -169,7 +197,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
             dot={false}
           />
           <Bar dataKey="percentage" xAxisId={1}>
-            {data.map((entry, index) => (
+            {barChartData.map((entry, index) => (
               <Cell
                 stroke="black"
                 fill={entry?.active ? '#4879FF' : 'transparent'}
