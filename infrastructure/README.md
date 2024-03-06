@@ -68,7 +68,7 @@ Please note, there are some actions that might to be carried out manually - you'
 
 First, authenticate with GCP. The easiest way to do this is to run `gcloud auth application-default login`.
 
-Next, check and adapt if necessary the contents of `infrastructure/base/vars/terraform.tfvars`.
+Next, check and adapt if necessary the contents of `infrastructure/base/vars/terraform.tfvars`. For example, set the email address used for sendig alert notifications.
 
 You will need to initialize both terraform projects by running:
 `terraform init`
