@@ -8,7 +8,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Cell,
-  // Tooltip,
+  Tooltip,
   ReferenceLine,
   Line,
 } from 'recharts';
@@ -205,6 +205,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
               />
             ))}
           </Bar>
+          <Tooltip />
         </ComposedChart>
       </ResponsiveContainer>
       <ChartLegend />
