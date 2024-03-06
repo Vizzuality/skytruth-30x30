@@ -160,7 +160,7 @@ locals {
     DATABASE_HOST     = module.database.database_host
     DATABASE_NAME     = module.database.database_name
     DATABASE_USERNAME = module.database.database_user
-    DATABASE_PASSWORD = module.database.database_password
+    DATABASE_PASSWORD = module.postgres_application_user_password.secret_value
     DATABASE_SSL      = false
   }
   client_env = {
@@ -183,6 +183,8 @@ locals {
     secret     = module.postgres_application_user_password.secret_name
     version    = module.postgres_application_user_password.latest_version
   }]
+
+  depends_on = [module.postgres_application_user_password]
 }
 
 locals {
