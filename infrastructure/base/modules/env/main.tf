@@ -268,6 +268,7 @@ module "load_balancer" {
 module "analysis_cloud_function" {
   source                           = "../cloudfunction"
   region                           = var.gcp_region
+  project                          = var.gcp_project_id
   vpc_connector_name               = module.network.vpc_access_connector_name
   function_name                    = "${var.project_name}-analysis"
   description                      = "Analysis Cloud Function"
