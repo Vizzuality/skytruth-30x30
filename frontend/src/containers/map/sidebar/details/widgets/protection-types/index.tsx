@@ -24,21 +24,11 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       // @ts-ignore
       populate: {
         mpaa_protection_level_stats: {
-          filters: {
-            mpaa_protection_level: {
-              slug: 'fully-highly-protected',
-            },
-          },
           populate: {
             mpaa_protection_level: '*',
           },
         },
         fishing_protection_level_stats: {
-          filters: {
-            fishing_protection_level: {
-              slug: 'highly',
-            },
-          },
           populate: {
             fishing_protection_level: '*',
           },
@@ -59,36 +49,51 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
 
-    const parsedProtectionLevel = (label, protectionLevel, stats) => {
+    const parsedProtectionLevel = (label, property, filter, protectionData) => {
+      const protectionDataAttributes = protectionData?.[0]?.attributes;
+      const protectionDataStatsEntries = protectionDataAttributes?.[property + '_stats']?.data;
+
+      const cumulativeIndicatorProtectedArea = protectionDataStatsEntries.reduce(
+        (protectedArea, { attributes }) => protectedArea + attributes?.area,
+        0
+      );
+
+      const data = protectionDataStatsEntries.filter(
+        (entry) => entry?.attributes?.[property]?.data?.attributes?.slug === filter
+      );
+
+      const attributes = data[0]?.attributes;
+      const propertyData = attributes[property].data?.attributes;
+
       return {
         title: label,
-        slug: protectionLevel.slug,
-        background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
+        slug: propertyData?.slug,
+        background: PROTECTION_TYPES_CHART_COLORS[propertyData?.slug],
         totalArea: location.totalMarineArea,
-        protectedArea: stats?.area,
-        info: protectionLevel.info,
+        indicatorArea: cumulativeIndicatorProtectedArea,
+        protectedArea: attributes.area,
+        info: propertyData?.info,
       };
     };
 
-    const parsedMpaaProtectionLevelData =
-      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.map((entry) => {
-        const stats = entry?.attributes;
-        const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
-        return parsedProtectionLevel('Fully or highly protected', protectionLevel, stats);
-      });
+    const parsedMpaaProtectionLevelData = parsedProtectionLevel(
+      'Fully or highly protected',
+      'mpaa_protection_level',
+      'fully-highly-protected',
+      protectionLevelsData
+    );
 
-    const parsedFishingProtectionLevelData =
-      protectionLevelsData[0]?.attributes?.fishing_protection_level_stats?.data?.map((entry) => {
-        const stats = entry?.attributes;
-        const protectionLevel = stats?.fishing_protection_level?.data.attributes;
-        return parsedProtectionLevel('Highly protected from fishing', protectionLevel, stats);
-      });
+    const parsedHighlyProtectedFromFishingData = parsedProtectionLevel(
+      'Highly protected from fishing',
+      'fishing_protection_level',
+      'highly',
+      protectionLevelsData
+    );
 
-    return [...parsedMpaaProtectionLevelData, ...parsedFishingProtectionLevelData];
-  }, [location, protectionLevelsData]);
+    return [parsedMpaaProtectionLevelData, parsedHighlyProtectedFromFishingData];
+  }, [location.totalMarineArea, protectionLevelsData]);
 
   const noData = !widgetChartData.length;
-
   const loading = isFetchingProtectionLevelsData;
 
   return (
@@ -99,7 +104,12 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       loading={loading}
     >
       {widgetChartData.map((chartData) => (
-        <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
+        <HorizontalBarChart
+          key={chartData.slug}
+          className="py-2"
+          data={chartData}
+          areaToDisplay="indicator-area"
+        />
       ))}
     </Widget>
   );
