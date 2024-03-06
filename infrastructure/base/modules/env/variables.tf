@@ -141,3 +141,9 @@ variable "analysis_function_max_instance_request_concurrency" {
   default     = 80
   description = "Max instance request concurrency for the analysis function"
 }
+
+variable "use_hello_world_image" {
+  type        = bool
+  default     = false
+  description = "Use the hello-world image for the cloud run service"
+}

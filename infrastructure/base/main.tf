@@ -32,6 +32,7 @@ module "staging" {
   environment                                        = "staging"
   database_name                                      = "strapi"
   database_user                                      = "strapi"
+  use_hello_world_image                              = false
 }
 
 module "production" {
@@ -59,6 +60,7 @@ module "production" {
   environment                                        = "production"
   database_name                                      = "strapi"
   database_user                                      = "strapi"
+  use_hello_world_image                              = false
 }
 
 module "github_values" {

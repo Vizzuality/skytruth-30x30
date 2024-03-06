@@ -31,31 +31,33 @@ module "postgres_application_user_password" {
 }
 
 module "frontend_cloudrun" {
-  source             = "../cloudrun"
-  name               = "${var.project_name}-fe"
-  region             = var.gcp_region
-  project_id         = var.gcp_project_id
-  repository         = module.frontend_gcr.repository_name
-  container_port     = 3000
-  vpc_connector_name = module.network.vpc_access_connector_name
-  database           = module.database.database
-  min_scale          = var.frontend_min_scale
-  max_scale          = var.frontend_max_scale
-  tag                = var.environment
+  source                = "../cloudrun"
+  name                  = "${var.project_name}-fe"
+  region                = var.gcp_region
+  project_id            = var.gcp_project_id
+  repository            = module.frontend_gcr.repository_name
+  container_port        = 3000
+  vpc_connector_name    = module.network.vpc_access_connector_name
+  database              = module.database.database
+  min_scale             = var.frontend_min_scale
+  max_scale             = var.frontend_max_scale
+  tag                   = var.environment
+  use_hello_world_image = var.use_hello_world_image
 }
 
 module "backend_cloudrun" {
-  source             = "../cloudrun"
-  name               = "${var.project_name}-be"
-  region             = var.gcp_region
-  project_id         = var.gcp_project_id
-  repository         = module.backend_gcr.repository_name
-  container_port     = 1337
-  vpc_connector_name = module.network.vpc_access_connector_name
-  database           = module.database.database
-  min_scale          = var.backend_min_scale
-  max_scale          = var.backend_max_scale
-  tag                = var.environment
+  source                = "../cloudrun"
+  name                  = "${var.project_name}-be"
+  region                = var.gcp_region
+  project_id            = var.gcp_project_id
+  repository            = module.backend_gcr.repository_name
+  container_port        = 1337
+  vpc_connector_name    = module.network.vpc_access_connector_name
+  database              = module.database.database
+  min_scale             = var.backend_min_scale
+  max_scale             = var.backend_max_scale
+  tag                   = var.environment
+  use_hello_world_image = var.use_hello_world_image
 }
 
 module "database" {

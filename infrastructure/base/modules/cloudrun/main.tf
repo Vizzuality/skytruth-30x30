@@ -21,6 +21,12 @@ resource "google_secret_manager_secret_iam_member" "secret_access" {
   depends_on = [google_service_account.service_account]
 }
 
+locals {
+  # if use_hello_world_image is true, then the image is the hello world image
+  # otherwise, the image is the latest image from repository
+  image = var.use_hello_world_image ? "gcr.io/cloudrun/hello" : "${var.region}-docker.pkg.dev/${var.project_id}/${var.repository}/${var.name}:latest"
+}
+
 resource "google_cloud_run_service" "cloud_run" {
   name     = var.name
   location = var.region
@@ -30,10 +36,7 @@ resource "google_cloud_run_service" "cloud_run" {
       service_account_name = google_service_account.service_account.email
 
       containers {
-        ##### FIRST RUN #####
-        # Google provides a pre-deployed “Hello Cloud Run”
-        # image = "gcr.io/cloudrun/hello"
-        image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.repository}/${var.name}:latest"
+        image = local.image
 
         ports {
           container_port = var.container_port
