@@ -8,7 +8,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Cell,
-  // Tooltip,
+  Tooltip,
   ReferenceLine,
   Line,
 } from 'recharts';
@@ -18,7 +18,6 @@ import { cn } from '@/lib/classnames';
 import { useGetDataInfos } from '@/types/generated/data-info';
 
 import ChartLegend from './legend';
-
 // import ChartTooltip from './tooltip';
 
 type ConservationChartProps = {
@@ -34,7 +33,7 @@ type ConservationChartProps = {
 };
 
 const TARGET_YEAR = 2030;
-const LINE_LAST_COLUMN_OFFSET = 0.5;
+const MAX_NUM_YEARS = 20;
 
 const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }) => {
   const barChartData = useMemo(() => {
@@ -49,7 +48,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
 
     const missingYearsData = missingYearsArr.map((year) => {
       return {
-        percentage: 0,
+        percentage: null,
         year: year,
         active: false,
         totalArea: null,
@@ -67,6 +66,9 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
   const lastYearData = barChartData[barChartData?.length - 1];
   const activeYearData = barChartData.find(({ active }) => active);
   const xAxisTicks = [firstYearData.year, activeYearData.year, lastYearData.year];
+  const numHistoricalYears = activeYearData?.year - firstYearData?.year;
+  const historicalDelta =
+    (activeYearData.percentage - firstYearData.percentage) / numHistoricalYears;
 
   // Calculate data for the historical line; first and active year are known, years in between
   // need to be extrapolated.
@@ -75,13 +77,10 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
       (i) => i + firstYearData.year + 1
     );
 
-    const delta =
-      (activeYearData.percentage - firstYearData.percentage) / (13 + LINE_LAST_COLUMN_OFFSET);
-
     const extrapolatedHistoricalYears = missingYearsArr.map((year, idx) => {
       return {
         year,
-        percentage: firstYearData.percentage + delta * (idx + 1),
+        percentage: firstYearData.percentage + historicalDelta * (idx + 1),
       };
     });
 
@@ -89,33 +88,31 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
       { year: firstYearData.year, percentage: firstYearData.percentage },
       ...extrapolatedHistoricalYears,
       {
-        year: activeYearData.year + LINE_LAST_COLUMN_OFFSET,
+        year: activeYearData.year,
         percentage: activeYearData.percentage,
       },
     ];
-  }, [activeYearData, firstYearData]);
+  }, [activeYearData, firstYearData, historicalDelta]);
 
-  const projectedPercentage = useMemo(() => {
-    const numHistoricalYears = activeYearData.year - firstYearData.year;
-    const numProjectedYears = lastYearData.year - activeYearData.year;
+  // Calculate data for the projected line; we know the active and target years; extrapolate
+  // the projection based on the historical data.
+  const projectedLineData = useMemo(() => {
+    const yearsArray = [...Array(TARGET_YEAR - activeYearData.year).keys()].map(
+      (i) => i + activeYearData.year + 1
+    );
 
-    const projectedPercentageChange =
-      ((activeYearData.percentage - firstYearData.percentage) / numHistoricalYears) *
-      numProjectedYears;
+    const extrapolatedProjectedYears = yearsArray.map((year, idx) => {
+      return {
+        year,
+        percentage: activeYearData.percentage + historicalDelta * (idx + 1),
+      };
+    });
 
-    return activeYearData.percentage + projectedPercentageChange;
-  }, [
-    activeYearData.percentage,
-    activeYearData.year,
-    firstYearData.percentage,
-    firstYearData.year,
-    lastYearData.year,
-  ]);
-
-  const projectedLineData = [
-    { year: activeYearData.year + 0.5, percentage: activeYearData.percentage },
-    { year: lastYearData.year, percentage: projectedPercentage },
-  ];
+    return [
+      { year: activeYearData.year, percentage: activeYearData.percentage },
+      ...extrapolatedProjectedYears,
+    ];
+  }, [activeYearData, historicalDelta]);
 
   const { data: dataInfo } = useGetDataInfos(
     {
@@ -131,10 +128,39 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
     }
   );
 
+  const chartData = useMemo(() => {
+    const historicalYearsArray = data?.map(({ year }) => year);
+    const lastDataYear = historicalYearsArray[historicalYearsArray.length - 1];
+    const futureYearsArray = [...Array(TARGET_YEAR - lastDataYear).keys()].map(
+      (i) => i + lastDataYear + 1
+    );
+    const allYearsArray = [...historicalYearsArray, ...futureYearsArray];
+
+    return allYearsArray
+      .map((year) => {
+        const percentage = data?.find(({ year: dataYear }) => year === dataYear)?.percentage;
+        const historical = historicalLineData?.find(
+          ({ year: historicalYear }) => year === historicalYear
+        )?.percentage;
+        const projected = projectedLineData?.find(
+          ({ year: projectedYear }) => year === projectedYear
+        )?.percentage;
+
+        return {
+          year,
+          percentage,
+          historical,
+          projected,
+          active: year === lastDataYear,
+        };
+      })
+      ?.slice(-MAX_NUM_YEARS);
+  }, [data, historicalLineData, projectedLineData]);
+
   return (
     <div className={cn(className, 'text-xs text-black')}>
       <ResponsiveContainer>
-        <ComposedChart data={barChartData}>
+        <ComposedChart data={chartData}>
           <CartesianGrid vertical={false} strokeDasharray="3 3" />
           <ReferenceLine
             xAxisId={1}
@@ -195,32 +221,27 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
             ticks={[0, 15, 30, 45, 55]}
             tickFormatter={(value) => `${value}%`}
           />
-          {/*
-            // TODO: Investigate tooltip
-            // Tooltip does not play nice when the Line charts are used (no payload)
-            <Tooltip content={<ChartTooltip />} />
-          */}
           <Line
             xAxisId={2}
             type="monotone"
-            data={historicalLineData}
             strokeWidth={2}
-            dataKey="percentage"
+            dataKey="historical"
             stroke="#4879FF"
             dot={false}
+            activeDot={false}
           />
           <Line
             xAxisId={2}
             type="monotone"
-            data={projectedLineData}
             strokeWidth={2}
             strokeDasharray="4 4"
-            dataKey="percentage"
+            dataKey="projected"
             stroke="#4879FF"
             dot={false}
+            activeDot={false}
           />
           <Bar dataKey="percentage" xAxisId={1}>
-            {barChartData.map((entry, index) => (
+            {chartData.map((entry, index) => (
               <Cell
                 stroke="black"
                 fill={entry?.active ? '#4879FF' : 'transparent'}
@@ -228,8 +249,8 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
               />
             ))}
           </Bar>
-
-          {/* <Tooltip /> */}
+          {/* <Tooltip content={ChartTooltip} /> */}
+          <Tooltip />
         </ComposedChart>
       </ResponsiveContainer>
       <ChartLegend />
