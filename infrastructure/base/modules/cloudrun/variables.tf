@@ -17,6 +17,12 @@ variable "repository" {
   description = "GAR repository name"
 }
 
+variable "use_hello_world_image" {
+  type        = bool
+  description = "Use the hello world image"
+  default     = false
+}
+
 # variable "start_command" {
 #   type        = string
 #   description = "Docker image start command"

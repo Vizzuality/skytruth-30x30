@@ -46,7 +46,7 @@ resource "google_storage_bucket" "bucket" {
 }
 
 resource "google_storage_bucket_object" "object" {
-  name   = "${var.function_name}-${timestamp()}.zip"
+  name   = "${var.function_name}-${filemd5(data.archive_file.default.output_path)}.zip"
   bucket = google_storage_bucket.bucket.name
   source = data.archive_file.default.output_path
 }
@@ -78,8 +78,9 @@ resource "google_cloudfunctions2_function" "function" {
   description = var.description
 
   build_config {
-    runtime     = var.runtime
-    entry_point = var.entry_point
+    runtime           = var.runtime
+    entry_point       = var.entry_point
+    docker_repository = "projects/${var.project}/locations/${var.region}/repositories/gcf-artifacts"
     source {
       storage_source {
         bucket = google_storage_bucket.bucket.name

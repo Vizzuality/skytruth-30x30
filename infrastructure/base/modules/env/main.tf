@@ -31,31 +31,33 @@ module "postgres_application_user_password" {
 }
 
 module "frontend_cloudrun" {
-  source             = "../cloudrun"
-  name               = "${var.project_name}-fe"
-  region             = var.gcp_region
-  project_id         = var.gcp_project_id
-  repository         = module.frontend_gcr.repository_name
-  container_port     = 3000
-  vpc_connector_name = module.network.vpc_access_connector_name
-  database           = module.database.database
-  min_scale          = var.frontend_min_scale
-  max_scale          = var.frontend_max_scale
-  tag                = var.environment
+  source                = "../cloudrun"
+  name                  = "${var.project_name}-fe"
+  region                = var.gcp_region
+  project_id            = var.gcp_project_id
+  repository            = module.frontend_gcr.repository_name
+  container_port        = 3000
+  vpc_connector_name    = module.network.vpc_access_connector_name
+  database              = module.database.database
+  min_scale             = var.frontend_min_scale
+  max_scale             = var.frontend_max_scale
+  tag                   = var.environment
+  use_hello_world_image = var.use_hello_world_image
 }
 
 module "backend_cloudrun" {
-  source             = "../cloudrun"
-  name               = "${var.project_name}-be"
-  region             = var.gcp_region
-  project_id         = var.gcp_project_id
-  repository         = module.backend_gcr.repository_name
-  container_port     = 1337
-  vpc_connector_name = module.network.vpc_access_connector_name
-  database           = module.database.database
-  min_scale          = var.backend_min_scale
-  max_scale          = var.backend_max_scale
-  tag                = var.environment
+  source                = "../cloudrun"
+  name                  = "${var.project_name}-be"
+  region                = var.gcp_region
+  project_id            = var.gcp_project_id
+  repository            = module.backend_gcr.repository_name
+  container_port        = 1337
+  vpc_connector_name    = module.network.vpc_access_connector_name
+  database              = module.database.database
+  min_scale             = var.backend_min_scale
+  max_scale             = var.backend_max_scale
+  tag                   = var.environment
+  use_hello_world_image = var.use_hello_world_image
 }
 
 module "database" {
@@ -158,7 +160,7 @@ locals {
     DATABASE_HOST     = module.database.database_host
     DATABASE_NAME     = module.database.database_name
     DATABASE_USERNAME = module.database.database_user
-    DATABASE_PASSWORD = module.database.database_password
+    DATABASE_PASSWORD = module.postgres_application_user_password.secret_value
     DATABASE_SSL      = false
   }
   client_env = {
@@ -181,6 +183,8 @@ locals {
     secret     = module.postgres_application_user_password.secret_name
     version    = module.postgres_application_user_password.latest_version
   }]
+
+  depends_on = [module.postgres_application_user_password]
 }
 
 locals {
@@ -199,8 +203,6 @@ module "github_values" {
   source    = "../github_values"
   repo_name = var.github_project
   secret_map = {
-    GCP_PROJECT_ID            = var.gcp_project_id
-    GCP_REGION                = var.gcp_region
     (local.gcp_sa_key)        = base64decode(google_service_account_key.deploy_service_account_key.private_key)
     (local.project_name)      = var.project_name
     (local.cms_repository)    = module.backend_gcr.repository_name
@@ -268,6 +270,7 @@ module "load_balancer" {
 module "analysis_cloud_function" {
   source                           = "../cloudfunction"
   region                           = var.gcp_region
+  project                          = var.gcp_project_id
   vpc_connector_name               = module.network.vpc_access_connector_name
   function_name                    = "${var.project_name}-analysis"
   description                      = "Analysis Cloud Function"

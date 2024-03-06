@@ -59,7 +59,7 @@ jobs:
       #- name: Google Auth authentication via credentials json
       - name: Google Auth
         id: auth
-        uses: 'google-github-actions/auth@v1'
+        uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: "${{ secrets[format('{0}_GCP_SA_KEY', steps.extract_environment.outputs.environment)] }}"
           token_format: 'access_token'
@@ -95,7 +95,7 @@ jobs:
           REPOSITORY: ${{ secrets[format('{0}_CLIENT_REPOSITORY', steps.extract_environment.outputs.environment)] }} 
           SERVICE: ${{ secrets[format('{0}_CLIENT_SERVICE', steps.extract_environment.outputs.environment)] }}
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@v1
+        uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
@@ -133,7 +133,7 @@ jobs:
 
       - name: Google Auth
         id: auth
-        uses: 'google-github-actions/auth@v1'
+        uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: "${{ secrets[format('{0}_GCP_SA_KEY', steps.extract_environment.outputs.environment)] }}"
           token_format: 'access_token'
@@ -167,7 +167,7 @@ jobs:
           REPOSITORY: ${{ secrets[format('{0}_CMS_REPOSITORY', steps.extract_environment.outputs.environment)] }} 
           SERVICE: ${{ secrets[format('{0}_CMS_SERVICE', steps.extract_environment.outputs.environment)] }}
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@v1
+        uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
@@ -200,12 +200,12 @@ jobs:
 
       - name: Google Auth
         id: auth
-        uses: 'google-github-actions/auth@v1'
+        uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: "${{ secrets[format('{0}_GCP_SA_KEY', steps.extract_environment.outputs.environment)] }}"
           token_format: 'access_token'
       - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
+        uses: 'google-github-actions/setup-gcloud@v2'
         with:
           version: '>= 363.0.0'
       - name: 'Use gcloud CLI'

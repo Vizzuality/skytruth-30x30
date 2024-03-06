@@ -8,11 +8,6 @@ variable "github_project" {
   description = "Github project name"
 }
 
-variable "github_branch" {
-  type        = string
-  description = "Github project branch"
-}
-
 variable "project_name" {
   type        = string
   description = "Name of the project"
@@ -145,4 +140,10 @@ variable "analysis_function_max_instance_request_concurrency" {
   type        = number
   default     = 80
   description = "Max instance request concurrency for the analysis function"
+}
+
+variable "use_hello_world_image" {
+  type        = bool
+  default     = false
+  description = "Use the hello-world image for the cloud run service"
 }
