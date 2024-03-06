@@ -8,7 +8,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Cell,
-  Tooltip,
+  // Tooltip,
   ReferenceLine,
   Line,
 } from 'recharts';
@@ -34,6 +34,7 @@ type ConservationChartProps = {
 };
 
 const TARGET_YEAR = 2030;
+const LINE_LAST_COLUMN_OFFSET = 0.5;
 
 const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }) => {
   const barChartData = useMemo(() => {
@@ -61,16 +62,38 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
     return [...data, ...missingYearsData].slice(-20);
   }, [data]);
 
-  // Not using useMEmo as it may not be worth the overhead, performance wise
+  // Not using useMemo as it may not be worth the overhead, performance wise
   const firstYearData = barChartData[0];
   const lastYearData = barChartData[barChartData?.length - 1];
   const activeYearData = barChartData.find(({ active }) => active);
   const xAxisTicks = [firstYearData.year, activeYearData.year, lastYearData.year];
 
-  const historicalLineData = [
-    { year: firstYearData.year, percentage: firstYearData.percentage },
-    { year: activeYearData.year + 0.5, percentage: activeYearData.percentage },
-  ];
+  // Calculate data for the historical line; first and active year are known, years in between
+  // need to be extrapolated.
+  const historicalLineData = useMemo(() => {
+    const missingYearsArr = [...Array(activeYearData.year - firstYearData.year - 1).keys()].map(
+      (i) => i + firstYearData.year + 1
+    );
+
+    const delta =
+      (activeYearData.percentage - firstYearData.percentage) / (13 + LINE_LAST_COLUMN_OFFSET);
+
+    const extrapolatedHistoricalYears = missingYearsArr.map((year, idx) => {
+      return {
+        year,
+        percentage: firstYearData.percentage + delta * (idx + 1),
+      };
+    });
+
+    return [
+      { year: firstYearData.year, percentage: firstYearData.percentage },
+      ...extrapolatedHistoricalYears,
+      {
+        year: activeYearData.year + LINE_LAST_COLUMN_OFFSET,
+        percentage: activeYearData.percentage,
+      },
+    ];
+  }, [activeYearData, firstYearData]);
 
   const projectedPercentage = useMemo(() => {
     const numHistoricalYears = activeYearData.year - firstYearData.year;
@@ -205,7 +228,8 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
               />
             ))}
           </Bar>
-          <Tooltip />
+
+          {/* <Tooltip /> */}
         </ComposedChart>
       </ResponsiveContainer>
       <ChartLegend />
