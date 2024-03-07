@@ -9,8 +9,8 @@ import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query
 import 'styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { figtree, overpassMono } from '@/styles/fonts';
 import Analytics from '@/components/analytics';
+import { figtree, overpassMono } from '@/styles/fonts';
 
 type PageProps = {
   dehydratedState: unknown;
