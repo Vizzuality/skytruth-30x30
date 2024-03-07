@@ -100,7 +100,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     const data = mergedProtectionStats.map((entry, index) => {
       const isLastYear = index === mergedProtectionStats.length - 1;
       const { year, protectedArea } = entry;
-      const percentage = Math.round((protectedArea * 100) / location.totalMarineArea);
+      const percentage = (protectedArea * 100) / location.totalMarineArea;
 
       return {
         // We only want to show up to 55%, so we'll cap the percentage here
