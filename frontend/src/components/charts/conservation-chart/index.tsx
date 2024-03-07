@@ -18,7 +18,7 @@ import { cn } from '@/lib/classnames';
 import { useGetDataInfos } from '@/types/generated/data-info';
 
 import ChartLegend from './legend';
-// import ChartTooltip from './tooltip';
+import ChartTooltip from './tooltip';
 
 type ConservationChartProps = {
   className?: string;
@@ -249,8 +249,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
               />
             ))}
           </Bar>
-          {/* <Tooltip content={ChartTooltip} /> */}
-          <Tooltip />
+          <Tooltip content={ChartTooltip} />
         </ComposedChart>
       </ResponsiveContainer>
       <ChartLegend />
