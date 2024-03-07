@@ -155,7 +155,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
                   >
                     <TooltipButton
                       text={dataInfo?.attributes.content}
-                      className="hover:bg-transparent"
+                      className="mt-1 hover:bg-transparent"
                     />
                   </foreignObject>
                 </g>
