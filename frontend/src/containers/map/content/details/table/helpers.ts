@@ -1,13 +1,11 @@
-import { format } from 'd3-format';
-
-import { formatPercentage } from '@/lib/utils/formats';
+import { formatPercentage, formatKM } from '@/lib/utils/formats';
 
 const percentage = (value: number) => {
   return formatPercentage(value, { displayPercentageSign: false });
 };
 
 const area = (value: number) => {
-  return format(',.2r')(value);
+  return formatKM(value);
 };
 
 const capitalize = (value: string) => {
