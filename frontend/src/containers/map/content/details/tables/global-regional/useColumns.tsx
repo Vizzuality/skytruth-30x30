@@ -15,7 +15,6 @@ import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 export type GlobalRegionalTableColumns = {
   location: string;
   locationCode: string;
-  totalMarineArea: number;
   coverage: number;
   locationType: string;
   mpas: number;
@@ -86,20 +85,11 @@ const useColumns = () => {
           </HeaderItem>
         ),
         cell: ({ row }) => {
-          const { totalMarineArea, area: value } = row.original;
+          const { area: value } = row.original;
           const formattedValue = cellFormatter.area(value);
-          let displayValue = formattedValue;
-
-          // In certain circumstances, due to rounding, the formatted value may exceed the
-          // total marine area, mostly in situations where the coverage is nearing 100%.
-          // In this case, we skip the rounding and display the value.
-          if (parseFloat(formattedValue) > totalMarineArea) {
-            displayValue = value.toString();
-          }
-
           return (
             <span>
-              {displayValue} km<sup>2</sup>
+              {formattedValue} km<sup>2</sup>
             </span>
           );
         },
