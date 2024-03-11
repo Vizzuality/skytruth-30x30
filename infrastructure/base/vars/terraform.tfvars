@@ -9,7 +9,7 @@ staging_project_name    = "x30-dev"
 production_project_name = "x30-prod"
 
 domain               = "skytruth.org"
-staging_subdomain    = "30x30"              # TMP
+staging_subdomain    = "30x30-dev"
 production_subdomain = "30x30"
 
 uptime_alert_email = "agnieszka.figiel@vizzuality.com"
