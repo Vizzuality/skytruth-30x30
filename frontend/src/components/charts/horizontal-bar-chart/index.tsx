@@ -1,10 +1,8 @@
 import { useMemo } from 'react';
 
-import { format } from 'd3-format';
-
 import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
-import { formatPercentage } from '@/lib/utils/formats';
+import { formatPercentage, formatKM } from '@/lib/utils/formats';
 
 const DEFAULT_MAX_PERCENTAGE = 100;
 const PROTECTION_TARGET = 30;
@@ -47,7 +45,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   }, [protectedArea, totalArea]);
 
   const formattedArea = useMemo(() => {
-    return format(',.0f')(totalArea);
+    return formatKM(totalArea);
   }, [totalArea]);
 
   return (
