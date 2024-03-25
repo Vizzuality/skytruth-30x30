@@ -38,8 +38,8 @@ const nextConfig = {
   redirects() {
     return [
       {
-        source: '/map',
-        destination: '/map/GLOB',
+        source: '/progress-tracker',
+        destination: '/progress-tracker/GLOB',
         permanent: false,
       },
     ];
