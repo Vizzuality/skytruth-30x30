@@ -19,7 +19,8 @@ import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 const NAVIGATION_ITEMS = [
-  { name: 'Map', href: PAGES.map, colorClassName: 'text-blue' },
+  { name: 'Progress Tracker', href: PAGES.progressTracker, colorClassName: 'text-orange' },
+  { name: 'Conservation Builder', href: PAGES.conservationBuilder, colorClassName: 'text-blue' },
   { name: 'Knowledge Hub', href: PAGES.knowledgeHub, colorClassName: 'text-green' },
   { name: 'About', href: PAGES.about, colorClassName: 'text-violet' },
   { name: 'Contact', href: PAGES.contact, colorClassName: 'text-black' },

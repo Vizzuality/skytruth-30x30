@@ -46,7 +46,7 @@ const useColumns = () => {
             <HeaderItem>
               <Link
                 className="underline"
-                href={`${PAGES.map}/${locationCode}?${searchParams.toString()}`}
+                href={`${PAGES.progressTracker}/${locationCode}?${searchParams.toString()}`}
               >
                 {location}
               </Link>

@@ -163,7 +163,11 @@ const EEZLayerPopup = ({ locationId }) => {
   }, [map]);
 
   const handleLocationSelected = useCallback(async () => {
-    await push(`${PAGES.map}/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`);
+    await push(
+      `${
+        PAGES.progressTracker
+      }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`
+    );
     setLocationBBox(locationsQuery.data.bounds);
     setPopup({});
   }, [push, searchParams, setLocationBBox, locationsQuery.data, setPopup]);
