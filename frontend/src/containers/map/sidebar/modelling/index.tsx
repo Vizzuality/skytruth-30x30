@@ -2,7 +2,6 @@ import { useAtomValue } from 'jotai';
 
 import { modellingAtom } from '../../store';
 
-import BackButton from './back-button';
 import ModellingButtons from './modelling-buttons';
 import ModellingIntro from './modelling-intro';
 import ModellingWidget from './widget';
@@ -24,9 +23,6 @@ const SidebarModelling: React.FC = () => {
         </div>
         {showIntro && <ModellingIntro />}
         {!showIntro && <ModellingWidget />}
-      </div>
-      <div className="absolute bottom-0 left-px">
-        <BackButton />
       </div>
     </>
   );
