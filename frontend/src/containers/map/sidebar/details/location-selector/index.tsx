@@ -79,7 +79,9 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
 
       if (selectedLocation) {
         setLocationBBox(selectedLocation?.attributes.bounds);
-        await push(`${PAGES.map}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
+        await push(
+          `${PAGES.progressTracker}/${locationCode.toUpperCase()}?${searchParams.toString()}`
+        );
       }
     },
     [push, searchParams, setLocationBBox, locationsData, setPopup]
