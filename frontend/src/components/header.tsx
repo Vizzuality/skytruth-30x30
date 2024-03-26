@@ -130,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => (
               <Icon
                 icon={ArrowRight}
                 className={cn(
-                  'mr-2.5 hidden w-5 fill-black group-[.is-active]:inline-block',
+                  'mr-2.5 -mt-1 hidden w-5 fill-black group-[.is-active]:inline-block',
                   colorClassName
                 )}
               />
