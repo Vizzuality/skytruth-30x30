@@ -37,10 +37,12 @@ const MainMap: React.FC = () => {
   const drawState = useAtomValue(drawStateAtom);
   const isSidebarOpen = useAtomValue(sidebarAtom);
   const [popup, setPopup] = useAtom(popupAtom);
-  const { locationCode } = useParams();
+  const params = useParams();
   const locationBbox = useAtomValue(bboxLocation);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
   const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
+
+  const locationCode = params?.locationCode || 'GLOB';
 
   const locationsQuery = useGetLocations(
     {
