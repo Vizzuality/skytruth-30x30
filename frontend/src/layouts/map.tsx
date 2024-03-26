@@ -2,17 +2,16 @@ import { PropsWithChildren } from 'react';
 
 import Head from '@/components/head';
 import Header from '@/components/header';
+import Content from '@/containers/map/content';
+import Sidebar from '@/containers/map/sidebar';
 
-export interface FullscreenLayoutProps {
+export interface MapLayoutProps {
   title?: string;
   description?: string;
+  type: 'progress-tracker' | 'conservation-builder';
 }
 
-const FullscreenLayout: React.FC<PropsWithChildren<FullscreenLayoutProps>> = ({
-  children,
-  title,
-  description,
-}) => (
+const MapLayout: React.FC<PropsWithChildren<MapLayoutProps>> = ({ title, description, type }) => (
   <>
     <Head title={title} description={description} />
     <div className="flex h-screen w-screen flex-col">
@@ -20,10 +19,19 @@ const FullscreenLayout: React.FC<PropsWithChildren<FullscreenLayoutProps>> = ({
         <Header />
       </div>
       <div className="relative flex h-full w-full flex-col overflow-hidden md:flex-row">
-        {children}
+        {/* DESKTOP SIDEBAR */}
+        <div className="hidden md:block">
+          <Sidebar type={type} />
+        </div>
+        {/* CONTENT: MAP/TABLES */}
+        <Content />
+        {/* MOBILE SIDEBAR */}
+        <div className="h-1/2 flex-shrink-0 overflow-hidden bg-white md:hidden">
+          <Sidebar type={type} />
+        </div>
       </div>
     </div>
   </>
 );
 
-export default FullscreenLayout;
+export default MapLayout;
