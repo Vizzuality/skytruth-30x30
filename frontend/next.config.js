@@ -35,12 +35,11 @@ const nextConfig = {
 
     return config;
   },
-  redirects() {
+  rewrites() {
     return [
       {
         source: '/progress-tracker',
         destination: '/progress-tracker/GLOB',
-        permanent: false,
       },
     ];
   },

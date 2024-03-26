@@ -1,10 +1,10 @@
 import Content from '@/containers/map/content';
 import Sidebar from '@/containers/map/sidebar';
-import Layout from '@/layouts/map';
+import MapLayout from '@/layouts/map';
 
-export default function Page() {
+export default function ConservationBuilderPage() {
   return (
-    <Layout title="Conservation Builder">
+    <>
       <div className="hidden md:block">
         <Sidebar type="conservation-builder" />
       </div>
@@ -12,6 +12,13 @@ export default function Page() {
       <div className="h-1/2 flex-shrink-0 overflow-hidden bg-white md:hidden">
         <Sidebar type="conservation-builder" />
       </div>
-    </Layout>
+    </>
   );
 }
+
+ConservationBuilderPage.layout = {
+  Component: MapLayout,
+  props: {
+    title: 'Conservation builder',
+  },
+};
