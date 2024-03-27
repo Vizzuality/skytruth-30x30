@@ -58,6 +58,7 @@
     "lucide-react": "^0.274.0",
     "mapbox-gl": "3.1.2",
     "next": "13.5.6",
+    "next-auth": "^4.24.7",
     "next-usequerystate": "1.9.2",
     "orval": "6.18.1",
     "postcss": "8.4.21",
