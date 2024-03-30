@@ -9,13 +9,18 @@ import { cn } from '@/lib/classnames';
 import Details from './details';
 import Modelling from './modelling';
 
+const SIDEBAR_TYPES = {
+  progress_tracker: 'progress-tracker',
+  conservation_builder: 'conservation-builder',
+};
+
 const SIDEBAR_COMPONENTS = {
-  'progress-tracker': Details,
-  'conservation-builder': Modelling,
+  [SIDEBAR_TYPES.progress_tracker]: Details,
+  [SIDEBAR_TYPES.conservation_builder]: Modelling,
 };
 
 type MapSidebarProps = {
-  type: 'progress-tracker' | 'conservation-builder';
+  type: keyof typeof SIDEBAR_TYPES;
 };
 
 const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {

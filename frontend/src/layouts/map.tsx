@@ -8,10 +8,15 @@ import Content from '@/containers/map/content';
 import Sidebar from '@/containers/map/sidebar';
 import { drawStateAtom, modellingAtom } from '@/containers/map/store';
 
+const LAYOUT_TYPES = {
+  progress_tracker: 'progress-tracker',
+  conservation_builder: 'conservation-builder',
+};
+
 export interface MapLayoutProps {
   title?: string;
   description?: string;
-  type: 'progress-tracker' | 'conservation-builder';
+  type: keyof typeof LAYOUT_TYPES;
 }
 
 const MapLayout: React.FC<PropsWithChildren<MapLayoutProps>> = ({ title, description, type }) => {
@@ -19,7 +24,7 @@ const MapLayout: React.FC<PropsWithChildren<MapLayoutProps>> = ({ title, descrip
   const resetDrawState = useResetAtom(drawStateAtom);
 
   useEffect(() => {
-    if (type !== 'conservation-builder') {
+    if (type !== LAYOUT_TYPES.conservation_builder) {
       resetModelling();
       resetDrawState();
     }
