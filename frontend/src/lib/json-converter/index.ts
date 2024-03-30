@@ -8,8 +8,8 @@ import { JSONConfiguration, JSONConverter } from '@deck.gl/json/typed';
 //   LegendTypeChoropleth,
 //   LegendTypeGradient,
 // } from '@/components/map/legend/item-types';
-import EEZLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/eez';
-import EstablishmentLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/establishment';
+import EEZLayerLegend from '@/containers/map/content/map/legend/eez';
+import EstablishmentLayerLegend from '@/containers/map/content/map/legend/establishment';
 import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
