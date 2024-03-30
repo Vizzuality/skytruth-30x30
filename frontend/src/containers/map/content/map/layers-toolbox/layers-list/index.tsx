@@ -88,7 +88,7 @@ const LayersDropdown = (): JSX.Element => {
           />
           <LuChevronUp className={`hidden group-data-[state=open]:block ${TABS_ICONS_CLASSES}`} />
         </CollapsibleTrigger>
-        <CollapsibleContent className="border-b border-dashed border-black/20">
+        <CollapsibleContent className="border-b border-dashed border-black/20  data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
           <ul className="my-3 flex flex-col space-y-5">
             {layersQuery.data?.map((layer) => {
               const isActive = activeLayers.findIndex((layerId) => layerId === layer.id) !== -1;
