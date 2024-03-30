@@ -18,7 +18,7 @@ type MapSidebarProps = {
   type: 'progress-tracker' | 'conservation-builder';
 };
 
-const MapSidebar: React.FC<MapSidebarProps> = ({ type = 'progress-tracker' }) => {
+const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
   const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
 
   const ContentComponent = SIDEBAR_COMPONENTS[type] || Details;
