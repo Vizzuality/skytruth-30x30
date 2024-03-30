@@ -12,7 +12,7 @@ import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
-import { useMapSearchParams } from '../../../content/map/sync-settings';
+import { useMapSearchParams } from '../../../../content/map/sync-settings';
 
 import LocationDropdown from './location-dropdown';
 import LocationTypeToggle from './type-toggle';

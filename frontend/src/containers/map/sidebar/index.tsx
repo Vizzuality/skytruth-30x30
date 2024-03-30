@@ -10,19 +10,8 @@ import LayersIcon from '@/styles/icons/layers.svg?sprite';
 
 import { useSyncMapContentSettings } from '../sync-settings';
 
-import Details from './details';
-import Layers from './layers';
-import Modelling from './modelling';
-
-const SIDEBAR_TYPES = {
-  progress_tracker: 'progress-tracker',
-  conservation_builder: 'conservation-builder',
-};
-
-const SIDEBAR_COMPONENTS = {
-  [SIDEBAR_TYPES.progress_tracker]: Details,
-  [SIDEBAR_TYPES.conservation_builder]: Modelling,
-};
+import LayersPanel from './layers-panel';
+import MainPanel, { SIDEBAR_TYPES } from './main-panel';
 
 type MapSidebarProps = {
   type: keyof typeof SIDEBAR_TYPES;
@@ -32,9 +21,6 @@ const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
   const [{ showDetails }] = useSyncMapContentSettings();
   const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
   const [isLayersOpen, setLayersOpen] = useAtom(layersAtom);
-
-  // Main panel component selection
-  const ContentComponent = SIDEBAR_COMPONENTS[type] || Details;
 
   // Visibility (main panel/toggle)
   const showSidebar = true;
@@ -60,7 +46,7 @@ const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
           >
             <CollapsibleContent className="left-00 relative top-0 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-collapsible-left data-[state=open]:animate-collapsible-right">
               <div className="h-full md:w-[460px]">
-                <ContentComponent />
+                <MainPanel type={type} />
               </div>
             </CollapsibleContent>
           </Collapsible>
@@ -81,7 +67,7 @@ const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
           >
             <CollapsibleContent className="relative top-0 left-0 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-collapsible-left data-[state=open]:animate-collapsible-right">
               <div className="h-full md:w-[280px]">
-                <Layers />
+                <LayersPanel />
               </div>
             </CollapsibleContent>
           </Collapsible>

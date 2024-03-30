@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 
-import { modellingAtom } from '../../store';
+import { modellingAtom } from '../../../store';
 
 import ModellingButtons from './modelling-buttons';
 import ModellingIntro from './modelling-intro';
