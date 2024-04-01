@@ -8,6 +8,7 @@ const LinkCards: React.FC = () => (
       subtitle="An interactive map for tracking 30x30 progress and drawing new protected areas"
       description="This tool allows users to understand global progress toward 30x30 at a glance, draw new potential protected areas, and illustrate the effects of those proposed areas on national and global progress toward 30x30."
       image="computer"
+      color="orange"
       link={PAGES.progressTracker}
       linkLabel="Go to the Map"
     />
