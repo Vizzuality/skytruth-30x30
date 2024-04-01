@@ -53,12 +53,22 @@ module.exports = {
           from: { height: 'var(--radix-collapsible-content-height)' },
           to: { height: 0 },
         },
+        'collapsible-left': {
+          from: { width: 'var(--radix-collapsible-content-width)' },
+          to: { width: 0 },
+        },
+        'collapsible-right': {
+          from: { width: 0 },
+          to: { width: 'var(--radix-collapsible-content-width)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'collapsible-down': 'collapsible-down 0.2s ease-out',
         'collapsible-up': 'collapsible-up 0.2s ease-out',
+        'collapsible-left': 'collapsible-left 0.2s ease-out',
+        'collapsible-right': 'collapsible-right 0.2s ease-out',
       },
     },
   },

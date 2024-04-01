@@ -22,7 +22,7 @@ const SidebarDetails: React.FC = () => {
 
   return (
     <>
-      <div className="h-full w-full border-x border-black">
+      <div className="h-full w-full">
         <div className="sticky border-b border-black px-4 pt-4 pb-2 md:px-8">
           <h1 className="text-5xl font-black">{locationsData.data[0]?.attributes?.name}</h1>
           <LocationSelector />
@@ -35,11 +35,7 @@ const SidebarDetails: React.FC = () => {
         >
           <DetailsWidgets />
         </div>
-        <div
-          className={cn('absolute bottom-0 left-px ', {
-            'right-px': true,
-          })}
-        >
+        <div className="absolute bottom-0 w-full">
           <DetailsButton />
         </div>
       </div>

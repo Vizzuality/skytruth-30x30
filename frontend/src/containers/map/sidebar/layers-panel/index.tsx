@@ -15,10 +15,10 @@ import { useGetLayers } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 
 const COLLAPSIBLE_TRIGGER_CLASSES =
-  'group flex w-full items-center justify-between font-mono font-bold uppercase text-black data-[state=open]:border-b data-[state=open]:border-dashed data-[state=open]:border-black/20 data-[state=open]:pb-2 leading-none';
+  'group flex w-full items-center justify-between font-mono font-semibold uppercase text-black data-[state=open]:border-b data-[state=open]:border-dashed data-[state=open]:border-black/20 data-[state=open]:pb-2 leading-none';
 const TABS_ICONS_CLASSES = 'w-5 h-5 -translate-y-[2px]';
 
-const LayersDropdown = (): JSX.Element => {
+const LayersPanel = (): JSX.Element => {
   const [activeLayers, setMapLayers] = useSyncMapLayers();
   const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
   const [{ labels }, setMapSettings] = useSyncMapSettings();
@@ -79,7 +79,7 @@ const LayersDropdown = (): JSX.Element => {
   );
 
   return (
-    <div className="space-y-3">
+    <div className="h-full space-y-3 overflow-auto p-4 text-xs">
       <Collapsible defaultOpen={Boolean(activeLayers.length)}>
         <CollapsibleTrigger className={COLLAPSIBLE_TRIGGER_CLASSES}>
           <span>Data Layers</span>
@@ -88,8 +88,8 @@ const LayersDropdown = (): JSX.Element => {
           />
           <LuChevronUp className={`hidden group-data-[state=open]:block ${TABS_ICONS_CLASSES}`} />
         </CollapsibleTrigger>
-        <CollapsibleContent className="border-b border-dashed border-black/20">
-          <ul className="my-3 flex flex-col space-y-5">
+        <CollapsibleContent className="border-b border-dashed border-black/20  data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+          <ul className="my-3 flex flex-col space-y-4">
             {layersQuery.data?.map((layer) => {
               const isActive = activeLayers.findIndex((layerId) => layerId === layer.id) !== -1;
               const onCheckedChange = onToggleLayer.bind(null, layer.id) as (
@@ -98,14 +98,17 @@ const LayersDropdown = (): JSX.Element => {
               const metadata = layer?.attributes?.metadata;
 
               return (
-                <li key={layer.id} className="flex items-center">
+                <li key={layer.id} className="flex items-center justify-between">
                   <span className="flex gap-2">
                     <Switch
                       id={`${layer.id}-switch`}
                       checked={isActive}
                       onCheckedChange={onCheckedChange}
                     />
-                    <Label htmlFor={`${layer.id}-switch`} className="cursor-pointer">
+                    <Label
+                      htmlFor={`${layer.id}-switch`}
+                      className="-mb-px cursor-pointer pt-px font-mono text-xs font-normal"
+                    >
                       {layer.attributes.title}
                     </Label>
                   </span>
@@ -143,4 +146,4 @@ const LayersDropdown = (): JSX.Element => {
   );
 };
 
-export default LayersDropdown;
+export default LayersPanel;

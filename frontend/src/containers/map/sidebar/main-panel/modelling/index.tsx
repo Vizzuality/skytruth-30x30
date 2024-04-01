@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 
-import { modellingAtom } from '../../store';
+import { modellingAtom } from '../../../store';
 
 import ModellingButtons from './modelling-buttons';
 import ModellingIntro from './modelling-intro';
@@ -14,7 +14,7 @@ const SidebarModelling: React.FC = () => {
 
   return (
     <>
-      <div className="h-full w-full overflow-y-scroll border-x border-black pb-12">
+      <div className="h-full w-full overflow-y-scroll pb-12">
         <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
           <h1 className="text-5xl font-black">
             {showIntro ? 'Conservation Scenario Builder' : 'Custom Area'}

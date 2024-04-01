@@ -11,7 +11,7 @@ import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
 import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
-import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
+import LayersLegend from '@/containers/map/content/map/legend';
 import Modelling from '@/containers/map/content/map/modelling';
 import Popup from '@/containers/map/content/map/popup';
 import { useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
@@ -247,7 +247,7 @@ const MainMap: React.FC = () => {
         <>
           <Popup />
           <LabelsManager />
-          <LayersToolbox />
+          <LayersLegend />
           <ZoomControls />
           <DrawControls />
           <LayerManager cursor={cursor} />
