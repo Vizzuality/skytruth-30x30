@@ -10,7 +10,7 @@ const LinkCards: React.FC = () => (
       image="computer"
       color="orange"
       link={PAGES.progressTracker}
-      linkLabel="Go to the Map"
+      linkLabel="Go to the Progress Tracker"
     />
     <LinkCard
       title="Conservation Builder"
@@ -18,8 +18,8 @@ const LinkCards: React.FC = () => (
       description="Lorem ipsum dolor sit amet consectetur. Leo pellentesque ornare libero libero commodo vitae adipiscing viverra purus. In ut ultricies facilisis quam. Ultricies urna convallis pharetra sagittis est. Rhoncus vitae condimentum nulla urna."
       image="computer"
       color="blue"
-      link={PAGES.progressTracker}
-      linkLabel="Go to the Map"
+      link={PAGES.conservationBuilder}
+      linkLabel="Go to the Conservation Builder"
     />
     <LinkCard
       title="Knowledge Hub"
