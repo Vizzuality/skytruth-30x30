@@ -13,6 +13,15 @@ const LinkCards: React.FC = () => (
       linkLabel="Go to the Map"
     />
     <LinkCard
+      title="Conservation Builder"
+      subtitle="Leo pellentesque ornare libero libero commodo vitae adipiscing."
+      description="Lorem ipsum dolor sit amet consectetur. Leo pellentesque ornare libero libero commodo vitae adipiscing viverra purus. In ut ultricies facilisis quam. Ultricies urna convallis pharetra sagittis est. Rhoncus vitae condimentum nulla urna."
+      image="computer"
+      color="blue"
+      link={PAGES.progressTracker}
+      linkLabel="Go to the Map"
+    />
+    <LinkCard
       title="Knowledge Hub"
       subtitle="A navigation hub guiding users toward other helpful 30x30 resources"
       description="The Knowledge Hub will link users to other 30x30 focused organizations and efforts, making it easier for stakeholders at all levels to discover and make use of advanced resources for monitoring, planning, and decision making."
