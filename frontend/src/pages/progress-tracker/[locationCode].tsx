@@ -1,11 +1,9 @@
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import type { GetServerSideProps } from 'next';
 
-import Content from '@/containers/map/content';
-import Sidebar from '@/containers/map/sidebar';
-import Layout from '@/layouts/map';
+import MapLayout from '@/layouts/map';
 import { getGetLocationsQueryKey, getGetLocationsQueryOptions } from '@/types/generated/location';
-import { Location, LocationListResponse } from '@/types/generated/strapi.schemas';
+import { LocationListResponse } from '@/types/generated/strapi.schemas';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -42,16 +40,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function Page({ location }: { location: Location }) {
-  return (
-    <Layout title={location.name}>
-      <div className="hidden md:block">
-        <Sidebar />
-      </div>
-      <Content />
-      <div className="h-1/2 flex-shrink-0 overflow-hidden bg-white md:hidden">
-        <Sidebar />
-      </div>
-    </Layout>
-  );
+export default function ProgressTrackerPage() {
+  return null;
 }
+
+ProgressTrackerPage.layout = {
+  Component: MapLayout,
+  props: ({ location }) => ({
+    title: location?.name,
+  }),
+};

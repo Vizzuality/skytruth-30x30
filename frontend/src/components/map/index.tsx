@@ -133,6 +133,8 @@ export const Map: FC<CustomMapProps> = ({
         onMove={handleMapMove}
         onLoad={handleMapLoad}
         mapStyle="mapbox://styles/skytruth/clnud2d3100nr01pl3b4icpyw"
+        dragRotate={false}
+        touchZoomRotate={false}
         {...mapboxProps}
         {...localViewState}
       >

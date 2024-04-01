@@ -19,8 +19,9 @@ import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 const NAVIGATION_ITEMS = [
-  { name: 'Map', href: PAGES.map, colorClassName: 'text-blue' },
-  { name: 'Knowledge Hub', href: PAGES.knowledgeHub, colorClassName: 'text-green' },
+  { name: 'Progress tracker', href: PAGES.progressTracker, colorClassName: 'text-orange' },
+  { name: 'Conservation builder', href: PAGES.conservationBuilder, colorClassName: 'text-blue' },
+  { name: 'Knowledge hub', href: PAGES.knowledgeHub, colorClassName: 'text-green' },
   { name: 'About', href: PAGES.about, colorClassName: 'text-violet' },
   { name: 'Contact', href: PAGES.contact, colorClassName: 'text-black' },
 ];
@@ -129,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => (
               <Icon
                 icon={ArrowRight}
                 className={cn(
-                  'mr-2.5 hidden w-5 fill-black group-[.is-active]:inline-block',
+                  'mr-2.5 -mt-1 hidden w-5 fill-black group-[.is-active]:inline-block',
                   colorClassName
                 )}
               />

@@ -1,6 +1,7 @@
 export const PAGES = {
   homepage: '/',
-  map: '/map',
+  progressTracker: '/progress-tracker',
+  conservationBuilder: '/conservation-builder',
   knowledgeHub: '/knowledge-hub',
   contact: '/contact',
   about: '/about',
