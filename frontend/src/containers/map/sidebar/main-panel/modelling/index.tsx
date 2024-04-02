@@ -10,16 +10,26 @@ const SidebarModelling: React.FC = () => {
   const { status: modellingStatus } = useAtomValue(modellingAtom);
 
   const showIntro = modellingStatus === 'idle';
-  const showButtons = ['success', 'error'].includes(modellingStatus);
+  // const showButtons = ['success', 'error'].includes(modellingStatus);
 
   return (
     <>
       <div className="h-full w-full overflow-y-scroll pb-12">
-        <div className="border-b border-black px-4 pt-4 pb-2 md:px-8">
-          <h1 className="text-5xl font-black">
-            {showIntro ? 'Conservation Scenario Builder' : 'Custom Area'}
-          </h1>
-          <div className="my-2">{showButtons && <ModellingButtons />}</div>
+        <div className="space-y-4 border-b border-black bg-blue-600 p-4 md:px-8">
+          {showIntro && (
+            <h1 className="text-5xl font-black">Conservation scenarios with custom areas.</h1>
+          )}
+          {!showIntro && (
+            <div className="space-y-2 text-xl font-black">
+              <h1 className="text-5xl font-black">Custom Area</h1>
+              <p>
+                Activate more layers for additional contextual information about your custom area
+                conservation scenario.
+              </p>
+            </div>
+          )}
+
+          <ModellingButtons />
         </div>
         {showIntro && <ModellingIntro />}
         {!showIntro && <ModellingWidget />}

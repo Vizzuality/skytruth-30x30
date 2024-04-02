@@ -1,62 +1,138 @@
-import { useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useAtom } from 'jotai';
-import { useResetAtom } from 'jotai/utils';
+import Image from 'next/image';
 
-import { Button } from '@/components/ui/button';
-import Icon from '@/components/ui/icon';
-import VideoPlayer from '@/components/video-player';
+import { useAtomValue } from 'jotai';
+
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 import { drawStateAtom } from '@/containers/map/store';
-import Graph from '@/styles/icons/graph.svg?sprite';
+
+const snapFormat = new Intl.NumberFormat(undefined, {
+  minimumIntegerDigits: 2,
+});
 
 const ModellingIntro: React.FC = () => {
-  const [{ active: isDrawStateActive }, setDrawState] = useAtom(drawStateAtom);
-  const resetDrawState = useResetAtom(drawStateAtom);
+  const { active, status } = useAtomValue(drawStateAtom);
+  const [current, setCurrent] = useState(1);
+  const [api, setApi] = useState<CarouselApi>();
 
-  const onClickDraw = useCallback(() => {
-    setDrawState((prevState) => ({
-      ...prevState,
-      active: true,
-    }));
-  }, [setDrawState]);
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    api.on('select', () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  useEffect(() => {
+    let step = null;
+
+    if (!api) {
+      return;
+    }
+
+    if (active) {
+      step = 2;
+      setCurrent(step);
+      api.scrollTo(step - 1);
+    }
+
+    if (status === 'drawing') {
+      step = 3;
+      setCurrent(step);
+      api.scrollTo(step - 1);
+    }
+  }, [active, status, api]);
 
   return (
     <div className="flex flex-col gap-4 py-4 px-4 md:px-8">
-      <span className="flex items-center font-bold">
-        <Icon icon={Graph} className="mr-2.5 inline h-4 w-5 fill-black" />
-        Build conservation scenarios with custom areas.
+      <span className="text-xl font-bold">
+        <span className="text-blue-600">How to draw a custom area</span> on the map, using the
+        drawing functionality?
       </span>
-      <VideoPlayer
-        source="/videos/modelling-instructions.mp4"
-        stillImage="/images/video-stills/modelling-instructions.png"
-        type="video/mp4"
-      />
-      <p>
-        Draw in the map the area you want to build and asses conservation scenarios with, through
-        on-the-fly calculations.
-      </p>
-      <span>
-        {isDrawStateActive && (
-          <Button
-            type="button"
-            variant="blue"
-            className="w-full font-mono text-xs"
-            onClick={resetDrawState}
-          >
-            Start drawing on the map
-          </Button>
-        )}
-        {!isDrawStateActive && (
-          <Button
-            type="button"
-            variant="white"
-            className="w-full font-mono text-xs"
-            onClick={onClickDraw}
-          >
-            Draw a shape
-          </Button>
-        )}
-      </span>
+
+      <Carousel
+        setApi={setApi}
+        opts={{
+          duration: 0,
+        }}
+        className="space-y-1"
+      >
+        <div className="flex items-end justify-between">
+          <span className="font-mono text-lg">
+            {snapFormat.format(current)}—
+            <span className="text-black/20">
+              {api ? snapFormat.format(api.scrollSnapList().length) : '-'}
+            </span>
+          </span>
+          <div className="space-x-2">
+            <CarouselPrevious className="static translate-y-0" />
+            <CarouselNext className="static translate-y-0" />
+          </div>
+        </div>
+        <CarouselContent>
+          <CarouselItem>
+            <div className="space-y-2">
+              {/* // todo: replace with image of step 01 */}
+              <Image
+                className="w-full"
+                src="/images/drawing-steps/02.jpg"
+                alt="Step 02"
+                quality={100}
+                width={375}
+                height={143}
+              />
+              <p>
+                Click on the <span className="font-bold">Draw a shape</span> button located above,
+                in the blue section at the top of the panel.
+              </p>
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div className="space-y-2">
+              <Image
+                className="w-full"
+                src="/images/drawing-steps/02.jpg"
+                // sizes="100vw"
+                alt="Step 02"
+                quality={100}
+                width={375}
+                height={143}
+              />
+              <p>
+                <span className="font-bold">Start drawing on the map</span> by clicking. Each click
+                adds an anchor point. All sides of the polygon are connected through anchor points.
+              </p>
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div className="space-y-2">
+              <Image
+                className="w-full"
+                src="/images/drawing-steps/03.jpg"
+                alt="Step 03"
+                quality={100}
+                width={375}
+                height={143}
+              />
+              <p>
+                <span className="font-bold">Close the polygon</span> you drew by clicking on the
+                first anchor point you added at the beginning or by double clicking on the last
+                anchor point.
+              </p>
+            </div>
+          </CarouselItem>
+        </CarouselContent>
+      </Carousel>
     </div>
   );
 };
