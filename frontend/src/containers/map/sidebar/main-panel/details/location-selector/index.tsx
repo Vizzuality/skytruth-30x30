@@ -108,7 +108,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
   return (
     <div className={cn('flex gap-3.5', className)}>
       <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
           <Button className={BUTTON_CLASSES} type="button" variant="text-link">
             <Icon icon={MagnifyingGlassIcon} className="mr-2 h-4 w-4 pb-px" />
             Change Location
