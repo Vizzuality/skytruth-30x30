@@ -17,11 +17,6 @@ def serialize_response(data: dict) -> dict:
     """Converts the data from the database
     into a Dict {locations_area:{"code":<location_iso>, "protected_area": <area>, "area":<location_marine_area>}, "total_area":<total_area>} response
     """
-    if not data or len(data) == 0:
-        raise ValueError(
-            "No data found, this is likely due to a geometry that does not intersect with a Marine area."
-        )
-
     result = {"total_area": data[0][5]}
     sub_result = {}
     total_protected_area = 0
@@ -53,9 +48,9 @@ def get_locations_stats(db: sqlalchemy.engine.base.Engine, geojson: JSON) -> dic
         stmt = sqlalchemy.text(
             """
         with user_data as (select ST_GeomFromGeoJSON(:geometry) as geom),
-	            user_data_stats as (select *, round((st_area(st_transform(geom,'EPSG:4326', 'ESRI:54009'))/1e6)) user_area_km2 from user_data)
+	            user_data_stats as (select *, round((st_area(st_transform(geom,'+proj=longlat +datum=WGS84 +no_defs +type=crs', '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +type=crs'))/1e6)) user_area_km2 from user_data)
             select area_km2, iso_sov1, iso_sov2, iso_sov3, 
-                round((st_area(st_transform(st_makevalid(st_intersection(ST_Subdivide(the_geom, 20000), user_data_stats.geom)),'EPSG:4326', 'ESRI:54009'))/1e6)) portion_area_km2, 
+                round((st_area(st_transform(st_makevalid(st_intersection(ST_Subdivide(the_geom, 20000), user_data_stats.geom)),'+proj=longlat +datum=WGS84 +no_defs +type=crs', '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +type=crs'))/1e6)) portion_area_km2, 
                 user_data_stats.user_area_km2 
             from data.eez_minus_mpa emm, user_data_stats
             where st_intersects(the_geom, user_data_stats.geom)
