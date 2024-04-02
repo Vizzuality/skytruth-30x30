@@ -13,7 +13,7 @@ const SidebarModelling: React.FC = () => {
 
   return (
     <>
-      <div className="h-full w-full overflow-y-scroll pb-12">
+      <div className="h-full w-full overflow-y-auto pb-12">
         <div className="space-y-4 border-b border-black bg-blue-600 p-4 md:px-8">
           {showIntro && (
             <h1 className="text-5xl font-black">Conservation scenarios with custom areas.</h1>
