@@ -82,11 +82,10 @@ const ModellingIntro: React.FC = () => {
         <CarouselContent>
           <CarouselItem>
             <div className="space-y-2">
-              {/* // todo: replace with image of step 01 */}
               <Image
                 className="w-full"
-                src="/images/drawing-steps/02.jpg"
-                alt="Step 02"
+                src="/images/drawing-steps/01.webp"
+                alt="Step 01"
                 quality={100}
                 width={375}
                 height={143}
@@ -101,8 +100,7 @@ const ModellingIntro: React.FC = () => {
             <div className="space-y-2">
               <Image
                 className="w-full"
-                src="/images/drawing-steps/02.jpg"
-                // sizes="100vw"
+                src="/images/drawing-steps/02.webp"
                 alt="Step 02"
                 quality={100}
                 width={375}
@@ -118,7 +116,7 @@ const ModellingIntro: React.FC = () => {
             <div className="space-y-2">
               <Image
                 className="w-full"
-                src="/images/drawing-steps/03.jpg"
+                src="/images/drawing-steps/03.webp"
                 alt="Step 03"
                 quality={100}
                 width={375}
