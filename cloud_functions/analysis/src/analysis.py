@@ -17,6 +17,11 @@ def serialize_response(data: dict) -> dict:
     """Converts the data from the database
     into a Dict {locations_area:{"code":<location_iso>, "protected_area": <area>, "area":<location_marine_area>}, "total_area":<total_area>} response
     """
+    if not data or len(data) == 0:
+        raise ValueError(
+            "No data found, this is likely due to a geometry that does not intersect with the Marine data."
+        )
+
     result = {"total_area": data[0][5]}
     sub_result = {}
     total_protected_area = 0
