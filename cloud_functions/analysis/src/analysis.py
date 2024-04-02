@@ -19,7 +19,7 @@ def serialize_response(data: dict) -> dict:
     """
     if not data or len(data) == 0:
         raise ValueError(
-            "No data found, this is likely due to a geometry that does not intersect with the Marine data."
+            "No data found, this is likely due to a geometry that does not intersect with a Marine area."
         )
 
     result = {"total_area": data[0][5]}
