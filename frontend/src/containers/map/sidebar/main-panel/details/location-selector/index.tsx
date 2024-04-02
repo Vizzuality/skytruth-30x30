@@ -5,10 +5,13 @@ import { useRouter } from 'next/router';
 import { useSetAtom } from 'jotai';
 
 import { Button } from '@/components/ui/button';
+import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PAGES } from '@/constants/pages';
 import { bboxLocation, popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
+import GlobeIcon from '@/styles/icons/globe.svg';
+import MagnifyingGlassIcon from '@/styles/icons/magnifying-glass.svg';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
@@ -30,7 +33,7 @@ export const FILTERS = {
 };
 
 const BUTTON_CLASSES =
-  'font-mono text-xs px-0 font-semibold uppercase underline ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2';
+  'font-mono text-xs px-0 font-semibold no-underline normal-case ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2';
 
 type LocationSelectorProps = {
   className?: HTMLDivElement['className'];
@@ -107,6 +110,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
       <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
         <PopoverTrigger asChild>
           <Button className={BUTTON_CLASSES} type="button" variant="text-link">
+            <Icon icon={MagnifyingGlassIcon} className="mr-2 h-4 w-4 pb-px" />
             Change Location
           </Button>
         </PopoverTrigger>
@@ -131,6 +135,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
           variant="text-link"
           onClick={() => handleLocationSelected('GLOB')}
         >
+          <Icon icon={GlobeIcon} className="mr-2 h-4 w-4 pb-px" />
           Global view
         </Button>
       )}

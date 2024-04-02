@@ -5,10 +5,16 @@ import { useResetAtom } from 'jotai/utils';
 
 import { Button } from '@/components/ui/button';
 import { modellingAtom, drawStateAtom } from '@/containers/map/store';
+import { cn } from '@/lib/classnames';
 
-const COMMON_BUTTON_CLASSES = 'w-full text-xs normal-case';
+const COMMON_BUTTON_CLASSES =
+  'flex h-10 justify-between border-t border-black px-5 md:px-8 w-full pt-1 font-mono text-xs normal-case justify-center';
 
-const ModellingButtons: React.FC = () => {
+type ModellingButtonsProps = {
+  className?: HTMLDivElement['className'];
+};
+
+const ModellingButtons: React.FC<ModellingButtonsProps> = ({ className }) => {
   const setModelling = useSetAtom(modellingAtom);
   const resetModelling = useResetAtom(modellingAtom);
   const resetDrawState = useResetAtom(drawStateAtom);
@@ -26,13 +32,12 @@ const ModellingButtons: React.FC = () => {
   }, [resetModelling, resetDrawState, setModelling]);
 
   return (
-    <div className="flex font-mono">
+    <div className={cn('flex font-mono', className)}>
       {status !== 'drawing' && status !== 'success' && (
         <Button
-          type="button"
-          variant="blue"
+          variant="transparent"
           className={COMMON_BUTTON_CLASSES}
-          size="sm"
+          size="full"
           onClick={() => setDrawState((prevState) => ({ ...prevState, active: true }))}
         >
           {active ? 'Start drawing on the map' : 'Draw a shape'}
@@ -41,19 +46,17 @@ const ModellingButtons: React.FC = () => {
       {(status === 'drawing' || status === 'success') && (
         <div className="flex w-full space-x-2">
           <Button
-            type="button"
-            variant="blue"
+            variant="transparent"
             className={COMMON_BUTTON_CLASSES}
-            size="sm"
+            size="full"
             onClick={onClickClearModelling}
           >
             Clear shape
           </Button>
           <Button
-            type="button"
-            variant="blue"
+            variant="transparent"
             className={COMMON_BUTTON_CLASSES}
-            size="sm"
+            size="full"
             onClick={onClickRedraw}
           >
             Re-draw
