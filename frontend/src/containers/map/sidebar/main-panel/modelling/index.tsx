@@ -14,7 +14,7 @@ const SidebarModelling: React.FC = () => {
   return (
     <>
       <div className="h-full w-full overflow-y-auto pb-12">
-        <div className="space-y-4 border-b border-black bg-blue-600 p-4 md:px-8">
+        <div className="sticky border-b border-black bg-blue px-4 py-4 md:py-6 md:px-8">
           {showIntro && (
             <h1 className="text-5xl font-black">Conservation scenarios with custom areas.</h1>
           )}
@@ -28,7 +28,7 @@ const SidebarModelling: React.FC = () => {
             </div>
           )}
 
-          <ModellingButtons />
+          <ModellingButtons className="mt-4" />
         </div>
         {showIntro && <ModellingIntro />}
         {!showIntro && <ModellingWidget />}
