@@ -48,6 +48,7 @@ WORKDIR /home/$MAMBA_USER
 FROM build AS dev
 
 USER root
+
 RUN git clone https://github.com/mapbox/tippecanoe.git && \
     cd tippecanoe && \
     make -j && make install && cd ..

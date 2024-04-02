@@ -23,6 +23,8 @@ def run_pipe(pipe):
         pipe_instance = pipe()
         pipe_instance.execute()
 
+    # TODO: parallel execution of pipes, faster but less stable
+
 
 if __name__ == "__main__":
     cli()

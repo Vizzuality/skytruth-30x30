@@ -1,14 +1,16 @@
+from shutil import unpack_archive
+from logging import getLogger
+
+from pathlib import Path
+
+from helpers.tippcanoe import mbtileGeneration
+from helpers.mapshaper import Mapshaper
 from pipelines.base_pipe import (
     VTBasePipe,
     ExtractParams,
     TransformParams,
     LoadParams,
 )
-
-from shutil import unpack_archive
-from tippcanoe import mbtileGeneration
-from mapshaper import Mapshaper
-from logging import getLogger
 
 logger = getLogger(__name__)
 
@@ -18,7 +20,6 @@ class EEZTilesPipe(VTBasePipe):
     depends_on = ["eez_intermediate"]
     extract_params = ExtractParams(
         source="eez/eez_intermediate.zip",
-        output_path="data/eez_intermediate",
     )
     transform_params = TransformParams(
         files="eez_intermediate.shp",
@@ -30,10 +31,15 @@ class EEZTilesPipe(VTBasePipe):
         super().__init__()
         self.folder_path = self.settings.DATA_DIR.joinpath(self.pipeline_name)
         self.force_clean = force_clean
+        self.extract_params.output_path = self.folder_path.joinpath(
+            "data/eez_intermediate"
+        )  # type: ignore
         self.settings.validate_config()
 
     def transform(self):
-        unziped_folder = unpack_archive(self.transform_params.input_path)
+        unpack_archive(Path(self.transform_params.input_path))  # type: ignore
+
+        unziped_folder = self.transform_params.input_path
 
         file = unziped_folder.joinpath(self.transform_params.files)
         keep_fields = (

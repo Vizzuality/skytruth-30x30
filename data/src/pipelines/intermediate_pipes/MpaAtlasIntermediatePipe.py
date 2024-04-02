@@ -1,5 +1,4 @@
 from logging import getLogger
-import shutil
 from pathlib import Path
 import geopandas as gpd
 import pandas as pd
@@ -12,50 +11,10 @@ from pipelines.base_pipe import (
     LoadParams,
 )
 from pipelines.utils import watch
-from utils import downloadFile, rm_tree, make_archive
+from helpers.utils import downloadFile, rm_tree, make_archive
 
 
 logger = getLogger(__name__)
-
-
-def set_wdpa_id(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(
-        wdpa_id=df["wdpa_pid"]
-        .fillna(df["wdpa_id"])
-        .replace(to_replace=[None, "None"], value=np.nan)
-    )
-
-
-def protection_level(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(
-        protection_level=np.where(
-            df["protection_mpaguide_level"].isin(["full", "high"]),
-            "fully or highly protected",
-            "less protected or unknown",
-        ),
-        expand=False,
-    )
-
-
-def status(df: pd.DataFrame) -> pd.DataFrame:
-    return df.replace(
-        {"establishment_stage": "proposed/committed"},
-        {"establishment_stage": "proposed or committed"},
-        regex=True,
-    )
-
-
-def create_year(df: pd.DataFrame) -> pd.DataFrame:
-    df["proposed_date"] = df["proposed_date"].str[:4].astype("Int64")
-    df["designated_date"] = df["designated_date"].str[:4].astype("Int64")
-    df["implemented_date"] = df["implemented_date"].str[:4].astype("Int64")
-    return df.assign(
-        year=df[["proposed_date", "designated_date", "implemented_date"]]
-        .max(axis=1)
-        .fillna(0)
-        .astype(int)
-        .replace(0, pd.NaT)
-    )
 
 
 class MpaAtlasIntermediatePipe(IntermediateBasePipe):
@@ -133,3 +92,44 @@ class MpaAtlasIntermediatePipe(IntermediateBasePipe):
         rm_tree(input_folder)
 
         return self
+
+
+# TODO: move to processors
+def set_wdpa_id(df: pd.DataFrame) -> pd.DataFrame:
+    return df.assign(
+        wdpa_id=df["wdpa_pid"]
+        .replace(to_replace=[None, "None"], value=np.nan)
+        .fillna(df["wdpa_id"])
+    )
+
+
+def protection_level(df: pd.DataFrame) -> pd.DataFrame:
+    return df.assign(
+        protection_level=np.where(
+            df["protection_mpaguide_level"].isin(["full", "high"]),
+            "fully or highly protected",
+            "less protected or unknown",
+        ),
+        expand=False,
+    )
+
+
+def status(df: pd.DataFrame) -> pd.DataFrame:
+    return df.replace(
+        {"establishment_stage": "proposed/committed"},
+        {"establishment_stage": "proposed or committed"},
+        regex=True,
+    )
+
+
+def create_year(df: pd.DataFrame) -> pd.DataFrame:
+    df["proposed_date"] = df["proposed_date"].str[:4].astype("Int64")
+    df["designated_date"] = df["designated_date"].str[:4].astype("Int64")
+    df["implemented_date"] = df["implemented_date"].str[:4].astype("Int64")
+    return df.assign(
+        year=df[["proposed_date", "designated_date", "implemented_date"]]
+        .max(axis=1)
+        .fillna(0)
+        .astype(int)
+        .replace(0, pd.NaT)
+    )

@@ -3,7 +3,8 @@ from pathlib import Path
 import subprocess
 import logging
 from typing import Union
-from mapshaper import Mapshaper
+
+from helpers.mapshaper import Mapshaper
 
 
 @dataclass
@@ -19,9 +20,9 @@ def simplifyGeometries2Json(
     if not output_path:
         output_path = source_path.with_suffix(".json")
 
-    Mapshaper().input([source_path.as_posix()]).clean(
-        allow_overlaps=True, rewind=True
-    ).output(output_path.as_posix(), format="geojson").execute()
+    Mapshaper().input([source_path.as_posix()]).clean(allow_overlaps=True, rewind=True).output(
+        output_path.as_posix(), format="geojson"
+    ).execute()
 
     return output_path
 

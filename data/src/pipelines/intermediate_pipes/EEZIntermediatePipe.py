@@ -11,7 +11,7 @@ from pipelines.base_pipe import (
     LoadParams,
 )
 from pipelines.utils import watch
-from utils import downloadFile, rm_tree, make_archive
+from helpers.utils import downloadFile, rm_tree, make_archive
 
 
 logger = getLogger(__name__)

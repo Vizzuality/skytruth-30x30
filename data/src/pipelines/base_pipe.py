@@ -2,17 +2,17 @@ from abc import ABC, abstractmethod, ABCMeta
 from dataclasses import dataclass
 from logging import getLogger
 from pathlib import Path
-from typing import Literal, Optional, TypeVar, Union, List
+from typing import Literal, Optional, TypeVar, Union, List, ClassVar
 from datetime import datetime
 
 # import requests
 
 from pipelines.settings import Settings, get_settings
 from pipelines.utils import watch
-from mapbox_uploader import uploadToMapbox
-from utils import writeReadGCP
+from helpers.mapbox_uploader import uploadToMapbox
+from helpers.utils import writeReadGCP
 
-# from strapi import Strapi
+from helpers.strapi import Strapi
 
 
 logger = getLogger(__name__)
@@ -71,23 +71,28 @@ class BasePipe(ABC):
 
     @property
     @abstractmethod
-    def extract_params(self: _Self) -> ExtractParams | List[ExtractParams]:
+    def extract_params(self) -> Union[ExtractParams, List[ExtractParams]]:  # type: ignore
         pass
 
     @property
     @abstractmethod
-    def transform_params(self: _Self) -> TransformParams:
+    def transform_params(self) -> TransformParams:  # type: ignore
         pass
 
     @property
     @abstractmethod
-    def load_params(self: _Self) -> LoadParams:
+    def load_params(self) -> LoadParams:  # type: ignore
         pass
 
     @property
     @abstractmethod
-    def pipeline_name(self: _Self) -> str:
+    def pipeline_name(self) -> str:  # type: ignore
         pass
+
+    pipeline_name: ClassVar[str]
+    load_params: ClassVar[LoadParams]
+    transform_params: ClassVar[TransformParams]
+    extract_params: ClassVar[Union[ExtractParams, List[ExtractParams]]]
 
     @abstractmethod
     def extract(self: _Self) -> _Self:
@@ -139,8 +144,12 @@ class IntermediateBasePipe(BasePipe, metaclass=ABCMeta):
         writeReadGCP(
             credentials=self.settings.GCS_KEYFILE_JSON,
             bucket_name=self.settings.GCS_BUCKET,
-            blob_name=self.load_params.destination_name,
-            file=self.load_params.input_path,
+            blob_name=self.load_params.destination_name
+            if self.load_params.destination_name
+            else self.pipeline_name,
+            file=self.load_params.input_path[0]
+            if isinstance(self.load_params.input_path, list)
+            else self.load_params.input_path,  # type: ignore
             operation="w",
         )
         return self
@@ -151,7 +160,7 @@ class VTBasePipe(BasePipe, metaclass=ABCMeta):
 
     @watch
     def extract(self: _Self) -> _Self:
-        self.__set_status("running", "Download from GCP")
+        self.set_status("running", "Download from GCP")
         writeReadGCP(
             credentials=self.settings.GCS_KEYFILE_JSON,
             bucket_name=self.settings.GCS_BUCKET,

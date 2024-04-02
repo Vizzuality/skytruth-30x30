@@ -11,41 +11,12 @@ from pipelines.base_pipe import (
     TransformParams,
     LoadParams,
 )
+from pipelines.processors import transform_points, clean_geometries
 from pipelines.utils import watch
-from utils import downloadFile, rm_tree, make_archive
+from helpers.utils import downloadFile, rm_tree, make_archive
 
 
 logger = getLogger(__name__)
-
-
-def calculate_radius(rep_area: float) -> float:
-    return ((rep_area * 1000) / 3.14159265358979323846) ** 0.5
-
-
-def filter_by_methodology(df: pd.DataFrame) -> pd.DataFrame:
-    mask = (df["STATUS"] != "Not Reported") & ~(df["DESIG_ENG"].str.contains("MAB", case=False))
-    return df[mask].reset_index(drop=True)
-
-
-def create_buffer(df: pd.DataFrame) -> pd.DataFrame:
-    df["geometry"] = df.to_crs("ESRI:54009").apply(
-        lambda row: row.geometry.buffer(calculate_radius(row["REP_AREA"])),
-        axis=1,
-    )
-    return df.to_crs("EPSG:4326").copy()
-
-
-def transform_points(gdf: pd.DataFrame) -> pd.DataFrame:
-    if "MultiPoint" in gdf.geometry.geom_type.values:
-        filtered_gdf = gdf[gdf["REP_AREA"] > 0].copy()
-        return filtered_gdf.pipe(create_buffer)
-    else:
-        return gdf
-
-
-def clean_geometries(df: pd.DataFrame) -> pd.DataFrame:
-    df["geometry"] = df["geometry"].make_valid()
-    return df
 
 
 class MpasIntermediatePipe(IntermediateBasePipe):
@@ -69,7 +40,7 @@ class MpasIntermediatePipe(IntermediateBasePipe):
             "PARENT_ISO",
             "STATUS",
             "STATUS_YR",
-            "REP_M_AREA",
+            "GIS_M_AREA",
             "AREA_KM2",
         ],
         rename={},
@@ -113,7 +84,10 @@ class MpasIntermediatePipe(IntermediateBasePipe):
             return self
 
         # unzip file twice due how data is provisioned by protected planet
-        unzip_folder = self.folder_path.joinpath(self.transform_params.input_path.stem)
+        temp_folder = self.folder_path.joinpath("temp")
+        temp_folder.mkdir(parents=True, exist_ok=True)
+
+        unzip_folder = temp_folder.joinpath(self.transform_params.input_path.stem)
         shutil.unpack_archive(
             self.transform_params.input_path,
             unzip_folder,
@@ -121,11 +95,11 @@ class MpasIntermediatePipe(IntermediateBasePipe):
         )
 
         for file in unzip_folder.glob("*.zip"):
-            shutil.unpack_archive(file, self.folder_path.joinpath(file.stem), "zip")
+            shutil.unpack_archive(file, temp_folder.joinpath(file.stem), "zip")
 
         # load data & Transform it
         unziped_folders = []
-        for file in self.folder_path.glob("*/*.shp"):
+        for file in temp_folder.glob("*/*.shp"):
             df = (
                 gpd.read_file(file)
                 .pipe(filter_by_methodology)
@@ -153,8 +127,11 @@ class MpasIntermediatePipe(IntermediateBasePipe):
 
         # clean unzipped files
         rm_tree(input_folder)
-        for folder in self.folder_path.glob("*"):
-            if folder.is_dir():
-                rm_tree(self.folder_path.joinpath(folder.stem))
+        rm_tree(temp_folder)
 
         return self
+
+
+def filter_by_methodology(df: pd.DataFrame) -> pd.DataFrame:
+    mask = (df["STATUS"] != "Not Reported") & ~(df["DESIG_ENG"].str.contains("MAB", case=False))
+    return df[mask].reset_index(drop=True)

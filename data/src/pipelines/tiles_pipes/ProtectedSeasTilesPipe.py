@@ -1,14 +1,14 @@
+from shutil import unpack_archive
+from logging import getLogger
+
 from pipelines.base_pipe import (
     VTBasePipe,
     ExtractParams,
     TransformParams,
     LoadParams,
 )
-
-from shutil import unpack_archive
-from tippcanoe import mbtileGeneration
-from mapshaper import Mapshaper
-from logging import getLogger
+from helpers.tippcanoe import mbtileGeneration
+from helpers.mapshaper import Mapshaper
 
 logger = getLogger(__name__)
 

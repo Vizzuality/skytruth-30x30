@@ -11,40 +11,12 @@ from pipelines.base_pipe import (
     TransformParams,
     LoadParams,
 )
-from pipelines.utils import watch, load_country_mapping
-from utils import rm_tree, writeReadGCP, make_archive
+from data_commons.loader import load_country_mapping
+from pipelines.utils import watch
+from helpers.utils import rm_tree, writeReadGCP, make_archive
 
 
 logger = getLogger(__name__)
-
-
-def get_mpas(df: pd.DataFrame) -> pd.DataFrame:
-    mask1 = df["wdpa_id"].notna()
-    mask2 = df["wdpa_id"] != "0"
-    return df[mask1][mask2].reset_index()
-
-
-def add_location_iso(df: pd.DataFrame) -> pd.DataFrame:
-    country_map = load_country_mapping()
-
-    def get_parent_iso(country):
-        try:
-            if country:
-                return country_map.get(country, np.nan)
-            else:
-                return "FRA"
-        except ValueError:
-            return np.nan
-
-    return df.assign(iso=df.country.apply(get_parent_iso))
-
-
-def set_fps_classes(df: pd.DataFrame) -> pd.DataFrame:
-    fps_classes = {1: "less", 2: "less", 3: "moderately", 4: "highly", 5: "highly"}
-    return df.assign(
-        FPS_cat=df["removal_of_marine_life_is_prohibited"].map(fps_classes),
-        expand=False,
-    )
 
 
 class ProtectedSeasIntermediatePipe(IntermediateBasePipe):
@@ -56,7 +28,7 @@ class ProtectedSeasIntermediatePipe(IntermediateBasePipe):
         ExtractParams(
             source="ProtectedSeas/ProtectedSeas_ProtectedSeas_06142023_shp_ProtectedSeas_06142023_shp.zip",
         ),
-    ]
+    ]  # type: ignore
     transform_params = TransformParams(
         files=[
             "ProtectedSeas_06142023.csv",
@@ -73,7 +45,7 @@ class ProtectedSeasIntermediatePipe(IntermediateBasePipe):
             "total_area",
         ],
         rename={"removal_of_marine_life_is_prohibited": "FPS"},
-    )
+    )  # type: ignore
     load_params = LoadParams()
 
     def __init__(self, force_clean: bool = False) -> None:
@@ -86,6 +58,7 @@ class ProtectedSeasIntermediatePipe(IntermediateBasePipe):
             f"{self.settings.GCS_PATH}/{self.pipeline_name}/{self.load_params.input_path.stem}.zip"
         )
 
+    # TODO: change the source and the extract method to get this data
     @watch
     def extract(self):
         self.transform_params.input_path = []
@@ -141,3 +114,35 @@ class ProtectedSeasIntermediatePipe(IntermediateBasePipe):
         rm_tree(input_folder)
 
         return self
+
+
+# TODO: move to processors
+
+
+def get_mpas(df: pd.DataFrame) -> pd.DataFrame:
+    mask1 = df["wdpa_id"].notna()
+    mask2 = df["wdpa_id"] != "0"
+    return df[mask1][mask2].reset_index()
+
+
+def add_location_iso(df: pd.DataFrame) -> pd.DataFrame:
+    country_map = load_country_mapping()
+
+    def get_parent_iso(country):
+        try:
+            if country:
+                return country_map.get(country, np.nan)
+            else:
+                return "FRA"
+        except ValueError:
+            return np.nan
+
+    return df.assign(iso=df.country.apply(get_parent_iso))
+
+
+def set_fps_classes(df: pd.DataFrame) -> pd.DataFrame:
+    fps_classes = {1: "less", 2: "less", 3: "moderately", 4: "highly", 5: "highly"}
+    return df.assign(
+        FPS_cat=df["removal_of_marine_life_is_prohibited"].map(fps_classes),
+        expand=False,
+    )
