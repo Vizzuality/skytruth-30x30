@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import twTheme from 'lib/tailwind';
+
 import {
   ComposedChart,
   Bar,
@@ -226,7 +228,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
             type="monotone"
             strokeWidth={2}
             dataKey="historical"
-            stroke="#4879FF"
+            stroke={twTheme.colors.blue[600]}
             dot={false}
             activeDot={false}
           />
@@ -236,7 +238,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
             strokeWidth={2}
             strokeDasharray="4 4"
             dataKey="projected"
-            stroke="#4879FF"
+            stroke={twTheme.colors.blue[600]}
             dot={false}
             activeDot={false}
           />

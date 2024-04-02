@@ -28,6 +28,7 @@ module.exports = {
         'black-300': '#666666',
         'black-400': '#333333',
         blue: '#3C70FF',
+        'blue-600': '#4879FF',
         green: '#02B07C',
         orange: '#FD8E28',
         violet: '#AD6CFF',
