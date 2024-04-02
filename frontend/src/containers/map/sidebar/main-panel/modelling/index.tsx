@@ -10,7 +10,6 @@ const SidebarModelling: React.FC = () => {
   const { status: modellingStatus } = useAtomValue(modellingAtom);
 
   const showIntro = modellingStatus === 'idle';
-  // const showButtons = ['success', 'error'].includes(modellingStatus);
 
   return (
     <>
