@@ -16,9 +16,11 @@ Go to the `client/` directory and install the dependencies:
 yarn install
 ```
 
-Copy the .env.example file to .env.local and fill in the NEXT_PUBLIC_API_URL field with the url of the API. (By default it's http://localhost:1337)
+Copy the .env.example file to .env.default and fill in the fields with values from LastPass. 
 
-Add the NEXT_PUBLIC_MAPBOX_TOKEN field with the Mapbox token of the project. (You can get one [here](https://account.mapbox.com/access-tokens/))
+**Note:**
+
+`HTTP_AUTH_*` and `NEXTAUTH_*` fields enable temporary auth with a hardcoded user/pass for pre-launch purposes. If all fields are set, a username and password will be required. Auth details are available on LastPass. 
 
 ### Start
 
