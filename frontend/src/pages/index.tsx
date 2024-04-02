@@ -96,14 +96,14 @@ const Home: React.FC = ({
       name: 'Services',
       ref: useRef<HTMLDivElement>(null),
     },
-    context: {
-      id: 'context',
-      name: 'Context',
-      ref: useRef<HTMLDivElement>(null),
-    },
     impact: {
       id: 'impact',
       name: 'Impact',
+      ref: useRef<HTMLDivElement>(null),
+    },
+    context: {
+      id: 'context',
+      name: 'Context',
       ref: useRef<HTMLDivElement>(null),
     },
   };
@@ -185,30 +185,6 @@ const Home: React.FC = ({
           </SectionDescription>
           <SectionContent>
             <LinkCards />
-          </SectionContent>
-        </Section>
-
-        <Section ref={sections.context.ref}>
-          <SectionTitle>The path to protecting 30% of the ocean</SectionTitle>
-          <SectionContent>
-            <TwoColSubsection
-              title="How big is the ocean?"
-              description="Covering 71 percent of the Earth’s surface, the ocean and its biodiversity stabilizes
-              our climate, provides 51% of the oxygen we need to survive, and provides food and
-              livelihoods for billions of people."
-            >
-              <EarthSurfaceCoverage />
-            </TwoColSubsection>
-          </SectionContent>
-
-          <TwoColSubsection
-            title="How big is 30% of the ocean?"
-            description="Thirty percent (30%) of the ocean is the equivalent of South America, North America,
-              Europe and Russia combined. This means 70 million square kilometres."
-          />
-
-          <SectionContent className="mt-10">
-            <InteractiveMap />
           </SectionContent>
         </Section>
 
@@ -315,6 +291,30 @@ const Home: React.FC = ({
             sourceLink={indicators?.livesLivelihoods?.source}
             image="stats3"
           />
+        </Section>
+
+        <Section ref={sections.context.ref}>
+          <SectionTitle>The path to protecting 30% of the ocean</SectionTitle>
+          <SectionContent>
+            <TwoColSubsection
+              title="How big is the ocean?"
+              description="Covering 71 percent of the Earth’s surface, the ocean and its biodiversity stabilizes
+              our climate, provides 51% of the oxygen we need to survive, and provides food and
+              livelihoods for billions of people."
+            >
+              <EarthSurfaceCoverage />
+            </TwoColSubsection>
+          </SectionContent>
+
+          <TwoColSubsection
+            title="How big is 30% of the ocean?"
+            description="Thirty percent (30%) of the ocean is the equivalent of South America, North America,
+              Europe and Russia combined. This means 70 million square kilometres."
+          />
+
+          <SectionContent className="mt-10">
+            <InteractiveMap />
+          </SectionContent>
         </Section>
       </Content>
     </Layout>

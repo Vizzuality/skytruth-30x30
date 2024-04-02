@@ -14,12 +14,13 @@ const BACKGROUND_IMAGES = {
 const linkCardVariants = cva('', {
   variants: {
     color: {
+      orange: 'bg-orange',
       blue: 'bg-blue',
       green: 'bg-green',
     },
   },
   defaultVariants: {
-    color: 'blue',
+    color: 'orange',
   },
 });
 
