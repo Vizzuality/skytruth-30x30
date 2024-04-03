@@ -22,6 +22,7 @@ const Modelling = () => {
     {
       enabled: Boolean(feature),
       select: ({ data }) => data,
+      refetchOnWindowFocus: false,
     }
   );
 
