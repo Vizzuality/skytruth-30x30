@@ -1,12 +1,8 @@
-import { useCallback } from 'react';
-
 import { useAtom } from 'jotai';
 
-import Icon from '@/components/ui/icon';
+import FiltersButton from '@/components/filters-button';
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
-import CheckIcon from '@/styles/icons/check.svg?sprite';
 import { useGetDataToolResourceTypes } from '@/types/generated/data-tool-resource-type';
-import { DataToolResourceType } from 'types/generated/strapi.schemas';
 
 const CardFiltersResourceTypes = (): JSX.Element => {
   const [filters, setFilters] = useAtom(cardFiltersAtom);
@@ -20,29 +16,29 @@ const CardFiltersResourceTypes = (): JSX.Element => {
     }
   );
 
-  const onSelectResourceType = useCallback(
-    (resourceType: DataToolResourceType['name']) => {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        resourceType: prevFilters.resourceType === resourceType ? null : resourceType,
-      }));
-    },
-    [setFilters]
-  );
+  const handleFiltersChange = (field, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [field]: value,
+    }));
+  };
+
+  const options =
+    resourceTypesQuery?.data?.map((resourceType) => ({
+      name: resourceType,
+      value: resourceType,
+    })) || [];
 
   return (
-    <ul className="space-y-1">
-      {resourceTypesQuery.data?.map((resourceType) => (
-        <li
-          key={resourceType}
-          className="flex cursor-pointer items-center space-x-1 text-base font-black hover:underline"
-          onClick={() => onSelectResourceType(resourceType)}
-        >
-          {filters.resourceType === resourceType && <Icon icon={CheckIcon} className="h-3 w-3" />}
-          <span>{resourceType}</span>
-        </li>
-      ))}
-    </ul>
+    <div className="flex items-center font-mono text-xs font-semibold">
+      <FiltersButton
+        field="resourceType"
+        options={options}
+        values={filters?.resourceType}
+        onChange={handleFiltersChange}
+      />
+      <span>Filter by resource type</span>
+    </div>
   );
 };
 

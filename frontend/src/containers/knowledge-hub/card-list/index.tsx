@@ -7,6 +7,7 @@ import CardItem from './card-item';
 
 const CardList = (): JSX.Element => {
   const filters = useAtomValue(cardFiltersAtom);
+
   const dataToolsQuery = useGetDataToolsInfinite(
     {
       sort: filters.name,
@@ -36,7 +37,6 @@ const CardList = (): JSX.Element => {
           if (lastPage.meta.pagination.page < lastPage.meta.pagination.pageCount) {
             return lastPage.meta.pagination.page + 1;
           }
-
           return false;
         },
       },
@@ -45,7 +45,7 @@ const CardList = (): JSX.Element => {
 
   return (
     <div className="min-h-[225px] space-y-8">
-      <ul className="grid-cols:1 my-4 grid gap-10 md:grid-cols-3">
+      <ul className="grid gap-10 md:grid-cols-3">
         {dataToolsQuery.data?.pages?.map((page) => {
           return page?.data?.map((dataTool) => (
             <li key={dataTool.id}>
@@ -54,8 +54,8 @@ const CardList = (): JSX.Element => {
           ));
         })}
       </ul>
-      <div className="flex justify-center">
-        {dataToolsQuery.hasNextPage && (
+      {dataToolsQuery.hasNextPage && (
+        <div className="flex justify-center">
           <button
             type="button"
             className="font-mono text-xs uppercase underline"
@@ -63,8 +63,8 @@ const CardList = (): JSX.Element => {
           >
             Load more
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
