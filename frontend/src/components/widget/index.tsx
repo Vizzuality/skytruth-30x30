@@ -1,11 +1,11 @@
-import { PropsWithChildren, useMemo } from 'react';
+import { ComponentProps, PropsWithChildren, useMemo } from 'react';
 
 import { timeFormat } from 'd3-time-format';
 
-import { cn } from '@/lib/classnames';
-
 import Loading from './loading';
 import NoData from './no-data';
+
+import { cn } from '@/lib/classnames';
 
 type WidgetProps = {
   className?: string;
@@ -14,6 +14,7 @@ type WidgetProps = {
   noData?: boolean;
   loading?: boolean;
   error?: boolean;
+  messageError?: ComponentProps<typeof NoData>['message'];
 };
 
 const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
@@ -23,6 +24,7 @@ const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
   noData = false,
   loading = false,
   error = false,
+  messageError = undefined,
   children,
 }) => {
   const formattedLastUpdated = useMemo(
@@ -43,7 +45,7 @@ const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
         )}
       </div>
       {loading && <Loading />}
-      {showNoData && <NoData error={error} />}
+      {showNoData && <NoData error={error} message={messageError} />}
       {!loading && !showNoData && <div>{children}</div>}
     </div>
   );

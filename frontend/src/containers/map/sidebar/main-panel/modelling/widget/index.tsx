@@ -2,14 +2,14 @@ import { PropsWithChildren, useMemo } from 'react';
 
 import { useAtomValue } from 'jotai';
 
+import useTooltips from '../useTooltips';
+
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import TooltipButton from '@/components/tooltip-button';
 import Widget from '@/components/widget';
 import { modellingAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
-
-import useTooltips from '../useTooltips';
 
 const DEFAULT_ENTRY_CLASSNAMES = 'border-t border-black py-6';
 
@@ -40,7 +40,11 @@ const WidgetSectionWidgetTitle: React.FC<WidgetSectionWidgetTitleProps> = ({ tit
 const ModellingWidget: React.FC = () => {
   const chartsProps = DEFAULT_CHART_PROPS;
 
-  const { status: modellingStatus, data: modellingData } = useAtomValue(modellingAtom);
+  const {
+    status: modellingStatus,
+    data: modellingData,
+    messageError,
+  } = useAtomValue(modellingAtom);
 
   // Tooltips with mapping
   const tooltips = useTooltips();
@@ -111,6 +115,7 @@ const ModellingWidget: React.FC = () => {
       noData={!contributionDetailsData}
       loading={loading}
       error={error}
+      messageError={messageError}
     >
       <div className="flex flex-col">
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES, 'flex justify-between border-t-0')}>

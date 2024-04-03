@@ -31,8 +31,10 @@ export const modellingAtom = atomWithReset<{
   active: boolean;
   status: 'idle' | 'running' | 'success' | 'error';
   data: ModellingData;
+  messageError?: string;
 }>({
   active: false,
   status: 'idle',
   data: null,
+  messageError: undefined,
 });
