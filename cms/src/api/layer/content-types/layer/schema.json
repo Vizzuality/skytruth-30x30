@@ -4,7 +4,8 @@
   "info": {
     "singularName": "layer",
     "pluralName": "layers",
-    "displayName": "Layer"
+    "displayName": "Layer",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -42,6 +43,11 @@
       "type": "component",
       "repeatable": false,
       "component": "documentation.metadata"
+    },
+    "dataset": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dataset.dataset"
     }
   }
 }

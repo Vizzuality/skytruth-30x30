@@ -47,6 +47,7 @@ module.exports = {
           'Protection-status',
           'Fishing-protection-level',
           'Fishing-protection-level-stat',
+          'Dataset',
           'Layer',
           'Data-info',
           'Data-tool',

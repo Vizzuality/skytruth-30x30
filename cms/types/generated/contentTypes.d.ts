@@ -930,6 +930,42 @@ export interface ApiDataToolResourceTypeDataToolResourceType
   };
 }
 
+export interface ApiDatasetDataset extends Schema.CollectionType {
+  collectionName: 'datasets';
+  info: {
+    singularName: 'dataset';
+    pluralName: 'datasets';
+    displayName: 'Dataset';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    layers: Attribute.Relation<
+      'api::dataset.dataset',
+      'oneToMany',
+      'api::layer.layer'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::dataset.dataset',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::dataset.dataset',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiFishingProtectionLevelFishingProtectionLevel
   extends Schema.CollectionType {
   collectionName: 'fishing_protection_levels';
@@ -1095,6 +1131,7 @@ export interface ApiLayerLayer extends Schema.CollectionType {
     singularName: 'layer';
     pluralName: 'layers';
     displayName: 'Layer';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1107,6 +1144,11 @@ export interface ApiLayerLayer extends Schema.CollectionType {
     legend_config: Attribute.JSON & Attribute.Required;
     interaction_config: Attribute.JSON;
     metadata: Attribute.Component<'documentation.metadata'>;
+    dataset: Attribute.Relation<
+      'api::layer.layer',
+      'oneToOne',
+      'api::dataset.dataset'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1597,6 +1639,7 @@ declare module '@strapi/types' {
       'api::data-tool-ecosystem.data-tool-ecosystem': ApiDataToolEcosystemDataToolEcosystem;
       'api::data-tool-language.data-tool-language': ApiDataToolLanguageDataToolLanguage;
       'api::data-tool-resource-type.data-tool-resource-type': ApiDataToolResourceTypeDataToolResourceType;
+      'api::dataset.dataset': ApiDatasetDataset;
       'api::fishing-protection-level.fishing-protection-level': ApiFishingProtectionLevelFishingProtectionLevel;
       'api::fishing-protection-level-stat.fishing-protection-level-stat': ApiFishingProtectionLevelStatFishingProtectionLevelStat;
       'api::habitat.habitat': ApiHabitatHabitat;

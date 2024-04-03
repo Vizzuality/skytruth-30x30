@@ -1,9 +1,6 @@
 import { ComponentProps, useCallback } from 'react';
 
-import { LuChevronDown, LuChevronUp } from 'react-icons/lu';
-
 import TooltipButton from '@/components/tooltip-button';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import {
@@ -11,28 +8,30 @@ import {
   useSyncMapLayerSettings,
   useSyncMapSettings,
 } from '@/containers/map/content/map/sync-settings';
-import { useGetLayers } from '@/types/generated/layer';
-import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
+import { useGetDatasets } from '@/types/generated/dataset';
+import { DatasetUpdatedByData, LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 
-const COLLAPSIBLE_TRIGGER_CLASSES =
-  'group flex w-full items-center justify-between font-mono font-semibold uppercase text-black data-[state=open]:border-b data-[state=open]:border-dashed data-[state=open]:border-black/20 data-[state=open]:pb-2 leading-none';
-const TABS_ICONS_CLASSES = 'w-5 h-5 -translate-y-[2px]';
+const SWITCH_LABEL_CLASSES = '-mb-px cursor-pointer pt-px font-mono text-xs font-normal';
 
 const LayersPanel = (): JSX.Element => {
   const [activeLayers, setMapLayers] = useSyncMapLayers();
   const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
   const [{ labels }, setMapSettings] = useSyncMapSettings();
 
-  const layersQuery = useGetLayers(
+  const { data: datasets }: { data: DatasetUpdatedByData[] } = useGetDatasets(
     {
-      sort: 'title:asc',
-      populate: 'metadata',
+      sort: 'name:asc',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      populate: {
+        layers: {
+          populate: 'metadata',
+        },
+      },
     },
     {
       query: {
         select: ({ data }) => data,
-        placeholderData: { data: [] },
-        keepPreviousData: true,
       },
     }
   );
@@ -80,68 +79,60 @@ const LayersPanel = (): JSX.Element => {
 
   return (
     <div className="h-full space-y-3 overflow-auto p-4 text-xs">
-      <Collapsible defaultOpen={Boolean(activeLayers.length)}>
-        <CollapsibleTrigger className={COLLAPSIBLE_TRIGGER_CLASSES}>
-          <span>Data Layers</span>
-          <LuChevronDown
-            className={`hidden group-data-[state=closed]:block ${TABS_ICONS_CLASSES}`}
-          />
-          <LuChevronUp className={`hidden group-data-[state=open]:block ${TABS_ICONS_CLASSES}`} />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="border-b border-dashed border-black/20  data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-          <ul className="my-3 flex flex-col space-y-4">
-            {layersQuery.data?.map((layer) => {
-              const isActive = activeLayers.findIndex((layerId) => layerId === layer.id) !== -1;
-              const onCheckedChange = onToggleLayer.bind(null, layer.id) as (
-                isActive: boolean
-              ) => void;
-              const metadata = layer?.attributes?.metadata;
+      <h3 className="text-xl font-black">Layers</h3>
+      <div className="space-y-2 divide-y divide-dashed divide-black">
+        {datasets?.map((dataset) => {
+          return (
+            <div key={dataset.id} className="[&:not(:first-child)]:pt-3">
+              <h4 className="font-black">{dataset?.attributes?.name}</h4>
+              <ul className="my-3 flex flex-col space-y-4">
+                {dataset.attributes?.layers?.data?.map((layer) => {
+                  const isActive = activeLayers.findIndex((layerId) => layerId === layer.id) !== -1;
+                  const onCheckedChange = onToggleLayer.bind(null, layer.id) as (
+                    isActive: boolean
+                  ) => void;
+                  const metadata = layer?.attributes?.metadata;
 
-              return (
-                <li key={layer.id} className="flex items-center justify-between">
-                  <span className="flex gap-2">
-                    <Switch
-                      id={`${layer.id}-switch`}
-                      checked={isActive}
-                      onCheckedChange={onCheckedChange}
-                    />
-                    <Label
-                      htmlFor={`${layer.id}-switch`}
-                      className="-mb-px cursor-pointer pt-px font-mono text-xs font-normal"
-                    >
-                      {layer.attributes.title}
-                    </Label>
-                  </span>
-                  {metadata?.description && (
-                    <TooltipButton className="-my-1" text={metadata?.description} />
+                  return (
+                    <li key={layer.id} className="flex items-center justify-between">
+                      <span className="flex gap-2">
+                        <Switch
+                          id={`${layer.id}-switch`}
+                          checked={isActive}
+                          onCheckedChange={onCheckedChange}
+                        />
+                        <Label htmlFor={`${layer.id}-switch`} className={SWITCH_LABEL_CLASSES}>
+                          {layer.attributes.title}
+                        </Label>
+                      </span>
+                      {metadata?.description && (
+                        <TooltipButton className="-my-1" text={metadata?.description} />
+                      )}
+                    </li>
+                  );
+                })}
+
+                <>
+                  {dataset.attributes?.name === 'Basemap' && (
+                    <li className="flex items-center justify-between">
+                      <span className="flex gap-2">
+                        <Switch
+                          id="labels-switch"
+                          checked={labels}
+                          onCheckedChange={handleLabelsChange}
+                        />
+                        <Label htmlFor="labels-switch" className={SWITCH_LABEL_CLASSES}>
+                          Labels
+                        </Label>
+                      </span>
+                    </li>
                   )}
-                </li>
-              );
-            })}
-          </ul>
-        </CollapsibleContent>
-      </Collapsible>
-      <Collapsible defaultOpen={labels}>
-        <CollapsibleTrigger
-          className={`${COLLAPSIBLE_TRIGGER_CLASSES} pb-0 data-[state=open]:pb-2`}
-        >
-          <span>basemap Layers</span>
-          <LuChevronDown
-            className={`hidden group-data-[state=closed]:block ${TABS_ICONS_CLASSES}`}
-          />
-          <LuChevronUp className={`hidden group-data-[state=open]:block ${TABS_ICONS_CLASSES}`} />
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <ul className="my-3 flex flex-col space-y-5 overflow-y-hidden">
-            <li className="flex items-start gap-2">
-              <Switch id="labels-switch" checked={labels} onCheckedChange={handleLabelsChange} />
-              <Label htmlFor="labels-switch" className="cursor-pointer">
-                Labels
-              </Label>
-            </li>
-          </ul>
-        </CollapsibleContent>
-      </Collapsible>
+                </>
+              </ul>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
