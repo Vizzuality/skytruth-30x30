@@ -311,7 +311,7 @@
           "description",
           "site",
           "languages",
-          "data_tool_resource_type",
+          "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
         ]
@@ -342,7 +342,7 @@
           "description",
           "site",
           "languages",
-          "data_tool_resource_type",
+          "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
         ]
@@ -359,9 +359,59 @@
           "description",
           "site",
           "languages",
-          "data_tool_resource_type",
+          "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {
+        "fields": [
+          "name",
+          "layers"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {
+        "fields": [
+          "name",
+          "layers"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {
+        "fields": [
+          "name",
+          "layers"
         ]
       },
       "conditions": []
@@ -573,7 +623,8 @@
           "metadata.source",
           "metadata.resolution",
           "metadata.content_date",
-          "metadata.license"
+          "metadata.license",
+          "dataset"
         ]
       },
       "conditions": []
@@ -609,7 +660,8 @@
           "metadata.source",
           "metadata.resolution",
           "metadata.content_date",
-          "metadata.license"
+          "metadata.license",
+          "dataset"
         ]
       },
       "conditions": []
@@ -631,7 +683,8 @@
           "metadata.source",
           "metadata.resolution",
           "metadata.content_date",
-          "metadata.license"
+          "metadata.license",
+          "dataset"
         ]
       },
       "conditions": []

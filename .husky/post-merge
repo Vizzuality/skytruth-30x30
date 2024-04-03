@@ -1,0 +1,30 @@
+#!/bin/bash
+. "$(dirname -- "$0")/_/husky.sh"
+
+# If client yarn.lock has changed, run yarn to install dependencies
+CLIENT_CHANGED=`git diff HEAD@{1} --stat -- ./client/yarn.lock | wc -l`
+if [ "$CLIENT_CHANGED" -gt 0 ];
+then
+    echo "client/yarn.lock has changed!"
+    cd ./client && yarn
+fi
+
+# If CMS yarn.lock has changed, run yarn to install dependencies
+CMS_CHANGED=`git diff HEAD@{1} --stat -- ./cms/yarn.lock | wc -l`
+if [ "$CMS_CHANGED" -gt 0 ];
+then
+    echo "cms/yarn.lock has changed!"
+    cd ./cms && yarn
+fi
+
+# If CMS env file exists and there are changes to the config sync files, import them into the DB
+CMS_CONFIG_CHANGED=`git diff HEAD@{1} --stat -- ./cms/config/sync/ | wc -l`
+SCRIPT_DIR="$(pwd)"
+CMS_ENV_FILE="$SCRIPT_DIR/../cms/.env"
+if [ ! -f "$CMS_ENV_FILE" ] ; then
+    echo "CMS env file does not exist, can't import config."
+    echo "DEBUG: looking for env file in $CMS_ENV_FILE"
+elif [ -f "$CMS_ENV_FILE" && "$CMS_CONFIG_CHANGED" -gt 0 ]; then
+    echo "Importing CMS config..."
+    cd ./cms && yarn config-sync import -y
+fi

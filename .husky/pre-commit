@@ -3,4 +3,12 @@
 
 cd ./frontend && yarn types && yarn lint --fix && yarn check-types && git add src/types/generated/
 
-cd .. && cd ./cms && yarn cs export -y
+SCRIPT_DIR="$(pwd)"
+CMS_ENV_FILE="$SCRIPT_DIR/../cms/.env"
+if [ -f "$CMS_ENV_FILE" ] ; then
+    echo "Exporting CMS config.."
+    cd .. && cd ./cms && yarn config-sync export -y && git add config/sync/*
+else
+    echo "CMS env file does not exist, can't export config"
+    echo "DEBUG: looking for env file in $CMS_ENV_FILE"
+fi
