@@ -84,7 +84,7 @@ const LayersPanel = (): JSX.Element => {
         {datasets?.map((dataset) => {
           return (
             <div key={dataset.id} className="[&:not(:first-child)]:pt-3">
-              <h4 className="font-black">{dataset?.attributes?.name}</h4>
+              <h4 className="font-bold">{dataset?.attributes?.name}</h4>
               <ul className="my-3 flex flex-col space-y-4">
                 {dataset.attributes?.layers?.data?.map((layer) => {
                   const isActive = activeLayers.findIndex((layerId) => layerId === layer.id) !== -1;
