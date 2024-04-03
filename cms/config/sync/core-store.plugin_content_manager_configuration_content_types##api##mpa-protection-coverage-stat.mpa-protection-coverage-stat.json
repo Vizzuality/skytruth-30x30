@@ -94,6 +94,21 @@
           "sortable": true
         }
       },
+      "mpaa_establishment_stage": {
+        "edit": {
+          "label": "mpaa_establishment_stage",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "slug"
+        },
+        "list": {
+          "label": "mpaa_establishment_stage",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -185,6 +200,10 @@
           {
             "name": "area",
             "size": 4
+          },
+          {
+            "name": "mpaa_establishment_stage",
+            "size": 6
           }
         ]
       ]

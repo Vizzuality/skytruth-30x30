@@ -1211,11 +1211,6 @@ export interface ApiMpaMpa extends Schema.CollectionType {
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    mpaa_establishment_stage: Attribute.Relation<
-      'api::mpa.mpa',
-      'oneToOne',
-      'api::mpaa-establishment-stage.mpaa-establishment-stage'
-    >;
     protection_status: Attribute.Relation<
       'api::mpa.mpa',
       'oneToOne',
@@ -1273,6 +1268,11 @@ export interface ApiMpaProtectionCoverageStatMpaProtectionCoverageStat
       Attribute.SetMinMax<{
         min: 0;
       }>;
+    mpaa_establishment_stage: Attribute.Relation<
+      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
+      'manyToOne',
+      'api::mpaa-establishment-stage.mpaa-establishment-stage'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1305,6 +1305,11 @@ export interface ApiMpaaEstablishmentStageMpaaEstablishmentStage
     slug: Attribute.String & Attribute.Required & Attribute.Unique;
     name: Attribute.String & Attribute.Required;
     info: Attribute.Text;
+    mpa_protection_coverage_stats: Attribute.Relation<
+      'api::mpaa-establishment-stage.mpaa-establishment-stage',
+      'oneToMany',
+      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

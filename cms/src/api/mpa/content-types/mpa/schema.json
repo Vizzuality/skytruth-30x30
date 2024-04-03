@@ -27,17 +27,15 @@
       "column": {
         "defaultTo": 0,
         "type": "decimal",
-        "args": [12,2]
+        "args": [
+          12,
+          2
+        ]
       }
     },
     "year": {
       "type": "integer",
       "min": 0
-    },
-    "mpaa_establishment_stage": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::mpaa-establishment-stage.mpaa-establishment-stage"
     },
     "protection_status": {
       "type": "relation",
