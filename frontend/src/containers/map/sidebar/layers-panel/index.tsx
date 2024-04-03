@@ -79,8 +79,8 @@ const LayersPanel = (): JSX.Element => {
 
   return (
     <div className="h-full space-y-3 overflow-auto p-4 text-xs">
-      <h3 className="text-xl font-black">Layers</h3>
-      <div className="space-y-2 divide-y divide-dashed divide-black">
+      <h3 className="text-xl font-bold">Layers</h3>
+      <div className="space-y-3 divide-y divide-dashed divide-black">
         {datasets?.map((dataset) => {
           return (
             <div key={dataset.id} className="[&:not(:first-child)]:pt-3">
