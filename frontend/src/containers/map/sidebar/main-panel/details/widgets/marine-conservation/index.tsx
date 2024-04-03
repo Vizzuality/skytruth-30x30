@@ -17,7 +17,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   const defaultQueryParams = {
     filters: {
       location: {
-        code: location.code,
+        code: location?.code,
       },
     },
   };
@@ -31,6 +31,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       },
       {
         query: {
+          enabled: Boolean(location?.code),
           select: ({ data }) => data?.[0]?.attributes?.updatedAt,
           placeholderData: { data: null },
           refetchOnWindowFocus: false,

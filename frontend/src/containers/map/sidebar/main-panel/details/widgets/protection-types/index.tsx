@@ -18,7 +18,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   } = useGetLocations(
     {
       filters: {
-        code: location.code,
+        code: location?.code,
       },
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -48,6 +48,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     },
     {
       query: {
+        enabled: Boolean(location?.code),
         select: ({ data }) => ({ data }),
         placeholderData: { data: [] },
         refetchOnWindowFocus: false,
