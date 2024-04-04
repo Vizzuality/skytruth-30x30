@@ -39,7 +39,8 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
     {
       query: {
         queryKey: ['locations', locationCode],
-        select: ({ data }) => data?.[0]?.attributes,
+        select: ({ data }) =>
+          data?.find(({ attributes: { code } }) => code === (locationCode || 'GLOB'))?.attributes,
       },
     }
   );

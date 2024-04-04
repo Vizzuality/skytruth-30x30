@@ -19,7 +19,7 @@ const SidebarDetails: React.FC = () => {
 
   const { data: locationsData } = useGetLocations({
     filters: {
-      code: locationCode,
+      code: locationCode || 'GLOB',
     },
     populate: 'members',
   });
