@@ -76,21 +76,6 @@
           "sortable": true
         }
       },
-      "mpaa_establishment_stage": {
-        "edit": {
-          "label": "mpaa_establishment_stage",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "slug"
-        },
-        "list": {
-          "label": "mpaa_establishment_stage",
-          "searchable": true,
-          "sortable": true
-        }
-      },
       "protection_status": {
         "edit": {
           "label": "protection_status",
@@ -185,16 +170,14 @@
         "id",
         "wdpaid",
         "name",
-        "year"
+        "area"
       ],
       "edit": [
         [
           {
             "name": "wdpaid",
             "size": 4
-          }
-        ],
-        [
+          },
           {
             "name": "name",
             "size": 6
@@ -211,10 +194,6 @@
           }
         ],
         [
-          {
-            "name": "mpaa_establishment_stage",
-            "size": 6
-          },
           {
             "name": "protection_status",
             "size": 6

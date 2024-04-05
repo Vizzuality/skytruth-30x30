@@ -43,7 +43,7 @@ yarn build
 ### Usage with Docker (recommended)
 To run with docker:
 
-docker-compose up --build
+docker compose up --build
 
 Open the app at http://localhost:1337
 
