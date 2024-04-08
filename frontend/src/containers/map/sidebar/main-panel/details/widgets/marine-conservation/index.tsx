@@ -131,14 +131,14 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       loading={loading}
     >
       {stats && (
-        <div className="mt-6 mb-4 flex flex-col text-blue">
+        <div className="mt-6 mb-4 flex flex-col">
           <span className="space-x-1">
             <span className="text-[64px] font-bold leading-[80%]">
               {stats?.protectedPercentage}
             </span>
             <span className="text-lg">%</span>
           </span>
-          <span className="space-x-1 text-lg  ">
+          <span className="space-x-1 text-xs">
             <span>
               {stats?.protectedArea} out of {stats?.totalArea}
             </span>
