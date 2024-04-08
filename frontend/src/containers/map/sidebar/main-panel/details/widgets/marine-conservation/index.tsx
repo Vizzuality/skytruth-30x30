@@ -123,6 +123,8 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   const noData = !chartData.length;
   const loading = isFetchingProtectionStatsData || isFetchingDataLastUpdate;
 
+  const displayTarget = location?.code === 'GLOB';
+
   return (
     <Widget
       title="Marine Conservation Coverage"
@@ -148,7 +150,11 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
           </span>
         </div>
       )}
-      <ConservationChart className="-ml-8 aspect-[16/10]" data={chartData} />
+      <ConservationChart
+        className="-ml-8 aspect-[16/10]"
+        displayTarget={displayTarget}
+        data={chartData}
+      />
     </Widget>
   );
 };
