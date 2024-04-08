@@ -4,12 +4,15 @@ import { timeFormat } from 'd3-time-format';
 
 import { cn } from '@/lib/classnames';
 
+import TooltipButton from '../tooltip-button';
+
 import Loading from './loading';
 import NoData from './no-data';
 
 type WidgetProps = {
   className?: string;
   title?: string;
+  tooltip?: string;
   lastUpdated?: string;
   noData?: boolean;
   loading?: boolean;
@@ -21,6 +24,7 @@ const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
   className,
   title,
   lastUpdated,
+  tooltip,
   noData = false,
   loading = false,
   error = false,
@@ -37,8 +41,9 @@ const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
   return (
     <div className={cn('py-4 px-4 md:px-8', className)}>
       <div className="pt-2">
-        <span className="flex justify-between">
+        <span className="flex">
           {title && <h2 className="font-sans text-xl font-bold">{title}</h2>}
+          {tooltip && <TooltipButton text={tooltip} className="mt-1 hover:bg-transparent" />}
         </span>
         {!showNoData && lastUpdated && (
           <span className="text-xs">Data last updated: {formattedLastUpdated}</span>
