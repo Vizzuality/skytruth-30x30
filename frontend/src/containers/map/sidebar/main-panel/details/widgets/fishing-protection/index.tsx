@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
-import { PROTECTION_TYPES_CHART_COLORS } from '@/constants/protection-types-chart-colors';
+import { FISHING_PROTECTION_CHART_COLORS } from '@/constants/fishing-protection-chart-colors';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
@@ -23,14 +23,14 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       populate: {
-        mpaa_protection_level_stats: {
+        fishing_protection_level_stats: {
           filters: {
-            mpaa_protection_level: {
-              slug: 'fully-highly-protected',
+            fishing_protection_level: {
+              slug: 'highly',
             },
           },
           populate: {
-            mpaa_protection_level: '*',
+            fishing_protection_level: '*',
           },
         },
       },
@@ -54,21 +54,21 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       return {
         title: label,
         slug: protectionLevel.slug,
-        background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
+        background: FISHING_PROTECTION_CHART_COLORS[protectionLevel.slug],
         totalArea: location.totalMarineArea,
         protectedArea: stats?.area,
         info: protectionLevel.info,
       };
     };
 
-    const parsedMpaaProtectionLevelData =
-      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.map((entry) => {
+    const parsedFishingProtectionLevelData =
+      protectionLevelsData[0]?.attributes?.fishing_protection_level_stats?.data?.map((entry) => {
         const stats = entry?.attributes;
-        const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
-        return parsedProtectionLevel('Fully or highly protected', protectionLevel, stats);
+        const protectionLevel = stats?.fishing_protection_level?.data.attributes;
+        return parsedProtectionLevel('Highly protected from fishing', protectionLevel, stats);
       });
 
-    return parsedMpaaProtectionLevelData;
+    return parsedFishingProtectionLevelData;
   }, [location, protectionLevelsData]);
 
   const noData = !widgetChartData.length;
@@ -77,7 +77,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   return (
     <Widget
-      title="Marine Conservation Protection Levels"
+      title="Fishing Protection"
       lastUpdated={protectionLevelsData[0]?.attributes?.updatedAt}
       noData={noData}
       loading={loading}
