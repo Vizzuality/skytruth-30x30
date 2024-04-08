@@ -37,6 +37,24 @@ const WidgetSectionWidgetTitle: React.FC<WidgetSectionWidgetTitleProps> = ({ tit
   );
 };
 
+const WidgetLegend: React.FC = () => {
+  const LEGEND_LINE_CLASSES =
+    'relative pl-9 font-mono text-xs before:absolute before:left-0 before:top-1/2 before:h-[2px] before:w-[28px] before:-translate-y-1/2';
+
+  return (
+    <ul>
+      <li>
+        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-black')}>
+          Existing marine conservation coverage
+        </span>
+      </li>
+      <li>
+        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-green')}>New added area</span>
+      </li>
+    </ul>
+  );
+};
+
 const ModellingWidget: React.FC = () => {
   const chartsProps = DEFAULT_CHART_PROPS;
 
@@ -118,25 +136,32 @@ const ModellingWidget: React.FC = () => {
             title="Administrative boundary"
             tooltip={tooltips?.['administrativeBoundary']}
           />
+          v
           <span className="text-right font-mono text-xs font-bold underline">
             {administrativeBoundaries?.[0]}{' '}
             {administrativeBoundaries?.length > 1 && `+${administrativeBoundaries?.length - 1}`}
           </span>
         </div>
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>
-          <WidgetSectionWidgetTitle
-            title="Contribution details"
-            tooltip={tooltips?.['contributionDetails']}
-          />
+          <div className="space-y-2">
+            <WidgetSectionWidgetTitle
+              title="Contribution details"
+              tooltip={tooltips?.['contributionDetails']}
+            />
+            <WidgetLegend />
+          </div>
           {contributionDetailsData?.map((entry) => (
             <HorizontalBarChart key={entry.title} data={entry} {...chartsProps} />
           ))}
         </div>
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>
-          <WidgetSectionWidgetTitle
-            title="Global contribution"
-            tooltip={tooltips?.['globalContribution']}
-          />
+          <div className="space-y-2">
+            <WidgetSectionWidgetTitle
+              title="Global contribution"
+              tooltip={tooltips?.['globalContribution']}
+            />
+            <WidgetLegend />
+          </div>
           <HorizontalBarChart data={globalContributionData} {...chartsProps} />
         </div>
       </div>
