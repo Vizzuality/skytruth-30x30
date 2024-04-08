@@ -41,7 +41,7 @@ const KnowledgeHubPage = () => {
       }
     >
       <Content>
-        <Section ref={sectionRef} borderTop={false}>
+        <Section ref={sectionRef} borderTop={false} className="py-0 md:mb-0">
           <div className="space-y-24">
             <h2 className="text-[52px] font-black leading-none">
               I am looking for...
