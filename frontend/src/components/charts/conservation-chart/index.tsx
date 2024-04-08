@@ -24,6 +24,7 @@ import ChartTooltip from './tooltip';
 
 type ConservationChartProps = {
   className?: string;
+  displayTarget?: boolean;
   data: {
     year?: number;
     percentage: number;
@@ -37,7 +38,11 @@ type ConservationChartProps = {
 const TARGET_YEAR = 2030;
 const MAX_NUM_YEARS = 20;
 
-const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }) => {
+const ConservationChart: React.FC<ConservationChartProps> = ({
+  className,
+  displayTarget = true,
+  data,
+}) => {
   const barChartData = useMemo(() => {
     // Last year of data available
     const lastEntryYear = data[data.length - 1]?.year;
@@ -164,34 +169,36 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
       <ResponsiveContainer>
         <ComposedChart data={chartData}>
           <CartesianGrid vertical={false} strokeDasharray="3 3" />
-          <ReferenceLine
-            xAxisId={1}
-            y={30}
-            label={(props) => {
-              const { viewBox } = props;
-              return (
-                <g>
-                  <text {...viewBox} x={viewBox.x + 5} y={viewBox.y - 2}>
-                    30x30 Target
-                  </text>
-                  <foreignObject
-                    {...viewBox}
-                    x={viewBox.x + 90}
-                    y={viewBox.y - 17}
-                    width="160"
-                    height="160"
-                  >
-                    <TooltipButton
-                      text={dataInfo?.attributes.content}
-                      className="mt-1 hover:bg-transparent"
-                    />
-                  </foreignObject>
-                </g>
-              );
-            }}
-            stroke="#FD8E28"
-            strokeDasharray="3 3"
-          />
+          {displayTarget && (
+            <ReferenceLine
+              xAxisId={1}
+              y={30}
+              label={(props) => {
+                const { viewBox } = props;
+                return (
+                  <g>
+                    <text {...viewBox} x={viewBox.x + 5} y={viewBox.y - 2}>
+                      30x30 Target
+                    </text>
+                    <foreignObject
+                      {...viewBox}
+                      x={viewBox.x + 90}
+                      y={viewBox.y - 17}
+                      width="160"
+                      height="160"
+                    >
+                      <TooltipButton
+                        text={dataInfo?.attributes.content}
+                        className="mt-1 hover:bg-transparent"
+                      />
+                    </foreignObject>
+                  </g>
+                );
+              }}
+              stroke="#FD8E28"
+              strokeDasharray="3 3"
+            />
+          )}
           <ReferenceLine
             xAxisId={1}
             x={firstYearData.year - 0.4}
