@@ -88,10 +88,12 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       displayPercentageSign: false,
     });
     const protectedAreaFormatted = formatKM(protectedArea);
+    const totalAreaFormatted = formatKM(totalArea);
 
     return {
       protectedPercentage: percentageFormatted,
       protectedArea: protectedAreaFormatted,
+      totalArea: totalAreaFormatted,
     };
   }, [location, mergedProtectionStats]);
 
@@ -137,7 +139,9 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
             <span className="text-lg">%</span>
           </span>
           <span className="space-x-1 text-lg  ">
-            <span>{stats?.protectedArea}</span>
+            <span>
+              {stats?.protectedArea} out of {stats?.totalArea}
+            </span>
             <span>
               km<sup>2</sup>
             </span>
