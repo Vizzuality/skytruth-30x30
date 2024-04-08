@@ -228,7 +228,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
             type="monotone"
             strokeWidth={2}
             dataKey="historical"
-            stroke={twTheme.colors.blue[600]}
+            stroke={twTheme.colors.violet as string}
             dot={false}
             activeDot={false}
           />
@@ -238,7 +238,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
             strokeWidth={2}
             strokeDasharray="4 4"
             dataKey="projected"
-            stroke={twTheme.colors.blue[600]}
+            stroke={twTheme.colors.violet as string}
             dot={false}
             activeDot={false}
           />
@@ -246,7 +246,7 @@ const ConservationChart: React.FC<ConservationChartProps> = ({ className, data }
             {chartData.map((entry, index) => (
               <Cell
                 stroke="black"
-                fill={entry?.active ? '#4879FF' : 'transparent'}
+                fill={entry?.active ? 'black' : 'transparent'}
                 key={`cell-${index}`}
               />
             ))}
