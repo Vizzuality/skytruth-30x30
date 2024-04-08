@@ -2,6 +2,10 @@ import { useGetDataInfos } from '@/types/generated/data-info';
 
 const TOOLTIP_MAPPING = {
   marineConservation: 'coverage-widget',
+  establishmentStages: 'establishment-stages-widget',
+  habitats: 'habitats-widget',
+  protectionTypes: 'protection-types-widget',
+  fishingProtection: 'fishing-protection-widget',
 };
 
 const useTooltips = () => {
