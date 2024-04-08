@@ -1,21 +1,23 @@
 import { PropsWithChildren, useMemo } from 'react';
 
+import theme from 'lib/tailwind';
+
+import { useQueries } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 
-import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
+import StackedHorizontalBarChart from '@/components/charts/stacked-horizontal-bar-chart';
 import TooltipButton from '@/components/tooltip-button';
 import Widget from '@/components/widget';
 import { modellingAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
-import { useGetLocations } from '@/types/generated/location';
+import {
+  getGetProtectionCoverageStatsQueryOptions,
+  useGetProtectionCoverageStats,
+} from '@/types/generated/protection-coverage-stat';
 
 import useTooltips from '../useTooltips';
 
 const DEFAULT_ENTRY_CLASSNAMES = 'border-t border-black py-6';
-
-const DEFAULT_CHART_DATA = {
-  background: '#000',
-};
 
 const DEFAULT_CHART_PROPS = {
   className: 'py-2',
@@ -44,12 +46,12 @@ const WidgetLegend: React.FC = () => {
   return (
     <ul>
       <li>
-        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-black')}>
+        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-green')}>
           Existing marine conservation coverage
         </span>
       </li>
       <li>
-        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-green')}>New added area</span>
+        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-black')}>New added area</span>
       </li>
     </ul>
   );
@@ -63,70 +65,126 @@ const ModellingWidget: React.FC = () => {
   // Tooltips with mapping
   const tooltips = useTooltips();
 
-  // Get all locations in order to get country names for modelling data
-  const { data: locationsData } = useGetLocations(
+  const { data: globalProtectionStatsData } = useGetProtectionCoverageStats(
     {
+      filters: {
+        location: {
+          code: 'GLOB',
+        },
+      },
+      populate: '*',
+      // @ts-expect-error this is an issue with Orval typing
+      'sort[year]': 'asc',
       'pagination[limit]': -1,
-      sort: 'name:asc',
     },
     {
       query: {
-        placeholderData: { data: [] },
-        select: ({ data }) => data,
+        select: ({ data }) => {
+          if (!data) return null;
+
+          const latestYearAvailable = data[data.length - 1]?.attributes.year;
+
+          const lastYearData = data.filter(
+            ({ attributes }) => attributes.year === latestYearAvailable
+          );
+
+          const protectedArea = lastYearData.reduce(
+            (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
+            0
+          );
+
+          const totalArea =
+            lastYearData?.[0].attributes?.location?.data?.attributes?.totalMarineArea || 0;
+
+          return {
+            protectedArea,
+            percentageProtectedArea: (protectedArea / totalArea) * 100,
+            totalArea,
+          };
+        },
+        refetchOnWindowFocus: false,
       },
     }
   );
 
-  // Build contribution details details for the charts
-  const contributionDetailsData = useMemo(() => {
-    if (!locationsData.length || !modellingData) return null;
+  const locationQueries = useQueries({
+    queries: (modellingData?.locations_area || []).map((location) =>
+      getGetProtectionCoverageStatsQueryOptions(
+        {
+          filters: {
+            location: {
+              code: location.code,
+            },
+          },
+          populate: '*',
+          // @ts-expect-error this is an issue with Orval typing
+          'sort[year]': 'asc',
+          'pagination[limit]': -1,
+        },
+        {
+          query: {
+            enabled: Boolean(modellingData?.locations_area),
+            select: ({ data }) => {
+              if (!data) return null;
 
-    const modellingLocations = modellingData?.locations_area;
+              const latestYearAvailable = data[data.length - 1]?.attributes.year;
 
-    const chartData = modellingLocations.map((modellingLocation) => {
-      const location = locationsData?.find(
-        ({ attributes }) => modellingLocation.code === attributes?.code
-      )?.attributes;
+              const lastYearData = data.filter(
+                ({ attributes }) => attributes.year === latestYearAvailable
+              );
 
-      if (!location) return null;
+              const protectedArea = lastYearData.reduce(
+                (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
+                0
+              );
 
-      const { name, totalMarineArea } = location;
+              const totalArea =
+                lastYearData?.[0].attributes?.location?.data?.attributes?.totalMarineArea || 0;
 
-      return {
-        ...DEFAULT_CHART_DATA,
-        title: name,
-        protectedArea: modellingLocation.protected_area,
-        totalArea: totalMarineArea,
-      };
-    });
-
-    return chartData;
-  }, [modellingData, locationsData]);
-
-  // Build global contribution details for the charts
-  const globalContributionData = useMemo(() => {
-    const location = locationsData?.find(
-      ({ attributes }) => attributes?.code === 'GLOB'
-    )?.attributes;
-
-    if (!location) return null;
-
-    return {
-      ...DEFAULT_CHART_DATA,
-      protectedArea: modellingData?.total_protected_area,
-      totalArea: location?.totalMarineArea,
-    };
-  }, [modellingData, locationsData]);
-
-  const administrativeBoundaries = contributionDetailsData?.map(({ title }) => title);
+              return {
+                protectedArea,
+                percentageProtectedArea: (protectedArea / totalArea) * 100,
+                location: lastYearData?.[0].attributes?.location?.data?.attributes,
+                totalArea,
+              };
+            },
+            refetchOnWindowFocus: false,
+          },
+        }
+      )
+    ),
+  });
 
   const loading = modellingStatus === 'running';
   const error = modellingStatus === 'error';
 
+  const nationalLevelContributions = useMemo(() => {
+    return locationQueries.map((query) => {
+      if (query.status === 'loading') return null;
+
+      const totalCustomArea = modellingData.locations_area.find(
+        ({ code }) => code === query.data.location.code
+      ).protected_area;
+
+      const totalCustomAreaPercentage =
+        (totalCustomArea / modellingData.total_protected_area) * 100;
+
+      return {
+        ...query.data,
+        totalCustomArea,
+        totalCustomAreaPercentage,
+      };
+    });
+  }, [locationQueries, modellingData]);
+
+  const administrativeBoundaries = nationalLevelContributions?.map(
+    (contribution) => contribution?.location?.name
+  );
+
   return (
     <Widget
       className="border-b border-black py-0"
-      noData={!contributionDetailsData}
+      noData={!nationalLevelContributions}
       loading={loading}
       error={error}
     >
@@ -136,7 +194,6 @@ const ModellingWidget: React.FC = () => {
             title="Administrative boundary"
             tooltip={tooltips?.['administrativeBoundary']}
           />
-          v
           <span className="text-right font-mono text-xs font-bold underline">
             {administrativeBoundaries?.[0]}{' '}
             {administrativeBoundaries?.length > 1 && `+${administrativeBoundaries?.length - 1}`}
@@ -145,24 +202,63 @@ const ModellingWidget: React.FC = () => {
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>
           <div className="space-y-2">
             <WidgetSectionWidgetTitle
-              title="Contribution details"
+              title="National level contribution"
               tooltip={tooltips?.['contributionDetails']}
             />
             <WidgetLegend />
           </div>
-          {contributionDetailsData?.map((entry) => (
-            <HorizontalBarChart key={entry.title} data={entry} {...chartsProps} />
+          {nationalLevelContributions?.map((contribution) => (
+            <StackedHorizontalBarChart
+              key={contribution?.location?.code}
+              title={contribution?.location?.name}
+              totalArea={contribution?.totalArea}
+              highlightedPercentage={contribution?.totalCustomAreaPercentage}
+              data={[
+                {
+                  background: theme.colors.green as string,
+                  total: contribution?.protectedArea,
+                  totalPercentage: contribution?.percentageProtectedArea,
+                },
+                {
+                  background: theme.colors.black as string,
+                  total: contribution?.totalCustomArea,
+                  totalPercentage: contribution?.totalCustomAreaPercentage,
+                },
+              ]}
+              {...chartsProps}
+            />
           ))}
         </div>
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>
           <div className="space-y-2">
             <WidgetSectionWidgetTitle
-              title="Global contribution"
+              title="Global level contribution"
               tooltip={tooltips?.['globalContribution']}
             />
             <WidgetLegend />
           </div>
-          <HorizontalBarChart data={globalContributionData} {...chartsProps} />
+          <StackedHorizontalBarChart
+            title="Global"
+            totalArea={globalProtectionStatsData?.totalArea}
+            highlightedPercentage={
+              (modellingData?.total_protected_area / globalProtectionStatsData?.protectedArea) * 100
+            }
+            data={[
+              {
+                background: theme.colors.green as string,
+                total: globalProtectionStatsData?.protectedArea,
+                totalPercentage: globalProtectionStatsData?.percentageProtectedArea,
+              },
+              {
+                background: theme.colors.black as string,
+                total: modellingData?.total_protected_area,
+                totalPercentage:
+                  (modellingData?.total_protected_area / globalProtectionStatsData?.protectedArea) *
+                  100,
+              },
+            ]}
+            {...chartsProps}
+          />
         </div>
       </div>
     </Widget>
