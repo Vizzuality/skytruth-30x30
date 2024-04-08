@@ -33,16 +33,6 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
             mpaa_protection_level: '*',
           },
         },
-        fishing_protection_level_stats: {
-          filters: {
-            fishing_protection_level: {
-              slug: 'highly',
-            },
-          },
-          populate: {
-            fishing_protection_level: '*',
-          },
-        },
       },
       'pagination[limit]': -1,
     },
@@ -78,14 +68,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
         return parsedProtectionLevel('Fully or highly protected', protectionLevel, stats);
       });
 
-    const parsedFishingProtectionLevelData =
-      protectionLevelsData[0]?.attributes?.fishing_protection_level_stats?.data?.map((entry) => {
-        const stats = entry?.attributes;
-        const protectionLevel = stats?.fishing_protection_level?.data.attributes;
-        return parsedProtectionLevel('Highly protected from fishing', protectionLevel, stats);
-      });
-
-    return [...parsedMpaaProtectionLevelData, ...parsedFishingProtectionLevelData];
+    return [...parsedMpaaProtectionLevelData];
   }, [location, protectionLevelsData]);
 
   const noData = !widgetChartData.length;
