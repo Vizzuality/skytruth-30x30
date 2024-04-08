@@ -30,11 +30,11 @@ const CountriesList: React.FC<CountriesListProps> = ({
   if (!countries?.length) return null;
 
   return (
-    <div className={cn('font-mono text-xs', className)}>
+    <div className={cn('font-mono text-xs leading-5', className)}>
       <div
         className={cn({
           'relative overflow-hidden': true,
-          'max-h-[30px]': !isListOpen,
+          'max-h-[38px]': !isListOpen,
           'max-h-full': isListOpen,
         })}
       >
