@@ -60,7 +60,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
           {info && <TooltipButton text={info} />}
         </span>
         <span>
-          of {formattedArea} km<sup>2</sup>
+          out of {formattedArea} km<sup>2</sup>
         </span>
       </div>
       <div className="relative my-2 flex h-3.5">
