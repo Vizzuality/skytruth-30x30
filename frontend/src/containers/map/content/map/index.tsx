@@ -103,7 +103,6 @@ const MainMap: React.FC = () => {
         );
 
         setPopup({});
-        return null;
       }
 
       if (
@@ -122,11 +121,17 @@ const MainMap: React.FC = () => {
 
   const handleMouseMove = useCallback(
     (e: Parameters<ComponentProps<typeof Map>['onMouseOver']>[0]) => {
-      if (popup?.features?.length) return;
+      if (!e.features.length) {
+        setPopup({});
+      }
 
-      if (e.features.length > 0) {
+      if (e?.features?.length > 0) {
         if (!drawState.active) {
           setCursor('pointer');
+        }
+
+        if (e.type === 'mousemove') {
+          setPopup({ ...e });
         }
 
         if (hoveredPolygonId.current !== null) {
@@ -155,7 +160,7 @@ const MainMap: React.FC = () => {
         }
       }
     },
-    [map, hoveredPolygonId, drawState.active, popup]
+    [map, hoveredPolygonId, drawState.active, setPopup]
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -170,7 +175,8 @@ const MainMap: React.FC = () => {
         { hover: false }
       );
     }
-  }, [map, hoveredPolygonId, popup]);
+    setPopup({});
+  }, [map, hoveredPolygonId, popup, setPopup]);
 
   const initialViewState: ComponentProps<typeof Map>['initialViewState'] = useMemo(() => {
     if (URLBbox) {
@@ -231,6 +237,8 @@ const MainMap: React.FC = () => {
     }
   }, [map, popup]);
 
+  const disableMouseMove = popup.type === 'click' && popup.features?.length;
+
   return (
     <div className="absolute left-0 h-full w-full border-r border-b border-black">
       <Map
@@ -239,7 +247,7 @@ const MainMap: React.FC = () => {
         interactiveLayerIds={!drawState.active && !drawState.feature ? layersInteractiveIds : []}
         onClick={handleMapClick}
         onMoveEnd={handleMoveEnd}
-        onMouseMove={handleMouseMove}
+        onMouseMove={!disableMouseMove && handleMouseMove}
         onMouseLeave={handleMouseLeave}
         attributionControl={false}
         cursor={cursor}
