@@ -22,7 +22,7 @@ const DetailsButton: React.FC<DetailsButtonProps> = ({ className }) => {
       size="full"
       onClick={handleButtonClick}
     >
-      <span className="w-full pt-1 font-mono text-xs normal-case">More details</span>
+      <span className="w-full pt-1 font-mono text-xs font-semibold normal-case">More details</span>
     </Button>
   );
 };
