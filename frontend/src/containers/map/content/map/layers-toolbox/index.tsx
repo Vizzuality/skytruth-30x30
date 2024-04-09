@@ -24,8 +24,8 @@ const LayersToolbox: React.FC = () => {
               </span>
             )}
           </CollapsibleTrigger>
-          <CollapsibleContent className="relative h-[180px] w-[300px] border-l border-t border-black bg-white fill-mode-none data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-            <div className="h-full w-full overflow-y-scroll border">
+          <CollapsibleContent className="border-l border-t border-black bg-white fill-mode-none data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+            <div className="relative h-full max-h-[calc(100vh-200px)] w-[300px] overflow-y-scroll border ">
               <LayersLegend />
             </div>
           </CollapsibleContent>
