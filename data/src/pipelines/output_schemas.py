@@ -66,7 +66,6 @@ class MPAsSchema(pa.DataFrameModel):
     name: Series[str] = pa.Field(coerce=True)
     year: Series[pd.Int64Dtype] = pa.Field(gt=1800, nullable=True)
     area: Series[float] = pa.Field(ge=0, coerce=True)
-    mpaa_establishment_stage: Series[int] = pa.Field(ge=0)
     protection_status: Series[int] = pa.Field(ge=0)
 
 
@@ -75,5 +74,6 @@ class MPAsTableStatsSchema(pa.DataFrameModel):
     mpa: Series[str] = pa.Field(coerce=True)
     location: Series[int] = pa.Field(gt=0, coerce=True)
     area: Series[float] = pa.Field(ge=0, coerce=True)
+    mpaa_establishment_stage: Series[int] = pa.Field(ge=0)
     mpaa_protection_level: Series[pd.Int64Dtype] = pa.Field(ge=0, nullable=True, coerce=True)
     fishing_protection_level: Series[pd.Int64Dtype] = pa.Field(ge=0, nullable=True, coerce=True)
