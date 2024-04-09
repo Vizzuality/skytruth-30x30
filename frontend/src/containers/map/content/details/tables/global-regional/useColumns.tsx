@@ -143,22 +143,22 @@ const useColumns = () => {
           return <span className="text-xs">{formattedValue}%</span>;
         },
       },
-      {
-        accessorKey: 'highlyProtectedLfp',
-        header: ({ column }) => (
-          <HeaderItem>
-            <SortingButton column={column} />
-            Highly Protected LFP
-            <TooltipButton column={column} tooltips={tooltips} />
-          </HeaderItem>
-        ),
-        cell: ({ row }) => {
-          const { highlyProtectedLfp: value } = row.original;
-          if (!value) return <>No data</>;
-          const formattedValue = cellFormatter.percentage(value);
-          return <span className="text-xs">{formattedValue}%</span>;
-        },
-      },
+      // {
+      //   accessorKey: 'highlyProtectedLfp',
+      //   header: ({ column }) => (
+      //     <HeaderItem>
+      //       <SortingButton column={column} />
+      //       Highly Protected LFP
+      //       <TooltipButton column={column} tooltips={tooltips} />
+      //     </HeaderItem>
+      //   ),
+      //   cell: ({ row }) => {
+      //     const { highlyProtectedLfp: value } = row.original;
+      //     if (!value) return <>No data</>;
+      //     const formattedValue = cellFormatter.percentage(value);
+      //     return <span className="text-xs">{formattedValue}%</span>;
+      //   },
+      // },
       {
         accessorKey: 'globalContribution',
         header: ({ column }) => (

@@ -30,7 +30,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
     protectionLevel: protectionLevelOptions,
-    fishingProtectionLevel: fishingProtectionLevelOptions,
+    // fishingProtectionLevel: fishingProtectionLevelOptions,
   } = useFiltersOptions();
 
   const tooltips = useTooltips();
@@ -159,27 +159,27 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           return <>{formattedValue}</>;
         },
       },
-      {
-        accessorKey: 'fishingProtectionLevel',
-        header: ({ column }) => (
-          <HeaderItem>
-            <FiltersButton
-              field={column.id}
-              options={fishingProtectionLevelOptions}
-              values={filters[column.id]}
-              onChange={onFiltersChange}
-            />
-            Level of Fishing Protection
-            <TooltipButton column={column} tooltips={tooltips} />
-          </HeaderItem>
-        ),
-        cell: ({ row }) => {
-          const { fishingProtectionLevel: value } = row.original;
-          const formattedValue =
-            fishingProtectionLevelOptions.find((entry) => value === entry?.value)?.name || 'N/A';
-          return <>{formattedValue}</>;
-        },
-      },
+      // {
+      //   accessorKey: 'fishingProtectionLevel',
+      //   header: ({ column }) => (
+      //     <HeaderItem>
+      //       <FiltersButton
+      //         field={column.id}
+      //         options={fishingProtectionLevelOptions}
+      //         values={filters[column.id]}
+      //         onChange={onFiltersChange}
+      //       />
+      //       Level of Fishing Protection
+      //       <TooltipButton column={column} tooltips={tooltips} />
+      //     </HeaderItem>
+      //   ),
+      //   cell: ({ row }) => {
+      //     const { fishingProtectionLevel: value } = row.original;
+      //     const formattedValue =
+      //       fishingProtectionLevelOptions.find((entry) => value === entry?.value)?.name || 'N/A';
+      //     return <>{formattedValue}</>;
+      //   },
+      // },
     ];
   }, [
     filters,
@@ -188,7 +188,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     protectionStatusOptions,
     establishmentStageOptions,
     protectionLevelOptions,
-    fishingProtectionLevelOptions,
+    // fishingProtectionLevelOptions,
   ]);
 
   return columns;
