@@ -28,8 +28,13 @@ const ModellingButtons: React.FC<ModellingButtonsProps> = ({ className }) => {
   const onClickRedraw = useCallback(() => {
     resetDrawState();
     resetModelling();
+    setDrawState({
+      active: true,
+      status: 'drawing',
+      feature: null,
+    });
     setModelling((prevState) => ({ ...prevState, active: true }));
-  }, [resetModelling, resetDrawState, setModelling]);
+  }, [resetModelling, resetDrawState, setModelling, setDrawState]);
 
   return (
     <div className={cn('flex font-mono', className)}>
