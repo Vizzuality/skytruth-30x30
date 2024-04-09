@@ -766,7 +766,8 @@
           "fishing_protection_level",
           "mpaa_protection_level",
           "location",
-          "area"
+          "area",
+          "mpaa_establishment_stage"
         ]
       },
       "conditions": []
@@ -788,7 +789,8 @@
           "fishing_protection_level",
           "mpaa_protection_level",
           "location",
-          "area"
+          "area",
+          "mpaa_establishment_stage"
         ]
       },
       "conditions": []
@@ -803,7 +805,8 @@
           "fishing_protection_level",
           "mpaa_protection_level",
           "location",
-          "area"
+          "area",
+          "mpaa_establishment_stage"
         ]
       },
       "conditions": []
@@ -818,7 +821,6 @@
           "name",
           "area",
           "year",
-          "mpaa_establishment_stage",
           "protection_status",
           "mpa_protection_coverage_stats"
         ]
@@ -842,7 +844,6 @@
           "name",
           "area",
           "year",
-          "mpaa_establishment_stage",
           "protection_status",
           "mpa_protection_coverage_stats"
         ]
@@ -859,7 +860,6 @@
           "name",
           "area",
           "year",
-          "mpaa_establishment_stage",
           "protection_status",
           "mpa_protection_coverage_stats"
         ]
@@ -926,7 +926,8 @@
         "fields": [
           "slug",
           "name",
-          "info"
+          "info",
+          "mpa_protection_coverage_stats"
         ]
       },
       "conditions": []
@@ -946,7 +947,8 @@
         "fields": [
           "slug",
           "name",
-          "info"
+          "info",
+          "mpa_protection_coverage_stats"
         ]
       },
       "conditions": []
@@ -959,7 +961,8 @@
         "fields": [
           "slug",
           "name",
-          "info"
+          "info",
+          "mpa_protection_coverage_stats"
         ]
       },
       "conditions": []

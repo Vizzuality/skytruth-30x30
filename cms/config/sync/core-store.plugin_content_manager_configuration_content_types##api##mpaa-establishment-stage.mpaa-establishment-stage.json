@@ -62,6 +62,21 @@
           "sortable": true
         }
       },
+      "mpa_protection_coverage_stats": {
+        "edit": {
+          "label": "mpa_protection_coverage_stats",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "id"
+        },
+        "list": {
+          "label": "mpa_protection_coverage_stats",
+          "searchable": false,
+          "sortable": false
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -142,6 +157,10 @@
         [
           {
             "name": "info",
+            "size": 6
+          },
+          {
+            "name": "mpa_protection_coverage_stats",
             "size": 6
           }
         ]
