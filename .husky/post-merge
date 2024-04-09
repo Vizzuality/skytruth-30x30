@@ -1,12 +1,12 @@
 #!/bin/bash
 . "$(dirname -- "$0")/_/husky.sh"
 
-# If client yarn.lock has changed, run yarn to install dependencies
-CLIENT_CHANGED=`git diff HEAD@{1} --stat -- ./client/yarn.lock | wc -l`
+# If frontend yarn.lock has changed, run yarn to install dependencies
+CLIENT_CHANGED=`git diff HEAD@{1} --stat -- ./frontend/yarn.lock | wc -l`
 if [ "$CLIENT_CHANGED" -gt 0 ];
 then
-    echo "client/yarn.lock has changed!"
-    cd ./client && yarn
+    echo "frontend/yarn.lock has changed!"
+    cd ./frontend && yarn
 fi
 
 # If CMS yarn.lock has changed, run yarn to install dependencies
