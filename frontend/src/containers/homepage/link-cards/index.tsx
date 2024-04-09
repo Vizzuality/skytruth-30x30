@@ -16,7 +16,7 @@ const LinkCards: React.FC = () => (
       title="Conservation Builder"
       subtitle="A lightweight, interactive scenario building and visualization tool for evaluating conservation and protection scenarios that can provide potential pathways to achieving 30x30 goals."
       description="The Conservation Builder enables users to view existing protected areas, draw potential protected areas, dynamically illustrate the effects of proposed regions on progress toward 30x30, and quickly generate information about the proposed protected area from disparate data sources, including 30x30 research-based recommendations for areas to protect (e.g., Pew, Sala et al., Zhao et al., etc.) and the location of key habitats."
-      image="computer"
+      image="pencilHolder"
       color="blue"
       link={PAGES.conservationBuilder}
       linkLabel="Go to the Conservation Builder"
