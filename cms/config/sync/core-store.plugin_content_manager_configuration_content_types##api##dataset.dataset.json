@@ -1,7 +1,7 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::data-tool.data-tool",
+  "key": "plugin_content_manager_configuration_content_types::api::dataset.dataset",
   "value": {
-    "uid": "api::data-tool.data-tool",
+    "uid": "api::dataset.dataset",
     "settings": {
       "bulkable": true,
       "filterable": true,
@@ -34,89 +34,17 @@
           "sortable": true
         }
       },
-      "description": {
+      "layers": {
         "edit": {
-          "label": "description",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "description",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "site": {
-        "edit": {
-          "label": "site",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "site",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "languages": {
-        "edit": {
-          "label": "languages",
+          "label": "layers",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true,
-          "mainField": "name"
+          "mainField": "title"
         },
         "list": {
-          "label": "languages",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "data_tool_resource_types": {
-        "edit": {
-          "label": "data_tool_resource_types",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "name"
-        },
-        "list": {
-          "label": "data_tool_resource_types",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "geography": {
-        "edit": {
-          "label": "geography",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "geography",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "data_tool_ecosystems": {
-        "edit": {
-          "label": "data_tool_ecosystems",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "name"
-        },
-        "list": {
-          "label": "data_tool_ecosystems",
+          "label": "layers",
           "searchable": false,
           "sortable": false
         }
@@ -184,8 +112,8 @@
       "list": [
         "id",
         "name",
-        "description",
-        "site"
+        "layers",
+        "createdAt"
       ],
       "edit": [
         [
@@ -194,33 +122,7 @@
             "size": 6
           },
           {
-            "name": "description",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "site",
-            "size": 6
-          },
-          {
-            "name": "languages",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "geography",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "data_tool_ecosystems",
-            "size": 6
-          },
-          {
-            "name": "data_tool_resource_types",
+            "name": "layers",
             "size": 6
           }
         ]
