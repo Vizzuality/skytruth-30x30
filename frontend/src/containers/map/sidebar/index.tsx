@@ -44,7 +44,7 @@ const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
             open={isSidebarOpen}
             onOpenChange={setSidebarOpen}
           >
-            <CollapsibleContent className="left-00 relative top-0 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-collapsible-left data-[state=open]:animate-collapsible-right">
+            <CollapsibleContent className="left-0 relative top-0 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-collapsible-left data-[state=open]:animate-collapsible-right">
               <div className="h-full md:w-[460px]">
                 <MainPanel type={type} />
               </div>

@@ -111,7 +111,7 @@ const Legend: FC = () => {
   );
 
   return (
-    <div className="absolute bottom-0 right-0 flex max-h-[calc(100%-100px)] w-[335px] overflow-y-auto border border-black bg-white py-3 px-6">
+    <div className="py-3 px-6">
       {!layersQuery.data?.length && (
         <p>
           Open <span className="text-sm font-black uppercase">Layers</span> to add layers to the map
