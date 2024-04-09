@@ -146,10 +146,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
           </span>
           <span className="space-x-1 text-xs">
             <span>
-              {stats?.protectedArea} out of {stats?.totalArea}
-            </span>
-            <span>
-              km<sup>2</sup>
+              {stats?.protectedArea} km<sup>2</sup> out of {stats?.totalArea} km<sup>2</sup>
             </span>
           </span>
         </div>
