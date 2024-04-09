@@ -13,13 +13,13 @@ import DetailsWidgets from './widgets';
 
 const SidebarDetails: React.FC = () => {
   const {
-    query: { locationCode },
+    query: { locationCode = 'GLOB' },
   } = useRouter();
   const [{ showDetails }] = useSyncMapContentSettings();
 
   const { data: locationsData } = useGetLocations({
     filters: {
-      code: locationCode || 'GLOB',
+      code: locationCode,
     },
     populate: 'members',
   });

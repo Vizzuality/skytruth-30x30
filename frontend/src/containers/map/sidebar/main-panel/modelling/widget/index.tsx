@@ -2,14 +2,14 @@ import { PropsWithChildren, useMemo } from 'react';
 
 import { useAtomValue } from 'jotai';
 
-import useTooltips from '../useTooltips';
-
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import TooltipButton from '@/components/tooltip-button';
 import Widget from '@/components/widget';
 import { modellingAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
+
+import useTooltips from '../useTooltips';
 
 const DEFAULT_ENTRY_CLASSNAMES = 'border-t border-black py-6';
 

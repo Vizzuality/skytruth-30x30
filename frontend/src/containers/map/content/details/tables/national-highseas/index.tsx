@@ -11,7 +11,7 @@ import { MpaProtectionCoverageStatListResponseDataItem } from '@/types/generated
 
 const NationalHighseasTable: React.FC = () => {
   const {
-    query: { locationCode },
+    query: { locationCode = 'GLOB' },
   } = useRouter();
 
   const locationsQuery = useGetLocations(

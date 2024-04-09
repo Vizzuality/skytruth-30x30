@@ -2,10 +2,10 @@ import { ComponentProps, PropsWithChildren, useMemo } from 'react';
 
 import { timeFormat } from 'd3-time-format';
 
+import { cn } from '@/lib/classnames';
+
 import Loading from './loading';
 import NoData from './no-data';
-
-import { cn } from '@/lib/classnames';
 
 type WidgetProps = {
   className?: string;

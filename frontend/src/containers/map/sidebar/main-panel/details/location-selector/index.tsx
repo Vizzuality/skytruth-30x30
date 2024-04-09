@@ -42,7 +42,7 @@ type LocationSelectorProps = {
 const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
   const {
     push,
-    query: { locationCode },
+    query: { locationCode = 'GLOB' },
   } = useRouter();
 
   // @ts-expect-error to work properly, strict mode should be enabled
