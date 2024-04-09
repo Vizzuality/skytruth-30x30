@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 
 import { useAtom, useAtomValue } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 
 import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
@@ -39,6 +40,7 @@ const MainMap: React.FC = () => {
   const [popup, setPopup] = useAtom(popupAtom);
   const params = useParams();
   const locationBbox = useAtomValue(bboxLocation);
+  const resetLocationBbox = useResetAtom(bboxLocation);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
   const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
 
@@ -236,6 +238,12 @@ const MainMap: React.FC = () => {
       );
     }
   }, [map, popup]);
+
+  useEffect(() => {
+    return () => {
+      resetLocationBbox();
+    };
+  }, [resetLocationBbox]);
 
   const disableMouseMove = popup.type === 'click' && popup.features?.length;
 

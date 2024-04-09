@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import type { Feature } from 'geojson';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
+import { CustomMapProps } from '@/components/map/types';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
@@ -23,7 +24,6 @@ const EEZLayerPopup = ({ locationId }) => {
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
   const { push } = useRouter();
-  // @ts-expect-error to work properly, strict mode should be enabled
   const setLocationBBox = useSetAtom(bboxLocation);
   const [popup, setPopup] = useAtom(popupAtom);
 
@@ -168,7 +168,7 @@ const EEZLayerPopup = ({ locationId }) => {
         PAGES.progressTracker
       }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`
     );
-    setLocationBBox(locationsQuery.data.bounds);
+    setLocationBBox(locationsQuery.data.bounds as CustomMapProps['bounds']['bbox']);
     setPopup({});
   }, [push, searchParams, setLocationBBox, locationsQuery.data, setPopup]);
 
