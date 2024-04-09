@@ -27,7 +27,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   onSelected,
 }) => {
   const {
-    query: { locationCode },
+    query: { locationCode = 'GLOB' },
   } = useRouter();
 
   const locationsQuery = useGetLocations(

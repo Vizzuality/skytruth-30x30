@@ -5,14 +5,14 @@ import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 
 // import EstablishmentStagesWidget from './establishment-stages';
+import FishingProtectionWidget from './fishing-protection';
 import HabitatWidget from './habitat';
 import MarineConservationWidget from './marine-conservation';
 import ProtectionTypesWidget from './protection-types';
-import FishingProtectionWidget from './fishing-protection';
 
 const DetailsWidgets: React.FC = () => {
   const {
-    query: { locationCode },
+    query: { locationCode = 'GLOB' },
   } = useRouter();
 
   const [{ showDetails }] = useSyncMapContentSettings();

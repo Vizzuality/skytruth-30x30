@@ -12,7 +12,7 @@ import { getGetLocationsQueryOptions, useGetLocations } from '@/types/generated/
 const MapDetails: React.FC = () => {
   const [, setSettings] = useSyncMapContentSettings();
   const {
-    query: { locationCode },
+    query: { locationCode = 'GLOB' },
   } = useRouter();
 
   const locationsQuery = useGetLocations(

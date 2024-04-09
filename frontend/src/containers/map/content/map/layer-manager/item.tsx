@@ -23,7 +23,7 @@ const LayerManagerItem = ({ id, beforeId, settings }: LayerManagerItemProps) => 
   });
   const [, setLayersInteractive] = useAtom(layersInteractiveAtom);
   const [, setLayersInteractiveIds] = useAtom(layersInteractiveIdsAtom);
-  const { locationCode } = useParams();
+  const { locationCode = 'GLOB' } = useParams();
 
   const handleAddMapboxLayer = useCallback(
     ({ styles }: Config) => {
