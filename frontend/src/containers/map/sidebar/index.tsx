@@ -44,7 +44,7 @@ const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
             open={isSidebarOpen}
             onOpenChange={setSidebarOpen}
           >
-            <CollapsibleContent className="left-0 relative top-0 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-collapsible-left data-[state=open]:animate-collapsible-right">
+            <CollapsibleContent className="relative left-0 top-0 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-collapsible-left data-[state=open]:animate-collapsible-right">
               <div className="h-full md:w-[460px]">
                 <MainPanel type={type} />
               </div>
@@ -91,7 +91,7 @@ const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
           >
             {isLayersOpen && (
               <>
-                <LuChevronLeft className="-ml-px h-6 w-6" aria-hidden />
+                <LuChevronLeft className="-mx-0.5 h-5 w-5" aria-hidden />
                 <span className="sr-only">Close layers</span>
               </>
             )}
