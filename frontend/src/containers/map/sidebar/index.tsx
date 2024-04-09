@@ -98,7 +98,7 @@ const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
             {!isLayersOpen && (
               <>
                 <Icon icon={LayersIcon} className="ml-0.5 h-4 w-4 pb-px" />
-                <span className="pr-1 pl-3 font-mono text-xs font-semibold">Layers</span>
+                <span className="pr-1 pl-3 font-mono text-xs normal-case font-normal">Layers</span>
               </>
             )}
           </Button>
