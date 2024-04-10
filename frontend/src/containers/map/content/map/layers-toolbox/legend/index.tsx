@@ -111,7 +111,7 @@ const Legend: FC = () => {
   );
 
   return (
-    <div className="py-3 px-6">
+    <div className="py-2 px-4">
       {!layersQuery.data?.length && (
         <p>
           Open <span className="text-sm font-black uppercase">Layers</span> to add layers to the map
@@ -131,14 +131,14 @@ const Legend: FC = () => {
                 key={id}
                 className={cn({
                   'pb-3': index + 1 < activeLayers.length,
-                  'border-t border-black pt-3': index > 0,
+                  'pt-2': index > 0,
                 })}
               >
                 <div className="flex items-center justify-between gap-4">
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-bold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 [&_svg]:aria-[expanded=true]:rotate-180">
+                        <div className="overflow-hidden text-ellipsis whitespace-nowrap font-mono text-xs ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 [&_svg]:aria-[expanded=true]:rotate-180">
                           {title}
                         </div>
                       </TooltipTrigger>
@@ -234,7 +234,7 @@ const Legend: FC = () => {
                     </div>
                   </TooltipProvider>
                 </div>
-                <div className="pt-2">
+                <div className="pt-1.5">
                   <LegendItem config={legend_config as LayerTyped['legend_config']} />
                 </div>
               </div>
