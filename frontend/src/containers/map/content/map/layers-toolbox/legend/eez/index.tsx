@@ -7,7 +7,7 @@ import SeveralEEZIcon from '@/styles/icons/several-eez.svg?sprite';
 import { useGetDataInfos } from '@/types/generated/data-info';
 
 const ITEM_LIST_CLASSES = 'flex items-center space-x-2';
-const ICON_CLASSES = 'h-7 w-7';
+const ICON_CLASSES = 'h-3.5 w-3.5';
 
 const EEZLayerLegend = () => {
   const EEZInfoQuery = useGetDataInfos(

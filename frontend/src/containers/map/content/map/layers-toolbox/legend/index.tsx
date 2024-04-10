@@ -1,14 +1,7 @@
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useCallback } from 'react';
 
-import { ChevronDown } from 'lucide-react';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { Label } from '@/components/ui/label';
@@ -117,48 +110,15 @@ const Legend: FC = () => {
     [activeLayers, setMapLayers]
   );
 
-  const onToggleAccordion = useCallback(
-    (layerStringIds: string[]) => {
-      setLayerSettings((prev) => ({
-        ...prev,
-        ...activeLayers.reduce(
-          (acc, layerId) => ({
-            ...acc,
-            [layerId]: {
-              ...prev[layerId],
-              expanded: layerStringIds.findIndex((stringId) => stringId === `${layerId}`) !== -1,
-            },
-          }),
-          {}
-        ),
-      }));
-    },
-    [activeLayers, setLayerSettings]
-  );
-
-  const accordionValue = useMemo(() => {
-    // If we don't have layerSettings entries, the view is in its default state; we wish to
-    // show all legend accordion items expanded by default.
-    const layerSettingsKeys = Object.keys(layerSettings);
-    if (!layerSettingsKeys.length) {
-      return activeLayers.map((layerId) => layerId.toString());
-    }
-
-    // We have layerSettings entries; let's use those to define which accordion items are expanded.
-    return layerSettingsKeys.filter((layerId) =>
-      layerSettings[layerId].expanded ? layerId.toString() : null
-    );
-  }, [activeLayers, layerSettings]);
-
   return (
-    <div className="absolute bottom-0 right-0 flex max-h-[calc(100%-100px)] w-[335px] overflow-y-auto border border-black bg-white py-3 px-6">
+    <div className="py-2 px-4">
       {!layersQuery.data?.length && (
         <p>
           Open <span className="text-sm font-black uppercase">Layers</span> to add layers to the map
         </p>
       )}
       {layersQuery.data?.length > 0 && (
-        <Accordion type="multiple" value={accordionValue} onValueChange={onToggleAccordion}>
+        <div>
           {layersQuery.data?.map(({ id, attributes: { title, legend_config } }, index) => {
             const isFirst = index === 0;
             const isLast = index + 1 === layersQuery.data.length;
@@ -167,28 +127,26 @@ const Legend: FC = () => {
             const opacity = layerSettings[id]?.opacity ?? 1;
 
             return (
-              <AccordionItem
+              <div
                 key={id}
-                value={`${id}`}
                 className={cn({
                   'pb-3': index + 1 < activeLayers.length,
-                  'border-t border-black pt-3': index > 0,
+                  'pt-2': index > 0,
                 })}
               >
-                <div className="flex justify-between gap-4">
+                <div className="flex items-center justify-between gap-4">
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <AccordionTrigger className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-bold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 [&_svg]:aria-[expanded=true]:rotate-180">
-                          <ChevronDown className="mr-2 inline-block h-4 w-4" aria-hidden />
+                        <div className="overflow-hidden text-ellipsis whitespace-nowrap font-mono text-xs ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 [&_svg]:aria-[expanded=true]:rotate-180">
                           {title}
-                        </AccordionTrigger>
+                        </div>
                       </TooltipTrigger>
                       <TooltipContent>{title}</TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                   <TooltipProvider>
-                    <div className="flex shrink-0 items-center gap-0.5">
+                    <div className="flex shrink-0 items-center">
                       <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
                           <Button
@@ -199,7 +157,7 @@ const Legend: FC = () => {
                             onClick={() => onMoveLayerUp(id)}
                           >
                             <span className="sr-only">Move up</span>
-                            <Icon icon={ArrowTopIcon} className="h-4 w-4 " />
+                            <Icon icon={ArrowTopIcon} className="h-3 w-3" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>Move up</TooltipContent>
@@ -214,7 +172,7 @@ const Legend: FC = () => {
                             onClick={() => onMoveLayerDown(id)}
                           >
                             <span className="sr-only">Move down</span>
-                            <Icon icon={ArrowDownIcon} className="h-4 w-4" />
+                            <Icon icon={ArrowDownIcon} className="h-3 w-3" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>Move down</TooltipContent>
@@ -225,7 +183,7 @@ const Legend: FC = () => {
                             <PopoverTrigger asChild>
                               <Button type="button" variant="ghost" size="icon-sm">
                                 <span className="sr-only">Change opacity</span>
-                                <Icon icon={OpacityIcon} className="h-4 w-4" />
+                                <Icon icon={OpacityIcon} className="h-3.5 w-3.5" />
                               </Button>
                             </PopoverTrigger>
                           </TooltipTrigger>
@@ -257,7 +215,6 @@ const Legend: FC = () => {
                         </TooltipTrigger>
                         <TooltipContent>{isVisible ? 'Hide' : 'Show'}</TooltipContent>
                       </Tooltip>
-                      <div className="mx-2 h-5 w-px bg-gray-300" />
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button
@@ -277,13 +234,13 @@ const Legend: FC = () => {
                     </div>
                   </TooltipProvider>
                 </div>
-                <AccordionContent className="pt-2">
+                <div className="pt-1.5">
                   <LegendItem config={legend_config as LayerTyped['legend_config']} />
-                </AccordionContent>
-              </AccordionItem>
+                </div>
+              </div>
             );
           })}
-        </Accordion>
+        </div>
       )}
     </div>
   );
