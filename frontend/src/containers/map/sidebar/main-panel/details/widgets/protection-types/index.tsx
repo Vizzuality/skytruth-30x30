@@ -6,6 +6,8 @@ import { PROTECTION_TYPES_CHART_COLORS } from '@/constants/protection-types-char
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
+import useTooltips from '../useTooltips';
+
 type ProtectionTypesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
@@ -46,6 +48,8 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     }
   );
 
+  const tooltips = useTooltips();
+
   // Parse data to display in the chart
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
@@ -78,6 +82,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   return (
     <Widget
       title="Marine Conservation Protection Levels"
+      tooltip={tooltips?.['protectionTypes']}
       lastUpdated={protectionLevelsData[0]?.attributes?.updatedAt}
       noData={noData}
       loading={loading}

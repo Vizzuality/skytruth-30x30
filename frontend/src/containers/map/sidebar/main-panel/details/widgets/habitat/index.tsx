@@ -6,6 +6,8 @@ import { HABITAT_CHART_COLORS } from '@/constants/habitat-chart-colors';
 import { useGetHabitatStats } from '@/types/generated/habitat-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
+import useTooltips from '../useTooltips';
+
 type HabitatWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
@@ -53,6 +55,8 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
     }
   );
 
+  const tooltips = useTooltips();
+
   const widgetChartData = useMemo(() => {
     if (!habitatStatsData) return [];
 
@@ -78,6 +82,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
   return (
     <Widget
       title="Proportion of Habitat within Protected and Conserved Areas"
+      tooltip={tooltips?.['habitats']}
       lastUpdated={dataLastUpdate}
       noData={noData}
       loading={loading}

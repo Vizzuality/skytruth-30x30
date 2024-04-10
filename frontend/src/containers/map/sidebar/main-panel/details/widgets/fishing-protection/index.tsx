@@ -6,6 +6,8 @@ import { FISHING_PROTECTION_CHART_COLORS } from '@/constants/fishing-protection-
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
+import useTooltips from '../useTooltips';
+
 type ProtectionTypesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
@@ -46,6 +48,8 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     }
   );
 
+  const tooltips = useTooltips();
+
   // Parse data to display in the chart
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
@@ -78,6 +82,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   return (
     <Widget
       title="Fishing Protection"
+      tooltip={tooltips?.['fishingProtection']}
       lastUpdated={protectionLevelsData[0]?.attributes?.updatedAt}
       noData={noData}
       loading={loading}

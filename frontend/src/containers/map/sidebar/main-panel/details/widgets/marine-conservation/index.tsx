@@ -9,6 +9,8 @@ import { formatPercentage } from '@/lib/utils/formats';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
+import useTooltips from '../useTooltips';
+
 type MarineConservationWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
@@ -17,7 +19,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   const defaultQueryParams = {
     filters: {
       location: {
-        code: location?.code,
+        code: location?.code || 'GLOB',
       },
     },
   };
@@ -59,6 +61,8 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     }
   );
 
+  const tooltips = useTooltips();
+
   const mergedProtectionStats = useMemo(() => {
     if (!protectionStatsData.length) return null;
 
@@ -88,10 +92,12 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       displayPercentageSign: false,
     });
     const protectedAreaFormatted = formatKM(protectedArea);
+    const totalAreaFormatted = formatKM(totalArea);
 
     return {
       protectedPercentage: percentageFormatted,
       protectedArea: protectedAreaFormatted,
+      totalArea: totalAreaFormatted,
     };
   }, [location, mergedProtectionStats]);
 
@@ -120,31 +126,36 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
 
   const noData = !chartData.length;
   const loading = isFetchingProtectionStatsData || isFetchingDataLastUpdate;
+  const displayTarget = location?.code === 'GLOB';
 
   return (
     <Widget
       title="Marine Conservation Coverage"
+      tooltip={tooltips?.['marineConservation']}
       lastUpdated={dataLastUpdate}
       noData={noData}
       loading={loading}
     >
       {stats && (
-        <div className="mt-6 mb-4 flex flex-col text-blue">
+        <div className="mt-6 mb-4 flex flex-col">
           <span className="space-x-1">
             <span className="text-[64px] font-bold leading-[80%]">
               {stats?.protectedPercentage}
             </span>
             <span className="text-lg">%</span>
           </span>
-          <span className="space-x-1 text-lg  ">
-            <span>{stats?.protectedArea}</span>
+          <span className="space-x-1 text-xs">
             <span>
-              km<sup>2</sup>
+              {stats?.protectedArea} km<sup>2</sup> out of {stats?.totalArea} km<sup>2</sup>
             </span>
           </span>
         </div>
       )}
-      <ConservationChart className="-ml-8 aspect-[16/10]" data={chartData} />
+      <ConservationChart
+        className="-ml-8 aspect-[16/10]"
+        displayTarget={displayTarget}
+        data={chartData}
+      />
     </Widget>
   );
 };
