@@ -54,30 +54,30 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
     }
   );
 
-  const { data: metadataWidget } = useGetDataInfos(
-    {
-      filters: {
-        slug: 'habitats-widget',
-      },
-      populate: 'data_sources',
-    },
-    {
-      query: {
-        select: ({ data }) =>
-          data[0]
-            ? {
-                info: data[0].attributes.content,
-                sources: data[0].attributes?.data_sources?.data?.map(
-                  ({ attributes: { title, url } }) => ({
-                    title,
-                    url,
-                  })
-                ),
-              }
-            : undefined,
-      },
-    }
-  );
+  // const { data: metadataWidget } = useGetDataInfos(
+  //   {
+  //     filters: {
+  //       slug: 'habitats-widget',
+  //     },
+  //     populate: 'data_sources',
+  //   },
+  //   {
+  //     query: {
+  //       select: ({ data }) =>
+  //         data[0]
+  //           ? {
+  //               info: data[0].attributes.content,
+  //               sources: data[0].attributes?.data_sources?.data?.map(
+  //                 ({ attributes: { title, url } }) => ({
+  //                   title,
+  //                   url,
+  //                 })
+  //               ),
+  //             }
+  //           : undefined,
+  //     },
+  //   }
+  // );
 
   const { data: habitatMetadatas } = useGetDataInfos(
     {
@@ -145,8 +145,8 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
       lastUpdated={dataLastUpdate}
       noData={noData}
       loading={loading}
-      info={metadataWidget?.info}
-      sources={metadataWidget?.sources}
+      // info={metadataWidget?.info}
+      // sources={metadataWidget?.sources}
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart
