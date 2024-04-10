@@ -30,6 +30,7 @@ const LayersToolbox: React.FC = () => {
             </div>
           </CollapsibleContent>
         </Collapsible>
+        <div className="absolute bottom-0 left-0 h-6 w-full bg-gradient-to-b from-transparent to-white" />
       </div>
     </div>
   );
