@@ -10,8 +10,6 @@ import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
-import useTooltips from '../useTooltips';
-
 type MarineConservationWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
@@ -61,8 +59,6 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       },
     }
   );
-
-  const tooltips = useTooltips();
 
   const mergedProtectionStats = useMemo(() => {
     if (!protectionStatsData.length) return null;
@@ -157,7 +153,6 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   return (
     <Widget
       title="Marine Conservation Coverage"
-      tooltip={tooltips?.['marineConservation']}
       lastUpdated={dataLastUpdate}
       noData={noData}
       loading={loading}
