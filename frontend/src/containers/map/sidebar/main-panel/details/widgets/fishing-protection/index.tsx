@@ -24,11 +24,6 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       // @ts-ignore
       populate: {
         fishing_protection_level_stats: {
-          filters: {
-            fishing_protection_level: {
-              slug: 'highly',
-            },
-          },
           populate: {
             fishing_protection_level: '*',
           },
@@ -50,26 +45,38 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
 
-    const parsedProtectionLevel = (label, protectionLevel, stats) => {
+    const parsedProtectionLevel = (label, protectionLevel, totalClassificationArea, stats) => {
       return {
         title: label,
         slug: protectionLevel.slug,
         background: FISHING_PROTECTION_CHART_COLORS[protectionLevel.slug],
-        totalArea: location.totalMarineArea,
+        totalArea: totalClassificationArea,
         protectedArea: stats?.area,
         info: protectionLevel.info,
       };
     };
 
-    const parsedFishingProtectionLevelData =
-      protectionLevelsData[0]?.attributes?.fishing_protection_level_stats?.data?.map((entry) => {
-        const stats = entry?.attributes;
-        const protectionLevel = stats?.fishing_protection_level?.data.attributes;
-        return parsedProtectionLevel('Highly protected from fishing', protectionLevel, stats);
-      });
+    const protectionLevelStatsData =
+      protectionLevelsData[0]?.attributes?.fishing_protection_level_stats?.data;
 
-    return parsedFishingProtectionLevelData;
-  }, [location, protectionLevelsData]);
+    const totalClassificationArea = protectionLevelStatsData.reduce(
+      (acc, entry) => acc + entry?.attributes?.area,
+      0
+    );
+
+    const highlyProtectedLevelData = protectionLevelStatsData?.find(
+      ({ attributes }) => attributes?.fishing_protection_level?.data?.attributes?.slug === 'highly'
+    )?.attributes;
+
+    const parsedHighlyProtectedLevel = parsedProtectionLevel(
+      'Highly protected from fishing',
+      highlyProtectedLevelData?.fishing_protection_level?.data?.attributes,
+      totalClassificationArea,
+      highlyProtectedLevelData
+    );
+
+    return [parsedHighlyProtectedLevel];
+  }, [protectionLevelsData]);
 
   const noData = !widgetChartData.length;
 
