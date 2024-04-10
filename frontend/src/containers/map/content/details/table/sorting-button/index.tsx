@@ -38,7 +38,7 @@ const SortingButton: React.FC<SortingButtonProps> = ({ column }) => {
           onClick={() => column.toggleSorting(true)}
         >
           <span className="sr-only">Sort descending</span>
-          <ArrowDownNarrowWide className={ICON_CLASSNAMES} aria-hidden />
+          <ArrowUpNarrowWide className={ICON_CLASSNAMES} aria-hidden />
         </Button>
       )}
       {isSorted === 'desc' && (
@@ -49,7 +49,7 @@ const SortingButton: React.FC<SortingButtonProps> = ({ column }) => {
           onClick={() => column.clearSorting()}
         >
           <span className="sr-only">Clear sorting</span>
-          <ArrowUpNarrowWide className={ICON_CLASSNAMES} aria-hidden />
+          <ArrowDownNarrowWide className={ICON_CLASSNAMES} aria-hidden />
         </Button>
       )}
     </>

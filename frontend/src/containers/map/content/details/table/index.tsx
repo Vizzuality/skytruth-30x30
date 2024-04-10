@@ -17,6 +17,14 @@ const MapTable = ({ columns, data }) => {
   const table = useReactTable<typeof data>({
     data,
     columns,
+    initialState: {
+      sorting: [
+        {
+          id: columns?.[0]?.accessorKey,
+          desc: false,
+        },
+      ],
+    },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
