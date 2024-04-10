@@ -3,10 +3,9 @@ import { useMemo } from 'react';
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { FISHING_PROTECTION_CHART_COLORS } from '@/constants/fishing-protection-chart-colors';
+import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
-
-import useTooltips from '../useTooltips';
 
 type ProtectionTypesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
@@ -48,7 +47,55 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     }
   );
 
-  const tooltips = useTooltips();
+  const { data: metadataWidget } = useGetDataInfos(
+    {
+      filters: {
+        slug: 'fishing-protection-widget',
+      },
+      populate: 'data_sources',
+    },
+    {
+      query: {
+        select: ({ data }) =>
+          data[0]
+            ? {
+                info: data[0].attributes.content,
+                sources: data[0].attributes?.data_sources?.data?.map(
+                  ({ attributes: { title, url } }) => ({
+                    title,
+                    url,
+                  })
+                ),
+              }
+            : undefined,
+      },
+    }
+  );
+
+  const { data: metadata } = useGetDataInfos(
+    {
+      filters: {
+        slug: 'fishing-protection-level',
+      },
+      populate: 'data_sources',
+    },
+    {
+      query: {
+        select: ({ data }) =>
+          data[0]
+            ? {
+                info: data[0]?.attributes?.content,
+                sources: data[0]?.attributes?.data_sources?.data?.map(
+                  ({ attributes: { title, url } }) => ({
+                    title,
+                    url,
+                  })
+                ),
+              }
+            : undefined,
+      },
+    }
+  );
 
   // Parse data to display in the chart
   const widgetChartData = useMemo(() => {
@@ -61,7 +108,8 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
         background: FISHING_PROTECTION_CHART_COLORS[protectionLevel.slug],
         totalArea: location.totalMarineArea,
         protectedArea: stats?.area,
-        info: protectionLevel.info,
+        info: metadata?.info,
+        sources: metadata?.sources,
       };
     };
 
@@ -73,7 +121,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       });
 
     return parsedFishingProtectionLevelData;
-  }, [location, protectionLevelsData]);
+  }, [location, protectionLevelsData, metadata]);
 
   const noData = !widgetChartData.length;
 
@@ -82,10 +130,11 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   return (
     <Widget
       title="Fishing Protection"
-      tooltip={tooltips?.['fishingProtection']}
       lastUpdated={protectionLevelsData[0]?.attributes?.updatedAt}
       noData={noData}
       loading={loading}
+      info={metadataWidget?.info}
+      sources={metadataWidget?.sources}
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />

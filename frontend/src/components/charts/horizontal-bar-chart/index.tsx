@@ -15,6 +15,15 @@ type HorizontalBarChartProps = {
     totalArea: number;
     protectedArea: number;
     info?: string;
+    sources?:
+      | {
+          title: string;
+          url: string;
+        }
+      | {
+          title: string;
+          url: string;
+        }[];
   };
   showLegend?: boolean;
   showTarget?: boolean;
@@ -26,7 +35,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   showLegend = true,
   showTarget = true,
 }) => {
-  const { title, background, totalArea, protectedArea, info } = data;
+  const { title, background, totalArea, protectedArea, info, sources } = data;
 
   const targetPositionPercentage = useMemo(() => {
     return (PROTECTION_TARGET * 100) / DEFAULT_MAX_PERCENTAGE;
@@ -44,26 +53,25 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
     return relativeToMaxPercentage > DEFAULT_MAX_PERCENTAGE ? 100 : relativeToMaxPercentage;
   }, [protectedArea, totalArea]);
 
-  const formattedArea = useMemo(() => {
-    return formatKM(totalArea);
-  }, [totalArea]);
-
   return (
     <div className={cn('font-mono', className)}>
-      <div className="flex items-end justify-end text-3xl font-bold">
-        {protectedAreaPercentage}
-        <span className="pb-1.5 pl-1 text-xs">%</span>
+      <div className="space-y-2">
+        <div className="flex justify-between text-xs">
+          {title && <h3 className="font-sans text-base font-bold">{title}</h3>}
+          {info && <TooltipButton text={info} sources={sources} />}
+        </div>
+        <div className="text-4xl font-bold">
+          {protectedAreaPercentage}
+          <span className="pb-1.5 pl-1 text-xs">%</span>
+        </div>
       </div>
-      <div className="flex justify-between text-xs">
-        <span className="flex items-center">
-          {title && title}
-          {info && <TooltipButton text={info} />}
-        </span>
-        <span>
-          out of {formattedArea} km<sup>2</sup>
-        </span>
-      </div>
-      <div className="relative my-2 flex h-3.5">
+      <span className="text-xs">
+        {formatKM(protectedArea)} km<sup>2</sup>
+      </span>{' '}
+      <span className="text-xs">
+        out of {formatKM(totalArea)} km<sup>2</sup>
+      </span>
+      <div className="relative mb-2 flex h-3.5">
         <span className="absolute top-1/2 h-px w-full border-b border-dashed border-black"></span>
         <span
           className="absolute top-0 bottom-0 left-0 border border-black !bg-cover"
