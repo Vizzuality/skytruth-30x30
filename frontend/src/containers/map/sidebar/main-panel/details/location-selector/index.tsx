@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { useSetAtom } from 'jotai';
 
+import { CustomMapProps } from '@/components/map/types';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -45,7 +46,6 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     query: { locationCode = 'GLOB' },
   } = useRouter();
 
-  // @ts-expect-error to work properly, strict mode should be enabled
   const setLocationBBox = useSetAtom(bboxLocation);
   const setPopup = useSetAtom(popupAtom);
 
@@ -81,7 +81,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
       );
 
       if (selectedLocation) {
-        setLocationBBox(selectedLocation?.attributes.bounds);
+        setLocationBBox(selectedLocation?.attributes.bounds as CustomMapProps['bounds']['bbox']);
         await push(
           `${PAGES.progressTracker}/${locationCode.toUpperCase()}?${searchParams.toString()}`
         );
