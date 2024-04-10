@@ -7,8 +7,6 @@ import Widget from '@/components/widget';
 import { useGetMpaaEstablishmentStageStats } from '@/types/generated/mpaa-establishment-stage-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
-import useTooltips from '../useTooltips';
-
 type EstablishmentStagesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
@@ -66,8 +64,6 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
     }
   );
 
-  const tooltips = useTooltips();
-
   // Merge OECM and MPA stats
   const mergedEstablishmentStagesStats = useMemo(() => {
     if (!establishmentStagesData.length) return [];
@@ -117,7 +113,6 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
   return (
     <Widget
       title="Marine Conservation Establishment Stages"
-      tooltip={tooltips?.['establishmentStages']}
       lastUpdated={dataLastUpdate}
       noData={noData}
       loading={loading}
