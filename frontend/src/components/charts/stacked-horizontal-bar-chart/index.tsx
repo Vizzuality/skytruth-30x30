@@ -42,7 +42,7 @@ const StackedHorizontalBarChart: React.FC<StackedHorizontalBarChartProps> = ({
           {title && title}
           {info && <TooltipButton text={info} />}
         </span>
-        <span>
+        <span className="text-right">
           {formatKM(totalProtectedArea)} km<sup>2</sup> out of {formatKM(totalArea)} km<sup>2</sup>
         </span>
       </div>
@@ -60,12 +60,7 @@ const StackedHorizontalBarChart: React.FC<StackedHorizontalBarChartProps> = ({
           />
         ))}
         {showTarget && (
-          <span
-            className="absolute top-0 bottom-0 left-[30%] w-1 border-x border-white bg-orange"
-            // style={{
-            //   left: '30%',
-            // }}
-          >
+          <span className="absolute top-0 bottom-0 left-[30%] w-1 border-x border-white bg-orange">
             <span className="absolute right-0 top-5 whitespace-nowrap text-xs text-orange">
               30% target
             </span>
