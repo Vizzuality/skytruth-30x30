@@ -5,7 +5,7 @@ import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 
 // import EstablishmentStagesWidget from './establishment-stages';
-import FishingProtectionWidget from './fishing-protection';
+// import FishingProtectionWidget from './fishing-protection';
 import HabitatWidget from './habitat';
 import MarineConservationWidget from './marine-conservation';
 import ProtectionTypesWidget from './protection-types';
@@ -32,7 +32,7 @@ const DetailsWidgets: React.FC = () => {
     >
       <MarineConservationWidget location={locationsData?.data[0]?.attributes} />
       <ProtectionTypesWidget location={locationsData?.data[0]?.attributes} />
-      <FishingProtectionWidget location={locationsData?.data[0]?.attributes} />
+      {/* <FishingProtectionWidget location={locationsData?.data[0]?.attributes} /> */}
       {/* <EstablishmentStagesWidget location={locationsData?.data[0]?.attributes} /> */}
       <HabitatWidget location={locationsData?.data[0]?.attributes} />
     </div>
