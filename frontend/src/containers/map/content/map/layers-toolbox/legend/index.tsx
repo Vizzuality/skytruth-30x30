@@ -146,7 +146,7 @@ const Legend: FC = () => {
                     </Tooltip>
                   </TooltipProvider>
                   <TooltipProvider>
-                    <div className="flex shrink-0 items-center gap-0.5">
+                    <div className="flex shrink-0 items-center">
                       <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
                           <Button
@@ -157,7 +157,7 @@ const Legend: FC = () => {
                             onClick={() => onMoveLayerUp(id)}
                           >
                             <span className="sr-only">Move up</span>
-                            <Icon icon={ArrowTopIcon} className="h-4 w-4 " />
+                            <Icon icon={ArrowTopIcon} className="h-3 w-3" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>Move up</TooltipContent>
@@ -172,7 +172,7 @@ const Legend: FC = () => {
                             onClick={() => onMoveLayerDown(id)}
                           >
                             <span className="sr-only">Move down</span>
-                            <Icon icon={ArrowDownIcon} className="h-4 w-4" />
+                            <Icon icon={ArrowDownIcon} className="h-3 w-3" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>Move down</TooltipContent>
@@ -183,7 +183,7 @@ const Legend: FC = () => {
                             <PopoverTrigger asChild>
                               <Button type="button" variant="ghost" size="icon-sm">
                                 <span className="sr-only">Change opacity</span>
-                                <Icon icon={OpacityIcon} className="h-4 w-4" />
+                                <Icon icon={OpacityIcon} className="h-3.5 w-3.5" />
                               </Button>
                             </PopoverTrigger>
                           </TooltipTrigger>
@@ -215,7 +215,6 @@ const Legend: FC = () => {
                         </TooltipTrigger>
                         <TooltipContent>{isVisible ? 'Hide' : 'Show'}</TooltipContent>
                       </Tooltip>
-                      <div className="mx-2 h-5 w-px bg-gray-300" />
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button
