@@ -50,7 +50,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   const { data: metadataWidget } = useGetDataInfos(
     {
       filters: {
-        slug: 'protection-types-widget',
+        slug: 'protection-levels-widget',
       },
       populate: 'data_sources',
     },
