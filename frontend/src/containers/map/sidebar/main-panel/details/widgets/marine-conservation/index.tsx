@@ -6,6 +6,7 @@ import ConservationChart from '@/components/charts/conservation-chart';
 import Widget from '@/components/widget';
 import { formatKM } from '@/lib/utils/formats';
 import { formatPercentage } from '@/lib/utils/formats';
+import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
@@ -82,6 +83,31 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     });
   }, [protectionStatsData]);
 
+  const { data: metadata } = useGetDataInfos(
+    {
+      filters: {
+        slug: 'coverage-widget',
+      },
+      populate: 'data_sources',
+    },
+    {
+      query: {
+        select: ({ data }) =>
+          data[0]
+            ? {
+                info: data[0].attributes.content,
+                sources: data[0].attributes?.data_sources?.data?.map(
+                  ({ attributes: { title, url } }) => ({
+                    title,
+                    url,
+                  })
+                ),
+              }
+            : undefined,
+      },
+    }
+  );
+
   const stats = useMemo(() => {
     if (!mergedProtectionStats) return null;
 
@@ -135,6 +161,8 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       lastUpdated={dataLastUpdate}
       noData={noData}
       loading={loading}
+      info={metadata?.info}
+      sources={metadata?.sources}
     >
       {stats && (
         <div className="mt-6 mb-4 flex flex-col">
