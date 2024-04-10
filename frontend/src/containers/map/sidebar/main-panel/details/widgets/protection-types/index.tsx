@@ -24,11 +24,6 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       // @ts-ignore
       populate: {
         mpaa_protection_level_stats: {
-          filters: {
-            mpaa_protection_level: {
-              slug: 'fully-highly-protected',
-            },
-          },
           populate: {
             mpaa_protection_level: '*',
           },
@@ -50,28 +45,41 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
 
-    const parsedProtectionLevel = (label, protectionLevel, stats) => {
+    const parsedProtectionLevel = (label, protectionLevel, totalClassificationArea, stats) => {
       return {
         title: label,
         slug: protectionLevel.slug,
         background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
-        totalArea: location.totalMarineArea,
+        totalArea: totalClassificationArea,
         protectedArea: stats?.area,
         info: protectionLevel.info,
       };
     };
 
-    const parsedMpaaProtectionLevelData =
-      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.map((entry) => {
-        const stats = entry?.attributes;
-        const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
-        return parsedProtectionLevel('Fully or highly protected', protectionLevel, stats);
-      });
+    const protectionLevelStatsData =
+      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data;
 
-    return parsedMpaaProtectionLevelData;
-  }, [location, protectionLevelsData]);
+    const totalClassificationArea = protectionLevelStatsData.reduce(
+      (acc, entry) => acc + entry?.attributes?.area,
+      0
+    );
 
-  const noData = !widgetChartData.length;
+    const fullyHighlyProtectedLevelData = protectionLevelStatsData?.find(
+      ({ attributes }) =>
+        attributes?.mpaa_protection_level?.data?.attributes?.slug === 'fully-highly-protected'
+    )?.attributes;
+
+    const parsedFullyHighlyProtectedLevel = parsedProtectionLevel(
+      'Fully or highly protected',
+      fullyHighlyProtectedLevelData?.mpaa_protection_level?.data?.attributes,
+      totalClassificationArea,
+      fullyHighlyProtectedLevelData
+    );
+
+    return [parsedFullyHighlyProtectedLevel];
+  }, [protectionLevelsData]);
+
+  const noData = !widgetChartData;
 
   const loading = isFetchingProtectionLevelsData;
 
