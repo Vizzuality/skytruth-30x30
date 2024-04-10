@@ -197,17 +197,18 @@ const EEZLayerPopup = ({ locationId }) => {
         <>
           <div className="space-y-2">
             <div className="my-4 max-w-[95%] font-mono">Marine Conservation Coverage</div>
-            <div className="space-x-1 font-mono tracking-tighter text-blue">
+            <div className="space-x-1 font-mono tracking-tighter text-black">
               <span className="text-[64px] font-bold leading-[80%]">
                 {coverageStats.percentage}
               </span>
               {coverageStats.percentage !== '-' && <span className="text-lg">%</span>}
             </div>
-            <div className="space-x-1 font-mono text-xl text-blue">
+            <div className="space-x-1 font-mono font-medium text-black">
               <span>{coverageStats.protectedArea}</span>
               <span>
                 km<sup>2</sup>
-              </span>
+              </span>{' '}
+              out of {formatKM(locationsQuery.data.totalMarineArea)} km<sup>2</sup>
             </div>
           </div>
           <button
