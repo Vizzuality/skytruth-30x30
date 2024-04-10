@@ -134,7 +134,7 @@ const PopupContainer = () => {
         )}
         {isHoveredTooltip && (
           <div className="font-mono text-sm text-gray-500">
-            {popup.features[0].properties?.GEONAME}
+            {popup.features.find(({ source }) => source === 'ezz-source')?.properties?.GEONAME}
           </div>
         )}
         {isClickedTooltip && selectedLayerId && <PopupItem id={selectedLayerId} />}
