@@ -137,7 +137,12 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       // sources={metadataWidget?.sources}
     >
       {widgetChartData.map((chartData) => (
-        <HorizontalBarChart key={chartData.slug} className="py-2" data={chartData} />
+        <HorizontalBarChart
+          key={chartData.slug}
+          showTarget={false}
+          className="py-2"
+          data={chartData}
+        />
       ))}
     </Widget>
   );
