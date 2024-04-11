@@ -817,12 +817,12 @@
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
-          "wdpaid",
           "name",
           "area",
           "year",
           "protection_status",
-          "mpa_protection_coverage_stats"
+          "mpa_protection_coverage_stats",
+          "wdpaid"
         ]
       },
       "conditions": []
@@ -840,12 +840,12 @@
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
-          "wdpaid",
           "name",
           "area",
           "year",
           "protection_status",
-          "mpa_protection_coverage_stats"
+          "mpa_protection_coverage_stats",
+          "wdpaid"
         ]
       },
       "conditions": []
@@ -856,12 +856,12 @@
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
-          "wdpaid",
           "name",
           "area",
           "year",
           "protection_status",
-          "mpa_protection_coverage_stats"
+          "mpa_protection_coverage_stats",
+          "wdpaid"
         ]
       },
       "conditions": []

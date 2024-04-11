@@ -12,10 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "wdpaid": {
-      "type": "integer",
-      "required": false
-    },
     "name": {
       "type": "string",
       "required": true
@@ -47,6 +43,10 @@
       "relation": "oneToMany",
       "target": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
       "mappedBy": "mpa"
+    },
+    "wdpaid": {
+      "type": "string",
+      "unique": true
     }
   }
 }
