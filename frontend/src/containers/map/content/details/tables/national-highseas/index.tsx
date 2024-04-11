@@ -57,12 +57,12 @@ const NationalHighseasTable: React.FC = () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         populate: {
+          mpaa_establishment_stage: {
+            fields: ['name', 'slug'],
+          },
           mpa: {
             fields: ['name', 'wdpaid', 'area'],
             populate: {
-              mpaa_establishment_stage: {
-                fields: ['slug', 'name'],
-              },
               protection_status: {
                 fields: ['slug', 'name'],
               },
@@ -89,10 +89,10 @@ const NationalHighseasTable: React.FC = () => {
     );
 
   const parsedData = useMemo(() => {
-    return coverageData.map(({ attributes: coverageStats }) => {
-      const mpa = coverageStats?.mpa?.data?.attributes;
+    return coverageData?.map(({ attributes: coverageStats }) => {
+      const mpa = coverageStats.mpa?.data?.attributes;
       const protectionStatus = mpa?.protection_status?.data?.attributes;
-      const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
+      const establishmentStage = coverageStats?.mpaa_establishment_stage?.data?.attributes;
       const mpaaProtectionLevel = coverageStats?.mpaa_protection_level?.data?.attributes;
       const fishingProtectionLevel = coverageStats?.fishing_protection_level?.data?.attributes;
 
