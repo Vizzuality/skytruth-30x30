@@ -10,6 +10,7 @@ import { useResetAtom } from 'jotai/utils';
 
 import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
+import { CustomMapProps } from '@/components/map/types';
 import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
@@ -39,7 +40,7 @@ const MainMap: React.FC = () => {
   const isSidebarOpen = useAtomValue(sidebarAtom);
   const [popup, setPopup] = useAtom(popupAtom);
   const params = useParams();
-  const locationBbox = useAtomValue(bboxLocation);
+  const [locationBbox, setLocationBbox] = useAtom(bboxLocation);
   const resetLocationBbox = useResetAtom(bboxLocation);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
   const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
@@ -78,6 +79,10 @@ const MainMap: React.FC = () => {
       },
     }
   );
+
+  useEffect(() => {
+    setLocationBbox(locationsQuery?.data?.bounds as CustomMapProps['bounds']['bbox']);
+  }, [locationCode, locationsQuery, setLocationBbox]);
 
   const handleMoveEnd = useCallback(() => {
     setMapSettings((prev) => ({
