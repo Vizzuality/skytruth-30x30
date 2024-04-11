@@ -104,7 +104,7 @@ const NationalHighseasTable: React.FC = () => {
         coverage: coveragePercentage,
         protectedAreaType: protectionStatus?.slug,
         establishmentStage: establishmentStage?.slug,
-        protectionLevel: mpaaProtectionLevel?.slug,
+        protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
         fishingProtectionLevel: fishingProtectionLevel?.slug,
         area: mpa?.area,
       };
