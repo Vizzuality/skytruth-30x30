@@ -106,7 +106,7 @@ const NationalHighseasTable: React.FC = () => {
         establishmentStage: establishmentStage?.slug,
         protectionLevel: mpaaProtectionLevel?.slug,
         fishingProtectionLevel: fishingProtectionLevel?.slug,
-        area: mpa?.area,
+        area: coverageStats.area,
       };
     });
   }, [coverageData, locationsQuery.data]);
