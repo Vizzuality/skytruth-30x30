@@ -149,7 +149,6 @@ const ModellingWidget: React.FC = () => {
           populate: '*',
           // @ts-expect-error this is an issue with Orval typing
           'sort[year]': 'desc',
-          'pagination[limit]': 2,
         },
         {
           query: {
@@ -157,7 +156,13 @@ const ModellingWidget: React.FC = () => {
             select: ({ data }) => {
               if (!data) return null;
 
-              const protectedArea = data.reduce(
+              const lastYearAvailable = data?.[0].attributes?.year;
+
+              const dataFiltered = data.filter(
+                (entry) => entry.attributes.year === lastYearAvailable
+              );
+
+              const protectedArea = dataFiltered.reduce(
                 (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
                 0
               );
