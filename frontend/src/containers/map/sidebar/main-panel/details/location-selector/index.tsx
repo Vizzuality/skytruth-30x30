@@ -4,12 +4,11 @@ import { useRouter } from 'next/router';
 
 import { useSetAtom } from 'jotai';
 
-import { CustomMapProps } from '@/components/map/types';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PAGES } from '@/constants/pages';
-import { bboxLocation, popupAtom } from '@/containers/map/store';
+import { popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import GlobeIcon from '@/styles/icons/globe.svg';
 import MagnifyingGlassIcon from '@/styles/icons/magnifying-glass.svg';
@@ -46,7 +45,6 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     query: { locationCode = 'GLOB' },
   } = useRouter();
 
-  const setLocationBBox = useSetAtom(bboxLocation);
   const setPopup = useSetAtom(popupAtom);
 
   const searchParams = useMapSearchParams();
@@ -75,19 +73,9 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     async (locationCode: LocationGroupsDataItemAttributes['code']) => {
       setLocationPopoverOpen(false);
       setPopup({});
-
-      const selectedLocation = locationsData.find(
-        ({ attributes: { code } }) => code === locationCode
-      );
-
-      if (selectedLocation) {
-        setLocationBBox(selectedLocation?.attributes.bounds as CustomMapProps['bounds']['bbox']);
-        await push(
-          `${PAGES.progressTracker}/${locationCode.toUpperCase()}?${searchParams.toString()}`
-        );
-      }
+      push(`${PAGES.progressTracker}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
     },
-    [push, searchParams, setLocationBBox, locationsData, setPopup]
+    [setPopup, push, searchParams]
   );
 
   const reorderedLocations = useMemo(() => {
