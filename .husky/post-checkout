@@ -1,0 +1,13 @@
+#!/bin/bash
+. "$(dirname -- "$0")/_/husky.sh"
+
+SCRIPT_DIR="$(pwd)"
+CMS_ENV_FILE="$SCRIPT_DIR/cms/.env"
+echo $CMS_ENV_FILE
+if [[ -f "$CMS_ENV_FILE" ]] ; then
+    echo "Importing CMS config.."
+    cd ./cms && yarn config-sync import -y
+else
+    echo "CMS env file does not exist, can't import config"
+    echo "DEBUG: looking for env file in $CMS_ENV_FILE"
+fi

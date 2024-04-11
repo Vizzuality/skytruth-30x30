@@ -3,14 +3,16 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Button } from '@/components/ui/button';
+import Icon from '@/components/ui/icon';
 import tablesSettings from '@/containers/map/content/details/tables-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
+import CloseIcon from '@/styles/icons/close.svg?sprite';
 import { getGetLocationsQueryOptions, useGetLocations } from '@/types/generated/location';
 
 const MapDetails: React.FC = () => {
   const [, setSettings] = useSyncMapContentSettings();
   const {
-    query: { locationCode },
+    query: { locationCode = 'GLOB' },
   } = useRouter();
 
   const locationsQuery = useGetLocations(
@@ -69,10 +71,11 @@ const MapDetails: React.FC = () => {
         </span>
         <Button
           variant="text-link"
-          className="m-0 cursor-pointer p-0 font-mono text-xs"
+          className="m-0 cursor-pointer p-0 font-mono text-xs normal-case no-underline"
           onClick={handleOnCloseClick}
         >
           Close
+          <Icon icon={CloseIcon} className=" ml-2 h-3 w-3 pb-px" />
         </Button>
       </div>
       <div className="mt-4">

@@ -53,6 +53,6 @@ install docker and docker-compose
 In order to run the analysis locally using docker you will need to:
 
 1.- set the environment variables.
-2.- run `docker-compose up --build`
+2.- run `docker compose up --build`
 
 Note: the first time you run this, you will need to run as well, once the db service is up, the `skytruth-db-init service` in order to populate the db with the data.

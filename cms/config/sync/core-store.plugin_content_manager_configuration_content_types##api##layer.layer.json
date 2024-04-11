@@ -118,6 +118,21 @@
           "sortable": false
         }
       },
+      "dataset": {
+        "edit": {
+          "label": "dataset",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "dataset",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -223,6 +238,12 @@
           {
             "name": "metadata",
             "size": 12
+          }
+        ],
+        [
+          {
+            "name": "dataset",
+            "size": 6
           }
         ]
       ]

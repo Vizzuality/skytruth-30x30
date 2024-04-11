@@ -1,33 +1,19 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
-import { format } from 'd3-format';
+import { formatPercentage } from '@/lib/utils/formats';
 
 const ChartTooltip = ({ active, payload }) => {
-  const { percentage, year, protectedArea, totalArea, future } = payload[0]?.payload || {};
+  if (!active || !payload) return null;
 
-  const formattedAreas = useMemo(() => {
-    return {
-      protected: format(',.2r')(protectedArea),
-      total: format(',.2r')(totalArea),
-    };
-  }, [protectedArea, totalArea]);
+  const percentageData = payload?.find(({ dataKey }) => dataKey === 'percentage');
+  if (!percentageData?.payload) return null;
 
-  if (!active || !payload?.length) return null;
+  const { percentage, year } = percentageData?.payload;
 
   return (
-    <div className="flex flex-col gap-px rounded-md border border-black bg-white p-4 text-sm">
+    <div className="flex flex-col gap-px border border-black bg-white p-4 font-mono text-xs">
       <span>Year: {year}</span>
-      {!future && (
-        <>
-          <span>Protection percentage: {percentage}%</span>
-          <span>
-            Protected area: {formattedAreas.protected} km<sup>2</sup>
-          </span>
-          <span>
-            Total area: {formattedAreas.total} km<sup>2</sup>
-          </span>
-        </>
-      )}
+      <span>Coverage: {formatPercentage(percentage)}</span>
     </div>
   );
 };

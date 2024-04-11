@@ -1,9 +1,8 @@
-import { FC, useCallback, useEffect, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 
-import { Layer, LngLatBoundsLike, useMap, Source } from 'react-map-gl';
+import { Layer, Source } from 'react-map-gl';
 
-import { bbox } from '@turf/turf';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import {
@@ -11,12 +10,10 @@ import {
   useMapboxDraw,
   UseMapboxDrawProps,
 } from '@/components/map/draw-controls/hooks';
-import { drawStateAtom, sidebarAtom } from '@/containers/map/store';
+import { drawStateAtom } from '@/containers/map/store';
 
 const DrawControls: FC = () => {
   const [{ active, feature }, setDrawState] = useAtom(drawStateAtom);
-  const isSidebarOpen = useAtomValue(sidebarAtom);
-  const { current: map } = useMap();
 
   const onCreate: UseMapboxDrawProps['onCreate'] = useCallback(
     ({ features }) => {
@@ -47,22 +44,6 @@ const DrawControls: FC = () => {
   );
 
   useMapboxDraw(useMapboxDrawProps);
-
-  useEffect(() => {
-    if (map && feature) {
-      const geojsonBbox = bbox(feature);
-
-      map.fitBounds(geojsonBbox as LngLatBoundsLike, {
-        animate: true,
-        padding: {
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: isSidebarOpen ? 430 : 0,
-        },
-      });
-    }
-  }, [map, feature, isSidebarOpen]);
 
   if (active || !feature) {
     return null;

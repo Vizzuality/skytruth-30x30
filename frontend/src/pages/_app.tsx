@@ -9,17 +9,36 @@ import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query
 import 'styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { figtree, overpassMono } from '@/styles/fonts';
 import Analytics from '@/components/analytics';
+import { figtree, overpassMono } from '@/styles/fonts';
 
-type PageProps = {
-  dehydratedState: unknown;
+type LayoutProps<PageProps = object, Props = React.ComponentProps<'div'>> = {
+  Component?: React.FC<Props>;
+  props?: Props | ((props: PageProps) => Props);
 };
 
-const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
+type Props = AppProps & {
+  dehydratedState: unknown;
+  Component: {
+    layout?: LayoutProps;
+  };
+};
+
+const App: React.FC<AppProps> = ({ Component, pageProps }: Props) => {
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
   // between users
   const [queryClient] = useState(() => new QueryClient());
+
+  const Layout = Component?.layout?.Component ?? ((page) => page?.children);
+
+  let layoutProps = {};
+  if (Component.layout?.props) {
+    if (typeof Component.layout.props === 'function') {
+      layoutProps = Component.layout.props(pageProps);
+    } else {
+      layoutProps = Component.layout.props;
+    }
+  }
 
   return (
     <>
@@ -33,7 +52,9 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
         <Hydrate state={pageProps.dehydratedState}>
           <MapProvider>
             <Analytics />
-            <Component {...pageProps} />
+            <Layout {...layoutProps}>
+              <Component {...pageProps} />
+            </Layout>
           </MapProvider>
         </Hydrate>
       </QueryClientProvider>
@@ -41,4 +62,4 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
   );
 };
 
-export default MyApp;
+export default App;

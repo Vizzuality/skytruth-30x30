@@ -43,6 +43,12 @@
       "action": "api::data-tool.data-tool.findOne"
     },
     {
+      "action": "api::dataset.dataset.find"
+    },
+    {
+      "action": "api::dataset.dataset.findOne"
+    },
+    {
       "action": "api::fishing-protection-level-stat.fishing-protection-level-stat.find"
     },
     {

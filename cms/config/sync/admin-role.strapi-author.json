@@ -357,7 +357,6 @@
           "description",
           "site",
           "languages",
-          "data_tool_resource_type",
           "geography",
           "data_tool_ecosystems"
         ]
@@ -394,7 +393,6 @@
           "description",
           "site",
           "languages",
-          "data_tool_resource_type",
           "geography",
           "data_tool_ecosystems"
         ]
@@ -413,7 +411,6 @@
           "description",
           "site",
           "languages",
-          "data_tool_resource_type",
           "geography",
           "data_tool_ecosystems"
         ]

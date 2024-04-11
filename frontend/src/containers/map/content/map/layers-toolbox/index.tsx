@@ -1,38 +1,38 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useState } from 'react';
 
-import { useSyncMapLayers } from '../sync-settings';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@radix-ui/react-collapsible';
+import { LuChevronDown } from 'react-icons/lu';
 
-import LayersDropdown from './layers-list';
-import Legend from './legend';
+import Icon from '@/components/ui/icon';
+import LegendIcon from '@/styles/icons/legend.svg?sprite';
 
-const TABS_TRIGGER_CLASSES =
-  'group flex flex-1 items-center space-x-1 rounded-none border border-b-0 border-black py-3 px-6 font-mono text-sm font-bold uppercase leading-none text-black last:border-l-0 data-[state=active]:bg-orange';
+import LayersLegend from './legend';
 
-const LayersToolbox = (): JSX.Element => {
-  const [activeLayers] = useSyncMapLayers();
+const LayersToolbox: React.FC = () => {
+  const [open, setOpen] = useState(true);
 
   return (
-    <Tabs
-      className="absolute bottom-0 right-0 flex max-h-[calc(100%-100px)] w-[335px] flex-col items-end"
-      defaultValue={activeLayers.length ? 'legend' : 'layers-list'}
-    >
-      <TabsList className="h-auto rounded-none bg-white p-0">
-        <TabsTrigger value="layers-list" className={TABS_TRIGGER_CLASSES} tabIndex={0}>
-          <span>Layers</span>
-        </TabsTrigger>
-        <TabsTrigger value="legend" className={TABS_TRIGGER_CLASSES} tabIndex={0}>
-          <span>Legend</span>
-        </TabsTrigger>
-      </TabsList>
-      <div className="w-full overflow-y-scroll border border-black bg-white py-3 px-6">
-        <TabsContent value="layers-list" className="m-0">
-          <LayersDropdown />
-        </TabsContent>
-        <TabsContent value="legend">
-          <Legend />
-        </TabsContent>
+    <div className="bg-red absolute bottom-0 right-0 z-20">
+      <div className="relative">
+        <Collapsible className="bg-red relative" open={open} onOpenChange={setOpen}>
+          <CollapsibleTrigger className="absolute top-0 right-0 -translate-y-full border border-b-0 border-black bg-white">
+            {open && <LuChevronDown className="mx-2 my-px h-5 w-5" aria-hidden />}
+            {!open && (
+              <span className="flex items-center gap-2 py-2.5 pl-3 pr-4 font-mono text-xs">
+                <Icon icon={LegendIcon} className="ml-0.5 h-5 w-5" />
+                <span className="pt-px">Legend</span>
+              </span>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent className="border-l border-t border-black bg-white fill-mode-none data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+            <div className="relative h-full max-h-[calc(100vh-200px)] w-[300px] overflow-y-auto border ">
+              <LayersLegend />
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+        <div className="absolute bottom-0 left-0 h-6 w-full bg-gradient-to-b from-transparent to-white" />
       </div>
-    </Tabs>
+    </div>
   );
 };
 

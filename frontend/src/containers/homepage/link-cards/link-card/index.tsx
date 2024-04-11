@@ -9,17 +9,19 @@ import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 const BACKGROUND_IMAGES = {
   computer: '/images/static-pages/bg-images/card-1.png',
   magnifyingGlass: '/images/static-pages/bg-images/card-2.png',
+  pencilHolder: '/images/static-pages/bg-images/card-4.png',
 };
 
 const linkCardVariants = cva('', {
   variants: {
     color: {
+      orange: 'bg-orange',
       blue: 'bg-blue',
       green: 'bg-green',
     },
   },
   defaultVariants: {
-    color: 'blue',
+    color: 'orange',
   },
 });
 

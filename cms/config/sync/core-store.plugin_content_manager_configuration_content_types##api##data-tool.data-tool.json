@@ -77,9 +77,9 @@
           "sortable": false
         }
       },
-      "data_tool_resource_type": {
+      "data_tool_resource_types": {
         "edit": {
-          "label": "data_tool_resource_type",
+          "label": "data_tool_resource_types",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -87,9 +87,9 @@
           "mainField": "name"
         },
         "list": {
-          "label": "data_tool_resource_type",
-          "searchable": true,
-          "sortable": true
+          "label": "data_tool_resource_types",
+          "searchable": false,
+          "sortable": false
         }
       },
       "geography": {
@@ -210,10 +210,6 @@
         ],
         [
           {
-            "name": "data_tool_resource_type",
-            "size": 6
-          },
-          {
             "name": "geography",
             "size": 6
           }
@@ -221,6 +217,10 @@
         [
           {
             "name": "data_tool_ecosystems",
+            "size": 6
+          },
+          {
+            "name": "data_tool_resource_types",
             "size": 6
           }
         ]

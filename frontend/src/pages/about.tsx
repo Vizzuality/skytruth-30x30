@@ -122,7 +122,7 @@ const About: React.FC = ({
             . This target has been{' '}
             <a
               className="underline"
-              href="https://www.google.com/url?q=https://www.nytimes.com/2022/12/19/climate/biodiversity-cop15-montreal-30x30.html&sa=D&source=docs&ust=1707145082556030&usg=AOvVaw2LgZhM993iNNP-D3QR7CvL"
+              href="https://www.nytimes.com/2022/12/19/climate/biodiversity-cop15-montreal-30x30.html"
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Popup } from 'react-map-gl';
 
 import { useAtomValue, useSetAtom } from 'jotai';
+import { useKey } from 'rooks';
 
 import Icon from '@/components/ui/icon';
 import {
@@ -14,6 +15,7 @@ import {
 } from '@/components/ui/select';
 import PopupItem from '@/containers/map/content/map/popup/item';
 import { layersInteractiveAtom, popupAtom } from '@/containers/map/store';
+import { cn } from '@/lib/classnames';
 import CloseIcon from '@/styles/icons/close.svg?sprite';
 import { useGetLayers } from '@/types/generated/layer';
 
@@ -84,6 +86,11 @@ const PopupContainer = () => {
     }
   }, [layersInteractiveData]);
 
+  useKey('Escape', closePopup);
+
+  const isHoveredTooltip = popup?.type === 'mousemove';
+  const isClickedTooltip = popup?.type === 'click';
+
   if (!Object.keys(popup).length || !popup?.features?.length) return null;
 
   return (
@@ -94,15 +101,19 @@ const PopupContainer = () => {
       closeButton={false}
       maxWidth="300px"
       onClose={closePopup}
-      className="min-w-[250px]"
+      className={cn({
+        'min-w-[250px]': !isHoveredTooltip,
+      })}
     >
       <div className="space-y-2 p-4">
-        <div className="flex justify-end">
-          <button onClick={closePopup}>
-            <Icon icon={CloseIcon} className="h-3 w-3 fill-black" />
-          </button>
-        </div>
-        {availableSources.length > 1 && (
+        {!isHoveredTooltip && (
+          <div className="flex justify-end">
+            <button onClick={closePopup}>
+              <Icon icon={CloseIcon} className="h-3 w-3 fill-black" />
+            </button>
+          </div>
+        )}
+        {isClickedTooltip && availableSources.length > 1 && (
           <Select
             onValueChange={(v) => {
               setSelectedLayerId(+v);
@@ -121,7 +132,12 @@ const PopupContainer = () => {
             </SelectContent>
           </Select>
         )}
-        {selectedLayerId && <PopupItem id={selectedLayerId} />}
+        {isHoveredTooltip && (
+          <div className="font-mono text-sm text-gray-500">
+            {popup.features.find(({ source }) => source === 'ezz-source')?.properties?.GEONAME}
+          </div>
+        )}
+        {isClickedTooltip && selectedLayerId && <PopupItem id={selectedLayerId} />}
       </div>
     </Popup>
   );

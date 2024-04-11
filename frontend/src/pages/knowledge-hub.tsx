@@ -1,27 +1,19 @@
 import { useRef } from 'react';
 
-import { useAtomValue } from 'jotai';
-
 import Cta from '@/components/static-pages/cta';
 import Intro from '@/components/static-pages/intro';
 import Section from '@/components/static-pages/section';
 import { PAGES } from '@/constants/pages';
 import CardFilters from '@/containers/knowledge-hub/card-filters';
 import CardList from '@/containers/knowledge-hub/card-list';
-import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
 import Layout, { Content } from '@/layouts/static-page';
 
 const KnowledgeHubPage = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const filters = useAtomValue(cardFiltersAtom);
 
   const handleIntroScrollClick = () => {
     sectionRef?.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  const title = filters.resourceType
-    ? `${filters.resourceType.toLocaleLowerCase()} resources`
-    : 'all 30x30 resources';
 
   return (
     <Layout
@@ -49,13 +41,13 @@ const KnowledgeHubPage = () => {
       }
     >
       <Content>
-        <Section ref={sectionRef} borderTop={false}>
-          <div className="space-y-7">
+        <Section ref={sectionRef} borderTop={false} className="py-0 md:mb-0">
+          <div className="space-y-24">
             <h2 className="text-[52px] font-black leading-none">
               I am looking for...
-              <br /> {title}.
+              <br /> Data tools.
             </h2>
-            <div>
+            <div className="space-y-4">
               <CardFilters />
               <CardList />
             </div>

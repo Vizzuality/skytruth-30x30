@@ -84,7 +84,7 @@ const StaticPageLayout: React.FC<
       </div>
       <div className="border-x border-black">{hero && <>{hero}</>}</div>
       <div className={cn('border-black', { border: !!hero, 'border-x': !hero })}>
-        <div className="flex w-full flex-col gap-6 py-0 md:mx-auto md:max-w-7xl md:flex-row md:pt-24 md:pl-8">
+        <div className="flex w-full flex-col gap-6 py-6 md:mx-auto md:max-w-7xl md:flex-row md:py-24 md:pl-8">
           {children}
         </div>
       </div>

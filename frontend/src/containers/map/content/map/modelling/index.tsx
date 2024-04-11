@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import type { Feature } from 'geojson';
 import { useAtomValue, useSetAtom } from 'jotai';
 
@@ -16,12 +16,29 @@ const Modelling = () => {
   const { feature } = useAtomValue(drawStateAtom);
   const setModellingState = useSetAtom(modellingAtom);
 
-  const { isFetching, isSuccess, data, isError } = useQuery(
+  const { isFetching, isSuccess, data } = useQuery(
     ['modelling', feature],
     () => fetchModelling(feature),
     {
       enabled: Boolean(feature),
       select: ({ data }) => data,
+      refetchOnWindowFocus: false,
+      retry: false,
+      onError: (req) => {
+        if (isAxiosError(req)) {
+          setModellingState((prevState) => ({
+            ...prevState,
+            status: 'error',
+            messageError: req.response?.status === 400 ? req.response?.data.error : undefined,
+          }));
+        } else {
+          setModellingState((prevState) => ({
+            ...prevState,
+            status: 'error',
+            messageError: undefined,
+          }));
+        }
+      },
     }
   );
 
@@ -30,9 +47,8 @@ const Modelling = () => {
       ...prevState,
       ...(isSuccess && { status: 'success', data }),
       ...(isFetching && { status: 'running' }),
-      ...(isError && { status: 'error' }),
     }));
-  }, [setModellingState, isFetching, isSuccess, data, isError]);
+  }, [setModellingState, isFetching, isSuccess, data]);
 
   return null;
 };

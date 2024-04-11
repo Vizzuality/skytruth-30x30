@@ -23,19 +23,23 @@ const SectionContent: React.FC<SectionContentProps> = ({ className, children }) 
 );
 
 export type SectionProps = PropsWithChildren<{
+  className?: string;
   borderTop?: boolean;
 }>;
 
-const Section = forwardRef<HTMLDivElement, SectionProps>(({ borderTop = true, children }, ref) => (
-  <div
-    ref={ref}
-    className={cn('w-full border-black py-6 px-8 md:mx-auto md:mb-20 md:max-w-7xl md:px-0', {
-      'border-t': borderTop,
-    })}
-  >
-    {children}
-  </div>
-));
+const Section = forwardRef<HTMLDivElement, SectionProps>(
+  ({ className, borderTop = true, children }, ref) => (
+    <div
+      ref={ref}
+      className={cn('w-full border-black py-6 px-8 md:mx-auto md:mb-20 md:max-w-7xl md:px-0', {
+        'border-t': borderTop,
+        [className]: true,
+      })}
+    >
+      {children}
+    </div>
+  )
+);
 
 Section.displayName = 'Section';
 

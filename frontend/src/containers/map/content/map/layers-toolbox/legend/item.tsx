@@ -43,11 +43,11 @@ const LegendItem: FC<LegendItemsProps> = ({ config }) => {
   switch (type) {
     case 'basic':
       return (
-        <ul className="flex w-full flex-col space-y-1">
+        <ul className="flex w-full flex-col">
           {items.map(({ value, color, description }) => (
             <li key={`${value}`} className="flex items-center space-x-2 p-1 text-xs">
               <div
-                className={'h-6 w-6 flex-shrink-0 rounded-full'}
+                className={'h-3 w-3 flex-shrink-0 rounded-full'}
                 style={{
                   backgroundColor: color,
                 }}
@@ -63,11 +63,11 @@ const LegendItem: FC<LegendItemsProps> = ({ config }) => {
 
     case 'icon':
       return (
-        <ul className="flex w-full flex-col space-y-1">
+        <ul className="flex w-full flex-col">
           {items.map(({ value, icon, description }) => (
-            <li key={`${value}`} className="flex space-x-2 p-1">
-              <span className="h-7 w-7">
-                <Icon icon={ICONS_MAPPING[icon]} className="h-7 w-7" />
+            <li key={`${value}`} className="flex items-center space-x-2 p-1">
+              <span className="h-3.5 w-3.5">
+                <Icon icon={ICONS_MAPPING[icon]} className="h-3.5 w-3.5" />
               </span>
               <span className="flex items-center text-xs">
                 <span className="font-mono">{value}</span>

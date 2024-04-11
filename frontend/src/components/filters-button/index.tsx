@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { isEqual } from 'lodash-es';
 import { Filter } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -52,26 +51,25 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
     setValue('filters', values);
   }, [setValue, values]);
 
-  useEffect(() => {
-    if (isEqual(filters, values)) return;
-    onChange(field, filters);
-  }, [field, filters, values, onChange]);
-
   const handleSelectAll = () => {
     setValue('filters', allFilterValues);
+    onChange(field, allFilterValues);
   };
 
   const handleClearAll = () => {
     setValue('filters', []);
+    onChange(field, []);
   };
 
   const handleOnCheckedChange = (type, checked) => {
     if (checked) {
       const filtersValues = [...filters, type];
       setValue('filters', filtersValues);
+      onChange(field, filtersValues);
     } else {
       const filtersValues = filters.filter((entry) => entry !== type);
       setValue('filters', filtersValues);
+      onChange(field, filtersValues);
     }
   };
 

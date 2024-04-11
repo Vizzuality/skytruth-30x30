@@ -21,9 +21,9 @@ const buttonVariants = cva(
         ghost: 'hover:bg-gray-50 hover:text-gray-900 focus-visible:ring-black',
         // link: 'text-slate-900 underline-offset-4 hover:underline',
         white: 'bg-white border border-black',
-        'sidebar-details':
-          'bg-blue text-black text-sm justify-start text-center text-sm hover:brightness-90 font-bold uppercase md:px-8 focus-visible:ring-black',
-        'text-link': 'text-sm font-semibold uppercase underline focus-visible:ring-black',
+        transparent: 'bg-transparent border border-black',
+        'text-link':
+          'text-sm font-semibold uppercase underline ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2',
         blue: 'bg-blue text-black text-sm focus-visible:ring-black hover:brightness-90 font-bold border border-black',
       },
       size: {

@@ -68,6 +68,11 @@ Please note, there are some actions that might to be carried out manually - you'
 
 First, authenticate with GCP. The easiest way to do this is to run `gcloud auth application-default login`.
 
+To verify your credentials were applied correctly, you can use
+`gcloud projects list`
+to check projects available to the authenticated account. To make double sure you're working on the correct project, you can also run
+`gcloud config set project [project id]` 
+
 Next, check and adapt if necessary the contents of `infrastructure/base/vars/terraform.tfvars`. For example, set the email address used for sendig alert notifications.
 
 You will need to initialize both terraform projects by running:
@@ -85,7 +90,7 @@ While in `infrastructure/remote-state` directory:
 
 2. Apply the `Base` project. This needs to be repeated after any changes in the base project.
 
-_Please note: when doing this for the first time in a clean project, temporarily change the `cloudrun` module (`infrastructure/base/modules/cloudrun/main.tf`) by uncommenting the default image setting, so that it deploys a dummy "hello" image. This is to work around the fact that actual application images are going to be available in the image repository only once the infrastructure is provisioned and the GH Actions deployment passed._
+_Please note: when doing this for the first time in a clean project, or a new environment, use the `use_hello_world_image` variable, so that it deploys a dummy "hello" image. This is to work around the fact that actual application images are going to be available in the image repository only once the infrastructure is provisioned and the GH Actions deployment passed._
 
 While in `infrastructure/base` directory:
 

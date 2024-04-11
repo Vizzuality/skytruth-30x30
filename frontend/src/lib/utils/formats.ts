@@ -24,6 +24,8 @@ export function formatPercentage(
 }
 
 export function formatKM(value: number, options?: Intl.NumberFormatOptions) {
+  if (value < 1 && value > 0) return '<1';
+
   const v = Intl.NumberFormat('en-US', {
     notation: 'standard',
     compactDisplay: 'short',

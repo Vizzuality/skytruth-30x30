@@ -9,7 +9,7 @@ import type { LocationListResponseDataItem } from '@/types/generated/strapi.sche
 
 const GlobalRegionalTable: React.FC = () => {
   const {
-    query: { locationCode },
+    query: { locationCode = 'GLOB' },
   } = useRouter();
 
   const globalLocationQuery = useGetLocations(
@@ -168,7 +168,6 @@ const GlobalRegionalTable: React.FC = () => {
       return {
         location: location.name,
         locationCode: location.code,
-        totalMarineArea: location.totalMarineArea,
         coverage: coveragePercentage,
         area: protectedArea,
         locationType: location.type,

@@ -40,8 +40,17 @@
       "column": {
         "defaultTo": 0,
         "type": "decimal",
-        "args": [12,2]
+        "args": [
+          12,
+          2
+        ]
       }
+    },
+    "mpaa_establishment_stage": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::mpaa-establishment-stage.mpaa-establishment-stage",
+      "inversedBy": "mpa_protection_coverage_stats"
     }
   }
 }

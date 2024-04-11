@@ -6,9 +6,11 @@ import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 
 import { useAtom, useAtomValue } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 
 import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
+import { CustomMapProps } from '@/components/map/types';
 import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
@@ -37,10 +39,13 @@ const MainMap: React.FC = () => {
   const drawState = useAtomValue(drawStateAtom);
   const isSidebarOpen = useAtomValue(sidebarAtom);
   const [popup, setPopup] = useAtom(popupAtom);
-  const { locationCode } = useParams();
-  const locationBbox = useAtomValue(bboxLocation);
+  const params = useParams();
+  const [locationBbox, setLocationBbox] = useAtom(bboxLocation);
+  const resetLocationBbox = useResetAtom(bboxLocation);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
   const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
+
+  const locationCode = params?.locationCode || 'GLOB';
 
   const locationsQuery = useGetLocations(
     {
@@ -75,6 +80,10 @@ const MainMap: React.FC = () => {
     }
   );
 
+  useEffect(() => {
+    setLocationBbox(locationsQuery?.data?.bounds as CustomMapProps['bounds']['bbox']);
+  }, [locationCode, locationsQuery, setLocationBbox]);
+
   const handleMoveEnd = useCallback(() => {
     setMapSettings((prev) => ({
       ...prev,
@@ -101,7 +110,6 @@ const MainMap: React.FC = () => {
         );
 
         setPopup({});
-        return null;
       }
 
       if (
@@ -120,11 +128,17 @@ const MainMap: React.FC = () => {
 
   const handleMouseMove = useCallback(
     (e: Parameters<ComponentProps<typeof Map>['onMouseOver']>[0]) => {
-      if (popup?.features?.length) return;
+      if (!e.features.length) {
+        setPopup({});
+      }
 
-      if (e.features.length > 0) {
+      if (e?.features?.length > 0) {
         if (!drawState.active) {
           setCursor('pointer');
+        }
+
+        if (e.type === 'mousemove') {
+          setPopup({ ...e });
         }
 
         if (hoveredPolygonId.current !== null) {
@@ -153,7 +167,7 @@ const MainMap: React.FC = () => {
         }
       }
     },
-    [map, hoveredPolygonId, drawState.active, popup]
+    [map, hoveredPolygonId, drawState.active, setPopup]
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -168,7 +182,8 @@ const MainMap: React.FC = () => {
         { hover: false }
       );
     }
-  }, [map, hoveredPolygonId, popup]);
+    setPopup({});
+  }, [map, hoveredPolygonId, popup, setPopup]);
 
   const initialViewState: ComponentProps<typeof Map>['initialViewState'] = useMemo(() => {
     if (URLBbox) {
@@ -229,6 +244,18 @@ const MainMap: React.FC = () => {
     }
   }, [map, popup]);
 
+  useEffect(() => {
+    return () => {
+      resetLocationBbox();
+    };
+  }, [resetLocationBbox]);
+
+  const disableMouseMove = popup.type === 'click' && popup.features?.length;
+
+  // ? the popup won't show up when the user is hovering a layer that is not EEZ
+  const hidePopup =
+    popup?.type === 'mousemove' && !popup.features?.some((f) => f.source === 'ezz-source');
+
   return (
     <div className="absolute left-0 h-full w-full border-r border-b border-black">
       <Map
@@ -237,13 +264,13 @@ const MainMap: React.FC = () => {
         interactiveLayerIds={!drawState.active && !drawState.feature ? layersInteractiveIds : []}
         onClick={handleMapClick}
         onMoveEnd={handleMoveEnd}
-        onMouseMove={handleMouseMove}
+        onMouseMove={!disableMouseMove && handleMouseMove}
         onMouseLeave={handleMouseLeave}
         attributionControl={false}
         cursor={cursor}
       >
         <>
-          <Popup />
+          {!hidePopup && <Popup />}
           <LabelsManager />
           <LayersToolbox />
           <ZoomControls />
