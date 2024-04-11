@@ -1242,7 +1242,6 @@ export interface ApiMpaMpa extends Schema.CollectionType {
     draftAndPublish: false;
   };
   attributes: {
-    wdpaid: Attribute.Integer;
     name: Attribute.String & Attribute.Required;
     area: Attribute.Decimal &
       Attribute.Required &
@@ -1263,6 +1262,7 @@ export interface ApiMpaMpa extends Schema.CollectionType {
       'oneToMany',
       'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat'
     >;
+    wdpaid: Attribute.String & Attribute.Unique;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::mpa.mpa', 'oneToOne', 'admin::user'> &

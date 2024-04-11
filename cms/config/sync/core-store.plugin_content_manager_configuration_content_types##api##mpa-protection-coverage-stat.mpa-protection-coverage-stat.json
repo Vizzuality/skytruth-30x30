@@ -169,26 +169,10 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "mpa",
-        "fishing_protection_level",
-        "mpaa_protection_level"
-      ],
       "edit": [
         [
           {
             "name": "mpa",
-            "size": 6
-          },
-          {
-            "name": "fishing_protection_level",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "mpaa_protection_level",
             "size": 6
           },
           {
@@ -198,14 +182,32 @@
         ],
         [
           {
-            "name": "area",
-            "size": 4
-          },
-          {
             "name": "mpaa_establishment_stage",
             "size": 6
+          },
+          {
+            "name": "mpaa_protection_level",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "fishing_protection_level",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "area",
+            "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "mpa",
+        "fishing_protection_level",
+        "mpaa_protection_level"
       ]
     }
   },
