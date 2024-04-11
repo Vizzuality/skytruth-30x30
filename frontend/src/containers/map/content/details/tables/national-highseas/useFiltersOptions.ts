@@ -47,7 +47,12 @@ const useFiltersOptions = () => {
     {},
     {
       query: {
-        select: ({ data }) => data,
+        select: ({ data }) =>
+          data.filter(
+            ({ attributes }) =>
+              // ? these protection values are used internally, but they should not be visible to the user
+              !['fully-highly-protected', 'less-protected-unknown'].includes(attributes?.slug)
+          ),
         placeholderData: { data: [] },
       },
     }
@@ -66,13 +71,12 @@ const useFiltersOptions = () => {
     {
       query: {
         select: ({ data }) => data,
-        placeholderData: { data: [] },
       },
     }
   );
 
   const fishingProtectionLevelOptions = useMemo(() => {
-    return fishingProtectionLevels.map(({ attributes }) => ({
+    return fishingProtectionLevels?.map(({ attributes }) => ({
       name: attributes?.name,
       value: attributes?.slug,
     }));
