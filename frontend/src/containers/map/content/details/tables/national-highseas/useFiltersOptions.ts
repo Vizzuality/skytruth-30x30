@@ -29,7 +29,7 @@ const useFiltersOptions = () => {
     {},
     {
       query: {
-        select: ({ data }) => data,
+        select: ({ data }) => [...data, { attributes: { name: 'N/A', slug: 'N/A' } }],
         placeholderData: { data: [] },
       },
     }

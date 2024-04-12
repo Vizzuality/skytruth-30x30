@@ -20,7 +20,7 @@ const PopupItem = ({ id }: PopupItemProps) => {
     const l = parseConfig<InteractionConfig | ReactElement | null>({
       config: {
         ...interaction_config,
-        locationId: id,
+        layerId: id,
       },
       params_config,
       settings: {},

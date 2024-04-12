@@ -132,9 +132,8 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         ),
         cell: ({ row }) => {
           const { establishmentStage: value } = row.original;
-          const formattedValue = establishmentStageOptions.find(
-            (entry) => value === entry?.value
-          )?.name;
+          const formattedValue =
+            establishmentStageOptions.find((entry) => value === entry?.value)?.name || 'N/A';
           return <>{formattedValue}</>;
         },
       },
