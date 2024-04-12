@@ -139,7 +139,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart
           key={chartData.slug}
-          showTarget={false}
+          showTarget={location?.code === 'GLOB'}
           className="py-2"
           data={chartData}
         />
