@@ -14,7 +14,7 @@ import { LayerTyped } from '@/types/layers';
 
 const TERMS_CLASSES = 'font-mono uppercase';
 
-const ProtectedAreaPopup = ({ locationId }: { locationId: number }) => {
+const ProtectedAreaPopup = ({ layerId }: { layerId: number }) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
@@ -23,7 +23,7 @@ const ProtectedAreaPopup = ({ locationId }: { locationId: number }) => {
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
   const layerQuery = useGetLayersId(
-    locationId,
+    layerId,
     {
       populate: 'metadata',
     },
