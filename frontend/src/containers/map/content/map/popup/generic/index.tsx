@@ -10,10 +10,7 @@ import { format } from '@/lib/utils/formats';
 import { useGetLayersId } from '@/types/generated/layer';
 import { LayerTyped, InteractionConfig } from '@/types/layers';
 
-const GenericPopup = ({
-  locationId,
-  ...restConfig
-}: InteractionConfig & { locationId: number }) => {
+const GenericPopup = ({ layerId, ...restConfig }: InteractionConfig & { layerId: number }) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
@@ -23,7 +20,7 @@ const GenericPopup = ({
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
   const layerQuery = useGetLayersId(
-    locationId,
+    layerId,
     {
       populate: 'metadata',
     },

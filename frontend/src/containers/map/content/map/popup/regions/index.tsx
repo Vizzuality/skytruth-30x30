@@ -18,7 +18,7 @@ import { useGetProtectionCoverageStats } from '@/types/generated/protection-cove
 import { ProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
-const EEZLayerPopup = ({ locationId }) => {
+const RegionsPopup = ({ layerId }) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
@@ -30,7 +30,7 @@ const EEZLayerPopup = ({ locationId }) => {
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
   const layerQuery = useGetLayersId(
-    locationId,
+    layerId,
     {
       populate: 'metadata',
     },
@@ -224,4 +224,4 @@ const EEZLayerPopup = ({ locationId }) => {
   );
 };
 
-export default EEZLayerPopup;
+export default RegionsPopup;

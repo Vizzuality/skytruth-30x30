@@ -2,8 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
+import { useQueries } from '@tanstack/react-query';
 import type { Feature } from 'geojson';
 import { useAtom, useAtomValue } from 'jotai';
 
@@ -13,12 +14,12 @@ import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { useGetLayersId } from '@/types/generated/layer';
-import { useGetLocations } from '@/types/generated/location';
-import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
+import { getGetLocationsQueryOptions } from '@/types/generated/location';
+import { getGetProtectionCoverageStatsQueryOptions } from '@/types/generated/protection-coverage-stat';
 import { ProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
-const EEZLayerPopup = ({ locationId }) => {
+const EEZLayerPopup = ({ layerId }) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
@@ -26,11 +27,12 @@ const EEZLayerPopup = ({ locationId }) => {
   const { push } = useRouter();
   const [, setLocationBBox] = useAtom(bboxLocation);
   const [popup, setPopup] = useAtom(popupAtom);
+  const { locationCode } = useParams();
 
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
   const layerQuery = useGetLayersId(
-    locationId,
+    layerId,
     {
       populate: 'metadata',
     },
@@ -79,76 +81,120 @@ const EEZLayerPopup = ({ locationId }) => {
     return DATA_REF.current;
   }, [popup, source, layersInteractiveIds, map, rendered]);
 
-  const locationsQuery = useGetLocations(
-    {
-      filters: {
-        code: DATA?.ISO_SOV1,
-      },
-    },
-    {
-      query: {
-        enabled: !!DATA?.ISO_SOV1,
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
-  );
+  const locationCodes = Object.keys(DATA || {})
+    .filter((key) => key.startsWith('ISO_') && DATA[key])
+    .map((key) => DATA[key])
+    .filter((code, index, codes) => {
+      if (codes.length > 1) return code === locationCode;
+      return true;
+    });
 
-  // ? I had to type the data ad hoc because the generated type is wrong when we are adding
-  // ? the `sort` query param
-  const { data: protectionCoverageStats }: { data: ProtectionCoverageStatListResponseDataItem[] } =
-    useGetProtectionCoverageStats(
-      {
-        filters: {
-          location: {
-            code: DATA?.ISO_SOV1,
+  const locationQueries = useQueries({
+    queries: locationCodes.map((code) =>
+      getGetLocationsQueryOptions(
+        {
+          filters: {
+            code,
           },
         },
-        populate: '*',
-        // @ts-expect-error this is an issue with Orval typing
-        'sort[year]': 'desc',
-        'pagination[limit]': -1,
-      },
-      {
-        query: {
-          select: ({ data }) => data,
+        {
+          query: {
+            enabled: Boolean(code),
+            select: ({ data }) => data?.[0]?.attributes,
+          },
+        }
+      )
+    ),
+  });
+
+  const locationsData = useMemo(
+    () =>
+      locationQueries
+        .map((query) => {
+          if (['loading', 'error'].includes(query.status)) return null;
+
+          return query.data;
+        })
+        .filter((d) => Boolean(d)),
+    [locationQueries]
+  );
+
+  const protectionCoverageStatsQueries = useQueries({
+    queries: locationCodes.map((code) =>
+      getGetProtectionCoverageStatsQueryOptions(
+        {
+          filters: {
+            location: {
+              code,
+            },
+          },
+          populate: '*',
+          // @ts-expect-error this is an issue with Orval typing
+          'sort[year]': 'desc',
+          'pagination[limit]': -1,
         },
-      }
-    );
+        {
+          query: {
+            select: ({ data }) => {
+              if (!data?.length) return undefined;
 
-  const latestYearAvailable = useMemo(() => {
-    if (protectionCoverageStats?.[0]) {
-      return protectionCoverageStats[0].attributes.year;
-    }
-  }, [protectionCoverageStats]);
+              const latestYear = data[0].attributes.year;
 
-  const latestProtectionCoverageStats = useMemo(() => {
-    if (latestYearAvailable) {
-      return protectionCoverageStats.filter((d) => d.attributes.year === latestYearAvailable);
-    }
-    return [];
-  }, [protectionCoverageStats, latestYearAvailable]);
+              const latestStats = data.filter((d) => d.attributes.year === latestYear);
+
+              const cumSumProtectedArea = latestStats.reduce(
+                (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
+                0
+              );
+
+              return {
+                cumSumProtectedArea,
+              };
+            },
+          },
+        }
+      )
+    ),
+  });
+
+  const protectionCoverageStatsData: { cumSumProtectedArea: number }[] = useMemo(
+    () =>
+      protectionCoverageStatsQueries
+        .map((query) => {
+          if (!query.isSuccess) return null;
+
+          return query.data as {
+            cumSumProtectedArea: ProtectionCoverageStatListResponseDataItem['attributes']['cumSumProtectedArea'];
+          };
+        })
+        .filter((d) => Boolean(d)),
+    [protectionCoverageStatsQueries]
+  );
 
   const totalCumSumProtectedArea = useMemo(() => {
-    if (!latestProtectionCoverageStats.length) return 0;
+    if (!protectionCoverageStatsData.length) return 0;
 
-    return latestProtectionCoverageStats.reduce(
-      (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
+    return protectionCoverageStatsData.reduce(
+      (acc, { cumSumProtectedArea }) => acc + cumSumProtectedArea,
       0
     );
-  }, [latestProtectionCoverageStats]);
+  }, [protectionCoverageStatsData]);
+
+  const totalMarineArea = useMemo(() => {
+    if (!locationsData.length) return 0;
+
+    return locationsData.reduce((acc, { totalMarineArea }) => acc + totalMarineArea, 0);
+  }, [locationsData]);
 
   const coveragePercentage = useMemo(() => {
-    if (locationsQuery.data) {
-      return formatPercentage(
-        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100,
-        {
-          displayPercentageSign: false,
-        }
-      );
+    if (locationsData.length) {
+      return formatPercentage((totalCumSumProtectedArea / totalMarineArea) * 100, {
+        displayPercentageSign: false,
+      });
     }
 
     return '-';
-  }, [totalCumSumProtectedArea, locationsQuery.data]);
+  }, [totalCumSumProtectedArea, totalMarineArea, locationsData]);
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -156,14 +202,14 @@ const EEZLayerPopup = ({ locationId }) => {
   }, [map]);
 
   const handleLocationSelected = useCallback(async () => {
-    await push(
-      `${
-        PAGES.progressTracker
-      }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`
-    );
-    setLocationBBox(locationsQuery.data.bounds as CustomMapProps['bounds']['bbox']);
+    if (!locationsData[0]) return undefined;
+
+    const { code, bounds } = locationsData[0];
+
+    await push(`${PAGES.progressTracker}/${code.toUpperCase()}?${searchParams.toString()}`);
+    setLocationBBox(bounds as CustomMapProps['bounds']['bbox']);
     setPopup({});
-  }, [push, searchParams, setLocationBBox, locationsQuery.data, setPopup]);
+  }, [push, searchParams, setLocationBBox, locationsData, setPopup]);
 
   useEffect(() => {
     map?.on('render', handleMapRender);
@@ -175,18 +221,19 @@ const EEZLayerPopup = ({ locationId }) => {
     };
   }, [map, handleMapRender]);
 
+  const isFetchedLocations = locationQueries.every((query) => query.isFetched);
+  const isFetchingLocations =
+    !isFetchedLocations && locationQueries.some((query) => query.isFetching);
+  const isEmptyLocations = isFetchedLocations && locationQueries.some((query) => !query.data);
+
   if (!DATA) return null;
 
   return (
     <div className="space-y-2">
       <h3 className="text-xl font-semibold">{DATA?.GEONAME}</h3>
-      {locationsQuery.isFetching && !locationsQuery.isFetched && (
-        <span className="text-sm">Loading...</span>
-      )}
-      {locationsQuery.isFetched && !locationsQuery.data && (
-        <span className="text-sm">No data available</span>
-      )}
-      {locationsQuery.isFetched && locationsQuery.data && (
+      {isFetchingLocations && <span className="text-sm">Loading...</span>}
+      {isEmptyLocations && <span className="text-sm">No data available</span>}
+      {!isEmptyLocations && (
         <>
           <div className="space-y-2">
             <div className="my-4 max-w-[95%] font-mono">Marine Conservation Coverage</div>
@@ -199,16 +246,18 @@ const EEZLayerPopup = ({ locationId }) => {
               <span>
                 km<sup>2</sup>
               </span>{' '}
-              out of {formatKM(locationsQuery.data.totalMarineArea)} km<sup>2</sup>
+              out of {formatKM(totalMarineArea)} km<sup>2</sup>
             </div>
           </div>
-          <button
-            type="button"
-            className="block w-full border border-black p-4 text-center font-mono uppercase"
-            onClick={handleLocationSelected}
-          >
-            Open country insights
-          </button>
+          {locationCodes?.length === 1 && (
+            <button
+              type="button"
+              className="block w-full border border-black p-4 text-center font-mono uppercase"
+              onClick={handleLocationSelected}
+            >
+              Open country insights
+            </button>
+          )}
         </>
       )}
     </div>
