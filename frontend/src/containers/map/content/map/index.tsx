@@ -220,7 +220,8 @@ const MainMap: React.FC = () => {
         padding: {
           top: 0,
           bottom: 0,
-          left: isSidebarOpen ? 430 : 0,
+          left:
+            typeof window !== 'undefined' && window?.innerWidth > 430 && isSidebarOpen ? 430 : 0,
           right: 0,
         },
       },
