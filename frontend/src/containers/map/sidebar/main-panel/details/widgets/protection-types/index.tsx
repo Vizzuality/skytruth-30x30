@@ -74,6 +74,18 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     }
   );
 
+  // Go through all the relevant stats, find the last updated one's value
+  const lastUpdated = useMemo(() => {
+    const protectionLevelStats =
+      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data;
+    const updatedAtValues = protectionLevelStats?.reduce(
+      (acc, curr) => [...acc, curr?.attributes?.updatedAt],
+      []
+    );
+
+    return updatedAtValues?.sort()?.reverse()?.[0];
+  }, [protectionLevelsData]);
+
   // Parse data to display in the chart
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
@@ -109,7 +121,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   return (
     <Widget
       title="Marine Conservation Protection Levels"
-      lastUpdated={protectionLevelsData[0]?.attributes?.updatedAt}
+      lastUpdated={lastUpdated}
       noData={noData}
       loading={loading}
     >
