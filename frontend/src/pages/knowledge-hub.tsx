@@ -43,10 +43,7 @@ const KnowledgeHubPage = () => {
       <Content>
         <Section ref={sectionRef} borderTop={false} className="py-0 md:mb-0">
           <div className="space-y-24">
-            <h2 className="text-[52px] font-black leading-none">
-              I am looking for...
-              <br /> Data tools.
-            </h2>
+            <h2 className="text-[52px] font-black leading-none">I am looking for...</h2>
             <div className="space-y-4">
               <CardFilters />
               <CardList />
