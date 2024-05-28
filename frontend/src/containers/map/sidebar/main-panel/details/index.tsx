@@ -36,7 +36,7 @@ const SidebarDetails: React.FC = () => {
       <div className="h-full w-full">
         <div className="sticky border-b border-black bg-orange px-4 py-4 md:py-6 md:px-8">
           <h1 className="text-5xl font-black">{locationsData?.data[0]?.attributes?.name}</h1>
-          <LocationSelector className="mt-2" />
+          <LocationSelector className="mt-2" theme="orange" />
           <CountriesList
             className="mt-2"
             bgColorClassName="bg-orange"

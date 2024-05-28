@@ -37,9 +37,10 @@ const BUTTON_CLASSES =
 
 type LocationSelectorProps = {
   className?: HTMLDivElement['className'];
+  theme?: 'orange' | 'blue';
 };
 
-const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
+const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme = "orange" }) => {
   const {
     push,
     query: { locationCode = 'GLOB' },
@@ -104,6 +105,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
         </PopoverTrigger>
         <PopoverContent className="w-96 max-w-screen" align="start">
           <LocationTypeToggle
+            theme={theme}
             defaultValue={locationsFilter}
             value={locationsFilter}
             className="mb-4"

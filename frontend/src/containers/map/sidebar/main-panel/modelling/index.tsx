@@ -29,7 +29,7 @@ const SidebarModelling: React.FC = () => {
             </div>
           )}
 
-          <LocationSelector className="mt-2" />
+          <LocationSelector className="mt-2" theme="blue" />
           <ModellingButtons className="mt-4" />
         </div>
         {showIntro && <ModellingIntro />}
