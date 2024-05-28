@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai';
 
 import { modellingAtom } from '../../../store';
+import LocationSelector from '../details/location-selector';
 
 import ModellingButtons from './modelling-buttons';
 import ModellingIntro from './modelling-intro';
@@ -28,6 +29,7 @@ const SidebarModelling: React.FC = () => {
             </div>
           )}
 
+          <LocationSelector className="mt-2" />
           <ModellingButtons className="mt-4" />
         </div>
         {showIntro && <ModellingIntro />}
