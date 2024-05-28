@@ -49,31 +49,6 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     }
   );
 
-  // const { data: metadataWidget } = useGetDataInfos(
-  //   {
-  //     filters: {
-  //       slug: 'protection-levels-widget',
-  //     },
-  //     populate: 'data_sources',
-  //   },
-  //   {
-  //     query: {
-  //       select: ({ data }) =>
-  //         data[0]
-  //           ? {
-  //               info: data[0].attributes.content,
-  //               sources: data[0].attributes?.data_sources?.data?.map(
-  //                 ({ attributes: { title, url } }) => ({
-  //                   title,
-  //                   url,
-  //                 })
-  //               ),
-  //             }
-  //           : undefined,
-  //     },
-  //   }
-  // );
-
   const { data: metadata } = useGetDataInfos(
     {
       filters: {
@@ -137,8 +112,6 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       lastUpdated={protectionLevelsData[0]?.attributes?.updatedAt}
       noData={noData}
       loading={loading}
-      // info={metadataWidget?.info}
-      // sources={metadataWidget?.sources}
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart
