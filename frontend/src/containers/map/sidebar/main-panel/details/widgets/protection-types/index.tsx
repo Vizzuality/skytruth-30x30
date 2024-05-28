@@ -7,6 +7,8 @@ import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
+import { PROTECTION_LEVEL_NAME_SUBSTITUTIONS } from './constants';
+
 type ProtectionTypesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
@@ -117,7 +119,9 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.map((entry) => {
         const stats = entry?.attributes;
         const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
-        return parsedProtectionLevel('Fully or highly protected', protectionLevel, stats);
+        const displayName =
+          PROTECTION_LEVEL_NAME_SUBSTITUTIONS[protectionLevel.slug] || protectionLevel?.name;
+        return parsedProtectionLevel(displayName, protectionLevel, stats);
       });
 
     return parsedMpaaProtectionLevelData;
