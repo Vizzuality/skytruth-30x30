@@ -37,7 +37,7 @@ const SidebarDetails: React.FC = () => {
   }, [locationsData?.data]);
 
   const handleLocationSelected = (locationCode) => {
-    push(`${PAGES.progressTracker}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
+    push(`${PAGES.progressTracker}/${locationCode}?${searchParams.toString()}`);
   };
 
   return (

@@ -20,7 +20,7 @@ const SidebarModelling: React.FC = () => {
   const showIntro = modellingStatus === 'idle';
 
   const handleLocationSelected = (locationCode) => {
-    push(`${PAGES.conservationBuilder}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
+    push(`${PAGES.conservationBuilder}/${locationCode}?${searchParams.toString()}`);
   };
 
   return (
