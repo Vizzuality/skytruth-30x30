@@ -1,5 +1,7 @@
 import { useAtomValue } from 'jotai';
 
+import { PAGES } from '@/constants/pages';
+
 import { modellingAtom } from '../../../store';
 import LocationSelector from '../details/location-selector';
 
@@ -29,7 +31,7 @@ const SidebarModelling: React.FC = () => {
             </div>
           )}
 
-          <LocationSelector className="mt-2" theme="blue" />
+          <LocationSelector className="mt-2" theme="blue" targetPage={PAGES.conservationBuilder} />
           <ModellingButtons className="mt-4" />
         </div>
         {showIntro && <ModellingIntro />}
