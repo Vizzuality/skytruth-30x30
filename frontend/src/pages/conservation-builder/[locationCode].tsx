@@ -40,13 +40,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function ProgressTrackerPage() {
+export default function ConservationBuilderPage() {
   return null;
 }
 
-ProgressTrackerPage.layout = {
+ConservationBuilderPage.layout = {
   Component: MapLayout,
-  props: ({ location }) => ({
-    title: location?.name,
-  }),
+  props: {
+    title: 'Conservation builder',
+    type: 'conservation-builder',
+  },
 };
