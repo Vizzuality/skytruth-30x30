@@ -7,8 +7,6 @@ import { useSetAtom } from 'jotai';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { TOOLS_PAGES } from '@/constants/pages';
-import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import GlobeIcon from '@/styles/icons/globe.svg';
@@ -37,18 +35,15 @@ const BUTTON_CLASSES =
 type LocationSelectorProps = {
   className?: HTMLDivElement['className'];
   theme: 'orange' | 'blue';
-  targetPage: (typeof TOOLS_PAGES)[keyof typeof TOOLS_PAGES];
+  onChange: (locationCode: string) => void;
 };
 
-const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme, targetPage }) => {
+const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme, onChange }) => {
   const {
-    push,
     query: { locationCode = 'GLOB' },
   } = useRouter();
 
   const setPopup = useSetAtom(popupAtom);
-
-  const searchParams = useMapSearchParams();
 
   const [locationsFilter, setLocationsFilter] = useState<keyof typeof FILTERS>('all');
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
@@ -74,9 +69,9 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme, t
     async (locationCode: LocationGroupsDataItemAttributes['code']) => {
       setLocationPopoverOpen(false);
       setPopup({});
-      push(`${targetPage}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
+      onChange(locationCode.toUpperCase());
     },
-    [setPopup, push, targetPage, searchParams]
+    [setPopup, onChange]
   );
 
   const reorderedLocations = useMemo(() => {
