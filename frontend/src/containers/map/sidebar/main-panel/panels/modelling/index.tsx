@@ -1,9 +1,9 @@
 import { useAtomValue } from 'jotai';
 
 import { PAGES } from '@/constants/pages';
+import { modellingAtom } from '@/containers/map/store';
 
-import { modellingAtom } from '../../../store';
-import LocationSelector from '../details/location-selector';
+import LocationSelector from '../../location-selector';
 
 import ModellingButtons from './modelling-buttons';
 import ModellingIntro from './modelling-intro';

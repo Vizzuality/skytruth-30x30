@@ -7,9 +7,10 @@ import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
 import { useGetLocations } from '@/types/generated/location';
 
+import LocationSelector from '../../location-selector';
+
 import CountriesList from './countries-list';
 import DetailsButton from './details-button';
-import LocationSelector from './location-selector';
 import DetailsWidgets from './widgets';
 
 const SidebarDetails: React.FC = () => {

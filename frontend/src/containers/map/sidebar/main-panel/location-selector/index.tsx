@@ -8,14 +8,13 @@ import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { TOOLS_PAGES } from '@/constants/pages';
+import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import GlobeIcon from '@/styles/icons/globe.svg';
 import MagnifyingGlassIcon from '@/styles/icons/magnifying-glass.svg';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
-
-import { useMapSearchParams } from '../../../../content/map/sync-settings';
 
 import LocationDropdown from './location-dropdown';
 import LocationTypeToggle from './type-toggle';
