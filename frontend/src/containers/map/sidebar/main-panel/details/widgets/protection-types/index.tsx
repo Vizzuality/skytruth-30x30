@@ -7,6 +7,8 @@ import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
+import { PROTECTION_LEVEL_NAME_SUBSTITUTIONS } from './constants';
+
 type ProtectionTypesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
@@ -47,31 +49,6 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     }
   );
 
-  // const { data: metadataWidget } = useGetDataInfos(
-  //   {
-  //     filters: {
-  //       slug: 'protection-levels-widget',
-  //     },
-  //     populate: 'data_sources',
-  //   },
-  //   {
-  //     query: {
-  //       select: ({ data }) =>
-  //         data[0]
-  //           ? {
-  //               info: data[0].attributes.content,
-  //               sources: data[0].attributes?.data_sources?.data?.map(
-  //                 ({ attributes: { title, url } }) => ({
-  //                   title,
-  //                   url,
-  //                 })
-  //               ),
-  //             }
-  //           : undefined,
-  //     },
-  //   }
-  // );
-
   const { data: metadata } = useGetDataInfos(
     {
       filters: {
@@ -97,6 +74,18 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     }
   );
 
+  // Go through all the relevant stats, find the last updated one's value
+  const lastUpdated = useMemo(() => {
+    const protectionLevelStats =
+      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data;
+    const updatedAtValues = protectionLevelStats?.reduce(
+      (acc, curr) => [...acc, curr?.attributes?.updatedAt],
+      []
+    );
+
+    return updatedAtValues?.sort()?.reverse()?.[0];
+  }, [protectionLevelsData]);
+
   // Parse data to display in the chart
   const widgetChartData = useMemo(() => {
     if (!protectionLevelsData.length) return [];
@@ -117,7 +106,9 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
       protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.map((entry) => {
         const stats = entry?.attributes;
         const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
-        return parsedProtectionLevel('Fully or highly protected', protectionLevel, stats);
+        const displayName =
+          PROTECTION_LEVEL_NAME_SUBSTITUTIONS[protectionLevel.slug] || protectionLevel?.name;
+        return parsedProtectionLevel(displayName, protectionLevel, stats);
       });
 
     return parsedMpaaProtectionLevelData;
@@ -130,11 +121,9 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
   return (
     <Widget
       title="Marine Conservation Protection Levels"
-      lastUpdated={protectionLevelsData[0]?.attributes?.updatedAt}
+      lastUpdated={lastUpdated}
       noData={noData}
       loading={loading}
-      // info={metadataWidget?.info}
-      // sources={metadataWidget?.sources}
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart
