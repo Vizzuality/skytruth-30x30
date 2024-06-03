@@ -11,10 +11,10 @@ import LayersIcon from '@/styles/icons/layers.svg?sprite';
 import { useSyncMapContentSettings } from '../sync-settings';
 
 import LayersPanel from './layers-panel';
-import MainPanel, { SIDEBAR_TYPES } from './main-panel';
+import MainPanel, { PANEL_TYPES } from './main-panel/panels';
 
 type MapSidebarProps = {
-  type: keyof typeof SIDEBAR_TYPES;
+  type: keyof typeof PANEL_TYPES;
 };
 
 const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
