@@ -1,5 +1,8 @@
+import { useMemo } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { VariantProps, cva } from 'class-variance-authority';
 import { Menu } from 'lucide-react';
@@ -15,12 +18,27 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { PAGES } from '@/constants/pages';
+import {
+  useSyncMapLayerSettings,
+  useSyncMapLayers,
+  useSyncMapSettings,
+} from '@/containers/map/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
 
 const NAVIGATION_ITEMS = [
-  { name: 'Progress tracker', href: PAGES.progressTracker, colorClassName: 'text-orange' },
-  { name: 'Conservation builder', href: PAGES.conservationBuilder, colorClassName: 'text-blue' },
+  {
+    name: 'Progress tracker',
+    href: PAGES.progressTracker,
+    colorClassName: 'text-orange',
+    preserveMapParams: true,
+  },
+  {
+    name: 'Conservation builder',
+    href: PAGES.conservationBuilder,
+    colorClassName: 'text-blue',
+    preserveMapParams: true,
+  },
   { name: 'Knowledge hub', href: PAGES.knowledgeHub, colorClassName: 'text-green' },
   { name: 'About', href: PAGES.about, colorClassName: 'text-violet' },
   { name: 'Contact', href: PAGES.contact, colorClassName: 'text-black' },
@@ -54,93 +72,129 @@ export type HeaderProps = VariantProps<typeof headerVariants> & {
   hideLogo?: boolean;
 };
 
-const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => (
-  <header className={cn('border-b font-mono text-sm', headerVariants({ theme }))}>
-    <nav
-      className="mx-auto flex items-center justify-between p-6 py-2.5 md:py-3 lg:px-10"
-      aria-label="Global"
-    >
-      <span className="flex">
-        {!hideLogo && (
-          <Link
-            href="/"
-            className="-my-1.5 inline-block ring-offset-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
-          >
-            <Image
-              src="/images/skytruth-30-30-logo.svg"
-              alt="SkyTruth 30x30"
-              width={25}
-              height={25}
-            />
-          </Link>
-        )}
-      </span>
+const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => {
+  const [mapSettings] = useSyncMapSettings();
+  const [mapLayers] = useSyncMapLayers();
+  const [mapLayerSettings] = useSyncMapLayerSettings();
+  const {
+    query: { locationCode = 'GLOB' },
+  } = useRouter();
 
-      {/* Mobile hamburger menu */}
-      <div className="flex md:hidden">
-        <Sheet>
-          <SheetTrigger className="px-3 py-2 ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
-            <span className="sr-only">Open main menu</span>
-            <Menu className="h-6 w-6" aria-hidden="true" />
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle className="sr-only">Main menu</SheetTitle>
-              <SheetDescription>
-                <div className="mt-6 flow-root">
-                  <div className="-my-6 divide-y divide-gray-500/10">
-                    <div className="space-y-2 py-6 font-mono text-sm">
-                      {NAVIGATION_ITEMS.map(({ name, href, colorClassName }) => (
-                        <ActiveLink
-                          key={href}
-                          href={href}
-                          className={cn(
-                            'group -mx-3 block px-3 py-2  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-                            buttonVariants({ theme })
-                          )}
-                          activeClassName="is-active"
-                        >
-                          <Icon
-                            icon={ArrowRight}
+  const navigationEntries = useMemo(() => {
+    return NAVIGATION_ITEMS.map(({ name, href, colorClassName, preserveMapParams }) => {
+      return {
+        name: name,
+        href: {
+          pathname: href,
+          ...(preserveMapParams && {
+            query: {
+              location: locationCode,
+              mapParams: JSON.stringify({
+                settings: mapSettings,
+                layers: mapLayers,
+                layerSettings: mapLayerSettings,
+              }),
+            },
+          }),
+        },
+        ...(preserveMapParams && {
+          as: href,
+        }),
+        colorClassName: colorClassName,
+      };
+    });
+  }, [mapLayers, locationCode, mapSettings, mapLayerSettings]);
+
+  return (
+    <header className={cn('border-b font-mono text-sm', headerVariants({ theme }))}>
+      <nav
+        className="mx-auto flex items-center justify-between p-6 py-2.5 md:py-3 lg:px-10"
+        aria-label="Global"
+      >
+        <span className="flex">
+          {!hideLogo && (
+            <Link
+              href="/"
+              className="-my-1.5 inline-block ring-offset-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+            >
+              <Image
+                src="/images/skytruth-30-30-logo.svg"
+                alt="SkyTruth 30x30"
+                width={25}
+                height={25}
+              />
+            </Link>
+          )}
+        </span>
+
+        {/* Mobile hamburger menu */}
+        <div className="flex md:hidden">
+          <Sheet>
+            <SheetTrigger className="px-3 py-2 ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
+              <span className="sr-only">Open main menu</span>
+              <Menu className="h-6 w-6" aria-hidden="true" />
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle className="sr-only">Main menu</SheetTitle>
+                <SheetDescription>
+                  <div className="mt-6 flow-root">
+                    <div className="-my-6 divide-y divide-gray-500/10">
+                      <div className="space-y-2 py-6 font-mono text-sm">
+                        {navigationEntries.map(({ name, href, as, colorClassName }) => (
+                          <ActiveLink
+                            key={name}
+                            href={href}
+                            as={as}
                             className={cn(
-                              'mr-2.5 hidden w-5 fill-black group-[.is-active]:inline-block',
-                              colorClassName
+                              'group -mx-3 block px-3 py-2  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+                              buttonVariants({ theme })
                             )}
-                          />
-                          {name}
-                        </ActiveLink>
-                      ))}
+                            activeClassName="is-active"
+                          >
+                            <Icon
+                              icon={ArrowRight}
+                              className={cn(
+                                'mr-2.5 hidden w-5 fill-black group-[.is-active]:inline-block',
+                                colorClassName
+                              )}
+                            />
+                            {name}
+                          </ActiveLink>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
-      </div>
+                </SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
+        </div>
 
-      <ul className="hidden md:flex md:gap-x-10">
-        {NAVIGATION_ITEMS.map(({ name, href, colorClassName }) => (
-          <li key={href}>
-            <ActiveLink
-              href={href}
-              className="group -mx-3 flex px-3 py-2 ring-offset-white transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
-              activeClassName="bg-white text-black hover:bg-white is-active"
-            >
-              <Icon
-                icon={ArrowRight}
-                className={cn(
-                  'mr-2.5 -mt-1 hidden w-5 fill-black group-[.is-active]:inline-block',
-                  colorClassName
-                )}
-              />
-              {name}
-            </ActiveLink>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  </header>
-);
+        <ul className="hidden md:flex md:gap-x-10">
+          {navigationEntries.map(({ name, href, as, colorClassName }) => (
+            <li key={name}>
+              <ActiveLink
+                href={href}
+                as={as}
+                className="group -mx-3 flex px-3 py-2 ring-offset-white transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+                activeClassName="bg-white text-black hover:bg-white is-active"
+              >
+                <Icon
+                  icon={ArrowRight}
+                  className={cn(
+                    'mr-2.5 -mt-1 hidden w-5 fill-black group-[.is-active]:inline-block',
+                    colorClassName
+                  )}
+                />
+                {name}
+              </ActiveLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+  );
+};
 
 export default Header;
