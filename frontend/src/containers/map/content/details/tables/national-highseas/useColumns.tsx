@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 
 import FiltersButton from '@/components/filters-button';
+import ExpansionControls from '@/containers/map/content/details/table/expansion-controls';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
 import { cellFormatter } from '@/containers/map/content/details/table/helpers';
 import SortingButton from '@/containers/map/content/details/table/sorting-button';
@@ -41,15 +42,17 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
       {
         accessorKey: 'protectedArea',
         header: ({ column }) => (
-          <HeaderItem>
+          <HeaderItem className="ml-6">
             <SortingButton column={column} />
             Name
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
-          const { protectedArea } = row.original;
-          return <span className="underline">{protectedArea}</span>;
+          const {
+            original: { protectedArea },
+          } = row;
+          return <ExpansionControls row={row}>{protectedArea}</ExpansionControls>;
         },
       },
       {
