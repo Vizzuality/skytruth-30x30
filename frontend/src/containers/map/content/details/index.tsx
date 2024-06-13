@@ -78,7 +78,7 @@ const MapDetails: React.FC = () => {
           <Icon icon={CloseIcon} className=" ml-2 h-3 w-3 pb-px" />
         </Button>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 overflow-x-scroll">
         <table.component />
       </div>
     </div>
