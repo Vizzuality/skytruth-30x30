@@ -78,13 +78,13 @@ const MapTable: FCWithMessages = ({ columns, data }) => {
       </thead>
       <tbody>
         {hasData &&
-          table.getRowModel().rows.map((row) => {
+          table.getRowModel().rows.map((row, idx) => {
             return (
               <tr
                 key={row.id}
                 className={cn({
                   'border-b border-t border-black': true,
-                  'border-t-0': row.index === 0,
+                  'border-t-0': idx === 0,
                 })}
               >
                 {row.getVisibleCells().map((cell) => {
