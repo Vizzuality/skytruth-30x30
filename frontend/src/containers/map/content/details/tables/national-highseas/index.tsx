@@ -107,6 +107,28 @@ const NationalHighseasTable: React.FC = () => {
         protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
         fishingProtectionLevel: fishingProtectionLevel?.slug,
         area: coverageStats.area,
+        ...(mpa?.name !== 'Aln Estuary' && {
+          subRows: [
+            {
+              protectedArea: `${mpa?.name} - 1`,
+              coverage: coveragePercentage,
+              protectedAreaType: protectionStatus?.slug,
+              establishmentStage: establishmentStage?.slug || 'N/A',
+              protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
+              fishingProtectionLevel: fishingProtectionLevel?.slug,
+              area: coverageStats.area,
+            },
+            {
+              protectedArea: `${mpa?.name} - 2`,
+              coverage: coveragePercentage,
+              protectedAreaType: protectionStatus?.slug,
+              establishmentStage: establishmentStage?.slug || 'N/A',
+              protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
+              fishingProtectionLevel: fishingProtectionLevel?.slug,
+              area: coverageStats.area,
+            },
+          ],
+        }),
       };
     });
   }, [coverageData, locationsQuery.data]);
