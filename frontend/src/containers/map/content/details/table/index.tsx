@@ -79,12 +79,18 @@ const MapTable: FCWithMessages = ({ columns, data }) => {
       <tbody>
         {hasData &&
           table.getRowModel().rows.map((row, idx) => {
+            const { depth } = row;
+            const isParentRow = depth === 0;
+            const isFirstRow = idx === 0;
+            const isLastRow = idx + 1 === table.getRowModel().rows.length;
+
             return (
               <tr
                 key={row.id}
                 className={cn({
-                  'border-b border-t border-black': true,
-                  'border-t-0': idx === 0,
+                  'border-t border-black': !isFirstRow,
+                  'border-dashed': !isParentRow,
+                  'border-b': isLastRow,
                 })}
               >
                 {row.getVisibleCells().map((cell) => {
