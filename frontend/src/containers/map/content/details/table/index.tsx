@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import {
   flexRender,
   getCoreRowModel,
+  getExpandedRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
@@ -31,8 +32,10 @@ const MapTable: FCWithMessages = ({ columns, data }) => {
         },
       ],
     },
+    getSubRows: (row) => row.subRows,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
   });
 
   const hasData = table.getRowModel().rows?.length > 0;
