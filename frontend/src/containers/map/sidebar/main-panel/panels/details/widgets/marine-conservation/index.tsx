@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { groupBy } from 'lodash-es';
 
 import ConservationChart from '@/components/charts/conservation-chart';
@@ -15,6 +17,8 @@ type MarineConservationWidgetProps = {
 };
 
 const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ location }) => {
+  const { locale } = useRouter();
+
   const defaultQueryParams = {
     filters: {
       location: {
@@ -110,18 +114,18 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     const totalArea = location.totalMarineArea;
     const lastYearData = mergedProtectionStats[mergedProtectionStats.length - 1];
     const { protectedArea } = lastYearData;
-    const percentageFormatted = formatPercentage((protectedArea / totalArea) * 100, {
+    const percentageFormatted = formatPercentage(locale, (protectedArea / totalArea) * 100, {
       displayPercentageSign: false,
     });
-    const protectedAreaFormatted = formatKM(protectedArea);
-    const totalAreaFormatted = formatKM(totalArea);
+    const protectedAreaFormatted = formatKM(locale, protectedArea);
+    const totalAreaFormatted = formatKM(locale, totalArea);
 
     return {
       protectedPercentage: percentageFormatted,
       protectedArea: protectedAreaFormatted,
       totalArea: totalAreaFormatted,
     };
-  }, [location, mergedProtectionStats]);
+  }, [locale, location, mergedProtectionStats]);
 
   const chartData = useMemo(() => {
     if (!mergedProtectionStats?.length) return [];

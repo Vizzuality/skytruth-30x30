@@ -1,5 +1,7 @@
 import { useMemo, useRef } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 
@@ -108,6 +110,8 @@ const Home: React.FC = ({
     },
   };
 
+  const { locale } = useRouter();
+
   const scrollActiveId = useScrollSpy(Object.values(sections).map(({ id, ref }) => ({ id, ref })));
 
   const handleIntroScrollClick = () => {
@@ -153,8 +157,8 @@ const Home: React.FC = ({
 
     if (Number.isNaN(coveragePercentage)) return null;
 
-    return formatPercentage(coveragePercentage, { displayPercentageSign: false });
-  }, [protectionCoverageStats]);
+    return formatPercentage(locale, coveragePercentage, { displayPercentageSign: false });
+  }, [locale, protectionCoverageStats]);
 
   return (
     <Layout

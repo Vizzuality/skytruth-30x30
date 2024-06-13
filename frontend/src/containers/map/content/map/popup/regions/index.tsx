@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import type { Feature } from 'geojson';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -23,7 +23,7 @@ const RegionsPopup = ({ layerId }) => {
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
-  const { push } = useRouter();
+  const { locale, push } = useRouter();
   const setLocationBBox = useSetAtom(bboxLocation);
   const [popup, setPopup] = useAtom(popupAtom);
 
@@ -137,13 +137,14 @@ const RegionsPopup = ({ layerId }) => {
       );
 
       const percentage = formatPercentage(
+        locale,
         (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100,
         {
           displayPercentageSign: false,
         }
       );
 
-      const protectedArea = formatKM(totalCumSumProtectedArea);
+      const protectedArea = formatKM(locale, totalCumSumProtectedArea);
 
       return {
         percentage,
@@ -208,7 +209,7 @@ const RegionsPopup = ({ layerId }) => {
               <span>
                 km<sup>2</sup>
               </span>{' '}
-              out of {formatKM(locationsQuery.data.totalMarineArea)} km<sup>2</sup>
+              out of {formatKM(locale, locationsQuery.data.totalMarineArea)} km<sup>2</sup>
             </div>
           </div>
           <button

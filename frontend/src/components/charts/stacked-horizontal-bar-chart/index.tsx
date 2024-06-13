@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
@@ -31,10 +33,12 @@ const StackedHorizontalBarChart: React.FC<StackedHorizontalBarChartProps> = ({
   showLegend = true,
   showTarget = true,
 }) => {
+  const { locale } = useRouter();
+
   return (
     <div className={cn('font-mono', className)}>
       <div className="flex items-end justify-end text-3xl font-bold">
-        {formatPercentage(highlightedPercentage, { displayPercentageSign: false })}
+        {formatPercentage(locale, highlightedPercentage, { displayPercentageSign: false })}
         <span className="pb-1.5 pl-1 text-xs">%</span>
       </div>
       <div className="flex justify-between text-xs">
@@ -43,7 +47,8 @@ const StackedHorizontalBarChart: React.FC<StackedHorizontalBarChartProps> = ({
           {info && <TooltipButton text={info} />}
         </span>
         <span className="text-right">
-          {formatKM(totalProtectedArea)} km<sup>2</sup> out of {formatKM(totalArea)} km<sup>2</sup>
+          {formatKM(locale, totalProtectedArea)} km<sup>2</sup> out of {formatKM(locale, totalArea)}{' '}
+          km<sup>2</sup>
         </span>
       </div>
       <div className="relative my-2 flex h-3.5">

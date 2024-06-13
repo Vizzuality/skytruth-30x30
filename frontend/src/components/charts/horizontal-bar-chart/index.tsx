@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { useRouter } from 'next/router';
+
 import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
@@ -37,13 +39,17 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
 }) => {
   const { title, background, totalArea, protectedArea, info, sources } = data;
 
+  const { locale } = useRouter();
+
   const targetPositionPercentage = useMemo(() => {
     return (PROTECTION_TARGET * 100) / DEFAULT_MAX_PERCENTAGE;
   }, []);
 
   const protectedAreaPercentage = useMemo(() => {
-    return formatPercentage((protectedArea / totalArea) * 100, { displayPercentageSign: false });
-  }, [totalArea, protectedArea]);
+    return formatPercentage(locale, (protectedArea / totalArea) * 100, {
+      displayPercentageSign: false,
+    });
+  }, [locale, totalArea, protectedArea]);
 
   const barFillPercentage = useMemo(() => {
     const totalPercentage = (protectedArea * 100) / totalArea;
@@ -66,10 +72,10 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
         </div>
       </div>
       <span className="text-xs">
-        {formatKM(protectedArea)} km<sup>2</sup>
+        {formatKM(locale, protectedArea)} km<sup>2</sup>
       </span>{' '}
       <span className="text-xs">
-        out of {formatKM(totalArea)} km<sup>2</sup>
+        out of {formatKM(locale, totalArea)} km<sup>2</sup>
       </span>
       <div className="relative mb-2 flex h-3.5">
         <span className="absolute top-1/2 h-px w-full border-b border-dashed border-black"></span>

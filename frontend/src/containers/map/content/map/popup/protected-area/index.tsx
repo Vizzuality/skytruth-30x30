@@ -17,6 +17,7 @@ import { LayerTyped } from '@/types/layers';
 const TERMS_CLASSES = 'font-mono uppercase';
 
 const ProtectedAreaPopup = ({ layerId }: { layerId: number }) => {
+  const { locale } = useRouter();
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
@@ -128,12 +129,14 @@ const ProtectedAreaPopup = ({ layerId }: { layerId: number }) => {
               <dt className={TERMS_CLASSES}>Global coverage</dt>
               <dd className={`font-mono text-6xl tracking-tighter ${classNameByMPAType}`}>
                 {format({
+                  locale,
                   value: globalCoveragePercentage,
                   id: 'formatPercentage',
                 })}
               </dd>
               <dd className={`font-mono text-xl ${classNameByMPAType}`}>
                 {format({
+                  locale,
                   value: DATA?.REP_M_AREA,
                   id: 'formatKM',
                   options: {

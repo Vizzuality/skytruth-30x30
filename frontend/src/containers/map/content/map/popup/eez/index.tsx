@@ -25,7 +25,7 @@ const EEZLayerPopup = ({ layerId }) => {
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
-  const { push } = useRouter();
+  const { locale, push } = useRouter();
   const [, setLocationBBox] = useAtom(bboxLocation);
   const [popup, setPopup] = useAtom(popupAtom);
   const { locationCode } = useParams();
@@ -189,13 +189,13 @@ const EEZLayerPopup = ({ layerId }) => {
 
   const coveragePercentage = useMemo(() => {
     if (locationsData.length) {
-      return formatPercentage((totalCumSumProtectedArea / totalMarineArea) * 100, {
+      return formatPercentage(locale, (totalCumSumProtectedArea / totalMarineArea) * 100, {
         displayPercentageSign: false,
       });
     }
 
     return '-';
-  }, [totalCumSumProtectedArea, totalMarineArea, locationsData]);
+  }, [locale, totalCumSumProtectedArea, totalMarineArea, locationsData]);
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -243,11 +243,11 @@ const EEZLayerPopup = ({ layerId }) => {
               {coveragePercentage !== '-' && <span className="text-lg">%</span>}
             </div>
             <div className="space-x-1 font-mono text-xs font-medium text-black">
-              <span>{formatKM(totalCumSumProtectedArea)}</span>
+              <span>{formatKM(locale, totalCumSumProtectedArea)}</span>
               <span>
                 km<sup>2</sup>
               </span>{' '}
-              out of {formatKM(totalMarineArea)} km<sup>2</sup>
+              out of {formatKM(locale, totalMarineArea)} km<sup>2</sup>
             </div>
           </div>
           {locationCodes?.length === 1 && (

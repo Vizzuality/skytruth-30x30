@@ -16,6 +16,13 @@ import {
 
 export type ValidGeometryType = Polygon | MultiPolygon | GeometryCollection;
 
+export enum UploadErrorType {
+  Generic,
+  InvalidXMLSyntax,
+  SHPMissingFile,
+  UnsupportedFile,
+}
+
 export const supportedFileformats = [
   ...KMLLoader.extensions,
   ...['kmz'],
@@ -52,17 +59,14 @@ const readFileAsText = (file: File | ArrayBuffer): Promise<string> => {
  * @param file File to validate
  * @param loader Loader used to parse the file
  * @param intl Intl object for internationalization
- * @returns Error message if the validation fails
+ * @returns Error code if the validation fails
  */
 export const validateFile = async (
   file: File | ArrayBuffer,
   loader: Loader
-): Promise<string | undefined> => {
+): Promise<UploadErrorType | undefined> => {
   switch (loader) {
     case KMLLoader: {
-      const errorMessage =
-        'This .kml/.kmz file does not have a valid XML syntax. Please try to validate it and resolve the issues.';
-
       // For the KML files, we're checking whether they are valid XML files. For this, we verify:
       // 1. that we can parse them with `DOMParser`
       // 2. that they don't contain parse errors using the technique described in
@@ -75,10 +79,10 @@ export const validateFile = async (
         const parseErrorNS = xmlWithError.getElementsByTagName('parsererror')[0].namespaceURI;
 
         if (xml.getElementsByTagNameNS(parseErrorNS, 'parsererror').length > 0) {
-          return errorMessage;
+          return UploadErrorType.InvalidXMLSyntax;
         }
       } catch (e) {
-        return errorMessage;
+        return UploadErrorType.Generic;
       }
       return;
     }
@@ -91,7 +95,7 @@ export const validateFile = async (
 /**
  * Convert files to a GeoJSON
  * @param files Files to convert
- * @returns Error message if the convertion fails
+ * @returns Error code if the convertion fails
  */
 export async function convertFilesToGeojson(files: File[]): Promise<Feature<ValidGeometryType>> {
   // If multiple files are uploaded and one of them is a ShapeFile, this is the one we pass to the
@@ -110,9 +114,7 @@ export async function convertFilesToGeojson(files: File[]): Promise<Feature<Vali
       fileToParse.name.endsWith('.prj')) &&
     files.length < 3
   ) {
-    return Promise.reject(
-      'To upload a Shapefile geometry, you must upload the .shp, .shx, .dbf and eventually .prj files all at once.'
-    );
+    return Promise.reject(UploadErrorType.SHPMissingFile);
   }
 
   if (fileToParse.name.endsWith('.kmz')) {
@@ -131,12 +133,12 @@ export async function convertFilesToGeojson(files: File[]): Promise<Feature<Vali
     try {
       loader = await selectLoader(fileToParse, [ShapefileLoader, KMLLoader]);
     } catch (e) {
-      return Promise.reject('This file is not supported. Please try uploading a different format.');
+      return Promise.reject(UploadErrorType.UnsupportedFile);
     }
   }
 
   if (!loader) {
-    return Promise.reject('This file is not supported. Please try uploading a different format.');
+    return Promise.reject(UploadErrorType.UnsupportedFile);
   }
 
   const validationError = await validateFile(fileToParse, loader);
@@ -181,7 +183,7 @@ export async function convertFilesToGeojson(files: File[]): Promise<Feature<Vali
       },
     })) as Awaited<ReturnType<typeof KMLLoader.parse | typeof ShapefileLoader.parse>>;
   } catch (e) {
-    return Promise.reject('Unable to parse the file. Please try uploading a different format.');
+    return Promise.reject(UploadErrorType.UnsupportedFile);
   }
 
   if (loader === ShapefileLoader) {
@@ -193,7 +195,7 @@ export async function convertFilesToGeojson(files: File[]): Promise<Feature<Vali
   try {
     cleanedGeoJSON = cleanupGeoJSON(content as GeoJSONObject);
   } catch (e) {
-    return Promise.reject('Unable to parse the file. Please try uploading a different format.');
+    return Promise.reject(UploadErrorType.UnsupportedFile);
   }
 
   return cleanedGeoJSON;

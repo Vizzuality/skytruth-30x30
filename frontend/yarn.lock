@@ -6317,6 +6317,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deepmerge@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "deepmerge@npm:4.3.1"
+  checksum: 2024c6a980a1b7128084170c4cf56b0fd58a63f2da1660dcfe977415f27b17dbe5888668b59d0b063753f3220719d5e400b7f113609489c90160bb9a5518d052
+  languageName: node
+  linkType: hard
+
 "defaults@npm:^1.0.3":
   version: 1.0.4
   resolution: "defaults@npm:1.0.4"
@@ -12094,6 +12101,7 @@ __metadata:
     d3-time-format: ^4.1.0
     date-fns: ^2.30.0
     deck.gl: 8.9.31
+    deepmerge: ^4.3.1
     embla-carousel-react: 8.0.0
     eslint: 8.32.0
     eslint-config-next: 13.2.4

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { ColumnDef } from '@tanstack/react-table';
 
@@ -28,6 +29,8 @@ export type GlobalRegionalTableColumns = {
 const useColumns = () => {
   const searchParams = useMapSearchParams();
   const tooltips = useTooltips();
+
+  const { locale } = useRouter();
 
   const columns: ColumnDef<GlobalRegionalTableColumns>[] = useMemo(() => {
     return [
@@ -65,7 +68,7 @@ const useColumns = () => {
         ),
         cell: ({ row }) => {
           const { coverage: value } = row.original;
-          const formattedCoverage = cellFormatter.percentage(value);
+          const formattedCoverage = cellFormatter.percentage(locale, value);
 
           return (
             <span className="text-4xl font-bold">
@@ -86,7 +89,7 @@ const useColumns = () => {
         ),
         cell: ({ row }) => {
           const { area: value } = row.original;
-          const formattedValue = cellFormatter.area(value);
+          const formattedValue = cellFormatter.area(locale, value);
           return (
             <span>
               {formattedValue} km<sup>2</sup>
@@ -107,7 +110,7 @@ const useColumns = () => {
           const { mpas: value } = row.original;
           if (Number.isNaN(value)) return 'N/A';
 
-          const formattedValue = cellFormatter.percentage(value);
+          const formattedValue = cellFormatter.percentage(locale, value);
           return <span className="text-xs">{formattedValue}%</span>;
         },
       },
@@ -124,7 +127,7 @@ const useColumns = () => {
           const { oecms: value } = row.original;
           if (Number.isNaN(value)) return 'N/A';
 
-          const formattedValue = cellFormatter.percentage(value);
+          const formattedValue = cellFormatter.percentage(locale, value);
           return <span className="text-xs">{formattedValue}%</span>;
         },
       },
@@ -139,7 +142,7 @@ const useColumns = () => {
         ),
         cell: ({ row }) => {
           const { fullyHighlyProtected: value } = row.original;
-          const formattedValue = cellFormatter.percentage(value);
+          const formattedValue = cellFormatter.percentage(locale, value);
           return <span className="text-xs">{formattedValue}%</span>;
         },
       },
@@ -155,7 +158,7 @@ const useColumns = () => {
       //   cell: ({ row }) => {
       //     const { highlyProtectedLfp: value } = row.original;
       //     if (!value) return <>No data</>;
-      //     const formattedValue = cellFormatter.percentage(value);
+      //     const formattedValue = cellFormatter.percentage(locale, value);
       //     return <span className="text-xs">{formattedValue}%</span>;
       //   },
       // },
@@ -171,7 +174,7 @@ const useColumns = () => {
         cell: ({ row }) => {
           const { globalContribution: value } = row.original;
           if (!value) return <>No data</>;
-          const formattedValue = cellFormatter.percentage(value);
+          const formattedValue = cellFormatter.percentage(locale, value);
           return <span className="text-xs">{formattedValue}%</span>;
         },
       },

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import Icon from '@/components/ui/icon';
 import SidebarItem from '@/containers/homepage/intro/sidebar-item';
@@ -14,6 +15,8 @@ type IntroProps = {
 };
 
 const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
+  const { locale } = useRouter();
+
   const {
     data: { data: protectionStatsData },
   } = useGetProtectionCoverageStats(
@@ -73,8 +76,8 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
 
     if (Number.isNaN(coveragePercentage)) return null;
 
-    return formatPercentage(coveragePercentage, { displayPercentageSign: false });
-  }, [protectionStatsData]);
+    return formatPercentage(locale, coveragePercentage, { displayPercentageSign: false });
+  }, [locale, protectionStatsData]);
 
   return (
     <div className="bg-black">

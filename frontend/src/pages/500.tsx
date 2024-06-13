@@ -1,12 +1,31 @@
-import Layout from '@/layouts/error-page';
+import { pick } from 'lodash-es';
+import { useTranslations } from 'next-intl';
 
-const Error500Page: React.FC = () => (
-  <Layout
-    pageTitle="Internal Server Error"
-    error={500}
-    title="Internal server error"
-    description="Something went wrong. we are working on to fix the problem."
-  />
-);
+import Layout from '@/layouts/error-page';
+import { fetchTranslations } from '@/lib/i18n';
+import { FCWithMessages } from '@/types';
+
+const Error500Page: FCWithMessages = () => {
+  const t = useTranslations('pages.500');
+
+  return (
+    <Layout
+      pageTitle={t('page-title')}
+      error={500}
+      title={t('page-title')}
+      description={t('page-description')}
+    />
+  );
+};
+
+Error500Page.messages = ['pages.500', ...Layout.messages];
+
+export async function getStaticProps(context) {
+  return {
+    props: {
+      messages: pick(await fetchTranslations(context.locale), Error500Page.messages),
+    },
+  };
+}
 
 export default Error500Page;
