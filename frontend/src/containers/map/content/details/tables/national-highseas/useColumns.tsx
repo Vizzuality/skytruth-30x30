@@ -52,7 +52,11 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           const {
             original: { protectedArea },
           } = row;
-          return <ExpansionControls row={row}>{protectedArea}</ExpansionControls>;
+          return (
+            <ExpansionControls row={row}>
+              <span className="font-semibold">{protectedArea}</span>
+            </ExpansionControls>
+          );
         },
       },
       {
