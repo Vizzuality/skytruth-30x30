@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Icon from '@/components/ui/icon';
 import SidebarItem from '@/containers/homepage/intro/sidebar-item';
 import { formatPercentage } from '@/lib/utils/formats';
-import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
+import ArrowRight from '@/styles/icons/arrow-right.svg';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 import { useGetStaticIndicators } from '@/types/generated/static-indicator';
 

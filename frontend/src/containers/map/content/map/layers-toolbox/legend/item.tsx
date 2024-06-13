@@ -3,11 +3,11 @@ import { FC, ReactElement, isValidElement, useMemo } from 'react';
 import TooltipButton from '@/components/tooltip-button';
 import Icon from '@/components/ui/icon';
 import { parseConfig } from '@/lib/json-converter';
-import EEZIcon from '@/styles/icons/eez.svg?sprite';
-import MPAIcon from '@/styles/icons/mpa.svg?sprite';
-import OECMIcon from '@/styles/icons/oecm.svg?sprite';
-import EEZSelectedIcon from '@/styles/icons/selected-eez.svg?sprite';
-import EEZMultipleIcon from '@/styles/icons/several-eez.svg?sprite';
+import EEZIcon from '@/styles/icons/eez.svg';
+import MPAIcon from '@/styles/icons/mpa.svg';
+import OECMIcon from '@/styles/icons/oecm.svg';
+import EEZSelectedIcon from '@/styles/icons/selected-eez.svg';
+import EEZMultipleIcon from '@/styles/icons/several-eez.svg';
 import { LayerTyped, LegendConfig } from '@/types/layers';
 export interface LegendItemsProps {
   config: LayerTyped['legend_config'];

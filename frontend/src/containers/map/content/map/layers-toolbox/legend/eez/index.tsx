@@ -1,9 +1,9 @@
 import Icon from '@/components/ui/icon';
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
-import EEZIcon from '@/styles/icons/eez.svg?sprite';
-import InfoIcon from '@/styles/icons/info.svg?sprite';
-import SelectedEEZIcon from '@/styles/icons/selected-eez.svg?sprite';
-import SeveralEEZIcon from '@/styles/icons/several-eez.svg?sprite';
+import EEZIcon from '@/styles/icons/eez.svg';
+import InfoIcon from '@/styles/icons/info.svg';
+import SelectedEEZIcon from '@/styles/icons/selected-eez.svg';
+import SeveralEEZIcon from '@/styles/icons/several-eez.svg';
 import { useGetDataInfos } from '@/types/generated/data-info';
 
 const ITEM_LIST_CLASSES = 'flex items-center space-x-2';

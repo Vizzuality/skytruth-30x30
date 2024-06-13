@@ -1,9 +1,9 @@
 import TooltipButton from '@/components/tooltip-button';
 import Icon from '@/components/ui/icon';
-import DesignatedIcon from '@/styles/icons/designated.svg?sprite';
-import ImplementedIcon from '@/styles/icons/implemented.svg?sprite';
-import ManagedIcon from '@/styles/icons/managed.svg?sprite';
-import ProposedIcon from '@/styles/icons/proposed.svg?sprite';
+import DesignatedIcon from '@/styles/icons/designated.svg';
+import ImplementedIcon from '@/styles/icons/implemented.svg';
+import ManagedIcon from '@/styles/icons/managed.svg';
+import ProposedIcon from '@/styles/icons/proposed.svg';
 
 const ITEM_LIST_CLASSES = 'flex items-center space-x-2';
 const ICON_CLASSES = 'h-3.5 w-3.5 border border-black rounded-full';

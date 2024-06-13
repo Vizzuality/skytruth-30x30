@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { ColumnDef } from '@tanstack/react-table';
 
 import FiltersButton from '@/components/filters-button';
@@ -26,6 +28,8 @@ type UseColumnsProps = {
 };
 
 const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
+  const { locale } = useRouter();
+
   const {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
@@ -65,7 +69,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           const { coverage: value } = row.original;
           if (!value) return <>&mdash;</>;
 
-          const formattedCoverage = cellFormatter.percentage(value);
+          const formattedCoverage = cellFormatter.percentage(locale, value);
 
           return (
             <span className="text-4xl font-bold">
@@ -86,7 +90,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         ),
         cell: ({ row }) => {
           const { area: value } = row.original;
-          const formattedValue = cellFormatter.area(value);
+          const formattedValue = cellFormatter.area(locale, value);
           return (
             <span>
               {formattedValue} km<sup>2</sup>

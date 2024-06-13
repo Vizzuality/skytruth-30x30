@@ -4,7 +4,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@radix-ui/r
 import { LuChevronDown } from 'react-icons/lu';
 
 import Icon from '@/components/ui/icon';
-import LegendIcon from '@/styles/icons/legend.svg?sprite';
+import LegendIcon from '@/styles/icons/legend.svg';
 
 import LayersLegend from './legend';
 

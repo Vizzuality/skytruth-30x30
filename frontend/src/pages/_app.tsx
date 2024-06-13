@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { MapProvider } from 'react-map-gl';
 
 import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import { NextIntlClientProvider } from 'next-intl';
 
 import 'styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -29,6 +31,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: Props) => {
   // between users
   const [queryClient] = useState(() => new QueryClient());
 
+  const router = useRouter();
+
   const Layout = Component?.layout?.Component ?? ((page) => page?.children);
 
   let layoutProps = {};
@@ -48,16 +52,18 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: Props) => {
           --font-figtree: ${figtree.style.fontFamily};
         }
       `}</style>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <MapProvider>
-            <Analytics />
-            <Layout {...layoutProps}>
-              <Component {...pageProps} />
-            </Layout>
-          </MapProvider>
-        </Hydrate>
-      </QueryClientProvider>
+      <NextIntlClientProvider locale={router.locale} messages={pageProps.messages}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <MapProvider>
+              <Analytics />
+              <Layout {...layoutProps}>
+                <Component {...pageProps} />
+              </Layout>
+            </MapProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </NextIntlClientProvider>
     </>
   );
 };

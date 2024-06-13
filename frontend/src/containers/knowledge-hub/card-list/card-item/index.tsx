@@ -1,8 +1,8 @@
 import Icon from '@/components/ui/icon';
 import ExternalLinkIcon from '@/styles/icons/external-link-square.svg';
-import ListIcon from '@/styles/icons/list.svg?sprite';
-import StarIcon from '@/styles/icons/star.svg?sprite';
-import WorldIcon from '@/styles/icons/world.svg?sprite';
+import ListIcon from '@/styles/icons/list.svg';
+import StarIcon from '@/styles/icons/star.svg';
+import WorldIcon from '@/styles/icons/world.svg';
 import { DataToolListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 const CIRCLE_ICON_CLASSES =

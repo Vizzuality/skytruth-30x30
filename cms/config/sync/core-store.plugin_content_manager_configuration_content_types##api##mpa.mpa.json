@@ -20,20 +20,6 @@
           "sortable": true
         }
       },
-      "wdpaid": {
-        "edit": {
-          "label": "wdpaid",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "wdpaid",
-          "searchable": true,
-          "sortable": true
-        }
-      },
       "name": {
         "edit": {
           "label": "name",
@@ -106,6 +92,20 @@
           "sortable": false
         }
       },
+      "wdpaid": {
+        "edit": {
+          "label": "wdpaid",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "wdpaid",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -168,32 +168,26 @@
     "layouts": {
       "list": [
         "id",
-        "wdpaid",
         "name",
-        "area"
+        "area",
+        "year"
       ],
       "edit": [
         [
           {
-            "name": "wdpaid",
-            "size": 4
-          },
-          {
             "name": "name",
             "size": 6
-          }
-        ],
-        [
+          },
           {
             "name": "area",
             "size": 4
-          },
-          {
-            "name": "year",
-            "size": 4
           }
         ],
         [
+          {
+            "name": "year",
+            "size": 4
+          },
           {
             "name": "protection_status",
             "size": 6
@@ -202,6 +196,10 @@
         [
           {
             "name": "mpa_protection_coverage_stats",
+            "size": 6
+          },
+          {
+            "name": "wdpaid",
             "size": 6
           }
         ]

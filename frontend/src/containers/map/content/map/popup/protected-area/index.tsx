@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
+import { useRouter } from 'next/router';
+
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 

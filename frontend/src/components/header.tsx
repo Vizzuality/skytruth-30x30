@@ -24,7 +24,7 @@ import {
   useSyncMapSettings,
 } from '@/containers/map/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
-import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
+import ArrowRight from '@/styles/icons/arrow-right.svg';
 
 const NAVIGATION_ITEMS = [
   {

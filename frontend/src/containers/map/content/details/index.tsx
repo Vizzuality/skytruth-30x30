@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import tablesSettings from '@/containers/map/content/details/tables-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
-import CloseIcon from '@/styles/icons/close.svg?sprite';
+import CloseIcon from '@/styles/icons/close.svg';
 import { getGetLocationsQueryOptions, useGetLocations } from '@/types/generated/location';
 
 const MapDetails: React.FC = () => {

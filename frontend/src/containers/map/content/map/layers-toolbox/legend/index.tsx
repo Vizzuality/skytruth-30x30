@@ -13,10 +13,10 @@ import {
   useSyncMapLayers,
 } from '@/containers/map/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
-import ArrowDownIcon from '@/styles/icons/arrow-down.svg?sprite';
-import ArrowTopIcon from '@/styles/icons/arrow-top.svg?sprite';
-import CloseIcon from '@/styles/icons/close.svg?sprite';
-import OpacityIcon from '@/styles/icons/opacity.svg?sprite';
+import ArrowDownIcon from '@/styles/icons/arrow-down.svg';
+import ArrowTopIcon from '@/styles/icons/arrow-top.svg';
+import CloseIcon from '@/styles/icons/close.svg';
+import OpacityIcon from '@/styles/icons/opacity.svg';
 import { useGetLayers } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';

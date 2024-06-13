@@ -1,5 +1,5 @@
 declare module '*.svg';
-declare module '*.svg?sprite' {
+declare module '*.svg' {
   const content: {
     id: string;
     viewBox: string;

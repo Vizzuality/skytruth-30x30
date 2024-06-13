@@ -5,7 +5,7 @@ import Head from '@/components/head';
 import Header, { HeaderProps } from '@/components/header';
 import Icon from '@/components/ui/icon';
 import { cn } from '@/lib/classnames';
-import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
+import ArrowRight from '@/styles/icons/arrow-right.svg';
 
 type SidebarProps = {
   sections: {

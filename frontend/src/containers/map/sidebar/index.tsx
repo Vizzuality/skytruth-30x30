@@ -6,7 +6,7 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import Icon from '@/components/ui/icon';
 import { sidebarAtom, layersAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
-import LayersIcon from '@/styles/icons/layers.svg?sprite';
+import LayersIcon from '@/styles/icons/layers.svg';
 
 import { useSyncMapContentSettings } from '../sync-settings';
 
