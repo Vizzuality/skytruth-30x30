@@ -2,7 +2,7 @@ import { PropsWithChildren, useEffect, useState } from 'react';
 
 import { cn } from '@/lib/classnames';
 
-type ScrollPositions = 'start' | 'middle' | 'end';
+export type ScrollPositions = 'start' | 'middle' | 'end';
 
 export type PositionalScrollProps = PropsWithChildren<{
   className?: string;
