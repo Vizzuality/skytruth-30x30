@@ -6,8 +6,8 @@ import PositionalScroll, { ScrollPositions } from '@/components/positional-scrol
 import { cn } from '@/lib/classnames';
 
 const COMMON_CLASSNAMES = {
-  border: 'absolute top-0 z-20 h-full border-r border-black',
-  iconWrapper: 'absolute top-0 -translate-y-full border border-black p-px',
+  border: 'absolute z-20 h-full border-r border-black',
+  iconWrapper: 'absolute border border-black p-px',
   icon: 'h-4 w-4',
 };
 
@@ -21,18 +21,38 @@ const ScrollingIndicators: React.FC<ScrollingIndicatorsProps> = ({ className, ch
   return (
     <PositionalScroll className={cn(className)} onXScrollPositionChange={setXScrollPosition}>
       {xScrollPosition !== 'end' && (
-        <span className={cn(COMMON_CLASSNAMES.border, 'right-0')}>
-          <span className={cn(COMMON_CLASSNAMES.iconWrapper, '-right-px')}>
-            <LuChevronRight className={COMMON_CLASSNAMES.icon} />
+        <>
+          <span className={cn(COMMON_CLASSNAMES.border, 'right-0 top-0')}>
+            <span
+              className={cn(COMMON_CLASSNAMES.iconWrapper, '-right-px top-0 -translate-y-full')}
+            >
+              <LuChevronRight className={COMMON_CLASSNAMES.icon} />
+            </span>
           </span>
-        </span>
+          <span className={cn(COMMON_CLASSNAMES.border, 'right-0 bottom-0')}>
+            <span
+              className={cn(COMMON_CLASSNAMES.iconWrapper, '-right-px bottom-px translate-y-full')}
+            >
+              <LuChevronRight className={COMMON_CLASSNAMES.icon} />
+            </span>
+          </span>
+        </>
       )}
       {xScrollPosition !== 'start' && (
-        <span className={cn(COMMON_CLASSNAMES.border, 'left-0')}>
-          <span className={cn(COMMON_CLASSNAMES.iconWrapper, 'left-0')}>
-            <LuChevronLeft className={COMMON_CLASSNAMES.icon} />
+        <>
+          <span className={cn(COMMON_CLASSNAMES.border, 'left-0 top-0')}>
+            <span className={cn(COMMON_CLASSNAMES.iconWrapper, 'left-0 top-0 -translate-y-full')}>
+              <LuChevronLeft className={COMMON_CLASSNAMES.icon} />
+            </span>
           </span>
-        </span>
+          <span className={cn(COMMON_CLASSNAMES.border, 'left-0 bottom-0')}>
+            <span
+              className={cn(COMMON_CLASSNAMES.iconWrapper, 'left-0 bottom-px translate-y-full')}
+            >
+              <LuChevronLeft className={COMMON_CLASSNAMES.icon} />
+            </span>
+          </span>
+        </>
       )}
       {children}
     </PositionalScroll>
