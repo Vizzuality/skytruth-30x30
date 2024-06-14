@@ -112,7 +112,7 @@ const MapDetails: FCWithMessages = () => {
           <Icon icon={CloseIcon} className="ml-2 h-3 w-3 pb-px " />
         </Button>
       </div>
-      <div className="relative">
+      <div className="relative z-0 mb-10">
         <ScrollingIndicators className="mt-4 overflow-x-scroll">
           <table.component />
         </ScrollingIndicators>
