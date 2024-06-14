@@ -9,6 +9,8 @@ import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import CloseIcon from '@/styles/icons/close.svg?sprite';
 import { getGetLocationsQueryOptions, useGetLocations } from '@/types/generated/location';
 
+import ScrollingIndicators from './table/scrolling-indicators';
+
 const MapDetails: React.FC = () => {
   const [, setSettings] = useSyncMapContentSettings();
   const {
@@ -78,8 +80,10 @@ const MapDetails: React.FC = () => {
           <Icon icon={CloseIcon} className=" ml-2 h-3 w-3 pb-px" />
         </Button>
       </div>
-      <div className="mt-4 overflow-x-scroll">
-        <table.component />
+      <div className="relative">
+        <ScrollingIndicators className="mt-4 overflow-x-scroll">
+          <table.component />
+        </ScrollingIndicators>
       </div>
     </div>
   );
