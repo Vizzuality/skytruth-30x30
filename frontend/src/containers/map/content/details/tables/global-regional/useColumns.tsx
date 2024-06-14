@@ -34,7 +34,7 @@ const useColumns = () => {
       {
         accessorKey: 'location',
         header: ({ column }) => (
-          <HeaderItem>
+          <HeaderItem className="ml-1">
             <SortingButton column={column} />
             Name
             <TooltipButton column={column} tooltips={tooltips} />
