@@ -107,6 +107,7 @@ const NationalHighseasTable: React.FC = () => {
         protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
         fishingProtectionLevel: fishingProtectionLevel?.slug,
         area: coverageStats.area,
+        map: {},
         ...(mpa?.name !== 'Aln Estuary' && {
           subRows: [
             {
@@ -137,7 +138,7 @@ const NationalHighseasTable: React.FC = () => {
     return applyFilters(parsedData, filters);
   }, [filters, parsedData]);
 
-  return <Table columns={columns} data={tableData} />;
+  return <Table columns={columns} data={tableData} columnSeparators={['map']} />;
 };
 
 export default NationalHighseasTable;
