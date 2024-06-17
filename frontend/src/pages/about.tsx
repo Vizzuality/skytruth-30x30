@@ -1,7 +1,9 @@
 import { useMemo, useRef } from 'react';
 
 import { QueryClient, dehydrate } from '@tanstack/react-query';
+import { pick } from 'lodash-es';
 import { GetServerSideProps } from 'next';
+import { useTranslations } from 'next-intl';
 
 import Cta from '@/components/static-pages/cta';
 import Intro from '@/components/static-pages/intro';
@@ -19,60 +21,45 @@ import LogosGrid from '@/containers/about/logos-grid';
 import QuestionsList from '@/containers/about/questions-list';
 import useScrollSpy from '@/hooks/use-scroll-spy';
 import Layout, { Sidebar, Content } from '@/layouts/static-page';
+import { fetchTranslations } from '@/lib/i18n';
+import { FCWithMessages } from '@/types';
 import {
   getGetStaticIndicatorsQueryKey,
   getGetStaticIndicatorsQueryOptions,
 } from '@/types/generated/static-indicator';
 import { StaticIndicator, StaticIndicatorListResponse } from '@/types/generated/strapi.schemas';
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    ...getGetStaticIndicatorsQueryOptions(),
-  });
-
-  const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
-    getGetStaticIndicatorsQueryKey()
-  );
-
-  return {
-    props: {
-      staticIndicators: staticIndicatorsData || { data: [] },
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
-
-const About: React.FC = ({
+const About: FCWithMessages = ({
   staticIndicators,
 }: {
   staticIndicators: StaticIndicatorListResponse;
 }) => {
+  const t = useTranslations('pages.about');
+
   const sections = {
     definition: {
       id: 'definition',
-      name: 'Definition',
+      name: t('definition'),
       ref: useRef<HTMLDivElement>(null),
     },
     problem: {
       id: 'problem',
-      name: 'Problem',
+      name: t('problem'),
       ref: useRef<HTMLDivElement>(null),
     },
     dataPartners: {
       id: 'data-partners',
-      name: 'Data Partners',
+      name: t('data-partners'),
       ref: useRef<HTMLDivElement>(null),
     },
     futureObjectives: {
       id: 'future-objectives',
-      name: 'Future Objectives',
+      name: t('future-objectives'),
       ref: useRef<HTMLDivElement>(null),
     },
     teamAndFunders: {
       id: 'teams-and-funders',
-      name: 'Team & Funders',
+      name: t('team-and-funders'),
       ref: useRef<HTMLDivElement>(null),
     },
   };
@@ -91,10 +78,10 @@ const About: React.FC = ({
 
   return (
     <Layout
-      title="About"
+      title={t('page-title')}
       hero={
         <Intro
-          title="A global movement to protect 30% of the world’s lands and waters by 2030."
+          title={t('intro-title')}
           color="purple"
           image="tablet"
           onScrollClick={handleIntroScrollClick}
@@ -102,12 +89,12 @@ const About: React.FC = ({
       }
       bottom={
         <Cta
-          title="How can I get involved?"
-          description="If you have questions, feedback, or interest in partnering on this project, please get in touch at our contact page."
+          title={t('outro-title')}
+          description={t('outro-description')}
           color="purple"
           image="cta1"
           button={{
-            text: 'Get in touch',
+            text: t('outro-button'),
             link: PAGES.contact,
           }}
         />
@@ -116,83 +103,65 @@ const About: React.FC = ({
       <Sidebar sections={sections} activeSection={scrollActiveId} arrowColor="purple" />
       <Content>
         <Section ref={sections.definition.ref}>
-          <SectionTitle>What is 30x30</SectionTitle>
+          <SectionTitle>{t('section-definition-title')}</SectionTitle>
           <SectionDescription>
-            30x30 is a global movement to <b>protect 30% of the world’s lands and waters by 2030</b>
-            . This target has been{' '}
-            <a
-              className="underline"
-              href="https://www.nytimes.com/2022/12/19/climate/biodiversity-cop15-montreal-30x30.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              formally adopted by nearly every country
-            </a>{' '}
-            on earth, and ecosystem protection is being advanced and monitored by governments, NGOs,
-            and local communities around the world.
+            {t.rich('section-definition-description', {
+              b: (chunks) => <b>{chunks}</b>,
+              a: (chunks) => (
+                <a
+                  className="underline"
+                  href="https://www.nytimes.com/2022/12/19/climate/biodiversity-cop15-montreal-30x30.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {chunks}
+                </a>
+              ),
+            })}
           </SectionDescription>
         </Section>
         <Section ref={sections.problem.ref}>
-          <SectionTitle>Why build a 30x30 hub?</SectionTitle>
+          <SectionTitle>{t('section-problem-title')}</SectionTitle>
           <SectionDescription>
-            <p>
-              With only a few years left between now and 2030, the world is pushing hard to preserve
-              our critical ecosystems. Biodiversity conservation is moving faster than ever, and a
-              host of new organizations, tools, and campaigns are emerging every day. Even for
-              conservation professionals, it can be hard to keep up. And for anyone new to 30x30, it
-              can be hard to know where to start or how to get involved.
-            </p>
-            <p className="mt-4 font-bold">
-              We are building the 30x30 hub to unify these critical tools and information streams in
-              a single location that provides an accessible entry point for getting informed and
-              engaged in 30x30.
-            </p>
+            <p>{t('section-problem-description-1')}</p>
+            <p className="mt-4 font-bold">{t('section-problem-description-2')}</p>
           </SectionDescription>
 
           <SectionContent>
             <HighlightedText>
-              We are a hub, not a destination. We want visitors to be able to answer{' '}
-              <span className="text-black">three questions</span>.
+              {t.rich('section-highlighted-1-title', {
+                b: (chunks) => <span className="text-black">{chunks}</span>,
+              })}
             </HighlightedText>
             <QuestionsList
               questions={[
-                'How is the world progressing toward 30x30?',
-                'How much more of our lands and waters do we need to protect to reach the 30% goal?',
-                'What resources are available to learn more about 30x30, get involved, and take action?',
+                t('section-highlighted-1-question-1'),
+                t('section-highlighted-1-question-2'),
+                t('section-highlighted-1-question-3'),
               ]}
             />
           </SectionContent>
         </Section>
         <Section ref={sections.dataPartners.ref}>
-          <SectionTitle>Who are our data partners?</SectionTitle>
-          <SectionDescription>
-            We depend on the expertise and efforts of key data partners to power our maps and
-            dashboards. Each of these datasets represents a tremendous amount of effort to assess
-            and measure the effectiveness of ecosystem protections globally, and is critical to the
-            success of 30x30.
-          </SectionDescription>
+          <SectionTitle>{t('section-data-partners-title')}</SectionTitle>
+          <SectionDescription>{t('section-data-partners-description')}</SectionDescription>
 
           <SectionContent>
             <TwoColSubsection
               itemNum={1}
               itemTotal={3}
-              title="The World Database on Protected Areas (WDPA)"
-              description={
-                <>
+              title={t('section-wdpa-title')}
+              description={t.rich('section-wdpa-description', {
+                a: (chunks) => (
                   <a
                     href="https://www.protectedplanet.net"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <u>The World Database on Protected Areas (WDPA)</u>
+                    <u>{chunks}</u>
                   </a>
-                  , maintained by Protected Planet, provides a comprehensive global inventory of the
-                  world&apos;s marine and terrestrial protected areas. The WDPA provides official
-                  protected area boundaries that have been self-reported by 245 countries around the
-                  world. WDPA data powers our statistics on total area protected per country and
-                  globally.
-                </>
-              }
+                ),
+              })}
             >
               <Logo logo="protectedPlanet" />
             </TwoColSubsection>
@@ -202,18 +171,14 @@ const About: React.FC = ({
             <TwoColSubsection
               itemNum={2}
               itemTotal={3}
-              title="The Marine Protection Atlas (MPAtlas)"
-              description={
-                <>
+              title={t('section-mpatlas-title')}
+              description={t.rich('section-mpatlas-description', {
+                a: (chunks) => (
                   <a href="https://mpatlas.org" target="_blank" rel="noopener noreferrer">
-                    <u>The Marine Protection Atlas (MPAtlas)</u>
+                    <u>{chunks}</u>
                   </a>
-                  , which is produced by the Marine Conservation Institute, builds on the WDPA
-                  dataset to provide a science-based, independent assessment of the Stage of
-                  Establishment and Level of Protection per marine protected area (MPA). MPAtlas
-                  data powers our statistics on Level of Protection per MPA.
-                </>
-              }
+                ),
+              })}
             >
               <Logo logo="marineProtectionAtlas" />
             </TwoColSubsection>
@@ -223,46 +188,45 @@ const About: React.FC = ({
             <TwoColSubsection
               itemNum={3}
               itemTotal={3}
-              title="ProtectedSeas"
-              description={
-                <>
+              title={t('section-protectedseas-title')}
+              description={t.rich('section-protectedseas-description', {
+                a: (chunks) => (
                   <a href="https://protectedseas.net" target="_blank" rel="noopener noreferrer">
-                    <u>ProtectedSeas</u>
-                  </a>{' '}
-                  maintains the world’s largest database of regulatory information for MPAs, with
-                  information on over 21,000 marine and coastal protected areas around the world.
-                  ProtectedSeas data powers our Level of Fishing Protection (LFP) score, which
-                  describes the degree to which fishing activity has been restricted in MPAs.
-                </>
-              }
+                    <u>{chunks}</u>
+                  </a>
+                ),
+              })}
             >
               <Logo logo="protectedSeas" />
             </TwoColSubsection>
           </SectionContent>
         </Section>
         <Section ref={sections.futureObjectives.ref}>
-          <SectionTitle>What’s next for the 30x30 hub?</SectionTitle>
+          <SectionTitle>{t('section-future-objectives-title')}</SectionTitle>
           <SectionDescription>
-            This web portal was built with support from the{' '}
-            <a
-              href="https://www.bloomberg.org/environment/protecting-the-oceans/bloomberg-ocean/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <u>Bloomberg Ocean Initiative</u>
-            </a>
-            , so we started by focusing on marine protection, with the goal of creating a one-stop
-            entry point for getting engaged and informed on 30x30.
+            {t.rich('section-future-objectives-description', {
+              a: (chunks) => (
+                <a
+                  href="https://www.bloomberg.org/environment/protecting-the-oceans/bloomberg-ocean/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <u>{chunks}</u>
+                </a>
+              ),
+            })}
           </SectionDescription>
 
           <SectionContent>
             <HighlightedText>
-              Next, we&apos;re extending the hub to include{' '}
-              <span className="text-black">terrestrial ecosystems</span>.
+              {t.rich('section-highlighted-2-title', {
+                b: (chunks) => <span className="text-black">{chunks}</span>,
+              })}
             </HighlightedText>
             <HighlightedText>
-              Our goal of creating a <span className="text-black">one-stop entry point</span> for
-              getting engaged and informed on 30x30.
+              {t.rich('section-highlighted-2-description', {
+                b: (chunks) => <span className="text-black">{chunks}</span>,
+              })}
             </HighlightedText>
           </SectionContent>
 
@@ -275,25 +239,44 @@ const About: React.FC = ({
           />
         </Section>
         <Section ref={sections.teamAndFunders.ref}>
-          <SectionTitle>Who is behind this project?</SectionTitle>
-          <SectionDescription>
-            Discover our team and trusted partner companies. At the core of our accomplishments are
-            the dedicated individuals who bring expertise and commitment to the 30x30 Project
-          </SectionDescription>
+          <SectionTitle>{t('section-team-and-funders-title')}</SectionTitle>
+          <SectionDescription>{t('section-team-and-funders-description')}</SectionDescription>
 
           <SectionContent>
-            <TwoColSubsection title="Team" />
+            <TwoColSubsection title={t('section-team-title')} />
             <LogosGrid className="md:mt-8" type="team" columns={4} />
           </SectionContent>
 
           <SectionContent>
-            <TwoColSubsection title="Funders" />
+            <TwoColSubsection title={t('section-funders-title')} />
             <LogosGrid className="md:mt-8" type="funders" columns={2} />
           </SectionContent>
         </Section>
       </Content>
     </Layout>
   );
+};
+
+About.messages = ['pages.about', ...Layout.messages, ...LogosGrid.messages];
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    ...getGetStaticIndicatorsQueryOptions(),
+  });
+
+  const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
+    getGetStaticIndicatorsQueryKey()
+  );
+
+  return {
+    props: {
+      staticIndicators: staticIndicatorsData || { data: [] },
+      dehydratedState: dehydrate(queryClient),
+      messages: pick(await fetchTranslations(context.locale), About.messages),
+    },
+  };
 };
 
 export default About;

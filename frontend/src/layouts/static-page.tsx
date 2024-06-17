@@ -6,6 +6,7 @@ import Header, { HeaderProps } from '@/components/header';
 import Icon from '@/components/ui/icon';
 import { cn } from '@/lib/classnames';
 import ArrowRight from '@/styles/icons/arrow-right.svg';
+import { FCWithMessages } from '@/types';
 
 type SidebarProps = {
   sections: {
@@ -73,7 +74,7 @@ export interface StaticPageLayoutProps {
   bottom?: ReactNode;
 }
 
-const StaticPageLayout: React.FC<
+const StaticPageLayout: FCWithMessages<
   PropsWithChildren<StaticPageLayoutProps & Pick<HeaderProps, 'theme' | 'hideLogo'>>
 > = ({ title, description, hero, bottom, children, theme, hideLogo }) => (
   <>
@@ -93,6 +94,8 @@ const StaticPageLayout: React.FC<
     </div>
   </>
 );
+
+StaticPageLayout.messages = [...Header.messages, ...Footer.messages];
 
 export default StaticPageLayout;
 export { Content, Sidebar };

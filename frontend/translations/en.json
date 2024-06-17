@@ -23,6 +23,43 @@
       "page-title": "Contact us",
       "want-know-more": "Want to <br></br>know more?",
       "get-in-touch": "Get in touch."
+    },
+    "about": {
+      "page-title": "About",
+      "definition": "Definition",
+      "problem": "Problem",
+      "data-partners": "Data Partners",
+      "future-objectives": "Future Objectives",
+      "team-and-funders": "Team & Funders",
+      "intro-title": "A global movement to protect 30% of the world’s lands and waters by 2030.",
+      "outro-title": "How can I get involved?",
+      "outro-description": "If you have questions, feedback, or interest in partnering on this project, please get in touch at our contact page.",
+      "outro-button": "Get in touch",
+      "section-definition-title": "What is 30x30",
+      "section-definition-description": "30x30 is a global movement to <b>protect 30% of the world’s lands and waters by 2030</b>. This target has been <a>formally adopted by nearly every country</a> on earth, and ecosystem protection is being advanced and monitored by governments, NGOs, and local communities around the world.",
+      "section-problem-title": "Why build a 30x30 hub?",
+      "section-problem-description-1": "With only a few years left between now and 2030, the world is pushing hard to preserve our critical ecosystems. Biodiversity conservation is moving faster than ever, and a host of new organizations, tools, and campaigns are emerging every day. Even for conservation professionals, it can be hard to keep up. And for anyone new to 30x30, it can be hard to know where to start or how to get involved.",
+      "section-problem-description-2": "We are building the 30x30 hub to unify these critical tools and information streams in a single location that provides an accessible entry point for getting informed and engaged in 30x30.",
+      "section-highlighted-1-title": "We are a hub, not a destination. We want visitors to be able to answer <b>three questions</b>.",
+      "section-highlighted-1-question-1": "How is the world progressing toward 30x30?",
+      "section-highlighted-1-question-2": "How much more of our lands and waters do we need to protect to reach the 30% goal?",
+      "section-highlighted-1-question-3": "What resources are available to learn more about 30x30, get involved, and take action?",
+      "section-data-partners-title": "Who are our data partners?",
+      "section-data-partners-description": "We depend on the expertise and efforts of key data partners to power our maps and dashboards. Each of these datasets represents a tremendous amount of effort to assess and measure the effectiveness of ecosystem protections globally, and is critical to the success of 30x30.",
+      "section-wdpa-title": "The World Database on Protected Areas (WDPA)",
+      "section-wdpa-description": "<a>The World Database on Protected Areas (WDPA)</a>, maintained by Protected Planet, provides a comprehensive global inventory of the world's marine and terrestrial protected areas. The WDPA provides official protected area boundaries that have been self-reported by 245 countries around the world. WDPA data powers our statistics on total area protected per country and globally.",
+      "section-mpatlas-title": "The Marine Protection Atlas (MPAtlas)",
+      "section-mpatlas-description": "<a>The Marine Protection Atlas (MPAtlas)</a>, which is produced by the Marine Conservation Institute, builds on the WDPA dataset to provide a science-based, independent assessment of the Stage of Establishment and Level of Protection per marine protected area (MPA). MPAtlas data powers our statistics on Level of Protection per MPA.",
+      "section-protectedseas-title": "ProtectedSeas",
+      "section-protectedseas-description": "<a>ProtectedSeas</a> maintains the world’s largest database of regulatory information for MPAs, with information on over 21,000 marine and coastal protected areas around the world. ProtectedSeas data powers our Level of Fishing Protection (LFP) score, which describes the degree to which fishing activity has been restricted in MPAs.",
+      "section-future-objectives-title": "What’s next for the 30x30 hub?",
+      "section-future-objectives-description": "This web portal was built with support from the <a>Bloomberg Ocean Initiative</a>, so we started by focusing on marine protection, with the goal of creating a one-stop entry point for getting engaged and informed on 30x30.",
+      "section-highlighted-2-title": "Next, we're extending the hub to include <b>terrestrial ecosystems</b>.",
+      "section-highlighted-2-description": "Our goal of creating a <b>one-stop entry point</b> for getting engaged and informed on 30x30.",
+      "section-team-and-funders-title": "Who is behind this project?",
+      "section-team-and-funders-description": "Discover our team and trusted partner companies. At the core of our accomplishments are the dedicated individuals who bring expertise and commitment to the 30x30 Project",
+      "section-team-title": "Team",
+      "section-funders-title": "Funders"
     }
   },
   "containers": {
@@ -52,6 +89,32 @@
         "error-empty-message": "The message cannot be empty.",
         "error-accept-privacy-policy": "You must agree with the privacy policy."
       }
+    },
+    "logos-grid": {
+      "skytruth-description": "Serves as project lead",
+      "vizzuality-description": "Leads design and development",
+      "cea-description": "Leads user discovery and stakeholder engagement",
+      "ocean-advocate-description": "Leads data discovery and strategy",
+      "bloomberg-description": "Provides the funding and support that made this tool a reality"
+    }
+  },
+  "components": {
+    "header": {
+      "progress-tracker": "Progress tracker",
+      "conservation-builder": "Conservation builder",
+      "knowledge-hub": "Knowledge hub",
+      "about": "About",
+      "contact": "Contact",
+      "global": "Global",
+      "open-main-menu": "Open main menu",
+      "main-menu": "Main menu",
+      "close": "Close"
+    },
+    "footer": {
+      "title": "Would you like to know more?",
+      "button": "Get in touch",
+      "privacy-policy": "Privacy policy",
+      "terms-of-use": "Terms of use"
     }
   }
 }
