@@ -1,6 +1,5 @@
 import Script from 'next/script';
 
-import { pick } from 'lodash-es';
 import { useTranslations } from 'next-intl';
 
 import ContactUsForm from '@/containers/contact/form';
@@ -45,7 +44,7 @@ ContactUsPage.messages = ['pages.contact', ...ContactUsForm.messages];
 export async function getServerSideProps(context) {
   return {
     props: {
-      messages: pick(await fetchTranslations(context.locale), ContactUsPage.messages),
+      messages: await fetchTranslations(context.locale, ContactUsPage.messages),
     },
   };
 }

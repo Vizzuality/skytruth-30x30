@@ -1,4 +1,3 @@
-import { pick } from 'lodash-es';
 import { useTranslations } from 'next-intl';
 
 import Layout from '@/layouts/error-page';
@@ -23,7 +22,7 @@ Error404Page.messages = ['pages.404', ...Layout.messages];
 export async function getStaticProps(context) {
   return {
     props: {
-      messages: pick(await fetchTranslations(context.locale), Error404Page.messages),
+      messages: await fetchTranslations(context.locale, Error404Page.messages),
     },
   };
 }

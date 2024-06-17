@@ -1,7 +1,6 @@
 import { useMemo, useRef } from 'react';
 
 import { QueryClient, dehydrate } from '@tanstack/react-query';
-import { pick } from 'lodash-es';
 import { GetServerSideProps } from 'next';
 import { useTranslations } from 'next-intl';
 
@@ -274,7 +273,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       staticIndicators: staticIndicatorsData || { data: [] },
       dehydratedState: dehydrate(queryClient),
-      messages: pick(await fetchTranslations(context.locale), About.messages),
+      messages: await fetchTranslations(context.locale, About.messages),
     },
   };
 };
