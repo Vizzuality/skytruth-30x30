@@ -85,6 +85,15 @@
       "section-context-subsection-1-description": "Covering 71 percent of the Earth’s surface, the ocean and its biodiversity stabilizes our climate, provides 51% of the oxygen we need to survive, and provides food and livelihoods for billions of people.",
       "section-context-subsection-2-title": "How big is 30% of the ocean?",
       "section-context-subsection-2-description": "Thirty percent (30%) of the ocean is the equivalent of South America, North America, Europe and Russia combined. This means 70 million square kilometres."
+    },
+    "knowledge-hub": {
+      "page-title": "Knowledge hub",
+      "intro-title": "Resources for 30x30 monitoring, planning and decision making.",
+      "intro-description": "We intend to provide an entry point that is accessible and relevant to stakeholders at various levels, democratizing the conversation around 30x30 so everyone can participate in the process from a common starting point.",
+      "outro-title": "Submit resources.",
+      "outro-description": "Do you want to contribute to the Knowledge Hub and add a tool?",
+      "outro-button": "Get in touch",
+      "looking-for": "I am looking for..."
     }
   },
   "containers": {
@@ -145,6 +154,19 @@
     },
     "homepage-earth-surface-coverage": {
       "earth-surface-coverage": "Earth surface coverage"
+    },
+    "knowledge-hub-card-filters": {
+      "name": "Name",
+      "clear-filters": "Clear filters",
+      "filter-by-resource-type": "Filter by resource type",
+      "filter-by-language": "Filter by language",
+      "filter-by-ecosystem": "Filter by ecosystem",
+      "load-more": "Load more",
+      "website": "Website",
+      "resource-category": "Resource category",
+      "geography": "Geography",
+      "ecosystems": "Ecosystems",
+      "languages": "Language(s)"
     }
   },
   "components": {
@@ -164,6 +186,12 @@
       "button": "Get in touch",
       "privacy-policy": "Privacy policy",
       "terms-of-use": "Terms of use"
+    },
+    "filters-button": {
+      "filter": "Filter",
+      "select-all": "Select all",
+      "clear-all": "Clear all (None selected)",
+      "error-no-filters": "Please, select at least one option"
     }
   }
 }

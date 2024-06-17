@@ -1,10 +1,14 @@
 import { useAtom } from 'jotai';
+import { useTranslations } from 'next-intl';
 
 import FiltersButton from '@/components/filters-button';
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
+import { FCWithMessages } from '@/types';
 import { useGetDataToolEcosystems } from '@/types/generated/data-tool-ecosystem';
 
-const CardFiltersEcosystems = (): JSX.Element => {
+const CardFiltersEcosystems: FCWithMessages = (): JSX.Element => {
+  const t = useTranslations('containers.knowledge-hub-card-filters');
+
   const [filters, setFilters] = useAtom(cardFiltersAtom);
 
   const ecosystemsQuery = useGetDataToolEcosystems(
@@ -34,9 +38,14 @@ const CardFiltersEcosystems = (): JSX.Element => {
         values={filters?.ecosystem}
         onChange={handleFiltersChange}
       />
-      <span>Filter by ecosystem</span>
+      <span>{t('filter-by-ecosystem')}</span>
     </div>
   );
 };
+
+CardFiltersEcosystems.messages = [
+  'containers.knowledge-hub-card-filters',
+  ...FiltersButton.messages,
+];
 
 export default CardFiltersEcosystems;
