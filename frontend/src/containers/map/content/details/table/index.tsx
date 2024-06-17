@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 import {
   flexRender,
@@ -10,8 +10,8 @@ import {
 
 import { cn } from '@/lib/classnames';
 
-// ! todo: type columns,data properly
-const MapTable = ({ columns, data }) => {
+// ! todo: type props properly
+const MapTable = ({ columns, data, columnSeparators = null }) => {
   const tableRef = useRef<HTMLTableElement>();
   const firstColumnRef = useRef<HTMLTableCellElement>(null);
 
@@ -35,8 +35,15 @@ const MapTable = ({ columns, data }) => {
   const hasData = table.getRowModel().rows?.length > 0;
 
   const firstColumn = columns[0];
-  const secondColumn = columns[1];
   const lastColumn = columns[columns.length - 1];
+
+  const shouldAddColumnSeparator = useCallback(
+    (columnId) => {
+      const isFirstColumn = columnId === firstColumn.accessorKey;
+      return columnSeparators ? columnSeparators?.includes(columnId) : isFirstColumn;
+    },
+    [columnSeparators, firstColumn.accessorKey]
+  );
 
   return (
     <table
@@ -47,19 +54,20 @@ const MapTable = ({ columns, data }) => {
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id} className="shadow-[0_2px_0_-1px_rgb(0,0,0)]">
             {headerGroup.headers.map((header) => {
-              const { id, column, index } = header;
+              const { id, column } = header;
               const isFirstColumn = id === firstColumn.accessorKey;
-              const isSecondColumn = index === 1;
               const isLastColumn = id === lastColumn.accessorKey;
+              const isMapColumn = column.id === 'map';
 
               return (
                 <th
                   key={id}
                   ref={isFirstColumn ? firstColumnRef : null}
                   className={cn({
-                    'h-10 py-3 pl-6 pr-16': true,
+                    'border-r border-dashed border-black': shouldAddColumnSeparator(id),
+                    'h-10': true,
+                    'pl-6 pr-16': !isMapColumn,
                     'pl-0 pr-5': isFirstColumn,
-                    'border-l border-dashed border-black': isSecondColumn,
                     'pr-0': isLastColumn,
                   })}
                 >
@@ -90,17 +98,19 @@ const MapTable = ({ columns, data }) => {
                 {row.getVisibleCells().map((cell) => {
                   const { column } = cell;
                   const isFirstColumn = column.id === firstColumn.accessorKey;
-                  const isSecondColumn = column.id === secondColumn.accessorKey;
                   const isLastColumn = column.id === lastColumn.accessorKey;
+                  const isMapColumn = column.id === 'map';
 
                   return (
                     <td
                       key={cell.id}
                       className={cn({
-                        'h-16 py-3 pl-6 pr-16': true,
+                        'h-16 pl-6': true,
+                        'pl-6 pr-16 ': !isMapColumn,
+                        '-mt-px -mb-px': isMapColumn,
                         'pl-0 pr-5': isFirstColumn,
-                        'border-l border-dashed border-black': isSecondColumn,
                         'pr-0': isLastColumn,
+                        'border-r border-dashed border-black': shouldAddColumnSeparator(column.id),
                       })}
                     >
                       {flexRender(column.columnDef.cell, cell.getContext())}
