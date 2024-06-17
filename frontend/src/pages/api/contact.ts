@@ -1,11 +1,9 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { ContactUsInput } from '@/containers/contact/form';
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { body: values }: { body: ContactUsInput } = req;
+    const { body: values }: { body: Record<string, unknown> } = req;
 
     try {
       const hubSpotResponse = await axios.post(
