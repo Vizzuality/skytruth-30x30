@@ -3,10 +3,13 @@ import { useMemo } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import { useTranslations } from 'next-intl';
+
 import Icon from '@/components/ui/icon';
 import SidebarItem from '@/containers/homepage/intro/sidebar-item';
 import { formatPercentage } from '@/lib/utils/formats';
 import ArrowRight from '@/styles/icons/arrow-right.svg';
+import { FCWithMessages } from '@/types';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 import { useGetStaticIndicators } from '@/types/generated/static-indicator';
 
@@ -14,8 +17,9 @@ type IntroProps = {
   onScrollClick: () => void;
 };
 
-const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
+const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
   const { locale } = useRouter();
+  const t = useTranslations('containers.homepage-intro');
 
   const {
     data: { data: protectionStatsData },
@@ -94,41 +98,40 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
             />
           </div>
           <div className="pr-10 text-5xl font-extrabold leading-tight md:text-6xl">
-            Protect 30% of land and ocean by 2030
+            {t('protect-land-and-ocean')}
           </div>
           <div className="mt-16 flex">
             <div className="mb-6 flex flex-grow items-center gap-4 text-xs">
               <span>
                 <Image
                   src="/images/static-pages/logos/skytruth-white.png"
-                  alt="SkyTruth 30x30 logo"
+                  alt="SkyTruth 30x30"
                   width={57}
                   height={39}
                 />
               </span>
               <span className="flex items-center gap-1.5">
-                <span>Product powered by</span>
+                <span>{t('product-powered-by')}</span>
                 <Image
                   src="/images/static-pages/logos/bloomberg-white.png"
-                  alt="Bloomberg Philanthropies Ocean Initiative logo"
+                  alt="Bloomberg Philanthropies Ocean Initiative"
                   width={247}
                   height={29}
                 />
               </span>
             </div>
-            {/* <div>Social</div> */}
           </div>
         </div>
         <div className="border-l border-t border-white md:w-[40%] md:border-t-0">
           <div className="flex h-full flex-col border-r">
             <SidebarItem
               percentage={formattedOceanProtectedAreaPercentage}
-              text="Current global ocean protected area"
+              text={t('current-ocean-protected-area')}
               icon="icon1"
             />
             <SidebarItem
               percentage={protectedTerrestrialInlandAreasData?.attributes?.value}
-              text="Current global land and inland waters protected area"
+              text={t('current-total-protected-area')}
               icon="icon2"
             />
             <div className="flex h-full w-full justify-center">
@@ -146,5 +149,7 @@ const Intro: React.FC<IntroProps> = ({ onScrollClick }) => {
     </div>
   );
 };
+
+Intro.messages = ['containers.homepage-intro', ...SidebarItem.messages];
 
 export default Intro;
