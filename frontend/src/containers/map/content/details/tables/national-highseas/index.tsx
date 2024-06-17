@@ -122,7 +122,7 @@ const NationalHighseasTable: FCWithMessages = () => {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return <Table columns={columns} data={tableData} />;
+  return <Table columns={columns} data={tableData} columnSeparators={['map']} />;
 };
 
 NationalHighseasTable.messages = [
