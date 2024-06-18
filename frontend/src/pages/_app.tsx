@@ -14,7 +14,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Analytics from '@/components/analytics';
 import { figtree, overpassMono } from '@/styles/fonts';
 
-type LayoutProps<PageProps = object, Props = React.ComponentProps<'div'>> = {
+export type LayoutProps<PageProps = object, Props = React.ComponentProps<'div'>> = {
   Component?: React.FC<Props>;
   props?: Props | ((props: PageProps) => Props);
 };

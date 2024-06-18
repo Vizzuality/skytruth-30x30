@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useSetAtom } from 'jotai';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
@@ -11,17 +12,12 @@ import { popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import GlobeIcon from '@/styles/icons/globe.svg';
 import MagnifyingGlassIcon from '@/styles/icons/magnifying-glass.svg';
+import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
 
 import LocationDropdown from './location-dropdown';
 import LocationTypeToggle from './type-toggle';
-
-export const FILTERS_SEARCH_LABELS = {
-  all: 'Search Country or Region',
-  countryHighseas: 'Search Country or Highseas',
-  regions: 'Search Region',
-};
 
 export const FILTERS = {
   all: ['country', 'highseas', 'region', 'worldwide'],
@@ -38,7 +34,13 @@ type LocationSelectorProps = {
   onChange: (locationCode: string) => void;
 };
 
-const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme, onChange }) => {
+const LocationSelector: FCWithMessages<LocationSelectorProps> = ({
+  className,
+  theme,
+  onChange,
+}) => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
@@ -59,6 +61,15 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme, o
         select: ({ data }) => data,
       },
     }
+  );
+
+  const filtersSearchLabels = useMemo(
+    () => ({
+      all: t('search-country-region'),
+      countryHighseas: t('search-country-high-seas'),
+      regions: t('search-region'),
+    }),
+    [t]
   );
 
   const handleLocationsFilterChange = (value) => {
@@ -95,7 +106,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme, o
         <PopoverTrigger asChild>
           <Button className={BUTTON_CLASSES} type="button" variant="text-link">
             <Icon icon={MagnifyingGlassIcon} className="mr-2 h-4 w-4 pb-px" />
-            Change Location
+            {t('change-location')}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-96 max-w-screen" align="start">
@@ -107,7 +118,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme, o
             onChange={handleLocationsFilterChange}
           />
           <LocationDropdown
-            searchPlaceholder={FILTERS_SEARCH_LABELS[locationsFilter]}
+            searchPlaceholder={filtersSearchLabels[locationsFilter]}
             locations={filteredLocations}
             onSelected={handleLocationSelected}
           />
@@ -121,11 +132,17 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme, o
           onClick={() => handleLocationSelected('GLOB')}
         >
           <Icon icon={GlobeIcon} className="mr-2 h-4 w-4 pb-px" />
-          Global view
+          {t('global-view')}
         </Button>
       )}
     </div>
   );
 };
+
+LocationSelector.messages = [
+  'containers.map-sidebar-main-panel',
+  ...LocationTypeToggle.messages,
+  ...LocationDropdown.messages,
+];
 
 export default LocationSelector;

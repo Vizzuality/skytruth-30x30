@@ -7,6 +7,7 @@ import Header from '@/components/header';
 import Content from '@/containers/map/content';
 import Sidebar from '@/containers/map/sidebar';
 import { drawStateAtom, modellingAtom } from '@/containers/map/store';
+import { FCWithMessages } from '@/types';
 
 const LAYOUT_TYPES = {
   progress_tracker: 'progress-tracker',
@@ -19,7 +20,11 @@ export interface MapLayoutProps {
   type: keyof typeof LAYOUT_TYPES;
 }
 
-const MapLayout: React.FC<PropsWithChildren<MapLayoutProps>> = ({ title, description, type }) => {
+const MapLayout: FCWithMessages<PropsWithChildren<MapLayoutProps>> = ({
+  title,
+  description,
+  type,
+}) => {
   const resetModelling = useResetAtom(modellingAtom);
   const resetDrawState = useResetAtom(drawStateAtom);
 
@@ -53,5 +58,7 @@ const MapLayout: React.FC<PropsWithChildren<MapLayoutProps>> = ({ title, descrip
     </>
   );
 };
+
+MapLayout.messages = ['layouts.map', ...Header.messages, ...Sidebar.messages, ...Content.messages];
 
 export default MapLayout;

@@ -8,7 +8,8 @@
   "layouts": {
     "error": {
       "go-to-homepage": "Go to homepage"
-    }
+    },
+    "map": {}
   },
   "pages": {
     "404": {
@@ -94,7 +95,8 @@
       "outro-description": "Do you want to contribute to the Knowledge Hub and add a tool?",
       "outro-button": "Get in touch",
       "looking-for": "I am looking for..."
-    }
+    },
+    "progress-tracker": {}
   },
   "containers": {
     "contact-form": {
@@ -167,6 +169,99 @@
       "geography": "Geography",
       "ecosystems": "Ecosystems",
       "languages": "Language(s)"
+    },
+    "map-sidebar": {
+      "close-layers": "Close layers",
+      "layers": "layers",
+      "toggle-sidebar": "Toggle sidebar"
+    },
+    "map-sidebar-main-panel": {
+      "change-location": "Change Location",
+      "global-view": "Global view",
+      "search-country-region": "Search Country or Region",
+      "search-country-high-seas": "Search Country or High Seas",
+      "search-region": "Search Region",
+      "locations-filter": "Locations filter",
+      "all": "All",
+      "countries-and-high-seas": "Countries & High Seas",
+      "regions": "Regions",
+      "no-result": "No result",
+      "view-all-countries": "View all countries",
+      "hide-some-countries": "Hide some countries",
+      "more-details": "More details",
+      "marine-conservation-coverage": "Marine Conservation Coverage",
+      "marine-protected-percentage": "<b1>{percentage}</b1><b2>%</b2>",
+      "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "marine-conservation-protection-levels": "Marine Conservation Protection Levels",
+      "proportion-habitat-within-protected-areas": "Proportion of Habitat within Protected and Conserved Areas",
+      "conservation-scenarios": "Conservation scenarios with custom areas.",
+      "custom-area": "Custom Area",
+      "custom-area-description": "Activate more layers for additional contextual information about your custom area conservation scenario.",
+      "start-drawing-on-map": "Start drawing on the map",
+      "draw-shape": "Draw a shape",
+      "clear-shape": "Clear shape",
+      "re-draw": "Re-draw",
+      "how-to-draw": "<b>How to draw a custom area</b> on the map, using the drawing functionality?",
+      "step-1-alt": "Step 01",
+      "step-1-description": "Click on the <b>Draw a shape</b> button located above, in the blue section at the top of the panel.",
+      "step-2-alt": "Step 02",
+      "step-2-description": "<b>Start drawing on the map</b> by clicking. Each click adds an anchor point. All sides of the polygon are connected through anchor points.",
+      "step-3-alt": "Step 03",
+      "step-3-description": "<b>Close the polygon</b> you drew by clicking on the first anchor point you added at the beginning or by double clicking on the last anchor point.",
+      "marine-existing-conservation": "Existing marine conservation coverage",
+      "new-added-area": "New added area",
+      "administrative-boundary": "Administrative boundary",
+      "national-level-contribution": "National level contribution",
+      "global": "Global"
+    },
+    "map-sidebar-layers-panel": {
+      "layers": "Layers",
+      "labels": "Labels"
+    },
+    "map": {
+      "loading": "Loading...",
+      "no-data": "No data",
+      "no-data-available": "No data available",
+      "no-results": "No results.",
+      "marine-conservation-coverage": "Marine Conservation Coverage",
+      "percentage": "{percentage}%",
+      "percentage-bold": "<b1>{percentage}</b1><b2>%</b2>",
+      "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "open-country-insights": "Open country insights",
+      "eezs": "EEZs",
+      "selected-eez": "Selected EEZ",
+      "area-corresponding-to-more-than-1-eez": "Area corresponding to more <br></br> than one EEZ",
+      "global-coverage": "Global coverage",
+      "area-km2": "{area} km²",
+      "open-region-insights": "Open region insights",
+      "legend": "Legend",
+      "open-layers-to-add-to-map": "Open <b>Layers</b> to add layers to the map",
+      "move-up": "Move up",
+      "move-down": "Move down",
+      "change-opacity": "Change opacity",
+      "opacity": "Opacity",
+      "hide": "Hide",
+      "show": "Show",
+      "remove": "Remove",
+      "close": "Close",
+      "marine-conservation-national-regional-levels": "Marine Conservation at National and Regional Levels",
+      "marine-conservation-location": "Marine Conservation for '{location'}",
+      "marine-conservation": "Marine Conservation",
+      "marin-conservation-high-seas": "Marine Conservation for High Seas",
+      "name": "Name",
+      "coverage": "Coverage",
+      "area": "Area",
+      "mpas": "MPAs",
+      "n-a": "N/A",
+      "oecms": "OECMs",
+      "fully-highly-protected": "Fully/Highly Protected",
+      "global-contribution": "Global contribution",
+      "sort-ascending": "Sort ascending",
+      "sort-descending": "Sort descending",
+      "clear-sorting": "Clear sorting",
+      "type": "Type",
+      "establishment-stage": "Establishment Stage",
+      "protection-level": "Protection Level"
     }
   },
   "components": {
@@ -192,6 +287,38 @@
       "select-all": "Select all",
       "clear-all": "Clear all (None selected)",
       "error-no-filters": "Please, select at least one option"
+    },
+    "widget": {
+      "updated-on": "Updated on {date}",
+      "loading-data": "Loading data...",
+      "data-not-available": "Data not available"
+    },
+    "chart-conservation": {
+      "year-value": "Year: {value}",
+      "coverage-value": "Coverage: {percentage}"
+    },
+    "chart-horizontal-bar": {
+      "marine-protected-percentage": "{percentage}<b>%</b>",
+      "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "30%-target": "30% target",
+      "percentage": "{percentage}%"
+    },
+    "chart-stacked-horizontal-bar": {
+      "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "30%-target": "30% target",
+      "percentage": "{percentage}%"
+    },
+    "tooltip-button": {
+      "info": "Info",
+      "data-source": "Data source"
+    },
+    "ui-carousel": {
+      "previous-slide": "Previous slide",
+      "next-slide": "Next slide"
+    },
+    "map": {
+      "zoom-in": "Zoom in",
+      "zoom-out": "Zoom out"
     }
   }
 }

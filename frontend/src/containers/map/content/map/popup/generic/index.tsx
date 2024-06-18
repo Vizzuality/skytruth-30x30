@@ -9,10 +9,14 @@ import { useAtomValue } from 'jotai';
 
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { format } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
 import { LayerTyped, InteractionConfig } from '@/types/layers';
 
-const GenericPopup = ({ layerId, ...restConfig }: InteractionConfig & { layerId: number }) => {
+const GenericPopup: FCWithMessages<InteractionConfig & { layerId: number }> = ({
+  layerId,
+  ...restConfig
+}) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
@@ -126,5 +130,7 @@ const GenericPopup = ({ layerId, ...restConfig }: InteractionConfig & { layerId:
     </>
   );
 };
+
+GenericPopup.messages = ['containers.map'];
 
 export default GenericPopup;

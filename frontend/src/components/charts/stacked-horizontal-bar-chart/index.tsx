@@ -1,8 +1,11 @@
 import { useRouter } from 'next/router';
 
+import { useTranslations } from 'next-intl';
+
 import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
 
 const DEFAULT_MAX_PERCENTAGE = 100;
 
@@ -22,7 +25,7 @@ type StackedHorizontalBarChartProps = {
   showTarget?: boolean;
 };
 
-const StackedHorizontalBarChart: React.FC<StackedHorizontalBarChartProps> = ({
+const StackedHorizontalBarChart: FCWithMessages<StackedHorizontalBarChartProps> = ({
   className,
   data,
   title,
@@ -33,6 +36,8 @@ const StackedHorizontalBarChart: React.FC<StackedHorizontalBarChartProps> = ({
   showLegend = true,
   showTarget = true,
 }) => {
+  const t = useTranslations('components.chart-stacked-horizontal-bar');
+
   const { locale } = useRouter();
 
   return (
@@ -47,8 +52,10 @@ const StackedHorizontalBarChart: React.FC<StackedHorizontalBarChartProps> = ({
           {info && <TooltipButton text={info} />}
         </span>
         <span className="text-right">
-          {formatKM(locale, totalProtectedArea)} km<sup>2</sup> out of {formatKM(locale, totalArea)}{' '}
-          km<sup>2</sup>
+          {t('marine-protected-area', {
+            protectedArea: formatKM(locale, totalProtectedArea),
+            totalArea: formatKM(locale, totalArea),
+          })}
         </span>
       </div>
       <div className="relative my-2 flex h-3.5">
@@ -67,19 +74,24 @@ const StackedHorizontalBarChart: React.FC<StackedHorizontalBarChartProps> = ({
         {showTarget && (
           <span className="absolute top-0 bottom-0 left-[30%] w-1 border-x border-white bg-orange">
             <span className="absolute right-0 top-5 whitespace-nowrap text-xs text-orange">
-              30% target
+              {t('30%-target')}
             </span>
           </span>
         )}
       </div>
       {showLegend && (
         <div className="flex justify-between text-xs">
-          <span>0%</span>
-          <span>{DEFAULT_MAX_PERCENTAGE}%</span>
+          <span>{t('percentage', { percentage: 0 })}</span>
+          <span>{t('percentage', { percentage: DEFAULT_MAX_PERCENTAGE })}</span>
         </div>
       )}
     </div>
   );
 };
+
+StackedHorizontalBarChart.messages = [
+  'components.chart-stacked-horizontal-bar',
+  ...TooltipButton.messages,
+];
 
 export default StackedHorizontalBarChart;

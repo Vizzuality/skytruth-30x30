@@ -1,13 +1,20 @@
-import { FC, ReactElement, isValidElement, useMemo } from 'react';
+import { ReactElement, isValidElement, useMemo } from 'react';
 
 import TooltipButton from '@/components/tooltip-button';
 import Icon from '@/components/ui/icon';
+import EEZLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/eez';
+import EstablishmentLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/establishment';
+import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
+import GenericPopup from '@/containers/map/content/map/popup/generic';
+import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
+import RegionsPopup from '@/containers/map/content/map/popup/regions';
 import { parseConfig } from '@/lib/json-converter';
 import EEZIcon from '@/styles/icons/eez.svg';
 import MPAIcon from '@/styles/icons/mpa.svg';
 import OECMIcon from '@/styles/icons/oecm.svg';
 import EEZSelectedIcon from '@/styles/icons/selected-eez.svg';
 import EEZMultipleIcon from '@/styles/icons/several-eez.svg';
+import { FCWithMessages } from '@/types';
 import { LayerTyped, LegendConfig } from '@/types/layers';
 export interface LegendItemsProps {
   config: LayerTyped['legend_config'];
@@ -21,7 +28,7 @@ const ICONS_MAPPING = {
   mpa: MPAIcon,
 };
 
-const LegendItem: FC<LegendItemsProps> = ({ config }) => {
+const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
   const { type, items } = config;
 
   const LEGEND_ITEM_COMPONENT = useMemo(() => {
@@ -136,5 +143,15 @@ const LegendItem: FC<LegendItemsProps> = ({ config }) => {
       return LEGEND_ITEM_COMPONENT;
   }
 };
+
+LegendItem.messages = [
+  // Imported by `parseConfig`
+  ...EEZLayerPopup.messages,
+  ...EEZLayerLegend.messages,
+  ...GenericPopup.messages,
+  ...ProtectedAreaPopup.messages,
+  ...RegionsPopup.messages,
+  ...EstablishmentLayerLegend.messages,
+];
 
 export default LegendItem;

@@ -2,9 +2,17 @@ import React from 'react';
 
 import { useRouter } from 'next/router';
 
-import { formatPercentage } from '@/lib/utils/formats';
+import { useTranslations } from 'next-intl';
 
-const ChartTooltip = ({ active, payload }) => {
+import { formatPercentage } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
+
+const ChartTooltip: FCWithMessages<{
+  active: boolean;
+  payload?: { dataKey: string; payload?: { percentage: number; year: number } }[];
+}> = ({ active, payload }) => {
+  const t = useTranslations('components.chart-conservation');
+
   const { locale } = useRouter();
 
   if (!active || !payload) return null;
@@ -16,10 +24,12 @@ const ChartTooltip = ({ active, payload }) => {
 
   return (
     <div className="flex flex-col gap-px border border-black bg-white p-4 font-mono text-xs">
-      <span>Year: {year}</span>
-      <span>Coverage: {formatPercentage(locale, percentage)}</span>
+      <span>{t('year-value', { year })}</span>
+      <span>{t('year-value', { percentage: formatPercentage(locale, percentage) })}</span>
     </div>
   );
 };
+
+ChartTooltip.messages = ['components.chart-conservation'];
 
 export default ChartTooltip;

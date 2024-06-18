@@ -1,15 +1,17 @@
-import { FC } from 'react';
-
 import { useMap } from 'react-map-gl';
 
 import { Minus, Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
+import { FCWithMessages } from '@/types';
 
 const BUTTON_CLASSES = 'group bg-white';
 const ICON_CLASSES = 'h-6 w-6 text-black group-hover:text-white';
 
-const ZoomControls: FC = () => {
+const ZoomControls: FCWithMessages = () => {
+  const t = useTranslations('components.map');
+
   const {
     current: { getZoom, zoomTo, getMinZoom, getMaxZoom },
   } = useMap();
@@ -28,7 +30,7 @@ const ZoomControls: FC = () => {
         className={BUTTON_CLASSES}
       >
         <Plus className={ICON_CLASSES} aria-hidden />
-        <span className="sr-only">Zoom in</span>
+        <span className="sr-only">{t('zoom-in')}</span>
       </Button>
       <Button
         type="button"
@@ -38,10 +40,12 @@ const ZoomControls: FC = () => {
         className={BUTTON_CLASSES}
       >
         <Minus className={ICON_CLASSES} aria-hidden />
-        <span className="sr-only">Zoom out</span>
+        <span className="sr-only">{t('zoom-out')}</span>
       </Button>
     </div>
   );
 };
+
+ZoomControls.messages = ['components.map'];
 
 export default ZoomControls;

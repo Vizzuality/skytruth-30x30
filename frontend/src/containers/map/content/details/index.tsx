@@ -2,14 +2,20 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useTranslations } from 'next-intl';
+
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
-import tablesSettings from '@/containers/map/content/details/tables-settings';
+import GlobalRegionalTable from '@/containers/map/content/details/tables/global-regional';
+import NationalHighSeasTable from '@/containers/map/content/details/tables/national-highseas';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import CloseIcon from '@/styles/icons/close.svg';
+import { FCWithMessages } from '@/types';
 import { getGetLocationsQueryOptions, useGetLocations } from '@/types/generated/location';
 
-const MapDetails: React.FC = () => {
+const MapDetails: FCWithMessages = () => {
+  const t = useTranslations('containers.map');
+
   const [, setSettings] = useSyncMapContentSettings();
   const {
     query: { locationCode = 'GLOB' },
@@ -43,6 +49,32 @@ const MapDetails: React.FC = () => {
     setSettings((prevSettings) => ({ ...prevSettings, showDetails: false }));
   };
 
+  const tablesSettings = useMemo(
+    () => ({
+      worldwideRegion: {
+        locationTypes: ['worldwide', 'region'],
+        component: GlobalRegionalTable,
+        title: {
+          worldwide: t('marine-conservation-national-regional-levels'),
+          region: t('marine-conservation-location'),
+          // Fallback to use in case the slug/code isn't defined, in order to prevent crashes
+          fallback: t('marine-conservation'),
+        },
+      },
+      countryHighseas: {
+        locationTypes: ['country', 'highseas'],
+        component: NationalHighSeasTable,
+        title: {
+          country: t('marine-conservation-location'),
+          highseas: t('marin-conservation-high-seas'),
+          // Fallback to use in case the slug/code isn't defined, in order to prevent crashes
+          fallback: t('marine-conservation'),
+        },
+      },
+    }),
+    [t]
+  );
+
   const table = useMemo(() => {
     // TODO: Improve to support more entries (although not needed right now)
     const tableSettings = tablesSettings.worldwideRegion.locationTypes.includes(
@@ -61,7 +93,7 @@ const MapDetails: React.FC = () => {
       title: parsedTitle,
       component: tableSettings.component,
     };
-  }, [locationsQuery.data]);
+  }, [tablesSettings, locationsQuery.data]);
 
   return (
     <div className="absolute h-full w-full overflow-scroll bg-white px-4 py-4 md:px-6">
@@ -74,8 +106,8 @@ const MapDetails: React.FC = () => {
           className="m-0 cursor-pointer p-0 font-mono text-xs normal-case no-underline"
           onClick={handleOnCloseClick}
         >
-          Close
-          <Icon icon={CloseIcon} className=" ml-2 h-3 w-3 pb-px" />
+          {t('close')}
+          <Icon icon={CloseIcon} className="ml-2 h-3 w-3 pb-px " />
         </Button>
       </div>
       <div className="mt-4">
@@ -84,5 +116,11 @@ const MapDetails: React.FC = () => {
     </div>
   );
 };
+
+MapDetails.messages = [
+  'containers.map',
+  ...GlobalRegionalTable.messages,
+  ...NationalHighSeasTable.messages,
+];
 
 export default MapDetails;

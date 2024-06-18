@@ -17,6 +17,7 @@ import {
 
 import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 
 import ChartLegend from './legend';
@@ -38,7 +39,7 @@ type ConservationChartProps = {
 const TARGET_YEAR = 2030;
 const MAX_NUM_YEARS = 20;
 
-const ConservationChart: React.FC<ConservationChartProps> = ({
+const ConservationChart: FCWithMessages<ConservationChartProps> = ({
   className,
   displayTarget = true,
   data,
@@ -265,5 +266,11 @@ const ConservationChart: React.FC<ConservationChartProps> = ({
     </div>
   );
 };
+
+ConservationChart.messages = [
+  'components.chart-conservation',
+  ...TooltipButton.messages,
+  ...ChartTooltip.messages,
+];
 
 export default ConservationChart;

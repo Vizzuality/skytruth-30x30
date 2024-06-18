@@ -1,7 +1,9 @@
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import { VariantProps, cva } from 'class-variance-authority';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 
 import { FILTERS } from '../index';
 
@@ -27,13 +29,15 @@ type LocationTypeToggleProps = VariantProps<typeof toggleVariants> & {
   onChange: (value: keyof typeof FILTERS) => void;
 };
 
-const LocationTypeToggle: React.FC<LocationTypeToggleProps> = ({
+const LocationTypeToggle: FCWithMessages<LocationTypeToggleProps> = ({
   className,
   theme,
   defaultValue,
   value,
   onChange,
 }) => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+
   return (
     <ToggleGroup.Root
       className={cn(
@@ -42,28 +46,34 @@ const LocationTypeToggle: React.FC<LocationTypeToggleProps> = ({
       )}
       type="single"
       defaultValue={defaultValue}
-      aria-label="Locations filter"
+      aria-label={t('locations-filter')}
       value={value}
       onValueChange={(value: keyof typeof FILTERS) => {
         if (!value) return;
         onChange(value);
       }}
     >
-      <ToggleGroup.Item className={toggleVariants({ theme })} value="all" aria-label="All">
-        All
+      <ToggleGroup.Item className={toggleVariants({ theme })} value="all" aria-label={t('all')}>
+        {t('all')}
       </ToggleGroup.Item>
       <ToggleGroup.Item
         className={toggleVariants({ theme })}
         value="countryHighseas"
-        aria-label="Countries & High Seas"
+        aria-label={t('countries-and-high-seas')}
       >
-        Countries & High Seas
+        {t('countries-and-high-seas')}
       </ToggleGroup.Item>
-      <ToggleGroup.Item className={toggleVariants({ theme })} value="regions" aria-label="Regions">
-        Regions
+      <ToggleGroup.Item
+        className={toggleVariants({ theme })}
+        value="regions"
+        aria-label={t('regions')}
+      >
+        {t('regions')}
       </ToggleGroup.Item>
     </ToggleGroup.Root>
   );
 };
+
+LocationTypeToggle.messages = ['containers.map-sidebar-main-panel'];
 
 export default LocationTypeToggle;

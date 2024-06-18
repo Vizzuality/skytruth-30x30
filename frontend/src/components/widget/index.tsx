@@ -1,8 +1,10 @@
 import { ComponentProps, PropsWithChildren, useMemo } from 'react';
 
 import { timeFormat } from 'd3-time-format';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 
 import TooltipButton from '../tooltip-button';
 
@@ -21,7 +23,7 @@ type WidgetProps = {
   sources?: ComponentProps<typeof TooltipButton>['sources'];
 };
 
-const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
+const Widget: FCWithMessages<PropsWithChildren<WidgetProps>> = ({
   className,
   title,
   lastUpdated,
@@ -33,6 +35,8 @@ const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
   sources,
   children,
 }) => {
+  const t = useTranslations('components.widget');
+
   const formattedLastUpdated = useMemo(
     () => timeFormat('%B %Y')(new Date(lastUpdated)),
     [lastUpdated]
@@ -48,7 +52,7 @@ const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
           {(info || sources) && <TooltipButton text={info} sources={sources} />}
         </span>
         {!showNoData && lastUpdated && (
-          <span className="text-xs">Updated on {formattedLastUpdated}</span>
+          <span className="text-xs">{t('updated-on', { date: formattedLastUpdated })}</span>
         )}
       </div>
       {loading && <Loading />}
@@ -57,5 +61,7 @@ const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({
     </div>
   );
 };
+
+Widget.messages = ['components.widget', ...Loading.messages, ...NoData.messages];
 
 export default Widget;

@@ -23,3 +23,8 @@ declare module '*.jpg';
 export type FCWithMessages<P = NonNullable<unknown>> = React.FC<P> & {
   messages: Parameters<typeof useTranslations>[0][];
 };
+
+export interface ForwadedComponentWithMessages<P = NonNullable<unknown>>
+  extends React.ForwardRefExoticComponent<P & RefAttributes<HTMLElement>> {
+  messages?: Parameters<typeof useTranslations>[0][];
+}

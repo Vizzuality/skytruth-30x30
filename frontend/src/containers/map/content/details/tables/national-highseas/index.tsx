@@ -2,14 +2,18 @@ import { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import TooltipButton from '@/components/tooltip-button';
 import { applyFilters } from '@/containers/map/content/details/helpers';
 import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/national-highseas/useColumns';
+import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 import { useGetMpaProtectionCoverageStats } from '@/types/generated/mpa-protection-coverage-stat';
 import { MpaProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 
-const NationalHighseasTable: React.FC = () => {
+import SortingButton from '../../table/sorting-button';
+
+const NationalHighseasTable: FCWithMessages = () => {
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
@@ -115,7 +119,17 @@ const NationalHighseasTable: React.FC = () => {
     return applyFilters(parsedData, filters);
   }, [filters, parsedData]);
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   return <Table columns={columns} data={tableData} />;
 };
+
+NationalHighseasTable.messages = [
+  'containers.map',
+  ...Table.messages,
+  // Dependencies of `useColumns`
+  ...SortingButton.messages,
+  ...TooltipButton.messages,
+];
 
 export default NationalHighseasTable;
