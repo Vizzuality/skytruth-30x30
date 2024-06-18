@@ -9,7 +9,9 @@
     "error": {
       "go-to-homepage": "Go to homepage"
     },
-    "map": {}
+    "map": {
+      "conservation-builder": "Conservation builder"
+    }
   },
   "pages": {
     "404": {
@@ -96,7 +98,8 @@
       "outro-button": "Get in touch",
       "looking-for": "I am looking for..."
     },
-    "progress-tracker": {}
+    "progress-tracker": {},
+    "conservation-builder": {}
   },
   "containers": {
     "contact-form": {
@@ -294,8 +297,12 @@
       "data-not-available": "Data not available"
     },
     "chart-conservation": {
+      "30x30-target": "30x30 Target",
       "year-value": "Year: {value}",
-      "coverage-value": "Coverage: {percentage}"
+      "coverage-value": "Coverage: {percentage}",
+      "historical-trend": "Historical Trend",
+      "future-projection": "Future Projection",
+      "historical": "Historical"
     },
     "chart-horizontal-bar": {
       "marine-protected-percentage": "{percentage}<b>%</b>",

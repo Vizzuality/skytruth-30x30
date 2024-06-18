@@ -1,6 +1,7 @@
 import { PropsWithChildren, useEffect } from 'react';
 
 import { useResetAtom } from 'jotai/utils';
+import { useTranslations } from 'next-intl';
 
 import Head from '@/components/head';
 import Header from '@/components/header';
@@ -25,6 +26,8 @@ const MapLayout: FCWithMessages<PropsWithChildren<MapLayoutProps>> = ({
   description,
   type,
 }) => {
+  const t = useTranslations('layouts.map');
+
   const resetModelling = useResetAtom(modellingAtom);
   const resetDrawState = useResetAtom(drawStateAtom);
 
@@ -37,7 +40,10 @@ const MapLayout: FCWithMessages<PropsWithChildren<MapLayoutProps>> = ({
 
   return (
     <>
-      <Head title={title} description={description} />
+      <Head
+        title={!title.length && type === 'conservation_builder' ? t('conservation-builder') : title}
+        description={description}
+      />
       <div className="flex h-screen w-screen flex-col">
         <div className="flex-shrink-0">
           <Header />

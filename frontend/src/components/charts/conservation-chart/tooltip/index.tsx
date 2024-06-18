@@ -24,8 +24,8 @@ const ChartTooltip: FCWithMessages<{
 
   return (
     <div className="flex flex-col gap-px border border-black bg-white p-4 font-mono text-xs">
-      <span>{t('year-value', { year })}</span>
-      <span>{t('year-value', { percentage: formatPercentage(locale, percentage) })}</span>
+      <span>{t('year-value', { value: year })}</span>
+      <span>{t('coverage-value', { percentage: formatPercentage(locale, percentage) })}</span>
     </div>
   );
 };
