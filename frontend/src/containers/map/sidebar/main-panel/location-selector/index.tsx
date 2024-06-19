@@ -7,15 +7,12 @@ import { useSetAtom } from 'jotai';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { PAGES } from '@/constants/pages';
 import { popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import GlobeIcon from '@/styles/icons/globe.svg';
 import MagnifyingGlassIcon from '@/styles/icons/magnifying-glass.svg';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
-
-import { useMapSearchParams } from '../../../../content/map/sync-settings';
 
 import LocationDropdown from './location-dropdown';
 import LocationTypeToggle from './type-toggle';
@@ -37,17 +34,16 @@ const BUTTON_CLASSES =
 
 type LocationSelectorProps = {
   className?: HTMLDivElement['className'];
+  theme: 'orange' | 'blue';
+  onChange: (locationCode: string) => void;
 };
 
-const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
+const LocationSelector: React.FC<LocationSelectorProps> = ({ className, theme, onChange }) => {
   const {
-    push,
     query: { locationCode = 'GLOB' },
   } = useRouter();
 
   const setPopup = useSetAtom(popupAtom);
-
-  const searchParams = useMapSearchParams();
 
   const [locationsFilter, setLocationsFilter] = useState<keyof typeof FILTERS>('all');
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
@@ -73,9 +69,9 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
     async (locationCode: LocationGroupsDataItemAttributes['code']) => {
       setLocationPopoverOpen(false);
       setPopup({});
-      push(`${PAGES.progressTracker}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
+      onChange(locationCode.toUpperCase());
     },
-    [setPopup, push, searchParams]
+    [setPopup, onChange]
   );
 
   const reorderedLocations = useMemo(() => {
@@ -104,6 +100,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ className }) => {
         </PopoverTrigger>
         <PopoverContent className="w-96 max-w-screen" align="start">
           <LocationTypeToggle
+            theme={theme}
             defaultValue={locationsFilter}
             value={locationsFilter}
             className="mb-4"

@@ -41,6 +41,10 @@ const nextConfig = {
         source: '/progress-tracker',
         destination: '/progress-tracker/GLOB',
       },
+      {
+        source: '/conservation-builder',
+        destination: '/conservation-builder/GLOB',
+      },
     ];
   },
 };

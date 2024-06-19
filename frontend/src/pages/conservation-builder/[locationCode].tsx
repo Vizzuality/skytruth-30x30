@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   if (mapParams) {
     const searchParams = mapParamsToSearchParams(mapParams);
-    const target = `${PAGES.progressTracker}/${location}?${searchParams}`;
+    const target = `${PAGES.conservationBuilder}/${location}?${searchParams}`;
 
     return {
       redirect: {
@@ -54,13 +54,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function ProgressTrackerPage() {
+export default function ConservationBuilderPage() {
   return null;
 }
 
-ProgressTrackerPage.layout = {
+ConservationBuilderPage.layout = {
   Component: MapLayout,
-  props: ({ location }) => ({
-    title: location?.name,
-  }),
+  props: {
+    title: 'Conservation builder',
+    type: 'conservation-builder',
+  },
 };

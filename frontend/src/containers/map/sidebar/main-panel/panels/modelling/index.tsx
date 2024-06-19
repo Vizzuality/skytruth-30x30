@@ -1,15 +1,27 @@
+import { useRouter } from 'next/router';
+
 import { useAtomValue } from 'jotai';
 
-import { modellingAtom } from '../../../store';
+import { PAGES } from '@/constants/pages';
+import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
+import { modellingAtom } from '@/containers/map/store';
+
+import LocationSelector from '../../location-selector';
 
 import ModellingButtons from './modelling-buttons';
 import ModellingIntro from './modelling-intro';
 import ModellingWidget from './widget';
 
 const SidebarModelling: React.FC = () => {
+  const { push } = useRouter();
+  const searchParams = useMapSearchParams();
   const { status: modellingStatus } = useAtomValue(modellingAtom);
 
   const showIntro = modellingStatus === 'idle';
+
+  const handleLocationSelected = (locationCode) => {
+    push(`${PAGES.conservationBuilder}/${locationCode}?${searchParams.toString()}`);
+  };
 
   return (
     <>
@@ -28,6 +40,7 @@ const SidebarModelling: React.FC = () => {
             </div>
           )}
 
+          <LocationSelector className="mt-2" theme="blue" onChange={handleLocationSelected} />
           <ModellingButtons className="mt-4" />
         </div>
         {showIntro && <ModellingIntro />}
