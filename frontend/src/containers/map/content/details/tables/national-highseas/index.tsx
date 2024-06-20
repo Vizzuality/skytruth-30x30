@@ -69,7 +69,7 @@ const NationalHighseasTable: React.FC = () => {
             },
           },
           location: {
-            fields: ['code', 'total_marine_area'],
+            fields: ['code', 'total_marine_area', 'bounds'],
           },
           fishing_protection_level: {
             fields: ['slug', 'name'],
@@ -88,6 +88,8 @@ const NationalHighseasTable: React.FC = () => {
       }
     );
 
+  console.log({ coverageData });
+
   const parsedData = useMemo(() => {
     return coverageData?.map(({ attributes: coverageStats }) => {
       const mpa = coverageStats.mpa?.data?.attributes;
@@ -95,6 +97,7 @@ const NationalHighseasTable: React.FC = () => {
       const establishmentStage = coverageStats?.mpaa_establishment_stage?.data?.attributes;
       const mpaaProtectionLevel = coverageStats?.mpaa_protection_level?.data?.attributes;
       const fishingProtectionLevel = coverageStats?.fishing_protection_level?.data?.attributes;
+      const locationCoverage = coverageStats?.location?.data?.attributes;
 
       // Calculate coverage percentage
       const coveragePercentage = (coverageStats.area / locationsQuery.data?.totalMarineArea) * 100;
@@ -107,7 +110,10 @@ const NationalHighseasTable: React.FC = () => {
         protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
         fishingProtectionLevel: fishingProtectionLevel?.slug,
         area: coverageStats.area,
-        map: {},
+        map: {
+          wdpaId: mpa?.wdpaid,
+          bounds: locationCoverage?.bounds,
+        },
         ...(mpa?.name !== 'Aln Estuary' && {
           subRows: [
             {
@@ -118,6 +124,10 @@ const NationalHighseasTable: React.FC = () => {
               protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
               fishingProtectionLevel: fishingProtectionLevel?.slug,
               area: coverageStats.area,
+              map: {
+                wdpaId: mpa?.wdpaid,
+                bounds: locationCoverage?.bounds,
+              },
             },
             {
               protectedArea: `${mpa?.name} - 2`,
@@ -127,6 +137,10 @@ const NationalHighseasTable: React.FC = () => {
               protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
               fishingProtectionLevel: fishingProtectionLevel?.slug,
               area: coverageStats.area,
+              map: {
+                wdpaId: mpa?.wdpaid,
+                bounds: locationCoverage?.bounds,
+              },
             },
           ],
         }),
