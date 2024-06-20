@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 
 import FiltersButton from '@/components/filters-button';
+import LayerPreview from '@/components/layer-preview';
 import ExpansionControls from '@/containers/map/content/details/table/expansion-controls';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
 import { cellFormatter } from '@/containers/map/content/details/table/helpers';
@@ -19,6 +20,10 @@ export type NationalHighseasTableColumns = {
   protectionLevel: string;
   fishingProtectionLevel: string;
   area: number;
+  map: {
+    wdpaId: string;
+    bounds: [number, number, number, number];
+  };
 };
 
 type UseColumnsProps = {
@@ -62,9 +67,13 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
       {
         accessorKey: 'map',
         header: null,
-        cell: () => {
+        cell: ({ row }) => {
+          const { bounds, wdpaId } = row.original.map;
+
           return (
-            <div className="-mr-0.5 h-[calc(100%+4px)] w-12 border-l border-r border-t border-b border-black" />
+            <div className="relative -mr-0.5 h-[calc(100%+4px)] w-12 border-l border-r border-t border-b border-black">
+              <LayerPreview bounds={bounds} wdpaId={wdpaId} />
+            </div>
           );
         },
       },
