@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
+import { useTranslations } from 'next-intl';
+
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 
 type CountriesListProps = {
   className?: HTMLDivElement['className'];
@@ -15,11 +18,13 @@ type CountriesListProps = {
   }[];
 };
 
-const CountriesList: React.FC<CountriesListProps> = ({
+const CountriesList: FCWithMessages<CountriesListProps> = ({
   className,
   countries,
   bgColorClassName,
 }) => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+
   const [isListOpen, setListOpen] = useState(false);
   const searchParams = useMapSearchParams();
 
@@ -57,18 +62,20 @@ const CountriesList: React.FC<CountriesListProps> = ({
               className={cn('cursor-pointer underline', bgColorClassName)}
               onClick={() => setListOpen(!isListOpen)}
             >
-              View all countries
+              {t('view-all-countries')}
             </span>
           </span>
         )}
       </div>
       <div className="mt-2">
         <span className="cursor-pointer underline" onClick={() => setListOpen(!isListOpen)}>
-          {isListOpen && <>Hide some countries</>}
+          {isListOpen && t('hide-some-countries')}
         </span>
       </div>
     </div>
   );
 };
+
+CountriesList.messages = ['containers.map-sidebar-main-panel'];
 
 export default CountriesList;

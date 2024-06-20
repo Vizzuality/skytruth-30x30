@@ -2,12 +2,16 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import TooltipButton from '@/components/tooltip-button';
 import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/global-regional/useColumns';
+import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 
-const GlobalRegionalTable: React.FC = () => {
+import SortingButton from '../../table/sorting-button';
+
+const GlobalRegionalTable: FCWithMessages = () => {
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
@@ -182,7 +186,17 @@ const GlobalRegionalTable: React.FC = () => {
 
   const tableData = parsedData;
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
   return <Table columns={columns} data={tableData} />;
 };
+
+GlobalRegionalTable.messages = [
+  'containers.map',
+  ...Table.messages,
+  // Dependencies of `useColumns`
+  ...SortingButton.messages,
+  ...TooltipButton.messages,
+];
 
 export default GlobalRegionalTable;

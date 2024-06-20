@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { MapProvider } from 'react-map-gl';
 
 import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import { NextIntlClientProvider } from 'next-intl';
 
 import 'styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -12,7 +14,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Analytics from '@/components/analytics';
 import { figtree, overpassMono } from '@/styles/fonts';
 
-type LayoutProps<PageProps = object, Props = React.ComponentProps<'div'>> = {
+export type LayoutProps<PageProps = object, Props = React.ComponentProps<'div'>> = {
   Component?: React.FC<Props>;
   props?: Props | ((props: PageProps) => Props);
 };
@@ -28,6 +30,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: Props) => {
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
   // between users
   const [queryClient] = useState(() => new QueryClient());
+
+  const router = useRouter();
 
   const Layout = Component?.layout?.Component ?? ((page) => page?.children);
 
@@ -48,16 +52,18 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: Props) => {
           --font-figtree: ${figtree.style.fontFamily};
         }
       `}</style>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <MapProvider>
-            <Analytics />
-            <Layout {...layoutProps}>
-              <Component {...pageProps} />
-            </Layout>
-          </MapProvider>
-        </Hydrate>
-      </QueryClientProvider>
+      <NextIntlClientProvider locale={router.locale} messages={pageProps.messages}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <MapProvider>
+              <Analytics />
+              <Layout {...layoutProps}>
+                <Component {...pageProps} />
+              </Layout>
+            </MapProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </NextIntlClientProvider>
     </>
   );
 };

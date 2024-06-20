@@ -1,3 +1,5 @@
+import { FCWithMessages } from '@/types';
+
 import Details from './details';
 import Modelling from './modelling';
 
@@ -15,10 +17,12 @@ type PanelsProps = {
   type: keyof typeof PANEL_TYPES;
 };
 
-const MainPanel: React.FC<PanelsProps> = ({ type }) => {
+const MainPanel: FCWithMessages<PanelsProps> = ({ type }) => {
   const Component = SIDEBAR_COMPONENTS[type] || Details;
 
   return <Component />;
 };
+
+MainPanel.messages = [...Details.messages, ...Modelling.messages];
 
 export default MainPanel;

@@ -1,8 +1,11 @@
 import { useMemo } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { HABITAT_CHART_COLORS } from '@/constants/habitat-chart-colors';
+import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetHabitatStats } from '@/types/generated/habitat-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
@@ -11,7 +14,9 @@ type HabitatWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
 
-const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
+const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+
   const defaultQueryParams = {
     filters: {
       location: {
@@ -141,7 +146,7 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
 
   return (
     <Widget
-      title="Proportion of Habitat within Protected and Conserved Areas"
+      title={t('proportion-habitat-within-protected-areas')}
       lastUpdated={dataLastUpdate}
       noData={noData}
       loading={loading}
@@ -159,5 +164,11 @@ const HabitatWidget: React.FC<HabitatWidgetProps> = ({ location }) => {
     </Widget>
   );
 };
+
+HabitatWidget.messages = [
+  'containers.map-sidebar-main-panel',
+  ...Widget.messages,
+  ...HorizontalBarChart.messages,
+];
 
 export default HabitatWidget;

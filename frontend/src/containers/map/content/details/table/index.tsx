@@ -6,11 +6,17 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 
 // ! todo: type columns,data properly
-const MapTable = ({ columns, data }) => {
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const MapTable: FCWithMessages = ({ columns, data }) => {
+  const t = useTranslations('containers.map');
+
   const tableRef = useRef<HTMLTableElement>();
   const firstColumnRef = useRef<HTMLTableCellElement>(null);
 
@@ -105,7 +111,7 @@ const MapTable = ({ columns, data }) => {
         {!hasData && (
           <tr>
             <td colSpan={columns.length} className="h-24 text-center">
-              No results.
+              {t('no-results')}
             </td>
           </tr>
         )}
@@ -113,5 +119,7 @@ const MapTable = ({ columns, data }) => {
     </table>
   );
 };
+
+MapTable.messages = ['containers.map'];
 
 export default MapTable;

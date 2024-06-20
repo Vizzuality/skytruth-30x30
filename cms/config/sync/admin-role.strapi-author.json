@@ -16,21 +16,18 @@
           "registration"
         ]
       },
-      "conditions": []
+      "conditions": [
+        "admin::is-creator"
+      ]
     },
     {
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::contact-detail.contact-detail",
       "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::contact-detail.contact-detail",
-      "properties": {},
-      "conditions": []
+      "conditions": [
+        "admin::is-creator"
+      ]
     },
     {
       "action": "plugin::content-manager.explorer.read",
@@ -45,7 +42,9 @@
           "registration"
         ]
       },
-      "conditions": []
+      "conditions": [
+        "admin::is-creator"
+      ]
     },
     {
       "action": "plugin::content-manager.explorer.update",
@@ -60,7 +59,9 @@
           "registration"
         ]
       },
-      "conditions": []
+      "conditions": [
+        "admin::is-creator"
+      ]
     },
     {
       "action": "plugin::content-manager.explorer.create",
@@ -193,15 +194,6 @@
       ]
     },
     {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
-      "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ]
-    },
-    {
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
@@ -244,15 +236,6 @@
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::data-tool-language.data-tool-language",
-      "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ]
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
       "subject": "api::data-tool-language.data-tool-language",
       "properties": {},
@@ -313,15 +296,6 @@
       ]
     },
     {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::data-tool-resource-type.data-tool-resource-type",
-      "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ]
-    },
-    {
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::data-tool-resource-type.data-tool-resource-type",
@@ -357,6 +331,7 @@
           "description",
           "site",
           "languages",
+          "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
         ]
@@ -375,15 +350,6 @@
       ]
     },
     {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::data-tool.data-tool",
-      "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ]
-    },
-    {
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::data-tool.data-tool",
@@ -393,6 +359,7 @@
           "description",
           "site",
           "languages",
+          "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
         ]
@@ -411,8 +378,60 @@
           "description",
           "site",
           "languages",
+          "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ]
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {
+        "fields": [
+          "name",
+          "layers"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ]
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ]
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {
+        "fields": [
+          "name",
+          "layers"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ]
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {
+        "fields": [
+          "name",
+          "layers"
         ]
       },
       "conditions": [
@@ -644,6 +663,90 @@
     {
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
+      "subject": "api::layer.layer",
+      "properties": {
+        "fields": [
+          "title",
+          "type",
+          "config",
+          "params_config",
+          "legend_config",
+          "interaction_config",
+          "metadata.description",
+          "metadata.citation",
+          "metadata.source",
+          "metadata.resolution",
+          "metadata.content_date",
+          "metadata.license",
+          "dataset"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ]
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::layer.layer",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ]
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::layer.layer",
+      "properties": {
+        "fields": [
+          "title",
+          "type",
+          "config",
+          "params_config",
+          "legend_config",
+          "interaction_config",
+          "metadata.description",
+          "metadata.citation",
+          "metadata.source",
+          "metadata.resolution",
+          "metadata.content_date",
+          "metadata.license",
+          "dataset"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ]
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::layer.layer",
+      "properties": {
+        "fields": [
+          "title",
+          "type",
+          "config",
+          "params_config",
+          "legend_config",
+          "interaction_config",
+          "metadata.description",
+          "metadata.citation",
+          "metadata.source",
+          "metadata.resolution",
+          "metadata.content_date",
+          "metadata.license",
+          "dataset"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ]
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
       "subject": "api::location.location",
       "properties": {
         "fields": [
@@ -652,7 +755,11 @@
           "totalMarineArea",
           "type",
           "groups",
-          "members"
+          "members",
+          "fishing_protection_level_stats",
+          "mpaa_protection_level_stats",
+          "protection_coverage_stats",
+          "bounds"
         ]
       },
       "conditions": [
@@ -679,7 +786,11 @@
           "totalMarineArea",
           "type",
           "groups",
-          "members"
+          "members",
+          "fishing_protection_level_stats",
+          "mpaa_protection_level_stats",
+          "protection_coverage_stats",
+          "bounds"
         ]
       },
       "conditions": [
@@ -697,7 +808,11 @@
           "totalMarineArea",
           "type",
           "groups",
-          "members"
+          "members",
+          "fishing_protection_level_stats",
+          "mpaa_protection_level_stats",
+          "protection_coverage_stats",
+          "bounds"
         ]
       },
       "conditions": [
@@ -714,7 +829,8 @@
           "fishing_protection_level",
           "mpaa_protection_level",
           "location",
-          "area"
+          "area",
+          "mpaa_establishment_stage"
         ]
       },
       "conditions": [
@@ -740,7 +856,8 @@
           "fishing_protection_level",
           "mpaa_protection_level",
           "location",
-          "area"
+          "area",
+          "mpaa_establishment_stage"
         ]
       },
       "conditions": [
@@ -757,7 +874,8 @@
           "fishing_protection_level",
           "mpaa_protection_level",
           "location",
-          "area"
+          "area",
+          "mpaa_establishment_stage"
         ]
       },
       "conditions": [
@@ -770,9 +888,12 @@
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
-          "wdpaid",
           "name",
-          "area"
+          "area",
+          "year",
+          "protection_status",
+          "mpa_protection_coverage_stats",
+          "wdpaid"
         ]
       },
       "conditions": [
@@ -794,9 +915,12 @@
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
-          "wdpaid",
           "name",
-          "area"
+          "area",
+          "year",
+          "protection_status",
+          "mpa_protection_coverage_stats",
+          "wdpaid"
         ]
       },
       "conditions": [
@@ -809,9 +933,12 @@
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
-          "wdpaid",
           "name",
-          "area"
+          "area",
+          "year",
+          "protection_status",
+          "mpa_protection_coverage_stats",
+          "wdpaid"
         ]
       },
       "conditions": [
@@ -886,7 +1013,8 @@
         "fields": [
           "slug",
           "name",
-          "info"
+          "info",
+          "mpa_protection_coverage_stats"
         ]
       },
       "conditions": [
@@ -910,7 +1038,8 @@
         "fields": [
           "slug",
           "name",
-          "info"
+          "info",
+          "mpa_protection_coverage_stats"
         ]
       },
       "conditions": [
@@ -925,7 +1054,8 @@
         "fields": [
           "slug",
           "name",
-          "info"
+          "info",
+          "mpa_protection_coverage_stats"
         ]
       },
       "conditions": [
@@ -1169,21 +1299,18 @@
           "description"
         ]
       },
-      "conditions": []
+      "conditions": [
+        "admin::is-creator"
+      ]
     },
     {
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::static-indicator.static-indicator",
       "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::static-indicator.static-indicator",
-      "properties": {},
-      "conditions": []
+      "conditions": [
+        "admin::is-creator"
+      ]
     },
     {
       "action": "plugin::content-manager.explorer.read",
@@ -1197,7 +1324,9 @@
           "description"
         ]
       },
-      "conditions": []
+      "conditions": [
+        "admin::is-creator"
+      ]
     },
     {
       "action": "plugin::content-manager.explorer.update",
@@ -1211,7 +1340,9 @@
           "description"
         ]
       },
-      "conditions": []
+      "conditions": [
+        "admin::is-creator"
+      ]
     },
     {
       "action": "plugin::upload.assets.copy-link",

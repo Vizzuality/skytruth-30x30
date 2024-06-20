@@ -1,11 +1,36 @@
+import { ComponentProps } from 'react';
+
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import type { GetServerSideProps } from 'next';
 
 import { PAGES } from '@/constants/pages';
 import MapLayout from '@/layouts/map';
+import { fetchTranslations } from '@/lib/i18n';
 import mapParamsToSearchParams from '@/lib/mapparams-to-searchparams';
+import { FCWithMessages } from '@/types';
 import { getGetLocationsQueryKey, getGetLocationsQueryOptions } from '@/types/generated/location';
 import { LocationListResponse } from '@/types/generated/strapi.schemas';
+
+import { LayoutProps } from '../_app';
+
+const ConservationBuilderPage: FCWithMessages & {
+  layout: LayoutProps<
+    { location: { code: string; name: string } },
+    ComponentProps<typeof MapLayout>
+  >;
+} = () => {
+  return null;
+};
+
+ConservationBuilderPage.layout = {
+  Component: MapLayout,
+  props: {
+    title: '',
+    type: 'conservation_builder',
+  },
+};
+
+ConservationBuilderPage.messages = ['pages.conservation-builder', ...MapLayout.messages];
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -50,18 +75,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         name: 'Global',
       },
       dehydratedState: dehydrate(queryClient),
+      messages: await fetchTranslations(context.locale, ConservationBuilderPage.messages),
     },
   };
 };
 
-export default function ConservationBuilderPage() {
-  return null;
-}
-
-ConservationBuilderPage.layout = {
-  Component: MapLayout,
-  props: {
-    title: 'Conservation builder',
-    type: 'conservation-builder',
-  },
-};
+export default ConservationBuilderPage;

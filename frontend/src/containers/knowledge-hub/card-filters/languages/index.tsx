@@ -1,10 +1,14 @@
 import { useAtom } from 'jotai';
+import { useTranslations } from 'use-intl';
 
 import FiltersButton from '@/components/filters-button';
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
+import { FCWithMessages } from '@/types';
 import { useGetDataToolLanguages } from '@/types/generated/data-tool-language';
 
-const CardFiltersLanguages = (): JSX.Element => {
+const CardFiltersLanguages: FCWithMessages = (): JSX.Element => {
+  const t = useTranslations('containers.knowledge-hub-card-filters');
+
   const [filters, setFilters] = useAtom(cardFiltersAtom);
 
   const languagesQuery = useGetDataToolLanguages(
@@ -34,9 +38,14 @@ const CardFiltersLanguages = (): JSX.Element => {
         values={filters?.language}
         onChange={handleFiltersChange}
       />
-      <span>Filter by language</span>
+      <span>{t('filter-by-language')}</span>
     </div>
   );
 };
+
+CardFiltersLanguages.messages = [
+  'containers.knowledge-hub-card-filters',
+  ...FiltersButton.messages,
+];
 
 export default CardFiltersLanguages;

@@ -1,5 +1,7 @@
 import { ComponentProps, useCallback } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import TooltipButton from '@/components/tooltip-button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
@@ -8,12 +10,15 @@ import {
   useSyncMapLayerSettings,
   useSyncMapSettings,
 } from '@/containers/map/content/map/sync-settings';
+import { FCWithMessages } from '@/types';
 import { useGetDatasets } from '@/types/generated/dataset';
 import { DatasetUpdatedByData, LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 
 const SWITCH_LABEL_CLASSES = '-mb-px cursor-pointer pt-px font-mono text-xs font-normal';
 
-const LayersPanel = (): JSX.Element => {
+const LayersPanel: FCWithMessages = (): JSX.Element => {
+  const t = useTranslations('containers.map-sidebar-layers-panel');
+
   const [activeLayers, setMapLayers] = useSyncMapLayers();
   const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
   const [{ labels }, setMapSettings] = useSyncMapSettings();
@@ -79,7 +84,7 @@ const LayersPanel = (): JSX.Element => {
 
   return (
     <div className="h-full space-y-3 overflow-auto p-4 text-xs">
-      <h3 className="text-xl font-bold">Layers</h3>
+      <h3 className="text-xl font-bold">{t('layers')}</h3>
       <div className="space-y-3 divide-y divide-dashed divide-black">
         {datasets?.map((dataset) => {
           return (
@@ -122,7 +127,7 @@ const LayersPanel = (): JSX.Element => {
                           onCheckedChange={handleLabelsChange}
                         />
                         <Label htmlFor="labels-switch" className={SWITCH_LABEL_CLASSES}>
-                          Labels
+                          {t('labels')}
                         </Label>
                       </span>
                     </li>
@@ -136,5 +141,7 @@ const LayersPanel = (): JSX.Element => {
     </div>
   );
 };
+
+LayersPanel.messages = ['containers.map-sidebar-layers-panel', ...TooltipButton.messages];
 
 export default LayersPanel;

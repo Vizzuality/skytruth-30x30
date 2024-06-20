@@ -2,19 +2,27 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
+import { useRouter } from 'next/router';
+
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
 
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { format } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
 import { LayerTyped, InteractionConfig } from '@/types/layers';
 
-const GenericPopup = ({ layerId, ...restConfig }: InteractionConfig & { layerId: number }) => {
+const GenericPopup: FCWithMessages<InteractionConfig & { layerId: number }> = ({
+  layerId,
+  ...restConfig
+}) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const { events } = restConfig;
+
+  const { locale } = useRouter();
 
   const popup = useAtomValue(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
@@ -112,7 +120,7 @@ const GenericPopup = ({ layerId, ...restConfig }: InteractionConfig & { layerId:
             <div key={key}>
               <dt className="mt-4 font-mono">{label}</dt>
               <dd className="font-mono first-letter:uppercase">
-                {customFormat && format({ value: DATA[key], ...customFormat })}
+                {customFormat && format({ locale, value: DATA[key], ...customFormat })}
                 {!customFormat && DATA[key]}
               </dd>
             </div>
@@ -122,5 +130,7 @@ const GenericPopup = ({ layerId, ...restConfig }: InteractionConfig & { layerId:
     </>
   );
 };
+
+GenericPopup.messages = ['containers.map'];
 
 export default GenericPopup;

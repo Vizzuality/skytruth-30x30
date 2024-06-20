@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { ColumnDef } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 
 import FiltersButton from '@/components/filters-button';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
@@ -26,6 +29,10 @@ type UseColumnsProps = {
 };
 
 const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
+  const t = useTranslations('containers.map');
+
+  const { locale } = useRouter();
+
   const {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
@@ -43,7 +50,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Name
+            {t('name')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
@@ -57,7 +64,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Coverage
+            {t('coverage')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
@@ -65,12 +72,15 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           const { coverage: value } = row.original;
           if (!value) return <>&mdash;</>;
 
-          const formattedCoverage = cellFormatter.percentage(value);
+          const formattedCoverage = cellFormatter.percentage(locale, value);
 
           return (
             <span className="text-4xl font-bold">
-              {formattedCoverage}
-              <span className="text-xs">%</span>
+              {t.rich('percentage-bold', {
+                b1: (chunks) => chunks,
+                b2: (chunks) => <span className="text-xs">{chunks}</span>,
+                percentage: formattedCoverage,
+              })}
             </span>
           );
         },
@@ -80,18 +90,14 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Area
+            {t('area')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { area: value } = row.original;
-          const formattedValue = cellFormatter.area(value);
-          return (
-            <span>
-              {formattedValue} km<sup>2</sup>
-            </span>
-          );
+          const formattedValue = cellFormatter.area(locale, value);
+          return <span>{t('area-km2', { area: formattedValue })}</span>;
         },
       },
       {
@@ -104,7 +110,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               values={filters[column.id]}
               onChange={onFiltersChange}
             />
-            Type
+            {t('type')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
@@ -126,14 +132,14 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               values={filters[column.id]}
               onChange={onFiltersChange}
             />
-            Establishment Stage
+            {t('establishment-stage')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { establishmentStage: value } = row.original;
           const formattedValue =
-            establishmentStageOptions.find((entry) => value === entry?.value)?.name || 'N/A';
+            establishmentStageOptions.find((entry) => value === entry?.value)?.name || t('n-a');
           return <>{formattedValue}</>;
         },
       },
@@ -147,14 +153,14 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               values={filters[column.id]}
               onChange={onFiltersChange}
             />
-            Protection Level
+            {t('protection-level')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { protectionLevel: value } = row.original;
           const formattedValue =
-            protectionLevelOptions.find((entry) => value === entry?.value)?.name || 'N/A';
+            protectionLevelOptions.find((entry) => value === entry?.value)?.name || t('n-a');
           return <>{formattedValue}</>;
         },
       },
@@ -168,26 +174,27 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
       //         values={filters[column.id]}
       //         onChange={onFiltersChange}
       //       />
-      //       Level of Fishing Protection
+      //       {t('level-fishing-protection')}
       //       <TooltipButton column={column} tooltips={tooltips} />
       //     </HeaderItem>
       //   ),
       //   cell: ({ row }) => {
       //     const { fishingProtectionLevel: value } = row.original;
       //     const formattedValue =
-      //       fishingProtectionLevelOptions.find((entry) => value === entry?.value)?.name || 'N/A';
+      //       fishingProtectionLevelOptions.find((entry) => value === entry?.value)?.name || t('n-a');
       //     return <>{formattedValue}</>;
       //   },
       // },
     ];
   }, [
+    t,
+    tooltips,
+    locale,
+    protectionStatusOptions,
     filters,
     onFiltersChange,
-    tooltips,
-    protectionStatusOptions,
     establishmentStageOptions,
     protectionLevelOptions,
-    // fishingProtectionLevelOptions,
   ]);
 
   return columns;

@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { ColumnDef } from '@tanstack/react-table';
+import { useTranslations } from 'use-intl';
 
 import { PAGES } from '@/constants/pages';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
@@ -26,8 +28,12 @@ export type GlobalRegionalTableColumns = {
 };
 
 const useColumns = () => {
+  const t = useTranslations('containers.map');
+
   const searchParams = useMapSearchParams();
   const tooltips = useTooltips();
+
+  const { locale } = useRouter();
 
   const columns: ColumnDef<GlobalRegionalTableColumns>[] = useMemo(() => {
     return [
@@ -36,7 +42,7 @@ const useColumns = () => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Name
+            {t('name')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
@@ -59,18 +65,21 @@ const useColumns = () => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Coverage
+            {t('coverage')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { coverage: value } = row.original;
-          const formattedCoverage = cellFormatter.percentage(value);
+          const formattedCoverage = cellFormatter.percentage(locale, value);
 
           return (
             <span className="text-4xl font-bold">
-              {formattedCoverage}
-              <span className="text-xs">%</span>
+              {t.rich('percentage-bold', {
+                b1: (chunks) => chunks,
+                b2: (chunks) => <span className="text-xs">{chunks}</span>,
+                percentage: formattedCoverage,
+              })}
             </span>
           );
         },
@@ -80,18 +89,14 @@ const useColumns = () => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Area
+            {t('area')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { area: value } = row.original;
-          const formattedValue = cellFormatter.area(value);
-          return (
-            <span>
-              {formattedValue} km<sup>2</sup>
-            </span>
-          );
+          const formattedValue = cellFormatter.area(locale, value);
+          return <span>{t('area-km2', { area: formattedValue })}</span>;
         },
       },
       {
@@ -99,16 +104,16 @@ const useColumns = () => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            MPAs
+            {t('mpas')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { mpas: value } = row.original;
-          if (Number.isNaN(value)) return 'N/A';
+          if (Number.isNaN(value)) return t('n-a');
 
-          const formattedValue = cellFormatter.percentage(value);
-          return <span className="text-xs">{formattedValue}%</span>;
+          const formattedValue = cellFormatter.percentage(locale, value);
+          return <span className="text-xs">{t('percentage', { percentage: formattedValue })}</span>;
         },
       },
       {
@@ -116,16 +121,16 @@ const useColumns = () => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            OECMs
+            {t('oecms')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { oecms: value } = row.original;
-          if (Number.isNaN(value)) return 'N/A';
+          if (Number.isNaN(value)) return t('n-a');
 
-          const formattedValue = cellFormatter.percentage(value);
-          return <span className="text-xs">{formattedValue}%</span>;
+          const formattedValue = cellFormatter.percentage(locale, value);
+          return <span className="text-xs">{t('percentage', { percentage: formattedValue })}</span>;
         },
       },
       {
@@ -133,14 +138,14 @@ const useColumns = () => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Fully/Highly Protected
+            {t('fully-highly-protected')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { fullyHighlyProtected: value } = row.original;
-          const formattedValue = cellFormatter.percentage(value);
-          return <span className="text-xs">{formattedValue}%</span>;
+          const formattedValue = cellFormatter.percentage(locale, value);
+          return <span className="text-xs">{t('percentage', { percentage: formattedValue })}</span>;
         },
       },
       // {
@@ -148,15 +153,15 @@ const useColumns = () => {
       //   header: ({ column }) => (
       //     <HeaderItem>
       //       <SortingButton column={column} />
-      //       Highly Protected LFP
+      //       {t('highly-protected-lfp')}
       //       <TooltipButton column={column} tooltips={tooltips} />
       //     </HeaderItem>
       //   ),
       //   cell: ({ row }) => {
       //     const { highlyProtectedLfp: value } = row.original;
       //     if (!value) return <>No data</>;
-      //     const formattedValue = cellFormatter.percentage(value);
-      //     return <span className="text-xs">{formattedValue}%</span>;
+      //     const formattedValue = cellFormatter.percentage(locale, value);
+      //     return <span className="text-xs">{t('percentage', { percentage: formattedValue })}</span>;
       //   },
       // },
       {
@@ -164,19 +169,19 @@ const useColumns = () => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Global contribution
+            {t('global-contribution')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { globalContribution: value } = row.original;
-          if (!value) return <>No data</>;
-          const formattedValue = cellFormatter.percentage(value);
-          return <span className="text-xs">{formattedValue}%</span>;
+          if (!value) return t('no-data');
+          const formattedValue = cellFormatter.percentage(locale, value);
+          return <span className="text-xs">{t('percentage', { percentage: formattedValue })}</span>;
         },
       },
     ];
-  }, [searchParams, tooltips]);
+  }, [locale, searchParams, t, tooltips]);
 
   return columns;
 };

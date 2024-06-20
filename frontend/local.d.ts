@@ -1,5 +1,5 @@
 declare module '*.svg';
-declare module '*.svg?sprite' {
+declare module '*.svg' {
   const content: {
     id: string;
     viewBox: string;
@@ -10,3 +10,11 @@ declare module '*.svg?sprite' {
 }
 declare module '*.png';
 declare module '*.jpg';
+
+import en from './translations/en.json';
+type Messages = typeof en;
+
+declare global {
+  // Use type safe message keys with `next-intl`
+  interface IntlMessages extends Messages {}
+}

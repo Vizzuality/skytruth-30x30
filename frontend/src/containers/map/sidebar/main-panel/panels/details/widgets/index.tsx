@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 
 // import EstablishmentStagesWidget from './establishment-stages';
@@ -10,7 +11,7 @@ import HabitatWidget from './habitat';
 import MarineConservationWidget from './marine-conservation';
 import ProtectionTypesWidget from './protection-types';
 
-const DetailsWidgets: React.FC = () => {
+const DetailsWidgets: FCWithMessages = () => {
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
@@ -38,5 +39,11 @@ const DetailsWidgets: React.FC = () => {
     </div>
   );
 };
+
+DetailsWidgets.messages = [
+  ...MarineConservationWidget.messages,
+  ...ProtectionTypesWidget.messages,
+  ...HabitatWidget.messages,
+];
 
 export default DetailsWidgets;

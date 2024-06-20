@@ -1,14 +1,18 @@
 import { useState } from 'react';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@radix-ui/react-collapsible';
+import { useTranslations } from 'next-intl';
 import { LuChevronDown } from 'react-icons/lu';
 
 import Icon from '@/components/ui/icon';
-import LegendIcon from '@/styles/icons/legend.svg?sprite';
+import LegendIcon from '@/styles/icons/legend.svg';
+import { FCWithMessages } from '@/types';
 
 import LayersLegend from './legend';
 
-const LayersToolbox: React.FC = () => {
+const LayersToolbox: FCWithMessages = () => {
+  const t = useTranslations('containers.map');
+
   const [open, setOpen] = useState(true);
 
   return (
@@ -20,7 +24,7 @@ const LayersToolbox: React.FC = () => {
             {!open && (
               <span className="flex items-center gap-2 py-2.5 pl-3 pr-4 font-mono text-xs">
                 <Icon icon={LegendIcon} className="ml-0.5 h-5 w-5" />
-                <span className="pt-px">Legend</span>
+                <span className="pt-px">{t('legend')}</span>
               </span>
             )}
           </CollapsibleTrigger>
@@ -35,5 +39,7 @@ const LayersToolbox: React.FC = () => {
     </div>
   );
 };
+
+LayersToolbox.messages = ['containers.map', ...LayersLegend.messages];
 
 export default LayersToolbox;

@@ -2,7 +2,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 import Icon from '@/components/ui/icon';
 import { cn } from '@/lib/classnames';
-import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
+import ArrowRight from '@/styles/icons/arrow-right.svg';
 
 const questionsListVariants = cva('', {
   variants: {

@@ -1,11 +1,15 @@
 import { useAtomValue } from 'jotai';
+import { useTranslations } from 'next-intl';
 
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
+import { FCWithMessages } from '@/types';
 import { useGetDataToolsInfinite } from '@/types/generated/data-tool';
 
 import CardItem from './card-item';
 
-const CardList = (): JSX.Element => {
+const CardList: FCWithMessages = (): JSX.Element => {
+  const t = useTranslations('containers.knowledge-hub-card-filters');
+
   const filters = useAtomValue(cardFiltersAtom);
 
   const dataToolsQuery = useGetDataToolsInfinite(
@@ -61,12 +65,14 @@ const CardList = (): JSX.Element => {
             className="font-mono text-xs uppercase underline"
             onClick={() => dataToolsQuery.fetchNextPage()}
           >
-            Load more
+            {t('load-more')}
           </button>
         </div>
       )}
     </div>
   );
 };
+
+CardList.messages = ['containers.knowledge-hub-card-filters', ...CardItem.messages];
 
 export default CardList;

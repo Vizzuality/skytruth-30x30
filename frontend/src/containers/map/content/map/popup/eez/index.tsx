@@ -2,29 +2,34 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import { useQueries } from '@tanstack/react-query';
 import type { Feature } from 'geojson';
 import { useAtom, useAtomValue } from 'jotai';
+import { useTranslations } from 'next-intl';
 
 import { CustomMapProps } from '@/components/map/types';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
 import { getGetLocationsQueryOptions } from '@/types/generated/location';
 import { getGetProtectionCoverageStatsQueryOptions } from '@/types/generated/protection-coverage-stat';
 import { ProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
-const EEZLayerPopup = ({ layerId }) => {
+const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
+  const t = useTranslations('containers.map');
+
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
-  const { push } = useRouter();
+  const { locale, push } = useRouter();
   const [, setLocationBBox] = useAtom(bboxLocation);
   const [popup, setPopup] = useAtom(popupAtom);
   const { locationCode } = useParams();
@@ -188,13 +193,13 @@ const EEZLayerPopup = ({ layerId }) => {
 
   const coveragePercentage = useMemo(() => {
     if (locationsData.length) {
-      return formatPercentage((totalCumSumProtectedArea / totalMarineArea) * 100, {
+      return formatPercentage(locale, (totalCumSumProtectedArea / totalMarineArea) * 100, {
         displayPercentageSign: false,
       });
     }
 
     return '-';
-  }, [totalCumSumProtectedArea, totalMarineArea, locationsData]);
+  }, [locale, totalCumSumProtectedArea, totalMarineArea, locationsData]);
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -231,22 +236,30 @@ const EEZLayerPopup = ({ layerId }) => {
   return (
     <div className="space-y-2">
       <h3 className="text-xl font-semibold">{DATA?.GEONAME}</h3>
-      {isFetchingLocations && <span className="text-sm">Loading...</span>}
-      {isEmptyLocations && <span className="text-sm">No data available</span>}
+      {isFetchingLocations && <span className="text-sm">{t('loading')}</span>}
+      {isEmptyLocations && <span className="text-sm">{t('no-data-available')}</span>}
       {!isEmptyLocations && (
         <>
           <div className="space-y-2">
-            <div className="my-4 max-w-[95%] font-mono">Marine Conservation Coverage</div>
+            <div className="my-4 max-w-[95%] font-mono">{t('marine-conservation-coverage')}</div>
             <div className="space-x-1 font-mono tracking-tighter text-black">
-              <span className="text-[64px] font-bold leading-[80%]">{coveragePercentage}</span>
-              {coveragePercentage !== '-' && <span className="text-lg">%</span>}
+              {coveragePercentage !== '-' &&
+                t.rich('percentage-bold', {
+                  percentage: coveragePercentage,
+                  b1: (chunks) => (
+                    <span className="text-[64px] font-bold leading-[80%]">{chunks}</span>
+                  ),
+                  b2: (chunks) => <span className="text-lg">{chunks}</span>,
+                })}
+              {coveragePercentage === '-' && (
+                <span className="text-[64px] font-bold leading-[80%]">{coveragePercentage}</span>
+              )}
             </div>
             <div className="space-x-1 font-mono text-xs font-medium text-black">
-              <span>{formatKM(totalCumSumProtectedArea)}</span>
-              <span>
-                km<sup>2</sup>
-              </span>{' '}
-              out of {formatKM(totalMarineArea)} km<sup>2</sup>
+              {t('marine-protected-area', {
+                protectedArea: formatKM(locale, totalCumSumProtectedArea),
+                totalArea: formatKM(locale, totalMarineArea),
+              })}
             </div>
           </div>
           {locationCodes?.length === 1 && (
@@ -255,7 +268,7 @@ const EEZLayerPopup = ({ layerId }) => {
               className="block w-full border border-black p-4 text-center font-mono uppercase"
               onClick={handleLocationSelected}
             >
-              Open country insights
+              {t('open-country-insights')}
             </button>
           )}
         </>
@@ -263,5 +276,7 @@ const EEZLayerPopup = ({ layerId }) => {
     </div>
   );
 };
+
+EEZLayerPopup.messages = ['containers.map'];
 
 export default EEZLayerPopup;

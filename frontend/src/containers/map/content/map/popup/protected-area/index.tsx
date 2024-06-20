@@ -2,19 +2,26 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
+import { useRouter } from 'next/router';
+
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
+import { useTranslations } from 'next-intl';
 
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
 import { format } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { LayerTyped } from '@/types/layers';
 
 const TERMS_CLASSES = 'font-mono uppercase';
 
-const ProtectedAreaPopup = ({ layerId }: { layerId: number }) => {
+const ProtectedAreaPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
+  const t = useTranslations('containers.map');
+
+  const { locale } = useRouter();
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
@@ -115,30 +122,33 @@ const ProtectedAreaPopup = ({ layerId }: { layerId: number }) => {
       <div className="space-y-2">
         <h3 className="text-xl font-semibold">{DATA?.NAME}</h3>
         {locationQuery.isFetching && !locationQuery.isFetched && (
-          <span className="text-sm">Loading...</span>
+          <span className="text-sm">{t('loading')}</span>
         )}
         {locationQuery.isFetched && !locationQuery.data && (
-          <span className="text-sm">No data available</span>
+          <span className="text-sm">{t('no-data-available')}</span>
         )}
         {locationQuery.isFetched && locationQuery.data && (
           <>
             <dl className="space-y-2">
-              <dt className={TERMS_CLASSES}>Global coverage</dt>
+              <dt className={TERMS_CLASSES}>{t('global-coverage')}</dt>
               <dd className={`font-mono text-6xl tracking-tighter ${classNameByMPAType}`}>
                 {format({
+                  locale,
                   value: globalCoveragePercentage,
                   id: 'formatPercentage',
                 })}
               </dd>
               <dd className={`font-mono text-xl ${classNameByMPAType}`}>
-                {format({
-                  value: DATA?.REP_M_AREA,
-                  id: 'formatKM',
-                  options: {
-                    maximumSignificantDigits: 3,
-                  },
+                {t('area-km2', {
+                  area: format({
+                    locale,
+                    value: DATA?.REP_M_AREA,
+                    id: 'formatKM',
+                    options: {
+                      maximumSignificantDigits: 3,
+                    },
+                  }),
                 })}
-                Km<sup>2</sup>
               </dd>
             </dl>
           </>
@@ -147,5 +157,7 @@ const ProtectedAreaPopup = ({ layerId }: { layerId: number }) => {
     </>
   );
 };
+
+ProtectedAreaPopup.messages = ['containers.map'];
 
 export default ProtectedAreaPopup;

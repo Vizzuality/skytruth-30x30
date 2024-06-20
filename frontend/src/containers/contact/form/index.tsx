@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { useTranslations } from 'next-intl';
 import * as z from 'zod';
 
 import { Checkbox } from '@/components/ui/checkbox';
@@ -27,57 +28,67 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { EXTERNAL_LINKS } from '@/constants/external-links';
+import { FCWithMessages } from '@/types';
 
-const CATEGORY_OPTIONS = [
-  {
-    label: 'Feedback',
-    value: 'Feedback',
-  },
-  {
-    label: 'Data update request',
-    value: 'Data update request',
-  },
-  {
-    label: 'Bug reporting',
-    value: 'Bug reporting',
-  },
-];
+const ContactUsForm: FCWithMessages = () => {
+  const t = useTranslations('containers.contact-form');
 
-const ContactUsSchema = z.object({
-  full_name: z
-    .string({
-      required_error: 'This field is mandatory.',
-    })
-    .min(1),
-  email: z
-    .string({
-      required_error: 'This field is mandatory.',
-    })
-    .email({ message: 'Invalid email format' })
-    .min(1),
-  organization: z.string().optional(),
-  country: z.string().optional(),
-  contact_reason: z
-    .string({
-      required_error: 'This field is mandatory.',
-    })
-    .min(1),
-  message: z
-    .string({
-      required_error: 'The message cannot be empty.',
-    })
-    .min(1),
-  privacy_policy_consent: z
-    .boolean()
-    .refine((v) => v, {
-      message: 'You must agree with the privacy policy.',
-    })
-    .default(false),
-});
+  const categoryOptions = useMemo(
+    () => [
+      {
+        label: t('inputs.feedback'),
+        value: t('inputs.feedback'),
+      },
+      {
+        label: t('inputs.data-update-request'),
+        value: t('inputs.data-update-request'),
+      },
+      {
+        label: t('inputs.bug-reporting'),
+        value: t('inputs.bug-reporting'),
+      },
+    ],
+    [t]
+  );
 
-export type ContactUsInput = z.infer<typeof ContactUsSchema>;
+  const ContactUsSchema = useMemo(
+    () =>
+      z.object({
+        full_name: z
+          .string({
+            required_error: t('inputs.error-mandatory-field'),
+          })
+          .min(1),
+        email: z
+          .string({
+            required_error: t('inputs.error-mandatory-field'),
+          })
+          .email({ message: t('inputs.error-invalid-email-format') })
+          .min(1),
+        organization: z.string().optional(),
+        country: z.string().optional(),
+        contact_reason: z
+          .string({
+            required_error: t('inputs.error-mandatory-field'),
+          })
+          .min(1),
+        message: z
+          .string({
+            required_error: t('inputs.error-empty-message'),
+          })
+          .min(1),
+        privacy_policy_consent: z
+          .boolean()
+          .refine((v) => v, {
+            message: t('inputs.error-accept-privacy-policy'),
+          })
+          .default(false),
+      }),
+    [t]
+  );
 
-const ContactUsForm = (): JSX.Element => {
+  type ContactUsInput = z.infer<typeof ContactUsSchema>;
+
   const form = useForm<ContactUsInput>({
     resolver: zodResolver(ContactUsSchema),
   });
@@ -91,12 +102,12 @@ const ContactUsForm = (): JSX.Element => {
   if (responseStatus === 200) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-8">
-        <p>Thanks for your message. We will get back to you as soon as possible.</p>
+        <p>{t('thanks-for-message')}</p>
         <Link
           href="/"
           className="flex border border-black bg-black p-4 font-mono text-xs uppercase text-white"
         >
-          Go to homepage
+          {t('go-to-homepage')}
         </Link>
       </div>
     );
@@ -110,9 +121,9 @@ const ContactUsForm = (): JSX.Element => {
           name="full_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First and last names*</FormLabel>
+              <FormLabel>{t('inputs.name-label')}*</FormLabel>
               <FormControl>
-                <Input placeholder="Your name" {...field} />
+                <Input placeholder={t('inputs.name-placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -123,9 +134,9 @@ const ContactUsForm = (): JSX.Element => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email address*</FormLabel>
+              <FormLabel>{t('inputs.email-label')}*</FormLabel>
               <FormControl>
-                <Input placeholder="Your email address" {...field} />
+                <Input placeholder={t('inputs.email-placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -136,9 +147,9 @@ const ContactUsForm = (): JSX.Element => {
           name="organization"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Organization</FormLabel>
+              <FormLabel>{t('inputs.organization-label')}</FormLabel>
               <FormControl>
-                <Input placeholder="Your organization" {...field} />
+                <Input placeholder={t('inputs.organization-placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -149,9 +160,9 @@ const ContactUsForm = (): JSX.Element => {
           name="country"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Country</FormLabel>
+              <FormLabel>{t('inputs.country-label')}</FormLabel>
               <FormControl>
-                <Input placeholder="Your country" {...field} />
+                <Input placeholder={t('inputs.country-placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -166,7 +177,7 @@ const ContactUsForm = (): JSX.Element => {
 
             return (
               <FormItem>
-                <FormLabel>Reason*</FormLabel>
+                <FormLabel>{t('inputs.reason-label')}*</FormLabel>
                 <FormControl>
                   <Select
                     {...restField}
@@ -175,10 +186,10 @@ const ContactUsForm = (): JSX.Element => {
                     }}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Please, select a contact reason" />
+                      <SelectValue placeholder={t('inputs.reason-placeholder')} />
                     </SelectTrigger>
                     <SelectContent>
-                      {CATEGORY_OPTIONS.map(({ label, value }) => (
+                      {categoryOptions.map(({ label, value }) => (
                         <SelectItem key={value} value={value}>
                           {label}
                         </SelectItem>
@@ -196,13 +207,13 @@ const ContactUsForm = (): JSX.Element => {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message*</FormLabel>
+              <FormLabel>{t('inputs.message-label')}*</FormLabel>
               <FormControl>
                 <Textarea
                   className="resize-none"
                   cols={10}
                   rows={8}
-                  placeholder="Your message"
+                  placeholder={t('inputs.message-placeholder')}
                   {...field}
                 />
               </FormControl>
@@ -224,17 +235,19 @@ const ContactUsForm = (): JSX.Element => {
                     value="privacy_policy_consent"
                   />
                   <FormLabel>
-                    By submitting this form you agree with processing your personal data in
-                    accordance with the{' '}
-                    <Link
-                      href={EXTERNAL_LINKS.privacyPolicy}
-                      className="underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Privacy Policy
-                    </Link>
-                    . *
+                    {t.rich('inputs.privacy-consent', {
+                      a: (chunks) => (
+                        <Link
+                          href={EXTERNAL_LINKS.privacyPolicy}
+                          className="underline"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {chunks}
+                        </Link>
+                      ),
+                    })}
+                    *
                   </FormLabel>
                 </div>
               </FormControl>
@@ -248,11 +261,14 @@ const ContactUsForm = (): JSX.Element => {
             type="submit"
             className="border border-black p-4 font-mono text-xs uppercase disabled:pointer-events-none disabled:opacity-50"
           >
-            Submit
+            {t('submit')}
           </button>
         )}
       </form>
     </Form>
   );
 };
+
+ContactUsForm.messages = ['containers.contact-form'];
+
 export default ContactUsForm;

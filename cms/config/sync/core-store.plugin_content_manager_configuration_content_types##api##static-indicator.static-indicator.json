@@ -136,6 +136,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "slug",
+        "source",
+        "value"
+      ],
       "edit": [
         [
           {
@@ -143,26 +149,20 @@
             "size": 6
           },
           {
-            "name": "value",
+            "name": "source",
             "size": 6
           }
         ],
         [
           {
-            "name": "description",
+            "name": "value",
             "size": 6
           },
           {
-            "name": "source",
+            "name": "description",
             "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "slug",
-        "source",
-        "value"
       ]
     }
   },

@@ -2,28 +2,32 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import type { Feature } from 'geojson';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useTranslations } from 'next-intl';
 
 import { CustomMapProps } from '@/components/map/types';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 import { ProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
-const RegionsPopup = ({ layerId }) => {
+const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
+  const t = useTranslations('containers.map');
+
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
-  const { push } = useRouter();
+  const { locale, push } = useRouter();
   const setLocationBBox = useSetAtom(bboxLocation);
   const [popup, setPopup] = useAtom(popupAtom);
 
@@ -137,13 +141,14 @@ const RegionsPopup = ({ layerId }) => {
       );
 
       const percentage = formatPercentage(
+        locale,
         (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100,
         {
           displayPercentageSign: false,
         }
       );
 
-      const protectedArea = formatKM(totalCumSumProtectedArea);
+      const protectedArea = formatKM(locale, totalCumSumProtectedArea);
 
       return {
         percentage,
@@ -155,7 +160,7 @@ const RegionsPopup = ({ layerId }) => {
       percentage: '-',
       protectedArea: '-',
     };
-  }, [latestProtectionCoverageStats, locationsQuery.data]);
+  }, [locale, latestProtectionCoverageStats, locationsQuery.data]);
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -188,27 +193,35 @@ const RegionsPopup = ({ layerId }) => {
     <div className="space-y-2">
       <h3 className="text-xl font-semibold">{locationsQuery.data?.name || '-'}</h3>
       {locationsQuery.isFetching && !locationsQuery.isFetched && (
-        <span className="text-sm">Loading...</span>
+        <span className="text-sm">{t('loading')}</span>
       )}
       {locationsQuery.isFetched && !locationsQuery.data && (
-        <span className="text-sm">No data available</span>
+        <span className="text-sm">{t('no-data-available')}</span>
       )}
       {locationsQuery.isFetched && locationsQuery.data && (
         <>
           <div className="space-y-2">
-            <div className="my-4 max-w-[95%] font-mono">Marine Conservation Coverage</div>
+            <div className="my-4 max-w-[95%] font-mono">{t('marine-conservation-coverage')}</div>
             <div className="space-x-1 font-mono tracking-tighter text-black">
-              <span className="text-[64px] font-bold leading-[80%]">
-                {coverageStats.percentage}
-              </span>
-              {coverageStats.percentage !== '-' && <span className="text-lg">%</span>}
+              {coverageStats.percentage !== '-' &&
+                t.rich('percentage-bold', {
+                  percentage: coverageStats.percentage,
+                  b1: (chunks) => (
+                    <span className="text-[64px] font-bold leading-[80%]">{chunks}</span>
+                  ),
+                  b2: (chunks) => <span className="text-lg">{chunks}</span>,
+                })}
+              {coverageStats.percentage === '-' && (
+                <span className="text-[64px] font-bold leading-[80%]">
+                  {coverageStats.percentage}
+                </span>
+              )}
             </div>
             <div className="space-x-1 font-mono font-medium text-black">
-              <span>{coverageStats.protectedArea}</span>
-              <span>
-                km<sup>2</sup>
-              </span>{' '}
-              out of {formatKM(locationsQuery.data.totalMarineArea)} km<sup>2</sup>
+              {t('marine-protected-area', {
+                protectedArea: coverageStats.protectedArea,
+                totalArea: formatKM(locale, locationsQuery.data.totalMarineArea),
+              })}
             </div>
           </div>
           <button
@@ -216,12 +229,14 @@ const RegionsPopup = ({ layerId }) => {
             className="block w-full border border-black p-4 text-center font-mono uppercase"
             onClick={handleLocationSelected}
           >
-            Open region insights
+            {t('open-region-insights')}
           </button>
         </>
       )}
     </div>
   );
 };
+
+RegionsPopup.messages = ['containers.map'];
 
 export default RegionsPopup;

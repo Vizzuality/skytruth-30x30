@@ -16,12 +16,13 @@ import {
 import PopupItem from '@/containers/map/content/map/popup/item';
 import { layersInteractiveAtom, popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
-import CloseIcon from '@/styles/icons/close.svg?sprite';
+import CloseIcon from '@/styles/icons/close.svg';
+import { FCWithMessages } from '@/types';
 import { useGetLayers } from '@/types/generated/layer';
 
 import { useSyncMapLayers } from '../sync-settings';
 
-const PopupContainer = () => {
+const PopupContainer: FCWithMessages = () => {
   const popup = useAtomValue(popupAtom);
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const [syncedLayers] = useSyncMapLayers();
@@ -142,5 +143,7 @@ const PopupContainer = () => {
     </Popup>
   );
 };
+
+PopupContainer.messages = [...PopupItem.messages];
 
 export default PopupContainer;

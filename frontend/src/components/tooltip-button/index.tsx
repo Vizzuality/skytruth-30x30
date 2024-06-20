@@ -3,10 +3,12 @@ import { useState } from 'react';
 import Linkify from 'react-linkify';
 
 import { Info } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 
 type TooltipButtonProps = {
   className?: string;
@@ -22,7 +24,9 @@ type TooltipButtonProps = {
       }[];
 };
 
-const TooltipButton: React.FC<TooltipButtonProps> = ({ className, text, sources }) => {
+const TooltipButton: FCWithMessages<TooltipButtonProps> = ({ className, text, sources }) => {
+  const t = useTranslations('components.tooltip-button');
+
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(false);
 
   return (
@@ -33,7 +37,7 @@ const TooltipButton: React.FC<TooltipButtonProps> = ({ className, text, sources 
           size="icon"
           variant="ghost"
         >
-          <span className="sr-only">Info</span>
+          <span className="sr-only">{t('info')}</span>
           <Info className="h-4 w-4" aria-hidden="true" />
         </Button>
       </PopoverTrigger>
@@ -87,12 +91,14 @@ const TooltipButton: React.FC<TooltipButtonProps> = ({ className, text, sources 
             rel="noopener noreferrer"
             className="font-semibold underline"
           >
-            Data source
+            {t('data-source')}
           </a>
         )}
       </PopoverContent>
     </Popover>
   );
 };
+
+TooltipButton.messages = ['components.tooltip-button'];
 
 export default TooltipButton;

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import {
   Command,
@@ -10,6 +11,7 @@ import {
   CommandEmpty,
 } from '@/components/ui/command';
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 import { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 
@@ -20,12 +22,14 @@ type LocationDropdownProps = {
   onSelected: (code: string) => void;
 };
 
-const LocationDropdown: React.FC<LocationDropdownProps> = ({
+const LocationDropdown: FCWithMessages<LocationDropdownProps> = ({
   className,
   searchPlaceholder = 'Search',
   locations,
   onSelected,
 }) => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
@@ -46,9 +50,9 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   );
 
   return (
-    <Command label="Search country or region" className={cn(className)}>
+    <Command label={t('search-country-region')} className={cn(className)}>
       <CommandInput placeholder={searchPlaceholder} />
-      <CommandEmpty>No result</CommandEmpty>
+      <CommandEmpty>{t('no-result')}</CommandEmpty>
       <CommandGroup className="mt-4 max-h-64 overflow-y-auto">
         {locations.map(({ attributes }) => {
           const { name, code, type } = attributes;
@@ -73,5 +77,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
     </Command>
   );
 };
+
+LocationDropdown.messages = ['containers.map-sidebar-main-panel'];
 
 export default LocationDropdown;

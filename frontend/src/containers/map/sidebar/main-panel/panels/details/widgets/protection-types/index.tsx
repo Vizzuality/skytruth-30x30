@@ -1,8 +1,11 @@
 import { useMemo } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { PROTECTION_TYPES_CHART_COLORS } from '@/constants/protection-types-chart-colors';
+import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
@@ -13,7 +16,9 @@ type ProtectionTypesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
 
-const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location }) => {
+const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ location }) => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+
   // Get protection levels data for the location
   const {
     data: { data: protectionLevelsData },
@@ -120,7 +125,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   return (
     <Widget
-      title="Marine Conservation Protection Levels"
+      title={t('marine-conservation-protection-levels')}
       lastUpdated={lastUpdated}
       noData={noData}
       loading={loading}
@@ -136,5 +141,11 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     </Widget>
   );
 };
+
+ProtectionTypesWidget.messages = [
+  'containers.map-sidebar-main-panel',
+  ...Widget.messages,
+  ...HorizontalBarChart.messages,
+];
 
 export default ProtectionTypesWidget;

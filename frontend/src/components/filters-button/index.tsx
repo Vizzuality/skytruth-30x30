@@ -3,10 +3,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Filter } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { FCWithMessages } from '@/types';
 
 const ICON_CLASSNAMES = 'h-4 w-4 fill-black';
 
@@ -26,7 +28,7 @@ type FormValues = {
   filters: string[];
 };
 
-const FiltersButton: React.FC<FiltersButtonProps> = ({
+const FiltersButton: FCWithMessages<FiltersButtonProps> = ({
   field,
   options,
   values,
@@ -34,6 +36,8 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
   showNoFiltersError = false,
   onChange,
 }) => {
+  const t = useTranslations('components.filters-button');
+
   const allFilterValues = useMemo(() => options.map(({ value }) => value), [options]);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
@@ -80,7 +84,7 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
       <Popover open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
         <PopoverTrigger asChild>
           <Button className="-ml-4" size="icon" variant="ghost">
-            <span className="sr-only">Filter</span>
+            <span className="sr-only">{t('filter')}</span>
             <Filter className={ICON_CLASSNAMES} aria-hidden />
           </Button>
         </PopoverTrigger>
@@ -93,7 +97,7 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
                 size="sm"
                 onClick={handleSelectAll}
               >
-                Select all
+                {t('select-all')}
               </Button>
               <Button
                 className="p-0 font-bold normal-case text-slate-400 hover:bg-transparent hover:text-slate-400"
@@ -101,7 +105,7 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
                 size="sm"
                 onClick={handleClearAll}
               >
-                Clear all (None selected)
+                {t('clear-all')}
               </Button>
             </div>
           )}
@@ -117,7 +121,7 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
                       onCheckedChange={(v) => handleOnCheckedChange(value, v)}
                     />
                     <label
-                      className="flex-grow cursor-pointer pl-2 pt-px text-xs leading-none text-black"
+                      className="flex-grow cursor-pointer pt-px pl-2 text-xs leading-none text-black"
                       htmlFor={value}
                     >
                       {name}
@@ -128,12 +132,14 @@ const FiltersButton: React.FC<FiltersButtonProps> = ({
             </form>
           </div>
           {noFiltersSelected && showNoFiltersError && (
-            <div className="text-orange">Please, select at least one option</div>
+            <div className="text-orange">{t('error-no-filters')}</div>
           )}
         </PopoverContent>
       </Popover>
     </div>
   );
 };
+
+FiltersButton.messages = ['components.filters-button'];
 
 export default FiltersButton;

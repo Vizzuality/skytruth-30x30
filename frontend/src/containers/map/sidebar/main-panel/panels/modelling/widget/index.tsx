@@ -4,12 +4,14 @@ import theme from 'lib/tailwind';
 
 import { useQueries } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
+import { useTranslations } from 'next-intl';
 
 import StackedHorizontalBarChart from '@/components/charts/stacked-horizontal-bar-chart';
 import TooltipButton from '@/components/tooltip-button';
 import Widget from '@/components/widget';
 import { modellingAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 import {
   getGetProtectionCoverageStatsQueryOptions,
   useGetProtectionCoverageStats,
@@ -40,7 +42,9 @@ const WidgetSectionWidgetTitle: React.FC<WidgetSectionWidgetTitleProps> = ({ tit
   );
 };
 
-const WidgetLegend: React.FC = () => {
+const WidgetLegend: FCWithMessages = () => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+
   const LEGEND_LINE_CLASSES =
     'relative pl-9 font-mono text-xs before:absolute before:left-0 before:top-1/2 before:h-[2px] before:w-[28px] before:-translate-y-1/2';
 
@@ -48,17 +52,21 @@ const WidgetLegend: React.FC = () => {
     <ul>
       <li>
         <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-green')}>
-          Existing marine conservation coverage
+          {t('marine-existing-conservation')}
         </span>
       </li>
       <li>
-        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-black')}>New added area</span>
+        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-black')}>{t('new-added-area')}</span>
       </li>
     </ul>
   );
 };
 
-const ModellingWidget: React.FC = () => {
+WidgetLegend.messages = ['containers.map-sidebar-main-panel'];
+
+const ModellingWidget: FCWithMessages = () => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+
   const chartsProps = DEFAULT_CHART_PROPS;
 
   const {
@@ -245,7 +253,7 @@ const ModellingWidget: React.FC = () => {
       <div className="flex flex-col">
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES, 'flex justify-between border-t-0')}>
           <WidgetSectionWidgetTitle
-            title="Administrative boundary"
+            title={t('administrative-boundary')}
             tooltip={tooltips?.['administrativeBoundary']}
           />
           <span className="text-right font-mono text-xs font-bold underline">
@@ -256,7 +264,7 @@ const ModellingWidget: React.FC = () => {
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>
           <div className="space-y-2">
             <WidgetSectionWidgetTitle
-              title="National level contribution"
+              title={t('national-level-contribution')}
               tooltip={tooltips?.['contributionDetails']}
             />
             <WidgetLegend />
@@ -295,7 +303,7 @@ const ModellingWidget: React.FC = () => {
             <WidgetLegend />
           </div>
           <StackedHorizontalBarChart
-            title="Global"
+            title={t('global')}
             totalProtectedArea={globalProtectionStatsData?.totalProtectedArea}
             totalArea={globalProtectionStatsData?.totalMarineArea}
             highlightedPercentage={globalProtectionStatsData?.totalPercentage}
@@ -319,5 +327,12 @@ const ModellingWidget: React.FC = () => {
     </Widget>
   );
 };
+
+ModellingWidget.messages = [
+  'containers.map-sidebar-main-panel',
+  ...Widget.messages,
+  ...WidgetLegend.messages,
+  ...StackedHorizontalBarChart.messages,
+];
 
 export default ModellingWidget;

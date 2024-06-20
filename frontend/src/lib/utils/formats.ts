@@ -1,4 +1,5 @@
 export function formatPercentage(
+  locale: string,
   value: number,
   options?: Intl.NumberFormatOptions & { displayPercentageSign?: boolean }
 ) {
@@ -14,7 +15,7 @@ export function formatPercentage(
     return displayPercentageSign ? '100.0%' : '100.0';
   }
 
-  const v = Intl.NumberFormat('en-US', {
+  const v = Intl.NumberFormat(locale === 'en' ? 'en-US' : locale, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
     style: displayPercentageSign ? 'percent' : 'decimal',
@@ -24,10 +25,10 @@ export function formatPercentage(
   return v.format(displayPercentageSign ? value / 100 : value);
 }
 
-export function formatKM(value: number, options?: Intl.NumberFormatOptions) {
+export function formatKM(locale: string, value: number, options?: Intl.NumberFormatOptions) {
   if (value < 1 && value > 0) return '<1';
 
-  const v = Intl.NumberFormat('en-US', {
+  const v = Intl.NumberFormat(locale === 'en' ? 'en-US' : locale, {
     notation: 'standard',
     compactDisplay: 'short',
     unit: 'kilometer',
@@ -45,16 +46,17 @@ const FORMATS = {
 } as const;
 
 export type FormatProps = {
+  locale: string;
   value: unknown;
   id?: keyof typeof FORMATS;
   options?: Intl.NumberFormatOptions;
 };
 
-export function format({ id, value, options }: FormatProps) {
+export function format({ locale, id, value, options }: FormatProps) {
   const fn = id ? FORMATS[id] : undefined;
 
   if (typeof fn === 'function' && typeof value === 'number') {
-    return fn(value, options);
+    return fn(locale, value, options);
   }
 
   if (typeof value === 'number') {

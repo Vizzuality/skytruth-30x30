@@ -45,3 +45,7 @@ tsconfig.tsbuildinfo
 
 # storybook
 /storybook-static/
+
+# translations
+translations/*
+!translations/en.json

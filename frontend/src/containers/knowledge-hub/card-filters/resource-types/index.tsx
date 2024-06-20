@@ -1,10 +1,14 @@
 import { useAtom } from 'jotai';
+import { useTranslations } from 'next-intl';
 
 import FiltersButton from '@/components/filters-button';
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
+import { FCWithMessages } from '@/types';
 import { useGetDataToolResourceTypes } from '@/types/generated/data-tool-resource-type';
 
-const CardFiltersResourceTypes = (): JSX.Element => {
+const CardFiltersResourceTypes: FCWithMessages = (): JSX.Element => {
+  const t = useTranslations('containers.knowledge-hub-card-filters');
+
   const [filters, setFilters] = useAtom(cardFiltersAtom);
 
   const resourceTypesQuery = useGetDataToolResourceTypes(
@@ -37,9 +41,14 @@ const CardFiltersResourceTypes = (): JSX.Element => {
         values={filters?.resourceType}
         onChange={handleFiltersChange}
       />
-      <span>Filter by resource type</span>
+      <span>{t('filter-by-resource-type')}</span>
     </div>
   );
 };
+
+CardFiltersResourceTypes.messages = [
+  'containers.knowledge-hub-card-filters',
+  ...FiltersButton.messages,
+];
 
 export default CardFiltersResourceTypes;

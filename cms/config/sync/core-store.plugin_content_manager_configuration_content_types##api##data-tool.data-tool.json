@@ -210,6 +210,10 @@
         ],
         [
           {
+            "name": "data_tool_resource_types",
+            "size": 6
+          },
+          {
             "name": "geography",
             "size": 6
           }
@@ -217,10 +221,6 @@
         [
           {
             "name": "data_tool_ecosystems",
-            "size": 6
-          },
-          {
-            "name": "data_tool_resource_types",
             "size": 6
           }
         ]
