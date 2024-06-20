@@ -1313,70 +1313,61 @@
 		},
 		"api::mpa.mpa": {
 			"1": {
-				"id": 1,
-				"wdpaid": 555635929,
-				"name": "Monumento Natural Das Ilhas de Trindade, Martim Vaz e Do Monte Columbia",
-				"area": 67698,
-				"createdAt": "2023-10-13T12:39:17.944Z",
-				"updatedAt": "2023-10-24T13:27:46.130Z",
-				"year": 2018,
-				"mpaa_establishment_stage": 1,
-				"protection_status": 1,
-				"mpa_protection_coverage_stats": [
-					2
-				],
-				"createdBy": null,
-				"updatedBy": null
-			},
+        "id": 1,
+        "wdpaid": "555635929",
+        "name": "Monumento Natural Das Ilhas de Trindade, Martim Vaz e Do Monte Columbia",
+        "area": 67698,
+        "createdAt": "2023-10-13T12:39:17.944Z",
+        "updatedAt": "2023-10-24T13:27:46.130Z",
+        "year": 2018,
+        "mpaa_establishment_stage": 1,
+        "protection_status": 1,
+        "mpa_protection_coverage_stats": [2],
+        "createdBy": null,
+        "updatedBy": null
+      },
 			"2": {
-				"id": 2,
-				"wdpaid": 555557228,
-				"name": "Charlie-Gibbs North High Seas Marine Protected Area",
-				"area": 178766,
-				"createdAt": "2023-10-13T12:51:35.526Z",
-				"updatedAt": "2023-10-24T13:27:46.224Z",
-				"year": 2012,
-				"mpaa_establishment_stage": 1,
-				"protection_status": 1,
-				"mpa_protection_coverage_stats": [
-					1
-				],
-				"createdBy": null,
-				"updatedBy": null
-			},
+        "id": 2,
+        "wdpaid": "555557228",
+        "name": "Charlie-Gibbs North High Seas Marine Protected Area",
+        "area": 178766,
+        "createdAt": "2023-10-13T12:51:35.526Z",
+        "updatedAt": "2023-10-24T13:27:46.224Z",
+        "year": 2012,
+        "mpaa_establishment_stage": 1,
+        "protection_status": 1,
+        "mpa_protection_coverage_stats": [1],
+        "createdBy": null,
+        "updatedBy": null
+      },
 			"3": {
-				"id": 3,
-				"wdpaid": 555624810,
-				"name": "Ross Sea Region",
-				"area": 2041330,
-				"createdAt": "2023-10-19T14:20:56.081Z",
-				"updatedAt": "2023-10-24T13:27:46.285Z",
-				"year": 2017,
-				"mpaa_establishment_stage": 1,
-				"protection_status": 1,
-				"mpa_protection_coverage_stats": [
-					3,
-					4
-				],
-				"createdBy": null,
-				"updatedBy": null
-			},
+        "id": 3,
+        "wdpaid": "555624810",
+        "name": "Ross Sea Region",
+        "area": 2041330,
+        "createdAt": "2023-10-19T14:20:56.081Z",
+        "updatedAt": "2023-10-24T13:27:46.285Z",
+        "year": 2017,
+        "mpaa_establishment_stage": 1,
+        "protection_status": 1,
+        "mpa_protection_coverage_stats": [3, 4],
+        "createdBy": null,
+        "updatedBy": null
+      },
 			"4": {
-				"id": 4,
-				"wdpaid": 4899,
-				"name": "Parque Estadual Da Ilha Anchieta",
-				"area": 0.15,
-				"createdAt": "2023-10-24T08:50:35.738Z",
-				"updatedAt": "2023-10-24T13:27:46.345Z",
-				"year": 1977,
-				"mpaa_establishment_stage": 1,
-				"protection_status": 1,
-				"mpa_protection_coverage_stats": [
-					5
-				],
-				"createdBy": null,
-				"updatedBy": null
-			}
+        "id": 4,
+        "wdpaid": "4899",
+        "name": "Parque Estadual Da Ilha Anchieta",
+        "area": 0.15,
+        "createdAt": "2023-10-24T08:50:35.738Z",
+        "updatedAt": "2023-10-24T13:27:46.345Z",
+        "year": 1977,
+        "mpaa_establishment_stage": 1,
+        "protection_status": 1,
+        "mpa_protection_coverage_stats": [5],
+        "createdBy": null,
+        "updatedBy": null
+      }
 		},
 		"documentation.metadata": {
 			"1": {
