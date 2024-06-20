@@ -18,25 +18,12 @@ ENV NODE_ENV development
 
 WORKDIR /app
 
-COPY .yarn ./.yarn
-COPY config ./config
-COPY database ./database
-COPY public ./public
-COPY src ./src
+COPY . ./
 
-COPY .env \
-     .nvmrc \
-     .yarnrc.yml \
-     favicon.png \
-     package.json \
-     entrypoint.sh \
-     tsconfig.json \
-     yarn.lock \
-     ./
-
-RUN yarn install
+RUN yarn install --immutable
 
 ENV PATH /app/node_modules/.bin:$PATH
 
 EXPOSE 1337
+# CMD [ "yarn", "strapi", "develop" ]
 ENTRYPOINT ["/app/entrypoint.sh"]

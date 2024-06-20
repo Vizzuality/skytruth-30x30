@@ -11,10 +11,14 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/app
+      - ./src:/app/src
+      - ./types:/app/types
+      - ./public:/app/public
+      - ./database:/app/database
+      - ./config:/app/config
 
   db:
-    image: postgres
+    image: postgis/postgis:16-3.4
     restart: always
     env_file:
       - .env
