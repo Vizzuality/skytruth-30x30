@@ -1,4 +1,4 @@
-FROM mambaorg/micromamba:1.4.4 AS base
+FROM mambaorg/micromamba:1.5.8 AS base
 
 USER root
 

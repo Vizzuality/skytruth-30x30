@@ -3,9 +3,12 @@ import shutil
 import requests
 from logging import getLogger
 from pathlib import Path
-from typing import Literal, Union
+from typing import Any, Dict, Literal, Union
 from google.cloud import storage
 from google.oauth2 import service_account
+
+from helpers.file_handler import FileConventionHandler, STEPS
+from helpers.settings import Settings
 
 logger = getLogger(__name__)
 
@@ -51,14 +54,13 @@ def downloadFile(
 
         output_file = output_path.joinpath(file)
 
-        if output_file.parent.exists() and overwrite:  # so we can always start from scratch
-            rm_tree(output_file.parent)
-
-        output_file.parent.mkdir(parents=True, exist_ok=True)
+        if overwrite:  # so we can always start from scratch
+            output_file.unlink(missing_ok=True)
 
         if output_file.exists() and not overwrite:
             logger.info(f"File {output_file} already exists.")
             return output_file
+
         if body:
             r = requests.post(url, params=params, data=body, headers=headers, allow_redirects=True)
         else:
@@ -78,7 +80,7 @@ def downloadFile(
 
 
 def writeReadGCP(
-    credentials: str,
+    credentials: str | Dict[str, Any],
     bucket_name: str,
     blob_name: str,
     file: Path,
@@ -114,3 +116,35 @@ def make_archive(source: Path, destination: Path) -> None:
     root_dir = source.parent
     base_dir = source.name
     shutil.make_archive(str(base_name), fmt, root_dir, base_dir)
+
+
+def download_and_unzip_if_needed(
+    file_handler: FileConventionHandler, prev_step: STEPS, mysettings: Settings
+):
+
+    zip_path = file_handler.get_step_fmt_file_path(prev_step, "zip", parent=True)
+
+    unzzipped_path = file_handler.get_processed_step_path(prev_step)
+
+    print(zip_path)
+    print(unzzipped_path)
+
+    if (
+        unzzipped_path.exists()
+        and unzzipped_path.is_dir()
+        and len(list(unzzipped_path.glob("*"))) > 0
+    ):
+        return unzzipped_path
+
+    elif not zip_path.exists():
+        writeReadGCP(
+            credentials=mysettings.GCS_KEYFILE_JSON,
+            bucket_name=mysettings.GCS_BUCKET,
+            blob_name=file_handler.get_remote_path(prev_step),
+            file=zip_path,
+            operation="r",
+        )
+
+    shutil.unpack_archive(zip_path, unzzipped_path.parent)
+
+    return unzzipped_path

@@ -11,6 +11,7 @@ services:
     ports:
       - 8887:8888
     env_file: .env
+    user: 1000:1000
 
   ntfy:
     profiles: [skytruth-data-pipes]
