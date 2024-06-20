@@ -107,6 +107,29 @@ const NationalHighseasTable: React.FC = () => {
         protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
         fishingProtectionLevel: fishingProtectionLevel?.slug,
         area: coverageStats.area,
+        map: {},
+        ...(mpa?.name !== 'Aln Estuary' && {
+          subRows: [
+            {
+              protectedArea: `${mpa?.name} - 1`,
+              coverage: coveragePercentage,
+              protectedAreaType: protectionStatus?.slug,
+              establishmentStage: establishmentStage?.slug || 'N/A',
+              protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
+              fishingProtectionLevel: fishingProtectionLevel?.slug,
+              area: coverageStats.area,
+            },
+            {
+              protectedArea: `${mpa?.name} - 2`,
+              coverage: coveragePercentage,
+              protectedAreaType: protectionStatus?.slug,
+              establishmentStage: establishmentStage?.slug || 'N/A',
+              protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
+              fishingProtectionLevel: fishingProtectionLevel?.slug,
+              area: coverageStats.area,
+            },
+          ],
+        }),
       };
     });
   }, [coverageData, locationsQuery.data]);
@@ -115,7 +138,7 @@ const NationalHighseasTable: React.FC = () => {
     return applyFilters(parsedData, filters);
   }, [filters, parsedData]);
 
-  return <Table columns={columns} data={tableData} />;
+  return <Table columns={columns} data={tableData} columnSeparators={['map']} />;
 };
 
 export default NationalHighseasTable;
