@@ -1,0 +1,20 @@
+name: Release tag on Localazy
+on: 
+  push:
+    workflow_dispatch:
+    branches:
+      - main
+
+jobs:
+  localazy-release:
+    name: Release strings to production on Localazy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: localazy/tag@v1
+        with:
+          workdir: 'frontend'
+          read_key: ${{ secrets.b }}
+          write_key: ${{ secrets.LOCALAZY_WRITE_KEY }}
+          promote_from: 'latest'
+          promote_to: 'production'
