@@ -39,7 +39,7 @@ const ContactUsPage: FCWithMessages = () => {
   );
 };
 
-ContactUsPage.messages = ['pages.contact', ...ContactUsForm.messages];
+ContactUsPage.messages = ['pages.contact', ...Layout.messages, ...ContactUsForm.messages];
 
 export async function getServerSideProps(context) {
   return {
