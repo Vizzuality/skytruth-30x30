@@ -26,7 +26,7 @@ ConservationBuilderPage.layout = {
   Component: MapLayout,
   props: {
     title: '',
-    type: 'conservation_builder',
+    type: 'conservation-builder',
   },
 };
 

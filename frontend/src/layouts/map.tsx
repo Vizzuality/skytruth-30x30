@@ -18,7 +18,7 @@ const LAYOUT_TYPES = {
 export interface MapLayoutProps {
   title?: string;
   description?: string;
-  type: keyof typeof LAYOUT_TYPES;
+  type: (typeof LAYOUT_TYPES)[keyof typeof LAYOUT_TYPES];
 }
 
 const MapLayout: FCWithMessages<PropsWithChildren<MapLayoutProps>> = ({
@@ -41,7 +41,11 @@ const MapLayout: FCWithMessages<PropsWithChildren<MapLayoutProps>> = ({
   return (
     <>
       <Head
-        title={!title.length && type === 'conservation_builder' ? t('conservation-builder') : title}
+        title={
+          !title.length && type === LAYOUT_TYPES.conservation_builder
+            ? t('conservation-builder')
+            : title
+        }
         description={description}
       />
       <div className="flex h-screen w-screen flex-col">
