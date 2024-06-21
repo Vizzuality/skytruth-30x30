@@ -14,7 +14,7 @@ const SIDEBAR_COMPONENTS = {
 };
 
 type PanelsProps = {
-  type: keyof typeof PANEL_TYPES;
+  type: (typeof PANEL_TYPES)[keyof typeof PANEL_TYPES];
 };
 
 const MainPanel: FCWithMessages<PanelsProps> = ({ type }) => {

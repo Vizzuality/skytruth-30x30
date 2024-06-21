@@ -16,7 +16,7 @@ import LayersPanel from './layers-panel';
 import MainPanel, { PANEL_TYPES } from './main-panel/panels';
 
 type MapSidebarProps = {
-  type: keyof typeof PANEL_TYPES;
+  type: (typeof PANEL_TYPES)[keyof typeof PANEL_TYPES];
 };
 
 const MapSidebar: FCWithMessages<MapSidebarProps> = ({ type }) => {
