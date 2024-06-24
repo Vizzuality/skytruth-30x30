@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   if (mapParams) {
     const searchParams = mapParamsToSearchParams(mapParams);
-    const target = `${PAGES.conservationBuilder}/${location}?${searchParams}`;
+    const target = `/${context.locale}/${PAGES.conservationBuilder}/${location}?${searchParams}`;
 
     return {
       redirect: {
