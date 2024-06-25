@@ -277,7 +277,11 @@
       "global": "Global",
       "open-main-menu": "Open main menu",
       "main-menu": "Main menu",
-      "close": "Close"
+      "close": "Close",
+      "selected-language": "Selected language: {language}",
+      "english": "English",
+      "spanish": "Spanish",
+      "french": "French"
     },
     "footer": {
       "title": "Would you like to know more?",
