@@ -262,11 +262,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    ...getGetStaticIndicatorsQueryOptions(),
+    ...getGetStaticIndicatorsQueryOptions({
+      locale: context.locale,
+    }),
   });
 
   const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
-    getGetStaticIndicatorsQueryKey()
+    getGetStaticIndicatorsQueryKey({
+      locale: context.locale,
+    })
   );
 
   return {

@@ -293,7 +293,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 
   await queryClient.prefetchQuery({
-    ...getGetStaticIndicatorsQueryOptions(),
+    ...getGetStaticIndicatorsQueryOptions({ locale: context.locale }),
   });
 
   await queryClient.prefetchQuery({
@@ -301,7 +301,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
-    getGetStaticIndicatorsQueryKey()
+    getGetStaticIndicatorsQueryKey({ locale: context.locale })
   );
 
   const protectionCoverageStatsData = queryClient.getQueryData<ProtectionCoverageStatListResponse>(

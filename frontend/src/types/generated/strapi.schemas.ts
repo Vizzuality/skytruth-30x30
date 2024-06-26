@@ -1222,27 +1222,19 @@ export interface UploadFile {
 
 export type StaticIndicatorResponseMeta = { [key: string]: any };
 
+export interface StaticIndicatorResponseDataObject {
+  id?: number;
+  attributes?: StaticIndicator;
+}
+
 export interface StaticIndicatorResponse {
   data?: StaticIndicatorResponseDataObject;
   meta?: StaticIndicatorResponseMeta;
 }
 
-export interface StaticIndicator {
-  slug?: string;
-  source?: string;
-  value?: string;
-  description?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  publishedAt?: string;
-  createdBy?: StaticIndicatorCreatedBy;
-  updatedBy?: StaticIndicatorUpdatedBy;
-}
-
-export interface StaticIndicatorResponseDataObject {
-  id?: number;
-  attributes?: StaticIndicator;
-}
+export type StaticIndicatorLocalizations = {
+  data?: StaticIndicator[];
+};
 
 export type StaticIndicatorUpdatedByDataAttributes = { [key: string]: any };
 
@@ -1255,23 +1247,6 @@ export type StaticIndicatorUpdatedBy = {
   data?: StaticIndicatorUpdatedByData;
 };
 
-export type StaticIndicatorCreatedByDataAttributes = {
-  firstname?: string;
-  lastname?: string;
-  username?: string;
-  email?: string;
-  resetPasswordToken?: string;
-  registrationToken?: string;
-  isActive?: boolean;
-  roles?: StaticIndicatorCreatedByDataAttributesRoles;
-  blocked?: boolean;
-  preferedLanguage?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  createdBy?: StaticIndicatorCreatedByDataAttributesCreatedBy;
-  updatedBy?: StaticIndicatorCreatedByDataAttributesUpdatedBy;
-};
-
 export type StaticIndicatorCreatedByData = {
   id?: number;
   attributes?: StaticIndicatorCreatedByDataAttributes;
@@ -1280,6 +1255,20 @@ export type StaticIndicatorCreatedByData = {
 export type StaticIndicatorCreatedBy = {
   data?: StaticIndicatorCreatedByData;
 };
+
+export interface StaticIndicator {
+  slug?: string;
+  source?: string;
+  value?: string;
+  description?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  publishedAt?: string;
+  createdBy?: StaticIndicatorCreatedBy;
+  updatedBy?: StaticIndicatorUpdatedBy;
+  localizations?: StaticIndicatorLocalizations;
+  locale?: string;
+}
 
 export type StaticIndicatorCreatedByDataAttributesUpdatedByDataAttributes = { [key: string]: any };
 
@@ -1312,6 +1301,23 @@ export type StaticIndicatorCreatedByDataAttributesRoles = {
   data?: StaticIndicatorCreatedByDataAttributesRolesDataItem[];
 };
 
+export type StaticIndicatorCreatedByDataAttributes = {
+  firstname?: string;
+  lastname?: string;
+  username?: string;
+  email?: string;
+  resetPasswordToken?: string;
+  registrationToken?: string;
+  isActive?: boolean;
+  roles?: StaticIndicatorCreatedByDataAttributesRoles;
+  blocked?: boolean;
+  preferedLanguage?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  createdBy?: StaticIndicatorCreatedByDataAttributesCreatedBy;
+  updatedBy?: StaticIndicatorCreatedByDataAttributesUpdatedBy;
+};
+
 export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesUpdatedByDataAttributes = {
   [key: string]: any;
 };
@@ -1323,6 +1329,15 @@ export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesUpdated
 
 export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesUpdatedBy = {
   data?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesUpdatedByData;
+};
+
+export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesCreatedByData = {
+  id?: number;
+  attributes?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesCreatedByDataAttributes;
+};
+
+export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesCreatedBy = {
+  data?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesCreatedByData;
 };
 
 export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributes = {
@@ -1341,14 +1356,19 @@ export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesCreated
   [key: string]: any;
 };
 
-export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesCreatedByData = {
-  id?: number;
-  attributes?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesCreatedByDataAttributes;
-};
-
-export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesCreatedBy = {
-  data?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesCreatedByData;
-};
+export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItemAttributes =
+  {
+    action?: string;
+    actionParameters?: unknown;
+    subject?: string;
+    properties?: unknown;
+    conditions?: unknown;
+    role?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItemAttributesRole;
+    createdAt?: string;
+    updatedAt?: string;
+    createdBy?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItemAttributesCreatedBy;
+    updatedBy?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItemAttributesUpdatedBy;
+  };
 
 export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItem = {
   id?: number;
@@ -1401,20 +1421,6 @@ export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermiss
     data?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItemAttributesRoleData;
   };
 
-export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItemAttributes =
-  {
-    action?: string;
-    actionParameters?: unknown;
-    subject?: string;
-    properties?: unknown;
-    conditions?: unknown;
-    role?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItemAttributesRole;
-    createdAt?: string;
-    updatedAt?: string;
-    createdBy?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItemAttributesCreatedBy;
-    updatedBy?: StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesPermissionsDataItemAttributesUpdatedBy;
-  };
-
 export type StaticIndicatorCreatedByDataAttributesRolesDataItemAttributesUsersDataItemAttributes = {
   [key: string]: any;
 };
@@ -1449,15 +1455,57 @@ export interface StaticIndicatorListResponse {
   meta?: StaticIndicatorListResponseMeta;
 }
 
+export type StaticIndicatorLocalizationListResponseMetaPagination = {
+  page?: number;
+  pageSize?: number;
+  pageCount?: number;
+  total?: number;
+};
+
+export type StaticIndicatorLocalizationListResponseMeta = {
+  pagination?: StaticIndicatorLocalizationListResponseMetaPagination;
+};
+
+export interface StaticIndicatorListResponseDataItemLocalized {
+  id?: number;
+  attributes?: StaticIndicator;
+}
+
+export interface StaticIndicatorLocalizationListResponse {
+  data?: StaticIndicatorListResponseDataItemLocalized[];
+  meta?: StaticIndicatorLocalizationListResponseMeta;
+}
+
+export type StaticIndicatorLocalizationResponseMeta = { [key: string]: any };
+
+export interface StaticIndicatorResponseDataObjectLocalized {
+  id?: number;
+  attributes?: StaticIndicator;
+}
+
+export interface StaticIndicatorLocalizationResponse {
+  data?: StaticIndicatorResponseDataObjectLocalized;
+  meta?: StaticIndicatorLocalizationResponseMeta;
+}
+
 export type StaticIndicatorRequestData = {
   slug?: string;
   source?: string;
   value?: string;
   description?: string;
+  locale?: string;
 };
 
 export interface StaticIndicatorRequest {
   data: StaticIndicatorRequestData;
+}
+
+export interface StaticIndicatorLocalizationRequest {
+  slug?: string;
+  source?: string;
+  value?: string;
+  description?: string;
+  locale: string;
 }
 
 export type ProtectionStatusResponseMeta = { [key: string]: any };

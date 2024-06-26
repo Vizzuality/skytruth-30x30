@@ -1277,6 +1277,11 @@
           "source",
           "value",
           "description"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [],
@@ -1285,14 +1290,26 @@
     {
       "action": "plugin::content-manager.explorer.delete",
       "subject": "api::static-indicator.static-indicator",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
       "conditions": [],
       "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "subject": "api::static-indicator.static-indicator",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
       "conditions": [],
       "actionParameters": {}
     },
@@ -1305,6 +1322,11 @@
           "source",
           "value",
           "description"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [],
@@ -1319,6 +1341,11 @@
           "source",
           "value",
           "description"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [],
