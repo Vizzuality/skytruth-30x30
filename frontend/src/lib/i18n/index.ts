@@ -17,7 +17,7 @@ export const fetchTranslations = async (
     });
 
     const messages = await cdn.fetch({
-      files: cdn.metafile.files[0],
+      files: cdn.metafile.files.find(({ file }) => file !== 'strapi.json'),
       locales: isDefaultLocale ? locale : ['en', locale],
     });
 
