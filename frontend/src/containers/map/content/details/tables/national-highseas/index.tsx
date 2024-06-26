@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useLocale } from 'next-intl';
+
 import FiltersButton from '@/components/filters-button';
 import TooltipButton from '@/components/tooltip-button';
 import { applyFilters } from '@/containers/map/content/details/helpers';
@@ -18,9 +20,11 @@ const NationalHighseasTable: FCWithMessages = () => {
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
+  const locale = useLocale();
 
   const locationsQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: locationCode,
       },
@@ -49,6 +53,7 @@ const NationalHighseasTable: FCWithMessages = () => {
   const { data: coverageData }: { data: MpaProtectionCoverageStatListResponseDataItem[] } =
     useGetMpaProtectionCoverageStats(
       {
+        locale,
         filters: {
           location: {
             code: {

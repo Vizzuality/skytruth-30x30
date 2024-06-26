@@ -26,10 +26,10 @@
     },
     "slug": {
       "type": "string",
-      "unique": true,
+      "unique": false,
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       }
     },

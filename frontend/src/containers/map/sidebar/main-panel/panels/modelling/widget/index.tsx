@@ -4,7 +4,7 @@ import theme from 'lib/tailwind';
 
 import { useQueries } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import StackedHorizontalBarChart from '@/components/charts/stacked-horizontal-bar-chart';
 import TooltipButton from '@/components/tooltip-button';
@@ -16,7 +16,7 @@ import {
   getGetProtectionCoverageStatsQueryOptions,
   useGetProtectionCoverageStats,
 } from '@/types/generated/protection-coverage-stat';
-import { Location } from '@/types/generated/strapi.schemas';
+import { Location, ProtectionCoverageStatLocationData } from '@/types/generated/strapi.schemas';
 
 import useTooltips from '../useTooltips';
 
@@ -66,6 +66,7 @@ WidgetLegend.messages = ['containers.map-sidebar-main-panel'];
 
 const ModellingWidget: FCWithMessages = () => {
   const t = useTranslations('containers.map-sidebar-main-panel');
+  const locale = useLocale();
 
   const chartsProps = DEFAULT_CHART_PROPS;
 
@@ -93,12 +94,13 @@ const ModellingWidget: FCWithMessages = () => {
     };
   } = useGetProtectionCoverageStats(
     {
+      locale,
       filters: {
         location: {
           code: 'GLOB',
         },
       },
-      populate: '*',
+      populate: 'location',
       // @ts-expect-error this is an issue with Orval typing
       'sort[year]': 'desc',
       'pagination[limit]': 2,
@@ -149,12 +151,13 @@ const ModellingWidget: FCWithMessages = () => {
     queries: (modellingData?.locations_area || []).map((location) =>
       getGetProtectionCoverageStatsQueryOptions(
         {
+          locale,
           filters: {
             location: {
               code: location.code,
             },
           },
-          populate: '*',
+          populate: 'location,location.localizations',
           // @ts-expect-error this is an issue with Orval typing
           'sort[year]': 'desc',
         },
@@ -164,7 +167,7 @@ const ModellingWidget: FCWithMessages = () => {
             select: ({ data }) => {
               if (!data) return null;
 
-              const lastYearAvailable = data?.[0].attributes?.year;
+              const lastYearAvailable = data?.[0]?.attributes?.year;
 
               const dataFiltered = data.filter(
                 (entry) => entry.attributes.year === lastYearAvailable
@@ -175,13 +178,19 @@ const ModellingWidget: FCWithMessages = () => {
                 0
               );
 
+              let location = data?.[0]?.attributes?.location?.data?.attributes;
+              if (location.locale !== locale) {
+                location = (
+                  location.localizations.data as ProtectionCoverageStatLocationData[]
+                ).find((localization) => localization.attributes.locale === locale)?.attributes;
+              }
+
               // ? total extension of location
-              const totalMarineArea =
-                data?.[0].attributes?.location?.data?.attributes?.totalMarineArea || 0;
+              const totalMarineArea = location?.totalMarineArea || 0;
 
               // ? total custom  protected area (analysis)
               const totalCustomArea = modellingData.locations_area.find(
-                ({ code }) => code === data?.[0].attributes?.location.data?.attributes?.code
+                ({ code }) => code === location?.code
               ).protected_area;
 
               //  ? percentage of custom protected area (analysis)
@@ -195,7 +204,7 @@ const ModellingWidget: FCWithMessages = () => {
               const totalPercentage = totalCustomAreaPercentage + totalExistingAreaPercentage;
 
               return {
-                location: data?.[0].attributes?.location?.data?.attributes,
+                location,
                 totalMarineArea,
                 totalProtectedArea,
                 protectedArea,

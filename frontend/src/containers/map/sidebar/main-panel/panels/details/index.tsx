@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useLocale } from 'next-intl';
+
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
@@ -16,6 +18,8 @@ import DetailsButton from './details-button';
 import DetailsWidgets from './widgets';
 
 const SidebarDetails: FCWithMessages = () => {
+  const locale = useLocale();
+
   const {
     push,
     query: { locationCode = 'GLOB' },
@@ -24,6 +28,7 @@ const SidebarDetails: FCWithMessages = () => {
   const searchParams = useMapSearchParams();
 
   const { data: locationsData } = useGetLocations({
+    locale,
     filters: {
       code: locationCode,
     },

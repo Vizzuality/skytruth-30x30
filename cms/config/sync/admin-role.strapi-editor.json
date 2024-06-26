@@ -62,13 +62,6 @@
       "actionParameters": {}
     },
     {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::data-info.data-info",
-      "properties": {},
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
       "action": "plugin::content-manager.explorer.read",
       "subject": "api::data-info.data-info",
       "properties": {
@@ -104,13 +97,6 @@
           "url"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::data-source.data-source",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -305,20 +291,6 @@
           "layers"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::dataset.dataset",
-      "properties": {},
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "subject": "api::dataset.dataset",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -402,13 +374,6 @@
           "info"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::fishing-protection-level.fishing-protection-level",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -500,13 +465,6 @@
           "info"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::habitat.habitat",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -556,20 +514,6 @@
           "dataset"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::layer.layer",
-      "properties": {},
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "subject": "api::layer.layer",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -636,13 +580,6 @@
           "bounds"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::location.location",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -859,13 +796,6 @@
           "mpa_protection_coverage_stats"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::mpaa-establishment-stage.mpaa-establishment-stage",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -953,13 +883,6 @@
           "info"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::mpaa-protection-level.mpaa-protection-level",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -1002,13 +925,6 @@
           "protectedAreasCount"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::protection-coverage-stat.protection-coverage-stat",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -1054,13 +970,6 @@
           "info"
         ]
       },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::protection-status.protection-status",
-      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },

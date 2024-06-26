@@ -1,6 +1,4 @@
-import { useRouter } from 'next/router';
-
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
@@ -37,8 +35,7 @@ const StackedHorizontalBarChart: FCWithMessages<StackedHorizontalBarChartProps> 
   showTarget = true,
 }) => {
   const t = useTranslations('components.chart-stacked-horizontal-bar');
-
-  const { locale } = useRouter();
+  const locale = useLocale();
 
   return (
     <div className={cn('font-mono', className)}>

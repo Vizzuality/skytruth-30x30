@@ -1,17 +1,22 @@
 import { useRouter } from 'next/router';
 
+import { useLocale } from 'next-intl';
+
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 
-// import EstablishmentStagesWidget from './establishment-stages';
-// import FishingProtectionWidget from './fishing-protection';
 import HabitatWidget from './habitat';
 import MarineConservationWidget from './marine-conservation';
 import ProtectionTypesWidget from './protection-types';
 
+// import EstablishmentStagesWidget from './establishment-stages';
+// import FishingProtectionWidget from './fishing-protection';
+
 const DetailsWidgets: FCWithMessages = () => {
+  const locale = useLocale();
+
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
@@ -19,6 +24,7 @@ const DetailsWidgets: FCWithMessages = () => {
   const [{ showDetails }] = useSyncMapContentSettings();
 
   const { data: locationsData } = useGetLocations({
+    locale,
     filters: {
       code: locationCode,
     },

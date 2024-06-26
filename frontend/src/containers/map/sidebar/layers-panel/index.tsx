@@ -1,6 +1,6 @@
 import { ComponentProps, useCallback } from 'react';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import TooltipButton from '@/components/tooltip-button';
 import { Label } from '@/components/ui/label';
@@ -18,6 +18,7 @@ const SWITCH_LABEL_CLASSES = '-mb-px cursor-pointer pt-px font-mono text-xs font
 
 const LayersPanel: FCWithMessages = (): JSX.Element => {
   const t = useTranslations('containers.map-sidebar-layers-panel');
+  const locale = useLocale();
 
   const [activeLayers, setMapLayers] = useSyncMapLayers();
   const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
@@ -25,6 +26,7 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
 
   const { data: datasets }: { data: DatasetUpdatedByData[] } = useGetDatasets(
     {
+      locale,
       sort: 'name:asc',
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

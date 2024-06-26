@@ -1,5 +1,7 @@
 import { ReactElement, isValidElement, useMemo } from 'react';
 
+import { useLocale } from 'next-intl';
+
 import EEZLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/eez';
 import EstablishmentLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/establishment';
 import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
@@ -15,7 +17,12 @@ export interface PopupItemProps {
   id: number;
 }
 const PopupItem: FCWithMessages<PopupItemProps> = ({ id }) => {
+  const locale = useLocale();
+
   const { data } = useGetLayersId(id, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    locale,
     populate: 'metadata',
   });
 

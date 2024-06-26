@@ -2,14 +2,18 @@ import { FC } from 'react';
 
 import { AttributionControl } from 'react-map-gl';
 
+import { useLocale } from 'next-intl';
+
 import { useSyncMapLayers } from '@/containers/map/content/map/sync-settings';
 import { useGetLayers } from '@/types/generated/layer';
 
 const Attributions: FC = () => {
+  const locale = useLocale();
   const [activeLayers] = useSyncMapLayers();
 
   const layerQuery = useGetLayers(
     {
+      locale,
       filters: {
         id: {
           $in: activeLayers,

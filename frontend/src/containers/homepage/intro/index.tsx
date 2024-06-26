@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import Icon from '@/components/ui/icon';
 import SidebarItem from '@/containers/homepage/intro/sidebar-item';
@@ -18,19 +17,20 @@ type IntroProps = {
 };
 
 const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
-  const { locale } = useRouter();
   const t = useTranslations('containers.homepage-intro');
+  const locale = useLocale();
 
   const {
     data: { data: protectionStatsData },
   } = useGetProtectionCoverageStats(
     {
+      locale,
       filters: {
         location: {
           code: 'GLOB',
         },
       },
-      populate: '*',
+      populate: 'location',
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       'sort[year]': 'desc',
@@ -46,6 +46,7 @@ const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
 
   const { data: protectedTerrestrialInlandAreasData } = useGetStaticIndicators(
     {
+      locale,
       filters: {
         slug: 'protected-land-area-percentage',
       },

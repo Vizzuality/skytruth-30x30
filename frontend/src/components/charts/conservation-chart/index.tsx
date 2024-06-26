@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import twTheme from 'lib/tailwind';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   ComposedChart,
   Bar,
@@ -47,6 +47,7 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
   data,
 }) => {
   const t = useTranslations('components.chart-conservation');
+  const locale = useLocale();
 
   const barChartData = useMemo(() => {
     // Last year of data available
@@ -128,6 +129,7 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
 
   const { data: dataInfo } = useGetDataInfos(
     {
+      locale,
       filters: {
         slug: '30x30-target',
       },

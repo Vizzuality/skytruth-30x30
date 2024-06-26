@@ -5,22 +5,22 @@ export function formatPercentage(
 ) {
   const { displayPercentageSign = true, ...intlNumberFormatOptions } = options || {};
 
-  if (value < 0.1 && value > 0) {
-    return displayPercentageSign ? '<0.1%' : '<0.1';
-  }
-
-  // Sanity check to prevent the display of percentages over 100.
-  // This should never be true, but data can be wonky hence this last resort check.
-  if (value > 100) {
-    return displayPercentageSign ? '100.0%' : '100.0';
-  }
-
   const v = Intl.NumberFormat(locale === 'en' ? 'en-US' : locale, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
     style: displayPercentageSign ? 'percent' : 'decimal',
     ...intlNumberFormatOptions,
   });
+
+  if (value < 0.1 && value > 0) {
+    return `<${v.format(0.1)}`;
+  }
+
+  // Sanity check to prevent the display of percentages over 100.
+  // This should never be true, but data can be wonky hence this last resort check.
+  if (value > 100) {
+    return v.format(100);
+  }
 
   return v.format(displayPercentageSign ? value / 100 : value);
 }

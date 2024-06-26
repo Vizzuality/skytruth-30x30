@@ -35,7 +35,10 @@
       "column": {
         "defaultTo": 0,
         "type": "decimal",
-        "args": [12,2]
+        "args": [
+          12,
+          2
+        ]
       }
     },
     "protectedArea": {
@@ -44,7 +47,10 @@
       "column": {
         "defaultTo": 0,
         "type": "decimal",
-        "args": [12,2]
+        "args": [
+          12,
+          2
+        ]
       }
     },
     "protectedAreasCount": {
