@@ -4,10 +4,12 @@
  * DOCUMENTATION
  * OpenAPI spec version: 1.0.0
  */
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import type {
   UseQueryOptions,
+  UseMutationOptions,
   QueryFunction,
+  MutationFunction,
   UseQueryResult,
   QueryKey,
 } from '@tanstack/react-query';
@@ -17,9 +19,11 @@ import type {
   GetLocationsParams,
   LocationResponse,
   GetLocationsIdParams,
+  LocationLocalizationResponse,
+  LocationLocalizationRequest,
 } from './strapi.schemas';
 import { API } from '../../services/api/index';
-import type { ErrorType } from '../../services/api/index';
+import type { ErrorType, BodyType } from '../../services/api/index';
 
 // eslint-disable-next-line
 type SecondParameter<T extends (...args: any) => any> = T extends (
@@ -146,4 +150,74 @@ export const useGetLocationsId = <
   query.queryKey = queryOptions.queryKey;
 
   return query;
+};
+
+export const postLocationsIdLocalizations = (
+  id: number,
+  locationLocalizationRequest: BodyType<LocationLocalizationRequest>,
+  options?: SecondParameter<typeof API>
+) => {
+  return API<LocationLocalizationResponse>(
+    {
+      url: `/locations/${id}/localizations`,
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      data: locationLocalizationRequest,
+    },
+    options
+  );
+};
+
+export const getPostLocationsIdLocalizationsMutationOptions = <
+  TError = ErrorType<Error>,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postLocationsIdLocalizations>>,
+    TError,
+    { id: number; data: BodyType<LocationLocalizationRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof API>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postLocationsIdLocalizations>>,
+  TError,
+  { id: number; data: BodyType<LocationLocalizationRequest> },
+  TContext
+> => {
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postLocationsIdLocalizations>>,
+    { id: number; data: BodyType<LocationLocalizationRequest> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return postLocationsIdLocalizations(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type PostLocationsIdLocalizationsMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postLocationsIdLocalizations>>
+>;
+export type PostLocationsIdLocalizationsMutationBody = BodyType<LocationLocalizationRequest>;
+export type PostLocationsIdLocalizationsMutationError = ErrorType<Error>;
+
+export const usePostLocationsIdLocalizations = <
+  TError = ErrorType<Error>,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postLocationsIdLocalizations>>,
+    TError,
+    { id: number; data: BodyType<LocationLocalizationRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof API>;
+}) => {
+  const mutationOptions = getPostLocationsIdLocalizationsMutationOptions(options);
+
+  return useMutation(mutationOptions);
 };

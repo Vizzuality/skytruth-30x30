@@ -1,11 +1,15 @@
 import { useMemo } from 'react';
 
 import { groupBy } from 'lodash-es';
+import { useLocale } from 'next-intl';
 
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { useGetMpaaEstablishmentStageStats } from '@/types/generated/mpaa-establishment-stage-stat';
-import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
+import type {
+  LocationGroupsDataItemAttributes,
+  MpaaEstablishmentStageListResponseDataItem,
+} from '@/types/generated/strapi.schemas';
 
 type EstablishmentStagesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
@@ -19,6 +23,8 @@ const PATTERNS = {
 };
 
 const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ location }) => {
+  const locale = useLocale();
+
   // Default params: filter by location
   const defaultQueryParams = {
     filters: {
@@ -33,6 +39,7 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
     useGetMpaaEstablishmentStageStats(
       {
         ...defaultQueryParams,
+        locale,
         sort: 'updatedAt:desc',
         'pagination[limit]': 1,
       },
@@ -52,7 +59,8 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
   } = useGetMpaaEstablishmentStageStats(
     {
       ...defaultQueryParams,
-      populate: '*',
+      locale,
+      populate: 'mpaa_establishment_stage,mpaa_establishment_stage.localizations',
       'pagination[limit]': -1,
     },
     {
@@ -76,9 +84,15 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
     return Object.keys(groupedByStage).map((establishmentStage) => {
       const entries = groupedByStage[establishmentStage];
       const totalArea = entries.reduce((acc, entry) => acc + entry.attributes.area, 0);
-      const establishmentStageData =
+
+      let establishmentStageData =
         groupedByStage[establishmentStage]?.[0]?.attributes?.mpaa_establishment_stage?.data
           ?.attributes;
+      if (establishmentStageData.locale !== locale) {
+        establishmentStageData = (
+          establishmentStageData.localizations.data as MpaaEstablishmentStageListResponseDataItem[]
+        ).find((localization) => localization.attributes.locale === locale)?.attributes;
+      }
 
       return {
         slug: establishmentStageData.slug,
@@ -87,7 +101,7 @@ const EstablishmentStagesWidget: React.FC<EstablishmentStagesWidgetProps> = ({ l
         area: totalArea,
       };
     });
-  }, [establishmentStagesData]);
+  }, [locale, establishmentStagesData]);
 
   // Parse data to display in the chart
   const widgetChartData = useMemo(() => {

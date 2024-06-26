@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { useQueries } from '@tanstack/react-query';
 import type { Feature } from 'geojson';
 import { useAtom, useAtomValue } from 'jotai';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { CustomMapProps } from '@/components/map/types';
 import { PAGES } from '@/constants/pages';
@@ -24,21 +24,28 @@ import { LayerTyped } from '@/types/layers';
 
 const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const t = useTranslations('containers.map');
+  const locale = useLocale();
 
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
-  const { locale, push } = useRouter();
+  const { push } = useRouter();
   const [, setLocationBBox] = useAtom(bboxLocation);
   const [popup, setPopup] = useAtom(popupAtom);
   const { locationCode } = useParams();
 
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
-  const layerQuery = useGetLayersId(
+  const layerQuery = useGetLayersId<{
+    source: LayerTyped['config']['source'];
+    click: LayerTyped['interaction_config']['events'][0];
+  }>(
     layerId,
     {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      locale,
       populate: 'metadata',
     },
     {
@@ -98,6 +105,7 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     queries: locationCodes.map((code) =>
       getGetLocationsQueryOptions(
         {
+          locale,
           filters: {
             code,
           },
@@ -128,12 +136,13 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     queries: locationCodes.map((code) =>
       getGetProtectionCoverageStatsQueryOptions(
         {
+          locale,
           filters: {
             location: {
               code,
             },
           },
-          populate: '*',
+          populate: 'location',
           // @ts-expect-error this is an issue with Orval typing
           'sort[year]': 'desc',
           'pagination[limit]': -1,

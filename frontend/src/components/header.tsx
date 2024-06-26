@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { VariantProps, cva } from 'class-variance-authority';
 import { Menu } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import ActiveLink from '@/components/active-link';
 import Icon from '@/components/ui/icon';
@@ -59,6 +59,7 @@ export type HeaderProps = VariantProps<typeof headerVariants> & {
 
 const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
   const t = useTranslations('components.header');
+  const locale = useLocale();
 
   const navigationItems = useMemo(
     () => [
@@ -84,7 +85,7 @@ const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
   const [mapSettings] = useSyncMapSettings();
   const [mapLayers] = useSyncMapLayers();
   const [mapLayerSettings] = useSyncMapLayerSettings();
-  const { pathname, asPath, query, locale, push } = useRouter();
+  const { pathname, asPath, query, push } = useRouter();
   const { locationCode = 'GLOB' } = query;
 
   const navigationEntries = useMemo(() => {

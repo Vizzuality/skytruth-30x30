@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import Icon from '@/components/ui/icon';
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
@@ -14,9 +14,11 @@ const ICON_CLASSES = 'h-3.5 w-3.5';
 
 const EEZLayerLegend: FCWithMessages = () => {
   const t = useTranslations('containers.map');
+  const locale = useLocale();
 
   const EEZInfoQuery = useGetDataInfos(
     {
+      locale,
       filters: {
         slug: 'eez-legend',
       },

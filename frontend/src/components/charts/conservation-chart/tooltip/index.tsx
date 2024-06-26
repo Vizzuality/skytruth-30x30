@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { useRouter } from 'next/router';
-
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { formatPercentage } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
@@ -12,8 +10,7 @@ const ChartTooltip: FCWithMessages<{
   payload?: { dataKey: string; payload?: { percentage: number; year: number } }[];
 }> = ({ active, payload }) => {
   const t = useTranslations('components.chart-conservation');
-
-  const { locale } = useRouter();
+  const locale = useLocale();
 
   if (!active || !payload) return null;
 

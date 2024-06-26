@@ -46,6 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   await queryClient.prefetchQuery({
     ...getGetLocationsQueryOptions({
+      locale: context.locale,
       filters: {
         code: locationCode,
       },
@@ -54,6 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const locationsData = queryClient.getQueryData<LocationListResponse>(
     getGetLocationsQueryKey({
+      locale: context.locale,
       filters: {
         code: locationCode,
       },

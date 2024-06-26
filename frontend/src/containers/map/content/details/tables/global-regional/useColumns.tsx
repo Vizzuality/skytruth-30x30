@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { useTranslations } from 'use-intl';
+import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 import { PAGES } from '@/constants/pages';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
@@ -29,11 +29,10 @@ export type GlobalRegionalTableColumns = {
 
 const useColumns = () => {
   const t = useTranslations('containers.map');
+  const locale = useLocale();
 
   const searchParams = useMapSearchParams();
   const tooltips = useTooltips();
-
-  const { locale } = useRouter();
 
   const columns: ColumnDef<GlobalRegionalTableColumns>[] = useMemo(() => {
     return [

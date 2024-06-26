@@ -70,15 +70,6 @@
       "actionParameters": {}
     },
     {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::data-info.data-info",
-      "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
       "action": "plugin::content-manager.explorer.read",
       "subject": "api::data-info.data-info",
       "properties": {
@@ -118,15 +109,6 @@
           "url"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::data-source.data-source",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -351,15 +333,6 @@
           "layers"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::dataset.dataset",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -457,15 +430,6 @@
           "info"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::fishing-protection-level.fishing-protection-level",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -571,15 +535,6 @@
           "info"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::habitat.habitat",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -635,15 +590,6 @@
           "dataset"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::layer.layer",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -716,15 +662,6 @@
           "bounds"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::location.location",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -971,15 +908,6 @@
           "mpa_protection_coverage_stats"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::mpaa-establishment-stage.mpaa-establishment-stage",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -1081,15 +1009,6 @@
           "info"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::mpaa-protection-level.mpaa-protection-level",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -1138,15 +1057,6 @@
           "protectedAreasCount"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::protection-coverage-stat.protection-coverage-stat",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -1198,15 +1108,6 @@
           "info"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::protection-status.protection-status",
-      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],

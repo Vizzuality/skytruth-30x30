@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 
 import { useAtom, useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
+import { useLocale } from 'next-intl';
 
 import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
@@ -41,6 +42,8 @@ const LayerManager = dynamic(() => import('@/containers/map/content/map/layer-ma
 });
 
 const MainMap: FCWithMessages = () => {
+  const locale = useLocale();
+
   const [{ bbox: URLBbox }, setMapSettings] = useSyncMapSettings();
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
@@ -56,6 +59,7 @@ const MainMap: FCWithMessages = () => {
 
   const locationsQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: locationCode,
       },
@@ -73,6 +77,7 @@ const MainMap: FCWithMessages = () => {
 
   const { data: layersInteractiveData } = useGetLayers(
     {
+      locale,
       filters: {
         id: {
           $in: layersInteractive,

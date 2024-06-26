@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useSetAtom } from 'jotai';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
@@ -40,6 +40,7 @@ const LocationSelector: FCWithMessages<LocationSelectorProps> = ({
   onChange,
 }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
+  const locale = useLocale();
 
   const {
     query: { locationCode = 'GLOB' },
@@ -52,6 +53,7 @@ const LocationSelector: FCWithMessages<LocationSelectorProps> = ({
 
   const { data: locationsData } = useGetLocations(
     {
+      locale,
       'pagination[limit]': -1,
       sort: 'name:asc',
     },

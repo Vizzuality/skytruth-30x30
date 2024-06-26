@@ -2,10 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
+import { useLocale } from 'next-intl';
 
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { format } from '@/lib/utils/formats';
@@ -22,14 +21,20 @@ const GenericPopup: FCWithMessages<InteractionConfig & { layerId: number }> = ({
   const { default: map } = useMap();
   const { events } = restConfig;
 
-  const { locale } = useRouter();
+  const locale = useLocale();
 
   const popup = useAtomValue(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
-  const layerQuery = useGetLayersId(
+  const layerQuery = useGetLayersId<{
+    source: LayerTyped['config']['source'];
+    click: LayerTyped['interaction_config']['events'][0];
+  }>(
     layerId,
     {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      locale,
       populate: 'metadata',
     },
     {

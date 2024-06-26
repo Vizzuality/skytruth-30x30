@@ -1,14 +1,18 @@
 import { useMemo } from 'react';
 
+import { useLocale } from 'next-intl';
+
 import { useGetFishingProtectionLevels } from '@/types/generated/fishing-protection-level';
 import { useGetMpaaEstablishmentStages } from '@/types/generated/mpaa-establishment-stage';
 import { useGetMpaaProtectionLevels } from '@/types/generated/mpaa-protection-level';
 import { useGetProtectionStatuses } from '@/types/generated/protection-status';
 
 const useFiltersOptions = () => {
+  const locale = useLocale();
+
   // Fetch protection statuses and build options for the filter
   const { data: protectionStatuses } = useGetProtectionStatuses(
-    {},
+    { locale },
     {
       query: {
         select: ({ data }) => data,
@@ -26,7 +30,7 @@ const useFiltersOptions = () => {
 
   // Fetch establishment stages and build options for the filter
   const { data: establishmentStages } = useGetMpaaEstablishmentStages(
-    {},
+    { locale },
     {
       query: {
         select: ({ data }) => [...data, { attributes: { name: 'N/A', slug: 'N/A' } }],
@@ -44,7 +48,7 @@ const useFiltersOptions = () => {
 
   // Fetch protection levels and build options for the filter
   const { data: protectionLevels } = useGetMpaaProtectionLevels(
-    {},
+    { locale },
     {
       query: {
         select: ({ data }) =>
@@ -67,7 +71,7 @@ const useFiltersOptions = () => {
 
   // Fetch fishing protection levels and build options for the filter
   const { data: fishingProtectionLevels } = useGetFishingProtectionLevels(
-    {},
+    { locale },
     {
       query: {
         select: ({ data }) => data,

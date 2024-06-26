@@ -1,9 +1,7 @@
 import { useMemo } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { ColumnDef } from '@tanstack/react-table';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import FiltersButton from '@/components/filters-button';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
@@ -30,8 +28,7 @@ type UseColumnsProps = {
 
 const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
   const t = useTranslations('containers.map');
-
-  const { locale } = useRouter();
+  const locale = useLocale();
 
   const {
     protectionStatus: protectionStatusOptions,

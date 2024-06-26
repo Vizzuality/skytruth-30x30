@@ -2,11 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
@@ -21,7 +19,7 @@ const TERMS_CLASSES = 'font-mono uppercase';
 const ProtectedAreaPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const t = useTranslations('containers.map');
 
-  const { locale } = useRouter();
+  const locale = useLocale();
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
@@ -29,9 +27,15 @@ const ProtectedAreaPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) =>
   const popup = useAtomValue(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
-  const layerQuery = useGetLayersId(
+  const layerQuery = useGetLayersId<{
+    source: LayerTyped['config']['source'];
+    click: LayerTyped['interaction_config']['events'][0];
+  }>(
     layerId,
     {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      locale,
       populate: 'metadata',
     },
     {
@@ -81,6 +85,7 @@ const ProtectedAreaPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) =>
 
   const locationQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: 'GLOB',
       },

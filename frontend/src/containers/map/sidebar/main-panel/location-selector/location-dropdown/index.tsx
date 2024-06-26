@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { Check } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import {
   Command,
@@ -29,6 +29,7 @@ const LocationDropdown: FCWithMessages<LocationDropdownProps> = ({
   onSelected,
 }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
+  const locale = useLocale();
 
   const {
     query: { locationCode = 'GLOB' },
@@ -36,6 +37,7 @@ const LocationDropdown: FCWithMessages<LocationDropdownProps> = ({
 
   const locationsQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: locationCode,
       },
