@@ -21,15 +21,6 @@
       "actionParameters": {}
     },
     {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::contact-detail.contact-detail",
-      "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ],
-      "actionParameters": {}
-    },
-    {
       "action": "plugin::content-manager.explorer.read",
       "subject": "api::contact-detail.contact-detail",
       "properties": {
