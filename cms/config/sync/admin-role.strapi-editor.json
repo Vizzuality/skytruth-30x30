@@ -5,7 +5,6 @@
   "permissions": [
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::contact-detail.contact-detail",
       "properties": {
         "fields": [
@@ -16,40 +15,25 @@
           "registration"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::contact-detail.contact-detail",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
       "subject": "api::contact-detail.contact-detail",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::contact-detail.contact-detail",
-      "properties": {
-        "fields": [
-          "name",
-          "address",
-          "phone",
-          "email",
-          "registration"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::contact-detail.contact-detail",
       "properties": {
         "fields": [
@@ -60,11 +44,26 @@
           "registration"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::contact-detail.contact-detail",
+      "properties": {
+        "fields": [
+          "name",
+          "address",
+          "phone",
+          "email",
+          "registration"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::data-info.data-info",
       "properties": {
         "fields": [
@@ -73,31 +72,18 @@
           "data_sources"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::data-info.data-info",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::data-info.data-info",
-      "properties": {
-        "fields": [
-          "slug",
-          "content",
-          "data_sources"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::data-info.data-info",
       "properties": {
         "fields": [
@@ -106,11 +92,24 @@
           "data_sources"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::data-info.data-info",
+      "properties": {
+        "fields": [
+          "slug",
+          "content",
+          "data_sources"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::data-source.data-source",
       "properties": {
         "fields": [
@@ -119,31 +118,18 @@
           "url"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::data-source.data-source",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::data-source.data-source",
-      "properties": {
-        "fields": [
-          "slug",
-          "title",
-          "url"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::data-source.data-source",
       "properties": {
         "fields": [
@@ -152,58 +138,57 @@
           "url"
         ]
       },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
-      "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
-      "properties": {
-        "fields": [
-          "name"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
-      "properties": {
-        "fields": [
-          "name"
-        ]
-      },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
+      "subject": "api::data-source.data-source",
+      "properties": {
+        "fields": [
+          "slug",
+          "title",
+          "url"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
       "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
       "properties": {
         "fields": [
           "name"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
+      "properties": {
+        "fields": [
+          "name"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
+      "properties": {
+        "fields": [
+          "name"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::data-tool-language.data-tool-language",
       "properties": {
         "fields": [
@@ -212,25 +197,11 @@
           "data_tool"
         ]
       },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::data-tool-language.data-tool-language",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::data-tool-language.data-tool-language",
-      "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
       "subject": "api::data-tool-language.data-tool-language",
       "properties": {
         "fields": [
@@ -239,11 +210,11 @@
           "data_tool"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::data-tool-language.data-tool-language",
       "properties": {
         "fields": [
@@ -252,58 +223,44 @@
           "data_tool"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::data-tool-resource-type.data-tool-resource-type",
       "properties": {
         "fields": [
           "name"
         ]
       },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::data-tool-resource-type.data-tool-resource-type",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::data-tool-resource-type.data-tool-resource-type",
-      "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
       "subject": "api::data-tool-resource-type.data-tool-resource-type",
       "properties": {
         "fields": [
           "name"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::data-tool-resource-type.data-tool-resource-type",
       "properties": {
         "fields": [
           "name"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::data-tool.data-tool",
       "properties": {
         "fields": [
@@ -316,25 +273,11 @@
           "data_tool_ecosystems"
         ]
       },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::data-tool.data-tool",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::data-tool.data-tool",
-      "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
       "subject": "api::data-tool.data-tool",
       "properties": {
         "fields": [
@@ -347,11 +290,11 @@
           "data_tool_ecosystems"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::data-tool.data-tool",
       "properties": {
         "fields": [
@@ -364,11 +307,11 @@
           "data_tool_ecosystems"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::dataset.dataset",
       "properties": {
         "fields": [
@@ -376,37 +319,25 @@
           "layers"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::dataset.dataset",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
       "subject": "api::dataset.dataset",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::dataset.dataset",
-      "properties": {
-        "fields": [
-          "name",
-          "layers"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::dataset.dataset",
       "properties": {
         "fields": [
@@ -414,44 +345,23 @@
           "layers"
         ]
       },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
-      "subject": "api::fishing-protection-level-stat.fishing-protection-level-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "fishing_protection_level",
-          "area"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::fishing-protection-level-stat.fishing-protection-level-stat",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::fishing-protection-level-stat.fishing-protection-level-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "fishing_protection_level",
-          "area"
-        ]
-      },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
+      "subject": "api::dataset.dataset",
+      "properties": {
+        "fields": [
+          "name",
+          "layers"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
       "subject": "api::fishing-protection-level-stat.fishing-protection-level-stat",
       "properties": {
         "fields": [
@@ -460,44 +370,44 @@
           "area"
         ]
       },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
-      "subject": "api::fishing-protection-level.fishing-protection-level",
-      "properties": {
-        "fields": [
-          "slug",
-          "name",
-          "info"
-        ]
-      },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::fishing-protection-level.fishing-protection-level",
+      "subject": "api::fishing-protection-level-stat.fishing-protection-level-stat",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::fishing-protection-level.fishing-protection-level",
+      "subject": "api::fishing-protection-level-stat.fishing-protection-level-stat",
       "properties": {
         "fields": [
-          "slug",
-          "name",
-          "info"
+          "location",
+          "fishing_protection_level",
+          "area"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
+      "subject": "api::fishing-protection-level-stat.fishing-protection-level-stat",
+      "properties": {
+        "fields": [
+          "location",
+          "fishing_protection_level",
+          "area"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
       "subject": "api::fishing-protection-level.fishing-protection-level",
       "properties": {
         "fields": [
@@ -506,11 +416,44 @@
           "info"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::fishing-protection-level.fishing-protection-level",
+      "properties": {},
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::fishing-protection-level.fishing-protection-level",
+      "properties": {
+        "fields": [
+          "slug",
+          "name",
+          "info"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::fishing-protection-level.fishing-protection-level",
+      "properties": {
+        "fields": [
+          "slug",
+          "name",
+          "info"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::habitat-stat.habitat-stat",
       "properties": {
         "fields": [
@@ -521,18 +464,18 @@
           "totalArea"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::habitat-stat.habitat-stat",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
       "subject": "api::habitat-stat.habitat-stat",
       "properties": {
         "fields": [
@@ -543,11 +486,11 @@
           "totalArea"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::habitat-stat.habitat-stat",
       "properties": {
         "fields": [
@@ -558,11 +501,11 @@
           "totalArea"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::habitat.habitat",
       "properties": {
         "fields": [
@@ -571,18 +514,18 @@
           "info"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::habitat.habitat",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
       "subject": "api::habitat.habitat",
       "properties": {
         "fields": [
@@ -591,11 +534,11 @@
           "info"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::habitat.habitat",
       "properties": {
         "fields": [
@@ -604,11 +547,11 @@
           "info"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::layer.layer",
       "properties": {
         "fields": [
@@ -627,25 +570,25 @@
           "dataset"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::layer.layer",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
       "subject": "api::layer.layer",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
       "subject": "api::layer.layer",
       "properties": {
         "fields": [
@@ -664,11 +607,11 @@
           "dataset"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::layer.layer",
       "properties": {
         "fields": [
@@ -687,11 +630,11 @@
           "dataset"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::location.location",
       "properties": {
         "fields": [
@@ -707,38 +650,18 @@
           "bounds"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::location.location",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::location.location",
-      "properties": {
-        "fields": [
-          "code",
-          "name",
-          "totalMarineArea",
-          "type",
-          "groups",
-          "members",
-          "fishing_protection_level_stats",
-          "mpaa_protection_level_stats",
-          "protection_coverage_stats",
-          "bounds"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::location.location",
       "properties": {
         "fields": [
@@ -754,11 +677,31 @@
           "bounds"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::location.location",
+      "properties": {
+        "fields": [
+          "code",
+          "name",
+          "totalMarineArea",
+          "type",
+          "groups",
+          "members",
+          "fishing_protection_level_stats",
+          "mpaa_protection_level_stats",
+          "protection_coverage_stats",
+          "bounds"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
       "properties": {
         "fields": [
@@ -770,34 +713,18 @@
           "mpaa_establishment_stage"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
-      "properties": {
-        "fields": [
-          "mpa",
-          "fishing_protection_level",
-          "mpaa_protection_level",
-          "location",
-          "area",
-          "mpaa_establishment_stage"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
       "properties": {
         "fields": [
@@ -809,11 +736,27 @@
           "mpaa_establishment_stage"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
+      "properties": {
+        "fields": [
+          "mpa",
+          "fishing_protection_level",
+          "mpaa_protection_level",
+          "location",
+          "area",
+          "mpaa_establishment_stage"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
@@ -825,34 +768,18 @@
           "wdpaid"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::mpa.mpa",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::mpa.mpa",
-      "properties": {
-        "fields": [
-          "name",
-          "area",
-          "year",
-          "protection_status",
-          "mpa_protection_coverage_stats",
-          "wdpaid"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
@@ -864,11 +791,27 @@
           "wdpaid"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::mpa.mpa",
+      "properties": {
+        "fields": [
+          "name",
+          "area",
+          "year",
+          "protection_status",
+          "mpa_protection_coverage_stats",
+          "wdpaid"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
       "properties": {
         "fields": [
@@ -879,33 +822,18 @@
           "area"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "mpaa_establishment_stage",
-          "protection_status",
-          "year",
-          "area"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
       "properties": {
         "fields": [
@@ -916,11 +844,26 @@
           "area"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
+      "properties": {
+        "fields": [
+          "location",
+          "mpaa_establishment_stage",
+          "protection_status",
+          "year",
+          "area"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::mpaa-establishment-stage.mpaa-establishment-stage",
       "properties": {
         "fields": [
@@ -930,32 +873,18 @@
           "mpa_protection_coverage_stats"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::mpaa-establishment-stage.mpaa-establishment-stage",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::mpaa-establishment-stage.mpaa-establishment-stage",
-      "properties": {
-        "fields": [
-          "slug",
-          "name",
-          "info",
-          "mpa_protection_coverage_stats"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::mpaa-establishment-stage.mpaa-establishment-stage",
       "properties": {
         "fields": [
@@ -965,44 +894,25 @@
           "mpa_protection_coverage_stats"
         ]
       },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
-      "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "mpaa_protection_level",
-          "area"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "mpaa_protection_level",
-          "area"
-        ]
-      },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
+      "subject": "api::mpaa-establishment-stage.mpaa-establishment-stage",
+      "properties": {
+        "fields": [
+          "slug",
+          "name",
+          "info",
+          "mpa_protection_coverage_stats"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
@@ -1011,44 +921,44 @@
           "area"
         ]
       },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
-      "subject": "api::mpaa-protection-level.mpaa-protection-level",
-      "properties": {
-        "fields": [
-          "slug",
-          "name",
-          "info"
-        ]
-      },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::mpaa-protection-level.mpaa-protection-level",
+      "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::mpaa-protection-level.mpaa-protection-level",
+      "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
-          "slug",
-          "name",
-          "info"
+          "location",
+          "mpaa_protection_level",
+          "area"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
+      "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
+      "properties": {
+        "fields": [
+          "location",
+          "mpaa_protection_level",
+          "area"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
       "subject": "api::mpaa-protection-level.mpaa-protection-level",
       "properties": {
         "fields": [
@@ -1057,11 +967,44 @@
           "info"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::mpaa-protection-level.mpaa-protection-level",
+      "properties": {},
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::mpaa-protection-level.mpaa-protection-level",
+      "properties": {
+        "fields": [
+          "slug",
+          "name",
+          "info"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::mpaa-protection-level.mpaa-protection-level",
+      "properties": {
+        "fields": [
+          "slug",
+          "name",
+          "info"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::protection-coverage-stat.protection-coverage-stat",
       "properties": {
         "fields": [
@@ -1073,18 +1016,18 @@
           "protectedAreasCount"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::protection-coverage-stat.protection-coverage-stat",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
       "subject": "api::protection-coverage-stat.protection-coverage-stat",
       "properties": {
         "fields": [
@@ -1096,11 +1039,11 @@
           "protectedAreasCount"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::protection-coverage-stat.protection-coverage-stat",
       "properties": {
         "fields": [
@@ -1112,11 +1055,11 @@
           "protectedAreasCount"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::protection-status.protection-status",
       "properties": {
         "fields": [
@@ -1125,18 +1068,18 @@
           "info"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::protection-status.protection-status",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
       "subject": "api::protection-status.protection-status",
       "properties": {
         "fields": [
@@ -1145,11 +1088,11 @@
           "info"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::protection-status.protection-status",
       "properties": {
         "fields": [
@@ -1158,11 +1101,11 @@
           "info"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::static-indicator.static-indicator",
       "properties": {
         "fields": [
@@ -1172,25 +1115,25 @@
           "description"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
       "subject": "api::static-indicator.static-indicator",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
       "subject": "api::static-indicator.static-indicator",
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
       "subject": "api::static-indicator.static-indicator",
       "properties": {
         "fields": [
@@ -1200,11 +1143,11 @@
           "description"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
       "subject": "api::static-indicator.static-indicator",
       "properties": {
         "fields": [
@@ -1214,49 +1157,50 @@
           "description"
         ]
       },
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::upload.assets.copy-link",
-      "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::upload.assets.create",
-      "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::upload.assets.download",
-      "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::upload.assets.update",
-      "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::upload.configure-view",
-      "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     },
     {
       "action": "plugin::upload.read",
-      "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "actionParameters": {}
     }
   ]
 }

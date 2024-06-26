@@ -791,10 +791,31 @@ export interface ApiDataToolDataTool extends Schema.CollectionType {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String & Attribute.Required;
-    description: Attribute.Text;
-    site: Attribute.String;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    description: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    site: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     languages: Attribute.Relation<
       'api::data-tool.data-tool',
       'oneToMany',
@@ -805,7 +826,12 @@ export interface ApiDataToolDataTool extends Schema.CollectionType {
       'oneToMany',
       'api::data-tool-resource-type.data-tool-resource-type'
     >;
-    geography: Attribute.Text;
+    geography: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     data_tool_ecosystems: Attribute.Relation<
       'api::data-tool.data-tool',
       'oneToMany',
@@ -826,6 +852,12 @@ export interface ApiDataToolDataTool extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-tool.data-tool',
+      'oneToMany',
+      'api::data-tool.data-tool'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -841,8 +873,18 @@ export interface ApiDataToolEcosystemDataToolEcosystem
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -858,6 +900,12 @@ export interface ApiDataToolEcosystemDataToolEcosystem
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-tool-ecosystem.data-tool-ecosystem',
+      'oneToMany',
+      'api::data-tool-ecosystem.data-tool-ecosystem'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -873,9 +921,25 @@ export interface ApiDataToolLanguageDataToolLanguage
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
-    slug: Attribute.String & Attribute.Unique;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    slug: Attribute.String &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     data_tool: Attribute.Relation<
       'api::data-tool-language.data-tool-language',
       'manyToOne',
@@ -896,6 +960,12 @@ export interface ApiDataToolLanguageDataToolLanguage
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-tool-language.data-tool-language',
+      'oneToMany',
+      'api::data-tool-language.data-tool-language'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -906,12 +976,24 @@ export interface ApiDataToolResourceTypeDataToolResourceType
     singularName: 'data-tool-resource-type';
     pluralName: 'data-tool-resource-types';
     displayName: 'Data Tool Resource Type';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String & Attribute.Unique;
+    name: Attribute.String &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -927,6 +1009,12 @@ export interface ApiDataToolResourceTypeDataToolResourceType
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-tool-resource-type.data-tool-resource-type',
+      'oneToMany',
+      'api::data-tool-resource-type.data-tool-resource-type'
+    >;
+    locale: Attribute.String;
   };
 }
 
