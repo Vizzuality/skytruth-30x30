@@ -1682,15 +1682,41 @@ export interface ApiStaticIndicatorStaticIndicator
     singularName: 'static-indicator';
     pluralName: 'static-indicators';
     displayName: 'Static Indicators';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    slug: Attribute.String;
-    source: Attribute.String;
-    value: Attribute.String;
-    description: Attribute.Text;
+    slug: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    source: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    value: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    description: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1706,6 +1732,12 @@ export interface ApiStaticIndicatorStaticIndicator
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::static-indicator.static-indicator',
+      'oneToMany',
+      'api::static-indicator.static-indicator'
+    >;
+    locale: Attribute.String;
   };
 }
 

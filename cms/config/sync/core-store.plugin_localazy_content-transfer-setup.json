@@ -34,6 +34,15 @@
           "geography": true,
           "data_tool_ecosystems": null
         }
+      },
+      {
+        "static_indicators": {
+          "__model__": true,
+          "slug": null,
+          "source": null,
+          "value": true,
+          "description": true
+        }
       }
     ]
   },
