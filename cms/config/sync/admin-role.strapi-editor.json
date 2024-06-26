@@ -19,20 +19,6 @@
       "actionParameters": {}
     },
     {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::contact-detail.contact-detail",
-      "properties": {},
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "subject": "api::contact-detail.contact-detail",
-      "properties": {},
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
       "action": "plugin::content-manager.explorer.read",
       "subject": "api::contact-detail.contact-detail",
       "properties": {

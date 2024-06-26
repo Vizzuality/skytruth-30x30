@@ -4,6 +4,16 @@
     "has_setup": true,
     "setup": [
       {
+        "contact_details": {
+          "__model__": true,
+          "name": null,
+          "address": true,
+          "phone": true,
+          "email": null,
+          "registration": true
+        }
+      },
+      {
         "data_tool_ecosystems": {
           "__model__": true,
           "name": true

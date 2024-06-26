@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { Copyright } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { EXTERNAL_LINKS } from '@/constants/external-links';
 import { PAGES } from '@/constants/pages';
@@ -10,9 +10,10 @@ import { useGetContactDetail } from '@/types/generated/contact-detail';
 
 const Footer: FCWithMessages = () => {
   const t = useTranslations('components.footer');
+  const locale = useLocale();
 
   const { data: contactDetails } = useGetContactDetail(
-    {},
+    { locale },
     {
       query: {
         select: ({ data }) => data?.attributes,
