@@ -1,0 +1,43 @@
+{
+  "key": "plugin_localazy_content-transfer-setup",
+  "value": {
+    "has_setup": true,
+    "setup": [
+      {
+        "data_tool_ecosystems": {
+          "__model__": true,
+          "name": true
+        }
+      },
+      {
+        "data_tool_languages": {
+          "__model__": true,
+          "name": true,
+          "slug": true,
+          "data_tool": null
+        }
+      },
+      {
+        "data_tool_resource_types": {
+          "__model__": true,
+          "name": true
+        }
+      },
+      {
+        "data_tools": {
+          "__model__": true,
+          "name": true,
+          "description": true,
+          "site": null,
+          "languages": null,
+          "data_tool_resource_types": null,
+          "geography": true,
+          "data_tool_ecosystems": null
+        }
+      }
+    ]
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}
