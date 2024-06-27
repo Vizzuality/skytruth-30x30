@@ -14,7 +14,7 @@ jobs:
       - uses: localazy/tag@v1
         with:
           workdir: 'frontend'
-          read_key: ${{ secrets.b }}
+          read_key: ${{ secrets.LOCALAZY_READ_KEY }}
           write_key: ${{ secrets.LOCALAZY_WRITE_KEY }}
           promote_from: 'latest'
           promote_to: 'production'
