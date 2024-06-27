@@ -15,6 +15,9 @@ RUN apt-get update -y && \
     && apt-get clean
 
 ENV NODE_ENV development
+RUN mkdir /app && chown node:node /app
+
+USER node
 
 WORKDIR /app
 
@@ -25,5 +28,5 @@ RUN yarn install --immutable
 ENV PATH /app/node_modules/.bin:$PATH
 
 EXPOSE 1337
-# CMD [ "yarn", "strapi", "develop" ]
+
 ENTRYPOINT ["/app/entrypoint.sh"]
