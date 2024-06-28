@@ -29,11 +29,11 @@ export const JSON_CONFIGURATION = new JSONConfiguration({
   enumerations: {},
   reactComponents: {
     EEZLayerPopup,
-    EEZLayerLegend,
+    EEZLayerLegend, // Deprecated
     GenericPopup,
     ProtectedAreaPopup,
     RegionsPopup,
-    EstablishmentLayerLegend,
+    EstablishmentLayerLegend, // Deprecated
     // LegendTypeBasic,
     // LegendTypeChoropleth,
     // LegendTypeGradient,

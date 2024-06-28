@@ -8,10 +8,15 @@ import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
 import RegionsPopup from '@/containers/map/content/map/popup/regions';
+import { cn } from '@/lib/classnames';
 import { parseConfig } from '@/lib/json-converter';
+import EstablishmentDesignatedIcon from '@/styles/icons/designated.svg';
 import EEZIcon from '@/styles/icons/eez.svg';
+import EstablishmentImplementedIcon from '@/styles/icons/implemented.svg';
+import EstablishmentManagedIcon from '@/styles/icons/managed.svg';
 import MPAIcon from '@/styles/icons/mpa.svg';
 import OECMIcon from '@/styles/icons/oecm.svg';
+import EstablishmentProposedIcon from '@/styles/icons/proposed.svg';
 import EEZSelectedIcon from '@/styles/icons/selected-eez.svg';
 import EEZMultipleIcon from '@/styles/icons/several-eez.svg';
 import { FCWithMessages } from '@/types';
@@ -26,6 +31,10 @@ const ICONS_MAPPING = {
   'eez-multiple': EEZMultipleIcon,
   oecm: OECMIcon,
   mpa: MPAIcon,
+  'establishment-proposed': EstablishmentProposedIcon,
+  'establishment-managed': EstablishmentManagedIcon,
+  'establishment-designated': EstablishmentDesignatedIcon,
+  'establishment-implemented': EstablishmentImplementedIcon,
 };
 
 const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
@@ -74,7 +83,13 @@ const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
           {items.map(({ value, icon, description }) => (
             <li key={`${value}`} className="flex items-center space-x-2 p-1">
               <span className="h-3.5 w-3.5">
-                <Icon icon={ICONS_MAPPING[icon]} className="h-3.5 w-3.5" />
+                <Icon
+                  icon={ICONS_MAPPING[icon]}
+                  className={cn({
+                    'h-3.5 w-3.5': true,
+                    'rounded-full border border-black': icon.startsWith('establishment'),
+                  })}
+                />
               </span>
               <span className="flex items-center text-xs">
                 <span className="font-mono">{value}</span>
