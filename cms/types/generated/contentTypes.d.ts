@@ -1416,13 +1416,6 @@ export interface ApiLayerLayer extends Schema.CollectionType {
           localized: false;
         };
       }>;
-    legend_config: Attribute.JSON &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
     interaction_config: Attribute.JSON &
       Attribute.SetPluginOptions<{
         i18n: {
@@ -1440,6 +1433,12 @@ export interface ApiLayerLayer extends Schema.CollectionType {
       'oneToOne',
       'api::dataset.dataset'
     >;
+    legend_config: Attribute.Component<'legend.legend'> &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

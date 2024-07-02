@@ -56,15 +56,6 @@
         }
       }
     },
-    "legend_config": {
-      "type": "json",
-      "required": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
-    },
     "interaction_config": {
       "type": "json",
       "pluginOptions": {
@@ -87,6 +78,17 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::dataset.dataset"
+    },
+    "legend_config": {
+      "displayName": "legend",
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "legend.legend"
     }
   }
 }
