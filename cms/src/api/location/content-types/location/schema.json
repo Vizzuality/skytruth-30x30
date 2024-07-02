@@ -10,17 +10,31 @@
   "options": {
     "draftAndPublish": false
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "code": {
       "type": "string",
       "required": true,
-      "unique": true,
-      "description": "Unique textual identifier for the location, e.g. iso3 code for countries."
+      "unique": false,
+      "description": "Unique textual identifier for the location, e.g. iso3 code for countries.",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "totalMarineArea": {
       "type": "decimal",
@@ -34,11 +48,21 @@
           12,
           2
         ]
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
       }
     },
     "type": {
       "type": "string",
-      "required": true
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
     "groups": {
       "type": "relation",
@@ -71,7 +95,12 @@
       "mappedBy": "location"
     },
     "bounds": {
-      "type": "json"
+      "type": "json",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

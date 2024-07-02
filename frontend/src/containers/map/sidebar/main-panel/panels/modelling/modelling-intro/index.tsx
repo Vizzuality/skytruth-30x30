@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { useAtomValue } from 'jotai';
-import { useTranslations } from 'use-intl';
+import { useTranslations } from 'next-intl';
 
 import {
   Carousel,

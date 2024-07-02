@@ -6,10 +6,11 @@ import { useRouter } from 'next/router';
 
 import { VariantProps, cva } from 'class-variance-authority';
 import { Menu } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import ActiveLink from '@/components/active-link';
 import Icon from '@/components/ui/icon';
+import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
 import {
   Sheet,
   SheetContent,
@@ -58,6 +59,7 @@ export type HeaderProps = VariantProps<typeof headerVariants> & {
 
 const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
   const t = useTranslations('components.header');
+  const locale = useLocale();
 
   const navigationItems = useMemo(
     () => [
@@ -83,9 +85,8 @@ const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
   const [mapSettings] = useSyncMapSettings();
   const [mapLayers] = useSyncMapLayers();
   const [mapLayerSettings] = useSyncMapLayerSettings();
-  const {
-    query: { locationCode = 'GLOB' },
-  } = useRouter();
+  const { pathname, asPath, query, push } = useRouter();
+  const { locationCode = 'GLOB' } = query;
 
   const navigationEntries = useMemo(() => {
     return navigationItems.map(({ name, href, colorClassName, preserveMapParams }) => {
@@ -111,6 +112,27 @@ const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
       };
     });
   }, [navigationItems, locationCode, mapSettings, mapLayers, mapLayerSettings]);
+
+  const languageSelector = (
+    <Select
+      value={locale}
+      onValueChange={(newLocale) => push({ pathname, query }, asPath, { locale: newLocale })}
+    >
+      <SelectTrigger variant="alternative">
+        <span className="sr-only">
+          {t('selected-language', {
+            language: locale === 'es' ? t('spanish') : locale === 'fr' ? t('french') : t('english'),
+          })}
+        </span>
+        <span className="not-sr-only">{locale.toLocaleUpperCase()}</span>
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="en">English{locale !== 'en' && ` (${t('english')})`}</SelectItem>
+        <SelectItem value="es">Español{locale !== 'es' && ` (${t('spanish')})`}</SelectItem>
+        <SelectItem value="fr">Français{locale !== 'fr' && ` (${t('french')})`}</SelectItem>
+      </SelectContent>
+    </Select>
+  );
 
   return (
     <header className={cn('border-b font-mono text-sm', headerVariants({ theme }))}>
@@ -169,6 +191,7 @@ const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
                             {name}
                           </ActiveLink>
                         ))}
+                        <div className="-mx-3">{languageSelector}</div>
                       </div>
                     </div>
                   </div>
@@ -198,6 +221,7 @@ const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
               </ActiveLink>
             </li>
           ))}
+          <li>{languageSelector}</li>
         </ul>
       </nav>
     </header>

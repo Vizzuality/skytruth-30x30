@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import twTheme from 'lib/tailwind';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   ComposedChart,
   Bar,
@@ -21,6 +21,7 @@ import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 
+import { getMultilineRenderer } from './helpers';
 import ChartLegend from './legend';
 import ChartTooltip from './tooltip';
 
@@ -46,6 +47,7 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
   data,
 }) => {
   const t = useTranslations('components.chart-conservation');
+  const locale = useLocale();
 
   const barChartData = useMemo(() => {
     // Last year of data available
@@ -127,6 +129,7 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
 
   const { data: dataInfo } = useGetDataInfos(
     {
+      locale,
       filters: {
         slug: '30x30-target',
       },
@@ -186,7 +189,7 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
                     </text>
                     <foreignObject
                       {...viewBox}
-                      x={viewBox.x + 90}
+                      x={viewBox.x + t('30x30-target').length * 7.5}
                       y={viewBox.y - 17}
                       width="160"
                       height="160"
@@ -212,7 +215,7 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
           <ReferenceLine
             xAxisId={1}
             x={activeYearData.year + 0.4}
-            label={{ position: 'insideTopLeft', value: t('future-projection'), fill: '#000' }}
+            label={getMultilineRenderer(t('future-projection'), 15)}
             stroke="#000"
           />
           <XAxis

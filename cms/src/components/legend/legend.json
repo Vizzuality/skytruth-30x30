@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_legend_legends",
+  "info": {
+    "displayName": "legend"
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "basic",
+        "icon",
+        "choropleth",
+        "gradient"
+      ]
+    },
+    "items": {
+      "displayName": "legend_items",
+      "type": "component",
+      "repeatable": true,
+      "component": "legend.legend-items"
+    }
+  }
+}

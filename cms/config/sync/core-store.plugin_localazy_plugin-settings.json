@@ -1,0 +1,28 @@
+{
+  "key": "plugin_localazy_plugin-settings",
+  "value": {
+    "defaultRoute": "download",
+    "upload": {
+      "allowAutomated": true,
+      "automatedTriggers": [
+        "created",
+        "updated"
+      ],
+      "allowDeprecate": true
+    },
+    "download": {
+      "webhookAuthorId": "2",
+      "webhookLanguages": [
+        "es",
+        "fr"
+      ],
+      "uiLanguages": [
+        "es",
+        "fr"
+      ]
+    }
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

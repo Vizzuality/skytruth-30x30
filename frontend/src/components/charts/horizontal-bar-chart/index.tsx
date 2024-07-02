@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 
-import { useRouter } from 'next/router';
-
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
@@ -41,10 +39,9 @@ const HorizontalBarChart: FCWithMessages<HorizontalBarChartProps> = ({
   showTarget = true,
 }) => {
   const t = useTranslations('components.chart-horizontal-bar');
+  const locale = useLocale();
 
   const { title, background, totalArea, protectedArea, info, sources } = data;
-
-  const { locale } = useRouter();
 
   const targetPositionPercentage = useMemo(() => {
     return (PROTECTION_TARGET * 100) / DEFAULT_MAX_PERCENTAGE;

@@ -1,9 +1,7 @@
 import { useMemo } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { groupBy } from 'lodash-es';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import ConservationChart from '@/components/charts/conservation-chart';
 import Widget from '@/components/widget';
@@ -20,8 +18,7 @@ type MarineConservationWidgetProps = {
 
 const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = ({ location }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
-
-  const { locale } = useRouter();
+  const locale = useLocale();
 
   const defaultQueryParams = {
     filters: {
@@ -35,6 +32,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
     useGetProtectionCoverageStats(
       {
         ...defaultQueryParams,
+        locale,
         sort: 'updatedAt:desc',
         'pagination[limit]': 1,
       },
@@ -54,6 +52,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
   } = useGetProtectionCoverageStats(
     {
       ...defaultQueryParams,
+      locale,
       populate: '*',
       // @ts-expect-error this is an issue with Orval typing
       'sort[year]': 'asc',
@@ -89,6 +88,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
 
   const { data: metadata } = useGetDataInfos(
     {
+      locale,
       filters: {
         slug: 'coverage-widget',
       },
@@ -171,7 +171,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
         <div className="mt-6 mb-4 flex flex-col">
           <span className="space-x-1">
             {t.rich('marine-protected-percentage', {
-              b1: (chunks) => <span className="text-[64px] font-bold leading-[80%]">{chunks}</span>,
+              b1: (chunks) => <span className="text-[64px] font-bold leading-[90%]">{chunks}</span>,
               b2: (chunks) => <span className="text-lg">{chunks}</span>,
               percentage: stats?.protectedPercentage,
             })}

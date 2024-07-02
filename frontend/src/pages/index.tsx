@@ -1,10 +1,8 @@
 import { useMemo, useRef } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import Cta from '@/components/static-pages/cta';
 import Section, {
@@ -55,6 +53,7 @@ const Home: FCWithMessages = ({
   protectionCoverageStats: ProtectionCoverageStatListResponse;
 }) => {
   const t = useTranslations('pages.home');
+  const locale = useLocale();
 
   const sections = {
     services: {
@@ -73,8 +72,6 @@ const Home: FCWithMessages = ({
       ref: useRef<HTMLDivElement>(null),
     },
   };
-
-  const { locale } = useRouter();
 
   const scrollActiveId = useScrollSpy(Object.values(sections).map(({ id, ref }) => ({ id, ref })));
 
@@ -205,7 +202,7 @@ const Home: FCWithMessages = ({
           />
 
           <TwoColSubsection
-            title="Climate"
+            title={t('section-impact-subsection-2-title')}
             itemNum={2}
             itemTotal={3}
             description={
@@ -280,6 +277,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
 
   const protectionCoverageStatsQueryParams = {
+    locale: context.locale,
     filters: {
       location: {
         code: 'GLOB',
@@ -293,7 +291,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 
   await queryClient.prefetchQuery({
-    ...getGetStaticIndicatorsQueryOptions(),
+    ...getGetStaticIndicatorsQueryOptions({ locale: context.locale }),
   });
 
   await queryClient.prefetchQuery({
@@ -301,7 +299,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
-    getGetStaticIndicatorsQueryKey()
+    getGetStaticIndicatorsQueryKey({ locale: context.locale })
   );
 
   const protectionCoverageStatsData = queryClient.getQueryData<ProtectionCoverageStatListResponse>(

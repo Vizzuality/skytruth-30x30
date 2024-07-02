@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
@@ -15,6 +15,7 @@ import { getGetLocationsQueryOptions, useGetLocations } from '@/types/generated/
 
 const MapDetails: FCWithMessages = () => {
   const t = useTranslations('containers.map');
+  const locale = useLocale();
 
   const [, setSettings] = useSyncMapContentSettings();
   const {
@@ -23,6 +24,7 @@ const MapDetails: FCWithMessages = () => {
 
   const locationsQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: locationCode,
       },
@@ -31,6 +33,7 @@ const MapDetails: FCWithMessages = () => {
       query: {
         ...getGetLocationsQueryOptions(
           {
+            locale,
             filters: {
               code: locationCode,
             },

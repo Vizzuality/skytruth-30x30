@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_legend_legend_items",
+  "info": {
+    "displayName": "legend_items"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

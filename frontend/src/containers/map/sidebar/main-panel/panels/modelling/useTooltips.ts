@@ -1,3 +1,5 @@
+import { useLocale } from 'next-intl';
+
 import { useGetDataInfos } from '@/types/generated/data-info';
 
 const TOOLTIP_MAPPING = {
@@ -7,8 +9,10 @@ const TOOLTIP_MAPPING = {
 };
 
 const useTooltips = () => {
+  const locale = useLocale();
+
   const { data: dataInfo } = useGetDataInfos(
-    {},
+    { locale },
     {
       query: {
         select: ({ data }) => data,

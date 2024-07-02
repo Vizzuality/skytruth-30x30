@@ -16,11 +16,11 @@ export type ParamsConfigValue = {
 export type ParamsConfig = Record<string, ParamsConfigValue>[];
 
 export type LegendConfig = {
-  type: 'basic' | 'icon' | 'gradient' | 'choropleth';
-  items: {
-    value: string;
-    icon: string;
-    color: string;
+  type?: 'basic' | 'icon' | 'gradient' | 'choropleth';
+  items?: {
+    value?: string;
+    icon?: string;
+    color?: string;
     description?: string;
   }[];
 };
