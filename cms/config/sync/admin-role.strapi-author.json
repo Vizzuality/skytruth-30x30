@@ -13,6 +13,22 @@
           "phone",
           "email",
           "registration"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::contact-detail.contact-detail",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -30,7 +46,8 @@
           "phone",
           "email",
           "registration"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -47,7 +64,8 @@
           "phone",
           "email",
           "registration"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -62,6 +80,22 @@
           "slug",
           "content",
           "data_sources"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::data-info.data-info",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -77,7 +111,8 @@
           "slug",
           "content",
           "data_sources"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -92,7 +127,8 @@
           "slug",
           "content",
           "data_sources"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -107,6 +143,22 @@
           "slug",
           "title",
           "url"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::data-source.data-source",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -122,7 +174,8 @@
           "slug",
           "title",
           "url"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -137,7 +190,8 @@
           "slug",
           "title",
           "url"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -150,6 +204,22 @@
       "properties": {
         "fields": [
           "name"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -163,7 +233,8 @@
       "properties": {
         "fields": [
           "name"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -176,7 +247,8 @@
       "properties": {
         "fields": [
           "name"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -191,6 +263,22 @@
           "name",
           "slug",
           "data_tool"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::data-tool-language.data-tool-language",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -206,7 +294,8 @@
           "name",
           "slug",
           "data_tool"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -221,7 +310,8 @@
           "name",
           "slug",
           "data_tool"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -234,6 +324,22 @@
       "properties": {
         "fields": [
           "name"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::data-tool-resource-type.data-tool-resource-type",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -247,7 +353,8 @@
       "properties": {
         "fields": [
           "name"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -260,7 +367,8 @@
       "properties": {
         "fields": [
           "name"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -279,6 +387,22 @@
           "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::data-tool.data-tool",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -298,7 +422,8 @@
           "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -317,7 +442,8 @@
           "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -331,6 +457,22 @@
         "fields": [
           "name",
           "layers"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::dataset.dataset",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -345,7 +487,8 @@
         "fields": [
           "name",
           "layers"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -359,7 +502,8 @@
         "fields": [
           "name",
           "layers"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -428,6 +572,22 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::fishing-protection-level.fishing-protection-level",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -443,7 +603,8 @@
           "slug",
           "name",
           "info"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -458,7 +619,8 @@
           "slug",
           "name",
           "info"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -533,6 +695,22 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::habitat.habitat",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -548,7 +726,8 @@
           "slug",
           "name",
           "info"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -563,7 +742,8 @@
           "slug",
           "name",
           "info"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -579,7 +759,6 @@
           "type",
           "config",
           "params_config",
-          "legend_config",
           "interaction_config",
           "metadata.description",
           "metadata.citation",
@@ -588,6 +767,22 @@
           "metadata.content_date",
           "metadata.license",
           "dataset"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::layer.layer",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -604,7 +799,6 @@
           "type",
           "config",
           "params_config",
-          "legend_config",
           "interaction_config",
           "metadata.description",
           "metadata.citation",
@@ -613,7 +807,8 @@
           "metadata.content_date",
           "metadata.license",
           "dataset"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -629,7 +824,6 @@
           "type",
           "config",
           "params_config",
-          "legend_config",
           "interaction_config",
           "metadata.description",
           "metadata.citation",
@@ -638,7 +832,8 @@
           "metadata.content_date",
           "metadata.license",
           "dataset"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -660,6 +855,22 @@
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "bounds"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::location.location",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -682,7 +893,8 @@
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "bounds"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -704,7 +916,8 @@
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "bounds"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -906,6 +1119,22 @@
           "name",
           "info",
           "mpa_protection_coverage_stats"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::mpaa-establishment-stage.mpaa-establishment-stage",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -922,7 +1151,8 @@
           "name",
           "info",
           "mpa_protection_coverage_stats"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -938,7 +1168,8 @@
           "name",
           "info",
           "mpa_protection_coverage_stats"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -1007,6 +1238,22 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::mpaa-protection-level.mpaa-protection-level",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -1022,7 +1269,8 @@
           "slug",
           "name",
           "info"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -1037,7 +1285,8 @@
           "slug",
           "name",
           "info"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -1057,6 +1306,15 @@
           "protectedAreasCount"
         ]
       },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::protection-coverage-stat.protection-coverage-stat",
+      "properties": {},
       "conditions": [
         "admin::is-creator"
       ],
@@ -1106,6 +1364,22 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::protection-status.protection-status",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -1121,7 +1395,8 @@
           "slug",
           "name",
           "info"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -1136,7 +1411,8 @@
           "slug",
           "name",
           "info"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -1152,6 +1428,22 @@
           "source",
           "value",
           "description"
+        ],
+        "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::static-indicator.static-indicator",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [
@@ -1168,7 +1460,8 @@
           "source",
           "value",
           "description"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
@@ -1184,7 +1477,8 @@
           "source",
           "value",
           "description"
-        ]
+        ],
+        "locales": []
       },
       "conditions": [
         "admin::is-creator"
