@@ -158,7 +158,7 @@
       "card-3-link": "Go to the Knowledge Hub"
     },
     "homepage-earth-surface-coverage": {
-      "earth-surface-coverage": "Earth surface coverage"
+      "percent-earth-surface-coverage": "<b>{percent}</b> Earth surface covered by oceans"
     },
     "knowledge-hub-card-filters": {
       "name": "Name",
