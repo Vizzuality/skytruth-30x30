@@ -86,12 +86,11 @@
       },
       {
         "layers": {
-          "__model__": false,
+          "__model__": true,
           "title": true,
           "type": null,
           "config": null,
           "params_config": null,
-          "legend_config": null,
           "interaction_config": null,
           "metadata": {
             "description": true,
@@ -101,7 +100,16 @@
             "content_date": null,
             "license": true
           },
-          "dataset": null
+          "dataset": null,
+          "legend_config": {
+            "type": null,
+            "items": {
+              "icon": false,
+              "color": false,
+              "value": true,
+              "description": true
+            }
+          }
         }
       },
       {
@@ -134,17 +142,6 @@
           "slug": null,
           "name": true,
           "info": true
-        }
-      },
-      {
-        "protection_coverage_stats": {
-          "__model__": true,
-          "location": null,
-          "protection_status": null,
-          "year": null,
-          "cumSumProtectedArea": null,
-          "protectedArea": null,
-          "protectedAreasCount": null
         }
       },
       {

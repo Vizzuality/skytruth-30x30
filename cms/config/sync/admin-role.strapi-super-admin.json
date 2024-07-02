@@ -861,7 +861,6 @@
           "type",
           "config",
           "params_config",
-          "legend_config",
           "interaction_config",
           "metadata.description",
           "metadata.citation",
@@ -869,7 +868,12 @@
           "metadata.resolution",
           "metadata.content_date",
           "metadata.license",
-          "dataset"
+          "dataset",
+          "legend_config.type",
+          "legend_config.items.icon",
+          "legend_config.items.color",
+          "legend_config.items.value",
+          "legend_config.items.description"
         ],
         "locales": [
           "en",
@@ -915,7 +919,6 @@
           "type",
           "config",
           "params_config",
-          "legend_config",
           "interaction_config",
           "metadata.description",
           "metadata.citation",
@@ -923,7 +926,12 @@
           "metadata.resolution",
           "metadata.content_date",
           "metadata.license",
-          "dataset"
+          "dataset",
+          "legend_config.type",
+          "legend_config.items.icon",
+          "legend_config.items.color",
+          "legend_config.items.value",
+          "legend_config.items.description"
         ],
         "locales": [
           "en",
@@ -943,7 +951,6 @@
           "type",
           "config",
           "params_config",
-          "legend_config",
           "interaction_config",
           "metadata.description",
           "metadata.citation",
@@ -951,7 +958,12 @@
           "metadata.resolution",
           "metadata.content_date",
           "metadata.license",
-          "dataset"
+          "dataset",
+          "legend_config.type",
+          "legend_config.items.icon",
+          "legend_config.items.color",
+          "legend_config.items.value",
+          "legend_config.items.description"
         ],
         "locales": [
           "en",

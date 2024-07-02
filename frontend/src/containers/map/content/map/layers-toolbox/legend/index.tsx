@@ -36,6 +36,7 @@ const Legend: FCWithMessages = () => {
     {
       locale,
       sort: 'title:asc',
+      populate: 'legend_config,legend_config.items',
     },
     {
       query: {
