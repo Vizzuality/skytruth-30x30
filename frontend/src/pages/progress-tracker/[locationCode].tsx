@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   if (mapParams) {
     const searchParams = mapParamsToSearchParams(mapParams);
-    const target = `${PAGES.progressTracker}/${location}?${searchParams}`;
+    const target = `/${context.locale}/${PAGES.progressTracker}/${location}?${searchParams}`;
 
     return {
       redirect: {

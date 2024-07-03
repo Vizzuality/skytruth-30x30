@@ -171,7 +171,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
         <div className="mt-6 mb-4 flex flex-col">
           <span className="space-x-1">
             {t.rich('marine-protected-percentage', {
-              b1: (chunks) => <span className="text-[64px] font-bold leading-[80%]">{chunks}</span>,
+              b1: (chunks) => <span className="text-[64px] font-bold leading-[90%]">{chunks}</span>,
               b2: (chunks) => <span className="text-lg">{chunks}</span>,
               percentage: stats?.protectedPercentage,
             })}

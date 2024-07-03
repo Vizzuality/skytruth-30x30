@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import * as SelectPrimitive from '@radix-ui/react-select';
+import { VariantProps, cva } from 'class-variance-authority';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 
 import { cn } from '@/lib/classnames';
@@ -11,21 +12,47 @@ const SelectGroup = SelectPrimitive.Group;
 
 const SelectValue = SelectPrimitive.Value;
 
+const selectTriggerVariants = cva(
+  'dark:bg-slate-950 dark:ring-offset-slate-950 flex gap-x-1 w-full items-center px-3 py-2 ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-gray-300 dark:placeholder:text-slate-400 dark:focus:ring-slate-300 [&>span]:line-clamp-1',
+  {
+    variants: {
+      variant: {
+        default:
+          'h-10 justify-between border border-black bg-white text-xs font-mono font-medium dark:border-slate-800',
+        alternative: 'justify-start',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
+
+const selectTriggerIconVarians = cva('h-4 w-4', {
+  variants: {
+    variant: {
+      default: 'opacity-50',
+      alternative: '',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> &
+    VariantProps<typeof selectTriggerVariants>
+>(({ className, variant, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={cn(
-      'dark:bg-slate-950 dark:ring-offset-slate-950 flex h-10 w-full items-center justify-between border border-black bg-white px-3 py-2 font-mono text-xs font-medium ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-gray-300 dark:border-slate-800 dark:placeholder:text-slate-400 dark:focus:ring-slate-300 [&>span]:line-clamp-1',
-      className
-    )}
+    className={cn(selectTriggerVariants({ variant }), className)}
     {...props}
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <ChevronDown className={cn(selectTriggerIconVarians({ variant }))} />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));

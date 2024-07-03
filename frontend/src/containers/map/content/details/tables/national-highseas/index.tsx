@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import FiltersButton from '@/components/filters-button';
 import TooltipButton from '@/components/tooltip-button';
 import { applyFilters } from '@/containers/map/content/details/helpers';
 import Table from '@/containers/map/content/details/table';
@@ -130,6 +131,7 @@ NationalHighseasTable.messages = [
   // Dependencies of `useColumns`
   ...SortingButton.messages,
   ...TooltipButton.messages,
+  ...FiltersButton.messages,
 ];
 
 export default NationalHighseasTable;
