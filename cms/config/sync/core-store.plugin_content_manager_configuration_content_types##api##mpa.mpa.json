@@ -194,6 +194,35 @@
           "sortable": true
         }
       },
+      "mpa_iucn_category": {
+        "edit": {
+          "label": "mpa_iucn_category",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "slug"
+        },
+        "list": {
+          "label": "mpa_iucn_category",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "designation": {
+        "edit": {
+          "label": "designation",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "designation",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -295,7 +324,17 @@
         ],
         [
           {
+            "name": "location",
+            "size": 6
+          }
+        ],
+        [
+          {
             "name": "data_source",
+            "size": 6
+          },
+          {
+            "name": "mpa_iucn_category",
             "size": 6
           }
         ],
@@ -303,16 +342,18 @@
           {
             "name": "mpaa_establishment_stage",
             "size": 6
-          },
-          {
-            "name": "location",
-            "size": 6
           }
         ],
         [
           {
             "name": "mpaa_protection_level",
             "size": 6
+          }
+        ],
+        [
+          {
+            "name": "is_child",
+            "size": 4
           },
           {
             "name": "children",
@@ -321,8 +362,8 @@
         ],
         [
           {
-            "name": "is_child",
-            "size": 4
+            "name": "designation",
+            "size": 6
           }
         ]
       ]

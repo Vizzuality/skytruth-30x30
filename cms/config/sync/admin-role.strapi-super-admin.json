@@ -832,7 +832,9 @@
           "location",
           "wdpaid",
           "mpaa_protection_level",
-          "is_child"
+          "is_child",
+          "mpa_iucn_category",
+          "designation"
         ]
       },
       "conditions": []
@@ -861,7 +863,9 @@
           "location",
           "wdpaid",
           "mpaa_protection_level",
-          "is_child"
+          "is_child",
+          "mpa_iucn_category",
+          "designation"
         ]
       },
       "conditions": []
@@ -883,7 +887,9 @@
           "location",
           "wdpaid",
           "mpaa_protection_level",
-          "is_child"
+          "is_child",
+          "mpa_iucn_category",
+          "designation"
         ]
       },
       "conditions": []

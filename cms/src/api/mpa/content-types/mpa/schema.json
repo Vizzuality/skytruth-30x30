@@ -74,6 +74,14 @@
       "type": "boolean",
       "default": false,
       "required": true
+    },
+    "mpa_iucn_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpa-iucn-category.mpa-iucn-category"
+    },
+    "designation": {
+      "type": "string"
     }
   }
 }

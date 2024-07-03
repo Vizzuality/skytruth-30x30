@@ -1283,6 +1283,12 @@ export interface ApiMpaMpa extends Schema.CollectionType {
     is_child: Attribute.Boolean &
       Attribute.Required &
       Attribute.DefaultTo<false>;
+    mpa_iucn_category: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToOne',
+      'api::mpa-iucn-category.mpa-iucn-category'
+    >;
+    designation: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::mpa.mpa', 'oneToOne', 'admin::user'> &
