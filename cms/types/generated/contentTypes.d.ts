@@ -1257,12 +1257,32 @@ export interface ApiMpaMpa extends Schema.CollectionType {
       'oneToOne',
       'api::protection-status.protection-status'
     >;
-    mpa_protection_coverage_stats: Attribute.Relation<
+    bbox: Attribute.JSON & Attribute.Required;
+    children: Attribute.Relation<'api::mpa.mpa', 'oneToMany', 'api::mpa.mpa'>;
+    data_source: Attribute.Relation<
       'api::mpa.mpa',
-      'oneToMany',
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat'
+      'oneToOne',
+      'api::data-source.data-source'
     >;
-    wdpaid: Attribute.String & Attribute.Unique;
+    mpaa_establishment_stage: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToOne',
+      'api::mpaa-establishment-stage.mpaa-establishment-stage'
+    >;
+    location: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToOne',
+      'api::location.location'
+    >;
+    wdpaid: Attribute.BigInteger;
+    mpaa_protection_level: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToOne',
+      'api::mpaa-protection-level.mpaa-protection-level'
+    >;
+    is_child: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::mpa.mpa', 'oneToOne', 'admin::user'> &
@@ -1272,63 +1292,65 @@ export interface ApiMpaMpa extends Schema.CollectionType {
   };
 }
 
-export interface ApiMpaProtectionCoverageStatMpaProtectionCoverageStat
+export interface ApiMpaIucnCategoryMpaIucnCategory
   extends Schema.CollectionType {
-  collectionName: 'mpa_protection_coverage_stats';
+  collectionName: 'mpa_iucn_categories';
   info: {
-    singularName: 'mpa-protection-coverage-stat';
-    pluralName: 'mpa-protection-coverage-stats';
-    displayName: 'MPA Protection Coverage Stats';
+    singularName: 'mpa-iucn-category';
+    pluralName: 'mpa-iucn-categories';
+    displayName: 'MPA iucn category';
     description: '';
   };
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    mpa: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'manyToOne',
-      'api::mpa.mpa'
-    >;
-    fishing_protection_level: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'oneToOne',
-      'api::fishing-protection-level.fishing-protection-level'
-    >;
-    mpaa_protection_level: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'oneToOne',
-      'api::mpaa-protection-level.mpaa-protection-level'
-    >;
-    location: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'oneToOne',
-      'api::location.location'
-    >;
-    area: Attribute.Decimal &
+    slug: Attribute.String &
       Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
       }>;
-    mpaa_establishment_stage: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'manyToOne',
-      'api::mpaa-establishment-stage.mpaa-establishment-stage'
-    >;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    info: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
+      'api::mpa-iucn-category.mpa-iucn-category',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
+      'api::mpa-iucn-category.mpa-iucn-category',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::mpa-iucn-category.mpa-iucn-category',
+      'oneToMany',
+      'api::mpa-iucn-category.mpa-iucn-category'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1347,11 +1369,6 @@ export interface ApiMpaaEstablishmentStageMpaaEstablishmentStage
     slug: Attribute.String & Attribute.Required & Attribute.Unique;
     name: Attribute.String & Attribute.Required;
     info: Attribute.Text;
-    mpa_protection_coverage_stats: Attribute.Relation<
-      'api::mpaa-establishment-stage.mpaa-establishment-stage',
-      'oneToMany',
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1652,7 +1669,7 @@ declare module '@strapi/types' {
       'api::layer.layer': ApiLayerLayer;
       'api::location.location': ApiLocationLocation;
       'api::mpa.mpa': ApiMpaMpa;
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat': ApiMpaProtectionCoverageStatMpaProtectionCoverageStat;
+      'api::mpa-iucn-category.mpa-iucn-category': ApiMpaIucnCategoryMpaIucnCategory;
       'api::mpaa-establishment-stage.mpaa-establishment-stage': ApiMpaaEstablishmentStageMpaaEstablishmentStage;
       'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat': ApiMpaaEstablishmentStageStatMpaaEstablishmentStageStat;
       'api::mpaa-protection-level.mpaa-protection-level': ApiMpaaProtectionLevelMpaaProtectionLevel;

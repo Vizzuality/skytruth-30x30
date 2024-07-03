@@ -12,12 +12,12 @@ services:
       - .env
     depends_on:
       - db
-    # volumes:
-    #   # - ./src:/app/src
-    #   # - ./types:/app/types
-    #   # - ./public:/app/public
-    #   # - ./database:/app/database
-    #   # - ./config:/app/config
+    volumes:
+      - ./src:/app/src
+      - ./types:/app/types
+      - ./public:/app/public
+      - ./database:/app/database
+      - ./config:/app/config
 
   db:
     image: postgis/postgis:16-3.4
