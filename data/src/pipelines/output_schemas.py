@@ -1,6 +1,6 @@
 from typing import Union, List
 import pandera as pa
-from pandera.typing import Index, DataFrame, Series
+from pandera.typing import Index, Series
 from pandera.typing.geopandas import GeoDataFrame, GeoSeries
 import pandas as pd
 
@@ -35,13 +35,13 @@ class ProtectionLevelSchema(pa.DataFrameModel):
     area: Series[float] = pa.Field(ge=0, coerce=True)
 
 
-class StablishmentStageSchema(pa.DataFrameModel):
-    id: Index[int] = pa.Field(gt=0, coerce=True)
-    location: Series[int] = pa.Field(gt=0, coerce=True)
-    mpaa_establishment_stage: Series[int] = pa.Field(ge=0, coerce=True)
-    protection_status: Series[int] = pa.Field(ge=0, coerce=True)
-    area: Series[float] = pa.Field(ge=0, coerce=True)
-    year: Series[int] = pa.Field(gt=1900, coerce=True)
+# class StablishmentStageSchema(pa.DataFrameModel):
+#     id: Index[int] = pa.Field(gt=0, coerce=True)
+#     location: Series[int] = pa.Field(gt=0, coerce=True)
+#     mpaa_establishment_stage: Series[int] = pa.Field(ge=0, coerce=True)
+#     protection_status: Series[int] = pa.Field(ge=0, coerce=True)
+#     area: Series[float] = pa.Field(ge=0, coerce=True)
+#     year: Series[int] = pa.Field(gt=1900, coerce=True)
 
 
 class FPLSchema(pa.DataFrameModel):
@@ -77,3 +77,19 @@ class MPAsTableStatsSchema(pa.DataFrameModel):
     mpaa_establishment_stage: Series[pd.Int64Dtype] = pa.Field(ge=0, nullable=True, coerce=True)
     mpaa_protection_level: Series[pd.Int64Dtype] = pa.Field(ge=0, nullable=True, coerce=True)
     fishing_protection_level: Series[pd.Int64Dtype] = pa.Field(ge=0, nullable=True, coerce=True)
+
+
+class MPAsTableOTFSchema(pa.DataFrameModel):
+    MRGID: Index[int] = pa.Field(coerce=True)
+    GEONAME: Series[str] = pa.Field(coerce=True)
+    POL_TYPE: Series[str] = pa.Field(coerce=True)
+    AREA_KM2: Series[float] = pa.Field(ge=0, coerce=True)
+    ISO_SOV1: Series[str] = pa.Field(coerce=True)
+    ISO_SOV2: Series[str] = pa.Field(coerce=True, nullable=True)
+    ISO_SOV3: Series[str] = pa.Field(coerce=True, nullable=True)
+    geometry: GeoSeries
+
+    # TODO: Check if it is a valid geometry column
+    # @pa.check("geometry")
+    # def is_valid_geometry(cls, series):
+    #     return series.map(lambda x: isinstance(x, Point))

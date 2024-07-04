@@ -267,6 +267,7 @@ def transform_points(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
 
 
 ### Spatial joins and dissolves
+
 def get_matches(geom: Polygon, df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """Get matches."""
     candidates = df.iloc[df.sindex.intersection(geom.bounds)]
@@ -287,6 +288,7 @@ def arrange_dimensions(
 
 
 ## TODO properly type this
+## TODO: generalize the next operations to make them more reusable
 @background
 def spatial_join_chunk(row_small, df_large, pbar):
     test_row = gpd.GeoDataFrame([row_small], crs=df_large.crs)
@@ -305,7 +307,7 @@ def spatial_join_chunk(row_small, df_large, pbar):
 async def spatial_join(
     geodataframe_a: gpd.GeoDataFrame, geodataframe_b: gpd.GeoDataFrame
 ) -> gpd.GeoDataFrame:
-    """Create difference between two GeoDataFrames."""
+    """Create spatial join between two GeoDataFrames."""
     # we build the spatial index for the larger GeoDataFrame
     smaller_dim, larger_dim = arrange_dimensions(geodataframe_a, geodataframe_b)
     with tqdm(total=smaller_dim.shape[0]) as pbar:  # we create a progress bar
@@ -316,6 +318,31 @@ async def spatial_join(
             )
         )
     return gpd.GeoDataFrame(pd.concat(new_df, ignore_index=True), crs=smaller_dim.crs)
+
+
+@background
+def difference(geom_col_value, df, pbar):
+    candidates = get_matches(geom_col_value, df)
+    if len(candidates) > 0:
+        geometry = repair_geometry(geom_col_value.difference(candidates.geometry.unary_union))
+    else:
+        geometry = geom_col_value
+    pbar.update(1)
+
+    return geometry
+
+
+async def create_difference(geodataframe1, geodataframe2):
+    """Create difference between two GeoDataFrames."""
+    # we build the spatial index for the larger GeoDataFrame
+
+    result = geodataframe1.copy()
+    with tqdm(total=result.shape[0]) as pbar:  # we create a progress bar
+        result["geometry"] = await asyncio.gather(
+            *(difference(val, geodataframe2[["geometry"]], pbar) for val in result["geometry"])
+        )
+
+    return result
 
 
 @background
@@ -498,7 +525,7 @@ def aggregate_area(df: pd.DataFrame) -> pd.DataFrame:
 async def process_mpa_data(
     gdf: gpd.GeoDataFrame, loop: list[int], by: list[str], aggfunc: dict
 ) -> pd.DataFrame:
-    """Create difference between two GeoDataFrames."""
+    """process protected planet data. relevant for acc coverage extent by year indicator."""
     # we split the data by =< year so we can acumulate the coverage
     base = split_by_year(gdf)
 
