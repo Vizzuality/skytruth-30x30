@@ -18,12 +18,14 @@ ENV NODE_ENV development
 
 WORKDIR /app
 
-COPY . ./
+COPY . .
 
 RUN yarn install --immutable
 
 ENV PATH /app/node_modules/.bin:$PATH
+RUN chown -R node:node /app
+USER node
 
 EXPOSE 1337
-# CMD [ "yarn", "strapi", "develop" ]
+
 ENTRYPOINT ["/app/entrypoint.sh"]

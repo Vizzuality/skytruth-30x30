@@ -822,69 +822,6 @@
     {
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
-      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
-      "properties": {
-        "fields": [
-          "mpa",
-          "fishing_protection_level",
-          "mpaa_protection_level",
-          "location",
-          "area",
-          "mpaa_establishment_stage"
-        ]
-      },
-      "conditions": [
-        "admin::is-creator"
-      ]
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
-      "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ]
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
-      "properties": {
-        "fields": [
-          "mpa",
-          "fishing_protection_level",
-          "mpaa_protection_level",
-          "location",
-          "area",
-          "mpaa_establishment_stage"
-        ]
-      },
-      "conditions": [
-        "admin::is-creator"
-      ]
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
-      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
-      "properties": {
-        "fields": [
-          "mpa",
-          "fishing_protection_level",
-          "mpaa_protection_level",
-          "location",
-          "area",
-          "mpaa_establishment_stage"
-        ]
-      },
-      "conditions": [
-        "admin::is-creator"
-      ]
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
       "subject": "api::mpa.mpa",
       "properties": {
         "fields": [
@@ -892,8 +829,9 @@
           "area",
           "year",
           "protection_status",
-          "mpa_protection_coverage_stats",
-          "wdpaid"
+          "bbox",
+          "wdpaid",
+          "is_child"
         ]
       },
       "conditions": [
@@ -919,8 +857,9 @@
           "area",
           "year",
           "protection_status",
-          "mpa_protection_coverage_stats",
-          "wdpaid"
+          "bbox",
+          "wdpaid",
+          "is_child"
         ]
       },
       "conditions": [
@@ -937,8 +876,9 @@
           "area",
           "year",
           "protection_status",
-          "mpa_protection_coverage_stats",
-          "wdpaid"
+          "bbox",
+          "wdpaid",
+          "is_child"
         ]
       },
       "conditions": [
@@ -1013,8 +953,7 @@
         "fields": [
           "slug",
           "name",
-          "info",
-          "mpa_protection_coverage_stats"
+          "info"
         ]
       },
       "conditions": [
@@ -1038,8 +977,7 @@
         "fields": [
           "slug",
           "name",
-          "info",
-          "mpa_protection_coverage_stats"
+          "info"
         ]
       },
       "conditions": [
@@ -1054,8 +992,7 @@
         "fields": [
           "slug",
           "name",
-          "info",
-          "mpa_protection_coverage_stats"
+          "info"
         ]
       },
       "conditions": [

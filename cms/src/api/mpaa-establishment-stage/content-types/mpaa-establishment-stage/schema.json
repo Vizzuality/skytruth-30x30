@@ -22,12 +22,6 @@
     },
     "info": {
       "type": "text"
-    },
-    "mpa_protection_coverage_stats": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
-      "mappedBy": "mpaa_establishment_stage"
     }
   }
 }
