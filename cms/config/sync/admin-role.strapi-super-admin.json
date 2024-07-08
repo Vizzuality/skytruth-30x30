@@ -1064,15 +1064,17 @@
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
       "properties": {
         "fields": [
-          "mpa",
-          "fishing_protection_level",
-          "mpaa_protection_level",
-          "location",
-          "area",
-          "mpaa_establishment_stage"
+          "slug",
+          "name",
+          "info"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [],
@@ -1080,22 +1082,30 @@
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
-      "properties": {},
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
       "conditions": [],
       "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
       "properties": {
         "fields": [
-          "mpa",
-          "fishing_protection_level",
-          "mpaa_protection_level",
-          "location",
-          "area",
-          "mpaa_establishment_stage"
+          "slug",
+          "name",
+          "info"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [],
@@ -1103,15 +1113,17 @@
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "subject": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
       "properties": {
         "fields": [
-          "mpa",
-          "fishing_protection_level",
-          "mpaa_protection_level",
-          "location",
-          "area",
-          "mpaa_establishment_stage"
+          "slug",
+          "name",
+          "info"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [],
@@ -1126,8 +1138,16 @@
           "area",
           "year",
           "protection_status",
-          "mpa_protection_coverage_stats",
-          "wdpaid"
+          "bbox",
+          "children",
+          "data_source",
+          "mpaa_establishment_stage",
+          "location",
+          "wdpaid",
+          "mpaa_protection_level",
+          "is_child",
+          "mpa_iucn_category",
+          "designation"
         ]
       },
       "conditions": [],
@@ -1149,8 +1169,16 @@
           "area",
           "year",
           "protection_status",
-          "mpa_protection_coverage_stats",
-          "wdpaid"
+          "bbox",
+          "children",
+          "data_source",
+          "mpaa_establishment_stage",
+          "location",
+          "wdpaid",
+          "mpaa_protection_level",
+          "is_child",
+          "mpa_iucn_category",
+          "designation"
         ]
       },
       "conditions": [],
@@ -1165,8 +1193,16 @@
           "area",
           "year",
           "protection_status",
-          "mpa_protection_coverage_stats",
-          "wdpaid"
+          "bbox",
+          "children",
+          "data_source",
+          "mpaa_establishment_stage",
+          "location",
+          "wdpaid",
+          "mpaa_protection_level",
+          "is_child",
+          "mpa_iucn_category",
+          "designation"
         ]
       },
       "conditions": [],
@@ -1231,8 +1267,7 @@
         "fields": [
           "slug",
           "name",
-          "info",
-          "mpa_protection_coverage_stats"
+          "info"
         ],
         "locales": [
           "en",
@@ -1263,8 +1298,7 @@
         "fields": [
           "slug",
           "name",
-          "info",
-          "mpa_protection_coverage_stats"
+          "info"
         ],
         "locales": [
           "en",
@@ -1282,8 +1316,7 @@
         "fields": [
           "slug",
           "name",
-          "info",
-          "mpa_protection_coverage_stats"
+          "info"
         ],
         "locales": [
           "en",

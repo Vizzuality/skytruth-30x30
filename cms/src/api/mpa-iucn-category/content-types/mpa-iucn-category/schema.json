@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "mpaa_establishment_stages",
+  "collectionName": "mpa_iucn_categories",
   "info": {
-    "singularName": "mpaa-establishment-stage",
-    "pluralName": "mpaa-establishment-stages",
-    "displayName": "MPAA Establishment Stage",
+    "singularName": "mpa-iucn-category",
+    "pluralName": "mpa-iucn-categories",
+    "displayName": "MPA iucn category",
     "description": ""
   },
   "options": {
@@ -17,31 +17,32 @@
   },
   "attributes": {
     "slug": {
-      "type": "string",
-      "required": true,
-      "unique": false,
       "pluginOptions": {
         "i18n": {
           "localized": false
         }
-      }
-    },
-    "name": {
+      },
       "type": "string",
       "required": true,
+      "unique": false
+    },
+    "name": {
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "type": "string",
+      "required": true,
+      "unique": true
     },
     "info": {
-      "type": "text",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "type": "text"
     }
   }
 }
