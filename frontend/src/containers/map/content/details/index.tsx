@@ -13,6 +13,8 @@ import CloseIcon from '@/styles/icons/close.svg';
 import { FCWithMessages } from '@/types';
 import { getGetLocationsQueryOptions, useGetLocations } from '@/types/generated/location';
 
+import ScrollingIndicators from './table/scrolling-indicators';
+
 const MapDetails: FCWithMessages = () => {
   const t = useTranslations('containers.map');
   const locale = useLocale();
@@ -113,8 +115,10 @@ const MapDetails: FCWithMessages = () => {
           <Icon icon={CloseIcon} className="ml-2 h-3 w-3 pb-px " />
         </Button>
       </div>
-      <div className="mt-4">
-        <table.component />
+      <div className="relative z-0 mb-14">
+        <ScrollingIndicators className="mt-4 overflow-x-scroll">
+          <table.component />
+        </ScrollingIndicators>
       </div>
     </div>
   );

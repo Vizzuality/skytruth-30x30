@@ -4,6 +4,8 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useLocale, useTranslations } from 'next-intl';
 
 import FiltersButton from '@/components/filters-button';
+import LayerPreview from '@/components/layer-preview';
+import ExpansionControls from '@/containers/map/content/details/table/expansion-controls';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
 import { cellFormatter } from '@/containers/map/content/details/table/helpers';
 import SortingButton from '@/containers/map/content/details/table/sorting-button';
@@ -19,6 +21,10 @@ export type NationalHighseasTableColumns = {
   protectionLevel: string;
   fishingProtectionLevel: string;
   area: number;
+  map: {
+    wdpaId: string;
+    bounds: [number, number, number, number];
+  };
 };
 
 type UseColumnsProps = {
@@ -45,15 +51,34 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
       {
         accessorKey: 'protectedArea',
         header: ({ column }) => (
-          <HeaderItem>
+          <HeaderItem className="ml-6">
             <SortingButton column={column} />
             {t('name')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
-          const { protectedArea } = row.original;
-          return <span className="underline">{protectedArea}</span>;
+          const {
+            original: { protectedArea },
+          } = row;
+          return (
+            <ExpansionControls row={row}>
+              <span className="font-semibold">{protectedArea}</span>
+            </ExpansionControls>
+          );
+        },
+      },
+      {
+        accessorKey: 'map',
+        header: null,
+        cell: ({ row }) => {
+          const { bounds, wdpaId } = row.original?.map || {};
+
+          return (
+            <div className="relative -mr-0.5 h-[calc(100%+4px)] w-12 border-l border-r border-t border-b border-black">
+              <LayerPreview bounds={bounds} wdpaId={wdpaId} />
+            </div>
+          );
         },
       },
       {

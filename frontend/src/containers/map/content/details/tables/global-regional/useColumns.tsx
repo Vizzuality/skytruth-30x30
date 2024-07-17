@@ -39,7 +39,7 @@ const useColumns = () => {
       {
         accessorKey: 'location',
         header: ({ column }) => (
-          <HeaderItem>
+          <HeaderItem className="ml-1">
             <SortingButton column={column} />
             {t('name')}
             <TooltipButton column={column} tooltips={tooltips} />
@@ -50,7 +50,7 @@ const useColumns = () => {
           return (
             <HeaderItem>
               <Link
-                className="underline"
+                className="font-semibold underline"
                 href={`${PAGES.progressTracker}/${locationCode}?${searchParams.toString()}`}
               >
                 {location}
