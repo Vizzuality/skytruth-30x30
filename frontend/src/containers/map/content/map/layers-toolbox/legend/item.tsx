@@ -38,7 +38,7 @@ const ICONS_MAPPING = {
 };
 
 const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
-  const { type, items } = config;
+  const { type, items } = config || {};
 
   const LEGEND_ITEM_COMPONENT = useMemo(() => {
     const l = parseConfig<LegendConfig | ReactElement | null>({
