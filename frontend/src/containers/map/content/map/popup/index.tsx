@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Popup } from 'react-map-gl';
 
 import { useAtomValue, useSetAtom } from 'jotai';
+import { useLocale } from 'next-intl';
 import { useKey } from 'rooks';
 
 import Icon from '@/components/ui/icon';
@@ -23,6 +24,8 @@ import { useGetLayers } from '@/types/generated/layer';
 import { useSyncMapLayers } from '../sync-settings';
 
 const PopupContainer: FCWithMessages = () => {
+  const locale = useLocale();
+
   const popup = useAtomValue(popupAtom);
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const [syncedLayers] = useSyncMapLayers();
@@ -35,6 +38,7 @@ const PopupContainer: FCWithMessages = () => {
 
   const { data: layersInteractiveData } = useGetLayers(
     {
+      locale,
       filters: {
         id: {
           $in: layersInteractive,

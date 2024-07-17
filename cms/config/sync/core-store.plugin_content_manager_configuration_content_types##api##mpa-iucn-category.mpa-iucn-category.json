@@ -58,8 +58,8 @@
         },
         "list": {
           "label": "info",
-          "searchable": false,
-          "sortable": false
+          "searchable": true,
+          "sortable": true
         }
       },
       "createdAt": {
@@ -125,8 +125,8 @@
       "list": [
         "id",
         "slug",
-        "createdAt",
-        "updatedAt"
+        "name",
+        "info"
       ],
       "edit": [
         [
@@ -142,7 +142,7 @@
         [
           {
             "name": "info",
-            "size": 12
+            "size": 6
           }
         ]
       ]

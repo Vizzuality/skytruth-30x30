@@ -1,5 +1,6 @@
 import { useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
 import { FCWithMessages } from '@/types';
@@ -9,11 +10,13 @@ import CardItem from './card-item';
 
 const CardList: FCWithMessages = (): JSX.Element => {
   const t = useTranslations('containers.knowledge-hub-card-filters');
+  const locale = useLocale();
 
   const filters = useAtomValue(cardFiltersAtom);
 
   const dataToolsQuery = useGetDataToolsInfinite(
     {
+      locale,
       sort: filters.name,
       filters: {
         ...(filters.language && {

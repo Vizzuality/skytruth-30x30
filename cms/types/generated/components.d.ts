@@ -16,10 +16,36 @@ export interface DocumentationMetadata extends Schema.Component {
   };
 }
 
+export interface LegendLegendItems extends Schema.Component {
+  collectionName: 'components_legend_legend_items';
+  info: {
+    displayName: 'legend_items';
+  };
+  attributes: {
+    icon: Attribute.String;
+    color: Attribute.String;
+    value: Attribute.String & Attribute.Required;
+    description: Attribute.String;
+  };
+}
+
+export interface LegendLegend extends Schema.Component {
+  collectionName: 'components_legend_legends';
+  info: {
+    displayName: 'legend';
+  };
+  attributes: {
+    type: Attribute.Enumeration<['basic', 'icon', 'choropleth', 'gradient']>;
+    items: Attribute.Component<'legend.legend-items', true>;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'documentation.metadata': DocumentationMetadata;
+      'legend.legend-items': LegendLegendItems;
+      'legend.legend': LegendLegend;
     }
   }
 }

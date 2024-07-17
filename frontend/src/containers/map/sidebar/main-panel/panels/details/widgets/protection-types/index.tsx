@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
@@ -18,6 +18,7 @@ type ProtectionTypesWidgetProps = {
 
 const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ location }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
+  const locale = useLocale();
 
   // Get protection levels data for the location
   const {
@@ -25,6 +26,7 @@ const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ loc
     isFetching: isFetchingProtectionLevelsData,
   } = useGetLocations(
     {
+      locale,
       filters: {
         code: location?.code,
       },
@@ -56,6 +58,7 @@ const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ loc
 
   const { data: metadata } = useGetDataInfos(
     {
+      locale,
       filters: {
         slug: 'fully-highly-protected',
       },

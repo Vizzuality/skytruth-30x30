@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useLocale } from 'next-intl';
+
 import TooltipButton from '@/components/tooltip-button';
 import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/global-regional/useColumns';
@@ -15,9 +17,11 @@ const GlobalRegionalTable: FCWithMessages = () => {
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
+  const locale = useLocale();
 
   const globalLocationQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: 'GLOB',
       },
@@ -31,6 +35,7 @@ const GlobalRegionalTable: FCWithMessages = () => {
 
   const locationsQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: locationCode,
       },
@@ -48,6 +53,7 @@ const GlobalRegionalTable: FCWithMessages = () => {
   // Get location data and calculate data to display on the table
   const { data: locationsData }: { data: LocationListResponseDataItem[] } = useGetLocations(
     {
+      locale,
       filters:
         locationsQuery.data?.type === 'region'
           ? {

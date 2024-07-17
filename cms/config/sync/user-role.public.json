@@ -85,12 +85,6 @@
       "action": "api::location.location.findOne"
     },
     {
-      "action": "api::mpa-iucn-category.mpa-iucn-category.find"
-    },
-    {
-      "action": "api::mpa-iucn-category.mpa-iucn-category.findOne"
-    },
-    {
       "action": "api::mpa.mpa.find"
     },
     {

@@ -14,6 +14,12 @@
           "phone",
           "email",
           "registration"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -22,14 +28,28 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::contact-detail.contact-detail",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
       "subject": "api::contact-detail.contact-detail",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -43,6 +63,12 @@
           "phone",
           "email",
           "registration"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -58,6 +84,12 @@
           "phone",
           "email",
           "registration"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -71,6 +103,12 @@
           "slug",
           "content",
           "data_sources"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -79,7 +117,14 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::data-info.data-info",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -91,6 +136,12 @@
           "slug",
           "content",
           "data_sources"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -104,6 +155,12 @@
           "slug",
           "content",
           "data_sources"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -117,6 +174,12 @@
           "slug",
           "title",
           "url"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -125,7 +188,14 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::data-source.data-source",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -137,6 +207,12 @@
           "slug",
           "title",
           "url"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -150,6 +226,12 @@
           "slug",
           "title",
           "url"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -161,6 +243,12 @@
       "properties": {
         "fields": [
           "name"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -169,14 +257,28 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
       "subject": "api::data-tool-ecosystem.data-tool-ecosystem",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -186,6 +288,12 @@
       "properties": {
         "fields": [
           "name"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -197,6 +305,12 @@
       "properties": {
         "fields": [
           "name"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -210,6 +324,12 @@
           "name",
           "slug",
           "data_tool"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -218,14 +338,28 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::data-tool-language.data-tool-language",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
       "subject": "api::data-tool-language.data-tool-language",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -237,6 +371,12 @@
           "name",
           "slug",
           "data_tool"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -250,6 +390,12 @@
           "name",
           "slug",
           "data_tool"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -261,6 +407,12 @@
       "properties": {
         "fields": [
           "name"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -269,14 +421,28 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::data-tool-resource-type.data-tool-resource-type",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
       "subject": "api::data-tool-resource-type.data-tool-resource-type",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -286,6 +452,12 @@
       "properties": {
         "fields": [
           "name"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -297,6 +469,12 @@
       "properties": {
         "fields": [
           "name"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -314,6 +492,12 @@
           "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -322,14 +506,28 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::data-tool.data-tool",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
       "subject": "api::data-tool.data-tool",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -345,6 +543,12 @@
           "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -362,6 +566,12 @@
           "data_tool_resource_types",
           "geography",
           "data_tool_ecosystems"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -374,6 +584,12 @@
         "fields": [
           "name",
           "layers"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -382,14 +598,28 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::dataset.dataset",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
       "subject": "api::dataset.dataset",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -400,6 +630,12 @@
         "fields": [
           "name",
           "layers"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -412,6 +648,12 @@
         "fields": [
           "name",
           "layers"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -471,6 +713,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -479,7 +727,14 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::fishing-protection-level.fishing-protection-level",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -491,6 +746,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -504,6 +765,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -569,6 +836,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -577,7 +850,14 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::habitat.habitat",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -589,6 +869,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -602,6 +888,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -616,7 +908,6 @@
           "type",
           "config",
           "params_config",
-          "legend_config",
           "interaction_config",
           "metadata.description",
           "metadata.citation",
@@ -624,7 +915,18 @@
           "metadata.resolution",
           "metadata.content_date",
           "metadata.license",
-          "dataset"
+          "dataset",
+          "legend_config.type",
+          "legend_config.items.icon",
+          "legend_config.items.color",
+          "legend_config.items.value",
+          "legend_config.items.description"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -633,14 +935,28 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::layer.layer",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
       "subject": "api::layer.layer",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -653,7 +969,6 @@
           "type",
           "config",
           "params_config",
-          "legend_config",
           "interaction_config",
           "metadata.description",
           "metadata.citation",
@@ -661,7 +976,18 @@
           "metadata.resolution",
           "metadata.content_date",
           "metadata.license",
-          "dataset"
+          "dataset",
+          "legend_config.type",
+          "legend_config.items.icon",
+          "legend_config.items.color",
+          "legend_config.items.value",
+          "legend_config.items.description"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -676,7 +1002,6 @@
           "type",
           "config",
           "params_config",
-          "legend_config",
           "interaction_config",
           "metadata.description",
           "metadata.citation",
@@ -684,7 +1009,18 @@
           "metadata.resolution",
           "metadata.content_date",
           "metadata.license",
-          "dataset"
+          "dataset",
+          "legend_config.type",
+          "legend_config.items.icon",
+          "legend_config.items.color",
+          "legend_config.items.value",
+          "legend_config.items.description"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -705,6 +1041,12 @@
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "bounds"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -713,7 +1055,14 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::location.location",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -732,6 +1081,12 @@
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "bounds"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -752,6 +1107,12 @@
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "bounds"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -767,7 +1128,10 @@
           "info"
         ],
         "locales": [
-          "en"
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -778,7 +1142,10 @@
       "subject": "api::mpa-iucn-category.mpa-iucn-category",
       "properties": {
         "locales": [
-          "en"
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -794,7 +1161,10 @@
           "info"
         ],
         "locales": [
-          "en"
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -810,7 +1180,10 @@
           "info"
         ],
         "locales": [
-          "en"
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -955,6 +1328,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -963,7 +1342,14 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::mpaa-establishment-stage.mpaa-establishment-stage",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -975,6 +1361,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -988,6 +1380,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -1047,6 +1445,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -1055,7 +1459,14 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::mpaa-protection-level.mpaa-protection-level",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -1067,6 +1478,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -1080,6 +1497,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -1148,6 +1571,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -1156,7 +1585,14 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::protection-status.protection-status",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -1168,6 +1604,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -1181,6 +1623,12 @@
           "slug",
           "name",
           "info"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -1195,6 +1643,12 @@
           "source",
           "value",
           "description"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -1203,14 +1657,28 @@
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
       "subject": "api::static-indicator.static-indicator",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
       "subject": "api::static-indicator.static-indicator",
-      "properties": {},
+      "properties": {
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
+        ]
+      },
       "conditions": []
     },
     {
@@ -1223,6 +1691,12 @@
           "source",
           "value",
           "description"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []
@@ -1237,6 +1711,12 @@
           "source",
           "value",
           "description"
+        ],
+        "locales": [
+          "en",
+          "fr",
+          "es",
+          "es"
         ]
       },
       "conditions": []

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import type { Feature } from 'geojson';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { CustomMapProps } from '@/components/map/types';
 import { PAGES } from '@/constants/pages';
@@ -22,20 +22,27 @@ import { LayerTyped } from '@/types/layers';
 
 const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const t = useTranslations('containers.map');
+  const locale = useLocale();
 
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
-  const { locale, push } = useRouter();
+  const { push } = useRouter();
   const setLocationBBox = useSetAtom(bboxLocation);
   const [popup, setPopup] = useAtom(popupAtom);
 
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
-  const layerQuery = useGetLayersId(
+  const layerQuery = useGetLayersId<{
+    source: LayerTyped['config']['source'];
+    click: LayerTyped['interaction_config']['events'][0];
+  }>(
     layerId,
     {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      locale,
       populate: 'metadata',
     },
     {
@@ -85,6 +92,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
 
   const locationsQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: DATA?.region_id,
       },
@@ -102,12 +110,13 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const { data: protectionCoverageStats }: { data: ProtectionCoverageStatListResponseDataItem[] } =
     useGetProtectionCoverageStats(
       {
+        locale,
         filters: {
           location: {
             code: DATA?.region_id,
           },
         },
-        populate: '*',
+        populate: 'location',
         // @ts-expect-error this is an issue with Orval typing
         'sort[year]': 'desc',
         'pagination[limit]': -1,

@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { useLocale } from 'next-intl';
+
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { FISHING_PROTECTION_CHART_COLORS } from '@/constants/fishing-protection-chart-colors';
@@ -12,12 +14,15 @@ type ProtectionTypesWidgetProps = {
 };
 
 const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location }) => {
+  const locale = useLocale();
+
   // Get protection levels data for the location
   const {
     data: { data: protectionLevelsData },
     isFetching: isFetchingProtectionLevelsData,
   } = useGetLocations(
     {
+      locale,
       filters: {
         code: location?.code,
       },
@@ -49,6 +54,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   const { data: metadataWidget } = useGetDataInfos(
     {
+      locale,
       filters: {
         slug: 'fishing-protection-widget',
       },
@@ -74,6 +80,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   const { data: metadata } = useGetDataInfos(
     {
+      locale,
       filters: {
         slug: 'fishing-protection-level',
       },

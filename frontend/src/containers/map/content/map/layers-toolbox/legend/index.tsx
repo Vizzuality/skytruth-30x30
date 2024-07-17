@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 import { Button } from '@/components/ui/button';
@@ -27,13 +27,16 @@ import LegendItem from './item';
 
 const Legend: FCWithMessages = () => {
   const t = useTranslations('containers.map');
+  const locale = useLocale();
 
   const [activeLayers, setMapLayers] = useSyncMapLayers();
   const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
 
   const layersQuery = useGetLayers(
     {
+      locale,
       sort: 'title:asc',
+      populate: 'legend_config,legend_config.items',
     },
     {
       query: {
