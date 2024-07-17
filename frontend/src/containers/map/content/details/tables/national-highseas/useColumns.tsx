@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { ComponentProps, useMemo } from 'react';
 
 import { ColumnDef } from '@tanstack/react-table';
 import { useLocale, useTranslations } from 'next-intl';
@@ -24,6 +24,7 @@ export type NationalHighseasTableColumns = {
   map: {
     wdpaId: string;
     bounds: [number, number, number, number];
+    dataSource: ComponentProps<typeof LayerPreview>['dataSource'];
   };
 };
 
@@ -72,11 +73,17 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         accessorKey: 'map',
         header: null,
         cell: ({ row }) => {
-          const { bounds, wdpaId } = row.original?.map || {};
+          const { bounds, wdpaId, dataSource } = row.original?.map || {};
 
           return (
             <div className="relative -mr-0.5 h-[calc(100%+4px)] w-12 border-l border-r border-t border-b border-black">
-              <LayerPreview bounds={bounds} wdpaId={wdpaId} />
+              <LayerPreview
+                {...{
+                  wdpaId,
+                  bounds,
+                  dataSource,
+                }}
+              />
             </div>
           );
         },

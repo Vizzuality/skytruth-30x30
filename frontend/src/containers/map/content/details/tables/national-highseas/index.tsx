@@ -84,6 +84,9 @@ const NationalHighseasTable: FCWithMessages = () => {
         protection_status: {
           fields: ['slug', 'name'],
         },
+        data_source: {
+          fields: ['slug'],
+        },
         children: '*',
       },
       'pagination[limit]': -1,
@@ -101,7 +104,7 @@ const NationalHighseasTable: FCWithMessages = () => {
       const protectionStatus = mpa?.protection_status?.data?.attributes;
       const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
       const mpaaProtectionLevel = mpa?.mpaa_protection_level?.data?.attributes;
-      const locationCoverage = mpa?.location?.data?.attributes;
+      const dataSource = mpa?.data_source?.data?.attributes?.slug;
 
       const coveragePercentage = (mpa.area / locationsQuery.data?.totalMarineArea) * 100;
 
@@ -114,7 +117,8 @@ const NationalHighseasTable: FCWithMessages = () => {
         area: mpa?.area,
         map: {
           wdpaId: mpa?.wdpaid,
-          bounds: locationCoverage?.bounds,
+          bounds: mpa?.bbox,
+          dataSource,
         },
       };
     };
