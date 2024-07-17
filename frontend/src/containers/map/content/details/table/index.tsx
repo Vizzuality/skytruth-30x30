@@ -44,7 +44,7 @@ const MapTable: FCWithMessages = ({ columns, data }) => {
   return (
     <table
       ref={tableRef}
-      className="relative border-spacing-0 whitespace-nowrap pr-6 font-mono text-xs"
+      className="relative min-w-full border-spacing-0 whitespace-nowrap pr-6 font-mono text-xs"
     >
       <thead className="sticky -top-4 z-10 bg-white text-left">
         {table.getHeaderGroups().map((headerGroup) => (

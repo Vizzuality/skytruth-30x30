@@ -4,6 +4,8 @@
  */
 import React, { useState, useEffect, PropsWithChildren } from 'react';
 
+import { UrlObject } from 'url';
+
 import Link, { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -35,7 +37,12 @@ const ActiveLink: React.FC<ActiveLinkProps> = ({
       // Dynamic route will be matched via props.as
       // Static route will be matched via props.href
       const linkPathname = new URL(
-        `${(props.as as string) ?? (props.href as string)}`,
+        `${
+          (props.as as string) ??
+          (typeof props.href === 'string'
+            ? (props.href as string)
+            : ((props.href as UrlObject)?.pathname as string))
+        }`,
         window.location.href
       ).pathname;
 
