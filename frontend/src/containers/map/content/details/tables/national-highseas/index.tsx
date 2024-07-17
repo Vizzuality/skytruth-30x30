@@ -71,7 +71,7 @@ const NationalHighseasTable: FCWithMessages = () => {
           },
         },
         location: {
-          fields: ['code', 'total_marine_area'],
+          fields: ['code', 'total_marine_area', 'bounds'],
         },
         mpaa_protection_level: {
           fields: ['slug', 'name'],
