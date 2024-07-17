@@ -75,7 +75,9 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         accessorKey: 'map',
         header: null,
         cell: ({ row }) => {
-          const { bounds, wdpaId } = row.original.map;
+          const { bounds, wdpaId } = row.original?.map || {};
+
+          if (!bounds || !wdpaId) return null;
 
           return (
             <div className="relative -mr-0.5 h-[calc(100%+4px)] w-12 border-l border-r border-t border-b border-black">

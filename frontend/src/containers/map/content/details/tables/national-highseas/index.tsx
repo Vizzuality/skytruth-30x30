@@ -94,6 +94,7 @@ const NationalHighseasTable: FCWithMessages = () => {
       const protectionStatus = mpa?.protection_status?.data?.attributes;
       const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
       const mpaaProtectionLevel = mpa?.mpaa_protection_level?.data?.attributes;
+      // const locationCoverage = mpa?.location?.data?.attributes;
 
       const coveragePercentage = (mpa.area / locationsQuery.data?.totalMarineArea) * 100;
 
@@ -104,6 +105,26 @@ const NationalHighseasTable: FCWithMessages = () => {
         establishmentStage: establishmentStage?.slug || 'N/A',
         protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
         area: mpa?.area,
+        // map: {
+        //   wdpaId: mpa?.wdpaid,
+        //   bounds: locationCoverage?.bounds,
+        // },
+        // ...(mpa?.name !== 'Aln Estuary' && {
+        //   subRows: [
+        //     {
+        //       protectedArea: `${mpa?.name} - 1`,
+        //       coverage: coveragePercentage,
+        //       protectedAreaType: protectionStatus?.slug,
+        //       establishmentStage: establishmentStage?.slug || 'N/A',
+        //       protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
+        //       area: mpa?.area,
+        //       map: {
+        //         wdpaId: mpa?.wdpaid,
+        //         bounds: locationCoverage?.bounds,
+        //       },
+        //     },
+        //   ],
+        // }),
       };
     });
   }, [locationsQuery, mpasData]);
