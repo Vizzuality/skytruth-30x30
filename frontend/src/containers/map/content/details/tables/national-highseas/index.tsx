@@ -54,6 +54,7 @@ const NationalHighseasTable: FCWithMessages = () => {
             $eq: locationsQuery.data?.code,
           },
         },
+        is_child: false,
       },
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -78,6 +79,7 @@ const NationalHighseasTable: FCWithMessages = () => {
         protection_status: {
           fields: ['slug', 'name'],
         },
+        children: '*',
       },
       'pagination[limit]': -1,
     },
@@ -90,11 +92,11 @@ const NationalHighseasTable: FCWithMessages = () => {
   );
 
   const parsedData = useMemo(() => {
-    return mpasData?.map(({ attributes: mpa }) => {
+    const buildMpaRow = (mpa) => {
       const protectionStatus = mpa?.protection_status?.data?.attributes;
       const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
       const mpaaProtectionLevel = mpa?.mpaa_protection_level?.data?.attributes;
-      // const locationCoverage = mpa?.location?.data?.attributes;
+      const locationCoverage = mpa?.location?.data?.attributes;
 
       const coveragePercentage = (mpa.area / locationsQuery.data?.totalMarineArea) * 100;
 
@@ -105,26 +107,24 @@ const NationalHighseasTable: FCWithMessages = () => {
         establishmentStage: establishmentStage?.slug || 'N/A',
         protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
         area: mpa?.area,
-        // map: {
-        //   wdpaId: mpa?.wdpaid,
-        //   bounds: locationCoverage?.bounds,
-        // },
-        // ...(mpa?.name !== 'Aln Estuary' && {
-        //   subRows: [
-        //     {
-        //       protectedArea: `${mpa?.name} - 1`,
-        //       coverage: coveragePercentage,
-        //       protectedAreaType: protectionStatus?.slug,
-        //       establishmentStage: establishmentStage?.slug || 'N/A',
-        //       protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
-        //       area: mpa?.area,
-        //       map: {
-        //         wdpaId: mpa?.wdpaid,
-        //         bounds: locationCoverage?.bounds,
-        //       },
-        //     },
-        //   ],
-        // }),
+        map: {
+          wdpaId: mpa?.wdpaid,
+          bounds: locationCoverage?.bounds,
+        },
+      };
+    };
+
+    return mpasData?.map(({ attributes: mpa }) => {
+      const mpaChildren = mpa?.children?.data;
+
+      const mpaData = buildMpaRow(mpa);
+      const mpaChildrenData = mpaChildren
+        .map(({ attributes: childMpa }) => buildMpaRow(childMpa))
+        .filter((row) => !!row);
+
+      return {
+        ...mpaData,
+        ...(mpaChildrenData?.length && { subRows: mpaChildrenData }),
       };
     });
   }, [locationsQuery, mpasData]);
