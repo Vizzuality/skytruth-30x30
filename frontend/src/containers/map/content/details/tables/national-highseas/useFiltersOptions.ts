@@ -3,10 +3,10 @@ import { useMemo } from 'react';
 import { useLocale } from 'next-intl';
 
 import { useGetDataSources } from '@/types/generated/data-source';
+import { useGetMpaIucnCategories } from '@/types/generated/mpa-iucn-category';
 import { useGetMpaaEstablishmentStages } from '@/types/generated/mpaa-establishment-stage';
 import { useGetMpaaProtectionLevels } from '@/types/generated/mpaa-protection-level';
 import { useGetProtectionStatuses } from '@/types/generated/protection-status';
-import { useGetMpaIucnCategories } from '@/types/generated/mpa-iucn-category';
 
 const useFiltersOptions = () => {
   const locale = useLocale();

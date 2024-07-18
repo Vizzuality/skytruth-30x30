@@ -12,7 +12,9 @@ type TableTooltipButtonProps = {
 };
 
 const TableTooltipButton: React.FC<TableTooltipButtonProps> = ({ column, tooltips }) => {
-  return <TooltipButton text={tooltips[column.id]} />;
+  const tooltipText = tooltips[column.id];
+  if (!tooltipText) return null;
+  return <TooltipButton text={tooltipText} />;
 };
 
 export default TableTooltipButton;
