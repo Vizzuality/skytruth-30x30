@@ -23,10 +23,6 @@ const LayerPreview: React.FC<{
 }> = ({ wdpaId, bounds, dataSource }) => {
   const sourceConfig = configs[dataSource];
 
-  if (!sourceConfig) {
-    throw new Error(`Invalid dataSource: ${dataSource}`);
-  }
-
   const point = [bounds[0] + (bounds[2] - bounds[0]), bounds[1] + (bounds[3] - bounds[1])];
 
   const { data: dataBounds, isError } = useQuery(['layer-preview-bounds', wdpaId], {
@@ -75,6 +71,10 @@ const LayerPreview: React.FC<{
   });
 
   const srcImage = dataBounds || dataPoint ? URL.createObjectURL(dataPoint || dataBounds) : null;
+
+  if (!sourceConfig) {
+    return null;
+  }
 
   return (
     <div

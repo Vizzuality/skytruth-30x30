@@ -41,7 +41,8 @@ const NationalHighseasTable: FCWithMessages = () => {
     protectedAreaType: [],
     establishmentStage: [],
     protectionLevel: [],
-    fishingProtectionLevel: [],
+    dataSource: [],
+    iucnCategory: [],
   });
 
   const handleOnFiltersChange = (field, values) => {
@@ -49,6 +50,35 @@ const NationalHighseasTable: FCWithMessages = () => {
   };
 
   const columns = useColumns({ filters, onFiltersChange: handleOnFiltersChange });
+
+  const mpaEntryPopulate = {
+    mpaa_establishment_stage: {
+      fields: ['name', 'slug'],
+    },
+    mpa: {
+      fields: ['name', 'wdpaid', 'area'],
+      populate: {
+        protection_status: {
+          fields: ['slug', 'name'],
+        },
+      },
+    },
+    location: {
+      fields: ['code', 'total_marine_area', 'bounds'],
+    },
+    mpaa_protection_level: {
+      fields: ['slug', 'name'],
+    },
+    protection_status: {
+      fields: ['slug', 'name'],
+    },
+    data_source: {
+      fields: ['slug'],
+    },
+    mpa_iucn_category: {
+      fields: ['slug'],
+    },
+  };
 
   const { data: mpasData }: { data: MpaListResponseDataItem[] } = useGetMpas(
     {
@@ -64,30 +94,10 @@ const NationalHighseasTable: FCWithMessages = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       populate: {
-        mpaa_establishment_stage: {
-          fields: ['name', 'slug'],
+        ...mpaEntryPopulate,
+        children: {
+          populate: mpaEntryPopulate,
         },
-        mpa: {
-          fields: ['name', 'wdpaid', 'area'],
-          populate: {
-            protection_status: {
-              fields: ['slug', 'name'],
-            },
-          },
-        },
-        location: {
-          fields: ['code', 'total_marine_area', 'bounds'],
-        },
-        mpaa_protection_level: {
-          fields: ['slug', 'name'],
-        },
-        protection_status: {
-          fields: ['slug', 'name'],
-        },
-        data_source: {
-          fields: ['slug'],
-        },
-        children: '*',
       },
       'pagination[limit]': -1,
     },
@@ -104,7 +114,8 @@ const NationalHighseasTable: FCWithMessages = () => {
       const protectionStatus = mpa?.protection_status?.data?.attributes;
       const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
       const mpaaProtectionLevel = mpa?.mpaa_protection_level?.data?.attributes;
-      const dataSource = mpa?.data_source?.data?.attributes?.slug;
+      const dataSource = mpa?.data_source?.data?.attributes;
+      const iucnCategory = mpa?.mpa_iucn_category?.data?.attributes;
 
       const coveragePercentage = (mpa.area / locationsQuery.data?.totalMarineArea) * 100;
 
@@ -115,10 +126,12 @@ const NationalHighseasTable: FCWithMessages = () => {
         establishmentStage: establishmentStage?.slug || 'N/A',
         protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
         area: mpa?.area,
+        dataSource: dataSource?.slug,
+        iucnCategory: iucnCategory?.slug,
         map: {
           wdpaId: mpa?.wdpaid,
           bounds: mpa?.bbox,
-          dataSource,
+          dataSource: dataSource?.slug,
         },
       };
     };

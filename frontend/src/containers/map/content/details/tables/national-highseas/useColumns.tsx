@@ -19,8 +19,9 @@ export type NationalHighseasTableColumns = {
   protectedAreaType: string;
   establishmentStage: string;
   protectionLevel: string;
-  fishingProtectionLevel: string;
   area: number;
+  dataSource: string;
+  iucnCategory: string;
   map: {
     wdpaId: string;
     bounds: [number, number, number, number];
@@ -41,7 +42,8 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
     protectionLevel: protectionLevelOptions,
-    // fishingProtectionLevel: fishingProtectionLevelOptions,
+    dataSource: dataSourceOptions,
+    iucnCategory: iucnCategoryOptions,
   } = useFiltersOptions();
 
   const tooltips = useTooltips();
@@ -130,6 +132,27 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
       {
+        accessorKey: 'dataSource',
+        header: ({ column }) => (
+          <HeaderItem>
+            <FiltersButton
+              field={column.id}
+              options={dataSourceOptions}
+              values={filters[column.id]}
+              onChange={onFiltersChange}
+            />
+            {t('data-source')}
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
+        cell: ({ row }) => {
+          const { dataSource: value } = row.original;
+          const formattedValue =
+            dataSourceOptions.find((entry) => value === entry?.value)?.name || t('n-a');
+          return <>{formattedValue}</>;
+        },
+      },
+      {
         accessorKey: 'protectedAreaType',
         header: ({ column }) => (
           <HeaderItem>
@@ -148,6 +171,27 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           const formattedValue = protectionStatusOptions.find(
             (entry) => value === entry?.value
           )?.name;
+          return <>{formattedValue}</>;
+        },
+      },
+      {
+        accessorKey: 'iucnCategory',
+        header: ({ column }) => (
+          <HeaderItem>
+            <FiltersButton
+              field={column.id}
+              options={iucnCategoryOptions}
+              values={filters[column.id]}
+              onChange={onFiltersChange}
+            />
+            {t('iucn-category')}
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
+        cell: ({ row }) => {
+          const { iucnCategory: value } = row.original;
+          const formattedValue =
+            iucnCategoryOptions.find((entry) => value === entry?.value)?.name || t('n-a');
           return <>{formattedValue}</>;
         },
       },
@@ -193,32 +237,13 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           return <>{formattedValue}</>;
         },
       },
-      // {
-      //   accessorKey: 'fishingProtectionLevel',
-      //   header: ({ column }) => (
-      //     <HeaderItem>
-      //       <FiltersButton
-      //         field={column.id}
-      //         options={fishingProtectionLevelOptions}
-      //         values={filters[column.id]}
-      //         onChange={onFiltersChange}
-      //       />
-      //       {t('level-fishing-protection')}
-      //       <TooltipButton column={column} tooltips={tooltips} />
-      //     </HeaderItem>
-      //   ),
-      //   cell: ({ row }) => {
-      //     const { fishingProtectionLevel: value } = row.original;
-      //     const formattedValue =
-      //       fishingProtectionLevelOptions.find((entry) => value === entry?.value)?.name || t('n-a');
-      //     return <>{formattedValue}</>;
-      //   },
-      // },
     ];
   }, [
     t,
     tooltips,
     locale,
+    dataSourceOptions,
+    iucnCategoryOptions,
     protectionStatusOptions,
     filters,
     onFiltersChange,

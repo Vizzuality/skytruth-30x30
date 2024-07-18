@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 
 import { useLocale } from 'next-intl';
 
-import { useGetFishingProtectionLevels } from '@/types/generated/fishing-protection-level';
+import { useGetDataSources } from '@/types/generated/data-source';
+import { useGetMpaIucnCategories } from '@/types/generated/mpa-iucn-category';
 import { useGetMpaaEstablishmentStages } from '@/types/generated/mpaa-establishment-stage';
 import { useGetMpaaProtectionLevels } from '@/types/generated/mpaa-protection-level';
 import { useGetProtectionStatuses } from '@/types/generated/protection-status';
@@ -46,6 +47,46 @@ const useFiltersOptions = () => {
     }));
   }, [establishmentStages]);
 
+  // Fetch data sources and build options for the filter
+  const { data: dataSources } = useGetDataSources(
+    { locale },
+    {
+      query: {
+        select: ({ data }) =>
+          data?.filter(({ attributes }) =>
+            // ? Even though there are more data sources, we limit the display to these
+            ['mpatlas', 'protected-planet']?.includes(attributes?.slug)
+          ),
+        placeholderData: { data: [] },
+      },
+    }
+  );
+
+  const dataSourceOptions = useMemo(() => {
+    return dataSources.map(({ attributes }) => ({
+      name: attributes?.title,
+      value: attributes?.slug,
+    }));
+  }, [dataSources]);
+
+  // Fetch IUCN category options and build options for the filter
+  const { data: iucnCategories } = useGetMpaIucnCategories(
+    { locale },
+    {
+      query: {
+        select: ({ data }) => data,
+        placeholderData: { data: [] },
+      },
+    }
+  );
+
+  const iucnCategoryOptions = useMemo(() => {
+    return iucnCategories.map(({ attributes }) => ({
+      name: attributes?.name,
+      value: attributes?.slug,
+    }));
+  }, [iucnCategories]);
+
   // Fetch protection levels and build options for the filter
   const { data: protectionLevels } = useGetMpaaProtectionLevels(
     { locale },
@@ -69,28 +110,12 @@ const useFiltersOptions = () => {
     }));
   }, [protectionLevels]);
 
-  // Fetch fishing protection levels and build options for the filter
-  const { data: fishingProtectionLevels } = useGetFishingProtectionLevels(
-    { locale },
-    {
-      query: {
-        select: ({ data }) => data,
-      },
-    }
-  );
-
-  const fishingProtectionLevelOptions = useMemo(() => {
-    return fishingProtectionLevels?.map(({ attributes }) => ({
-      name: attributes?.name,
-      value: attributes?.slug,
-    }));
-  }, [fishingProtectionLevels]);
-
   return {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
+    dataSource: dataSourceOptions,
+    iucnCategory: iucnCategoryOptions,
     protectionLevel: protectionLevelOptions,
-    fishingProtectionLevel: fishingProtectionLevelOptions,
   };
 };
 
