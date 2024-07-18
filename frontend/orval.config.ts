@@ -43,6 +43,7 @@ module.exports = {
           'Mpaa-establishment-stage-stat',
           'Mpa-protection-coverage-stat',
           'Mpaa-establishment-stage-status',
+          'Mpa-iucn-category',
           'Protection-coverage-stat',
           'Protection-status',
           'Fishing-protection-level',
