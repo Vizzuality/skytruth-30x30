@@ -50,6 +50,32 @@ const NationalHighseasTable: FCWithMessages = () => {
 
   const columns = useColumns({ filters, onFiltersChange: handleOnFiltersChange });
 
+  const mpaEntryPopulate = {
+    mpaa_establishment_stage: {
+      fields: ['name', 'slug'],
+    },
+    mpa: {
+      fields: ['name', 'wdpaid', 'area'],
+      populate: {
+        protection_status: {
+          fields: ['slug', 'name'],
+        },
+      },
+    },
+    location: {
+      fields: ['code', 'total_marine_area', 'bounds'],
+    },
+    mpaa_protection_level: {
+      fields: ['slug', 'name'],
+    },
+    protection_status: {
+      fields: ['slug', 'name'],
+    },
+    data_source: {
+      fields: ['slug'],
+    },
+  };
+
   const { data: mpasData }: { data: MpaListResponseDataItem[] } = useGetMpas(
     {
       locale,
@@ -64,30 +90,10 @@ const NationalHighseasTable: FCWithMessages = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       populate: {
-        mpaa_establishment_stage: {
-          fields: ['name', 'slug'],
+        ...mpaEntryPopulate,
+        children: {
+          populate: mpaEntryPopulate,
         },
-        mpa: {
-          fields: ['name', 'wdpaid', 'area'],
-          populate: {
-            protection_status: {
-              fields: ['slug', 'name'],
-            },
-          },
-        },
-        location: {
-          fields: ['code', 'total_marine_area', 'bounds'],
-        },
-        mpaa_protection_level: {
-          fields: ['slug', 'name'],
-        },
-        protection_status: {
-          fields: ['slug', 'name'],
-        },
-        data_source: {
-          fields: ['slug'],
-        },
-        children: '*',
       },
       'pagination[limit]': -1,
     },
