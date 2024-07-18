@@ -128,12 +128,19 @@
         }
       },
       {
+        "mpa_iucn_categories": {
+          "__model__": true,
+          "slug": null,
+          "name": true,
+          "info": true
+        }
+      },
+      {
         "mpaa_establishment_stages": {
           "__model__": true,
           "slug": null,
           "name": true,
-          "info": true,
-          "mpa_protection_coverage_stats": null
+          "info": true
         }
       },
       {
