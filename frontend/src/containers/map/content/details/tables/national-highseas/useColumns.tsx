@@ -20,6 +20,7 @@ export type NationalHighseasTableColumns = {
   establishmentStage: string;
   protectionLevel: string;
   area: number;
+  dataSource: string;
   map: {
     wdpaId: string;
     bounds: [number, number, number, number];
@@ -40,6 +41,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
     protectionLevel: protectionLevelOptions,
+    dataSource: dataSourceOptions,
   } = useFiltersOptions();
 
   const tooltips = useTooltips();
@@ -128,6 +130,27 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
       {
+        accessorKey: 'dataSource',
+        header: ({ column }) => (
+          <HeaderItem>
+            <FiltersButton
+              field={column.id}
+              options={dataSourceOptions}
+              values={filters[column.id]}
+              onChange={onFiltersChange}
+            />
+            {t('data-source')}
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
+        cell: ({ row }) => {
+          const { dataSource: value } = row.original;
+          const formattedValue =
+            dataSourceOptions.find((entry) => value === entry?.value)?.name || t('n-a');
+          return <>{formattedValue}</>;
+        },
+      },
+      {
         accessorKey: 'protectedAreaType',
         header: ({ column }) => (
           <HeaderItem>
@@ -196,6 +219,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     t,
     tooltips,
     locale,
+    dataSourceOptions,
     protectionStatusOptions,
     filters,
     onFiltersChange,

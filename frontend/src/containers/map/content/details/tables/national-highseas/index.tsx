@@ -41,7 +41,7 @@ const NationalHighseasTable: FCWithMessages = () => {
     protectedAreaType: [],
     establishmentStage: [],
     protectionLevel: [],
-    fishingProtectionLevel: [],
+    dataSource: [],
   });
 
   const handleOnFiltersChange = (field, values) => {
@@ -104,7 +104,7 @@ const NationalHighseasTable: FCWithMessages = () => {
       const protectionStatus = mpa?.protection_status?.data?.attributes;
       const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
       const mpaaProtectionLevel = mpa?.mpaa_protection_level?.data?.attributes;
-      const dataSource = mpa?.data_source?.data?.attributes?.slug;
+      const dataSource = mpa?.data_source?.data?.attributes;
 
       const coveragePercentage = (mpa.area / locationsQuery.data?.totalMarineArea) * 100;
 
@@ -115,10 +115,11 @@ const NationalHighseasTable: FCWithMessages = () => {
         establishmentStage: establishmentStage?.slug || 'N/A',
         protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
         area: mpa?.area,
+        dataSource: dataSource?.slug,
         map: {
           wdpaId: mpa?.wdpaid,
           bounds: mpa?.bbox,
-          dataSource,
+          dataSource: dataSource?.slug,
         },
       };
     };
