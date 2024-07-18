@@ -21,6 +21,7 @@ export type NationalHighseasTableColumns = {
   protectionLevel: string;
   area: number;
   dataSource: string;
+  iucnCategory: string;
   map: {
     wdpaId: string;
     bounds: [number, number, number, number];
@@ -42,6 +43,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     establishmentStage: establishmentStageOptions,
     protectionLevel: protectionLevelOptions,
     dataSource: dataSourceOptions,
+    iucnCategory: iucnCategoryOptions,
   } = useFiltersOptions();
 
   const tooltips = useTooltips();
@@ -173,6 +175,27 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         },
       },
       {
+        accessorKey: 'iucnCategory',
+        header: ({ column }) => (
+          <HeaderItem>
+            <FiltersButton
+              field={column.id}
+              options={iucnCategoryOptions}
+              values={filters[column.id]}
+              onChange={onFiltersChange}
+            />
+            {t('iucn-category')}
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
+        cell: ({ row }) => {
+          const { iucnCategory: value } = row.original;
+          const formattedValue =
+            iucnCategoryOptions.find((entry) => value === entry?.value)?.name || t('n-a');
+          return <>{formattedValue}</>;
+        },
+      },
+      {
         accessorKey: 'establishmentStage',
         header: ({ column }) => (
           <HeaderItem>
@@ -220,6 +243,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     tooltips,
     locale,
     dataSourceOptions,
+    iucnCategoryOptions,
     protectionStatusOptions,
     filters,
     onFiltersChange,

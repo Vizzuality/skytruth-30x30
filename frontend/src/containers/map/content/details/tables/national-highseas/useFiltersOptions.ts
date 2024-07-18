@@ -6,6 +6,7 @@ import { useGetDataSources } from '@/types/generated/data-source';
 import { useGetMpaaEstablishmentStages } from '@/types/generated/mpaa-establishment-stage';
 import { useGetMpaaProtectionLevels } from '@/types/generated/mpaa-protection-level';
 import { useGetProtectionStatuses } from '@/types/generated/protection-status';
+import { useGetMpaIucnCategories } from '@/types/generated/mpa-iucn-category';
 
 const useFiltersOptions = () => {
   const locale = useLocale();
@@ -46,7 +47,7 @@ const useFiltersOptions = () => {
     }));
   }, [establishmentStages]);
 
-  // Fetch data sources stages and build options for the filter
+  // Fetch data sources and build options for the filter
   const { data: dataSources } = useGetDataSources(
     { locale },
     {
@@ -67,6 +68,24 @@ const useFiltersOptions = () => {
       value: attributes?.slug,
     }));
   }, [dataSources]);
+
+  // Fetch IUCN category options and build options for the filter
+  const { data: iucnCategories } = useGetMpaIucnCategories(
+    { locale },
+    {
+      query: {
+        select: ({ data }) => data,
+        placeholderData: { data: [] },
+      },
+    }
+  );
+
+  const iucnCategoryOptions = useMemo(() => {
+    return iucnCategories.map(({ attributes }) => ({
+      name: attributes?.name,
+      value: attributes?.slug,
+    }));
+  }, [iucnCategories]);
 
   // Fetch protection levels and build options for the filter
   const { data: protectionLevels } = useGetMpaaProtectionLevels(
@@ -95,6 +114,7 @@ const useFiltersOptions = () => {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
     dataSource: dataSourceOptions,
+    iucnCategory: iucnCategoryOptions,
     protectionLevel: protectionLevelOptions,
   };
 };
