@@ -19,7 +19,6 @@ export type NationalHighseasTableColumns = {
   protectedAreaType: string;
   establishmentStage: string;
   protectionLevel: string;
-  fishingProtectionLevel: string;
   area: number;
   map: {
     wdpaId: string;
@@ -41,7 +40,6 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
     protectionLevel: protectionLevelOptions,
-    // fishingProtectionLevel: fishingProtectionLevelOptions,
   } = useFiltersOptions();
 
   const tooltips = useTooltips();
@@ -193,27 +191,6 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           return <>{formattedValue}</>;
         },
       },
-      // {
-      //   accessorKey: 'fishingProtectionLevel',
-      //   header: ({ column }) => (
-      //     <HeaderItem>
-      //       <FiltersButton
-      //         field={column.id}
-      //         options={fishingProtectionLevelOptions}
-      //         values={filters[column.id]}
-      //         onChange={onFiltersChange}
-      //       />
-      //       {t('level-fishing-protection')}
-      //       <TooltipButton column={column} tooltips={tooltips} />
-      //     </HeaderItem>
-      //   ),
-      //   cell: ({ row }) => {
-      //     const { fishingProtectionLevel: value } = row.original;
-      //     const formattedValue =
-      //       fishingProtectionLevelOptions.find((entry) => value === entry?.value)?.name || t('n-a');
-      //     return <>{formattedValue}</>;
-      //   },
-      // },
     ];
   }, [
     t,
