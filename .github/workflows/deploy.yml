@@ -150,7 +150,8 @@ jobs:
       - name: Copy env variables to docker
         run: |
           echo "${{ secrets[format('{0}_CMS_ENV', steps.extract_environment.outputs.environment)] }}" > cms/.env
-          echo "${{ secrets[format('{0}_CMS_ENV_TF_MANAGED', steps.extract_environment.outputs.environment)] }}" > cms/.env
+          # append Terraform managed secrets
+          echo "${{ secrets[format('{0}_CMS_ENV_TF_MANAGED', steps.extract_environment.outputs.environment)] }}" >> cms/.env
 
       - name: Build and Push Container
         env:
