@@ -1,10 +1,11 @@
 from pathlib import Path
-from typing import List, Union, Dict
+from typing import Callable, List, Union, Dict
 import pandas as pd
 import geopandas as gpd
 import numpy as np
 from shapely.geometry import Polygon
 from shapely.ops import unary_union
+import json
 
 import asyncio
 from tqdm.asyncio import tqdm
@@ -65,7 +66,7 @@ def mpaatlas_filter_stablishment(df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     return df[(df["establishm"].isin(["actively managed", "implemented"]))].copy()
 
 
-def status(df: pd.DataFrame) -> pd.DataFrame:
+def status(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
     return df.replace(
         {"establishment_stage": "proposed/committed"},
         {"establishment_stage": "proposed or committed"},
@@ -73,17 +74,33 @@ def status(df: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def create_year(df: pd.DataFrame) -> pd.DataFrame:
+def create_year(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
     df["proposed_date"] = df["proposed_date"].str[:4].astype("Int64")
     df["designated_date"] = df["designated_date"].str[:4].astype("Int64")
     df["implemented_date"] = df["implemented_date"].str[:4].astype("Int64")
-    return df.assign(
-        year=df[["proposed_date", "designated_date", "implemented_date"]]
+    year = (
+        df[["proposed_date", "designated_date", "implemented_date"]]
         .max(axis=1)
         .fillna(0)
         .astype(int)
-        .replace(0, pd.NaT)
     )
+    year = np.where(
+        year == 0, np.nan, year  # type: ignore
+    )  # Use numpy.where to conditionally replace 0 with pd.NaT
+    return df.assign(year=year)
+
+
+# def create_year(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
+#     df["proposed_date"] = df["proposed_date"].str[:4].astype("Int64")
+#     df["designated_date"] = df["designated_date"].str[:4].astype("Int64")
+#     df["implemented_date"] = df["implemented_date"].str[:4].astype("Int64")
+#     return df.assign(
+#         year=df[["proposed_date", "designated_date", "implemented_date"]]
+#         .max(axis=1)
+#         .fillna(0)
+#         .astype(int)
+#         .replace(0, pd.NaT)
+#     )
 
 
 def split_by_year(
@@ -110,13 +127,13 @@ def split_by_year(
     return [prior_2010, after_2010]
 
 
-def get_mpas(df: pd.DataFrame) -> pd.DataFrame:
+def get_mpas(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
     mask1 = df["wdpa_id"].notna()
     mask2 = df["wdpa_id"] != "0"
     return df[mask1][mask2].reset_index()
 
 
-def set_fps_classes(df: pd.DataFrame) -> pd.DataFrame:
+def set_fps_classes(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
     fps_classes = {1: "less", 2: "less", 3: "moderately", 4: "highly", 5: "highly"}
     return df.assign(
         FPS_cat=df["removal_of_marine_life_is_prohibited"].map(fps_classes),
@@ -125,7 +142,7 @@ def set_fps_classes(df: pd.DataFrame) -> pd.DataFrame:
 
 
 ### Iso processors
-def set_location_iso(df: pd.DataFrame) -> pd.DataFrame:
+def set_location_iso(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
     country_map = load_country_mapping()
 
     def get_parent_iso(country):
@@ -140,7 +157,7 @@ def set_location_iso(df: pd.DataFrame) -> pd.DataFrame:
     return df.assign(iso=df.country.apply(get_parent_iso))
 
 
-def assign_iso3(df):
+def assign_iso3(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
     """Assign ISO3 code. specific for Mpa data"""
 
     def set_iso3(row):
@@ -159,8 +176,8 @@ def assign_iso3(df):
 
 
 def add_location_iso(
-    df: pd.DataFrame, iso_cols: List[str] = ["ISO_SOV1", "ISO_SOV2", "ISO_SOV3"]
-) -> pd.DataFrame:
+    df: pd.DataFrame | gpd.GeoDataFrame, iso_cols: List[str] = ["ISO_SOV1", "ISO_SOV2", "ISO_SOV3"]
+) -> pd.DataFrame | gpd.GeoDataFrame:
     # Create new column "iso" that has the field "ISO_SOV1" for all rows except those in which ISO_SOV2 and ISO_SOV3 are not null. In such cases concatenate ISO_SOV1, ISO_SOV2 and ISO_SOV3
     def reduce_iso(row):
         filtered_isos = filter(lambda iso: isinstance(iso, str), row)
@@ -170,7 +187,9 @@ def add_location_iso(
     return df.assign(iso=lambda row: row[iso_cols].apply(reduce_iso, axis=1))
 
 
-def add_region_iso(df: pd.DataFrame, iso_column) -> pd.DataFrame:
+def add_region_iso(
+    df: pd.DataFrame | gpd.GeoDataFrame, iso_column
+) -> pd.DataFrame | gpd.GeoDataFrame:
     regions = load_regions()
 
     def find_region_iso(iso: str) -> Union[str, None]:
@@ -180,7 +199,7 @@ def add_region_iso(df: pd.DataFrame, iso_column) -> pd.DataFrame:
     return df.assign(region=lambda row: row[iso_column].apply(find_region_iso))
 
 
-def add_location_name(df):
+def add_location_name(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
     iso_map = load_iso_mapping()
 
     def get_name(iso):
@@ -190,7 +209,7 @@ def add_location_name(df):
     return df.assign(name=df.iso.apply(get_name))
 
 
-def add_groups_and_members(df: pd.DataFrame) -> pd.DataFrame:
+def add_groups_and_members(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
     return df.assign(
         groups=lambda row: row[["region", "location_type"]].apply(
             lambda x: (np.where(df.iso == x["region"])[0] + 1).tolist()
@@ -234,8 +253,8 @@ def add_envelope(df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     return df.assign(geometry=lambda row: row["geometry"].envelope)
 
 
-def add_bbox(df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-    return df.assign(bounds=lambda row: row["geometry"].bounds.apply(list, axis=1))
+def add_bbox(df: gpd.GeoDataFrame, col_name: str = "bounds") -> gpd.GeoDataFrame:
+    return df.assign(**{col_name: df.geometry.bounds.apply(list, axis=1)})
 
 
 def calculate_area(
@@ -558,10 +577,6 @@ def fix_monaco(df: pd.DataFrame, iso_column="location_i", area_column="area_km2"
     return df
 
 
-def set_area(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(area_km2=df[["area_km2_y", "area_km2_x"]].max(axis=1))
-
-
 def separate_parent_iso(df: pd.DataFrame, iso_column="location_i", separator=";") -> pd.DataFrame:
     df[iso_column] = (
         df[iso_column].str.replace(" ", "").str.replace(":", separator).str.split(separator)
@@ -582,30 +597,70 @@ def filter_location(df: pd.DataFrame) -> pd.DataFrame:
     return df[~df.location.isna()]
 
 
+def extract_wdpaid_mpaatlas(gdf):
+    return gdf.assign(wdpaid=gdf.wdpa_id.str.extract(r"(\d+(?:_\d+)*)").astype("Int64"))
+
+
+def columns_to_lower(gdf):
+    gdf.columns = gdf.columns.str.lower()
+    return gdf
+
+
+def define_is_child(
+    gdf: pd.DataFrame | gpd.GeoDataFrame,
+    gby: str = "wdpaid",
+    sort_by: dict[str, bool] = {"wdpa_pid": True, "wdpa_pid": True, "source": False},
+    col_name: str = "is_child",
+) -> pd.DataFrame | gpd.GeoDataFrame:
+    return gdf.assign(
+        **{
+            col_name: np.where(
+                gdf.index.isin(
+                    gdf.sort_values(by=list(sort_by.keys()), ascending=list(sort_by.values()))
+                    .groupby(gby)
+                    .nth(slice(1, None))
+                    .index
+                ),
+                True,
+                False,
+            )
+        }
+    )
+
+
+def define_childs_ids(group) -> tuple:
+
+    if len(group) > 1:
+        return (
+            group[group.is_child.eq(False)].index.values[0],
+            group[group.is_child.eq(True)].index.tolist(),
+        )
+    else:
+        return pd.NA, pd.NA
+
+
+def add_child_parent_relationship(
+    df: pd.DataFrame | gpd.GeoDataFrame,
+    gby: str = "wdpaid",
+    cols: list = ["wdpaid", "wdpa_pid", "is_child", "data_source"],
+) -> pd.DataFrame | gpd.GeoDataFrame:
+    groups: pd.Series = df.groupby(gby)[cols].apply(define_childs_ids)
+    df["children"] = (
+        pd.DataFrame([[a, b] for a, b in groups.values], columns=["parent", "children"])
+        .dropna(subset=["parent"])
+        .set_index("parent")
+    )
+
+    return df
+
+
+def set_child_id(
+    df: pd.DataFrame | gpd.GeoDataFrame, columns: list[str] = ["wdpa_pid", "mpa_zone_i"]
+) -> pd.DataFrame | gpd.GeoDataFrame:
+    return df.assign(child_id=df[columns].bfill(axis=1)[columns[0]])
+
+
 ## OUTPUT FUNCTIONS
-
-
-# # TODO: check if this is still needed as we also have output
-# def output_coverage(df: pd.DataFrame, cols: Dict[str, str]) -> pd.DataFrame:
-#     locations_code = load_locations_code()
-#     return (
-#         df.join(locations_code.set_index("code"), on="PARENT_ISO", how="left")
-#         .replace({"PA_DEF": {"0": 2, "1": 1}})
-#         .rename(columns=cols)
-#         .drop(columns=["PARENT_ISO", "cumsum_area"])
-#         .assign(
-#             id=df.index + 1,
-#             cumSumProtectedArea=df.cumSumProt.round(2),
-#             protectedArea=(
-#                 df.sort_values(by=["PARENT_ISO", "year", "PA_DEF"]).cumSumProt
-#                 - df.sort_values(by=["PARENT_ISO", "year", "PA_DEF"])
-#                 .groupby(["PA_DEF", "PARENT_ISO", "year"])
-#                 .cumSumProt.shift(-1, fill_value=0)
-#                 .reset_index(drop=True)
-#             ).round(2),
-#         )
-#         .set_index("id")
-#     )
 
 
 def output(
@@ -637,12 +692,38 @@ def output(
     )
 
 
-def batch_export(df: pd.DataFrame, batch_size: int, schema: object, folder: Path, filename: str):
+# TODO: type this better
+def batch_export(
+    df: pd.DataFrame,
+    batch_size: int,
+    schema: Callable[[pd.DataFrame], pd.DataFrame],
+    folder: Path,
+    filename: str,
+    format: str = "csv",
+    strapi_colection: str = "mpa",
+) -> None:
     prev = 0
-    for idx, size in enumerate(range(batch_size, len(df.index) + batch_size, batch_size)):
-        schema(df[(df.index > prev) & (df.index < size)]).to_csv(
-            folder.joinpath(f"{filename}_{idx}.csv"),
-            index=True,
-            encoding="utf-8",
-        )
-        prev = size
+    if format == "csv":
+        for idx, size in enumerate(range(batch_size, len(df.index) + batch_size, batch_size)):
+            schema(df[(df.index > prev) & (df.index < size)]).to_csv(
+                folder.joinpath(f"{filename}_{idx}.csv"),
+                index=True,
+                encoding="utf-8",
+            )
+            prev = size
+    elif format == "json":
+        df = df.assign(id=df.index)
+        for idx, size in enumerate(range(batch_size, len(df.index) + batch_size, batch_size)):
+            output_locations = {
+                "version": 2,
+                "data": {
+                    f"api::{strapi_colection}.{strapi_colection}": schema(
+                        df[(df.index > prev) & (df.index < size)]
+                    ).to_dict(orient="index", index=True)
+                },
+            }
+            with open(folder.joinpath(f"{filename}_{idx}.json"), "w") as f:
+                json.dump(output_locations, f)
+            prev = size
+    else:
+        raise ValueError("Invalid format")

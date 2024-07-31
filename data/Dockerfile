@@ -56,6 +56,8 @@ RUN npm install -g mapshaper
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && ./aws/install
 
+RUN chown -R $MAMBA_USER:$MAMBA_USER /home/$MAMBA_USER
 USER $MAMBA_USER
+
 
 ENTRYPOINT ["/usr/local/bin/_entrypoint.sh", "jupyter", "lab", "--ip=0.0.0.0","--allow-root", "--no-browser", "--collaborative", "--ServerApp.disable_check_xsrf=True", "--ServerApp.token=''"]
