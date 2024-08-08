@@ -10,6 +10,8 @@ const TOOLTIP_MAPPING = {
   protectionLevel: 'protection-level',
   fishingProtectionLevel: 'fishing-protection-level',
   area: 'protected-area-mpa',
+  dataSource: 'details-data-source',
+  iucnCategory: 'details-iucn-category',
 };
 
 const useTooltips = () => {
