@@ -71,25 +71,26 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           );
         },
       },
-      {
-        accessorKey: 'map',
-        header: null,
-        cell: ({ row }) => {
-          const { bounds, wdpaId, dataSource } = row.original?.map || {};
+      // ? LayerPreview: We're not displaying the layer preview at this moment, but we want to preserve the code
+      // {
+      //   accessorKey: 'map',
+      //   header: null,
+      //   cell: ({ row }) => {
+      //     const { bounds, wdpaId, dataSource } = row.original?.map || {};
 
-          return (
-            <div className="relative -mr-0.5 h-[calc(100%+4px)] w-12 border-l border-r border-t border-b border-black">
-              <LayerPreview
-                {...{
-                  wdpaId,
-                  bounds,
-                  dataSource,
-                }}
-              />
-            </div>
-          );
-        },
-      },
+      //     return (
+      //       <div className="relative -mr-0.5 h-[calc(100%+4px)] w-12 border-l border-r border-t border-b border-black">
+      //         <LayerPreview
+      //           {...{
+      //             wdpaId,
+      //             bounds,
+      //             dataSource,
+      //           }}
+      //         />
+      //       </div>
+      //     );
+      //   },
+      // },
       {
         accessorKey: 'coverage',
         header: ({ column }) => (
