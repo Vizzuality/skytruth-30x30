@@ -128,11 +128,12 @@ const NationalHighseasTable: FCWithMessages = () => {
         area: mpa?.area,
         dataSource: dataSource?.slug,
         iucnCategory: iucnCategory?.slug,
-        map: {
-          wdpaId: mpa?.wdpaid,
-          bounds: mpa?.bbox,
-          dataSource: dataSource?.slug,
-        },
+        // ? LayerPreview: We're not displaying the layer preview at this moment, but we want to preserve the code
+        // map: {
+        //   wdpaId: mpa?.wdpaid,
+        //   bounds: mpa?.bbox,
+        //   dataSource: dataSource?.slug,
+        // },
       };
     };
 
@@ -157,7 +158,7 @@ const NationalHighseasTable: FCWithMessages = () => {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return <Table columns={columns} data={tableData} columnSeparators={['map']} />;
+  return <Table columns={columns} data={tableData} />;
 };
 
 NationalHighseasTable.messages = [
