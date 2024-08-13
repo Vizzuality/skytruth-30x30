@@ -213,7 +213,8 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         cell: ({ row }) => {
           const { establishmentStage: value } = row.original;
           const formattedValue =
-            establishmentStageOptions.find((entry) => value === entry?.value)?.name || t('n-a');
+            establishmentStageOptions.find((entry) => value === entry?.value)?.name ||
+            t('not-assessed');
           return <>{formattedValue}</>;
         },
       },
@@ -234,7 +235,8 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         cell: ({ row }) => {
           const { protectionLevel: value } = row.original;
           const formattedValue =
-            protectionLevelOptions.find((entry) => value === entry?.value)?.name || t('n-a');
+            protectionLevelOptions.find((entry) => value === entry?.value)?.name ||
+            t('not-assessed');
           return <>{formattedValue}</>;
         },
       },
