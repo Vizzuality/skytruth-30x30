@@ -1424,9 +1424,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@localazy/strapi-plugin@npm:^0.2.6":
-  version: 0.2.6
-  resolution: "@localazy/strapi-plugin@npm:0.2.6"
+"@localazy/strapi-plugin@npm:0.2.9":
+  version: 0.2.9
+  resolution: "@localazy/strapi-plugin@npm:0.2.9"
   dependencies:
     "@david-vaclavek/deep-keys": ^0.5.0
     "@localazy/api-client": ^2.1.5
@@ -1452,7 +1452,7 @@ __metadata:
     "@strapi/strapi": ^4.0.0
   bin:
     strapi-plugin: install/index.mjs
-  checksum: 2237170fedd958284f4cc3b698c3eb48bc8bd2f94bc1e66d5595b7f0339af779daaad6c1ef4b9e9e45576b62efb747f72061b7f4f8e5ad1d77a557f720c0c48e
+  checksum: b6dd9c95f0553b2e5c636e5b1360e087b2920817f2fbc96a25f5f0230dd7d406ca95adf416f7bd38031ec289d34770a90588f1a559f7c7bb9ba64073d4d0b140
   languageName: node
   linkType: hard
 
@@ -2580,7 +2580,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@serverless-app-scaffold/cms@workspace:."
   dependencies:
-    "@localazy/strapi-plugin": ^0.2.6
+    "@localazy/strapi-plugin": 0.2.9
     "@strapi/plugin-documentation": 4.14.5
     "@strapi/plugin-i18n": 4.14.5
     "@strapi/plugin-users-permissions": 4.14.5
