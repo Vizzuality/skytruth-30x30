@@ -172,7 +172,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           const formattedValue = protectionStatusOptions.find(
             (entry) => value === entry?.value
           )?.name;
-          return <>{formattedValue}</>;
+          return <>{formattedValue ?? '-'}</>;
         },
       },
       {
