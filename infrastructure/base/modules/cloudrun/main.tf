@@ -43,7 +43,7 @@ resource "google_cloud_run_service" "cloud_run" {
         }
         resources {
           limits = {
-            memory = "1Gi"
+            memory = var.cloudrun_memory_limit
           }
         }
       }
