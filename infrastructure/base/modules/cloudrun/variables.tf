@@ -80,5 +80,5 @@ variable "tag" {
 variable "cloudrun_memory_limit" {
   type        = string
   description = "Memory limit for the Cloud Run service"
-  default     = "512Gi"
+  default     = "512Mi"
 }
