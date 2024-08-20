@@ -41,6 +41,11 @@ resource "google_cloud_run_service" "cloud_run" {
         ports {
           container_port = var.container_port
         }
+        resources {
+          limits = {
+            memory = "1Gi"
+          }
+        }
       }
     }
     metadata {
