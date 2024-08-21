@@ -1245,6 +1245,7 @@ export interface ApiFishingProtectionLevelStatFishingProtectionLevelStat
       Attribute.SetMinMax<{
         min: 0;
       }>;
+    pct: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
