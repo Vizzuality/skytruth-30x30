@@ -40,6 +40,7 @@ class FPLSchema(pa.DataFrameModel):
     location: Series[int] = pa.Field(gt=0, coerce=True)
     fishing_protection_level: Series[int] = pa.Field(ge=0, coerce=True)
     area: Series[float] = pa.Field(ge=0, coerce=True)
+    pct: Series[float] = pa.Field(ge=0, coerce=True)
 
 
 class HabitatsSchema(pa.DataFrameModel):
