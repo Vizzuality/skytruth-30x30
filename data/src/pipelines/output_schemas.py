@@ -62,7 +62,7 @@ class MPAsSchema(pa.DataFrameModel):
     bbox: Series[List[float]] = pa.Field(coerce=True)
     location: Series[int] = pa.Field(ge=0, coerce=True)
     protection_status: Series[int] = pa.Field(ge=0, nullable=True)
-    mpaa_establishment_stage: Series[int] = pa.Field(ge=0, nullable=True, coerce=True)
+    mpaa_establishment_stage: Series[pd.Int32Dtype] = pa.Field(ge=0, nullable=True, coerce=True)
     mpaa_protection_level: Series[pd.Int32Dtype] = pa.Field(ge=0, nullable=True, coerce=True)
     mpa_iucn_category: Series[pd.Int32Dtype] = pa.Field(coerce=True, nullable=True)
     designation: Series[str] = pa.Field(coerce=True, nullable=True)
