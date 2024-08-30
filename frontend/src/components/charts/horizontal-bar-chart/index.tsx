@@ -97,7 +97,7 @@ const HorizontalBarChart: FCWithMessages<HorizontalBarChartProps> = ({
               left: `${targetPositionPercentage}%`,
             }}
           >
-            <span className="absolute right-0 top-5 whitespace-nowrap text-xs text-orange">
+            <span className="absolute left-0 top-5 whitespace-nowrap text-xs text-orange">
               {t('30%-target')}
             </span>
           </span>
