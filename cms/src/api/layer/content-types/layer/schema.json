@@ -89,6 +89,15 @@
         }
       },
       "component": "legend.legend"
+    },
+    "default": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "boolean",
+      "default": false
     }
   }
 }

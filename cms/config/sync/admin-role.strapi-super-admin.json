@@ -879,7 +879,8 @@
           "legend_config.items.icon",
           "legend_config.items.color",
           "legend_config.items.value",
-          "legend_config.items.description"
+          "legend_config.items.description",
+          "default"
         ],
         "locales": [
           "en",
@@ -937,7 +938,8 @@
           "legend_config.items.icon",
           "legend_config.items.color",
           "legend_config.items.value",
-          "legend_config.items.description"
+          "legend_config.items.description",
+          "default"
         ],
         "locales": [
           "en",
@@ -969,7 +971,8 @@
           "legend_config.items.icon",
           "legend_config.items.color",
           "legend_config.items.value",
-          "legend_config.items.description"
+          "legend_config.items.description",
+          "default"
         ],
         "locales": [
           "en",

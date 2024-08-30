@@ -6695,6 +6695,7 @@ export interface Layer {
   metadata?: DocumentationMetadataComponent;
   dataset?: LayerDataset;
   legend_config?: LegendLegendComponent;
+  default?: boolean;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -6756,6 +6757,7 @@ export type LayerDatasetDataAttributesLayersDataItemAttributes = {
   metadata?: LayerDatasetDataAttributesLayersDataItemAttributesMetadata;
   dataset?: LayerDatasetDataAttributesLayersDataItemAttributesDataset;
   legend_config?: LayerDatasetDataAttributesLayersDataItemAttributesLegendConfig;
+  default?: boolean;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -7095,6 +7097,7 @@ export type LayerRequestData = {
   metadata?: DocumentationMetadataComponent;
   dataset?: LayerRequestDataDataset;
   legend_config?: LegendLegendComponent;
+  default?: boolean;
   locale?: string;
 };
 
@@ -7123,6 +7126,7 @@ export interface LayerLocalizationRequest {
   metadata?: DocumentationMetadataComponent;
   dataset?: LayerLocalizationRequestDataset;
   legend_config?: LegendLegendComponent;
+  default?: boolean;
   locale: string;
 }
 
@@ -9195,6 +9199,7 @@ export type DatasetLayersDataItemAttributes = {
   metadata?: DatasetLayersDataItemAttributesMetadata;
   dataset?: DatasetLayersDataItemAttributesDataset;
   legend_config?: DatasetLayersDataItemAttributesLegendConfig;
+  default?: boolean;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;

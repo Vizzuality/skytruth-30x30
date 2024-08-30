@@ -76,20 +76,6 @@
           "sortable": false
         }
       },
-      "legend_config": {
-        "edit": {
-          "label": "legend_config",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "legend_config",
-          "searchable": false,
-          "sortable": false
-        }
-      },
       "interaction_config": {
         "edit": {
           "label": "interaction_config",
@@ -129,6 +115,34 @@
         },
         "list": {
           "label": "dataset",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "legend_config": {
+        "edit": {
+          "label": "legend_config",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "legend_config",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "default": {
+        "edit": {
+          "label": "default",
+          "description": "Whether the layer is shown by default on the map",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "default",
           "searchable": true,
           "sortable": true
         }
@@ -193,12 +207,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "title",
-        "type",
-        "metadata"
-      ],
       "edit": [
         [
           {
@@ -208,6 +216,16 @@
           {
             "name": "type",
             "size": 6
+          }
+        ],
+        [
+          {
+            "name": "dataset",
+            "size": 6
+          },
+          {
+            "name": "default",
+            "size": 4
           }
         ],
         [
@@ -239,13 +257,13 @@
             "name": "metadata",
             "size": 12
           }
-        ],
-        [
-          {
-            "name": "dataset",
-            "size": 6
-          }
         ]
+      ],
+      "list": [
+        "id",
+        "title",
+        "type",
+        "metadata"
       ]
     }
   },

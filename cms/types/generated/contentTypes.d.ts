@@ -1447,6 +1447,13 @@ export interface ApiLayerLayer extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    default: Attribute.Boolean &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

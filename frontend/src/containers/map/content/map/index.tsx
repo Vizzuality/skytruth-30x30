@@ -23,7 +23,7 @@ import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
 import RegionsPopup from '@/containers/map/content/map/popup/regions';
-import { useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
+import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
 import { sidebarAtom } from '@/containers/map/store';
 import {
   bboxLocation,
@@ -45,6 +45,7 @@ const MainMap: FCWithMessages = () => {
   const locale = useLocale();
 
   const [{ bbox: URLBbox }, setMapSettings] = useSyncMapSettings();
+  const [, setMapLayers] = useSyncMapLayers();
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
   const isSidebarOpen = useAtomValue(sidebarAtom);
@@ -91,6 +92,30 @@ const MainMap: FCWithMessages = () => {
       },
     }
   );
+
+  const { data: defaultLayers } = useGetLayers(
+    {
+      locale,
+      fields: 'id',
+      filters: {
+        default: {
+          $eq: true,
+        },
+      },
+    },
+    {
+      query: {
+        select: ({ data }) => data.map(({ id }) => id),
+      },
+    }
+  );
+
+  // Once we have fetched from the CMS which layers are active by default, we set toggle them on
+  useEffect(() => {
+    if (defaultLayers) {
+      setMapLayers(defaultLayers);
+    }
+  }, [setMapLayers, defaultLayers]);
 
   useEffect(() => {
     setLocationBbox(locationsQuery?.data?.bounds as CustomMapProps['bounds']['bbox']);
