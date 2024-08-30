@@ -158,7 +158,7 @@ const FishingProtectionWidget: React.FC<FishingProtectionWidgetProps> = ({ locat
       return parsedProtectionLevel(t('highly-protected-from-fishing'), protectionLevel, data);
     });
 
-    return parsedFishingProtectionLevelData;
+    return parsedFishingProtectionLevelData ?? [];
   }, [t, protectionLevelsData, metadata]);
 
   const noData = !widgetChartData.length;
