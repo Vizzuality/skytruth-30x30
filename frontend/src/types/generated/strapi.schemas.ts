@@ -2151,6 +2151,7 @@ export type ProtectionCoverageStatLocationDataAttributesFishingProtectionLevelSt
     location?: ProtectionCoverageStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesLocation;
     fishing_protection_level?: ProtectionCoverageStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesFishingProtectionLevel;
     area?: number;
+    pct?: number;
     createdAt?: string;
     updatedAt?: string;
     createdBy?: ProtectionCoverageStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesCreatedBy;
@@ -2852,6 +2853,7 @@ export type MpaaProtectionLevelStatLocationDataAttributesFishingProtectionLevelS
     location?: MpaaProtectionLevelStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesLocation;
     fishing_protection_level?: MpaaProtectionLevelStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesFishingProtectionLevel;
     area?: number;
+    pct?: number;
     createdAt?: string;
     updatedAt?: string;
     createdBy?: MpaaProtectionLevelStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesCreatedBy;
@@ -3927,6 +3929,7 @@ export type MpaaEstablishmentStageStatLocationDataAttributesFishingProtectionLev
     location?: MpaaEstablishmentStageStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesLocation;
     fishing_protection_level?: MpaaEstablishmentStageStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesFishingProtectionLevel;
     area?: number;
+    pct?: number;
     createdAt?: string;
     updatedAt?: string;
     createdBy?: MpaaEstablishmentStageStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesCreatedBy;
@@ -5295,6 +5298,7 @@ export type MpaChildrenDataItemAttributesLocationDataAttributesFishingProtection
     location?: MpaChildrenDataItemAttributesLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesLocation;
     fishing_protection_level?: MpaChildrenDataItemAttributesLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesFishingProtectionLevel;
     area?: number;
+    pct?: number;
     createdAt?: string;
     updatedAt?: string;
     createdBy?: MpaChildrenDataItemAttributesLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesCreatedBy;
@@ -6164,6 +6168,7 @@ export type LocationGroupsDataItemAttributesFishingProtectionLevelStatsDataItemA
   location?: LocationGroupsDataItemAttributesFishingProtectionLevelStatsDataItemAttributesLocation;
   fishing_protection_level?: LocationGroupsDataItemAttributesFishingProtectionLevelStatsDataItemAttributesFishingProtectionLevel;
   area?: number;
+  pct?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: LocationGroupsDataItemAttributesFishingProtectionLevelStatsDataItemAttributesCreatedBy;
@@ -6662,6 +6667,7 @@ export type LayerDatasetDataAttributesLocalizations = {
 export type LayerDatasetDataAttributes = {
   name?: string;
   layers?: LayerDatasetDataAttributesLayers;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -7515,6 +7521,7 @@ export type HabitatStatLocationDataAttributesFishingProtectionLevelStatsDataItem
   location?: HabitatStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesLocation;
   fishing_protection_level?: HabitatStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesFishingProtectionLevel;
   area?: number;
+  pct?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: HabitatStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesCreatedBy;
@@ -8169,6 +8176,7 @@ export interface FishingProtectionLevelStat {
   location?: FishingProtectionLevelStatLocation;
   fishing_protection_level?: FishingProtectionLevelStatFishingProtectionLevel;
   area: number;
+  pct?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: FishingProtectionLevelStatCreatedBy;
@@ -8521,6 +8529,7 @@ export type FishingProtectionLevelStatLocationDataAttributesFishingProtectionLev
     location?: FishingProtectionLevelStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesLocation;
     fishing_protection_level?: FishingProtectionLevelStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesFishingProtectionLevel;
     area?: number;
+    pct?: number;
     createdAt?: string;
     updatedAt?: string;
     createdBy?: FishingProtectionLevelStatLocationDataAttributesFishingProtectionLevelStatsDataItemAttributesCreatedBy;
@@ -9141,6 +9150,7 @@ export type DatasetCreatedBy = {
 export interface Dataset {
   name: string;
   layers?: DatasetLayers;
+  slug: string;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -9237,6 +9247,7 @@ export type DatasetLayersDataItemAttributesDatasetDataAttributesLocalizations = 
 export type DatasetLayersDataItemAttributesDatasetDataAttributes = {
   name?: string;
   layers?: DatasetLayersDataItemAttributesDatasetDataAttributesLayers;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -9544,6 +9555,7 @@ export type DatasetRequestDataLayersItem = number | string;
 export type DatasetRequestData = {
   name: string;
   layers?: DatasetRequestDataLayersItem[];
+  slug: string;
   locale?: string;
 };
 
@@ -9556,6 +9568,7 @@ export type DatasetLocalizationRequestLayersItem = number | string;
 export interface DatasetLocalizationRequest {
   name: string;
   layers?: DatasetLocalizationRequestLayersItem[];
+  slug: string;
   locale: string;
 }
 

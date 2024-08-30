@@ -30,6 +30,16 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::layer.layer"
+    },
+    "slug": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "unique": false,
+      "required": true
     }
   }
 }

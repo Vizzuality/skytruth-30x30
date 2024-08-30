@@ -1132,6 +1132,13 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
       'oneToMany',
       'api::layer.layer'
     >;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

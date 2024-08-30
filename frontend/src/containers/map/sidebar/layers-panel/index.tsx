@@ -120,7 +120,7 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
                 })}
 
                 <>
-                  {dataset.attributes?.name === 'Basemap' && (
+                  {dataset.attributes?.slug === 'basemap' && (
                     <li className="flex items-center justify-between">
                       <span className="flex gap-2">
                         <Switch
