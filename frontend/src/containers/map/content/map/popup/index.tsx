@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Popup } from 'react-map-gl';
 
@@ -71,6 +71,26 @@ const PopupContainer: FCWithMessages = () => {
     }
   );
 
+  const hoverTooltipContent = useMemo(() => {
+    const properties = popup?.features?.find(({ source }) => source === 'ezz-source')?.properties;
+
+    let content = null;
+
+    if (!properties) {
+      return content;
+    }
+
+    if (locale === 'es') {
+      content = properties.GEONAME_ES;
+    }
+
+    if (locale === 'fr') {
+      content = properties.GEONAME_FR;
+    }
+
+    return content ?? properties.GEONAME;
+  }, [locale, popup]);
+
   const closePopup = useCallback(() => {
     setPopup({});
   }, [setPopup]);
@@ -138,9 +158,7 @@ const PopupContainer: FCWithMessages = () => {
           </Select>
         )}
         {isHoveredTooltip && (
-          <div className="font-mono text-sm text-gray-500">
-            {popup.features.find(({ source }) => source === 'ezz-source')?.properties?.GEONAME}
-          </div>
+          <div className="font-mono text-sm text-gray-500">{hoverTooltipContent}</div>
         )}
         {isClickedTooltip && selectedLayerId && <PopupItem id={selectedLayerId} />}
       </div>

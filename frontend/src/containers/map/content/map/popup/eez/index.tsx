@@ -210,6 +210,24 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     return '-';
   }, [locale, totalCumSumProtectedArea, totalMarineArea, locationsData]);
 
+  const EEZName = useMemo(() => {
+    let name = null;
+
+    if (!DATA) {
+      return name;
+    }
+
+    if (locale === 'es') {
+      name = DATA.GEONAME_ES;
+    }
+
+    if (locale === 'fr') {
+      name = DATA.GEONAME_FR;
+    }
+
+    return name ?? DATA.GEONAME;
+  }, [locale, DATA]);
+
   // handle renderer
   const handleMapRender = useCallback(() => {
     setRendered(map?.loaded() && map?.areTilesLoaded());
@@ -244,7 +262,7 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
 
   return (
     <div className="space-y-2">
-      <h3 className="text-xl font-semibold">{DATA?.GEONAME}</h3>
+      <h3 className="text-xl font-semibold">{EEZName}</h3>
       {isFetchingLocations && <span className="text-sm">{t('loading')}</span>}
       {isEmptyLocations && <span className="text-sm">{t('no-data-available')}</span>}
       {!isEmptyLocations && (
