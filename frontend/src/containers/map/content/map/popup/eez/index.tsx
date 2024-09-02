@@ -236,7 +236,7 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const handleLocationSelected = useCallback(async () => {
     if (!locationsData[0]) return undefined;
 
-    const { code, bounds } = locationsData[0];
+    const { code, marine_bounds: bounds } = locationsData[0];
 
     await push(`${PAGES.progressTracker}/${code.toUpperCase()}?${searchParams.toString()}`);
     setLocationBBox(bounds as CustomMapProps['bounds']['bbox']);

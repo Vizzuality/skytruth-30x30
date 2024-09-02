@@ -1,14 +1,14 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::protection-coverage-stat.protection-coverage-stat",
+  "key": "plugin_content_manager_configuration_content_types::api::dataset-group.dataset-group",
   "value": {
-    "uid": "api::protection-coverage-stat.protection-coverage-stat",
+    "uid": "api::dataset-group.dataset-group",
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "id",
-      "defaultSortBy": "id",
+      "mainField": "name",
+      "defaultSortBy": "name",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -20,95 +20,37 @@
           "sortable": true
         }
       },
-      "location": {
+      "name": {
         "edit": {
-          "label": "location",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "code"
-        },
-        "list": {
-          "label": "location",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "protection_status": {
-        "edit": {
-          "label": "protection_status",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "slug"
-        },
-        "list": {
-          "label": "protection_status",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "year": {
-        "edit": {
-          "label": "year",
+          "label": "name",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "year",
+          "label": "name",
           "searchable": true,
           "sortable": true
         }
       },
-      "cumSumProtectedArea": {
+      "slug": {
         "edit": {
-          "label": "cumSumProtectedArea",
+          "label": "slug",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "cumSumProtectedArea",
+          "label": "slug",
           "searchable": true,
           "sortable": true
         }
       },
-      "protectedArea": {
+      "datasets": {
         "edit": {
-          "label": "protectedArea",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "protectedArea",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "protectedAreasCount": {
-        "edit": {
-          "label": "protectedAreasCount",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "protectedAreasCount",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "environment": {
-        "edit": {
-          "label": "environment",
+          "label": "datasets",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -116,9 +58,9 @@
           "mainField": "name"
         },
         "list": {
-          "label": "environment",
-          "searchable": true,
-          "sortable": true
+          "label": "datasets",
+          "searchable": false,
+          "sortable": false
         }
       },
       "createdAt": {
@@ -183,42 +125,24 @@
     "layouts": {
       "list": [
         "id",
-        "location",
-        "protection_status",
-        "year"
+        "name",
+        "slug",
+        "datasets"
       ],
       "edit": [
         [
           {
-            "name": "location",
+            "name": "name",
             "size": 6
           },
           {
-            "name": "protection_status",
+            "name": "slug",
             "size": 6
           }
         ],
         [
           {
-            "name": "year",
-            "size": 4
-          },
-          {
-            "name": "cumSumProtectedArea",
-            "size": 4
-          },
-          {
-            "name": "protectedArea",
-            "size": 4
-          }
-        ],
-        [
-          {
-            "name": "protectedAreasCount",
-            "size": 4
-          },
-          {
-            "name": "environment",
+            "name": "datasets",
             "size": 6
           }
         ]

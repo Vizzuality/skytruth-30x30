@@ -847,7 +847,7 @@
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "bounds"
+          "totalTerrestrialArea"
         ],
         "locales": []
       },
@@ -881,7 +881,7 @@
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "bounds"
+          "totalTerrestrialArea"
         ],
         "locales": []
       },
@@ -902,7 +902,7 @@
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "bounds"
+          "totalTerrestrialArea"
         ],
         "locales": []
       },

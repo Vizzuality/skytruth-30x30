@@ -1139,6 +1139,11 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
           localized: false;
         };
       }>;
+    group: Attribute.Relation<
+      'api::dataset.dataset',
+      'manyToOne',
+      'api::dataset-group.dataset-group'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1158,6 +1163,119 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
       'api::dataset.dataset',
       'oneToMany',
       'api::dataset.dataset'
+    >;
+    locale: Attribute.String;
+  };
+}
+
+export interface ApiDatasetGroupDatasetGroup extends Schema.CollectionType {
+  collectionName: 'dataset_groups';
+  info: {
+    singularName: 'dataset-group';
+    pluralName: 'dataset-groups';
+    displayName: 'Dataset Group';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    datasets: Attribute.Relation<
+      'api::dataset-group.dataset-group',
+      'oneToMany',
+      'api::dataset.dataset'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::dataset-group.dataset-group',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::dataset-group.dataset-group',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::dataset-group.dataset-group',
+      'oneToMany',
+      'api::dataset-group.dataset-group'
+    >;
+    locale: Attribute.String;
+  };
+}
+
+export interface ApiEnvironmentEnvironment extends Schema.CollectionType {
+  collectionName: 'environments';
+  info: {
+    singularName: 'environment';
+    pluralName: 'environments';
+    displayName: 'Environment';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::environment.environment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::environment.environment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::environment.environment',
+      'oneToMany',
+      'api::environment.environment'
     >;
     locale: Attribute.String;
   };
@@ -1363,6 +1481,11 @@ export interface ApiHabitatStatHabitatStat extends Schema.CollectionType {
       Attribute.SetMinMax<{
         min: 0;
       }>;
+    environment: Attribute.Relation<
+      'api::habitat-stat.habitat-stat',
+      'oneToOne',
+      'api::environment.environment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1551,10 +1674,26 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'oneToMany',
       'api::protection-coverage-stat.protection-coverage-stat'
     >;
-    bounds: Attribute.JSON &
+    marine_bounds: Attribute.JSON &
       Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
+        };
+      }>;
+    totalTerrestrialArea: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
+    terrestrial_bounds: Attribute.JSON &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
         };
       }>;
     createdAt: Attribute.DateTime;
@@ -1633,12 +1772,17 @@ export interface ApiMpaMpa extends Schema.CollectionType {
     is_child: Attribute.Boolean &
       Attribute.Required &
       Attribute.DefaultTo<false>;
-    mpa_iucn_category: Attribute.Relation<
+    iucn_category: Attribute.Relation<
       'api::mpa.mpa',
       'oneToOne',
       'api::mpa-iucn-category.mpa-iucn-category'
     >;
     designation: Attribute.String;
+    environment: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToOne',
+      'api::environment.environment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::mpa.mpa', 'oneToOne', 'admin::user'> &
@@ -1969,6 +2113,11 @@ export interface ApiProtectionCoverageStatProtectionCoverageStat
         min: 0;
       }>;
     protectedAreasCount: Attribute.Integer & Attribute.Required;
+    environment: Attribute.Relation<
+      'api::protection-coverage-stat.protection-coverage-stat',
+      'oneToOne',
+      'api::environment.environment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -2137,6 +2286,8 @@ declare module '@strapi/types' {
       'api::data-tool-language.data-tool-language': ApiDataToolLanguageDataToolLanguage;
       'api::data-tool-resource-type.data-tool-resource-type': ApiDataToolResourceTypeDataToolResourceType;
       'api::dataset.dataset': ApiDatasetDataset;
+      'api::dataset-group.dataset-group': ApiDatasetGroupDatasetGroup;
+      'api::environment.environment': ApiEnvironmentEnvironment;
       'api::fishing-protection-level.fishing-protection-level': ApiFishingProtectionLevelFishingProtectionLevel;
       'api::fishing-protection-level-stat.fishing-protection-level-stat': ApiFishingProtectionLevelStatFishingProtectionLevelStat;
       'api::habitat.habitat': ApiHabitatHabitat;

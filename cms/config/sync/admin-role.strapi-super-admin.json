@@ -545,12 +545,80 @@
     },
     {
       "action": "plugin::content-manager.explorer.create",
+      "subject": "api::dataset-group.dataset-group",
+      "properties": {
+        "fields": [
+          "name",
+          "slug",
+          "datasets"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::dataset-group.dataset-group",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::dataset-group.dataset-group",
+      "properties": {
+        "fields": [
+          "name",
+          "slug",
+          "datasets"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::dataset-group.dataset-group",
+      "properties": {
+        "fields": [
+          "name",
+          "slug",
+          "datasets"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
       "subject": "api::dataset.dataset",
       "properties": {
         "fields": [
           "name",
           "layers",
-          "slug"
+          "slug",
+          "group"
         ],
         "locales": [
           "en",
@@ -594,7 +662,8 @@
         "fields": [
           "name",
           "layers",
-          "slug"
+          "slug",
+          "group"
         ],
         "locales": [
           "en",
@@ -612,6 +681,71 @@
         "fields": [
           "name",
           "layers",
+          "slug",
+          "group"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::environment.environment",
+      "properties": {
+        "fields": [
+          "name",
+          "slug"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::environment.environment",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::environment.environment",
+      "properties": {
+        "fields": [
+          "name",
+          "slug"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::environment.environment",
+      "properties": {
+        "fields": [
+          "name",
           "slug"
         ],
         "locales": [
@@ -748,7 +882,8 @@
           "habitat",
           "year",
           "protectedArea",
-          "totalArea"
+          "totalArea",
+          "environment"
         ]
       },
       "conditions": [],
@@ -770,7 +905,8 @@
           "habitat",
           "year",
           "protectedArea",
-          "totalArea"
+          "totalArea",
+          "environment"
         ]
       },
       "conditions": [],
@@ -785,7 +921,8 @@
           "habitat",
           "year",
           "protectedArea",
-          "totalArea"
+          "totalArea",
+          "environment"
         ]
       },
       "conditions": [],
@@ -997,7 +1134,9 @@
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "bounds"
+          "marine_bounds",
+          "totalTerrestrialArea",
+          "terrestrial_bounds"
         ],
         "locales": [
           "en",
@@ -1035,7 +1174,9 @@
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "bounds"
+          "marine_bounds",
+          "totalTerrestrialArea",
+          "terrestrial_bounds"
         ],
         "locales": [
           "en",
@@ -1060,7 +1201,9 @@
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "bounds"
+          "marine_bounds",
+          "totalTerrestrialArea",
+          "terrestrial_bounds"
         ],
         "locales": [
           "en",
@@ -1155,8 +1298,9 @@
           "wdpaid",
           "mpaa_protection_level",
           "is_child",
-          "mpa_iucn_category",
-          "designation"
+          "iucn_category",
+          "designation",
+          "environment"
         ]
       },
       "conditions": [],
@@ -1186,8 +1330,9 @@
           "wdpaid",
           "mpaa_protection_level",
           "is_child",
-          "mpa_iucn_category",
-          "designation"
+          "iucn_category",
+          "designation",
+          "environment"
         ]
       },
       "conditions": [],
@@ -1210,8 +1355,9 @@
           "wdpaid",
           "mpaa_protection_level",
           "is_child",
-          "mpa_iucn_category",
-          "designation"
+          "iucn_category",
+          "designation",
+          "environment"
         ]
       },
       "conditions": [],
@@ -1459,7 +1605,8 @@
           "year",
           "cumSumProtectedArea",
           "protectedArea",
-          "protectedAreasCount"
+          "protectedAreasCount",
+          "environment"
         ]
       },
       "conditions": [],
@@ -1482,7 +1629,8 @@
           "year",
           "cumSumProtectedArea",
           "protectedArea",
-          "protectedAreasCount"
+          "protectedAreasCount",
+          "environment"
         ]
       },
       "conditions": [],
@@ -1498,7 +1646,8 @@
           "year",
           "cumSumProtectedArea",
           "protectedArea",
-          "protectedAreasCount"
+          "protectedAreasCount",
+          "environment"
         ]
       },
       "conditions": [],

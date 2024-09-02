@@ -118,7 +118,7 @@ const MainMap: FCWithMessages = () => {
   }, [setMapLayers, defaultLayers]);
 
   useEffect(() => {
-    setLocationBbox(locationsQuery?.data?.bounds as CustomMapProps['bounds']['bbox']);
+    setLocationBbox(locationsQuery?.data?.marine_bounds as CustomMapProps['bounds']['bbox']);
   }, [locationCode, locationsQuery, setLocationBbox]);
 
   const handleMoveEnd = useCallback(() => {
@@ -233,7 +233,7 @@ const MainMap: FCWithMessages = () => {
     if (locationsQuery.data && locationsQuery.data?.code !== 'GLOB') {
       return {
         ...DEFAULT_VIEW_STATE,
-        bounds: locationsQuery.data?.bounds as ComponentProps<
+        bounds: locationsQuery.data?.marine_bounds as ComponentProps<
           typeof Map
         >['initialViewState']['bounds'],
         padding: {

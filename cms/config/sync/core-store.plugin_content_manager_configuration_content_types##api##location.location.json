@@ -151,16 +151,44 @@
           "sortable": false
         }
       },
-      "bounds": {
+      "marine_bounds": {
         "edit": {
-          "label": "bounds",
+          "label": "marine_bounds",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "bounds",
+          "label": "marine_bounds",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "totalTerrestrialArea": {
+        "edit": {
+          "label": "totalTerrestrialArea",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "totalTerrestrialArea",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "terrestrial_bounds": {
+        "edit": {
+          "label": "terrestrial_bounds",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "terrestrial_bounds",
           "searchable": false,
           "sortable": false
         }
@@ -248,6 +276,12 @@
             "size": 4
           },
           {
+            "name": "totalTerrestrialArea",
+            "size": 4
+          }
+        ],
+        [
+          {
             "name": "type",
             "size": 6
           }
@@ -280,7 +314,13 @@
         ],
         [
           {
-            "name": "bounds",
+            "name": "marine_bounds",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "terrestrial_bounds",
             "size": 12
           }
         ]

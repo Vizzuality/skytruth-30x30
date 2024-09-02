@@ -64,7 +64,7 @@ const NationalHighseasTable: FCWithMessages = () => {
       },
     },
     location: {
-      fields: ['code', 'total_marine_area', 'bounds'],
+      fields: ['code', 'total_marine_area', 'marine_bounds'],
     },
     mpaa_protection_level: {
       fields: ['slug', 'name'],
@@ -75,7 +75,7 @@ const NationalHighseasTable: FCWithMessages = () => {
     data_source: {
       fields: ['slug'],
     },
-    mpa_iucn_category: {
+    iucn_category: {
       fields: ['slug'],
     },
   };
@@ -115,7 +115,7 @@ const NationalHighseasTable: FCWithMessages = () => {
       const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
       const mpaaProtectionLevel = mpa?.mpaa_protection_level?.data?.attributes;
       const dataSource = mpa?.data_source?.data?.attributes;
-      const iucnCategory = mpa?.mpa_iucn_category?.data?.attributes;
+      const iucnCategory = mpa?.iucn_category?.data?.attributes;
 
       const coveragePercentage = (mpa.area / locationsQuery.data?.totalMarineArea) * 100;
 

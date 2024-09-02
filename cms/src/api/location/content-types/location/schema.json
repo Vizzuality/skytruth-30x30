@@ -94,13 +94,31 @@
       "target": "api::protection-coverage-stat.protection-coverage-stat",
       "mappedBy": "location"
     },
-    "bounds": {
+    "marine_bounds": {
       "type": "json",
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       }
+    },
+    "totalTerrestrialArea": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "terrestrial_bounds": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "json"
     }
   }
 }

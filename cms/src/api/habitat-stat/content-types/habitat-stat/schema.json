@@ -33,7 +33,10 @@
       "column": {
         "defaultTo": 0,
         "type": "decimal",
-        "args": [12,2]
+        "args": [
+          12,
+          2
+        ]
       }
     },
     "totalArea": {
@@ -43,8 +46,16 @@
       "column": {
         "defaultTo": 0,
         "type": "decimal",
-        "args": [12,2]
+        "args": [
+          12,
+          2
+        ]
       }
+    },
+    "environment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::environment.environment"
     }
   }
 }
