@@ -147,6 +147,21 @@
           "sortable": true
         }
       },
+      "environment": {
+        "edit": {
+          "label": "environment",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "environment",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -207,6 +222,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "title",
+        "type",
+        "metadata"
+      ],
       "edit": [
         [
           {
@@ -257,13 +278,13 @@
             "name": "metadata",
             "size": 12
           }
+        ],
+        [
+          {
+            "name": "environment",
+            "size": 6
+          }
         ]
-      ],
-      "list": [
-        "id",
-        "title",
-        "type",
-        "metadata"
       ]
     }
   },

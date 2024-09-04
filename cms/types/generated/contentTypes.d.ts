@@ -1577,6 +1577,11 @@ export interface ApiLayerLayer extends Schema.CollectionType {
         };
       }> &
       Attribute.DefaultTo<false>;
+    environment: Attribute.Relation<
+      'api::layer.layer',
+      'oneToOne',
+      'api::environment.environment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
