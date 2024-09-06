@@ -222,7 +222,8 @@
       "highly-protected-from-fishing": "Highly protected from fishing",
       "summary": "Summary",
       "terrestrial": "Terrestrial",
-      "marine": "Marine"
+      "marine": "Marine",
+      "coming-soon": "Coming soon!"
     },
     "map-sidebar-layers-panel": {
       "layers": "Layers",
@@ -274,7 +275,8 @@
       "clear-sorting": "Clear sorting",
       "type": "Type",
       "establishment-stage": "Establishment Stage",
-      "protection-level": "Protection Level"
+      "protection-level": "Protection Level",
+      "coming-soon": "Coming soon!"
     }
   },
   "components": {

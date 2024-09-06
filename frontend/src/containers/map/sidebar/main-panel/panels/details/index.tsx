@@ -67,11 +67,14 @@ const SidebarDetails: FCWithMessages = () => {
           <TabsTrigger value="terrestrial">{t('terrestrial')}</TabsTrigger>
           <TabsTrigger value="marine">{t('marine')}</TabsTrigger>
         </TabsList>
-        {/* <DetailsButton className="mt-4" /> */}
       </div>
       <div className="flex-grow overflow-y-auto">
-        <TabsContent value="summary">{t('summary')}</TabsContent>
-        <TabsContent value="terrestrial">{t('terrestrial')}</TabsContent>
+        <TabsContent value="summary">
+          <div className="py-36 text-center font-black">{t('coming-soon')}</div>
+        </TabsContent>
+        <TabsContent value="terrestrial">
+          <div className="py-36 text-center font-black">{t('coming-soon')}</div>
+        </TabsContent>
         <TabsContent value="marine">
           <DetailsWidgets />
         </TabsContent>
