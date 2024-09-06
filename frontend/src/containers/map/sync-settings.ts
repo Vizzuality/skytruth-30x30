@@ -1,7 +1,7 @@
 import { useQueryState } from 'next-usequerystate';
 import { parseAsJson } from 'next-usequerystate/parsers';
 
-const DEFAULT_SYNC_CONTENT_SETTINGS = {
+export const DEFAULT_SYNC_CONTENT_SETTINGS = {
   showDetails: false,
   tab: 'summary',
 };
