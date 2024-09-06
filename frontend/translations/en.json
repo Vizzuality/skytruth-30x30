@@ -217,7 +217,10 @@
       "national-level-contribution": "National level contribution",
       "global": "Global",
       "fishing-protection": "Fishing Protection",
-      "highly-protected-from-fishing": "Highly protected from fishing"
+      "highly-protected-from-fishing": "Highly protected from fishing",
+      "summary": "Summary",
+      "terrestrial": "Terrestrial",
+      "marine": "Marine"
     },
     "map-sidebar-layers-panel": {
       "layers": "Layers",
