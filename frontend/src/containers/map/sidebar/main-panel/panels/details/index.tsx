@@ -76,6 +76,9 @@ const SidebarDetails: FCWithMessages = () => {
           <DetailsWidgets />
         </TabsContent>
       </div>
+      <div className="shrink-0 border-t border-t-black px-4 py-5 md:px-8">
+        <DetailsButton />
+      </div>
     </Tabs>
   );
 };
