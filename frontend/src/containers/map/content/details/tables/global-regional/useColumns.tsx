@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import Link from 'next/link';
 
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, SortingFnOption } from '@tanstack/react-table';
 import { useLocale } from 'next-intl';
 import { useTranslations } from 'next-intl';
 
@@ -38,6 +38,7 @@ const useColumns = () => {
     return [
       {
         accessorKey: 'location',
+        sortingFn: 'localeStringCompare' as SortingFnOption<GlobalRegionalTableColumns>,
         header: ({ column }) => (
           <HeaderItem className="ml-1">
             <SortingButton column={column} />
