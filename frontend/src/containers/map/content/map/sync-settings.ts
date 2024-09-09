@@ -2,6 +2,10 @@ import { parseAsArrayOf, parseAsInteger, useQueryState } from 'next-usequerystat
 import { parseAsJson } from 'next-usequerystate/parsers';
 
 import { CustomMapProps } from '@/components/map/types';
+import {
+  DEFAULT_SYNC_CONTENT_SETTINGS,
+  useSyncMapContentSettings,
+} from '@/containers/map/sync-settings';
 import { LayerSettings } from '@/types/layers';
 
 const DEFAULT_SYNC_MAP_SETTINGS: {
@@ -38,6 +42,7 @@ export const useMapSearchParams = () => {
   const [settings] = useSyncMapSettings();
   const [layers] = useSyncMapLayers();
   const [layerSettings] = useSyncMapLayerSettings();
+  const [contentSettings] = useSyncMapContentSettings();
   const currentSearchparams = new URLSearchParams();
 
   currentSearchparams.set('layers', parseAsArrayOf(parseAsInteger).serialize(layers));
@@ -48,6 +53,10 @@ export const useMapSearchParams = () => {
   currentSearchparams.set(
     'layer-settings',
     parseAsJson<{ [layerId: number]: Partial<LayerSettings> }>().serialize(layerSettings)
+  );
+  currentSearchparams.set(
+    'content',
+    parseAsJson<typeof DEFAULT_SYNC_CONTENT_SETTINGS>().serialize(contentSettings)
   );
 
   return currentSearchparams;
