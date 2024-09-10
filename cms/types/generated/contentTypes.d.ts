@@ -1073,7 +1073,6 @@ export interface ApiDataToolResourceTypeDataToolResourceType
   };
   attributes: {
     name: Attribute.String &
-      Attribute.Unique &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1819,7 +1818,6 @@ export interface ApiMpaIucnCategoryMpaIucnCategory
       }>;
     name: Attribute.String &
       Attribute.Required &
-      Attribute.Unique &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

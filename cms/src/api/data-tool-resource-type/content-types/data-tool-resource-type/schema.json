@@ -18,7 +18,7 @@
   "attributes": {
     "name": {
       "type": "string",
-      "unique": true,
+      "unique": false,
       "pluginOptions": {
         "i18n": {
           "localized": true
