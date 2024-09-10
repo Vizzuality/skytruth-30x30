@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -15,11 +15,15 @@ import LocationSelector from '../../location-selector';
 
 import CountriesList from './countries-list';
 import DetailsButton from './details-button';
-import DetailsWidgets from './widgets';
+import MarineWidgets from './widgets/marine-widgets';
+import SummaryWidgets from './widgets/summary-widgets';
+import TerrestrialWidgets from './widgets/terrestrial-widgets';
 
 const SidebarDetails: FCWithMessages = () => {
   const locale = useLocale();
   const t = useTranslations('containers.map-sidebar-main-panel');
+
+  const tabsRef = useRef<HTMLDivElement | null>(null);
 
   const {
     push,
@@ -56,6 +60,12 @@ const SidebarDetails: FCWithMessages = () => {
     [setSettings]
   );
 
+  // Scroll to the top when the tab changes, whether that's initiated by clicking on the tab trigger
+  // or programmatically via `setSettings` in a different component
+  useEffect(() => {
+    tabsRef.current?.scrollTo({ top: 0 });
+  }, [tab]);
+
   return (
     <Tabs value={tab} onValueChange={handleTabChange} className="flex h-full w-full flex-col">
       <div className="shrink-0 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6">
@@ -68,15 +78,15 @@ const SidebarDetails: FCWithMessages = () => {
           <TabsTrigger value="marine">{t('marine')}</TabsTrigger>
         </TabsList>
       </div>
-      <div className="flex-grow overflow-y-auto">
+      <div ref={tabsRef} className="flex-grow overflow-y-auto">
         <TabsContent value="summary">
-          <div className="py-36 text-center font-black">{t('coming-soon')}</div>
+          <SummaryWidgets />
         </TabsContent>
         <TabsContent value="terrestrial">
-          <div className="py-36 text-center font-black">{t('coming-soon')}</div>
+          <TerrestrialWidgets />
         </TabsContent>
         <TabsContent value="marine">
-          <DetailsWidgets />
+          <MarineWidgets />
         </TabsContent>
       </div>
       <div className="shrink-0 border-t border-t-black px-4 py-5 md:px-8">
@@ -91,7 +101,8 @@ SidebarDetails.messages = [
   ...LocationSelector.messages,
   ...CountriesList.messages,
   ...DetailsButton.messages,
-  ...DetailsWidgets.messages,
+  ...SummaryWidgets.messages,
+  ...MarineWidgets.messages,
 ];
 
 export default SidebarDetails;

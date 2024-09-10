@@ -181,12 +181,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "location",
-        "protection_status",
-        "year"
-      ],
       "edit": [
         [
           {
@@ -222,6 +216,13 @@
             "size": 6
           }
         ]
+      ],
+      "list": [
+        "id",
+        "location",
+        "environment",
+        "year",
+        "protection_status"
       ]
     }
   },

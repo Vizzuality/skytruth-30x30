@@ -17,11 +17,13 @@ import type {
   ProtectionCoverageStatListResponseDataItem,
 } from '@/types/generated/strapi.schemas';
 
-type MarineConservationWidgetProps = {
+type TerrestrialConservationWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
 
-const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = ({ location }) => {
+const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidgetProps> = ({
+  location,
+}) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
   const locale = useLocale();
 
@@ -36,7 +38,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       // @ts-ignore
       populate: {
         location: {
-          fields: ['code', 'totalMarineArea'],
+          fields: ['code', 'totalTerrestrialArea'],
         },
         environment: {
           fields: ['slug'],
@@ -55,7 +57,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
         },
         environment: {
           slug: {
-            $eq: 'marine',
+            $eq: 'terrestrial',
           },
         },
       },
@@ -157,7 +159,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
 
   return (
     <Widget
-      title={t('marine-conservation-coverage')}
+      title={t('terrestrial-conservation-coverage')}
       lastUpdated={data[data.length - 1]?.attributes.updatedAt}
       noData={!chartData.length}
       loading={isFetching}
@@ -167,7 +169,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       {stats && (
         <div className="mt-6 mb-4 flex flex-col">
           <span className="space-x-1">
-            {t.rich('marine-protected-percentage', {
+            {t.rich('terrestrial-protected-percentage', {
               b1: (chunks) => <span className="text-[64px] font-bold leading-[90%]">{chunks}</span>,
               b2: (chunks) => <span className="text-lg">{chunks}</span>,
               percentage: stats?.protectedPercentage,
@@ -175,7 +177,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
           </span>
           <span className="space-x-1 text-xs">
             <span>
-              {t('marine-protected-area', {
+              {t('terrestrial-protected-area', {
                 protectedArea: stats?.protectedArea,
                 totalArea: stats?.totalArea,
               })}
@@ -188,15 +190,15 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
         displayTarget={location?.code === 'GLOB'}
         data={chartData}
       />
-      {tab !== 'marine' && (
+      {tab !== 'terrestrial' && (
         <Button
           variant="white"
           size="full"
           className="mt-5 flex h-10 px-5 md:px-8"
-          onClick={() => setSettings((settings) => ({ ...settings, tab: 'marine' }))}
+          onClick={() => setSettings((settings) => ({ ...settings, tab: 'terrestrial' }))}
         >
           <span className="font-mono text-xs font-semibold normal-case">
-            {t('explore-marine-conservation')}
+            {t('explore-terrestrial-conservation')}
           </span>
         </Button>
       )}
@@ -204,10 +206,10 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
   );
 };
 
-MarineConservationWidget.messages = [
+TerrestrialConservationWidget.messages = [
   'containers.map-sidebar-main-panel',
   ...Widget.messages,
   ...ConservationChart.messages,
 ];
 
-export default MarineConservationWidget;
+export default TerrestrialConservationWidget;

@@ -14,7 +14,7 @@ import ProtectionTypesWidget from './protection-types';
 
 // import EstablishmentStagesWidget from './establishment-stages';
 
-const DetailsWidgets: FCWithMessages = () => {
+const MarineWidgets: FCWithMessages = () => {
   const locale = useLocale();
 
   const {
@@ -23,12 +23,24 @@ const DetailsWidgets: FCWithMessages = () => {
 
   const [{ showDetails }] = useSyncMapContentSettings();
 
-  const { data: locationsData } = useGetLocations({
-    locale,
-    filters: {
-      code: locationCode,
+  const { data: locationData } = useGetLocations(
+    {
+      locale,
+      filters: {
+        code: locationCode,
+      },
+      'pagination[limit]': 1,
     },
-  });
+    {
+      query: {
+        select: ({ data }) => data[0]?.attributes ?? null,
+      },
+    }
+  );
+
+  if (!locationData) {
+    return null;
+  }
 
   return (
     <div
@@ -37,19 +49,20 @@ const DetailsWidgets: FCWithMessages = () => {
         'pb-40': showDetails,
       })}
     >
-      <MarineConservationWidget location={locationsData?.data[0]?.attributes} />
-      <ProtectionTypesWidget location={locationsData?.data[0]?.attributes} />
-      <FishingProtectionWidget location={locationsData?.data[0]?.attributes} />
-      {/* <EstablishmentStagesWidget location={locationsData?.data[0]?.attributes} /> */}
-      <HabitatWidget location={locationsData?.data[0]?.attributes} />
+      <MarineConservationWidget location={locationData} />
+      <ProtectionTypesWidget location={locationData} />
+      <FishingProtectionWidget location={locationData} />
+      {/* <EstablishmentStagesWidget location={locationData} /> */}
+      <HabitatWidget location={locationData} />
     </div>
   );
 };
 
-DetailsWidgets.messages = [
+MarineWidgets.messages = [
   ...MarineConservationWidget.messages,
   ...ProtectionTypesWidget.messages,
+  ...FishingProtectionWidget.messages,
   ...HabitatWidget.messages,
 ];
 
-export default DetailsWidgets;
+export default MarineWidgets;

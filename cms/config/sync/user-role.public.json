@@ -49,6 +49,12 @@
       "action": "api::dataset.dataset.findOne"
     },
     {
+      "action": "api::environment.environment.find"
+    },
+    {
+      "action": "api::environment.environment.findOne"
+    },
+    {
       "action": "api::fishing-protection-level-stat.fishing-protection-level-stat.find"
     },
     {
