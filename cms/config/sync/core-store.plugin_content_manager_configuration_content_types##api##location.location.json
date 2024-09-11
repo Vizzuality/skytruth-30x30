@@ -274,10 +274,6 @@
           {
             "name": "totalMarineArea",
             "size": 4
-          },
-          {
-            "name": "totalTerrestrialArea",
-            "size": 4
           }
         ],
         [
@@ -316,6 +312,12 @@
           {
             "name": "marine_bounds",
             "size": 12
+          }
+        ],
+        [
+          {
+            "name": "totalTerrestrialArea",
+            "size": 4
           }
         ],
         [

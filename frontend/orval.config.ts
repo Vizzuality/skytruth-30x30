@@ -36,7 +36,7 @@ module.exports = {
           'Location',
           'Habitat',
           'Habitat-stat',
-          'Mpa',
+          'Pa',
           'Mpaa-protection-level',
           'Mpaa-protection-level-stat',
           'Mpaa-establishment-stage',

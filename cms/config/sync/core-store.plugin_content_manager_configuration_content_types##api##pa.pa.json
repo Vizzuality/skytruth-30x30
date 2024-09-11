@@ -1,7 +1,7 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::mpa.mpa",
+  "key": "plugin_content_manager_configuration_content_types::api::pa.pa",
   "value": {
-    "uid": "api::mpa.mpa",
+    "uid": "api::pa.pa",
     "settings": {
       "bulkable": true,
       "filterable": true,
@@ -327,12 +327,6 @@
         ],
         [
           {
-            "name": "wdpaid",
-            "size": 6
-          }
-        ],
-        [
-          {
             "name": "bbox",
             "size": 12
           }
@@ -359,18 +353,18 @@
         ],
         [
           {
-            "name": "mpaa_protection_level",
-            "size": 6
+            "name": "wdpaid",
+            "size": 4
           },
           {
-            "name": "is_child",
-            "size": 4
+            "name": "mpaa_protection_level",
+            "size": 6
           }
         ],
         [
           {
-            "name": "designation",
-            "size": 6
+            "name": "is_child",
+            "size": 4
           },
           {
             "name": "iucn_category",
@@ -378,6 +372,10 @@
           }
         ],
         [
+          {
+            "name": "designation",
+            "size": 6
+          },
           {
             "name": "environment",
             "size": 6

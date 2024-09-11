@@ -1,5 +1,5 @@
 {
-  "/mpas": {
+  "/pas": {
     "get": {
       "responses": {
         "200": {
@@ -7,7 +7,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MpaListResponse"
+                "$ref": "#/components/schemas/PaListResponse"
               }
             }
           }
@@ -64,7 +64,7 @@
         }
       },
       "tags": [
-        "Mpa"
+        "Pa"
       ],
       "parameters": [
         {
@@ -169,10 +169,10 @@
           }
         }
       ],
-      "operationId": "get/mpas"
+      "operationId": "get/pas"
     }
   },
-  "/mpas/{id}": {
+  "/pas/{id}": {
     "get": {
       "responses": {
         "200": {
@@ -180,7 +180,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MpaResponse"
+                "$ref": "#/components/schemas/PaResponse"
               }
             }
           }
@@ -237,7 +237,7 @@
         }
       },
       "tags": [
-        "Mpa"
+        "Pa"
       ],
       "parameters": [
         {
@@ -251,7 +251,7 @@
           }
         }
       ],
-      "operationId": "get/mpas/{id}"
+      "operationId": "get/pas/{id}"
     }
   }
 }

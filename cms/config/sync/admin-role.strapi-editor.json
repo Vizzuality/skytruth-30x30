@@ -911,64 +911,6 @@
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "subject": "api::mpa.mpa",
-      "properties": {
-        "fields": [
-          "name",
-          "area",
-          "year",
-          "protection_status",
-          "wdpaid",
-          "bbox",
-          "is_child"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::mpa.mpa",
-      "properties": {},
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "subject": "api::mpa.mpa",
-      "properties": {
-        "fields": [
-          "name",
-          "area",
-          "year",
-          "protection_status",
-          "wdpaid",
-          "bbox",
-          "is_child"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "subject": "api::mpa.mpa",
-      "properties": {
-        "fields": [
-          "name",
-          "area",
-          "year",
-          "protection_status",
-          "wdpaid",
-          "bbox",
-          "is_child"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
       "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
       "properties": {
         "fields": [
@@ -1181,9 +1123,7 @@
       "properties": {
         "fields": [
           "location",
-          "protection_status",
           "year",
-          "cumSumProtectedArea",
           "protectedArea",
           "protectedAreasCount"
         ]
@@ -1204,9 +1144,7 @@
       "properties": {
         "fields": [
           "location",
-          "protection_status",
           "year",
-          "cumSumProtectedArea",
           "protectedArea",
           "protectedAreasCount"
         ]
@@ -1220,9 +1158,7 @@
       "properties": {
         "fields": [
           "location",
-          "protection_status",
           "year",
-          "cumSumProtectedArea",
           "protectedArea",
           "protectedAreasCount"
         ]

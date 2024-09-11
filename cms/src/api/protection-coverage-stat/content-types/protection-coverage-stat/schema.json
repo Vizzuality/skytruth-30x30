@@ -18,28 +18,10 @@
       "target": "api::location.location",
       "inversedBy": "protection_coverage_stats"
     },
-    "protection_status": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::protection-status.protection-status"
-    },
     "year": {
       "type": "integer",
       "required": true,
       "min": 0
-    },
-    "cumSumProtectedArea": {
-      "type": "decimal",
-      "required": true,
-      "min": 0,
-      "column": {
-        "defaultTo": 0,
-        "type": "decimal",
-        "args": [
-          12,
-          2
-        ]
-      }
     },
     "protectedArea": {
       "type": "decimal",
@@ -61,6 +43,22 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::environment.environment"
+    },
+    "coverage": {
+      "type": "decimal"
+    },
+    "pas": {
+      "type": "decimal"
+    },
+    "oecms": {
+      "type": "decimal"
+    },
+    "is_last_year": {
+      "type": "boolean",
+      "default": false
+    },
+    "global_contribution": {
+      "type": "decimal"
     }
   }
 }

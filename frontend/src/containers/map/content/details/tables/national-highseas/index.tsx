@@ -11,10 +11,11 @@ import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/national-highseas/useColumns';
 import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
-import { useGetMpas } from '@/types/generated/mpa';
 import { MpaListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 import SortingButton from '../../table/sorting-button';
+
+import { useGetMpas } from '@/types/generated/mpa';
 
 const NationalHighseasTable: FCWithMessages = () => {
   const {

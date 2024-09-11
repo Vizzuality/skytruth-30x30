@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "mpas",
+  "collectionName": "pas",
   "info": {
-    "singularName": "mpa",
-    "pluralName": "mpas",
-    "displayName": "MPA",
+    "singularName": "pa",
+    "pluralName": "pas",
+    "displayName": "PA",
     "description": ""
   },
   "options": {
@@ -45,7 +45,7 @@
     "children": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::mpa.mpa"
+      "target": "api::pa.pa"
     },
     "data_source": {
       "type": "relation",

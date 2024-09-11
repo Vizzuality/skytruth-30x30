@@ -35,6 +35,9 @@
           2
         ]
       }
+    },
+    "percentage": {
+      "type": "decimal"
     }
   }
 }
