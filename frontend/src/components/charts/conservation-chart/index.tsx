@@ -86,9 +86,12 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
   // Calculate data for the historical line; first and active year are known, years in between
   // need to be extrapolated.
   const historicalLineData = useMemo(() => {
-    const missingYearsArr = [...Array(activeYearData.year - firstYearData.year - 1).keys()].map(
-      (i) => i + firstYearData.year + 1
-    );
+    const missingYearsArr =
+      activeYearData.year === firstYearData.year
+        ? []
+        : [...Array(activeYearData.year - firstYearData.year - 1).keys()].map(
+            (i) => i + firstYearData.year + 1
+          );
 
     const extrapolatedHistoricalYears = missingYearsArr.map((year, idx) => {
       return {
