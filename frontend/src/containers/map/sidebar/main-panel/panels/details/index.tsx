@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
+import useScrollPosition from '@/hooks/use-scroll-position';
+import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 
@@ -23,7 +25,8 @@ const SidebarDetails: FCWithMessages = () => {
   const locale = useLocale();
   const t = useTranslations('containers.map-sidebar-main-panel');
 
-  const tabsRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerScroll = useScrollPosition(containerRef);
 
   const {
     push,
@@ -60,25 +63,54 @@ const SidebarDetails: FCWithMessages = () => {
     [setSettings]
   );
 
-  // Scroll to the top when the tab changes, whether that's initiated by clicking on the tab trigger
-  // or programmatically via `setSettings` in a different component
+  // Scroll to the top when the tab changes (whether that's initiated by clicking on the tab trigger
+  // or programmatically via `setSettings` in a different component) or when the location changes
   useEffect(() => {
-    tabsRef.current?.scrollTo({ top: 0 });
-  }, [tab]);
+    containerRef.current?.scrollTo({ top: 0 });
+  }, [tab, locationCode]);
 
   return (
-    <Tabs value={tab} onValueChange={handleTabChange} className="flex h-full w-full flex-col">
-      <div className="shrink-0 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6">
-        <h1 className="text-5xl font-black">{locationsData?.data[0]?.attributes?.name}</h1>
-        <LocationSelector className="mt-2" theme="orange" onChange={handleLocationSelected} />
-        <CountriesList className="mt-2" bgColorClassName="bg-orange" countries={memberCountries} />
-        <TabsList className="relative top-px mt-5">
+    <Tabs
+      ref={containerRef}
+      value={tab}
+      onValueChange={handleTabChange}
+      className="h-full w-full overflow-y-auto"
+    >
+      <div
+        className={cn({
+          'sticky top-0 z-10 flex gap-y-2 gap-x-5 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6':
+            true,
+          'flex-col': containerScroll === 0,
+          'flex-row flex-wrap': containerScroll > 0,
+        })}
+      >
+        <h1
+          className={cn({
+            'text-ellipsis font-black transition-all': true,
+            'text-5xl': containerScroll === 0,
+            'text-xl': containerScroll > 0,
+          })}
+        >
+          {locationsData?.data[0]?.attributes?.name}
+        </h1>
+        <LocationSelector
+          className="flex-shrink-0"
+          theme="orange"
+          size={containerScroll > 0 ? 'small' : 'default'}
+          onChange={handleLocationSelected}
+        />
+        <CountriesList
+          className="w-full flex-shrink-0"
+          bgColorClassName="bg-orange"
+          countries={memberCountries}
+        />
+        <TabsList className="relative top-px mt-5 w-full flex-shrink-0">
           <TabsTrigger value="summary">{t('summary')}</TabsTrigger>
           <TabsTrigger value="terrestrial">{t('terrestrial')}</TabsTrigger>
           <TabsTrigger value="marine">{t('marine')}</TabsTrigger>
         </TabsList>
       </div>
-      <div ref={tabsRef} className="flex-grow overflow-y-auto">
+      <div>
         <TabsContent value="summary">
           <SummaryWidgets />
         </TabsContent>
@@ -89,7 +121,7 @@ const SidebarDetails: FCWithMessages = () => {
           <MarineWidgets />
         </TabsContent>
       </div>
-      <div className="shrink-0 border-t border-t-black px-4 py-5 md:px-8">
+      <div className="sticky bottom-0 z-10 shrink-0 border-t border-t-black bg-white px-4 py-5 md:px-8">
         <DetailsButton />
       </div>
     </Tabs>
