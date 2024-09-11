@@ -7,7 +7,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
@@ -16,6 +16,7 @@ import { FCWithMessages } from '@/types';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const MapTable: FCWithMessages = ({ columns, data, columnSeparators = null }) => {
+  const locale = useLocale();
   const t = useTranslations('containers.map');
 
   const tableRef = useRef<HTMLTableElement>();
@@ -36,6 +37,13 @@ const MapTable: FCWithMessages = ({ columns, data, columnSeparators = null }) =>
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
+    sortingFns: {
+      localeStringCompare: (rowA, rowB, columnId) =>
+        (rowA.original[columnId] as string).localeCompare(
+          rowB.original[columnId as string],
+          locale
+        ),
+    },
   });
 
   const hasData = table.getRowModel().rows?.length > 0;

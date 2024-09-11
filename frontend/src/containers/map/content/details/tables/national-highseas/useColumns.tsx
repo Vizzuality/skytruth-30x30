@@ -1,6 +1,6 @@
 import { ComponentProps, useMemo } from 'react';
 
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, SortingFnOption } from '@tanstack/react-table';
 import { useLocale, useTranslations } from 'next-intl';
 
 import FiltersButton from '@/components/filters-button';
@@ -53,6 +53,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     return [
       {
         accessorKey: 'protectedArea',
+        sortingFn: 'localeStringCompare' as SortingFnOption<NationalHighseasTableColumns>,
         header: ({ column }) => (
           <HeaderItem className="ml-6">
             <SortingButton column={column} />
