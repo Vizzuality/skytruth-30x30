@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
+import useScrollPosition from '@/hooks/use-scroll-position';
+import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 
@@ -15,11 +17,16 @@ import LocationSelector from '../../location-selector';
 
 import CountriesList from './countries-list';
 import DetailsButton from './details-button';
-import DetailsWidgets from './widgets';
+import MarineWidgets from './widgets/marine-widgets';
+import SummaryWidgets from './widgets/summary-widgets';
+import TerrestrialWidgets from './widgets/terrestrial-widgets';
 
 const SidebarDetails: FCWithMessages = () => {
   const locale = useLocale();
   const t = useTranslations('containers.map-sidebar-main-panel');
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerScroll = useScrollPosition(containerRef);
 
   const {
     push,
@@ -56,30 +63,60 @@ const SidebarDetails: FCWithMessages = () => {
     [setSettings]
   );
 
+  // Scroll to the top when the tab changes (whether that's initiated by clicking on the tab trigger
+  // or programmatically via `setSettings` in a different component) or when the location changes
+  useEffect(() => {
+    containerRef.current?.scrollTo({ top: 0 });
+  }, [tab, locationCode]);
+
   return (
     <Tabs value={tab} onValueChange={handleTabChange} className="flex h-full w-full flex-col">
-      <div className="shrink-0 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6">
-        <h1 className="text-5xl font-black">{locationsData?.data[0]?.attributes?.name}</h1>
-        <LocationSelector className="mt-2" theme="orange" onChange={handleLocationSelected} />
-        <CountriesList className="mt-2" bgColorClassName="bg-orange" countries={memberCountries} />
-        <TabsList className="relative top-px mt-5">
+      <div
+        className={cn({
+          'flex flex-shrink-0 gap-y-2 gap-x-5 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6':
+            true,
+          'flex-col': containerScroll === 0,
+          'flex-row flex-wrap': containerScroll > 0,
+        })}
+      >
+        <h1
+          className={cn({
+            'text-ellipsis font-black transition-all': true,
+            'text-5xl': containerScroll === 0,
+            'text-xl': containerScroll > 0,
+          })}
+        >
+          {locationsData?.data[0]?.attributes?.name}
+        </h1>
+        <LocationSelector
+          className="flex-shrink-0"
+          theme="orange"
+          size={containerScroll > 0 ? 'small' : 'default'}
+          onChange={handleLocationSelected}
+        />
+        <CountriesList
+          className="w-full shrink-0"
+          bgColorClassName="bg-orange"
+          countries={memberCountries}
+        />
+        <TabsList className="relative top-px mt-5 w-full flex-shrink-0">
           <TabsTrigger value="summary">{t('summary')}</TabsTrigger>
           <TabsTrigger value="terrestrial">{t('terrestrial')}</TabsTrigger>
           <TabsTrigger value="marine">{t('marine')}</TabsTrigger>
         </TabsList>
       </div>
-      <div className="flex-grow overflow-y-auto">
+      <div ref={containerRef} className="flex-grow overflow-y-auto">
         <TabsContent value="summary">
-          <div className="py-36 text-center font-black">{t('coming-soon')}</div>
+          <SummaryWidgets />
         </TabsContent>
         <TabsContent value="terrestrial">
-          <div className="py-36 text-center font-black">{t('coming-soon')}</div>
+          <TerrestrialWidgets />
         </TabsContent>
         <TabsContent value="marine">
-          <DetailsWidgets />
+          <MarineWidgets />
         </TabsContent>
       </div>
-      <div className="shrink-0 border-t border-t-black px-4 py-5 md:px-8">
+      <div className="shrink-0 border-t border-t-black bg-white px-4 py-5 md:px-8">
         <DetailsButton />
       </div>
     </Tabs>
@@ -91,7 +128,8 @@ SidebarDetails.messages = [
   ...LocationSelector.messages,
   ...CountriesList.messages,
   ...DetailsButton.messages,
-  ...DetailsWidgets.messages,
+  ...SummaryWidgets.messages,
+  ...MarineWidgets.messages,
 ];
 
 export default SidebarDetails;

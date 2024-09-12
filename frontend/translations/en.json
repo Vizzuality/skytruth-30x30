@@ -223,7 +223,11 @@
       "summary": "Summary",
       "terrestrial": "Terrestrial",
       "marine": "Marine",
-      "coming-soon": "Coming soon!"
+      "terrestrial-conservation-coverage": "Terrestrial Conservation Coverage",
+      "terrestrial-protected-percentage": "<b1>{percentage}</b1><b2>%</b2>",
+      "terrestrial-protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "explore-terrestrial-conservation": "Explore Terrestrial Conservation",
+      "explore-marine-conservation": "Explore Marine Conservation"
     },
     "map-sidebar-layers-panel": {
       "layers": "Layers",
