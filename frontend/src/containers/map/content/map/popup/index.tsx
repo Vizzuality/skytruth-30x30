@@ -102,10 +102,6 @@ const PopupContainer: FCWithMessages = () => {
   }, [layersInteractive, closePopup]);
 
   useEffect(() => {
-    setPopup({});
-  }, [layersInteractive, setPopup]);
-
-  useEffect(() => {
     if (layersInteractiveData?.[0]?.value) {
       setSelectedLayerId(Number(layersInteractiveData[0].value));
     }
@@ -116,7 +112,9 @@ const PopupContainer: FCWithMessages = () => {
   const isHoveredTooltip = popup?.type === 'mousemove';
   const isClickedTooltip = popup?.type === 'click';
 
-  if (!Object.keys(popup).length || !popup?.features?.length) return null;
+  if (!Object.keys(popup).length || !popup?.features?.length) {
+    return null;
+  }
 
   return (
     <Popup

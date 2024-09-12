@@ -11,11 +11,10 @@ import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/national-highseas/useColumns';
 import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
-import { MpaListResponseDataItem } from '@/types/generated/strapi.schemas';
+import { useGetPas } from '@/types/generated/pa';
+import { PaListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 import SortingButton from '../../table/sorting-button';
-
-import { useGetMpas } from '@/types/generated/mpa';
 
 const NationalHighseasTable: FCWithMessages = () => {
   const {
@@ -81,7 +80,7 @@ const NationalHighseasTable: FCWithMessages = () => {
     },
   };
 
-  const { data: mpasData }: { data: MpaListResponseDataItem[] } = useGetMpas(
+  const { data: mpasData }: { data: PaListResponseDataItem[] } = useGetPas(
     {
       locale,
       filters: {

@@ -11,6 +11,7 @@ import ArrowRight from '@/styles/icons/arrow-right.svg';
 import { FCWithMessages } from '@/types';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 import { useGetStaticIndicators } from '@/types/generated/static-indicator';
+import { ProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 type IntroProps = {
   onScrollClick: () => void;
@@ -20,29 +21,35 @@ const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
   const t = useTranslations('containers.homepage-intro');
   const locale = useLocale();
 
-  const {
-    data: { data: protectionStatsData },
-  } = useGetProtectionCoverageStats(
-    {
-      locale,
-      filters: {
-        location: {
-          code: 'GLOB',
+  const { data: protectionStatsData } =
+    useGetProtectionCoverageStats<ProtectionCoverageStatListResponseDataItem>(
+      {
+        locale,
+        filters: {
+          location: {
+            code: 'GLOB',
+          },
+          is_last_year: {
+            $eq: true,
+          },
+          environment: {
+            slug: {
+              $eq: 'marine',
+            },
+          },
         },
+        populate: 'location,environment',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        'sort[year]': 'desc',
+        'pagination[limit]': 1,
       },
-      populate: 'location',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      'sort[year]': 'desc',
-      'pagination[limit]': -1,
-    },
-    {
-      query: {
-        select: ({ data }) => ({ data }),
-        placeholderData: { data: [] },
-      },
-    }
-  );
+      {
+        query: {
+          select: ({ data }) => data?.[0],
+        },
+      }
+    );
 
   const { data: protectedTerrestrialInlandAreasData } = useGetStaticIndicators(
     {
@@ -62,26 +69,9 @@ const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
   const formattedOceanProtectedAreaPercentage = useMemo(() => {
     if (!protectionStatsData) return null;
 
-    const lastProtectionDataYear = Math.max(
-      ...protectionStatsData.map(({ attributes }) => attributes.year)
-    );
-
-    const protectionStats = protectionStatsData.filter(
-      ({ attributes }) => attributes.year === lastProtectionDataYear
-    );
-
-    const totalMarineArea =
-      protectionStats[0]?.attributes?.location?.data?.attributes?.totalMarineArea;
-
-    const protectedArea = protectionStats.reduce(
-      (acc, { attributes }) => acc + attributes?.cumSumProtectedArea,
-      0
-    );
-    const coveragePercentage = (protectedArea * 100) / totalMarineArea;
-
-    if (Number.isNaN(coveragePercentage)) return null;
-
-    return formatPercentage(locale, coveragePercentage, { displayPercentageSign: false });
+    return formatPercentage(locale, protectionStatsData.attributes.coverage, {
+      displayPercentageSign: false,
+    });
   }, [locale, protectionStatsData]);
 
   return (

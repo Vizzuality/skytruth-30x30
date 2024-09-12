@@ -97,28 +97,11 @@ const Home: FCWithMessages = ({
   const protectedOceanPercentage = useMemo(() => {
     const protectionCoverageStatsData = protectionCoverageStats?.data;
 
-    if (!protectionCoverageStatsData) return null;
+    if (!protectionCoverageStatsData?.length) return null;
 
-    const lastProtectionDataYear = Math.max(
-      ...protectionCoverageStatsData.map(({ attributes }) => attributes.year)
-    );
-
-    const protectionStats = protectionCoverageStatsData.filter(
-      ({ attributes }) => attributes.year === lastProtectionDataYear
-    );
-
-    const totalMarineArea =
-      protectionStats[0]?.attributes?.location?.data?.attributes?.totalMarineArea;
-
-    const protectedArea = protectionStats.reduce(
-      (acc, { attributes }) => acc + attributes?.cumSumProtectedArea,
-      0
-    );
-    const coveragePercentage = (protectedArea * 100) / totalMarineArea;
-
-    if (Number.isNaN(coveragePercentage)) return null;
-
-    return formatPercentage(locale, coveragePercentage, { displayPercentageSign: false });
+    return formatPercentage(locale, protectionCoverageStatsData[0].attributes.coverage, {
+      displayPercentageSign: false,
+    });
   }, [locale, protectionCoverageStats]);
 
   return (
@@ -282,12 +265,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       location: {
         code: 'GLOB',
       },
+      is_last_year: {
+        $eq: true,
+      },
+      environment: {
+        slug: {
+          $eq: 'marine',
+        },
+      },
     },
     populate: '*',
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     'sort[year]': 'desc',
-    'pagination[limit]': -1,
+    'pagination[limit]': 1,
   };
 
   await queryClient.prefetchQuery({
