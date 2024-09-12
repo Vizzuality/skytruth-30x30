@@ -1232,6 +1232,7 @@ export interface ApiEnvironmentEnvironment extends Schema.CollectionType {
     singularName: 'environment';
     pluralName: 'environments';
     displayName: 'Environment';
+    description: '';
   };
   options: {
     draftAndPublish: false;
@@ -1244,7 +1245,6 @@ export interface ApiEnvironmentEnvironment extends Schema.CollectionType {
   attributes: {
     name: Attribute.String &
       Attribute.Required &
-      Attribute.Unique &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

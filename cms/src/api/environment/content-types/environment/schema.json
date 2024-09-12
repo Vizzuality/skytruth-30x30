@@ -4,7 +4,8 @@
   "info": {
     "singularName": "environment",
     "pluralName": "environments",
-    "displayName": "Environment"
+    "displayName": "Environment",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -23,7 +24,7 @@
       },
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": false
     },
     "slug": {
       "pluginOptions": {
