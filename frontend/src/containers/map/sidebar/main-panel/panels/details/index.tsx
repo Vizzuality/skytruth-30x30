@@ -70,15 +70,10 @@ const SidebarDetails: FCWithMessages = () => {
   }, [tab, locationCode]);
 
   return (
-    <Tabs
-      ref={containerRef}
-      value={tab}
-      onValueChange={handleTabChange}
-      className="h-full w-full overflow-y-auto"
-    >
+    <Tabs value={tab} onValueChange={handleTabChange} className="flex h-full w-full flex-col">
       <div
         className={cn({
-          'sticky top-0 z-10 flex gap-y-2 gap-x-5 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6':
+          'flex flex-shrink-0 gap-y-2 gap-x-5 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6':
             true,
           'flex-col': containerScroll === 0,
           'flex-row flex-wrap': containerScroll > 0,
@@ -100,7 +95,7 @@ const SidebarDetails: FCWithMessages = () => {
           onChange={handleLocationSelected}
         />
         <CountriesList
-          className="w-full flex-shrink-0"
+          className="w-full shrink-0"
           bgColorClassName="bg-orange"
           countries={memberCountries}
         />
@@ -110,7 +105,7 @@ const SidebarDetails: FCWithMessages = () => {
           <TabsTrigger value="marine">{t('marine')}</TabsTrigger>
         </TabsList>
       </div>
-      <div>
+      <div ref={containerRef} className="flex-grow overflow-y-auto">
         <TabsContent value="summary">
           <SummaryWidgets />
         </TabsContent>
@@ -121,7 +116,7 @@ const SidebarDetails: FCWithMessages = () => {
           <MarineWidgets />
         </TabsContent>
       </div>
-      <div className="sticky bottom-0 z-10 shrink-0 border-t border-t-black bg-white px-4 py-5 md:px-8">
+      <div className="shrink-0 border-t border-t-black bg-white px-4 py-5 md:px-8">
         <DetailsButton />
       </div>
     </Tabs>
