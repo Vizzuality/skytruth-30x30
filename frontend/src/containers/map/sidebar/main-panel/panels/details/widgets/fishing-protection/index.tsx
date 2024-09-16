@@ -167,7 +167,7 @@ const FishingProtectionWidget: React.FC<FishingProtectionWidgetProps> = ({ locat
 
   return (
     <Widget
-      title={t('fishing-protection')}
+      title={t('level-of-fishing-protection')}
       lastUpdated={protectionLevelsData[0]?.attributes?.updatedAt}
       noData={noData}
       loading={loading}
