@@ -130,11 +130,17 @@ const FishingProtectionWidget: React.FC<FishingProtectionWidgetProps> = ({ locat
     if (!protectionLevelsData.length) return [];
 
     const parsedProtectionLevel = (label: string, protectionLevel, stats) => {
+      const totalAreaPercentage = (stats?.area / stats?.pct) * 100;
+
+      // There are circumstances in which pct is 0, which will cause the percentage calculation to be NaN.
+      // This is a safeguard so that if the data is unexpected, we don't display NaN on the screen.
+      if (isNaN(totalAreaPercentage)) return null;
+
       return {
         title: label,
         slug: protectionLevel.slug,
         background: FISHING_PROTECTION_CHART_COLORS[protectionLevel.slug],
-        totalArea: (stats?.area / stats?.pct) * 100,
+        totalArea: totalAreaPercentage,
         protectedArea: stats?.area,
         info: metadata?.info,
         sources: metadata?.sources,
@@ -158,11 +164,10 @@ const FishingProtectionWidget: React.FC<FishingProtectionWidgetProps> = ({ locat
       return parsedProtectionLevel(t('highly-protected-from-fishing'), protectionLevel, data);
     });
 
-    return parsedFishingProtectionLevelData ?? [];
+    return parsedFishingProtectionLevelData.filter(Boolean) ?? [];
   }, [t, protectionLevelsData, metadata]);
 
   const noData = !widgetChartData.length;
-
   const loading = isFetchingProtectionLevelsData;
 
   return (
