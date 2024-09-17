@@ -1,4 +1,4 @@
-FROM mambaorg/micromamba:1.4.4 AS base
+FROM mambaorg/micromamba:1.5.8 AS base
 
 USER root
 
@@ -48,6 +48,7 @@ WORKDIR /home/$MAMBA_USER
 FROM build AS dev
 
 USER root
+
 RUN git clone https://github.com/mapbox/tippecanoe.git && \
     cd tippecanoe && \
     make -j && make install && cd ..
@@ -55,6 +56,8 @@ RUN npm install -g mapshaper
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && ./aws/install
 
+RUN chown -R $MAMBA_USER:$MAMBA_USER /home/$MAMBA_USER
 USER $MAMBA_USER
+
 
 ENTRYPOINT ["/usr/local/bin/_entrypoint.sh", "jupyter", "lab", "--ip=0.0.0.0","--allow-root", "--no-browser", "--collaborative", "--ServerApp.disable_check_xsrf=True", "--ServerApp.token=''"]

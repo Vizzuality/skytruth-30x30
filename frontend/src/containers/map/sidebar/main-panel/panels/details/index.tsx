@@ -2,10 +2,13 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useLocale } from 'next-intl';
+
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 
 import LocationSelector from '../../location-selector';
@@ -14,7 +17,9 @@ import CountriesList from './countries-list';
 import DetailsButton from './details-button';
 import DetailsWidgets from './widgets';
 
-const SidebarDetails: React.FC = () => {
+const SidebarDetails: FCWithMessages = () => {
+  const locale = useLocale();
+
   const {
     push,
     query: { locationCode = 'GLOB' },
@@ -23,6 +28,7 @@ const SidebarDetails: React.FC = () => {
   const searchParams = useMapSearchParams();
 
   const { data: locationsData } = useGetLocations({
+    locale,
     filters: {
       code: locationCode,
     },
@@ -65,5 +71,13 @@ const SidebarDetails: React.FC = () => {
     </>
   );
 };
+
+SidebarDetails.messages = [
+  'containers.map-sidebar-main-panel',
+  ...LocationSelector.messages,
+  ...CountriesList.messages,
+  ...DetailsButton.messages,
+  ...DetailsWidgets.messages,
+];
 
 export default SidebarDetails;

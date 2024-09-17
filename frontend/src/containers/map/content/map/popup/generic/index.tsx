@@ -4,24 +4,37 @@ import { useMap } from 'react-map-gl';
 
 import type { Feature } from 'geojson';
 import { useAtomValue } from 'jotai';
+import { useLocale } from 'next-intl';
 
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { format } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
 import { LayerTyped, InteractionConfig } from '@/types/layers';
 
-const GenericPopup = ({ layerId, ...restConfig }: InteractionConfig & { layerId: number }) => {
+const GenericPopup: FCWithMessages<InteractionConfig & { layerId: number }> = ({
+  layerId,
+  ...restConfig
+}) => {
   const [rendered, setRendered] = useState(false);
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const { events } = restConfig;
 
+  const locale = useLocale();
+
   const popup = useAtomValue(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
-  const layerQuery = useGetLayersId(
+  const layerQuery = useGetLayersId<{
+    source: LayerTyped['config']['source'];
+    click: LayerTyped['interaction_config']['events'][0];
+  }>(
     layerId,
     {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      locale,
       populate: 'metadata',
     },
     {
@@ -112,7 +125,7 @@ const GenericPopup = ({ layerId, ...restConfig }: InteractionConfig & { layerId:
             <div key={key}>
               <dt className="mt-4 font-mono">{label}</dt>
               <dd className="font-mono first-letter:uppercase">
-                {customFormat && format({ value: DATA[key], ...customFormat })}
+                {customFormat && format({ locale, value: DATA[key], ...customFormat })}
                 {!customFormat && DATA[key]}
               </dd>
             </div>
@@ -122,5 +135,7 @@ const GenericPopup = ({ layerId, ...restConfig }: InteractionConfig & { layerId:
     </>
   );
 };
+
+GenericPopup.messages = ['containers.map'];
 
 export default GenericPopup;

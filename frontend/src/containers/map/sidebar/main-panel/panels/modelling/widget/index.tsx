@@ -4,17 +4,19 @@ import theme from 'lib/tailwind';
 
 import { useQueries } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
+import { useLocale, useTranslations } from 'next-intl';
 
 import StackedHorizontalBarChart from '@/components/charts/stacked-horizontal-bar-chart';
 import TooltipButton from '@/components/tooltip-button';
 import Widget from '@/components/widget';
 import { modellingAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 import {
   getGetProtectionCoverageStatsQueryOptions,
   useGetProtectionCoverageStats,
 } from '@/types/generated/protection-coverage-stat';
-import { Location } from '@/types/generated/strapi.schemas';
+import { Location, ProtectionCoverageStatLocationData } from '@/types/generated/strapi.schemas';
 
 import useTooltips from '../useTooltips';
 
@@ -40,7 +42,9 @@ const WidgetSectionWidgetTitle: React.FC<WidgetSectionWidgetTitleProps> = ({ tit
   );
 };
 
-const WidgetLegend: React.FC = () => {
+const WidgetLegend: FCWithMessages = () => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+
   const LEGEND_LINE_CLASSES =
     'relative pl-9 font-mono text-xs before:absolute before:left-0 before:top-1/2 before:h-[2px] before:w-[28px] before:-translate-y-1/2';
 
@@ -48,17 +52,22 @@ const WidgetLegend: React.FC = () => {
     <ul>
       <li>
         <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-green')}>
-          Existing marine conservation coverage
+          {t('marine-existing-conservation')}
         </span>
       </li>
       <li>
-        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-black')}>New added area</span>
+        <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-black')}>{t('new-added-area')}</span>
       </li>
     </ul>
   );
 };
 
-const ModellingWidget: React.FC = () => {
+WidgetLegend.messages = ['containers.map-sidebar-main-panel'];
+
+const ModellingWidget: FCWithMessages = () => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+  const locale = useLocale();
+
   const chartsProps = DEFAULT_CHART_PROPS;
 
   const {
@@ -85,12 +94,13 @@ const ModellingWidget: React.FC = () => {
     };
   } = useGetProtectionCoverageStats(
     {
+      locale,
       filters: {
         location: {
           code: 'GLOB',
         },
       },
-      populate: '*',
+      populate: 'location',
       // @ts-expect-error this is an issue with Orval typing
       'sort[year]': 'desc',
       'pagination[limit]': 2,
@@ -141,12 +151,13 @@ const ModellingWidget: React.FC = () => {
     queries: (modellingData?.locations_area || []).map((location) =>
       getGetProtectionCoverageStatsQueryOptions(
         {
+          locale,
           filters: {
             location: {
               code: location.code,
             },
           },
-          populate: '*',
+          populate: 'location,location.localizations',
           // @ts-expect-error this is an issue with Orval typing
           'sort[year]': 'desc',
         },
@@ -156,7 +167,7 @@ const ModellingWidget: React.FC = () => {
             select: ({ data }) => {
               if (!data) return null;
 
-              const lastYearAvailable = data?.[0].attributes?.year;
+              const lastYearAvailable = data?.[0]?.attributes?.year;
 
               const dataFiltered = data.filter(
                 (entry) => entry.attributes.year === lastYearAvailable
@@ -167,13 +178,19 @@ const ModellingWidget: React.FC = () => {
                 0
               );
 
+              let location = data?.[0]?.attributes?.location?.data?.attributes;
+              if (location.locale !== locale) {
+                location = (
+                  location.localizations.data as ProtectionCoverageStatLocationData[]
+                ).find((localization) => localization.attributes.locale === locale)?.attributes;
+              }
+
               // ? total extension of location
-              const totalMarineArea =
-                data?.[0].attributes?.location?.data?.attributes?.totalMarineArea || 0;
+              const totalMarineArea = location?.totalMarineArea || 0;
 
               // ? total custom  protected area (analysis)
               const totalCustomArea = modellingData.locations_area.find(
-                ({ code }) => code === data?.[0].attributes?.location.data?.attributes?.code
+                ({ code }) => code === location?.code
               ).protected_area;
 
               //  ? percentage of custom protected area (analysis)
@@ -187,7 +204,7 @@ const ModellingWidget: React.FC = () => {
               const totalPercentage = totalCustomAreaPercentage + totalExistingAreaPercentage;
 
               return {
-                location: data?.[0].attributes?.location?.data?.attributes,
+                location,
                 totalMarineArea,
                 totalProtectedArea,
                 protectedArea,
@@ -245,7 +262,7 @@ const ModellingWidget: React.FC = () => {
       <div className="flex flex-col">
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES, 'flex justify-between border-t-0')}>
           <WidgetSectionWidgetTitle
-            title="Administrative boundary"
+            title={t('administrative-boundary')}
             tooltip={tooltips?.['administrativeBoundary']}
           />
           <span className="text-right font-mono text-xs font-bold underline">
@@ -256,7 +273,7 @@ const ModellingWidget: React.FC = () => {
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES)}>
           <div className="space-y-2">
             <WidgetSectionWidgetTitle
-              title="National level contribution"
+              title={t('national-level-contribution')}
               tooltip={tooltips?.['contributionDetails']}
             />
             <WidgetLegend />
@@ -295,7 +312,7 @@ const ModellingWidget: React.FC = () => {
             <WidgetLegend />
           </div>
           <StackedHorizontalBarChart
-            title="Global"
+            title={t('global')}
             totalProtectedArea={globalProtectionStatsData?.totalProtectedArea}
             totalArea={globalProtectionStatsData?.totalMarineArea}
             highlightedPercentage={globalProtectionStatsData?.totalPercentage}
@@ -319,5 +336,12 @@ const ModellingWidget: React.FC = () => {
     </Widget>
   );
 };
+
+ModellingWidget.messages = [
+  'containers.map-sidebar-main-panel',
+  ...Widget.messages,
+  ...WidgetLegend.messages,
+  ...StackedHorizontalBarChart.messages,
+];
 
 export default ModellingWidget;

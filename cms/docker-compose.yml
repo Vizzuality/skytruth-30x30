@@ -1,7 +1,9 @@
 version: "3.9" # optional since v1.27.0
 services:
   cms:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "1337:1337"
     extra_hosts:
@@ -11,10 +13,14 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/app
+      - ./src:/app/src
+      - ./types:/app/types
+      - ./public:/app/public
+      - ./database:/app/database
+      - ./config:/app/config
 
   db:
-    image: postgres
+    image: postgis/postgis:16-3.4
     restart: always
     env_file:
       - .env

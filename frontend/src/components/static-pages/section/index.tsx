@@ -13,7 +13,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ children }) => (
 export type SectionDescriptionProps = PropsWithChildren;
 
 const SectionDescription: React.FC<SectionDescriptionProps> = ({ children }) => (
-  <p className="my-6 max-w-[660px]">{children}</p>
+  <div className="my-6 max-w-[660px]">{children}</div>
 );
 
 export type SectionContentProps = PropsWithChildren<{ className?: string }>;

@@ -4,16 +4,26 @@
   "info": {
     "singularName": "data-tool-resource-type",
     "pluralName": "data-tool-resource-types",
-    "displayName": "Data Tool Resource Type"
+    "displayName": "Data Tool Resource Type",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "name": {
       "type": "string",
-      "unique": true
+      "unique": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

@@ -2,6 +2,7 @@ import { useMemo, useRef } from 'react';
 
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
+import { useLocale, useTranslations } from 'next-intl';
 
 import Cta from '@/components/static-pages/cta';
 import Section, {
@@ -18,7 +19,9 @@ import Intro from '@/containers/homepage/intro';
 import LinkCards from '@/containers/homepage/link-cards';
 import useScrollSpy from '@/hooks/use-scroll-spy';
 import Layout, { Content, Sidebar } from '@/layouts/static-page';
+import { fetchTranslations } from '@/lib/i18n';
 import { formatPercentage } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
 import {
   getGetProtectionCoverageStatsQueryKey,
   getGetProtectionCoverageStatsQueryOptions,
@@ -42,68 +45,30 @@ const STATIC_INDICATOR_MAPPING = {
   biodiversityTextLand: 'protected-land-area-percentage',
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const queryClient = new QueryClient();
-
-  const protectionCoverageStatsQueryParams = {
-    filters: {
-      location: {
-        code: 'GLOB',
-      },
-    },
-    populate: '*',
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    'sort[year]': 'desc',
-    'pagination[limit]': -1,
-  };
-
-  await queryClient.prefetchQuery({
-    ...getGetStaticIndicatorsQueryOptions(),
-  });
-
-  await queryClient.prefetchQuery({
-    ...getGetProtectionCoverageStatsQueryOptions(protectionCoverageStatsQueryParams),
-  });
-
-  const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
-    getGetStaticIndicatorsQueryKey()
-  );
-
-  const protectionCoverageStatsData = queryClient.getQueryData<ProtectionCoverageStatListResponse>(
-    getGetProtectionCoverageStatsQueryKey(protectionCoverageStatsQueryParams)
-  );
-
-  return {
-    props: {
-      staticIndicators: staticIndicatorsData || { data: [] },
-      protectionCoverageStats: protectionCoverageStatsData || { data: [] },
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
-
-const Home: React.FC = ({
+const Home: FCWithMessages = ({
   staticIndicators,
   protectionCoverageStats,
 }: {
   staticIndicators: StaticIndicatorListResponse;
   protectionCoverageStats: ProtectionCoverageStatListResponse;
 }) => {
+  const t = useTranslations('pages.home');
+  const locale = useLocale();
+
   const sections = {
     services: {
       id: 'services',
-      name: 'Services',
+      name: t('services'),
       ref: useRef<HTMLDivElement>(null),
     },
     impact: {
       id: 'impact',
-      name: 'Impact',
+      name: t('impact'),
       ref: useRef<HTMLDivElement>(null),
     },
     context: {
       id: 'context',
-      name: 'Context',
+      name: t('context'),
       ref: useRef<HTMLDivElement>(null),
     },
   };
@@ -153,8 +118,8 @@ const Home: React.FC = ({
 
     if (Number.isNaN(coveragePercentage)) return null;
 
-    return formatPercentage(coveragePercentage, { displayPercentageSign: false });
-  }, [protectionCoverageStats]);
+    return formatPercentage(locale, coveragePercentage, { displayPercentageSign: false });
+  }, [locale, protectionCoverageStats]);
 
   return (
     <Layout
@@ -163,10 +128,10 @@ const Home: React.FC = ({
       hero={<Intro onScrollClick={handleIntroScrollClick} />}
       bottom={
         <Cta
-          title="Take action."
-          description="Do you want to contribute to the Knowledge Hub and add a tool?"
+          title={t('outro-title')}
+          description={t('outro-description')}
           button={{
-            text: 'Get in touch',
+            text: t('outro-button'),
             link: PAGES.contact,
           }}
         />
@@ -175,13 +140,12 @@ const Home: React.FC = ({
       <Sidebar sections={sections} activeSection={scrollActiveId} arrowColor={'orange'} />
       <Content>
         <Section ref={sections.services.ref}>
-          <SectionTitle>An entry point for 30x30</SectionTitle>
+          <SectionTitle>{t('section-services-title')}</SectionTitle>
           <SectionDescription>
-            In partnership with <b>Bloomberg Ocean Initiative, SkyTruth</b> is developing an entry
-            point for 30x30 stakeholders. The tools below enable you to track the world’s progress
-            toward 30x30, draw new protected areas, and find additional tools and organizations
-            fighting for the protection of marine and terrestrial ecosystems{' '}
-            <i>(terrestrial coming soon)</i>.
+            {t.rich('section-services-description', {
+              b: (chunks) => <b>{chunks}</b>,
+              i: (chunks) => <i>{chunks}</i>,
+            })}
           </SectionDescription>
           <SectionContent>
             <LinkCards />
@@ -189,41 +153,42 @@ const Home: React.FC = ({
         </Section>
 
         <Section ref={sections.impact.ref}>
-          <SectionTitle>What&apos;s at stake?</SectionTitle>
+          <SectionTitle>{t('section-impact-title')}</SectionTitle>
 
           <TwoColSubsection
-            title="Biodiversity"
+            title={t('section-impact-subsection-1-title')}
             itemNum={1}
             itemTotal={3}
             description={
               <>
                 <p>
-                  Today, {protectedOceanPercentage} percent of the world&apos;s ocean and{' '}
-                  <a
-                    className="underline"
-                    href={indicators?.biodiversityTextLand?.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {indicators?.biodiversityTextLand?.value} percent of its land area
-                  </a>{' '}
-                  are protected . Wildlife populations - mammals, birds, fish, and other species -
-                  have decreased by nearly 70% since 1970, with up to{' '}
-                  <a
-                    className="underline"
-                    href={indicators?.biodiversity?.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {indicators?.biodiversity?.value} species threatened with extinction
-                  </a>
-                  .
+                  {t.rich('section-impact-subsection-1-description-1', {
+                    a1: (chunks) => (
+                      <a
+                        className="underline"
+                        href={indicators?.biodiversityTextLand?.source}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {chunks}
+                      </a>
+                    ),
+                    a2: (chunks) => (
+                      <a
+                        className="underline"
+                        href={indicators?.biodiversity?.source}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {chunks}
+                      </a>
+                    ),
+                    protectedOceanPercentage,
+                    protectedLandPercentage: indicators?.biodiversityTextLand?.value,
+                    threatenedSpeciesPercentage: indicators?.biodiversity?.value,
+                  })}
                 </p>
-                <p className="mt-4 font-bold">
-                  Protecting 30 percent of the world’s land and ocean habitats by 2030 will help
-                  these threatened species recover and survive, preserving them for future
-                  generations.
-                </p>
+                <p className="mt-4 font-bold">{t('section-impact-subsection-1-description-2')}</p>
               </>
             }
           />
@@ -237,22 +202,13 @@ const Home: React.FC = ({
           />
 
           <TwoColSubsection
-            title="Climate"
+            title={t('section-impact-subsection-2-title')}
             itemNum={2}
             itemTotal={3}
             description={
               <>
-                <p>
-                  Earth’s climate and biodiversity are inextricably linked. A stable climate helps
-                  ecosystems thrive, and protected ecosystems help slow rising global temperatures
-                  and buffer us from the worst impacts of climate change, including floods,
-                  wildfires, and food insecurity.
-                </p>
-                <p className="mt-4 font-bold">
-                  Protecting 30 percent of Earths’ biodiversity will not only preserve vital
-                  ecosystems, it will keep massive amounts of carbon out of the atmosphere and give
-                  us a fighting chance to prevent and adapt to the worst effects of climate change.
-                </p>
+                <p>{t('section-impact-subsection-2-description-1')}</p>
+                <p className="mt-4 font-bold">{t('section-impact-subsection-2-description-2')}</p>
               </>
             }
           />
@@ -265,22 +221,13 @@ const Home: React.FC = ({
           />
 
           <TwoColSubsection
-            title="Lives &amp; Livelihoods"
+            title={t('section-impact-subsection-3-title')}
             itemNum={3}
             itemTotal={3}
             description={
               <>
-                <p>
-                  From fisheries, to forests, to agriculture, to tourism, 30x30 envisions a world
-                  where critical habitats are sustained and protected, continuing to provide flood
-                  protection, pollinators for crops, and fish and other food resources for billions
-                  of people.
-                </p>
-                <p className="mt-4 font-bold">
-                  Protecting 30 percent of Earth’s lands and waters will help safeguard the
-                  resources we need for future generations to survive and flourish in a better
-                  world.
-                </p>
+                <p>{t('section-impact-subsection-3-description-1')}</p>
+                <p className="mt-4 font-bold">{t('section-impact-subsection-3-description-2')}</p>
               </>
             }
           />
@@ -294,22 +241,19 @@ const Home: React.FC = ({
         </Section>
 
         <Section ref={sections.context.ref}>
-          <SectionTitle>The path to protecting 30% of the ocean</SectionTitle>
+          <SectionTitle>{t('section-context-title')}</SectionTitle>
           <SectionContent>
             <TwoColSubsection
-              title="How big is the ocean?"
-              description="Covering 71 percent of the Earth’s surface, the ocean and its biodiversity stabilizes
-              our climate, provides 51% of the oxygen we need to survive, and provides food and
-              livelihoods for billions of people."
+              title={t('section-context-subsection-1-title')}
+              description={t('section-context-subsection-1-description')}
             >
               <EarthSurfaceCoverage />
             </TwoColSubsection>
           </SectionContent>
 
           <TwoColSubsection
-            title="How big is 30% of the ocean?"
-            description="Thirty percent (30%) of the ocean is the equivalent of South America, North America,
-              Europe and Russia combined. This means 70 million square kilometres."
+            title={t('section-context-subsection-2-title')}
+            description={t('section-context-subsection-2-description')}
           />
 
           <SectionContent className="mt-10">
@@ -319,6 +263,57 @@ const Home: React.FC = ({
       </Content>
     </Layout>
   );
+};
+
+Home.messages = [
+  'pages.home',
+  ...Layout.messages,
+  ...Intro.messages,
+  ...LinkCards.messages,
+  ...EarthSurfaceCoverage.messages,
+];
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+
+  const protectionCoverageStatsQueryParams = {
+    locale: context.locale,
+    filters: {
+      location: {
+        code: 'GLOB',
+      },
+    },
+    populate: '*',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    'sort[year]': 'desc',
+    'pagination[limit]': -1,
+  };
+
+  await queryClient.prefetchQuery({
+    ...getGetStaticIndicatorsQueryOptions({ locale: context.locale }),
+  });
+
+  await queryClient.prefetchQuery({
+    ...getGetProtectionCoverageStatsQueryOptions(protectionCoverageStatsQueryParams),
+  });
+
+  const staticIndicatorsData = queryClient.getQueryData<StaticIndicatorListResponse>(
+    getGetStaticIndicatorsQueryKey({ locale: context.locale })
+  );
+
+  const protectionCoverageStatsData = queryClient.getQueryData<ProtectionCoverageStatListResponse>(
+    getGetProtectionCoverageStatsQueryKey(protectionCoverageStatsQueryParams)
+  );
+
+  return {
+    props: {
+      staticIndicators: staticIndicatorsData || { data: [] },
+      protectionCoverageStats: protectionCoverageStatsData || { data: [] },
+      dehydratedState: dehydrate(queryClient),
+      messages: await fetchTranslations(context.locale, Home.messages),
+    },
+  };
 };
 
 export default Home;

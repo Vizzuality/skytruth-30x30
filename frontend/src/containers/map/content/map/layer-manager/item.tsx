@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { useParams } from 'next/navigation';
 
 import { useAtom } from 'jotai';
+import { useLocale } from 'next-intl';
 
 import DeckJsonLayer from '@/components/map/layers/deck-json-layer';
 import MapboxLayer from '@/components/map/layers/mapbox-layer';
@@ -18,7 +19,12 @@ interface LayerManagerItemProps extends Required<Pick<LayerResponseDataObject, '
 }
 
 const LayerManagerItem = ({ id, beforeId, settings }: LayerManagerItemProps) => {
+  const locale = useLocale();
+
   const { data } = useGetLayersId(id, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    locale,
     populate: 'metadata',
   });
   const [, setLayersInteractive] = useAtom(layersInteractiveAtom);

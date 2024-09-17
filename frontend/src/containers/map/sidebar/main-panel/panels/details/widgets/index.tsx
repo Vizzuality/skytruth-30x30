@@ -1,16 +1,22 @@
 import { useRouter } from 'next/router';
 
+import { useLocale } from 'next-intl';
+
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
+import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 
-// import EstablishmentStagesWidget from './establishment-stages';
-// import FishingProtectionWidget from './fishing-protection';
+import FishingProtectionWidget from './fishing-protection';
 import HabitatWidget from './habitat';
 import MarineConservationWidget from './marine-conservation';
 import ProtectionTypesWidget from './protection-types';
 
-const DetailsWidgets: React.FC = () => {
+// import EstablishmentStagesWidget from './establishment-stages';
+
+const DetailsWidgets: FCWithMessages = () => {
+  const locale = useLocale();
+
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
@@ -18,6 +24,7 @@ const DetailsWidgets: React.FC = () => {
   const [{ showDetails }] = useSyncMapContentSettings();
 
   const { data: locationsData } = useGetLocations({
+    locale,
     filters: {
       code: locationCode,
     },
@@ -32,11 +39,17 @@ const DetailsWidgets: React.FC = () => {
     >
       <MarineConservationWidget location={locationsData?.data[0]?.attributes} />
       <ProtectionTypesWidget location={locationsData?.data[0]?.attributes} />
-      {/* <FishingProtectionWidget location={locationsData?.data[0]?.attributes} /> */}
+      <FishingProtectionWidget location={locationsData?.data[0]?.attributes} />
       {/* <EstablishmentStagesWidget location={locationsData?.data[0]?.attributes} /> */}
       <HabitatWidget location={locationsData?.data[0]?.attributes} />
     </div>
   );
 };
+
+DetailsWidgets.messages = [
+  ...MarineConservationWidget.messages,
+  ...ProtectionTypesWidget.messages,
+  ...HabitatWidget.messages,
+];
 
 export default DetailsWidgets;

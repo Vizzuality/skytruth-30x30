@@ -13,7 +13,7 @@
     "postinstall": "cd .. && husky install"
   },
   "engines": {
-    "node": "~18"
+    "node": "~18.17"
   },
   "packageManager": "yarn@3.5.0",
   "dependencies": {
@@ -26,6 +26,7 @@
     "@loaders.gl/loader-utils": "^3.4.14",
     "@loaders.gl/shapefile": "^3.4.14",
     "@loaders.gl/zip": "^3.4.14",
+    "@localazy/cdn-client": "^1.5.2",
     "@mapbox/mapbox-gl-draw": "1.4.3",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -53,13 +54,15 @@
     "d3-time-format": "^4.1.0",
     "date-fns": "^2.30.0",
     "deck.gl": "8.9.31",
+    "deepmerge": "^4.3.1",
     "embla-carousel-react": "8.0.0",
     "jotai": "2.4.3",
     "lodash-es": "^4.17.21",
     "lucide-react": "^0.274.0",
     "mapbox-gl": "3.1.2",
-    "next": "13.5.6",
+    "next": "14.2.4",
     "next-auth": "^4.24.7",
+    "next-intl": "^3.15.0",
     "next-usequerystate": "1.9.2",
     "orval": "6.18.1",
     "postcss": "8.4.21",

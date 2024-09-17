@@ -1,42 +1,39 @@
 import { useMemo } from 'react';
 
+import { useLocale, useTranslations } from 'next-intl';
+
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { PROTECTION_TYPES_CHART_COLORS } from '@/constants/protection-types-chart-colors';
+import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
-import { useGetLocations } from '@/types/generated/location';
+import { useGetMpaaProtectionLevelStats } from '@/types/generated/mpaa-protection-level-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
-
-import { PROTECTION_LEVEL_NAME_SUBSTITUTIONS } from './constants';
 
 type ProtectionTypesWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
 
-const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location }) => {
+const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ location }) => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+  const locale = useLocale();
+
   // Get protection levels data for the location
   const {
-    data: { data: protectionLevelsData },
-    isFetching: isFetchingProtectionLevelsData,
-  } = useGetLocations(
+    data: { data: protectionLevelsStatsData },
+    isFetching: isFetchingProtectionLevelsStatsData,
+  } = useGetMpaaProtectionLevelStats(
     {
+      locale,
       filters: {
-        code: location?.code,
-      },
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      populate: {
-        mpaa_protection_level_stats: {
-          filters: {
-            mpaa_protection_level: {
-              slug: 'fully-highly-protected',
-            },
-          },
-          populate: {
-            mpaa_protection_level: '*',
-          },
+        location: {
+          code: location?.code || 'GLOB',
+        },
+        mpaa_protection_level: {
+          slug: 'fully-highly-protected',
         },
       },
+      populate: '*',
       'pagination[limit]': -1,
     },
     {
@@ -51,6 +48,7 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   const { data: metadata } = useGetDataInfos(
     {
+      locale,
       filters: {
         slug: 'fully-highly-protected',
       },
@@ -76,51 +74,46 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
 
   // Go through all the relevant stats, find the last updated one's value
   const lastUpdated = useMemo(() => {
-    const protectionLevelStats =
-      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data;
-    const updatedAtValues = protectionLevelStats?.reduce(
+    const updatedAtValues = protectionLevelsStatsData?.reduce(
       (acc, curr) => [...acc, curr?.attributes?.updatedAt],
       []
     );
 
     return updatedAtValues?.sort()?.reverse()?.[0];
-  }, [protectionLevelsData]);
+  }, [protectionLevelsStatsData]);
 
   // Parse data to display in the chart
   const widgetChartData = useMemo(() => {
-    if (!protectionLevelsData.length) return [];
+    if (!protectionLevelsStatsData.length) return [];
 
-    const parsedProtectionLevel = (label, protectionLevel, stats) => {
+    const parseProtectionLevelStats = (protectionLevelStats) => {
+      const mpaaProtectionLevel = protectionLevelStats?.mpaa_protection_level?.data?.attributes;
+      const location = protectionLevelStats?.location?.data?.attributes;
+
+      const barColor = PROTECTION_TYPES_CHART_COLORS[mpaaProtectionLevel?.slug];
+
       return {
-        title: label,
-        slug: protectionLevel.slug,
-        background: PROTECTION_TYPES_CHART_COLORS[protectionLevel.slug],
-        totalArea: location.totalMarineArea,
-        protectedArea: stats?.area,
+        title: mpaaProtectionLevel?.name,
+        slug: mpaaProtectionLevel?.slug,
+        background: barColor,
+        totalArea: location?.totalMarineArea,
+        protectedArea: protectionLevelStats?.area,
         info: metadata?.info,
         sources: metadata?.sources,
       };
     };
 
-    const parsedMpaaProtectionLevelData =
-      protectionLevelsData[0]?.attributes?.mpaa_protection_level_stats?.data?.map((entry) => {
-        const stats = entry?.attributes;
-        const protectionLevel = stats?.mpaa_protection_level?.data.attributes;
-        const displayName =
-          PROTECTION_LEVEL_NAME_SUBSTITUTIONS[protectionLevel.slug] || protectionLevel?.name;
-        return parsedProtectionLevel(displayName, protectionLevel, stats);
-      });
-
-    return parsedMpaaProtectionLevelData;
-  }, [location, protectionLevelsData, metadata]);
+    return protectionLevelsStatsData?.map(({ attributes }) =>
+      parseProtectionLevelStats(attributes)
+    );
+  }, [metadata, protectionLevelsStatsData]);
 
   const noData = !widgetChartData.length;
-
-  const loading = isFetchingProtectionLevelsData;
+  const loading = isFetchingProtectionLevelsStatsData;
 
   return (
     <Widget
-      title="Marine Conservation Protection Levels"
+      title={t('marine-conservation-protection-levels')}
       lastUpdated={lastUpdated}
       noData={noData}
       loading={loading}
@@ -136,5 +129,11 @@ const ProtectionTypesWidget: React.FC<ProtectionTypesWidgetProps> = ({ location 
     </Widget>
   );
 };
+
+ProtectionTypesWidget.messages = [
+  'containers.map-sidebar-main-panel',
+  ...Widget.messages,
+  ...HorizontalBarChart.messages,
+];
 
 export default ProtectionTypesWidget;

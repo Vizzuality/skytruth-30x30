@@ -2,20 +2,29 @@ import { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useLocale } from 'next-intl';
+
+import FiltersButton from '@/components/filters-button';
+import TooltipButton from '@/components/tooltip-button';
 import { applyFilters } from '@/containers/map/content/details/helpers';
 import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/national-highseas/useColumns';
+import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
-import { useGetMpaProtectionCoverageStats } from '@/types/generated/mpa-protection-coverage-stat';
-import { MpaProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
+import { useGetMpas } from '@/types/generated/mpa';
+import { MpaListResponseDataItem } from '@/types/generated/strapi.schemas';
 
-const NationalHighseasTable: React.FC = () => {
+import SortingButton from '../../table/sorting-button';
+
+const NationalHighseasTable: FCWithMessages = () => {
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
+  const locale = useLocale();
 
   const locationsQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: locationCode,
       },
@@ -32,7 +41,8 @@ const NationalHighseasTable: React.FC = () => {
     protectedAreaType: [],
     establishmentStage: [],
     protectionLevel: [],
-    fishingProtectionLevel: [],
+    dataSource: [],
+    iucnCategory: [],
   });
 
   const handleOnFiltersChange = (field, values) => {
@@ -41,81 +51,123 @@ const NationalHighseasTable: React.FC = () => {
 
   const columns = useColumns({ filters, onFiltersChange: handleOnFiltersChange });
 
-  const { data: coverageData }: { data: MpaProtectionCoverageStatListResponseDataItem[] } =
-    useGetMpaProtectionCoverageStats(
-      {
-        filters: {
-          location: {
-            code: {
-              $eq: locationsQuery.data?.code,
-            },
-          },
+  const mpaEntryPopulate = {
+    mpaa_establishment_stage: {
+      fields: ['name', 'slug'],
+    },
+    mpa: {
+      fields: ['name', 'wdpaid', 'area'],
+      populate: {
+        protection_status: {
+          fields: ['slug', 'name'],
         },
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        fields: ['area'],
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        populate: {
-          mpaa_establishment_stage: {
-            fields: ['name', 'slug'],
-          },
-          mpa: {
-            fields: ['name', 'wdpaid', 'area'],
-            populate: {
-              protection_status: {
-                fields: ['slug', 'name'],
-              },
-            },
-          },
-          location: {
-            fields: ['code', 'total_marine_area'],
-          },
-          fishing_protection_level: {
-            fields: ['slug', 'name'],
-          },
-          mpaa_protection_level: {
-            fields: ['slug', 'name'],
-          },
-        },
-        'pagination[limit]': -1,
       },
-      {
-        query: {
-          select: ({ data }) => data,
-          placeholderData: { data: [] },
+    },
+    location: {
+      fields: ['code', 'total_marine_area', 'bounds'],
+    },
+    mpaa_protection_level: {
+      fields: ['slug', 'name'],
+    },
+    protection_status: {
+      fields: ['slug', 'name'],
+    },
+    data_source: {
+      fields: ['slug'],
+    },
+    mpa_iucn_category: {
+      fields: ['slug'],
+    },
+  };
+
+  const { data: mpasData }: { data: MpaListResponseDataItem[] } = useGetMpas(
+    {
+      locale,
+      filters: {
+        location: {
+          code: {
+            $eq: locationsQuery.data?.code,
+          },
         },
-      }
-    );
+        is_child: false,
+      },
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      populate: {
+        ...mpaEntryPopulate,
+        children: {
+          populate: mpaEntryPopulate,
+        },
+      },
+      'pagination[limit]': -1,
+    },
+    {
+      query: {
+        select: ({ data }) => data,
+        placeholderData: { data: [] },
+      },
+    }
+  );
 
   const parsedData = useMemo(() => {
-    return coverageData?.map(({ attributes: coverageStats }) => {
-      const mpa = coverageStats.mpa?.data?.attributes;
+    const buildMpaRow = (mpa) => {
       const protectionStatus = mpa?.protection_status?.data?.attributes;
-      const establishmentStage = coverageStats?.mpaa_establishment_stage?.data?.attributes;
-      const mpaaProtectionLevel = coverageStats?.mpaa_protection_level?.data?.attributes;
-      const fishingProtectionLevel = coverageStats?.fishing_protection_level?.data?.attributes;
+      const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
+      const mpaaProtectionLevel = mpa?.mpaa_protection_level?.data?.attributes;
+      const dataSource = mpa?.data_source?.data?.attributes;
+      const iucnCategory = mpa?.mpa_iucn_category?.data?.attributes;
 
-      // Calculate coverage percentage
-      const coveragePercentage = (coverageStats.area / locationsQuery.data?.totalMarineArea) * 100;
+      const coveragePercentage = (mpa.area / locationsQuery.data?.totalMarineArea) * 100;
 
       return {
         protectedArea: mpa?.name,
         coverage: coveragePercentage,
         protectedAreaType: protectionStatus?.slug,
-        establishmentStage: establishmentStage?.slug || 'N/A',
-        protectionLevel: mpaaProtectionLevel?.slug || 'unknown',
-        fishingProtectionLevel: fishingProtectionLevel?.slug,
-        area: coverageStats.area,
+        establishmentStage: establishmentStage?.slug,
+        protectionLevel: mpaaProtectionLevel?.slug,
+        area: mpa?.area,
+        dataSource: dataSource?.slug,
+        iucnCategory: iucnCategory?.slug,
+        // ? LayerPreview: We're not displaying the layer preview at this moment, but we want to preserve the code
+        // map: {
+        //   wdpaId: mpa?.wdpaid,
+        //   bounds: mpa?.bbox,
+        //   dataSource: dataSource?.slug,
+        // },
+      };
+    };
+
+    return mpasData?.map(({ attributes: mpa }) => {
+      const mpaChildren = mpa?.children?.data;
+
+      const mpaData = buildMpaRow(mpa);
+      const mpaChildrenData = mpaChildren
+        .map(({ attributes: childMpa }) => buildMpaRow(childMpa))
+        .filter((row) => !!row);
+
+      return {
+        ...mpaData,
+        ...(mpaChildrenData?.length && { subRows: mpaChildrenData }),
       };
     });
-  }, [coverageData, locationsQuery.data]);
+  }, [locationsQuery, mpasData]);
 
   const tableData = useMemo(() => {
     return applyFilters(parsedData, filters);
   }, [filters, parsedData]);
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   return <Table columns={columns} data={tableData} />;
 };
+
+NationalHighseasTable.messages = [
+  'containers.map',
+  ...Table.messages,
+  // Dependencies of `useColumns`
+  ...SortingButton.messages,
+  ...TooltipButton.messages,
+  ...FiltersButton.messages,
+];
 
 export default NationalHighseasTable;

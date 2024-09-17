@@ -49,6 +49,20 @@
           "sortable": false
         }
       },
+      "slug": {
+        "edit": {
+          "label": "slug",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "slug",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -109,12 +123,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "name",
-        "layers",
-        "createdAt"
-      ],
       "edit": [
         [
           {
@@ -122,10 +130,22 @@
             "size": 6
           },
           {
+            "name": "slug",
+            "size": 6
+          }
+        ],
+        [
+          {
             "name": "layers",
             "size": 6
           }
         ]
+      ],
+      "list": [
+        "id",
+        "name",
+        "layers",
+        "createdAt"
       ]
     }
   },

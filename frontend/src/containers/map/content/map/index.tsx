@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 
 import { useAtom, useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
+import { useLocale } from 'next-intl';
 
 import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
@@ -14,9 +15,15 @@ import { CustomMapProps } from '@/components/map/types';
 import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
+import EEZLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/eez';
+import EstablishmentLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/establishment';
 import Modelling from '@/containers/map/content/map/modelling';
 import Popup from '@/containers/map/content/map/popup';
-import { useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
+import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
+import GenericPopup from '@/containers/map/content/map/popup/generic';
+import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
+import RegionsPopup from '@/containers/map/content/map/popup/regions';
+import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
 import { sidebarAtom } from '@/containers/map/store';
 import {
   bboxLocation,
@@ -25,6 +32,7 @@ import {
   layersInteractiveIdsAtom,
   popupAtom,
 } from '@/containers/map/store';
+import { FCWithMessages } from '@/types';
 import { useGetLayers } from '@/types/generated/layer';
 import { useGetLocations } from '@/types/generated/location';
 import { LayerTyped } from '@/types/layers';
@@ -33,8 +41,11 @@ const LayerManager = dynamic(() => import('@/containers/map/content/map/layer-ma
   ssr: false,
 });
 
-const MainMap: React.FC = () => {
+const MainMap: FCWithMessages = () => {
+  const locale = useLocale();
+
   const [{ bbox: URLBbox }, setMapSettings] = useSyncMapSettings();
+  const [, setMapLayers] = useSyncMapLayers();
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
   const isSidebarOpen = useAtomValue(sidebarAtom);
@@ -49,6 +60,7 @@ const MainMap: React.FC = () => {
 
   const locationsQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: locationCode,
       },
@@ -66,6 +78,7 @@ const MainMap: React.FC = () => {
 
   const { data: layersInteractiveData } = useGetLayers(
     {
+      locale,
       filters: {
         id: {
           $in: layersInteractive,
@@ -79,6 +92,30 @@ const MainMap: React.FC = () => {
       },
     }
   );
+
+  const { data: defaultLayers } = useGetLayers(
+    {
+      locale,
+      fields: 'id',
+      filters: {
+        default: {
+          $eq: true,
+        },
+      },
+    },
+    {
+      query: {
+        select: ({ data }) => data.map(({ id }) => id),
+      },
+    }
+  );
+
+  // Once we have fetched from the CMS which layers are active by default, we set toggle them on
+  useEffect(() => {
+    if (defaultLayers) {
+      setMapLayers(defaultLayers);
+    }
+  }, [setMapLayers, defaultLayers]);
 
   useEffect(() => {
     setLocationBbox(locationsQuery?.data?.bounds as CustomMapProps['bounds']['bbox']);
@@ -258,7 +295,7 @@ const MainMap: React.FC = () => {
     popup?.type === 'mousemove' && !popup.features?.some((f) => f.source === 'ezz-source');
 
   return (
-    <div className="absolute left-0 h-full w-full border-r border-b border-black">
+    <div className="absolute left-0 h-full w-full border-b border-r border-black">
       <Map
         initialViewState={initialViewState}
         bounds={bounds}
@@ -284,5 +321,19 @@ const MainMap: React.FC = () => {
     </div>
   );
 };
+
+MainMap.messages = [
+  'containers.map',
+  ...Popup.messages,
+  ...LayersToolbox.messages,
+  ...ZoomControls.messages,
+  // Indirectly imported by the layer manager
+  ...EEZLayerPopup.messages,
+  ...EEZLayerLegend.messages,
+  ...GenericPopup.messages,
+  ...ProtectedAreaPopup.messages,
+  ...RegionsPopup.messages,
+  ...EstablishmentLayerLegend.messages,
+];
 
 export default MainMap;

@@ -3,9 +3,28 @@ import type { GetServerSideProps } from 'next';
 
 import { PAGES } from '@/constants/pages';
 import MapLayout from '@/layouts/map';
+import { fetchTranslations } from '@/lib/i18n';
 import mapParamsToSearchParams from '@/lib/mapparams-to-searchparams';
+import { FCWithMessages } from '@/types';
 import { getGetLocationsQueryKey, getGetLocationsQueryOptions } from '@/types/generated/location';
 import { LocationListResponse } from '@/types/generated/strapi.schemas';
+
+import { LayoutProps } from '../_app';
+
+const ProgressTrackerPage: FCWithMessages & {
+  layout: LayoutProps<{ location: { code: string; name: string } }>;
+} = () => {
+  return null;
+};
+
+ProgressTrackerPage.layout = {
+  Component: MapLayout,
+  props: ({ location }) => ({
+    title: location?.name,
+  }),
+};
+
+ProgressTrackerPage.messages = ['pages.progress-tracker', ...MapLayout.messages];
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -13,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   if (mapParams) {
     const searchParams = mapParamsToSearchParams(mapParams);
-    const target = `${PAGES.progressTracker}/${location}?${searchParams}`;
+    const target = `/${context.locale}/${PAGES.progressTracker}/${location}?${searchParams}`;
 
     return {
       redirect: {
@@ -27,6 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   await queryClient.prefetchQuery({
     ...getGetLocationsQueryOptions({
+      locale: context.locale,
       filters: {
         code: locationCode,
       },
@@ -35,6 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const locationsData = queryClient.getQueryData<LocationListResponse>(
     getGetLocationsQueryKey({
+      locale: context.locale,
       filters: {
         code: locationCode,
       },
@@ -50,17 +71,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         name: 'Global',
       },
       dehydratedState: dehydrate(queryClient),
+      messages: await fetchTranslations(context.locale, ProgressTrackerPage.messages),
     },
   };
 };
 
-export default function ProgressTrackerPage() {
-  return null;
-}
-
-ProgressTrackerPage.layout = {
-  Component: MapLayout,
-  props: ({ location }) => ({
-    title: location?.name,
-  }),
-};
+export default ProgressTrackerPage;

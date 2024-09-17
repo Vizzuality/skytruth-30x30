@@ -2,13 +2,14 @@ import { PropsWithChildren } from 'react';
 
 import Head from '@/components/head';
 import Header from '@/components/header';
+import { FCWithMessages } from '@/types';
 
 export interface FullscreenLayoutProps {
   title?: string;
   description?: string;
 }
 
-const FullscreenLayout: React.FC<PropsWithChildren<FullscreenLayoutProps>> = ({
+const FullscreenLayout: FCWithMessages<PropsWithChildren<FullscreenLayoutProps>> = ({
   children,
   title,
   description,
@@ -25,5 +26,7 @@ const FullscreenLayout: React.FC<PropsWithChildren<FullscreenLayoutProps>> = ({
     </div>
   </>
 );
+
+FullscreenLayout.messages = [...Header.messages];
 
 export default FullscreenLayout;

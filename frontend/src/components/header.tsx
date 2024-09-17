@@ -6,9 +6,11 @@ import { useRouter } from 'next/router';
 
 import { VariantProps, cva } from 'class-variance-authority';
 import { Menu } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 
 import ActiveLink from '@/components/active-link';
 import Icon from '@/components/ui/icon';
+import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
 import {
   Sheet,
   SheetContent,
@@ -24,25 +26,8 @@ import {
   useSyncMapSettings,
 } from '@/containers/map/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
-import ArrowRight from '@/styles/icons/arrow-right.svg?sprite';
-
-const NAVIGATION_ITEMS = [
-  {
-    name: 'Progress tracker',
-    href: PAGES.progressTracker,
-    colorClassName: 'text-orange',
-    preserveMapParams: true,
-  },
-  {
-    name: 'Conservation builder',
-    href: PAGES.conservationBuilder,
-    colorClassName: 'text-blue',
-    preserveMapParams: true,
-  },
-  { name: 'Knowledge hub', href: PAGES.knowledgeHub, colorClassName: 'text-green' },
-  { name: 'About', href: PAGES.about, colorClassName: 'text-violet' },
-  { name: 'Contact', href: PAGES.contact, colorClassName: 'text-black' },
-];
+import ArrowRight from '@/styles/icons/arrow-right.svg';
+import { FCWithMessages } from '@/types';
 
 const headerVariants = cva('', {
   variants: {
@@ -72,16 +57,39 @@ export type HeaderProps = VariantProps<typeof headerVariants> & {
   hideLogo?: boolean;
 };
 
-const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => {
+const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
+  const t = useTranslations('components.header');
+  const locale = useLocale();
+
+  const navigationItems = useMemo(
+    () => [
+      {
+        name: t('progress-tracker'),
+        href: PAGES.progressTracker,
+        colorClassName: 'text-orange',
+        preserveMapParams: true,
+      },
+      {
+        name: t('conservation-builder'),
+        href: PAGES.conservationBuilder,
+        colorClassName: 'text-blue',
+        preserveMapParams: true,
+      },
+      { name: t('knowledge-hub'), href: PAGES.knowledgeHub, colorClassName: 'text-green' },
+      { name: t('about'), href: PAGES.about, colorClassName: 'text-violet' },
+      { name: t('contact'), href: PAGES.contact, colorClassName: 'text-black' },
+    ],
+    [t]
+  );
+
   const [mapSettings] = useSyncMapSettings();
   const [mapLayers] = useSyncMapLayers();
   const [mapLayerSettings] = useSyncMapLayerSettings();
-  const {
-    query: { locationCode = 'GLOB' },
-  } = useRouter();
+  const { pathname, asPath, query, push } = useRouter();
+  const { locationCode = 'GLOB' } = query;
 
   const navigationEntries = useMemo(() => {
-    return NAVIGATION_ITEMS.map(({ name, href, colorClassName, preserveMapParams }) => {
+    return navigationItems.map(({ name, href, colorClassName, preserveMapParams }) => {
       return {
         name: name,
         href: {
@@ -103,13 +111,34 @@ const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => {
         colorClassName: colorClassName,
       };
     });
-  }, [mapLayers, locationCode, mapSettings, mapLayerSettings]);
+  }, [navigationItems, locationCode, mapSettings, mapLayers, mapLayerSettings]);
+
+  const languageSelector = (
+    <Select
+      value={locale}
+      onValueChange={(newLocale) => push({ pathname, query }, asPath, { locale: newLocale })}
+    >
+      <SelectTrigger variant="alternative">
+        <span className="sr-only">
+          {t('selected-language', {
+            language: locale === 'es' ? t('spanish') : locale === 'fr' ? t('french') : t('english'),
+          })}
+        </span>
+        <span className="not-sr-only">{locale.toLocaleUpperCase()}</span>
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="en">English{locale !== 'en' && ` (${t('english')})`}</SelectItem>
+        <SelectItem value="es">Español{locale !== 'es' && ` (${t('spanish')})`}</SelectItem>
+        <SelectItem value="fr">Français{locale !== 'fr' && ` (${t('french')})`}</SelectItem>
+      </SelectContent>
+    </Select>
+  );
 
   return (
     <header className={cn('border-b font-mono text-sm', headerVariants({ theme }))}>
       <nav
         className="mx-auto flex items-center justify-between p-6 py-2.5 md:py-3 lg:px-10"
-        aria-label="Global"
+        aria-label={t('global')}
       >
         <span className="flex">
           {!hideLogo && (
@@ -131,12 +160,12 @@ const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => {
         <div className="flex md:hidden">
           <Sheet>
             <SheetTrigger className="px-3 py-2 ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
-              <span className="sr-only">Open main menu</span>
+              <span className="sr-only">{t('open-main-menu')}</span>
               <Menu className="h-6 w-6" aria-hidden="true" />
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent closeLabel={t('close')}>
               <SheetHeader>
-                <SheetTitle className="sr-only">Main menu</SheetTitle>
+                <SheetTitle className="sr-only">{t('main-menu')}</SheetTitle>
                 <SheetDescription>
                   <div className="mt-6 flow-root">
                     <div className="-my-6 divide-y divide-gray-500/10">
@@ -162,6 +191,7 @@ const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => {
                             {name}
                           </ActiveLink>
                         ))}
+                        <div className="-mx-3">{languageSelector}</div>
                       </div>
                     </div>
                   </div>
@@ -191,10 +221,13 @@ const Header: React.FC<HeaderProps> = ({ theme, hideLogo = false }) => {
               </ActiveLink>
             </li>
           ))}
+          <li>{languageSelector}</li>
         </ul>
       </nav>
     </header>
   );
 };
+
+Header.messages = ['components.header'];
 
 export default Header;

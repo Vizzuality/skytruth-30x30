@@ -688,12 +688,42 @@ export interface ApiContactDetailContactDetail extends Schema.SingleType {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
-    address: Attribute.String;
-    phone: Attribute.String;
-    email: Attribute.String;
-    registration: Attribute.String;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    address: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    phone: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    email: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    registration: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -709,6 +739,12 @@ export interface ApiContactDetailContactDetail extends Schema.SingleType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::contact-detail.contact-detail',
+      'oneToMany',
+      'api::contact-detail.contact-detail'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -723,9 +759,25 @@ export interface ApiDataInfoDataInfo extends Schema.CollectionType {
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    content: Attribute.Text;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    content: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     data_sources: Attribute.Relation<
       'api::data-info.data-info',
       'oneToMany',
@@ -745,6 +797,12 @@ export interface ApiDataInfoDataInfo extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-info.data-info',
+      'oneToMany',
+      'api::data-info.data-info'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -759,10 +817,32 @@ export interface ApiDataSourceDataSource extends Schema.CollectionType {
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    title: Attribute.String & Attribute.Required;
-    url: Attribute.String;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    url: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -777,6 +857,12 @@ export interface ApiDataSourceDataSource extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-source.data-source',
+      'oneToMany',
+      'api::data-source.data-source'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -791,10 +877,31 @@ export interface ApiDataToolDataTool extends Schema.CollectionType {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String & Attribute.Required;
-    description: Attribute.Text;
-    site: Attribute.String;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    description: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    site: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     languages: Attribute.Relation<
       'api::data-tool.data-tool',
       'oneToMany',
@@ -805,7 +912,12 @@ export interface ApiDataToolDataTool extends Schema.CollectionType {
       'oneToMany',
       'api::data-tool-resource-type.data-tool-resource-type'
     >;
-    geography: Attribute.Text;
+    geography: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     data_tool_ecosystems: Attribute.Relation<
       'api::data-tool.data-tool',
       'oneToMany',
@@ -826,6 +938,12 @@ export interface ApiDataToolDataTool extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-tool.data-tool',
+      'oneToMany',
+      'api::data-tool.data-tool'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -841,8 +959,18 @@ export interface ApiDataToolEcosystemDataToolEcosystem
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -858,6 +986,12 @@ export interface ApiDataToolEcosystemDataToolEcosystem
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-tool-ecosystem.data-tool-ecosystem',
+      'oneToMany',
+      'api::data-tool-ecosystem.data-tool-ecosystem'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -873,9 +1007,24 @@ export interface ApiDataToolLanguageDataToolLanguage
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
-    slug: Attribute.String & Attribute.Unique;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    slug: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     data_tool: Attribute.Relation<
       'api::data-tool-language.data-tool-language',
       'manyToOne',
@@ -896,6 +1045,12 @@ export interface ApiDataToolLanguageDataToolLanguage
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-tool-language.data-tool-language',
+      'oneToMany',
+      'api::data-tool-language.data-tool-language'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -906,12 +1061,23 @@ export interface ApiDataToolResourceTypeDataToolResourceType
     singularName: 'data-tool-resource-type';
     pluralName: 'data-tool-resource-types';
     displayName: 'Data Tool Resource Type';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String & Attribute.Unique;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -927,6 +1093,12 @@ export interface ApiDataToolResourceTypeDataToolResourceType
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::data-tool-resource-type.data-tool-resource-type',
+      'oneToMany',
+      'api::data-tool-resource-type.data-tool-resource-type'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -941,13 +1113,31 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String & Attribute.Required;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     layers: Attribute.Relation<
       'api::dataset.dataset',
       'oneToMany',
       'api::layer.layer'
     >;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -963,6 +1153,12 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::dataset.dataset',
+      'oneToMany',
+      'api::dataset.dataset'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -973,14 +1169,37 @@ export interface ApiFishingProtectionLevelFishingProtectionLevel
     singularName: 'fishing-protection-level';
     pluralName: 'fishing-protection-levels';
     displayName: 'Fishing Protection Level';
+    description: '';
   };
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    name: Attribute.String & Attribute.Required;
-    info: Attribute.Text;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    info: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -995,6 +1214,12 @@ export interface ApiFishingProtectionLevelFishingProtectionLevel
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::fishing-protection-level.fishing-protection-level',
+      'oneToMany',
+      'api::fishing-protection-level.fishing-protection-level'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1026,6 +1251,7 @@ export interface ApiFishingProtectionLevelStatFishingProtectionLevelStat
       Attribute.SetMinMax<{
         min: 0;
       }>;
+    pct: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1054,10 +1280,32 @@ export interface ApiHabitatHabitat extends Schema.CollectionType {
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    name: Attribute.String & Attribute.Required;
-    info: Attribute.Text;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    info: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1072,6 +1320,12 @@ export interface ApiHabitatHabitat extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::habitat.habitat',
+      'oneToMany',
+      'api::habitat.habitat'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1136,19 +1390,69 @@ export interface ApiLayerLayer extends Schema.CollectionType {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    title: Attribute.String & Attribute.Required;
-    type: Attribute.Enumeration<['mapbox', 'deckgl', 'carto']>;
-    config: Attribute.JSON & Attribute.Required;
-    params_config: Attribute.JSON & Attribute.Required;
-    legend_config: Attribute.JSON & Attribute.Required;
-    interaction_config: Attribute.JSON;
-    metadata: Attribute.Component<'documentation.metadata'>;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    type: Attribute.Enumeration<['mapbox', 'deckgl', 'carto']> &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    config: Attribute.JSON &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    params_config: Attribute.JSON &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    interaction_config: Attribute.JSON &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    metadata: Attribute.Component<'documentation.metadata'> &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     dataset: Attribute.Relation<
       'api::layer.layer',
       'oneToOne',
       'api::dataset.dataset'
     >;
+    legend_config: Attribute.Component<'legend.legend'> &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    default: Attribute.Boolean &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1164,6 +1468,12 @@ export interface ApiLayerLayer extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::layer.layer',
+      'oneToMany',
+      'api::layer.layer'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1178,15 +1488,43 @@ export interface ApiLocationLocation extends Schema.CollectionType {
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    code: Attribute.String & Attribute.Required & Attribute.Unique;
-    name: Attribute.String & Attribute.Required;
+    code: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     totalMarineArea: Attribute.Decimal &
       Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    type: Attribute.String & Attribute.Required;
+    type: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     groups: Attribute.Relation<
       'api::location.location',
       'manyToMany',
@@ -1212,7 +1550,12 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'oneToMany',
       'api::protection-coverage-stat.protection-coverage-stat'
     >;
-    bounds: Attribute.JSON;
+    bounds: Attribute.JSON &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1227,6 +1570,12 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::location.location',
+      'oneToMany',
+      'api::location.location'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1257,12 +1606,38 @@ export interface ApiMpaMpa extends Schema.CollectionType {
       'oneToOne',
       'api::protection-status.protection-status'
     >;
-    mpa_protection_coverage_stats: Attribute.Relation<
+    bbox: Attribute.JSON & Attribute.Required;
+    children: Attribute.Relation<'api::mpa.mpa', 'oneToMany', 'api::mpa.mpa'>;
+    data_source: Attribute.Relation<
       'api::mpa.mpa',
-      'oneToMany',
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat'
+      'oneToOne',
+      'api::data-source.data-source'
     >;
-    wdpaid: Attribute.String & Attribute.Unique;
+    mpaa_establishment_stage: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToOne',
+      'api::mpaa-establishment-stage.mpaa-establishment-stage'
+    >;
+    location: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToOne',
+      'api::location.location'
+    >;
+    wdpaid: Attribute.BigInteger;
+    mpaa_protection_level: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToOne',
+      'api::mpaa-protection-level.mpaa-protection-level'
+    >;
+    is_child: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    mpa_iucn_category: Attribute.Relation<
+      'api::mpa.mpa',
+      'oneToOne',
+      'api::mpa-iucn-category.mpa-iucn-category'
+    >;
+    designation: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::mpa.mpa', 'oneToOne', 'admin::user'> &
@@ -1272,63 +1647,64 @@ export interface ApiMpaMpa extends Schema.CollectionType {
   };
 }
 
-export interface ApiMpaProtectionCoverageStatMpaProtectionCoverageStat
+export interface ApiMpaIucnCategoryMpaIucnCategory
   extends Schema.CollectionType {
-  collectionName: 'mpa_protection_coverage_stats';
+  collectionName: 'mpa_iucn_categories';
   info: {
-    singularName: 'mpa-protection-coverage-stat';
-    pluralName: 'mpa-protection-coverage-stats';
-    displayName: 'MPA Protection Coverage Stats';
+    singularName: 'mpa-iucn-category';
+    pluralName: 'mpa-iucn-categories';
+    displayName: 'MPA iucn category';
     description: '';
   };
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    mpa: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'manyToOne',
-      'api::mpa.mpa'
-    >;
-    fishing_protection_level: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'oneToOne',
-      'api::fishing-protection-level.fishing-protection-level'
-    >;
-    mpaa_protection_level: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'oneToOne',
-      'api::mpaa-protection-level.mpaa-protection-level'
-    >;
-    location: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'oneToOne',
-      'api::location.location'
-    >;
-    area: Attribute.Decimal &
+    slug: Attribute.String &
       Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
       }>;
-    mpaa_establishment_stage: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
-      'manyToOne',
-      'api::mpaa-establishment-stage.mpaa-establishment-stage'
-    >;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    info: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
+      'api::mpa-iucn-category.mpa-iucn-category',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat',
+      'api::mpa-iucn-category.mpa-iucn-category',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::mpa-iucn-category.mpa-iucn-category',
+      'oneToMany',
+      'api::mpa-iucn-category.mpa-iucn-category'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1339,19 +1715,37 @@ export interface ApiMpaaEstablishmentStageMpaaEstablishmentStage
     singularName: 'mpaa-establishment-stage';
     pluralName: 'mpaa-establishment-stages';
     displayName: 'MPAA Establishment Stage';
+    description: '';
   };
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    name: Attribute.String & Attribute.Required;
-    info: Attribute.Text;
-    mpa_protection_coverage_stats: Attribute.Relation<
-      'api::mpaa-establishment-stage.mpaa-establishment-stage',
-      'oneToMany',
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat'
-    >;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    info: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1366,6 +1760,12 @@ export interface ApiMpaaEstablishmentStageMpaaEstablishmentStage
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::mpaa-establishment-stage.mpaa-establishment-stage',
+      'oneToMany',
+      'api::mpaa-establishment-stage.mpaa-establishment-stage'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1430,14 +1830,37 @@ export interface ApiMpaaProtectionLevelMpaaProtectionLevel
     singularName: 'mpaa-protection-level';
     pluralName: 'mpaa-protection-levels';
     displayName: 'MPAA Protection Level';
+    description: '';
   };
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    name: Attribute.String & Attribute.Required;
-    info: Attribute.Text;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    info: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1452,6 +1875,12 @@ export interface ApiMpaaProtectionLevelMpaaProtectionLevel
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::mpaa-protection-level.mpaa-protection-level',
+      'oneToMany',
+      'api::mpaa-protection-level.mpaa-protection-level'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1562,14 +1991,37 @@ export interface ApiProtectionStatusProtectionStatus
     singularName: 'protection-status';
     pluralName: 'protection-statuses';
     displayName: 'Protection Status';
+    description: '';
   };
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    name: Attribute.String & Attribute.Required;
-    info: Attribute.Text;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    info: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1584,6 +2036,12 @@ export interface ApiProtectionStatusProtectionStatus
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::protection-status.protection-status',
+      'oneToMany',
+      'api::protection-status.protection-status'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1594,15 +2052,41 @@ export interface ApiStaticIndicatorStaticIndicator
     singularName: 'static-indicator';
     pluralName: 'static-indicators';
     displayName: 'Static Indicators';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    slug: Attribute.String;
-    source: Attribute.String;
-    value: Attribute.String;
-    description: Attribute.Text;
+    slug: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    source: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    value: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    description: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1618,6 +2102,12 @@ export interface ApiStaticIndicatorStaticIndicator
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::static-indicator.static-indicator',
+      'oneToMany',
+      'api::static-indicator.static-indicator'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1652,7 +2142,7 @@ declare module '@strapi/types' {
       'api::layer.layer': ApiLayerLayer;
       'api::location.location': ApiLocationLocation;
       'api::mpa.mpa': ApiMpaMpa;
-      'api::mpa-protection-coverage-stat.mpa-protection-coverage-stat': ApiMpaProtectionCoverageStatMpaProtectionCoverageStat;
+      'api::mpa-iucn-category.mpa-iucn-category': ApiMpaIucnCategoryMpaIucnCategory;
       'api::mpaa-establishment-stage.mpaa-establishment-stage': ApiMpaaEstablishmentStageMpaaEstablishmentStage;
       'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat': ApiMpaaEstablishmentStageStatMpaaEstablishmentStageStat;
       'api::mpaa-protection-level.mpaa-protection-level': ApiMpaaProtectionLevelMpaaProtectionLevel;

@@ -1,4 +1,5 @@
 import { useAtom } from 'jotai';
+import { useTranslations } from 'next-intl';
 import { LuChevronLeft } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
@@ -6,7 +7,8 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import Icon from '@/components/ui/icon';
 import { sidebarAtom, layersAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
-import LayersIcon from '@/styles/icons/layers.svg?sprite';
+import LayersIcon from '@/styles/icons/layers.svg';
+import { FCWithMessages } from '@/types';
 
 import { useSyncMapContentSettings } from '../sync-settings';
 
@@ -14,10 +16,12 @@ import LayersPanel from './layers-panel';
 import MainPanel, { PANEL_TYPES } from './main-panel/panels';
 
 type MapSidebarProps = {
-  type: keyof typeof PANEL_TYPES;
+  type: (typeof PANEL_TYPES)[keyof typeof PANEL_TYPES];
 };
 
-const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
+const MapSidebar: FCWithMessages<MapSidebarProps> = ({ type }) => {
+  const t = useTranslations('containers.map-sidebar');
+
   const [{ showDetails }] = useSyncMapContentSettings();
   const [isSidebarOpen, setSidebarOpen] = useAtom(sidebarAtom);
   const [isLayersOpen, setLayersOpen] = useAtom(layersAtom);
@@ -92,13 +96,15 @@ const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
             {isLayersOpen && (
               <>
                 <LuChevronLeft className="-mx-0.5 h-5 w-5" aria-hidden />
-                <span className="sr-only">Close layers</span>
+                <span className="sr-only">{t('close-layers')}</span>
               </>
             )}
             {!isLayersOpen && (
               <>
                 <Icon icon={LayersIcon} className="ml-0.5 h-4 w-4 pb-px" />
-                <span className="pr-1 pl-3 font-mono text-xs font-normal normal-case">Layers</span>
+                <span className="pl-3 pr-1 font-mono text-xs font-normal normal-case">
+                  {t('layers')}
+                </span>
               </>
             )}
           </Button>
@@ -118,12 +124,14 @@ const MapSidebar: React.FC<MapSidebarProps> = ({ type }) => {
               className={cn('-ml-px h-6 w-6', { 'rotate-180': !isSidebarOpen })}
               aria-hidden
             />
-            <span className="sr-only">Toggle sidebar</span>
+            <span className="sr-only">{t('toggle-sidebar')}</span>
           </Button>
         )}
       </div>
     </div>
   );
 };
+
+MapSidebar.messages = ['containers.map-sidebar', ...MainPanel.messages, ...LayersPanel.messages];
 
 export default MapSidebar;

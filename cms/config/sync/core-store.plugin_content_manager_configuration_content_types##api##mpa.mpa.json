@@ -20,20 +20,6 @@
           "sortable": true
         }
       },
-      "wdpaid": {
-        "edit": {
-          "label": "wdpaid",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "wdpaid",
-          "searchable": true,
-          "sortable": true
-        }
-      },
       "name": {
         "edit": {
           "label": "name",
@@ -91,19 +77,150 @@
           "sortable": true
         }
       },
-      "mpa_protection_coverage_stats": {
+      "bbox": {
         "edit": {
-          "label": "mpa_protection_coverage_stats",
+          "label": "bbox",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "bbox",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "children": {
+        "edit": {
+          "label": "children",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true,
-          "mainField": "id"
+          "mainField": "name"
         },
         "list": {
-          "label": "mpa_protection_coverage_stats",
+          "label": "children",
           "searchable": false,
           "sortable": false
+        }
+      },
+      "data_source": {
+        "edit": {
+          "label": "data_source",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "slug"
+        },
+        "list": {
+          "label": "data_source",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "mpaa_establishment_stage": {
+        "edit": {
+          "label": "mpaa_establishment_stage",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "slug"
+        },
+        "list": {
+          "label": "mpaa_establishment_stage",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "location": {
+        "edit": {
+          "label": "location",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "code"
+        },
+        "list": {
+          "label": "location",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "wdpaid": {
+        "edit": {
+          "label": "wdpaid",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "wdpaid",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "mpaa_protection_level": {
+        "edit": {
+          "label": "mpaa_protection_level",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "slug"
+        },
+        "list": {
+          "label": "mpaa_protection_level",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "is_child": {
+        "edit": {
+          "label": "is_child",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "is_child",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "mpa_iucn_category": {
+        "edit": {
+          "label": "mpa_iucn_category",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "slug"
+        },
+        "list": {
+          "label": "mpa_iucn_category",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "designation": {
+        "edit": {
+          "label": "designation",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "designation",
+          "searchable": true,
+          "sortable": true
         }
       },
       "createdAt": {
@@ -168,32 +285,26 @@
     "layouts": {
       "list": [
         "id",
-        "wdpaid",
         "name",
-        "area"
+        "area",
+        "year"
       ],
       "edit": [
         [
           {
-            "name": "wdpaid",
-            "size": 4
-          },
-          {
             "name": "name",
             "size": 6
-          }
-        ],
-        [
+          },
           {
             "name": "area",
             "size": 4
-          },
-          {
-            "name": "year",
-            "size": 4
           }
         ],
         [
+          {
+            "name": "year",
+            "size": 4
+          },
           {
             "name": "protection_status",
             "size": 6
@@ -201,7 +312,53 @@
         ],
         [
           {
-            "name": "mpa_protection_coverage_stats",
+            "name": "wdpaid",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "bbox",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "children",
+            "size": 6
+          },
+          {
+            "name": "data_source",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "mpaa_establishment_stage",
+            "size": 6
+          },
+          {
+            "name": "location",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "mpaa_protection_level",
+            "size": 6
+          },
+          {
+            "name": "is_child",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "mpa_iucn_category",
+            "size": 6
+          },
+          {
+            "name": "designation",
             "size": 6
           }
         ]

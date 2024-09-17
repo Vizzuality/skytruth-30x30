@@ -1,11 +1,11 @@
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 
-const percentage = (value: number) => {
-  return formatPercentage(value, { displayPercentageSign: false });
+const percentage = (locale: string, value: number) => {
+  return formatPercentage(locale, value, { displayPercentageSign: false });
 };
 
-const area = (value: number) => {
-  return formatKM(value);
+const area = (locale: string, value: number) => {
+  return formatKM(locale, value);
 };
 
 const capitalize = (value: string) => {

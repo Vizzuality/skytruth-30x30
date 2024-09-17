@@ -1,11 +1,13 @@
 import { useMemo } from 'react';
 
 import { groupBy } from 'lodash-es';
+import { useLocale, useTranslations } from 'next-intl';
 
 import ConservationChart from '@/components/charts/conservation-chart';
 import Widget from '@/components/widget';
 import { formatKM } from '@/lib/utils/formats';
 import { formatPercentage } from '@/lib/utils/formats';
+import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
@@ -14,7 +16,10 @@ type MarineConservationWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
 
-const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ location }) => {
+const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = ({ location }) => {
+  const t = useTranslations('containers.map-sidebar-main-panel');
+  const locale = useLocale();
+
   const defaultQueryParams = {
     filters: {
       location: {
@@ -27,6 +32,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     useGetProtectionCoverageStats(
       {
         ...defaultQueryParams,
+        locale,
         sort: 'updatedAt:desc',
         'pagination[limit]': 1,
       },
@@ -46,6 +52,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
   } = useGetProtectionCoverageStats(
     {
       ...defaultQueryParams,
+      locale,
       populate: '*',
       // @ts-expect-error this is an issue with Orval typing
       'sort[year]': 'asc',
@@ -81,6 +88,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
 
   const { data: metadata } = useGetDataInfos(
     {
+      locale,
       filters: {
         slug: 'coverage-widget',
       },
@@ -110,18 +118,18 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     const totalArea = location.totalMarineArea;
     const lastYearData = mergedProtectionStats[mergedProtectionStats.length - 1];
     const { protectedArea } = lastYearData;
-    const percentageFormatted = formatPercentage((protectedArea / totalArea) * 100, {
+    const percentageFormatted = formatPercentage(locale, (protectedArea / totalArea) * 100, {
       displayPercentageSign: false,
     });
-    const protectedAreaFormatted = formatKM(protectedArea);
-    const totalAreaFormatted = formatKM(totalArea);
+    const protectedAreaFormatted = formatKM(locale, protectedArea);
+    const totalAreaFormatted = formatKM(locale, totalArea);
 
     return {
       protectedPercentage: percentageFormatted,
       protectedArea: protectedAreaFormatted,
       totalArea: totalAreaFormatted,
     };
-  }, [location, mergedProtectionStats]);
+  }, [locale, location, mergedProtectionStats]);
 
   const chartData = useMemo(() => {
     if (!mergedProtectionStats?.length) return [];
@@ -152,7 +160,7 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
 
   return (
     <Widget
-      title="Marine Conservation Coverage"
+      title={t('marine-conservation-coverage')}
       lastUpdated={dataLastUpdate}
       noData={noData}
       loading={loading}
@@ -162,14 +170,18 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
       {stats && (
         <div className="mt-6 mb-4 flex flex-col">
           <span className="space-x-1">
-            <span className="text-[64px] font-bold leading-[80%]">
-              {stats?.protectedPercentage}
-            </span>
-            <span className="text-lg">%</span>
+            {t.rich('marine-protected-percentage', {
+              b1: (chunks) => <span className="text-[64px] font-bold leading-[90%]">{chunks}</span>,
+              b2: (chunks) => <span className="text-lg">{chunks}</span>,
+              percentage: stats?.protectedPercentage,
+            })}
           </span>
           <span className="space-x-1 text-xs">
             <span>
-              {stats?.protectedArea} km<sup>2</sup> out of {stats?.totalArea} km<sup>2</sup>
+              {t('marine-protected-area', {
+                protectedArea: stats?.protectedArea,
+                totalArea: stats?.totalArea,
+              })}
             </span>
           </span>
         </div>
@@ -182,5 +194,11 @@ const MarineConservationWidget: React.FC<MarineConservationWidgetProps> = ({ loc
     </Widget>
   );
 };
+
+MarineConservationWidget.messages = [
+  'containers.map-sidebar-main-panel',
+  ...Widget.messages,
+  ...ConservationChart.messages,
+];
 
 export default MarineConservationWidget;

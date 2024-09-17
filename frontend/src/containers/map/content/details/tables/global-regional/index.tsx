@@ -2,18 +2,26 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useLocale } from 'next-intl';
+
+import TooltipButton from '@/components/tooltip-button';
 import Table from '@/containers/map/content/details/table';
 import useColumns from '@/containers/map/content/details/tables/global-regional/useColumns';
+import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationListResponseDataItem } from '@/types/generated/strapi.schemas';
 
-const GlobalRegionalTable: React.FC = () => {
+import SortingButton from '../../table/sorting-button';
+
+const GlobalRegionalTable: FCWithMessages = () => {
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
+  const locale = useLocale();
 
   const globalLocationQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: 'GLOB',
       },
@@ -27,6 +35,7 @@ const GlobalRegionalTable: React.FC = () => {
 
   const locationsQuery = useGetLocations(
     {
+      locale,
       filters: {
         code: locationCode,
       },
@@ -44,6 +53,12 @@ const GlobalRegionalTable: React.FC = () => {
   // Get location data and calculate data to display on the table
   const { data: locationsData }: { data: LocationListResponseDataItem[] } = useGetLocations(
     {
+      // We will use the data from the `localizations` field because the models “Protection Coverage
+      // Stats” and “Mpaa Protection Level Stats” are not localised and their relationship to the
+      // “Location” model only points to a specific localised version. As such, we're forced to load
+      // all the locales of the “Location” model and then figure out which version has the relation
+      // to the other model.
+      locale: 'en',
       filters:
         locationsQuery.data?.type === 'region'
           ? {
@@ -64,6 +79,7 @@ const GlobalRegionalTable: React.FC = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       populate: {
+        // This part if for the English version only
         protection_coverage_stats: {
           fields: ['cumSumProtectedArea', 'protectedAreasCount', 'year'],
           populate: {
@@ -80,12 +96,42 @@ const GlobalRegionalTable: React.FC = () => {
             },
           },
         },
-        fishing_protection_level_stats: {
-          fields: ['area'],
+        // fishing_protection_level_stats: {
+        //   fields: ['area'],
+        //   populate: {
+        //     fishing_protection_level: {
+        //       fields: ['slug', 'name'],
+        //     },
+        //   },
+        // },
+        // This part is for the Spanish and French versions
+        localizations: {
+          fields: ['code', 'name', 'type', 'totalMarineArea', 'locale'],
           populate: {
-            fishing_protection_level: {
-              fields: ['slug', 'name'],
+            protection_coverage_stats: {
+              fields: ['cumSumProtectedArea', 'protectedAreasCount', 'year'],
+              populate: {
+                protection_status: {
+                  fields: ['slug', 'name'],
+                },
+              },
             },
+            mpaa_protection_level_stats: {
+              fields: ['area'],
+              populate: {
+                mpaa_protection_level: {
+                  fields: ['slug', 'name'],
+                },
+              },
+            },
+            // fishing_protection_level_stats: {
+            //   fields: ['area'],
+            //   populate: {
+            //     fishing_protection_level: {
+            //       fields: ['slug', 'name'],
+            //     },
+            //   },
+            // },
           },
         },
       },
@@ -103,16 +149,59 @@ const GlobalRegionalTable: React.FC = () => {
   // Calculate table data
   const parsedData = useMemo(() => {
     return locationsData.map(({ attributes: location }) => {
+      const localizedLocation = [
+        { ...location, locale: 'en' },
+        ...(location.localizations.data.map(
+          // The types below are wrong. There is definitely an `attributes` key inside
+          // `localizations`.
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          (localization) => localization.attributes
+        ) ?? []),
+      ].find((data) => data.locale === locale);
+
       // Base stats needed for calculations
-      const allCoverageStats = location.protection_coverage_stats?.data;
-      const mpaaStats = location.mpaa_protection_level_stats?.data;
-      const lfpStats = location.fishing_protection_level_stats?.data;
+      const protectionCoverageStats =
+        [
+          location.protection_coverage_stats.data,
+          ...(location.localizations.data.map(
+            // The types below are wrong. There is definitely an `attributes` key inside
+            // `localizations`.
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            (localization) => localization.attributes.protection_coverage_stats.data
+          ) ?? []),
+        ].find((data) => data?.length) ?? [];
+
+      const mpaaProtectionLevelStats =
+        [
+          location.mpaa_protection_level_stats.data,
+          ...(location.localizations.data.map(
+            // The types below are wrong. There is definitely an `attributes` key inside
+            // `localizations`.
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            (localization) => localization.attributes.mpaa_protection_level_stats.data
+          ) ?? []),
+        ].find((data) => data?.length) ?? [];
+
+      // const fishingProtectionLevelStats =
+      //   [
+      //     location.fishing_protection_level_stats.data,
+      //     ...(location.localizations.data.map(
+      //       // The types below are wrong. There is definitely an `attributes` key inside
+      //       // `localizations`.
+      //       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //       // @ts-ignore
+      //       (localization) => localization.attributes.fishing_protection_level_stats.data
+      //     ) ?? []),
+      //   ].find((data) => data?.length) ?? [];
 
       // Find coverage stats data for the last available year in the data
       const lastCoverageDataYear = Math.max(
-        ...allCoverageStats.map(({ attributes }) => attributes.year)
+        ...protectionCoverageStats.map(({ attributes }) => attributes.year)
       );
-      const coverageStats = allCoverageStats.filter(
+      const coverageStats = protectionCoverageStats.filter(
         ({ attributes }) => attributes.year === lastCoverageDataYear
       );
 
@@ -139,7 +228,7 @@ const GlobalRegionalTable: React.FC = () => {
       const percentageOECMs = (numOECMs * 100) / (numMPAs + numOECMs);
 
       // Fully/Highly Protected calculations
-      const fullyHighlyProtected = mpaaStats.filter(
+      const fullyHighlyProtected = mpaaProtectionLevelStats.filter(
         ({ attributes }) =>
           attributes?.mpaa_protection_level?.data?.attributes?.slug === 'fully-highly-protected'
       );
@@ -151,22 +240,22 @@ const GlobalRegionalTable: React.FC = () => {
         (fullyHighlyProtectedArea * 100) / location.totalMarineArea;
 
       // Highly Protected LFP calculations
-      const lfpHighProtected = lfpStats.filter(
-        ({ attributes }) =>
-          attributes?.fishing_protection_level?.data?.attributes?.slug === 'highly'
-      );
-      const lfpHighProtectedArea = lfpHighProtected.reduce(
-        (acc, { attributes }) => acc + attributes?.area,
-        0
-      );
-      const lfpHighProtectedPercentage = (lfpHighProtectedArea * 100) / location.totalMarineArea;
+      // const lfpHighProtected = fishingProtectionLevelStats.filter(
+      //   ({ attributes }) =>
+      //     attributes?.fishing_protection_level?.data?.attributes?.slug === 'highly'
+      // );
+      // const lfpHighProtectedArea = lfpHighProtected.reduce(
+      //   (acc, { attributes }) => acc + attributes?.area,
+      //   0
+      // );
+      // const lfpHighProtectedPercentage = (lfpHighProtectedArea * 100) / location.totalMarineArea;
 
       // Global contributions calculations
       const globalContributionPercentage =
         (protectedArea * 100) / globalLocationQuery?.data?.totalMarineArea;
 
       return {
-        location: location.name,
+        location: localizedLocation.name,
         locationCode: location.code,
         coverage: coveragePercentage,
         area: protectedArea,
@@ -174,15 +263,25 @@ const GlobalRegionalTable: React.FC = () => {
         mpas: percentageMPAs,
         oecms: percentageOECMs,
         fullyHighlyProtected: fullyHighlyProtectedAreaPercentage,
-        highlyProtectedLfp: lfpHighProtectedPercentage,
+        // highlyProtectedLfp: lfpHighProtectedPercentage,
         globalContribution: globalContributionPercentage,
       };
     });
-  }, [globalLocationQuery?.data, locationsData]);
+  }, [locale, globalLocationQuery?.data, locationsData]);
 
   const tableData = parsedData;
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
   return <Table columns={columns} data={tableData} />;
 };
+
+GlobalRegionalTable.messages = [
+  'containers.map',
+  ...Table.messages,
+  // Dependencies of `useColumns`
+  ...SortingButton.messages,
+  ...TooltipButton.messages,
+];
 
 export default GlobalRegionalTable;

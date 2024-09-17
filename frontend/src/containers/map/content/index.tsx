@@ -1,9 +1,10 @@
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
+import { FCWithMessages } from '@/types';
 
 import Details from './details';
 import Map from './map';
 
-const MapContent: React.FC = () => {
+const MapContent: FCWithMessages = () => {
   const [{ showDetails }] = useSyncMapContentSettings();
 
   return (
@@ -17,5 +18,7 @@ const MapContent: React.FC = () => {
     </>
   );
 };
+
+MapContent.messages = [...Map.messages, ...Details.messages];
 
 export default MapContent;

@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 declare global {
   interface Window {
     // ? As we are using explicitily window to access the `gtag` property we need to declare it before using it
@@ -6,7 +8,7 @@ declare global {
 }
 
 declare module '*.svg';
-declare module '*.svg?sprite' {
+declare module '*.svg' {
   const content: {
     id: string;
     viewBox: string;
@@ -18,5 +20,11 @@ declare module '*.svg?sprite' {
 declare module '*.png';
 declare module '*.jpg';
 
-// ? If your module exports nothing, you will need this line. Otherwise, delete it */
-export {};
+export type FCWithMessages<P = NonNullable<unknown>> = React.FC<P> & {
+  messages: Parameters<typeof useTranslations>[0][];
+};
+
+export interface ForwadedComponentWithMessages<P = NonNullable<unknown>>
+  extends React.ForwardRefExoticComponent<P & RefAttributes<HTMLElement>> {
+  messages?: Parameters<typeof useTranslations>[0][];
+}

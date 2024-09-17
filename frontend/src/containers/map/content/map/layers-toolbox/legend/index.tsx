@@ -1,5 +1,6 @@
-import { FC, useCallback } from 'react';
+import { useCallback } from 'react';
 
+import { useLocale, useTranslations } from 'next-intl';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 import { Button } from '@/components/ui/button';
@@ -13,23 +14,29 @@ import {
   useSyncMapLayers,
 } from '@/containers/map/content/map/sync-settings';
 import { cn } from '@/lib/classnames';
-import ArrowDownIcon from '@/styles/icons/arrow-down.svg?sprite';
-import ArrowTopIcon from '@/styles/icons/arrow-top.svg?sprite';
-import CloseIcon from '@/styles/icons/close.svg?sprite';
-import OpacityIcon from '@/styles/icons/opacity.svg?sprite';
+import ArrowDownIcon from '@/styles/icons/arrow-down.svg';
+import ArrowTopIcon from '@/styles/icons/arrow-top.svg';
+import CloseIcon from '@/styles/icons/close.svg';
+import OpacityIcon from '@/styles/icons/opacity.svg';
+import { FCWithMessages } from '@/types';
 import { useGetLayers } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
 import LegendItem from './item';
 
-const Legend: FC = () => {
+const Legend: FCWithMessages = () => {
+  const t = useTranslations('containers.map');
+  const locale = useLocale();
+
   const [activeLayers, setMapLayers] = useSyncMapLayers();
   const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
 
   const layersQuery = useGetLayers(
     {
+      locale,
       sort: 'title:asc',
+      populate: 'legend_config,legend_config.items',
     },
     {
       query: {
@@ -111,10 +118,12 @@ const Legend: FC = () => {
   );
 
   return (
-    <div className="py-2 px-4">
+    <div className="px-4 py-2">
       {!layersQuery.data?.length && (
         <p>
-          Open <span className="text-sm font-black uppercase">Layers</span> to add layers to the map
+          {t.rich('open-layers-to-add-to-map', {
+            b: (chunks) => <span className="text-sm font-black uppercase">{chunks}</span>,
+          })}
         </p>
       )}
       {layersQuery.data?.length > 0 && (
@@ -156,11 +165,11 @@ const Legend: FC = () => {
                             disabled={isFirst}
                             onClick={() => onMoveLayerUp(id)}
                           >
-                            <span className="sr-only">Move up</span>
+                            <span className="sr-only">{t('move-up')}</span>
                             <Icon icon={ArrowTopIcon} className="h-3 w-3" />
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent>Move up</TooltipContent>
+                        <TooltipContent>{t('move-up')}</TooltipContent>
                       </Tooltip>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -171,27 +180,27 @@ const Legend: FC = () => {
                             disabled={isLast}
                             onClick={() => onMoveLayerDown(id)}
                           >
-                            <span className="sr-only">Move down</span>
+                            <span className="sr-only">{t('move-down')}</span>
                             <Icon icon={ArrowDownIcon} className="h-3 w-3" />
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent>Move down</TooltipContent>
+                        <TooltipContent>{t('move-down')}</TooltipContent>
                       </Tooltip>
                       <Tooltip>
                         <Popover>
                           <TooltipTrigger asChild>
                             <PopoverTrigger asChild>
                               <Button type="button" variant="ghost" size="icon-sm">
-                                <span className="sr-only">Change opacity</span>
+                                <span className="sr-only">{t('change-opacity')}</span>
                                 <Icon icon={OpacityIcon} className="h-3.5 w-3.5" />
                               </Button>
                             </PopoverTrigger>
                           </TooltipTrigger>
-                          <TooltipContent>Change opacity</TooltipContent>
+                          <TooltipContent>{t('change-opacity')}</TooltipContent>
                           <PopoverContent className="w-48">
-                            <Label className="mb-2 block text-xs">Opacity</Label>
+                            <Label className="mb-2 block text-xs">{t('opacity')}</Label>
                             <Slider
-                              thumbLabel="Opacity"
+                              thumbLabel={t('opacity')}
                               defaultValue={[opacity]}
                               max={1}
                               step={0.1}
@@ -208,12 +217,12 @@ const Legend: FC = () => {
                             size="icon-sm"
                             onClick={() => onToggleLayerVisibility(id, !isVisible)}
                           >
-                            <span className="sr-only">{isVisible ? 'Hide' : 'Show'}</span>
+                            <span className="sr-only">{isVisible ? t('hide') : t('show')}</span>
                             {isVisible && <HiEye className="h-4 w-4" aria-hidden />}
                             {!isVisible && <HiEyeOff className="h-4 w-4" aria-hidden />}
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent>{isVisible ? 'Hide' : 'Show'}</TooltipContent>
+                        <TooltipContent>{isVisible ? t('hide') : t('show')}</TooltipContent>
                       </Tooltip>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -225,11 +234,11 @@ const Legend: FC = () => {
                               onRemoveLayer(id);
                             }}
                           >
-                            <span className="sr-only">Remove</span>
+                            <span className="sr-only">{t('remove')}</span>
                             <Icon icon={CloseIcon} className="h-3 w-3" />
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent>Remove</TooltipContent>
+                        <TooltipContent>{t('remove')}</TooltipContent>
                       </Tooltip>
                     </div>
                   </TooltipProvider>
@@ -245,5 +254,7 @@ const Legend: FC = () => {
     </div>
   );
 };
+
+Legend.messages = ['containers.map', ...LegendItem.messages];
 
 export default Legend;

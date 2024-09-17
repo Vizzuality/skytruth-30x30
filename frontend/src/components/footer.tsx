@@ -1,14 +1,19 @@
 import Link from 'next/link';
 
 import { Copyright } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { EXTERNAL_LINKS } from '@/constants/external-links';
 import { PAGES } from '@/constants/pages';
+import { FCWithMessages } from '@/types';
 import { useGetContactDetail } from '@/types/generated/contact-detail';
 
-const Footer: React.FC = () => {
+const Footer: FCWithMessages = () => {
+  const t = useTranslations('components.footer');
+  const locale = useLocale();
+
   const { data: contactDetails } = useGetContactDetail(
-    {},
+    { locale },
     {
       query: {
         select: ({ data }) => data?.attributes,
@@ -25,12 +30,12 @@ const Footer: React.FC = () => {
         <div className="flex w-full flex-col">
           <div className="my-6">
             <div className="my-6">
-              <h2 className="text-4xl font-extrabold md:text-5xl">Would you like to know more?</h2>
+              <h2 className="text-4xl font-extrabold md:text-5xl">{t('title')}</h2>
               <Link
                 href={PAGES.contact}
                 className="mt-8 inline-block bg-white px-4 py-2.5 font-mono text-xs uppercase text-black"
               >
-                Get in touch
+                {t('button')}
               </Link>
             </div>
             <address className="my-4 flex flex-col gap-0.5 pt-6 text-xs not-italic text-black-300 md:my-8">
@@ -57,7 +62,7 @@ const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Privacy policy
+              {t('privacy-policy')}
             </Link>
             <Link
               className="py-2"
@@ -65,7 +70,7 @@ const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Terms of use
+              {t('terms-of-use')}
             </Link>
           </nav>
         </div>
@@ -79,5 +84,7 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
+
+Footer.messages = ['components.footer'];
 
 export default Footer;

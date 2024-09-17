@@ -1,0 +1,176 @@
+{
+  "key": "plugin_localazy_content-transfer-setup",
+  "value": {
+    "has_setup": true,
+    "setup": [
+      {
+        "contact_details": {
+          "__model__": true,
+          "name": null,
+          "address": true,
+          "phone": true,
+          "email": null,
+          "registration": true
+        }
+      },
+      {
+        "data_infos": {
+          "__model__": true,
+          "slug": null,
+          "content": true,
+          "data_sources": null
+        }
+      },
+      {
+        "data_sources": {
+          "__model__": true,
+          "slug": null,
+          "title": true,
+          "url": null
+        }
+      },
+      {
+        "data_tool_ecosystems": {
+          "__model__": true,
+          "name": true
+        }
+      },
+      {
+        "data_tool_languages": {
+          "__model__": true,
+          "name": true,
+          "slug": null,
+          "data_tool": null
+        }
+      },
+      {
+        "data_tool_resource_types": {
+          "__model__": true,
+          "name": true
+        }
+      },
+      {
+        "data_tools": {
+          "__model__": true,
+          "name": true,
+          "description": true,
+          "site": null,
+          "languages": null,
+          "data_tool_resource_types": null,
+          "geography": true,
+          "data_tool_ecosystems": null
+        }
+      },
+      {
+        "datasets": {
+          "__model__": true,
+          "name": true,
+          "layers": null
+        }
+      },
+      {
+        "fishing_protection_levels": {
+          "__model__": true,
+          "slug": null,
+          "name": true,
+          "info": true
+        }
+      },
+      {
+        "habitats": {
+          "__model__": true,
+          "slug": null,
+          "name": true,
+          "info": true
+        }
+      },
+      {
+        "layers": {
+          "__model__": true,
+          "title": true,
+          "type": null,
+          "config": null,
+          "params_config": null,
+          "interaction_config": null,
+          "metadata": {
+            "description": true,
+            "citation": true,
+            "source": true,
+            "resolution": true,
+            "content_date": null,
+            "license": true
+          },
+          "dataset": null,
+          "legend_config": {
+            "type": null,
+            "items": {
+              "icon": false,
+              "color": false,
+              "value": true,
+              "description": true
+            }
+          }
+        }
+      },
+      {
+        "locations": {
+          "__model__": true,
+          "code": null,
+          "name": true,
+          "totalMarineArea": null,
+          "type": null,
+          "groups": null,
+          "members": null,
+          "fishing_protection_level_stats": null,
+          "mpaa_protection_level_stats": null,
+          "protection_coverage_stats": null,
+          "bounds": null
+        }
+      },
+      {
+        "mpa_iucn_categories": {
+          "__model__": true,
+          "slug": null,
+          "name": true,
+          "info": true
+        }
+      },
+      {
+        "mpaa_establishment_stages": {
+          "__model__": true,
+          "slug": null,
+          "name": true,
+          "info": true
+        }
+      },
+      {
+        "mpaa_protection_levels": {
+          "__model__": true,
+          "slug": null,
+          "name": true,
+          "info": true
+        }
+      },
+      {
+        "protection_statuses": {
+          "__model__": true,
+          "slug": null,
+          "name": true,
+          "info": true
+        }
+      },
+      {
+        "static_indicators": {
+          "__model__": true,
+          "slug": null,
+          "source": null,
+          "value": true,
+          "description": true
+        }
+      }
+    ]
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

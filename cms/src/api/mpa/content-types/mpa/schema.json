@@ -38,15 +38,50 @@
       "relation": "oneToOne",
       "target": "api::protection-status.protection-status"
     },
-    "mpa_protection_coverage_stats": {
+    "bbox": {
+      "type": "json",
+      "required": true
+    },
+    "children": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::mpa-protection-coverage-stat.mpa-protection-coverage-stat",
-      "mappedBy": "mpa"
+      "target": "api::mpa.mpa"
+    },
+    "data_source": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::data-source.data-source"
+    },
+    "mpaa_establishment_stage": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpaa-establishment-stage.mpaa-establishment-stage"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location"
     },
     "wdpaid": {
-      "type": "string",
-      "unique": true
+      "type": "biginteger"
+    },
+    "mpaa_protection_level": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpaa-protection-level.mpaa-protection-level"
+    },
+    "is_child": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "mpa_iucn_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpa-iucn-category.mpa-iucn-category"
+    },
+    "designation": {
+      "type": "string"
     }
   }
 }

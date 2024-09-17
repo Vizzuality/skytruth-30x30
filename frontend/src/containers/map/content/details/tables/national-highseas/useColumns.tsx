@@ -1,8 +1,11 @@
-import { useMemo } from 'react';
+import { ComponentProps, useMemo } from 'react';
 
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, SortingFnOption } from '@tanstack/react-table';
+import { useLocale, useTranslations } from 'next-intl';
 
 import FiltersButton from '@/components/filters-button';
+import LayerPreview from '@/components/layer-preview';
+import ExpansionControls from '@/containers/map/content/details/table/expansion-controls';
 import HeaderItem from '@/containers/map/content/details/table/header-item';
 import { cellFormatter } from '@/containers/map/content/details/table/helpers';
 import SortingButton from '@/containers/map/content/details/table/sorting-button';
@@ -16,8 +19,14 @@ export type NationalHighseasTableColumns = {
   protectedAreaType: string;
   establishmentStage: string;
   protectionLevel: string;
-  fishingProtectionLevel: string;
   area: number;
+  dataSource: string;
+  iucnCategory: string;
+  map: {
+    wdpaId: string;
+    bounds: [number, number, number, number];
+    dataSource: ComponentProps<typeof LayerPreview>['dataSource'];
+  };
 };
 
 type UseColumnsProps = {
@@ -26,11 +35,15 @@ type UseColumnsProps = {
 };
 
 const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
+  const t = useTranslations('containers.map');
+  const locale = useLocale();
+
   const {
     protectionStatus: protectionStatusOptions,
     establishmentStage: establishmentStageOptions,
     protectionLevel: protectionLevelOptions,
-    // fishingProtectionLevel: fishingProtectionLevelOptions,
+    dataSource: dataSourceOptions,
+    iucnCategory: iucnCategoryOptions,
   } = useFiltersOptions();
 
   const tooltips = useTooltips();
@@ -40,24 +53,51 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
     return [
       {
         accessorKey: 'protectedArea',
+        sortingFn: 'localeStringCompare' as SortingFnOption<NationalHighseasTableColumns>,
         header: ({ column }) => (
-          <HeaderItem>
+          <HeaderItem className="ml-6">
             <SortingButton column={column} />
-            Name
+            {t('name')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
-          const { protectedArea } = row.original;
-          return <span className="underline">{protectedArea}</span>;
+          const {
+            original: { protectedArea },
+          } = row;
+          return (
+            <ExpansionControls row={row}>
+              <span className="font-semibold">{protectedArea}</span>
+            </ExpansionControls>
+          );
         },
       },
+      // ? LayerPreview: We're not displaying the layer preview at this moment, but we want to preserve the code
+      // {
+      //   accessorKey: 'map',
+      //   header: null,
+      //   cell: ({ row }) => {
+      //     const { bounds, wdpaId, dataSource } = row.original?.map || {};
+
+      //     return (
+      //       <div className="relative -mr-0.5 h-[calc(100%+4px)] w-12 border-l border-r border-t border-b border-black">
+      //         <LayerPreview
+      //           {...{
+      //             wdpaId,
+      //             bounds,
+      //             dataSource,
+      //           }}
+      //         />
+      //       </div>
+      //     );
+      //   },
+      // },
       {
         accessorKey: 'coverage',
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Coverage
+            {t('coverage')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
@@ -65,12 +105,15 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           const { coverage: value } = row.original;
           if (!value) return <>&mdash;</>;
 
-          const formattedCoverage = cellFormatter.percentage(value);
+          const formattedCoverage = cellFormatter.percentage(locale, value);
 
           return (
             <span className="text-4xl font-bold">
-              {formattedCoverage}
-              <span className="text-xs">%</span>
+              {t.rich('percentage-bold', {
+                b1: (chunks) => chunks,
+                b2: (chunks) => <span className="text-xs">{chunks}</span>,
+                percentage: formattedCoverage,
+              })}
             </span>
           );
         },
@@ -80,18 +123,35 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
-            Area
+            {t('area')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { area: value } = row.original;
-          const formattedValue = cellFormatter.area(value);
-          return (
-            <span>
-              {formattedValue} km<sup>2</sup>
-            </span>
-          );
+          const formattedValue = cellFormatter.area(locale, value);
+          return <span>{t('area-km2', { area: formattedValue })}</span>;
+        },
+      },
+      {
+        accessorKey: 'dataSource',
+        header: ({ column }) => (
+          <HeaderItem>
+            <FiltersButton
+              field={column.id}
+              options={dataSourceOptions}
+              values={filters[column.id]}
+              onChange={onFiltersChange}
+            />
+            {t('data-source')}
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
+        cell: ({ row }) => {
+          const { dataSource: value } = row.original;
+          const formattedValue =
+            dataSourceOptions.find((entry) => value === entry?.value)?.name || t('n-a');
+          return <>{formattedValue}</>;
         },
       },
       {
@@ -104,7 +164,7 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               values={filters[column.id]}
               onChange={onFiltersChange}
             />
-            Type
+            {t('type')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
@@ -113,6 +173,27 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
           const formattedValue = protectionStatusOptions.find(
             (entry) => value === entry?.value
           )?.name;
+          return <>{formattedValue ?? '-'}</>;
+        },
+      },
+      {
+        accessorKey: 'iucnCategory',
+        header: ({ column }) => (
+          <HeaderItem>
+            <FiltersButton
+              field={column.id}
+              options={iucnCategoryOptions}
+              values={filters[column.id]}
+              onChange={onFiltersChange}
+            />
+            {t('iucn-category')}
+            <TooltipButton column={column} tooltips={tooltips} />
+          </HeaderItem>
+        ),
+        cell: ({ row }) => {
+          const { iucnCategory: value } = row.original;
+          const formattedValue =
+            iucnCategoryOptions.find((entry) => value === entry?.value)?.name || t('n-a');
           return <>{formattedValue}</>;
         },
       },
@@ -126,14 +207,15 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               values={filters[column.id]}
               onChange={onFiltersChange}
             />
-            Establishment Stage
+            {t('establishment-stage')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { establishmentStage: value } = row.original;
           const formattedValue =
-            establishmentStageOptions.find((entry) => value === entry?.value)?.name || 'N/A';
+            establishmentStageOptions.find((entry) => value === entry?.value)?.name ||
+            t('not-assessed');
           return <>{formattedValue}</>;
         },
       },
@@ -147,47 +229,30 @@ const useColumns = ({ filters, onFiltersChange }: UseColumnsProps) => {
               values={filters[column.id]}
               onChange={onFiltersChange}
             />
-            Protection Level
+            {t('protection-level')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
         ),
         cell: ({ row }) => {
           const { protectionLevel: value } = row.original;
           const formattedValue =
-            protectionLevelOptions.find((entry) => value === entry?.value)?.name || 'N/A';
+            protectionLevelOptions.find((entry) => value === entry?.value)?.name ||
+            t('not-assessed');
           return <>{formattedValue}</>;
         },
       },
-      // {
-      //   accessorKey: 'fishingProtectionLevel',
-      //   header: ({ column }) => (
-      //     <HeaderItem>
-      //       <FiltersButton
-      //         field={column.id}
-      //         options={fishingProtectionLevelOptions}
-      //         values={filters[column.id]}
-      //         onChange={onFiltersChange}
-      //       />
-      //       Level of Fishing Protection
-      //       <TooltipButton column={column} tooltips={tooltips} />
-      //     </HeaderItem>
-      //   ),
-      //   cell: ({ row }) => {
-      //     const { fishingProtectionLevel: value } = row.original;
-      //     const formattedValue =
-      //       fishingProtectionLevelOptions.find((entry) => value === entry?.value)?.name || 'N/A';
-      //     return <>{formattedValue}</>;
-      //   },
-      // },
     ];
   }, [
+    t,
+    tooltips,
+    locale,
+    dataSourceOptions,
+    iucnCategoryOptions,
+    protectionStatusOptions,
     filters,
     onFiltersChange,
-    tooltips,
-    protectionStatusOptions,
     establishmentStageOptions,
     protectionLevelOptions,
-    // fishingProtectionLevelOptions,
   ]);
 
   return columns;

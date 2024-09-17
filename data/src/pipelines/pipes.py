@@ -5,6 +5,7 @@ from pipelines.base_pipe import PreprocessBasePipe, VTBasePipe, IntermediateBase
 from pipelines import tiles_pipes
 from pipelines import precalc_pipes
 from pipelines import intermediate_pipes
+from pipelines import analysis_pipes
 
 
 @lru_cache
@@ -27,7 +28,13 @@ def get_pipes() -> dict:
         if issubclass(cls, PreprocessBasePipe) and cls != PreprocessBasePipe
     }
 
-    return {**i_p, **t_p, **stat_p}
+    analysis_p = {
+        cls.pipeline_name: cls
+        for _, cls in inspect.getmembers(analysis_pipes, inspect.isclass)
+        if issubclass(cls, PreprocessBasePipe) and cls != PreprocessBasePipe
+    }
+
+    return {**i_p, **t_p, **stat_p, **analysis_p}
 
 
 def get_pipes_names():

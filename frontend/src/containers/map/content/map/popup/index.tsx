@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Popup } from 'react-map-gl';
 
 import { useAtomValue, useSetAtom } from 'jotai';
+import { useLocale } from 'next-intl';
 import { useKey } from 'rooks';
 
 import Icon from '@/components/ui/icon';
@@ -16,12 +17,15 @@ import {
 import PopupItem from '@/containers/map/content/map/popup/item';
 import { layersInteractiveAtom, popupAtom } from '@/containers/map/store';
 import { cn } from '@/lib/classnames';
-import CloseIcon from '@/styles/icons/close.svg?sprite';
+import CloseIcon from '@/styles/icons/close.svg';
+import { FCWithMessages } from '@/types';
 import { useGetLayers } from '@/types/generated/layer';
 
 import { useSyncMapLayers } from '../sync-settings';
 
-const PopupContainer = () => {
+const PopupContainer: FCWithMessages = () => {
+  const locale = useLocale();
+
   const popup = useAtomValue(popupAtom);
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const [syncedLayers] = useSyncMapLayers();
@@ -34,6 +38,7 @@ const PopupContainer = () => {
 
   const { data: layersInteractiveData } = useGetLayers(
     {
+      locale,
       filters: {
         id: {
           $in: layersInteractive,
@@ -65,6 +70,26 @@ const PopupContainer = () => {
       },
     }
   );
+
+  const hoverTooltipContent = useMemo(() => {
+    const properties = popup?.features?.find(({ source }) => source === 'ezz-source')?.properties;
+
+    let content = null;
+
+    if (!properties) {
+      return content;
+    }
+
+    if (locale === 'es') {
+      content = properties.GEONAME_ES;
+    }
+
+    if (locale === 'fr') {
+      content = properties.GEONAME_FR;
+    }
+
+    return content ?? properties.GEONAME;
+  }, [locale, popup]);
 
   const closePopup = useCallback(() => {
     setPopup({});
@@ -133,14 +158,14 @@ const PopupContainer = () => {
           </Select>
         )}
         {isHoveredTooltip && (
-          <div className="font-mono text-sm text-gray-500">
-            {popup.features.find(({ source }) => source === 'ezz-source')?.properties?.GEONAME}
-          </div>
+          <div className="font-mono text-sm text-gray-500">{hoverTooltipContent}</div>
         )}
         {isClickedTooltip && selectedLayerId && <PopupItem id={selectedLayerId} />}
       </div>
     </Popup>
   );
 };
+
+PopupContainer.messages = [...PopupItem.messages];
 
 export default PopupContainer;
