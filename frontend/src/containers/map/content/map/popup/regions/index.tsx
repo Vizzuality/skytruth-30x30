@@ -112,12 +112,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         // @ts-ignore
         populate: {
           location: {
-            fields: ['name', 'code', 'marine_bounds', 'totalMarineArea', 'locale'],
-            populate: {
-              localizations: {
-                fields: ['name', 'locale'],
-              },
-            },
+            fields: ['name', 'name_es', 'name_fr', 'code', 'marine_bounds', 'totalMarineArea'],
           },
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -158,16 +153,15 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       return null;
     }
 
-    return [
-      protectionCoverageStats.location.data.attributes,
-      ...(protectionCoverageStats.location.data.attributes.localizations.data.map(
-        // The types below are wrong. There is definitely an `attributes` key inside
-        // `localizations`.
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        (localization) => localization.attributes
-      ) ?? []),
-    ].find((data) => data.locale === locale)?.name;
+    if (locale === 'es') {
+      return protectionCoverageStats.location.data.attributes.name_es;
+    }
+
+    if (locale === 'fr') {
+      return protectionCoverageStats.location.data.attributes.name_fr;
+    }
+
+    return protectionCoverageStats.location.data.attributes.name;
   }, [locale, protectionCoverageStats]);
 
   // handle renderer

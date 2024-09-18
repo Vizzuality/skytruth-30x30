@@ -53,11 +53,22 @@ const LocationSelector: FCWithMessages<LocationSelectorProps> = ({
   const [locationsFilter, setLocationsFilter] = useState<keyof typeof FILTERS>('all');
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
 
+  const locationNameField = useMemo(() => {
+    let res = 'name';
+    if (locale === 'es') {
+      res = 'name_es';
+    }
+    if (locale === 'fr') {
+      res = 'name_fr';
+    }
+    return res;
+  }, [locale]);
+
   const { data: locationsData } = useGetLocations(
     {
       locale,
       'pagination[limit]': -1,
-      sort: 'name:asc',
+      sort: `${locationNameField}:asc`,
     },
     {
       query: {

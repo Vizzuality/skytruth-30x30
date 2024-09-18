@@ -10,31 +10,19 @@
   "options": {
     "draftAndPublish": false
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "code": {
       "type": "string",
       "required": true,
       "unique": false,
       "description": "Unique textual identifier for the location, e.g. iso3 code for countries.",
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "name": {
       "type": "string",
       "required": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     },
     "totalMarineArea": {
       "type": "decimal",
@@ -49,20 +37,12 @@
           2
         ]
       },
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "type": {
       "type": "string",
       "required": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "groups": {
       "type": "relation",
@@ -96,29 +76,25 @@
     },
     "marine_bounds": {
       "type": "json",
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "totalTerrestrialArea": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
+      "pluginOptions": {},
       "type": "decimal",
       "required": true,
       "min": 0
     },
     "terrestrial_bounds": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
+      "pluginOptions": {},
       "type": "json"
+    },
+    "name_es": {
+      "type": "string",
+      "required": true
+    },
+    "name_fr": {
+      "type": "string",
+      "required": true
     }
   }
 }

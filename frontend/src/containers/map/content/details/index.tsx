@@ -88,6 +88,14 @@ const MapDetails: FCWithMessages = () => {
       ? tablesSettings.worldwideRegion
       : tablesSettings.countryHighseas;
 
+    let locationName = locationsQuery.data?.name;
+    if (locale === 'es') {
+      locationName = locationsQuery.data?.name_es;
+    }
+    if (locale === 'fr') {
+      locationName = locationsQuery.data?.name_fr;
+    }
+
     const parsedTitle =
       tableSettings.title[locationsQuery.data?.type]?.replace(
         '{location}',
@@ -98,7 +106,7 @@ const MapDetails: FCWithMessages = () => {
       title: parsedTitle,
       component: tableSettings.component,
     };
-  }, [tablesSettings, locationsQuery.data]);
+  }, [locale, tablesSettings, locationsQuery.data]);
 
   return (
     <div className="absolute h-full w-full overflow-scroll bg-white px-4 py-4 md:px-6">

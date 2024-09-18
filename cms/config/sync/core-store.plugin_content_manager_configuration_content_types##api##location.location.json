@@ -193,6 +193,34 @@
           "sortable": false
         }
       },
+      "name_es": {
+        "edit": {
+          "label": "name_es",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "name_es",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "name_fr": {
+        "edit": {
+          "label": "name_fr",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "name_fr",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -253,12 +281,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "code",
-        "name",
-        "totalMarineArea"
-      ],
       "edit": [
         [
           {
@@ -266,7 +288,23 @@
             "size": 6
           },
           {
+            "name": "type",
+            "size": 6
+          }
+        ],
+        [
+          {
             "name": "name",
+            "size": 6
+          },
+          {
+            "name": "name_es",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "name_fr",
             "size": 6
           }
         ],
@@ -274,12 +312,10 @@
           {
             "name": "totalMarineArea",
             "size": 4
-          }
-        ],
-        [
+          },
           {
-            "name": "type",
-            "size": 6
+            "name": "totalTerrestrialArea",
+            "size": 4
           }
         ],
         [
@@ -316,16 +352,16 @@
         ],
         [
           {
-            "name": "totalTerrestrialArea",
-            "size": 4
-          }
-        ],
-        [
-          {
             "name": "terrestrial_bounds",
             "size": 12
           }
         ]
+      ],
+      "list": [
+        "id",
+        "code",
+        "name",
+        "totalMarineArea"
       ]
     }
   },

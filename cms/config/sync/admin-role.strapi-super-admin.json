@@ -1136,12 +1136,9 @@
           "protection_coverage_stats",
           "marine_bounds",
           "totalTerrestrialArea",
-          "terrestrial_bounds"
-        ],
-        "locales": [
-          "en",
-          "es",
-          "fr"
+          "terrestrial_bounds",
+          "name_es",
+          "name_fr"
         ]
       },
       "conditions": [],
@@ -1150,13 +1147,7 @@
     {
       "action": "plugin::content-manager.explorer.delete",
       "subject": "api::location.location",
-      "properties": {
-        "locales": [
-          "en",
-          "es",
-          "fr"
-        ]
-      },
+      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
@@ -1176,12 +1167,9 @@
           "protection_coverage_stats",
           "marine_bounds",
           "totalTerrestrialArea",
-          "terrestrial_bounds"
-        ],
-        "locales": [
-          "en",
-          "es",
-          "fr"
+          "terrestrial_bounds",
+          "name_es",
+          "name_fr"
         ]
       },
       "conditions": [],
@@ -1203,12 +1191,9 @@
           "protection_coverage_stats",
           "marine_bounds",
           "totalTerrestrialArea",
-          "terrestrial_bounds"
-        ],
-        "locales": [
-          "en",
-          "es",
-          "fr"
+          "terrestrial_bounds",
+          "name_es",
+          "name_fr"
         ]
       },
       "conditions": [],

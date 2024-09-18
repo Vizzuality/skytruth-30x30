@@ -177,12 +177,7 @@ const ModellingWidget: FCWithMessages = () => {
           // @ts-ignore
           populate: {
             location: {
-              fields: ['name', 'code', 'totalMarineArea', 'locale'],
-              populate: {
-                localizations: {
-                  fields: ['name', 'code', 'totalMarineArea', 'locale'],
-                },
-              },
+              fields: ['name', 'name_es', 'name_es', 'code', 'totalMarineArea'],
             },
           },
           'pagination[limit]': 1,
@@ -198,12 +193,7 @@ const ModellingWidget: FCWithMessages = () => {
 
               const protectedArea = data?.[0]?.attributes.protectedArea ?? 0;
 
-              let location = data?.[0]?.attributes?.location?.data?.attributes;
-              if (location.locale !== locale) {
-                location = (
-                  location.localizations.data as ProtectionCoverageStatLocationData[]
-                ).find((localization) => localization.attributes.locale === locale)?.attributes;
-              }
+              const location = data?.[0]?.attributes?.location?.data?.attributes;
 
               // ? total extension of location
               const totalMarineArea = location?.totalMarineArea ?? 0;
@@ -267,9 +257,16 @@ const ModellingWidget: FCWithMessages = () => {
     [locationQueries]
   );
 
-  const administrativeBoundaries = nationalLevelContributions?.map(
-    (contribution) => contribution?.location?.name
-  );
+  const administrativeBoundaries = nationalLevelContributions?.map((contribution) => {
+    let locationName = contribution.location.name;
+    if (locale === 'es') {
+      locationName = contribution.location.name_es;
+    }
+    if (locale === 'fr') {
+      locationName = contribution.location.name_fr;
+    }
+    return locationName;
+  });
 
   return (
     <Widget
@@ -299,10 +296,18 @@ const ModellingWidget: FCWithMessages = () => {
             <WidgetLegend />
           </div>
           {nationalLevelContributions?.map((contribution) => {
+            let locationName = contribution.location.name;
+            if (locale === 'es') {
+              locationName = contribution.location.name_es;
+            }
+            if (locale === 'fr') {
+              locationName = contribution.location.name_fr;
+            }
+
             return (
               <StackedHorizontalBarChart
                 key={contribution?.location?.code}
-                title={contribution?.location?.name}
+                title={locationName}
                 totalProtectedArea={contribution?.totalProtectedArea}
                 totalArea={contribution?.totalMarineArea}
                 highlightedPercentage={contribution?.totalPercentage}

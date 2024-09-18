@@ -860,7 +860,9 @@
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "totalTerrestrialArea"
+          "totalTerrestrialArea",
+          "name_es",
+          "name_fr"
         ],
         "locales": []
       },
@@ -898,7 +900,9 @@
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "totalTerrestrialArea"
+          "totalTerrestrialArea",
+          "name_es",
+          "name_fr"
         ],
         "locales": []
       },
@@ -921,7 +925,9 @@
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "totalTerrestrialArea"
+          "totalTerrestrialArea",
+          "name_es",
+          "name_fr"
         ],
         "locales": []
       },

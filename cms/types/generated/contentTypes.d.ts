@@ -1611,43 +1611,15 @@ export interface ApiLocationLocation extends Schema.CollectionType {
   options: {
     draftAndPublish: false;
   };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
   attributes: {
-    code: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    code: Attribute.String & Attribute.Required;
+    name: Attribute.String & Attribute.Required;
     totalMarineArea: Attribute.Decimal &
       Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }> &
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    type: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
+    type: Attribute.String & Attribute.Required;
     groups: Attribute.Relation<
       'api::location.location',
       'manyToMany',
@@ -1673,28 +1645,15 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'oneToMany',
       'api::protection-coverage-stat.protection-coverage-stat'
     >;
-    marine_bounds: Attribute.JSON &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
+    marine_bounds: Attribute.JSON;
     totalTerrestrialArea: Attribute.Decimal &
       Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }> &
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    terrestrial_bounds: Attribute.JSON &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
+    terrestrial_bounds: Attribute.JSON;
+    name_es: Attribute.String & Attribute.Required;
+    name_fr: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1709,12 +1668,6 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::location.location',
-      'oneToMany',
-      'api::location.location'
-    >;
-    locale: Attribute.String;
   };
 }
 
