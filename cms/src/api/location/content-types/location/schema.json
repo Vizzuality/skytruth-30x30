@@ -95,6 +95,11 @@
     "name_fr": {
       "type": "string",
       "required": true
+    },
+    "mpaa_fully_highly_protected_area": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
     }
   }
 }

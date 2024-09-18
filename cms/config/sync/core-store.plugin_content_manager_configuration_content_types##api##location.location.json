@@ -221,6 +221,20 @@
           "sortable": true
         }
       },
+      "mpaa_fully_highly_protected_area": {
+        "edit": {
+          "label": "mpaa_fully_highly_protected_area",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "mpaa_fully_highly_protected_area",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -330,18 +344,22 @@
         ],
         [
           {
-            "name": "fishing_protection_level_stats",
+            "name": "protection_coverage_stats",
             "size": 6
           },
           {
-            "name": "mpaa_protection_level_stats",
+            "name": "fishing_protection_level_stats",
             "size": 6
           }
         ],
         [
           {
-            "name": "protection_coverage_stats",
+            "name": "mpaa_protection_level_stats",
             "size": 6
+          },
+          {
+            "name": "mpaa_fully_highly_protected_area",
+            "size": 4
           }
         ],
         [

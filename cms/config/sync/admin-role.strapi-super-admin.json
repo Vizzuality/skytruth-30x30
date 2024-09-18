@@ -1138,7 +1138,8 @@
           "totalTerrestrialArea",
           "terrestrial_bounds",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "mpaa_fully_highly_protected_area"
         ]
       },
       "conditions": [],
@@ -1169,7 +1170,8 @@
           "totalTerrestrialArea",
           "terrestrial_bounds",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "mpaa_fully_highly_protected_area"
         ]
       },
       "conditions": [],
@@ -1193,7 +1195,8 @@
           "totalTerrestrialArea",
           "terrestrial_bounds",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "mpaa_fully_highly_protected_area"
         ]
       },
       "conditions": [],

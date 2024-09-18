@@ -849,7 +849,8 @@
           "protection_coverage_stats",
           "totalTerrestrialArea",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "mpaa_fully_highly_protected_area"
         ],
         "locales": []
       },
@@ -885,7 +886,8 @@
           "protection_coverage_stats",
           "totalTerrestrialArea",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "mpaa_fully_highly_protected_area"
         ],
         "locales": []
       },
@@ -908,7 +910,8 @@
           "protection_coverage_stats",
           "totalTerrestrialArea",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "mpaa_fully_highly_protected_area"
         ],
         "locales": []
       },

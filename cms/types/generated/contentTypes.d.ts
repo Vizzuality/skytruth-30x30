@@ -1654,6 +1654,11 @@ export interface ApiLocationLocation extends Schema.CollectionType {
     terrestrial_bounds: Attribute.JSON;
     name_es: Attribute.String & Attribute.Required;
     name_fr: Attribute.String & Attribute.Required;
+    mpaa_fully_highly_protected_area: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

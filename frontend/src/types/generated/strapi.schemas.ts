@@ -1905,6 +1905,7 @@ export type ProtectionCoverageStatLocationDataAttributes = {
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
+  mpaa_fully_highly_protected_area?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: ProtectionCoverageStatLocationDataAttributesCreatedBy;
@@ -2767,6 +2768,7 @@ export type PaChildrenDataItemAttributesLocationDataAttributes = {
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
+  mpaa_fully_highly_protected_area?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: PaChildrenDataItemAttributesLocationDataAttributesCreatedBy;
@@ -3684,6 +3686,7 @@ export type MpaaProtectionLevelStatLocationDataAttributes = {
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
+  mpaa_fully_highly_protected_area?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: MpaaProtectionLevelStatLocationDataAttributesCreatedBy;
@@ -4719,6 +4722,7 @@ export type MpaaEstablishmentStageStatLocationDataAttributes = {
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
+  mpaa_fully_highly_protected_area?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: MpaaEstablishmentStageStatLocationDataAttributesCreatedBy;
@@ -5938,6 +5942,7 @@ export interface Location {
   terrestrial_bounds?: unknown;
   name_es: string;
   name_fr: string;
+  mpaa_fully_highly_protected_area: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: LocationCreatedBy;
@@ -6050,6 +6055,7 @@ export type LocationGroupsDataItemAttributes = {
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
+  mpaa_fully_highly_protected_area?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: LocationGroupsDataItemAttributesCreatedBy;
@@ -7369,6 +7375,7 @@ export type HabitatStatLocationDataAttributes = {
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
+  mpaa_fully_highly_protected_area?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: HabitatStatLocationDataAttributesCreatedBy;
@@ -8319,6 +8326,7 @@ export type FishingProtectionLevelStatLocationDataAttributes = {
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
+  mpaa_fully_highly_protected_area?: number;
   createdAt?: string;
   updatedAt?: string;
   createdBy?: FishingProtectionLevelStatLocationDataAttributesCreatedBy;
