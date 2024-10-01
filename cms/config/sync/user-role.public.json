@@ -49,6 +49,12 @@
       "action": "api::dataset.dataset.findOne"
     },
     {
+      "action": "api::environment.environment.find"
+    },
+    {
+      "action": "api::environment.environment.findOne"
+    },
+    {
       "action": "api::fishing-protection-level-stat.fishing-protection-level-stat.find"
     },
     {
@@ -89,18 +95,6 @@
     },
     {
       "action": "api::mpa-iucn-category.mpa-iucn-category.findOne"
-    },
-    {
-      "action": "api::mpa.mpa.find"
-    },
-    {
-      "action": "api::mpa.mpa.findOne"
-    },
-    {
-      "action": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat.find"
-    },
-    {
-      "action": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat.findOne"
     },
     {
       "action": "api::mpaa-establishment-stage.mpaa-establishment-stage.find"

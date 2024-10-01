@@ -35,21 +35,6 @@
           "sortable": true
         }
       },
-      "protection_status": {
-        "edit": {
-          "label": "protection_status",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "slug"
-        },
-        "list": {
-          "label": "protection_status",
-          "searchable": true,
-          "sortable": true
-        }
-      },
       "year": {
         "edit": {
           "label": "year",
@@ -60,20 +45,6 @@
         },
         "list": {
           "label": "year",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "cumSumProtectedArea": {
-        "edit": {
-          "label": "cumSumProtectedArea",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "cumSumProtectedArea",
           "searchable": true,
           "sortable": true
         }
@@ -102,6 +73,91 @@
         },
         "list": {
           "label": "protectedAreasCount",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "environment": {
+        "edit": {
+          "label": "environment",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "environment",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "coverage": {
+        "edit": {
+          "label": "coverage",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "coverage",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "pas": {
+        "edit": {
+          "label": "pas",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "pas",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "oecms": {
+        "edit": {
+          "label": "oecms",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "oecms",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "is_last_year": {
+        "edit": {
+          "label": "is_last_year",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "is_last_year",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "global_contribution": {
+        "edit": {
+          "label": "global_contribution",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "global_contribution",
           "searchable": true,
           "sortable": true
         }
@@ -169,7 +225,7 @@
       "list": [
         "id",
         "location",
-        "protection_status",
+        "environment",
         "year"
       ],
       "edit": [
@@ -179,7 +235,7 @@
             "size": 6
           },
           {
-            "name": "protection_status",
+            "name": "environment",
             "size": 6
           }
         ],
@@ -189,17 +245,35 @@
             "size": 4
           },
           {
-            "name": "cumSumProtectedArea",
-            "size": 4
-          },
-          {
-            "name": "protectedArea",
+            "name": "is_last_year",
             "size": 4
           }
         ],
         [
           {
+            "name": "protectedArea",
+            "size": 4
+          },
+          {
             "name": "protectedAreasCount",
+            "size": 4
+          },
+          {
+            "name": "coverage",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "pas",
+            "size": 4
+          },
+          {
+            "name": "oecms",
+            "size": 4
+          },
+          {
+            "name": "global_contribution",
             "size": 4
           }
         ]

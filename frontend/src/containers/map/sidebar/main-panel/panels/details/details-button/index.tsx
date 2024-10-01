@@ -14,7 +14,7 @@ type DetailsButtonProps = {
 const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
 
-  const [, setSettings] = useSyncMapContentSettings();
+  const [{ tab }, setSettings] = useSyncMapContentSettings();
 
   const handleButtonClick = useCallback(() => {
     setSettings((prevSettings) => ({ ...prevSettings, showDetails: !prevSettings.showDetails }));
@@ -22,13 +22,14 @@ const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className }) => {
 
   return (
     <Button
-      className={cn('flex h-10 justify-between border-t border-black px-5 md:px-8', className)}
-      variant="transparent"
+      className={cn('flex h-10 px-5 md:px-8', className)}
       size="full"
       onClick={handleButtonClick}
     >
-      <span className="w-full pt-1 font-mono text-xs font-semibold normal-case">
-        {t('more-details')}
+      <span className="font-mono text-xs font-semibold normal-case">
+        {tab === 'summary' && t('more-regional-insights')}
+        {tab === 'terrestrial' && t('more-terrestrial-insights')}
+        {tab === 'marine' && t('more-marine-insights')}
       </span>
     </Button>
   );

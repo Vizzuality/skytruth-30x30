@@ -191,7 +191,9 @@
       "no-result": "No result",
       "view-all-countries": "View all countries",
       "hide-some-countries": "Hide some countries",
-      "more-details": "More details",
+      "more-regional-insights": "More Regional Insights",
+      "more-terrestrial-insights": "More Terrestrial Insights",
+      "more-marine-insights": "More Marine Insights",
       "marine-conservation-coverage": "Marine Conservation Coverage",
       "marine-protected-percentage": "<b1>{percentage}</b1><b2>%</b2>",
       "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
@@ -217,7 +219,15 @@
       "national-level-contribution": "National level contribution",
       "global": "Global",
       "level-of-fishing-protection": "Level of Fishing Protection",
-      "highly-protected-from-fishing": "Highly protected from fishing"
+      "highly-protected-from-fishing": "Highly protected from fishing",
+      "summary": "Summary",
+      "terrestrial": "Terrestrial",
+      "marine": "Marine",
+      "terrestrial-conservation-coverage": "Terrestrial Conservation Coverage",
+      "terrestrial-protected-percentage": "<b1>{percentage}</b1><b2>%</b2>",
+      "terrestrial-protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "explore-terrestrial-conservation": "Explore Terrestrial Conservation",
+      "explore-marine-conservation": "Explore Marine Conservation"
     },
     "map-sidebar-layers-panel": {
       "layers": "Layers",
@@ -269,7 +279,8 @@
       "clear-sorting": "Clear sorting",
       "type": "Type",
       "establishment-stage": "Establishment Stage",
-      "protection-level": "Protection Level"
+      "protection-level": "Protection Level",
+      "coming-soon": "Coming soon!"
     }
   },
   "components": {

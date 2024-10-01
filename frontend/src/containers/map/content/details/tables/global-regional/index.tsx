@@ -79,7 +79,7 @@ const GlobalRegionalTable: FCWithMessages = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       populate: {
-        // This part if for the English version only
+        // This part is for the English version only
         protection_coverage_stats: {
           fields: ['cumSumProtectedArea', 'protectedAreasCount', 'year'],
           populate: {

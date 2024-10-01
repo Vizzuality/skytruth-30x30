@@ -182,7 +182,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         PAGES.progressTracker
       }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`
     );
-    setLocationBBox(locationsQuery.data.bounds as CustomMapProps['bounds']['bbox']);
+    setLocationBBox(locationsQuery.data.marine_bounds as CustomMapProps['bounds']['bbox']);
     setPopup({});
   }, [push, searchParams, setLocationBBox, locationsQuery.data, setPopup]);
 

@@ -92,6 +92,21 @@
           "sortable": true
         }
       },
+      "environment": {
+        "edit": {
+          "label": "environment",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "environment",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -181,6 +196,12 @@
           {
             "name": "totalArea",
             "size": 4
+          }
+        ],
+        [
+          {
+            "name": "environment",
+            "size": 6
           }
         ]
       ]

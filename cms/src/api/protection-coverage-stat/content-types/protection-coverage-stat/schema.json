@@ -56,6 +56,11 @@
     "protectedAreasCount": {
       "type": "integer",
       "required": true
+    },
+    "environment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::environment.environment"
     }
   }
 }

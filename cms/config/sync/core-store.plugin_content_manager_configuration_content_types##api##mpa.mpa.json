@@ -194,9 +194,9 @@
           "sortable": true
         }
       },
-      "mpa_iucn_category": {
+      "iucn_category": {
         "edit": {
-          "label": "mpa_iucn_category",
+          "label": "iucn_category",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -204,7 +204,7 @@
           "mainField": "slug"
         },
         "list": {
-          "label": "mpa_iucn_category",
+          "label": "iucn_category",
           "searchable": true,
           "sortable": true
         }
@@ -219,6 +219,21 @@
         },
         "list": {
           "label": "designation",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "environment": {
+        "edit": {
+          "label": "environment",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "environment",
           "searchable": true,
           "sortable": true
         }
@@ -354,11 +369,17 @@
         ],
         [
           {
-            "name": "mpa_iucn_category",
+            "name": "designation",
             "size": 6
           },
           {
-            "name": "designation",
+            "name": "iucn_category",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "environment",
             "size": 6
           }
         ]

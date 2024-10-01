@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { FISHING_PROTECTION_CHART_COLORS } from '@/constants/fishing-protection-chart-colors';
+import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetLocations } from '@/types/generated/location';
 import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
@@ -13,7 +14,7 @@ type FishingProtectionWidgetProps = {
   location: LocationGroupsDataItemAttributes;
 };
 
-const FishingProtectionWidget: React.FC<FishingProtectionWidgetProps> = ({ location }) => {
+const FishingProtectionWidget: FCWithMessages<FishingProtectionWidgetProps> = ({ location }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
   const locale = useLocale();
 
@@ -34,7 +35,7 @@ const FishingProtectionWidget: React.FC<FishingProtectionWidgetProps> = ({ locat
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       populate: {
-        // This part if for the English version only
+        // This part is for the English version only
         fishing_protection_level_stats: {
           filters: {
             fishing_protection_level: {
@@ -162,5 +163,11 @@ const FishingProtectionWidget: React.FC<FishingProtectionWidgetProps> = ({ locat
     </Widget>
   );
 };
+
+FishingProtectionWidget.messages = [
+  'containers.map-sidebar-main-panel',
+  ...Widget.messages,
+  ...HorizontalBarChart.messages,
+];
 
 export default FishingProtectionWidget;
