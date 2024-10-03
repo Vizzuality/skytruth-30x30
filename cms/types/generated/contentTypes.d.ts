@@ -1635,9 +1635,9 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'oneToMany',
       'api::fishing-protection-level-stat.fishing-protection-level-stat'
     >;
-    mpaa_protection_level_stats: Attribute.Relation<
+    mpaa_protection_level_stat: Attribute.Relation<
       'api::location.location',
-      'oneToMany',
+      'oneToOne',
       'api::mpaa-protection-level-stat.mpaa-protection-level-stat'
     >;
     protection_coverage_stats: Attribute.Relation<
@@ -1655,7 +1655,6 @@ export interface ApiLocationLocation extends Schema.CollectionType {
     name_es: Attribute.String & Attribute.Required;
     name_fr: Attribute.String & Attribute.Required;
     mpaa_fully_highly_protected_area: Attribute.Decimal &
-      Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;
       }>;
@@ -1798,60 +1797,6 @@ export interface ApiMpaaEstablishmentStageMpaaEstablishmentStage
   };
 }
 
-export interface ApiMpaaEstablishmentStageStatMpaaEstablishmentStageStat
-  extends Schema.CollectionType {
-  collectionName: 'mpaa_establishment_stage_stats';
-  info: {
-    singularName: 'mpaa-establishment-stage-stat';
-    pluralName: 'mpaa-establishment-stage-stats';
-    displayName: 'MPAA Establishment Stage Stats';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    location: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'api::location.location'
-    >;
-    mpaa_establishment_stage: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'api::mpaa-establishment-stage.mpaa-establishment-stage'
-    >;
-    protection_status: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'api::protection-status.protection-status'
-    >;
-    year: Attribute.Integer &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
-    area: Attribute.Decimal &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiMpaaProtectionLevelMpaaProtectionLevel
   extends Schema.CollectionType {
   collectionName: 'mpaa_protection_levels';
@@ -1926,11 +1871,6 @@ export interface ApiMpaaProtectionLevelStatMpaaProtectionLevelStat
     draftAndPublish: false;
   };
   attributes: {
-    location: Attribute.Relation<
-      'api::mpaa-protection-level-stat.mpaa-protection-level-stat',
-      'manyToOne',
-      'api::location.location'
-    >;
     mpaa_protection_level: Attribute.Relation<
       'api::mpaa-protection-level-stat.mpaa-protection-level-stat',
       'oneToOne',
@@ -1942,6 +1882,11 @@ export interface ApiMpaaProtectionLevelStatMpaaProtectionLevelStat
         min: 0;
       }>;
     percentage: Attribute.Decimal;
+    location: Attribute.Relation<
+      'api::mpaa-protection-level-stat.mpaa-protection-level-stat',
+      'oneToOne',
+      'api::location.location'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -2023,6 +1968,11 @@ export interface ApiPaPa extends Schema.CollectionType {
       'oneToOne',
       'api::environment.environment'
     >;
+    coverage: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::pa.pa', 'oneToOne', 'admin::user'> &
@@ -2248,7 +2198,6 @@ declare module '@strapi/types' {
       'api::location.location': ApiLocationLocation;
       'api::mpa-iucn-category.mpa-iucn-category': ApiMpaIucnCategoryMpaIucnCategory;
       'api::mpaa-establishment-stage.mpaa-establishment-stage': ApiMpaaEstablishmentStageMpaaEstablishmentStage;
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat': ApiMpaaEstablishmentStageStatMpaaEstablishmentStageStat;
       'api::mpaa-protection-level.mpaa-protection-level': ApiMpaaProtectionLevelMpaaProtectionLevel;
       'api::mpaa-protection-level-stat.mpaa-protection-level-stat': ApiMpaaProtectionLevelStatMpaaProtectionLevelStat;
       'api::pa.pa': ApiPaPa;

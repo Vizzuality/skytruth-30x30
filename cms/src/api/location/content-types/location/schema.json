@@ -62,11 +62,11 @@
       "target": "api::fishing-protection-level-stat.fishing-protection-level-stat",
       "mappedBy": "location"
     },
-    "mpaa_protection_level_stats": {
+    "mpaa_protection_level_stat": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
-      "mappedBy": "location"
+      "inversedBy": "location"
     },
     "protection_coverage_stats": {
       "type": "relation",
@@ -98,7 +98,7 @@
     },
     "mpaa_fully_highly_protected_area": {
       "type": "decimal",
-      "required": true,
+      "required": false,
       "min": 0
     }
   }

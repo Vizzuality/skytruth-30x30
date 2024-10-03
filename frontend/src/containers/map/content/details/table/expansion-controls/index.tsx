@@ -4,7 +4,7 @@ import { Row } from '@tanstack/react-table';
 import { GoTriangleDown } from 'react-icons/go';
 import { LuCornerDownRight } from 'react-icons/lu';
 
-import { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/useColumns';
+import { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/hooks';
 import { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/useColumns';
 import { cn } from '@/lib/classnames';
 

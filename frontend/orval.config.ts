@@ -58,6 +58,7 @@ module.exports = {
           'Data-source',
           'Static-indicator',
           'Contact-detail',
+          'Environment',
         ],
       },
     },

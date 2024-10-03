@@ -845,7 +845,6 @@
           "groups",
           "members",
           "fishing_protection_level_stats",
-          "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "totalTerrestrialArea",
           "name_es",
@@ -882,7 +881,6 @@
           "groups",
           "members",
           "fishing_protection_level_stats",
-          "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "totalTerrestrialArea",
           "name_es",
@@ -906,7 +904,6 @@
           "groups",
           "members",
           "fishing_protection_level_stats",
-          "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "totalTerrestrialArea",
           "name_es",
@@ -914,58 +911,6 @@
           "mpaa_fully_highly_protected_area"
         ],
         "locales": []
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "mpaa_establishment_stage",
-          "protection_status",
-          "year",
-          "area"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
-      "properties": {},
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "mpaa_establishment_stage",
-          "protection_status",
-          "year",
-          "area"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "mpaa_establishment_stage",
-          "protection_status",
-          "year",
-          "area"
-        ]
       },
       "conditions": [],
       "actionParameters": {}

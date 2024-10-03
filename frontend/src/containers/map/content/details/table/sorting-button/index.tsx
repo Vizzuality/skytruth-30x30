@@ -3,7 +3,7 @@ import { ArrowDownNarrowWide, ArrowUpNarrowWide, ArrowUpDown } from 'lucide-reac
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-import { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/useColumns';
+import { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/hooks';
 import { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/useColumns';
 import { FCWithMessages } from '@/types';
 

@@ -121,9 +121,9 @@
           "sortable": false
         }
       },
-      "mpaa_protection_level_stats": {
+      "mpaa_protection_level_stat": {
         "edit": {
-          "label": "mpaa_protection_level_stats",
+          "label": "mpaa_protection_level_stat",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -131,9 +131,9 @@
           "mainField": "id"
         },
         "list": {
-          "label": "mpaa_protection_level_stats",
-          "searchable": false,
-          "sortable": false
+          "label": "mpaa_protection_level_stat",
+          "searchable": true,
+          "sortable": true
         }
       },
       "protection_coverage_stats": {
@@ -295,6 +295,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "code",
+        "name",
+        "totalMarineArea"
+      ],
       "edit": [
         [
           {
@@ -354,10 +360,6 @@
         ],
         [
           {
-            "name": "mpaa_protection_level_stats",
-            "size": 6
-          },
-          {
             "name": "mpaa_fully_highly_protected_area",
             "size": 4
           }
@@ -373,13 +375,13 @@
             "name": "terrestrial_bounds",
             "size": 12
           }
+        ],
+        [
+          {
+            "name": "mpaa_protection_level_stat",
+            "size": 6
+          }
         ]
-      ],
-      "list": [
-        "id",
-        "code",
-        "name",
-        "totalMarineArea"
       ]
     }
   },

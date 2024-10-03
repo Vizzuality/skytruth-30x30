@@ -97,12 +97,6 @@
       "action": "api::mpa-iucn-category.mpa-iucn-category.findOne"
     },
     {
-      "action": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat.find"
-    },
-    {
-      "action": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat.findOne"
-    },
-    {
       "action": "api::mpaa-establishment-stage.mpaa-establishment-stage.find"
     },
     {

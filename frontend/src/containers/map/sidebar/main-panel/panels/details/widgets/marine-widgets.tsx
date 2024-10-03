@@ -12,8 +12,6 @@ import HabitatWidget from './habitat';
 import MarineConservationWidget from './marine-conservation';
 import ProtectionTypesWidget from './protection-types';
 
-// import EstablishmentStagesWidget from './establishment-stages';
-
 const MarineWidgets: FCWithMessages = () => {
   const locale = useLocale();
 
@@ -52,7 +50,6 @@ const MarineWidgets: FCWithMessages = () => {
       <MarineConservationWidget location={locationData} />
       <ProtectionTypesWidget location={locationData} />
       <FishingProtectionWidget location={locationData} />
-      {/* <EstablishmentStagesWidget location={locationData} /> */}
       <HabitatWidget location={locationData} />
     </div>
   );
