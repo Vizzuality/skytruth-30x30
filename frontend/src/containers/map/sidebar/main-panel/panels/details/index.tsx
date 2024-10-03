@@ -44,12 +44,23 @@ const SidebarDetails: FCWithMessages = () => {
     populate: 'members',
   });
 
+  const locationNameField = useMemo(() => {
+    let res = 'name';
+    if (locale === 'es') {
+      res = 'name_es';
+    }
+    if (locale === 'fr') {
+      res = 'name_fr';
+    }
+    return res;
+  }, [locale]);
+
   const memberCountries = useMemo(() => {
     return locationsData?.data[0]?.attributes?.members?.data?.map(({ attributes }) => ({
       code: attributes?.code,
-      name: attributes?.name,
+      name: attributes?.[locationNameField],
     }));
-  }, [locationsData?.data]);
+  }, [locationsData?.data, locationNameField]);
 
   const handleLocationSelected = useCallback(
     (locationCode) => {
@@ -86,7 +97,7 @@ const SidebarDetails: FCWithMessages = () => {
             'text-xl': containerScroll > 0,
           })}
         >
-          {locationsData?.data[0]?.attributes?.name}
+          {locationsData?.data[0]?.attributes?.[locationNameField]}
         </h1>
         <LocationSelector
           className="flex-shrink-0"

@@ -15,9 +15,8 @@ import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
-import { useGetLocations } from '@/types/generated/location';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
-import { ProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
+import { ProtectionCoverageStat } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
 const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
@@ -90,74 +89,52 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     return DATA_REF.current;
   }, [popup, source, layersInteractiveIds, map, rendered]);
 
-  const locationsQuery = useGetLocations(
-    {
-      locale,
-      filters: {
-        code: DATA?.region_id,
-      },
-    },
-    {
-      query: {
-        enabled: !!DATA?.region_id,
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
-  );
-
   // ? I had to type the data ad hoc because the generated type is wrong when we are adding
   // ? the `sort` query param
-  const { data: protectionCoverageStats }: { data: ProtectionCoverageStatListResponseDataItem[] } =
-    useGetProtectionCoverageStats(
+  const { data: protectionCoverageStats, isFetching } =
+    useGetProtectionCoverageStats<ProtectionCoverageStat>(
       {
         locale,
         filters: {
           location: {
             code: DATA?.region_id,
           },
+          is_last_year: {
+            $eq: true,
+          },
+          environment: {
+            slug: {
+              $eq: 'marine',
+            },
+          },
         },
-        populate: 'location',
-        // @ts-expect-error this is an issue with Orval typing
-        'sort[year]': 'desc',
-        'pagination[limit]': -1,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        populate: {
+          location: {
+            fields: ['name', 'name_es', 'name_fr', 'code', 'marine_bounds', 'totalMarineArea'],
+          },
+        },
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        fields: ['coverage', 'protectedArea'],
+        'pagination[limit]': 1,
       },
       {
         query: {
-          select: ({ data }) => data,
+          select: ({ data }) => data?.[0].attributes,
           enabled: !!DATA?.region_id,
         },
       }
     );
 
-  const latestYearAvailable = useMemo(() => {
-    if (protectionCoverageStats?.[0]) {
-      return protectionCoverageStats[0].attributes.year;
-    }
-  }, [protectionCoverageStats]);
+  const formattedStats = useMemo(() => {
+    if (protectionCoverageStats) {
+      const percentage = formatPercentage(locale, protectionCoverageStats.coverage, {
+        displayPercentageSign: false,
+      });
 
-  const latestProtectionCoverageStats = useMemo(() => {
-    if (latestYearAvailable) {
-      return protectionCoverageStats.filter((d) => d.attributes.year === latestYearAvailable);
-    }
-    return [];
-  }, [protectionCoverageStats, latestYearAvailable]);
-
-  const coverageStats = useMemo(() => {
-    if (latestProtectionCoverageStats.length && locationsQuery.data) {
-      const totalCumSumProtectedArea = latestProtectionCoverageStats.reduce(
-        (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
-        0
-      );
-
-      const percentage = formatPercentage(
-        locale,
-        (totalCumSumProtectedArea / locationsQuery.data.totalMarineArea) * 100,
-        {
-          displayPercentageSign: false,
-        }
-      );
-
-      const protectedArea = formatKM(locale, totalCumSumProtectedArea);
+      const protectedArea = formatKM(locale, protectionCoverageStats.protectedArea);
 
       return {
         percentage,
@@ -169,7 +146,23 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       percentage: '-',
       protectedArea: '-',
     };
-  }, [locale, latestProtectionCoverageStats, locationsQuery.data]);
+  }, [locale, protectionCoverageStats]);
+
+  const localizedLocationName = useMemo(() => {
+    if (!protectionCoverageStats) {
+      return null;
+    }
+
+    if (locale === 'es') {
+      return protectionCoverageStats.location.data.attributes.name_es;
+    }
+
+    if (locale === 'fr') {
+      return protectionCoverageStats.location.data.attributes.name_fr;
+    }
+
+    return protectionCoverageStats.location.data.attributes.name;
+  }, [locale, protectionCoverageStats]);
 
   // handle renderer
   const handleMapRender = useCallback(() => {
@@ -177,14 +170,14 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   }, [map]);
 
   const handleLocationSelected = useCallback(async () => {
-    await push(
-      `${
-        PAGES.progressTracker
-      }/${locationsQuery.data.code.toUpperCase()}?${searchParams.toString()}`
-    );
-    setLocationBBox(locationsQuery.data.marine_bounds as CustomMapProps['bounds']['bbox']);
+    if (!protectionCoverageStats?.location?.data.attributes) return undefined;
+
+    const { code, marine_bounds: bounds } = protectionCoverageStats.location.data.attributes;
+
+    await push(`${PAGES.progressTracker}/${code.toUpperCase()}?${searchParams.toString()}`);
+    setLocationBBox(bounds as CustomMapProps['bounds']['bbox']);
     setPopup({});
-  }, [push, searchParams, setLocationBBox, locationsQuery.data, setPopup]);
+  }, [push, searchParams, setLocationBBox, protectionCoverageStats, setPopup]);
 
   useEffect(() => {
     map?.on('render', handleMapRender);
@@ -200,36 +193,37 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
 
   return (
     <div className="space-y-2">
-      <h3 className="text-xl font-semibold">{locationsQuery.data?.name || '-'}</h3>
-      {locationsQuery.isFetching && !locationsQuery.isFetched && (
-        <span className="text-sm">{t('loading')}</span>
+      <h3 className="text-xl font-semibold">{localizedLocationName || '-'}</h3>
+      {isFetching && <div className="my-4 text-center font-mono text-xs">{t('loading')}</div>}
+      {!isFetching && !protectionCoverageStats && (
+        <div className="my-4 text-center font-mono text-xs">{t('no-data-available')}</div>
       )}
-      {locationsQuery.isFetched && !locationsQuery.data && (
-        <span className="text-sm">{t('no-data-available')}</span>
-      )}
-      {locationsQuery.isFetched && locationsQuery.data && (
+      {!isFetching && !!protectionCoverageStats && (
         <>
           <div className="space-y-2">
             <div className="my-4 max-w-[95%] font-mono">{t('marine-conservation-coverage')}</div>
             <div className="space-x-1 font-mono tracking-tighter text-black">
-              {coverageStats.percentage !== '-' &&
+              {formattedStats.percentage !== '-' &&
                 t.rich('percentage-bold', {
-                  percentage: coverageStats.percentage,
+                  percentage: formattedStats.percentage,
                   b1: (chunks) => (
                     <span className="text-[64px] font-bold leading-[80%]">{chunks}</span>
                   ),
                   b2: (chunks) => <span className="text-lg">{chunks}</span>,
                 })}
-              {coverageStats.percentage === '-' && (
+              {formattedStats.percentage === '-' && (
                 <span className="text-[64px] font-bold leading-[80%]">
-                  {coverageStats.percentage}
+                  {formattedStats.percentage}
                 </span>
               )}
             </div>
             <div className="space-x-1 font-mono font-medium text-black">
               {t('marine-protected-area', {
-                protectedArea: coverageStats.protectedArea,
-                totalArea: formatKM(locale, locationsQuery.data.totalMarineArea),
+                protectedArea: formattedStats.protectedArea,
+                totalArea: formatKM(
+                  locale,
+                  protectionCoverageStats?.location.data.attributes.totalMarineArea
+                ),
               })}
             </div>
           </div>

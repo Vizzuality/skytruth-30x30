@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "mpas",
+  "collectionName": "pas",
   "info": {
-    "singularName": "mpa",
-    "pluralName": "mpas",
-    "displayName": "MPA",
+    "singularName": "pa",
+    "pluralName": "pas",
+    "displayName": "PA",
     "description": ""
   },
   "options": {
@@ -45,7 +45,7 @@
     "children": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::mpa.mpa"
+      "target": "api::pa.pa"
     },
     "data_source": {
       "type": "relation",
@@ -70,11 +70,6 @@
       "relation": "oneToOne",
       "target": "api::mpaa-protection-level.mpaa-protection-level"
     },
-    "is_child": {
-      "type": "boolean",
-      "default": false,
-      "required": true
-    },
     "iucn_category": {
       "type": "relation",
       "relation": "oneToOne",
@@ -87,6 +82,16 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::environment.environment"
+    },
+    "coverage": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::pa.pa"
     }
   }
 }

@@ -138,12 +138,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "location",
-        "mpaa_protection_level",
-        "area"
-      ],
       "edit": [
         [
           {
@@ -165,6 +159,12 @@
             "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "location",
+        "mpaa_protection_level",
+        "area"
       ]
     }
   },

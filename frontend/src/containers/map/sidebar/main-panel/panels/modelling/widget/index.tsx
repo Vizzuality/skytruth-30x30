@@ -79,31 +79,42 @@ const ModellingWidget: FCWithMessages = () => {
   // Tooltips with mapping
   const tooltips = useTooltips();
 
-  const {
-    data: globalProtectionStatsData,
-  }: {
-    data: {
-      protectedArea: number;
-      percentageProtectedArea: number;
-      totalMarineArea: number;
-      totalProtectedArea: number;
-      totalPercentage: number;
-      totalCustomAreas: number;
-      totalExistingAreaPercentage: number;
-      totalCustomAreasPercentage: number;
-    };
-  } = useGetProtectionCoverageStats(
+  const { data: globalProtectionStatsData } = useGetProtectionCoverageStats<{
+    protectedArea: number;
+    percentageProtectedArea: number;
+    totalMarineArea: number;
+    totalProtectedArea: number;
+    totalPercentage: number;
+    totalCustomAreas: number;
+    totalExistingAreaPercentage: number;
+    totalCustomAreasPercentage: number;
+  }>(
     {
       locale,
       filters: {
         location: {
           code: 'GLOB',
         },
+        is_last_year: {
+          $eq: true,
+        },
+        environment: {
+          slug: {
+            $eq: 'marine',
+          },
+        },
       },
-      populate: 'location',
-      // @ts-expect-error this is an issue with Orval typing
-      'sort[year]': 'desc',
-      'pagination[limit]': 2,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      populate: {
+        location: {
+          fields: ['totalMarineArea'],
+        },
+      },
+      'pagination[limit]': 1,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      fields: ['protectedArea'],
     },
     {
       query: {
@@ -111,13 +122,10 @@ const ModellingWidget: FCWithMessages = () => {
         select: ({ data }) => {
           if (!data) return null;
 
-          const protectedArea = data.reduce(
-            (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
-            0
-          );
+          const protectedArea = data?.[0].attributes.protectedArea ?? 0;
 
           const totalMarineArea =
-            data?.[0].attributes?.location?.data?.attributes?.totalMarineArea || 0;
+            data?.[0].attributes?.location?.data?.attributes?.totalMarineArea ?? 0;
 
           const totalCustomAreas = modellingData.locations_area.reduce((acc, location) => {
             return acc + location.protected_area;
@@ -156,10 +164,26 @@ const ModellingWidget: FCWithMessages = () => {
             location: {
               code: location.code,
             },
+            is_last_year: {
+              $eq: true,
+            },
+            environment: {
+              slug: {
+                $eq: 'marine',
+              },
+            },
           },
-          populate: 'location,location.localizations',
-          // @ts-expect-error this is an issue with Orval typing
-          'sort[year]': 'desc',
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          populate: {
+            location: {
+              fields: ['name', 'name_es', 'name_es', 'code', 'totalMarineArea'],
+            },
+          },
+          'pagination[limit]': 1,
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          fields: ['protectedArea'],
         },
         {
           query: {
@@ -167,26 +191,12 @@ const ModellingWidget: FCWithMessages = () => {
             select: ({ data }) => {
               if (!data) return null;
 
-              const lastYearAvailable = data?.[0]?.attributes?.year;
+              const protectedArea = data?.[0]?.attributes.protectedArea ?? 0;
 
-              const dataFiltered = data.filter(
-                (entry) => entry.attributes.year === lastYearAvailable
-              );
-
-              const protectedArea = dataFiltered.reduce(
-                (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
-                0
-              );
-
-              let location = data?.[0]?.attributes?.location?.data?.attributes;
-              if (location.locale !== locale) {
-                location = (
-                  location.localizations.data as ProtectionCoverageStatLocationData[]
-                ).find((localization) => localization.attributes.locale === locale)?.attributes;
-              }
+              const location = data?.[0]?.attributes?.location?.data?.attributes;
 
               // ? total extension of location
-              const totalMarineArea = location?.totalMarineArea || 0;
+              const totalMarineArea = location?.totalMarineArea ?? 0;
 
               // ? total custom  protected area (analysis)
               const totalCustomArea = modellingData.locations_area.find(
@@ -247,9 +257,16 @@ const ModellingWidget: FCWithMessages = () => {
     [locationQueries]
   );
 
-  const administrativeBoundaries = nationalLevelContributions?.map(
-    (contribution) => contribution?.location?.name
-  );
+  const administrativeBoundaries = nationalLevelContributions?.map((contribution) => {
+    let locationName = contribution.location.name;
+    if (locale === 'es') {
+      locationName = contribution.location.name_es;
+    }
+    if (locale === 'fr') {
+      locationName = contribution.location.name_fr;
+    }
+    return locationName;
+  });
 
   return (
     <Widget
@@ -279,10 +296,18 @@ const ModellingWidget: FCWithMessages = () => {
             <WidgetLegend />
           </div>
           {nationalLevelContributions?.map((contribution) => {
+            let locationName = contribution.location.name;
+            if (locale === 'es') {
+              locationName = contribution.location.name_es;
+            }
+            if (locale === 'fr') {
+              locationName = contribution.location.name_fr;
+            }
+
             return (
               <StackedHorizontalBarChart
                 key={contribution?.location?.code}
-                title={contribution?.location?.name}
+                title={locationName}
                 totalProtectedArea={contribution?.totalProtectedArea}
                 totalArea={contribution?.totalMarineArea}
                 highlightedPercentage={contribution?.totalPercentage}

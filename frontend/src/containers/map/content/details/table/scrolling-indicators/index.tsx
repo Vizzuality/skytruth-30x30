@@ -20,7 +20,7 @@ const ScrollingIndicators: React.FC<ScrollingIndicatorsProps> = ({ className, ch
 
   return (
     <PositionalScroll className={cn(className)} onXScrollPositionChange={setXScrollPosition}>
-      {xScrollPosition !== 'end' && (
+      {(xScrollPosition === 'start' || xScrollPosition === 'middle') && (
         <>
           <span className={cn(COMMON_CLASSNAMES.border, 'right-0 top-0')}>
             <span
@@ -38,7 +38,7 @@ const ScrollingIndicators: React.FC<ScrollingIndicatorsProps> = ({ className, ch
           </span>
         </>
       )}
-      {xScrollPosition !== 'start' && (
+      {(xScrollPosition === 'middle' || xScrollPosition === 'end') && (
         <>
           <span className={cn(COMMON_CLASSNAMES.border, 'left-0 top-0')}>
             <span className={cn(COMMON_CLASSNAMES.iconWrapper, 'left-0 top-0 -translate-y-full')}>

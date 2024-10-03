@@ -1,5 +1,5 @@
 {
-  "/mpaa-establishment-stage-stats": {
+  "/pas": {
     "get": {
       "responses": {
         "200": {
@@ -7,7 +7,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MpaaEstablishmentStageStatListResponse"
+                "$ref": "#/components/schemas/PaListResponse"
               }
             }
           }
@@ -64,7 +64,7 @@
         }
       },
       "tags": [
-        "Mpaa-establishment-stage-stat"
+        "Pa"
       ],
       "parameters": [
         {
@@ -169,10 +169,10 @@
           }
         }
       ],
-      "operationId": "get/mpaa-establishment-stage-stats"
+      "operationId": "get/pas"
     }
   },
-  "/mpaa-establishment-stage-stats/{id}": {
+  "/pas/{id}": {
     "get": {
       "responses": {
         "200": {
@@ -180,7 +180,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MpaaEstablishmentStageStatResponse"
+                "$ref": "#/components/schemas/PaResponse"
               }
             }
           }
@@ -237,7 +237,7 @@
         }
       },
       "tags": [
-        "Mpaa-establishment-stage-stat"
+        "Pa"
       ],
       "parameters": [
         {
@@ -251,7 +251,7 @@
           }
         }
       ],
-      "operationId": "get/mpaa-establishment-stage-stats/{id}"
+      "operationId": "get/pas/{id}"
     }
   }
 }

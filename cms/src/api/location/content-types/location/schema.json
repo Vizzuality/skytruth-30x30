@@ -10,31 +10,19 @@
   "options": {
     "draftAndPublish": false
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "code": {
       "type": "string",
       "required": true,
       "unique": false,
       "description": "Unique textual identifier for the location, e.g. iso3 code for countries.",
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "name": {
       "type": "string",
       "required": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     },
     "totalMarineArea": {
       "type": "decimal",
@@ -49,20 +37,12 @@
           2
         ]
       },
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "type": {
       "type": "string",
       "required": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "groups": {
       "type": "relation",
@@ -82,11 +62,11 @@
       "target": "api::fishing-protection-level-stat.fishing-protection-level-stat",
       "mappedBy": "location"
     },
-    "mpaa_protection_level_stats": {
+    "mpaa_protection_level_stat": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
-      "mappedBy": "location"
+      "inversedBy": "location"
     },
     "protection_coverage_stats": {
       "type": "relation",
@@ -96,29 +76,30 @@
     },
     "marine_bounds": {
       "type": "json",
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "totalTerrestrialArea": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
+      "pluginOptions": {},
       "type": "decimal",
       "required": true,
       "min": 0
     },
     "terrestrial_bounds": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
+      "pluginOptions": {},
       "type": "json"
+    },
+    "name_es": {
+      "type": "string",
+      "required": true
+    },
+    "name_fr": {
+      "type": "string",
+      "required": true
+    },
+    "mpaa_fully_highly_protected_area": {
+      "type": "decimal",
+      "required": false,
+      "min": 0
     }
   }
 }
