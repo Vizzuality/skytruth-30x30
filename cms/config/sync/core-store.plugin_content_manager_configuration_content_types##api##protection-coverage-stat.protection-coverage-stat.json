@@ -243,10 +243,6 @@
           {
             "name": "year",
             "size": 4
-          },
-          {
-            "name": "is_last_year",
-            "size": 4
           }
         ],
         [
@@ -272,6 +268,12 @@
             "name": "oecms",
             "size": 4
           },
+          {
+            "name": "is_last_year",
+            "size": 4
+          }
+        ],
+        [
           {
             "name": "global_contribution",
             "size": 4

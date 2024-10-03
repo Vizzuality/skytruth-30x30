@@ -115,12 +115,6 @@
       "action": "api::mpaa-protection-level.mpaa-protection-level.findOne"
     },
     {
-      "action": "api::pa.pa.find"
-    },
-    {
-      "action": "api::pa.pa.findOne"
-    },
-    {
       "action": "api::protection-coverage-stat.protection-coverage-stat.find"
     },
     {

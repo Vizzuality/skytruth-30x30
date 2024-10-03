@@ -316,16 +316,6 @@
           {
             "name": "name",
             "size": 6
-          },
-          {
-            "name": "name_es",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "name_fr",
-            "size": 6
           }
         ],
         [
@@ -360,12 +350,6 @@
         ],
         [
           {
-            "name": "mpaa_fully_highly_protected_area",
-            "size": 4
-          }
-        ],
-        [
-          {
             "name": "marine_bounds",
             "size": 12
           }
@@ -380,6 +364,20 @@
           {
             "name": "mpaa_protection_level_stat",
             "size": 6
+          },
+          {
+            "name": "name_es",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "name_fr",
+            "size": 6
+          },
+          {
+            "name": "mpaa_fully_highly_protected_area",
+            "size": 4
           }
         ]
       ]
