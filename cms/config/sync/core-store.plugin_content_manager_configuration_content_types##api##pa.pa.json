@@ -180,20 +180,6 @@
           "sortable": true
         }
       },
-      "is_child": {
-        "edit": {
-          "label": "is_child",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "is_child",
-          "searchable": true,
-          "sortable": true
-        }
-      },
       "iucn_category": {
         "edit": {
           "label": "iucn_category",
@@ -248,6 +234,21 @@
         },
         "list": {
           "label": "coverage",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "parent": {
+        "edit": {
+          "label": "parent",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "parent",
           "searchable": true,
           "sortable": true
         }
@@ -312,82 +313,10 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "name",
-        "area",
-        "year"
-      ],
       "edit": [
         [
           {
             "name": "name",
-            "size": 6
-          },
-          {
-            "name": "area",
-            "size": 4
-          }
-        ],
-        [
-          {
-            "name": "year",
-            "size": 4
-          },
-          {
-            "name": "protection_status",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "bbox",
-            "size": 12
-          }
-        ],
-        [
-          {
-            "name": "children",
-            "size": 6
-          },
-          {
-            "name": "data_source",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "mpaa_establishment_stage",
-            "size": 6
-          },
-          {
-            "name": "location",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "wdpaid",
-            "size": 4
-          },
-          {
-            "name": "mpaa_protection_level",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "is_child",
-            "size": 4
-          },
-          {
-            "name": "iucn_category",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "designation",
             "size": 6
           },
           {
@@ -397,10 +326,80 @@
         ],
         [
           {
+            "name": "location",
+            "size": 6
+          },
+          {
+            "name": "designation",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "year",
+            "size": 4
+          },
+          {
+            "name": "area",
+            "size": 4
+          },
+          {
             "name": "coverage",
             "size": 4
           }
+        ],
+        [
+          {
+            "name": "data_source",
+            "size": 6
+          },
+          {
+            "name": "protection_status",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "iucn_category",
+            "size": 6
+          },
+          {
+            "name": "mpaa_establishment_stage",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "mpaa_protection_level",
+            "size": 6
+          },
+          {
+            "name": "wdpaid",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "parent",
+            "size": 6
+          },
+          {
+            "name": "children",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "bbox",
+            "size": 12
+          }
         ]
+      ],
+      "list": [
+        "id",
+        "name",
+        "area",
+        "year"
       ]
     }
   },

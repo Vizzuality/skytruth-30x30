@@ -1,164 +1,86 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useLocale } from 'next-intl';
+import { PaginationState, SortingState } from '@tanstack/react-table';
+import { usePreviousImmediate } from 'rooks';
 
 import FiltersButton from '@/components/filters-button';
 import TooltipButton from '@/components/tooltip-button';
-import { applyFilters } from '@/containers/map/content/details/helpers';
 import Table from '@/containers/map/content/details/table';
-import useColumns from '@/containers/map/content/details/tables/national-highseas/useColumns';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { FCWithMessages } from '@/types';
-import { useGetLocations } from '@/types/generated/location';
-import { useGetPas } from '@/types/generated/pa';
-import { PaListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 import SortingButton from '../../table/sorting-button';
+
+import { useData, useColumns } from './hooks';
 
 const NationalHighseasTable: FCWithMessages = () => {
   const {
     query: { locationCode = 'GLOB' },
   } = useRouter();
-  const locale = useLocale();
 
-  const locationsQuery = useGetLocations(
-    {
-      locale,
-      filters: {
-        code: locationCode,
-      },
-    },
-    {
-      query: {
-        queryKey: ['locations', locationCode],
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
+  const [{ tab }] = useSyncMapContentSettings();
+  const previousTab = usePreviousImmediate(tab);
+
+  const [filters, setFilters] = useState<Record<string, string[]>>({});
+
+  const columns = useColumns(
+    tab === 'marine' || tab === 'terrestrial' ? tab : null,
+    filters,
+    setFilters
   );
 
-  const [filters, setFilters] = useState({
-    protectedAreaType: [],
-    establishmentStage: [],
-    protectionLevel: [],
-    dataSource: [],
-    iucnCategory: [],
+  const defaultSorting = useMemo(
+    () => [
+      {
+        id: columns[0].accessorKey,
+        desc: false,
+      },
+    ],
+    [columns]
+  );
+
+  const [sorting, setSorting] = useState<SortingState>(defaultSorting);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 100,
   });
 
-  const handleOnFiltersChange = (field, values) => {
-    setFilters({ ...filters, [field]: values });
-  };
-
-  const columns = useColumns({ filters, onFiltersChange: handleOnFiltersChange });
-
-  const mpaEntryPopulate = {
-    mpaa_establishment_stage: {
-      fields: ['name', 'slug'],
-    },
-    mpa: {
-      fields: ['name', 'wdpaid', 'area'],
-      populate: {
-        protection_status: {
-          fields: ['slug', 'name'],
-        },
-      },
-    },
-    location: {
-      fields: ['code', 'total_marine_area', 'marine_bounds'],
-    },
-    mpaa_protection_level: {
-      fields: ['slug', 'name'],
-    },
-    protection_status: {
-      fields: ['slug', 'name'],
-    },
-    data_source: {
-      fields: ['slug'],
-    },
-    iucn_category: {
-      fields: ['slug'],
-    },
-  };
-
-  const { data: mpasData }: { data: PaListResponseDataItem[] } = useGetPas(
-    {
-      locale,
-      filters: {
-        location: {
-          code: {
-            $eq: locationsQuery.data?.code,
-          },
-        },
-        is_child: false,
-      },
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      populate: {
-        ...mpaEntryPopulate,
-        children: {
-          populate: mpaEntryPopulate,
-        },
-      },
-      'pagination[limit]': -1,
-    },
-    {
-      query: {
-        select: ({ data }) => data,
-        placeholderData: { data: [] },
-      },
-    }
+  const [data, { total }] = useData(
+    locationCode as string,
+    tab === 'marine' || tab === 'terrestrial' ? tab : null,
+    sorting,
+    filters,
+    pagination
   );
 
-  const parsedData = useMemo(() => {
-    const buildMpaRow = (mpa) => {
-      const protectionStatus = mpa?.protection_status?.data?.attributes;
-      const establishmentStage = mpa?.mpaa_establishment_stage?.data?.attributes;
-      const mpaaProtectionLevel = mpa?.mpaa_protection_level?.data?.attributes;
-      const dataSource = mpa?.data_source?.data?.attributes;
-      const iucnCategory = mpa?.iucn_category?.data?.attributes;
+  // When the tab changes, we reset the filters and the sorting
+  useEffect(() => {
+    if (tab !== previousTab) {
+      setFilters({});
+      setSorting(defaultSorting);
+    }
+  }, [tab, previousTab, defaultSorting]);
 
-      const coveragePercentage = (mpa.area / locationsQuery.data?.totalMarineArea) * 100;
+  // When the filters or the sorting changes, the page number is reset
+  useEffect(() => {
+    setPagination((prevPagination) => ({ ...prevPagination, pageIndex: 0 }));
+  }, [filters, sorting]);
 
-      return {
-        protectedArea: mpa?.name,
-        coverage: coveragePercentage,
-        protectedAreaType: protectionStatus?.slug,
-        establishmentStage: establishmentStage?.slug,
-        protectionLevel: mpaaProtectionLevel?.slug,
-        area: mpa?.area,
-        dataSource: dataSource?.slug,
-        iucnCategory: iucnCategory?.slug,
-        // ? LayerPreview: We're not displaying the layer preview at this moment, but we want to preserve the code
-        // map: {
-        //   wdpaId: mpa?.wdpaid,
-        //   bounds: mpa?.bbox,
-        //   dataSource: dataSource?.slug,
-        // },
-      };
-    };
-
-    return mpasData?.map(({ attributes: mpa }) => {
-      const mpaChildren = mpa?.children?.data;
-
-      const mpaData = buildMpaRow(mpa);
-      const mpaChildrenData = mpaChildren
-        .map(({ attributes: childMpa }) => buildMpaRow(childMpa))
-        .filter((row) => !!row);
-
-      return {
-        ...mpaData,
-        ...(mpaChildrenData?.length && { subRows: mpaChildrenData }),
-      };
-    });
-  }, [locationsQuery, mpasData]);
-
-  const tableData = useMemo(() => {
-    return applyFilters(parsedData, filters);
-  }, [filters, parsedData]);
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return <Table columns={columns} data={tableData} />;
+  return (
+    <Table
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      columns={columns}
+      data={data}
+      sorting={sorting}
+      onSortingChange={setSorting}
+      pagination={pagination}
+      onPaginationChange={setPagination}
+      rowCount={total ?? 0}
+    />
+  );
 };
 
 NationalHighseasTable.messages = [

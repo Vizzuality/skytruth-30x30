@@ -1468,11 +1468,11 @@
           "location",
           "wdpaid",
           "mpaa_protection_level",
-          "is_child",
           "iucn_category",
           "designation",
           "environment",
-          "coverage"
+          "coverage",
+          "parent"
         ]
       },
       "conditions": [],
@@ -1501,11 +1501,11 @@
           "location",
           "wdpaid",
           "mpaa_protection_level",
-          "is_child",
           "iucn_category",
           "designation",
           "environment",
-          "coverage"
+          "coverage",
+          "parent"
         ]
       },
       "conditions": [],
@@ -1527,11 +1527,11 @@
           "location",
           "wdpaid",
           "mpaa_protection_level",
-          "is_child",
           "iucn_category",
           "designation",
           "environment",
-          "coverage"
+          "coverage",
+          "parent"
         ]
       },
       "conditions": [],

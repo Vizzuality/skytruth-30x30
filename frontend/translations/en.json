@@ -292,7 +292,9 @@
       "results-out-of": "{startIndex}-{endIndex} out of {total}",
       "previous-page": "Previous page",
       "next-page": "Next page",
-      "page-number": "<a>Page</a> {number}"
+      "page-number": "<a>Page</a> {number}",
+      "collapse-sub-rows": "Collapse sub-rows",
+      "expand-sub-rows": "Expand sub-rows"
     }
   },
   "components": {

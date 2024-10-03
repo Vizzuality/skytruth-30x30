@@ -81,7 +81,7 @@ const useTooltips = () => {
 const useFiltersOptions = () => {
   const locale = useLocale();
 
-  const { data: environmentOptions } = useGetEnvironments(
+  const { data: environmentOptions } = useGetEnvironments<{ name: string; value: string }[]>(
     {
       locale,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -102,7 +102,7 @@ const useFiltersOptions = () => {
   );
 
   return {
-    environment: environmentOptions as { name: string; value: string }[],
+    environment: environmentOptions,
   };
 };
 

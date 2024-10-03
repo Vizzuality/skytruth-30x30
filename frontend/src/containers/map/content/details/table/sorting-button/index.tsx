@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/hooks';
-import { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/useColumns';
+import { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/hooks';
 import { FCWithMessages } from '@/types';
 
 const BUTTON_CLASSNAMES = '-ml-4';

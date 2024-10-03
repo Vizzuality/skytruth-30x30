@@ -1954,9 +1954,6 @@ export interface ApiPaPa extends Schema.CollectionType {
       'oneToOne',
       'api::mpaa-protection-level.mpaa-protection-level'
     >;
-    is_child: Attribute.Boolean &
-      Attribute.Required &
-      Attribute.DefaultTo<false>;
     iucn_category: Attribute.Relation<
       'api::pa.pa',
       'oneToOne',
@@ -1973,6 +1970,7 @@ export interface ApiPaPa extends Schema.CollectionType {
       Attribute.SetMinMax<{
         min: 0;
       }>;
+    parent: Attribute.Relation<'api::pa.pa', 'oneToOne', 'api::pa.pa'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::pa.pa', 'oneToOne', 'admin::user'> &

@@ -16,11 +16,9 @@ import { FCWithMessages } from '@/types';
 
 import Pagination from './pagination';
 
-type Row = Record<string, unknown>;
-
-type MapTableProps = FCWithMessages<{
-  columns: AccessorKeyColumnDef<Row>[];
-  data: Row[];
+type MapTableProps<TData> = FCWithMessages<{
+  columns: AccessorKeyColumnDef<TData>[];
+  data: TData[];
   columnSeparators?: string[];
   sorting: SortingState;
   onSortingChange: (sorting: SortingState) => void;
@@ -29,7 +27,7 @@ type MapTableProps = FCWithMessages<{
   rowCount: number;
 }>;
 
-const MapTable: MapTableProps = ({
+const MapTable: MapTableProps<unknown> = <TData,>({
   columns,
   data,
   columnSeparators = null,
@@ -47,7 +45,7 @@ const MapTable: MapTableProps = ({
   const table = useReactTable({
     data,
     columns,
-    getSubRows: (row) => row['subRows'] as Row[] | undefined,
+    getSubRows: (row) => row['subRows'] as TData[] | undefined,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     manualFiltering: true,
