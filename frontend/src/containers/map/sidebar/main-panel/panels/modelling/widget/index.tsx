@@ -16,7 +16,7 @@ import {
   getGetProtectionCoverageStatsQueryOptions,
   useGetProtectionCoverageStats,
 } from '@/types/generated/protection-coverage-stat';
-import { Location, ProtectionCoverageStatLocationData } from '@/types/generated/strapi.schemas';
+import { Location } from '@/types/generated/strapi.schemas';
 
 import useTooltips from '../useTooltips';
 
