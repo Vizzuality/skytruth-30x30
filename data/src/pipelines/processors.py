@@ -5,6 +5,7 @@ import geopandas as gpd
 import numpy as np
 from shapely.geometry import Polygon
 from shapely.ops import unary_union
+from shapely.validation import make_valid
 import json
 
 import asyncio
@@ -23,6 +24,10 @@ from pipelines.utils import background
 def filter_by_methodology(df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     mask = (df["STATUS"] != "Not Reported") & ~(df["DESIG_ENG"].str.contains("MAB", case=False))
     return df[mask].reset_index(drop=True)
+
+
+def filter_by_terrestrial(gdf):
+    return gdf[gdf["MARINE"].astype(int) != 2].reset_index(drop=True)
 
 
 def filter_by_exluding_propossed_mpas(df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
@@ -157,10 +162,12 @@ def set_location_iso(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.
     return df.assign(iso=df.country.apply(get_parent_iso))
 
 
-def assign_iso3(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDataFrame:
+def assign_iso3(
+    df: pd.DataFrame | gpd.GeoDataFrame, marine: bool = True
+) -> pd.DataFrame | gpd.GeoDataFrame:
     """Assign ISO3 code. specific for Mpa data"""
 
-    def set_iso3(row):
+    def set_iso3_marine(row):
         """relevant for MPA data."""
         return (
             row["PARENT_ISO"]
@@ -172,7 +179,13 @@ def assign_iso3(df: pd.DataFrame | gpd.GeoDataFrame) -> pd.DataFrame | gpd.GeoDa
             else row["iso"]
         )
 
-    return df.assign(iso_3=df.apply(lambda row: set_iso3(row), axis=1))
+    def set_iso3_terrestrial(row):
+        """relevant for MPA data."""
+        return row["GID_0"]
+
+    assign_func = set_iso3_marine if marine else set_iso3_terrestrial
+
+    return df.assign(iso_3=df.apply(lambda row: assign_func(row), axis=1))
 
 
 def add_location_iso(
@@ -230,11 +243,8 @@ def clean_geometries(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
 
 def collection_to_multipolygon(geometry_collection):
     """Convert collection of polygons to multipolygon."""
-    print(type(geometry_collection.geoms))
     geom_list = [
-        geom
-        for geom in geometry_collection.geoms
-        if geom.geom_type == "Polygon" or geom.geom_type == "MultiPolygon"
+        geom for geom in geometry_collection.geoms if geom.geom_type in ("Polygon", "MultiPolygon")
     ]
     return unary_union(geom_list)
 
@@ -243,7 +253,7 @@ def repair_geometry(geom):
     if not geom:
         return Polygon()
     elif not geom.is_valid:
-        geom = collection_to_multipolygon(geom.buffer(0.0).make_valid())
+        geom = collection_to_multipolygon(make_valid(geom.buffer(0.0)))
     elif geom.geom_type == "GeometryCollection":
         geom = collection_to_multipolygon(geom)
     return geom
@@ -376,6 +386,23 @@ def spatial_dissolve_chunk(i, gdf, pbar, _by, _aggfunc):
     )
     pbar.update(1)
     return result
+
+
+@background
+def simplify(geometry, pbar, tlrc=0.0001) -> gpd.GeoDataFrame:
+    try:
+        return repair_geometry(geometry.simplify(tlrc))
+    except Exception as e:
+        print(e)
+        return geometry
+    finally:
+        pbar.update(1)
+
+
+async def simplify_async(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    with tqdm(total=gdf.shape[0]) as pbar:
+        gdf["geometry"] = await asyncio.gather(*(simplify(val, pbar) for val in gdf["geometry"]))
+    return gdf
 
 
 ## Calculations
@@ -542,6 +569,25 @@ def aggregate_area(df: pd.DataFrame) -> pd.DataFrame:
 
 
 async def process_mpa_data(
+    gdf: gpd.GeoDataFrame, loop: list[int], by: list[str], aggfunc: dict
+) -> pd.DataFrame:
+    """process protected planet data. relevant for acc coverage extent by year indicator."""
+    # we split the data by =< year so we can acumulate the coverage
+    base = split_by_year(gdf)
+
+    result_to_iter = pd.concat(base, ignore_index=True).copy()
+
+    with tqdm(total=len(loop)) as pbar:  # we create a progress bar
+        new_df = await asyncio.gather(
+            *(spatial_dissolve_chunk(year, result_to_iter, pbar, by, aggfunc) for year in loop)
+        )
+    return pd.concat(
+        [base[0].pipe(calculate_area, "area", None).drop(columns=["geometry"]), *new_df],
+        ignore_index=True,
+    )
+
+
+async def process_tpa_data(
     gdf: gpd.GeoDataFrame, loop: list[int], by: list[str], aggfunc: dict
 ) -> pd.DataFrame:
     """process protected planet data. relevant for acc coverage extent by year indicator."""
