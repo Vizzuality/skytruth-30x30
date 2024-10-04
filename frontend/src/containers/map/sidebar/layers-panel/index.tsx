@@ -5,26 +5,24 @@ import { useLocale, useTranslations } from 'next-intl';
 import TooltipButton from '@/components/tooltip-button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import {
-  useSyncMapLayers,
-  useSyncMapLayerSettings,
-  useSyncMapSettings,
-} from '@/containers/map/content/map/sync-settings';
+import { useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { FCWithMessages } from '@/types';
 import { useGetDatasets } from '@/types/generated/dataset';
-import { DatasetUpdatedByData, LayerResponseDataObject } from '@/types/generated/strapi.schemas';
+import { DatasetUpdatedByData } from '@/types/generated/strapi.schemas';
 
-const SWITCH_LABEL_CLASSES = '-mb-px cursor-pointer pt-px font-mono text-xs font-normal';
+import LayersGroup, { SWITCH_LABEL_CLASSES } from './layers-group';
 
 const LayersPanel: FCWithMessages = (): JSX.Element => {
   const t = useTranslations('containers.map-sidebar-layers-panel');
   const locale = useLocale();
-
-  const [activeLayers, setMapLayers] = useSyncMapLayers();
-  const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
   const [{ labels }, setMapSettings] = useSyncMapSettings();
+  const [{ tab }] = useSyncMapContentSettings();
 
-  const { data: datasets }: { data: DatasetUpdatedByData[] } = useGetDatasets(
+  const {
+    data: datasets,
+    isFetching: isFetchingDatasets,
+  }: { data: DatasetUpdatedByData[]; isFetching: boolean } = useGetDatasets(
     {
       locale,
       sort: 'name:asc',
@@ -43,37 +41,6 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
     }
   );
 
-  const onToggleLayer = useCallback(
-    (layerId: LayerResponseDataObject['id'], isActive: boolean) => {
-      setMapLayers(
-        isActive
-          ? [...activeLayers, Number(layerId)]
-          : activeLayers.filter((_layerId) => _layerId !== Number(layerId))
-      );
-
-      // If we don't have layerSettings entries, the view is in its default state; we wish to
-      // show all legend accordion items expanded by default.
-      const initialSettings = (() => {
-        const layerSettingsKeys = Object.keys(layerSettings);
-        if (layerSettingsKeys.length) return {};
-        return Object.assign(
-          {},
-          ...activeLayers.map((layerId) => ({ [layerId]: { expanded: true } }))
-        );
-      })();
-
-      setLayerSettings((prev) => ({
-        ...initialSettings,
-        ...prev,
-        [layerId]: {
-          ...prev[layerId],
-          expanded: true,
-        },
-      }));
-    },
-    [activeLayers, layerSettings, setLayerSettings, setMapLayers]
-  );
-
   const handleLabelsChange = useCallback(
     (active: Parameters<ComponentProps<typeof Switch>['onCheckedChange']>[0]) => {
       setMapSettings((prev) => ({
@@ -84,62 +51,50 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
     [setMapSettings]
   );
 
+  // ? NOTE: This is temporary, just to debug display until we connect it with final data format
+  const terrestrialDatasets = [];
+  const marineDatasets = datasets?.filter(({ attributes }) => attributes?.name !== 'Basemap');
+  const basemapDatasets = datasets?.filter(({ attributes }) => attributes?.name === 'Basemap');
+
   return (
-    <div className="h-full space-y-3 overflow-auto p-4 text-xs">
-      <h3 className="text-xl font-bold">{t('layers')}</h3>
-      <div className="space-y-3 divide-y divide-dashed divide-black">
-        {datasets?.map((dataset) => {
-          return (
-            <div key={dataset.id} className="[&:not(:first-child)]:pt-3">
-              <h4 className="font-bold">{dataset?.attributes?.name}</h4>
-              <ul className="my-3 flex flex-col space-y-4">
-                {dataset.attributes?.layers?.data?.map((layer) => {
-                  const isActive = activeLayers.findIndex((layerId) => layerId === layer.id) !== -1;
-                  const onCheckedChange = onToggleLayer.bind(null, layer.id) as (
-                    isActive: boolean
-                  ) => void;
-                  const metadata = layer?.attributes?.metadata;
-
-                  return (
-                    <li key={layer.id} className="flex items-center justify-between">
-                      <span className="flex gap-2">
-                        <Switch
-                          id={`${layer.id}-switch`}
-                          checked={isActive}
-                          onCheckedChange={onCheckedChange}
-                        />
-                        <Label htmlFor={`${layer.id}-switch`} className={SWITCH_LABEL_CLASSES}>
-                          {layer.attributes.title}
-                        </Label>
-                      </span>
-                      {metadata?.description && (
-                        <TooltipButton className="-my-1" text={metadata?.description} />
-                      )}
-                    </li>
-                  );
-                })}
-
-                <>
-                  {dataset.attributes?.slug === 'basemap' && (
-                    <li className="flex items-center justify-between">
-                      <span className="flex gap-2">
-                        <Switch
-                          id="labels-switch"
-                          checked={labels}
-                          onCheckedChange={handleLabelsChange}
-                        />
-                        <Label htmlFor="labels-switch" className={SWITCH_LABEL_CLASSES}>
-                          {t('labels')}
-                        </Label>
-                      </span>
-                    </li>
-                  )}
-                </>
-              </ul>
-            </div>
-          );
-        })}
+    <div className="h-full overflow-auto px-4 text-xs">
+      <div className="py-1">
+        <h3 className="text-xl font-extrabold">{t('layers')}</h3>
       </div>
+      <LayersGroup
+        name={t('terrestrial-data')}
+        datasets={terrestrialDatasets}
+        isOpen={['terrestrial'].includes(tab)}
+        loading={isFetchingDatasets}
+      />
+      <LayersGroup
+        name={t('marine-data')}
+        datasets={marineDatasets}
+        isOpen={['marine'].includes(tab)}
+        loading={isFetchingDatasets}
+      />
+      <LayersGroup
+        name={t('basemap')}
+        datasets={basemapDatasets}
+        isOpen={['summary'].includes(tab)}
+        loading={isFetchingDatasets}
+        showDatasetsNames={false}
+        showBottomBorder={false}
+      >
+        {/*
+          The labels toggle doesn't come from the basemap dataset and has slightly functionality implemented.
+          Not ideal, but given it's a one-off, we'll pass the entry as a child to be displayed alongside the
+          other entries, much like in the previous implementation.
+        */}
+        <li className="flex items-center justify-between">
+          <span className="flex gap-2">
+            <Switch id="labels-switch" checked={labels} onCheckedChange={handleLabelsChange} />
+            <Label htmlFor="labels-switch" className={SWITCH_LABEL_CLASSES}>
+              {t('labels')}
+            </Label>
+          </span>
+        </li>
+      </LayersGroup>
     </div>
   );
 };
