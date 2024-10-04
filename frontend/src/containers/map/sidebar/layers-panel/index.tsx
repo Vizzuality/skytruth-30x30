@@ -64,19 +64,19 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
       <LayersGroup
         name={t('terrestrial-data')}
         datasets={terrestrialDatasets}
-        isOpen={['summary', 'terrestrial'].includes(tab)}
+        isOpen={['terrestrial'].includes(tab)}
         loading={isFetchingDatasets}
       />
       <LayersGroup
         name={t('marine-data')}
         datasets={marineDatasets}
-        isOpen={['summary', 'marine'].includes(tab)}
+        isOpen={['marine'].includes(tab)}
         loading={isFetchingDatasets}
       />
       <LayersGroup
         name={t('basemap')}
         datasets={basemapDatasets}
-        isOpen={true}
+        isOpen={['summary'].includes(tab)}
         loading={isFetchingDatasets}
         showDatasetsNames={false}
         showBottomBorder={false}
