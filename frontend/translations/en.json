@@ -334,7 +334,8 @@
     "widget": {
       "updated-on": "Updated on {date}",
       "loading-data": "Loading data...",
-      "no-data-available": "No data available"
+      "no-data-available": "No data available",
+      "not-visible-due-to-error": "The current widget is not visible due to an error"
     },
     "chart-conservation": {
       "30x30-target": "30x30 Target",

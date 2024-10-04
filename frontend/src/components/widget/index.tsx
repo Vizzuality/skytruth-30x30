@@ -25,6 +25,7 @@ type WidgetProps = {
   title?: string;
   lastUpdated?: string;
   noData?: boolean;
+  noDataMessage?: ComponentProps<typeof NoData>['message'];
   loading?: boolean;
   error?: boolean;
   errorMessage?: ComponentProps<typeof NoData>['message'];
@@ -43,6 +44,7 @@ const Widget: FCWithMessages<PropsWithChildren<WidgetProps>> = ({
   title,
   lastUpdated,
   noData = false,
+  noDataMessage = undefined,
   loading = false,
   error = false,
   errorMessage = undefined,
@@ -74,8 +76,9 @@ const Widget: FCWithMessages<PropsWithChildren<WidgetProps>> = ({
         )}
       </div>
       {loading && <Loading />}
-      {showNoData && <NoData error={error} message={errorMessage} />}
-      {!loading && !showNoData && <div>{children}</div>}
+      {!loading && error && <NoData error={error} message={errorMessage} />}
+      {!loading && !error && noData && <NoData error={error} message={noDataMessage} />}
+      {!loading && !error && !noData && <div>{children}</div>}
     </div>
   );
 };
