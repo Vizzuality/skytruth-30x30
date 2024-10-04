@@ -116,6 +116,7 @@ const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ loc
       title={t('marine-conservation-protection-levels')}
       lastUpdated={lastUpdated}
       noData={noData}
+      noDataMessage={t('not-assessed')}
       loading={loading}
     >
       {widgetChartData.map((chartData) => (
