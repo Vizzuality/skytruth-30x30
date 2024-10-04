@@ -78,7 +78,7 @@ const ModellingWidget: FCWithMessages = () => {
   const {
     status: modellingStatus,
     data: modellingData,
-    messageError,
+    errorMessage,
   } = useAtomValue(modellingAtom);
 
   // Tooltips with mapping
@@ -296,7 +296,7 @@ const ModellingWidget: FCWithMessages = () => {
       noData={!nationalLevelContributions}
       loading={loading}
       error={error}
-      messageError={messageError}
+      errorMessage={errorMessage}
     >
       <div className="flex flex-col">
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES, 'flex justify-between border-t-0')}>

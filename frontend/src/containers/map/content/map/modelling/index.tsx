@@ -37,13 +37,13 @@ const Modelling = () => {
           setModellingState((prevState) => ({
             ...prevState,
             status: 'error',
-            messageError: req.response?.status === 400 ? req.response?.data.error : undefined,
+            errorMessage: req.response?.status === 400 ? req.response?.data.error : undefined,
           }));
         } else {
           setModellingState((prevState) => ({
             ...prevState,
             status: 'error',
-            messageError: undefined,
+            errorMessage: undefined,
           }));
         }
       },
