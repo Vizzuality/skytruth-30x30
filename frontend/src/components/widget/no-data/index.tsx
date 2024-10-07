@@ -17,7 +17,7 @@ const NoData: FCWithMessages<NoDataProps> = ({
     <div className="flex flex-col gap-8 py-12 px-14 text-center md:px-10 md:py-14">
       <p className="text-xs">
         {error && message}
-        {!error && t('data-not-available')}
+        {!error && t('no-data-available')}
       </p>
     </div>
   );
