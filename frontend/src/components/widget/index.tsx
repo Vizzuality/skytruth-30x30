@@ -25,9 +25,10 @@ type WidgetProps = {
   title?: string;
   lastUpdated?: string;
   noData?: boolean;
+  noDataMessage?: ComponentProps<typeof NoData>['message'];
   loading?: boolean;
   error?: boolean;
-  messageError?: ComponentProps<typeof NoData>['message'];
+  errorMessage?: ComponentProps<typeof NoData>['message'];
   info?: ComponentProps<typeof TooltipButton>['text'];
   sources?: ComponentProps<typeof TooltipButton>['sources'];
 };
@@ -43,9 +44,10 @@ const Widget: FCWithMessages<PropsWithChildren<WidgetProps>> = ({
   title,
   lastUpdated,
   noData = false,
+  noDataMessage = undefined,
   loading = false,
   error = false,
-  messageError = undefined,
+  errorMessage = undefined,
   info,
   sources,
   children,
@@ -74,8 +76,9 @@ const Widget: FCWithMessages<PropsWithChildren<WidgetProps>> = ({
         )}
       </div>
       {loading && <Loading />}
-      {showNoData && <NoData error={error} message={messageError} />}
-      {!loading && !showNoData && <div>{children}</div>}
+      {!loading && error && <NoData error={error} message={errorMessage} />}
+      {!loading && !error && noData && <NoData error={error} message={noDataMessage} />}
+      {!loading && !error && !noData && <div>{children}</div>}
     </div>
   );
 };

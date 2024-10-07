@@ -228,7 +228,8 @@
       "terrestrial-protected-area": "{protectedArea} km² out of {totalArea} km²",
       "explore-terrestrial-conservation": "Explore Terrestrial Conservation",
       "explore-marine-conservation": "Explore Marine Conservation",
-      "terrestrial-existing-conservation": "Existing terrestrial conservation coverage"
+      "terrestrial-existing-conservation": "Existing terrestrial conservation coverage",
+      "not-assessed": "Not assessed"
     },
     "map-sidebar-layers-panel": {
       "layers": "Layers",
@@ -334,7 +335,8 @@
     "widget": {
       "updated-on": "Updated on {date}",
       "loading-data": "Loading data...",
-      "no-data-available": "No data available"
+      "no-data-available": "No data available",
+      "not-visible-due-to-error": "The current widget is not visible due to an error"
     },
     "chart-conservation": {
       "30x30-target": "30x30 Target",
