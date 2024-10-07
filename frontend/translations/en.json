@@ -227,7 +227,8 @@
       "terrestrial-protected-percentage": "<b1>{percentage}</b1><b2>%</b2>",
       "terrestrial-protected-area": "{protectedArea} km² out of {totalArea} km²",
       "explore-terrestrial-conservation": "Explore Terrestrial Conservation",
-      "explore-marine-conservation": "Explore Marine Conservation"
+      "explore-marine-conservation": "Explore Marine Conservation",
+      "terrestrial-existing-conservation": "Existing terrestrial conservation coverage"
     },
     "map-sidebar-layers-panel": {
       "layers": "Layers",

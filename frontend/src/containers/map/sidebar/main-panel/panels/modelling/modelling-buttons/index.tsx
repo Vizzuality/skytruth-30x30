@@ -3,6 +3,8 @@ import { useCallback } from 'react';
 import { useAtom, useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 import { useTranslations } from 'next-intl';
+import { LuTrash2 } from 'react-icons/lu';
+import { RxTransform } from 'react-icons/rx';
 
 import { Button } from '@/components/ui/button';
 import { modellingAtom, drawStateAtom } from '@/containers/map/store';
@@ -44,30 +46,32 @@ const ModellingButtons: FCWithMessages<ModellingButtonsProps> = ({ className }) 
     <div className={cn('flex font-mono', className)}>
       {status !== 'drawing' && status !== 'success' && (
         <Button
-          variant="transparent"
           className={COMMON_BUTTON_CLASSES}
           size="full"
           onClick={() => setDrawState((prevState) => ({ ...prevState, active: true }))}
         >
+          <RxTransform className="mr-3 h-4 w-4" aria-hidden />
           {active ? t('start-drawing-on-map') : t('draw-shape')}
         </Button>
       )}
       {(status === 'drawing' || status === 'success') && (
         <div className="flex w-full space-x-2">
           <Button
-            variant="transparent"
+            variant="blue"
             className={COMMON_BUTTON_CLASSES}
             size="full"
             onClick={onClickClearModelling}
           >
+            <LuTrash2 className="mr-3 h-4 w-4" aria-hidden />
             {t('clear-shape')}
           </Button>
           <Button
-            variant="transparent"
+            variant="blue"
             className={COMMON_BUTTON_CLASSES}
             size="full"
             onClick={onClickRedraw}
           >
+            <RxTransform className="mr-3 h-4 w-4" aria-hidden />
             {t('re-draw')}
           </Button>
         </div>

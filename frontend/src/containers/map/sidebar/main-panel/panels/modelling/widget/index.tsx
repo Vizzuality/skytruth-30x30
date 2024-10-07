@@ -10,6 +10,7 @@ import StackedHorizontalBarChart from '@/components/charts/stacked-horizontal-ba
 import TooltipButton from '@/components/tooltip-button';
 import Widget from '@/components/widget';
 import { modellingAtom } from '@/containers/map/store';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
 import {
@@ -44,6 +45,7 @@ const WidgetSectionWidgetTitle: React.FC<WidgetSectionWidgetTitleProps> = ({ tit
 
 const WidgetLegend: FCWithMessages = () => {
   const t = useTranslations('containers.map-sidebar-main-panel');
+  const [{ tab }] = useSyncMapContentSettings();
 
   const LEGEND_LINE_CLASSES =
     'relative pl-9 font-mono text-xs before:absolute before:left-0 before:top-1/2 before:h-[2px] before:w-[28px] before:-translate-y-1/2';
@@ -52,7 +54,8 @@ const WidgetLegend: FCWithMessages = () => {
     <ul>
       <li>
         <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-green')}>
-          {t('marine-existing-conservation')}
+          {tab === 'marine' && t('marine-existing-conservation')}
+          {tab === 'terrestrial' && t('terrestrial-existing-conservation')}
         </span>
       </li>
       <li>
@@ -68,6 +71,8 @@ const ModellingWidget: FCWithMessages = () => {
   const t = useTranslations('containers.map-sidebar-main-panel');
   const locale = useLocale();
 
+  const [{ tab }] = useSyncMapContentSettings();
+
   const chartsProps = DEFAULT_CHART_PROPS;
 
   const {
@@ -82,7 +87,7 @@ const ModellingWidget: FCWithMessages = () => {
   const { data: globalProtectionStatsData } = useGetProtectionCoverageStats<{
     protectedArea: number;
     percentageProtectedArea: number;
-    totalMarineArea: number;
+    totalArea: number;
     totalProtectedArea: number;
     totalPercentage: number;
     totalCustomAreas: number;
@@ -100,7 +105,7 @@ const ModellingWidget: FCWithMessages = () => {
         },
         environment: {
           slug: {
-            $eq: 'marine',
+            $eq: tab,
           },
         },
       },
@@ -108,7 +113,7 @@ const ModellingWidget: FCWithMessages = () => {
       // @ts-ignore
       populate: {
         location: {
-          fields: ['totalMarineArea'],
+          fields: ['totalMarineArea', 'totalTerrestrialArea'],
         },
       },
       'pagination[limit]': 1,
@@ -118,14 +123,18 @@ const ModellingWidget: FCWithMessages = () => {
     },
     {
       query: {
-        enabled: Boolean(modellingData?.locations_area),
+        enabled: Boolean(modellingData?.locations_area) && ['marine', 'terrestrial'].includes(tab),
         select: ({ data }) => {
           if (!data) return null;
 
           const protectedArea = data?.[0].attributes.protectedArea ?? 0;
 
-          const totalMarineArea =
-            data?.[0].attributes?.location?.data?.attributes?.totalMarineArea ?? 0;
+          let totalArea;
+          if (tab === 'marine') {
+            totalArea = data?.[0].attributes?.location?.data?.attributes?.totalMarineArea ?? 0;
+          } else {
+            totalArea = data?.[0].attributes?.location?.data?.attributes?.totalTerrestrialArea ?? 0;
+          }
 
           const totalCustomAreas = modellingData.locations_area.reduce((acc, location) => {
             return acc + location.protected_area;
@@ -133,16 +142,16 @@ const ModellingWidget: FCWithMessages = () => {
 
           const totalProtectedArea = protectedArea + totalCustomAreas;
           //  ? percentage of custom protected areas (analysis)
-          const totalCustomAreasPercentage = (totalCustomAreas / totalMarineArea) * 100;
+          const totalCustomAreasPercentage = (totalCustomAreas / totalArea) * 100;
           //  ? percentage of existing global protected area
-          const totalExistingAreaPercentage = (protectedArea / totalMarineArea) * 100;
+          const totalExistingAreaPercentage = (protectedArea / totalArea) * 100;
 
           const totalPercentage = totalCustomAreasPercentage + totalExistingAreaPercentage;
 
           return {
             protectedArea,
-            percentageProtectedArea: (protectedArea / totalMarineArea) * 100,
-            totalMarineArea,
+            percentageProtectedArea: (protectedArea / totalArea) * 100,
+            totalArea,
             totalProtectedArea,
             totalPercentage,
             totalCustomAreas,
@@ -169,7 +178,7 @@ const ModellingWidget: FCWithMessages = () => {
             },
             environment: {
               slug: {
-                $eq: 'marine',
+                $eq: tab,
               },
             },
           },
@@ -177,7 +186,14 @@ const ModellingWidget: FCWithMessages = () => {
           // @ts-ignore
           populate: {
             location: {
-              fields: ['name', 'name_es', 'name_es', 'code', 'totalMarineArea'],
+              fields: [
+                'name',
+                'name_es',
+                'name_es',
+                'code',
+                'totalMarineArea',
+                'totalTerrestrialArea',
+              ],
             },
           },
           'pagination[limit]': 1,
@@ -187,7 +203,8 @@ const ModellingWidget: FCWithMessages = () => {
         },
         {
           query: {
-            enabled: Boolean(modellingData?.locations_area),
+            enabled:
+              Boolean(modellingData?.locations_area) && ['marine', 'terrestrial'].includes(tab),
             select: ({ data }) => {
               if (!data) return null;
 
@@ -196,7 +213,12 @@ const ModellingWidget: FCWithMessages = () => {
               const location = data?.[0]?.attributes?.location?.data?.attributes;
 
               // ? total extension of location
-              const totalMarineArea = location?.totalMarineArea ?? 0;
+              let totalArea;
+              if (tab === 'marine') {
+                totalArea = location?.totalMarineArea ?? 0;
+              } else {
+                totalArea = location?.totalTerrestrialArea ?? 0;
+              }
 
               // ? total custom  protected area (analysis)
               const totalCustomArea = modellingData.locations_area.find(
@@ -204,9 +226,9 @@ const ModellingWidget: FCWithMessages = () => {
               ).protected_area;
 
               //  ? percentage of custom protected area (analysis)
-              const totalCustomAreaPercentage = (totalCustomArea / totalMarineArea) * 100;
+              const totalCustomAreaPercentage = (totalCustomArea / totalArea) * 100;
               //  ? percentage of existing protected area
-              const totalExistingAreaPercentage = (protectedArea / totalMarineArea) * 100;
+              const totalExistingAreaPercentage = (protectedArea / totalArea) * 100;
 
               // ? sum of existing protected area and protected custom area (analysis)
               const totalProtectedArea = protectedArea + totalCustomArea;
@@ -215,7 +237,7 @@ const ModellingWidget: FCWithMessages = () => {
 
               return {
                 location,
-                totalMarineArea,
+                totalArea,
                 totalProtectedArea,
                 protectedArea,
                 totalExistingAreaPercentage,
@@ -238,7 +260,7 @@ const ModellingWidget: FCWithMessages = () => {
   const nationalLevelContributions: {
     location: Location;
     percentageProtectedArea: number;
-    totalMarineArea: number;
+    totalArea: number;
     totalProtectedArea: number;
     protectedArea: number;
     totalExistingAreaPercentage: number;
@@ -309,7 +331,7 @@ const ModellingWidget: FCWithMessages = () => {
                 key={contribution?.location?.code}
                 title={locationName}
                 totalProtectedArea={contribution?.totalProtectedArea}
-                totalArea={contribution?.totalMarineArea}
+                totalArea={contribution?.totalArea}
                 highlightedPercentage={contribution?.totalPercentage}
                 data={[
                   {
@@ -339,7 +361,7 @@ const ModellingWidget: FCWithMessages = () => {
           <StackedHorizontalBarChart
             title={t('global')}
             totalProtectedArea={globalProtectionStatsData?.totalProtectedArea}
-            totalArea={globalProtectionStatsData?.totalMarineArea}
+            totalArea={globalProtectionStatsData?.totalArea}
             highlightedPercentage={globalProtectionStatsData?.totalPercentage}
             data={[
               {
