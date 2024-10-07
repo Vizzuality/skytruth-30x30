@@ -92,7 +92,10 @@ const SidebarModelling: FCWithMessages = () => {
         </TabsList>
       </div>
       <div ref={containerRef} className="flex-grow overflow-y-auto">
-        <TabsContent value="terrestrial">{showIntro && <ModellingIntro />}</TabsContent>
+        <TabsContent value="terrestrial">
+          {showIntro && <ModellingIntro />}
+          {!showIntro && <ModellingWidget />}
+        </TabsContent>
         <TabsContent value="marine">
           {showIntro && <ModellingIntro />}
           {!showIntro && <ModellingWidget />}
