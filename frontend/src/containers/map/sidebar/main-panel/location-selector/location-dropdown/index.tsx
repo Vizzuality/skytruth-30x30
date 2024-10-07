@@ -51,8 +51,13 @@ const LocationDropdown: FCWithMessages<LocationDropdownProps> = ({
     }
   );
 
+  const handleFiltering = (value: string, search: string) => {
+    if (value.toLocaleLowerCase().includes(search.toLocaleLowerCase())) return 1;
+    return 0;
+  };
+
   return (
-    <Command label={t('search-country-region')} className={cn(className)}>
+    <Command label={t('search-country-region')} className={cn(className)} filter={handleFiltering}>
       <CommandInput placeholder={searchPlaceholder} />
       <CommandEmpty>{t('no-result')}</CommandEmpty>
       <CommandGroup className="mt-4 max-h-64 overflow-y-auto">
