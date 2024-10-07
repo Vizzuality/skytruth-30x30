@@ -333,7 +333,7 @@
     "widget": {
       "updated-on": "Updated on {date}",
       "loading-data": "Loading data...",
-      "data-not-available": "Data not available"
+      "no-data-available": "No data available"
     },
     "chart-conservation": {
       "30x30-target": "30x30 Target",
