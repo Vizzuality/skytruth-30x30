@@ -32,12 +32,6 @@
     },
     "percentage": {
       "type": "decimal"
-    },
-    "location": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::location.location",
-      "mappedBy": "mpaa_protection_level_stats"
     }
   }
 }

@@ -1555,7 +1555,6 @@ export interface ApiLocationLocation extends Schema.CollectionType {
   attributes: {
     code: Attribute.String & Attribute.Required;
     name: Attribute.String & Attribute.Required;
-    total_marine_area: Attribute.BigInteger & Attribute.Required;
     type: Attribute.String & Attribute.Required;
     groups: Attribute.Relation<
       'api::location.location',
@@ -1572,18 +1571,12 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'oneToMany',
       'api::fishing-protection-level-stat.fishing-protection-level-stat'
     >;
-    mpaa_protection_level_stats: Attribute.Relation<
-      'api::location.location',
-      'oneToOne',
-      'api::mpaa-protection-level-stat.mpaa-protection-level-stat'
-    >;
     protection_coverage_stats: Attribute.Relation<
       'api::location.location',
       'oneToMany',
       'api::protection-coverage-stat.protection-coverage-stat'
     >;
     marine_bounds: Attribute.JSON;
-    total_terrestrial_area: Attribute.BigInteger & Attribute.Required;
     terrestrial_bounds: Attribute.JSON;
     name_es: Attribute.String & Attribute.Required;
     name_fr: Attribute.String & Attribute.Required;
@@ -1811,11 +1804,6 @@ export interface ApiMpaaProtectionLevelStatMpaaProtectionLevelStat
         min: 0;
       }>;
     percentage: Attribute.Decimal;
-    location: Attribute.Relation<
-      'api::mpaa-protection-level-stat.mpaa-protection-level-stat',
-      'oneToOne',
-      'api::location.location'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

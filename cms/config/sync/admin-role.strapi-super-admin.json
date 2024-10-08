@@ -1060,15 +1060,12 @@
         "fields": [
           "code",
           "name",
-          "total_marine_area",
           "type",
           "groups",
           "members",
           "fishing_protection_level_stats",
-          "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "marine_bounds",
-          "total_terrestrial_area",
           "terrestrial_bounds",
           "name_es",
           "name_fr"
@@ -1091,15 +1088,12 @@
         "fields": [
           "code",
           "name",
-          "total_marine_area",
           "type",
           "groups",
           "members",
           "fishing_protection_level_stats",
-          "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "marine_bounds",
-          "total_terrestrial_area",
           "terrestrial_bounds",
           "name_es",
           "name_fr"
@@ -1115,15 +1109,12 @@
         "fields": [
           "code",
           "name",
-          "total_marine_area",
           "type",
           "groups",
           "members",
           "fishing_protection_level_stats",
-          "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "marine_bounds",
-          "total_terrestrial_area",
           "terrestrial_bounds",
           "name_es",
           "name_fr"
@@ -1273,8 +1264,7 @@
         "fields": [
           "mpaa_protection_level",
           "area",
-          "percentage",
-          "location"
+          "percentage"
         ]
       },
       "conditions": [],
@@ -1294,8 +1284,7 @@
         "fields": [
           "mpaa_protection_level",
           "area",
-          "percentage",
-          "location"
+          "percentage"
         ]
       },
       "conditions": [],
@@ -1308,8 +1297,7 @@
         "fields": [
           "mpaa_protection_level",
           "area",
-          "percentage",
-          "location"
+          "percentage"
         ]
       },
       "conditions": [],

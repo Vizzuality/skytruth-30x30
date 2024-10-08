@@ -24,20 +24,6 @@
       "required": true,
       "pluginOptions": {}
     },
-    "total_marine_area": {
-      "type": "biginteger",
-      "description": "Total marine area in km2",
-      "required": true,
-      "column": {
-        "defaultTo": 0,
-        "type": "decimal",
-        "args": [
-          12,
-          2
-        ]
-      },
-      "pluginOptions": {}
-    },
     "type": {
       "type": "string",
       "required": true,
@@ -61,12 +47,6 @@
       "target": "api::fishing-protection-level-stat.fishing-protection-level-stat",
       "mappedBy": "location"
     },
-    "mpaa_protection_level_stats": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
-      "inversedBy": "location"
-    },
     "protection_coverage_stats": {
       "type": "relation",
       "relation": "oneToMany",
@@ -76,11 +56,6 @@
     "marine_bounds": {
       "type": "json",
       "pluginOptions": {}
-    },
-    "total_terrestrial_area": {
-      "pluginOptions": {},
-      "type": "biginteger",
-      "required": true
     },
     "terrestrial_bounds": {
       "pluginOptions": {},
