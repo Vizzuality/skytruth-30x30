@@ -221,6 +221,34 @@
           "sortable": true
         }
       },
+      "marine_target": {
+        "edit": {
+          "label": "marine_target",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "marine_target",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "marine_target_year": {
+        "edit": {
+          "label": "marine_target_year",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "marine_target_year",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -353,6 +381,16 @@
           },
           {
             "name": "total_terrestrial_area",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "marine_target",
+            "size": 4
+          },
+          {
+            "name": "marine_target_year",
             "size": 4
           }
         ]

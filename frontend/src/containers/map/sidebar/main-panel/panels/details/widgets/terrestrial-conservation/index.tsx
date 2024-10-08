@@ -184,6 +184,7 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
       )}
       <ConservationChart
         className="-ml-8 aspect-[16/10]"
+        tooltipSlug="30x30-terrestrial-target"
         displayTarget={location?.code === 'GLOB'}
         data={chartData}
       />

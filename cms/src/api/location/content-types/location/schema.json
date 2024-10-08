@@ -93,6 +93,14 @@
     "name_fr": {
       "type": "string",
       "required": true
+    },
+    "marine_target": {
+      "type": "integer",
+      "min": 0,
+      "max": 100
+    },
+    "marine_target_year": {
+      "type": "integer"
     }
   }
 }

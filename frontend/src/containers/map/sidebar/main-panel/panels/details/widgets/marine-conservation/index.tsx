@@ -36,7 +36,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       // @ts-ignore
       populate: {
         location: {
-          fields: ['code', 'total_marine_area'],
+          fields: ['code', 'total_marine_area', 'marine_target', 'marine_target_year'],
         },
         environment: {
           fields: ['slug'],
@@ -126,6 +126,8 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       protectedPercentage: percentageFormatted,
       protectedArea: protectedAreaFormatted,
       totalArea: totalAreaFormatted,
+      target: location.marine_target,
+      targetYear: location.marine_target_year,
     };
   }, [locale, location, aggregatedData]);
 
@@ -182,8 +184,11 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       )}
       <ConservationChart
         className="-ml-8 aspect-[16/10]"
-        displayTarget={location?.code === 'GLOB'}
+        tooltipSlug="30x30-marine-target"
         data={chartData}
+        displayTarget={!!stats?.target}
+        target={stats?.target ?? undefined}
+        targetYear={stats?.targetYear ?? undefined}
       />
       {tab !== 'marine' && (
         <Button

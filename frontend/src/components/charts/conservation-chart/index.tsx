@@ -28,6 +28,9 @@ import ChartTooltip from './tooltip';
 type ConservationChartProps = {
   className?: string;
   displayTarget?: boolean;
+  target?: number;
+  targetYear?: number;
+  tooltipSlug: string;
   data: {
     year?: number;
     percentage: number;
@@ -44,6 +47,9 @@ const MAX_NUM_YEARS = 20;
 const ConservationChart: FCWithMessages<ConservationChartProps> = ({
   className,
   displayTarget = true,
+  target = 30,
+  targetYear = 2030,
+  tooltipSlug,
   data,
 }) => {
   const t = useTranslations('components.chart-conservation');
@@ -134,7 +140,7 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
     {
       locale,
       filters: {
-        slug: '30x30-target',
+        slug: tooltipSlug,
       },
     },
     {
@@ -182,23 +188,27 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
           {displayTarget && (
             <ReferenceLine
               xAxisId={1}
-              y={30}
+              y={target}
               label={(props) => {
                 const { viewBox } = props;
                 return (
                   <g>
                     <text {...viewBox} x={viewBox.x + 5} y={viewBox.y - 2}>
-                      {t('30x30-target')}
+                      {t.rich('percentage-target', { target })}
                     </text>
                     <foreignObject
                       {...viewBox}
-                      x={viewBox.x + t('30x30-target').length * 7.5}
+                      x={
+                        viewBox.x + (t.rich('percentage-target', { target }) as string).length * 7.5
+                      }
                       y={viewBox.y - 17}
                       width="160"
                       height="160"
                     >
                       <TooltipButton
-                        text={dataInfo?.attributes.content}
+                        text={dataInfo?.attributes.content
+                          .replace('{target}', `${target}`)
+                          .replace('{target_year}', `${targetYear}`)}
                         className="mt-1 hover:bg-transparent"
                       />
                     </foreignObject>
