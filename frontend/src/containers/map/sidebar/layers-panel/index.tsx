@@ -1,10 +1,11 @@
-import { ComponentProps, useCallback } from 'react';
+import { ComponentProps, useCallback, useMemo } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
 import TooltipButton from '@/components/tooltip-button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import { DATASETS } from '@/constants/datasets';
 import { useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { FCWithMessages } from '@/types';
@@ -20,8 +21,8 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
   const [{ tab }] = useSyncMapContentSettings();
 
   const {
-    data: datasets,
-    isFetching: isFetchingDatasets,
+    data: datasetsData,
+    isFetching: isFetchingDatasetsData,
   }: { data: DatasetUpdatedByData[]; isFetching: boolean } = useGetDatasets(
     {
       locale,
@@ -30,7 +31,7 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
       // @ts-ignore
       populate: {
         layers: {
-          populate: 'metadata',
+          populate: 'metadata,environment',
         },
       },
     },
@@ -40,6 +41,54 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
       },
     }
   );
+
+  const datasets = useMemo(() => {
+    const basemapDataset = datasetsData?.filter(
+      ({ attributes }) => attributes?.slug === DATASETS.basemap
+    );
+    const basemapDatasetIds = basemapDataset?.map(({ id }) => id);
+    const nonBasemapDataset = datasetsData?.filter(({ id }) => !basemapDatasetIds.includes(id));
+
+    const filterLayersByEnvironment = (layers, environment) => {
+      const layersData = layers?.data;
+      return (
+        layersData?.filter(({ attributes }) => {
+          const environmentData = attributes?.environment?.data;
+          return environmentData?.attributes?.slug === environment;
+        }) || []
+      );
+    };
+
+    const parseDatasetsByEnvironment = (dataset, environment) => {
+      const parsedDatasets = nonBasemapDataset?.map((d) => {
+        const { layers, ...rest } = d?.attributes;
+        const filteredLayers = filterLayersByEnvironment(layers, environment);
+        if (!filteredLayers.length) return null;
+
+        return {
+          id: dataset?.id,
+          attributes: {
+            ...rest,
+            layers: {
+              data: filteredLayers,
+            },
+          },
+        };
+      });
+
+      return parsedDatasets?.filter((dataset) => dataset !== null);
+    };
+
+    const [terrestrialDataset, marineDataset] = [DATASETS.terrestrial, DATASETS.marine]?.map(
+      (environment) => parseDatasetsByEnvironment(nonBasemapDataset, environment)
+    );
+
+    return {
+      terrestrial: terrestrialDataset,
+      marine: marineDataset,
+      basemap: basemapDataset,
+    };
+  }, [datasetsData]);
 
   const handleLabelsChange = useCallback(
     (active: Parameters<ComponentProps<typeof Switch>['onCheckedChange']>[0]) => {
@@ -51,11 +100,6 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
     [setMapSettings]
   );
 
-  // ? NOTE: This is temporary, just to debug display until we connect it with final data format
-  const terrestrialDatasets = [];
-  const marineDatasets = datasets?.filter(({ attributes }) => attributes?.name !== 'Basemap');
-  const basemapDatasets = datasets?.filter(({ attributes }) => attributes?.name === 'Basemap');
-
   return (
     <div className="h-full overflow-auto px-4 text-xs">
       <div className="py-1">
@@ -63,21 +107,21 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
       </div>
       <LayersGroup
         name={t('terrestrial-data')}
-        datasets={terrestrialDatasets}
+        datasets={datasets.terrestrial}
         isOpen={['terrestrial'].includes(tab)}
-        loading={isFetchingDatasets}
+        loading={isFetchingDatasetsData}
       />
       <LayersGroup
         name={t('marine-data')}
-        datasets={marineDatasets}
+        datasets={datasets.marine}
         isOpen={['marine'].includes(tab)}
-        loading={isFetchingDatasets}
+        loading={isFetchingDatasetsData}
       />
       <LayersGroup
         name={t('basemap')}
-        datasets={basemapDatasets}
+        datasets={datasets.basemap}
         isOpen={['summary'].includes(tab)}
-        loading={isFetchingDatasets}
+        loading={isFetchingDatasetsData}
         showDatasetsNames={false}
         showBottomBorder={false}
       >
