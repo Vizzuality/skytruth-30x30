@@ -545,80 +545,12 @@
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "subject": "api::dataset-group.dataset-group",
-      "properties": {
-        "fields": [
-          "name",
-          "slug",
-          "datasets"
-        ],
-        "locales": [
-          "en",
-          "es",
-          "fr"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::dataset-group.dataset-group",
-      "properties": {
-        "locales": [
-          "en",
-          "es",
-          "fr"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "subject": "api::dataset-group.dataset-group",
-      "properties": {
-        "fields": [
-          "name",
-          "slug",
-          "datasets"
-        ],
-        "locales": [
-          "en",
-          "es",
-          "fr"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "subject": "api::dataset-group.dataset-group",
-      "properties": {
-        "fields": [
-          "name",
-          "slug",
-          "datasets"
-        ],
-        "locales": [
-          "en",
-          "es",
-          "fr"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
       "subject": "api::dataset.dataset",
       "properties": {
         "fields": [
           "name",
           "layers",
-          "slug",
-          "group"
+          "slug"
         ],
         "locales": [
           "en",
@@ -662,8 +594,7 @@
         "fields": [
           "name",
           "layers",
-          "slug",
-          "group"
+          "slug"
         ],
         "locales": [
           "en",
@@ -681,8 +612,7 @@
         "fields": [
           "name",
           "layers",
-          "slug",
-          "group"
+          "slug"
         ],
         "locales": [
           "en",
@@ -1017,7 +947,8 @@
           "legend_config.items.color",
           "legend_config.items.value",
           "legend_config.items.description",
-          "default"
+          "default",
+          "environment"
         ],
         "locales": [
           "en",
@@ -1076,7 +1007,8 @@
           "legend_config.items.color",
           "legend_config.items.value",
           "legend_config.items.description",
-          "default"
+          "default",
+          "environment"
         ],
         "locales": [
           "en",
@@ -1109,7 +1041,8 @@
           "legend_config.items.color",
           "legend_config.items.value",
           "legend_config.items.description",
-          "default"
+          "default",
+          "environment"
         ],
         "locales": [
           "en",

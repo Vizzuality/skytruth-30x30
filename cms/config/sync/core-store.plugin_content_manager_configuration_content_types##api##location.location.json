@@ -316,6 +316,16 @@
           {
             "name": "name",
             "size": 6
+          },
+          {
+            "name": "name_es",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "name_fr",
+            "size": 6
           }
         ],
         [
@@ -363,16 +373,6 @@
         [
           {
             "name": "mpaa_protection_level_stat",
-            "size": 6
-          },
-          {
-            "name": "name_es",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "name_fr",
             "size": 6
           },
           {

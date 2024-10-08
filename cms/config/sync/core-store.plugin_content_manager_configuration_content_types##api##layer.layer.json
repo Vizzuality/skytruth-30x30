@@ -147,6 +147,21 @@
           "sortable": true
         }
       },
+      "environment": {
+        "edit": {
+          "label": "environment",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "environment",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -223,6 +238,12 @@
             "name": "dataset",
             "size": 6
           },
+          {
+            "name": "environment",
+            "size": 6
+          }
+        ],
+        [
           {
             "name": "default",
             "size": 4

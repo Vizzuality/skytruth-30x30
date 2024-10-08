@@ -1138,11 +1138,6 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
           localized: false;
         };
       }>;
-    group: Attribute.Relation<
-      'api::dataset.dataset',
-      'manyToOne',
-      'api::dataset-group.dataset-group'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1162,65 +1157,6 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
       'api::dataset.dataset',
       'oneToMany',
       'api::dataset.dataset'
-    >;
-    locale: Attribute.String;
-  };
-}
-
-export interface ApiDatasetGroupDatasetGroup extends Schema.CollectionType {
-  collectionName: 'dataset_groups';
-  info: {
-    singularName: 'dataset-group';
-    pluralName: 'dataset-groups';
-    displayName: 'Dataset Group';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    slug: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    datasets: Attribute.Relation<
-      'api::dataset-group.dataset-group',
-      'oneToMany',
-      'api::dataset.dataset'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::dataset-group.dataset-group',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::dataset-group.dataset-group',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::dataset-group.dataset-group',
-      'oneToMany',
-      'api::dataset-group.dataset-group'
     >;
     locale: Attribute.String;
   };
@@ -1576,6 +1512,11 @@ export interface ApiLayerLayer extends Schema.CollectionType {
         };
       }> &
       Attribute.DefaultTo<false>;
+    environment: Attribute.Relation<
+      'api::layer.layer',
+      'oneToOne',
+      'api::environment.environment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -2186,7 +2127,6 @@ declare module '@strapi/types' {
       'api::data-tool-language.data-tool-language': ApiDataToolLanguageDataToolLanguage;
       'api::data-tool-resource-type.data-tool-resource-type': ApiDataToolResourceTypeDataToolResourceType;
       'api::dataset.dataset': ApiDatasetDataset;
-      'api::dataset-group.dataset-group': ApiDatasetGroupDatasetGroup;
       'api::environment.environment': ApiEnvironmentEnvironment;
       'api::fishing-protection-level.fishing-protection-level': ApiFishingProtectionLevelFishingProtectionLevel;
       'api::fishing-protection-level-stat.fishing-protection-level-stat': ApiFishingProtectionLevelStatFishingProtectionLevelStat;

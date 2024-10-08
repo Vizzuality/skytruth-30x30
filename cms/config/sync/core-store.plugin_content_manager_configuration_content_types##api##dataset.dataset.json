@@ -63,21 +63,6 @@
           "sortable": true
         }
       },
-      "group": {
-        "edit": {
-          "label": "group",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "name"
-        },
-        "list": {
-          "label": "group",
-          "searchable": true,
-          "sortable": true
-        }
-      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -158,10 +143,6 @@
         [
           {
             "name": "layers",
-            "size": 6
-          },
-          {
-            "name": "group",
             "size": 6
           }
         ]
