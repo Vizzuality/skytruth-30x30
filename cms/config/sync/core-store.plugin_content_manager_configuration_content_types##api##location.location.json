@@ -121,9 +121,9 @@
           "sortable": false
         }
       },
-      "mpaa_protection_level_stat": {
+      "mpaa_protection_level_stats": {
         "edit": {
-          "label": "mpaa_protection_level_stat",
+          "label": "mpaa_protection_level_stats",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -131,7 +131,7 @@
           "mainField": "id"
         },
         "list": {
-          "label": "mpaa_protection_level_stat",
+          "label": "mpaa_protection_level_stats",
           "searchable": true,
           "sortable": true
         }
@@ -221,20 +221,6 @@
           "sortable": true
         }
       },
-      "mpaa_fully_highly_protected_area": {
-        "edit": {
-          "label": "mpaa_fully_highly_protected_area",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "mpaa_fully_highly_protected_area",
-          "searchable": true,
-          "sortable": true
-        }
-      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -295,12 +281,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "code",
-        "name",
-        "total_marine_area"
-      ],
       "edit": [
         [
           {
@@ -350,6 +330,12 @@
         ],
         [
           {
+            "name": "mpaa_protection_level_stats",
+            "size": 6
+          }
+        ],
+        [
+          {
             "name": "marine_bounds",
             "size": 12
           }
@@ -362,16 +348,6 @@
         ],
         [
           {
-            "name": "mpaa_protection_level_stat",
-            "size": 6
-          },
-          {
-            "name": "mpaa_fully_highly_protected_area",
-            "size": 4
-          }
-        ],
-        [
-          {
             "name": "total_marine_area",
             "size": 4
           },
@@ -380,6 +356,12 @@
             "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "code",
+        "name",
+        "total_marine_area"
       ]
     }
   },

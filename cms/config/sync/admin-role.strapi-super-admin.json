@@ -1065,14 +1065,13 @@
           "groups",
           "members",
           "fishing_protection_level_stats",
-          "mpaa_protection_level_stat",
+          "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "marine_bounds",
           "total_terrestrial_area",
           "terrestrial_bounds",
           "name_es",
-          "name_fr",
-          "mpaa_fully_highly_protected_area"
+          "name_fr"
         ]
       },
       "conditions": [],
@@ -1097,14 +1096,13 @@
           "groups",
           "members",
           "fishing_protection_level_stats",
-          "mpaa_protection_level_stat",
+          "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "marine_bounds",
           "total_terrestrial_area",
           "terrestrial_bounds",
           "name_es",
-          "name_fr",
-          "mpaa_fully_highly_protected_area"
+          "name_fr"
         ]
       },
       "conditions": [],
@@ -1122,14 +1120,13 @@
           "groups",
           "members",
           "fishing_protection_level_stats",
-          "mpaa_protection_level_stat",
+          "mpaa_protection_level_stats",
           "protection_coverage_stats",
           "marine_bounds",
           "total_terrestrial_area",
           "terrestrial_bounds",
           "name_es",
-          "name_fr",
-          "mpaa_fully_highly_protected_area"
+          "name_fr"
         ]
       },
       "conditions": [],

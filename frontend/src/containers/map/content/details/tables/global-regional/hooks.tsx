@@ -28,7 +28,9 @@ export type GlobalRegionalTableColumns = {
     name_es: string;
     name_fr: string;
     code: string;
-    mpaa_fully_highly_protected_area: number;
+    mpaa_protection_level_stats: {
+      percentage: number;
+    };
   };
   environment: {
     name: string;
@@ -258,8 +260,8 @@ export const useColumns = (
       ...(environment === 'marine'
         ? [
             {
-              id: 'location.mpaa_fully_highly_protected_area',
-              accessorKey: 'location.mpaa_fully_highly_protected_area',
+              id: 'location.mpaa_protection_level_stats.percentage',
+              accessorKey: 'location.mpaa_protection_level_stats.percentage',
               header: ({ column }) => (
                 <HeaderItem>
                   <SortingButton column={column} />
@@ -271,7 +273,7 @@ export const useColumns = (
                 const { location } = row.original;
                 const formattedValue = cellFormatter.percentage(
                   locale,
-                  location.mpaa_fully_highly_protected_area
+                  location.mpaa_protection_level_stats.percentage
                 );
                 return (
                   <span className="text-xs">{t('percentage', { percentage: formattedValue })}</span>
@@ -352,19 +354,12 @@ export const useData = (
       // @ts-ignore
       populate: {
         location: {
-          fields: ['name', 'name_es', 'name_fr', 'code', 'mpaa_fully_highly_protected_area'],
+          fields: ['name', 'name_es', 'name_fr', 'code'],
           populate: {
             ...(environment === 'marine'
               ? {
                   mpaa_protection_level_stats: {
                     fields: ['percentage'],
-                    filters: {
-                      mpaa_protection_level: {
-                        slug: {
-                          $eq: 'fully-highly-protected',
-                        },
-                      },
-                    },
                   },
                 }
               : {}),
@@ -450,7 +445,9 @@ export const useData = (
                   name_es: location?.name_es,
                   name_fr: location?.name_fr,
                   code: location.code,
-                  mpaa_fully_highly_protected_area: location.mpaa_fully_highly_protected_area,
+                  mpaa_protection_level_stats: {
+                    percentage: location?.mpaa_protection_level_stats.data.attributes.percentage,
+                  },
                 },
                 environment: {
                   name: localizedEnvironment.name,
