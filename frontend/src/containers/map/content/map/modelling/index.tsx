@@ -10,12 +10,10 @@ import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { ModellingData } from '@/types/modelling';
 
 const fetchModelling = async (tab: string, feature: Feature) => {
-  const url =
-    tab === 'marine'
-      ? process.env.NEXT_PUBLIC_ANALYSIS_CF_MARINE_URL
-      : process.env.NEXT_PUBLIC_ANALYSIS_CF_TERRESTRIAL_URL;
-
-  return axios.post<ModellingData>(url, feature);
+  return axios.post<ModellingData>(process.env.NEXT_PUBLIC_ANALYSIS_CF_URL, {
+    environment: tab,
+    feature,
+  });
 };
 
 const Modelling = () => {

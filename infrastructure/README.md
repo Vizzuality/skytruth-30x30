@@ -120,8 +120,7 @@ Deployment to the CloudRun instances is accomplished by building Docker images a
   - the following secrets set by terraform in STAGING_CLIENT_ENV_TF_MANAGED (in the format of an .env file):
     - NEXT_PUBLIC_URL
     - NEXT_PUBLIC_API_URL
-    - NEXT_PUBLIC_ANALYSIS_CF_MARINE_URL
-    - NEXT_PUBLIC_ANALYSIS_CF_TERRESTRIAL_URL
+    - NEXT_PUBLIC_ANALYSIS_CF_URL
     - NEXT_PUBLIC_ENVIRONMENT
     - LOG_LEVEL
   - additional secrets set manually in STAGING_CLIENT_ENV (copy to be managed in LastPass)
