@@ -1,5 +1,4 @@
-export const DATASETS = {
+export const ENVIRONMENTS = {
   terrestrial: 'terrestrial',
   marine: 'marine',
-  basemap: 'basemap',
 };

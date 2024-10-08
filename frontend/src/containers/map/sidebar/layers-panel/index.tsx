@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import TooltipButton from '@/components/tooltip-button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { DATASETS } from '@/constants/datasets';
+import { ENVIRONMENTS } from '@/constants/environments';
 import { useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { FCWithMessages } from '@/types';
@@ -43,14 +43,17 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
   );
 
   const datasets = useMemo(() => {
-    const basemapDataset = datasetsData?.filter(
-      ({ attributes }) => attributes?.slug === DATASETS.basemap
-    );
+    // Basemap dataset is displayed separately in the panel, much like terrestrial/maritime.
+    // We need to split it out from the datasets we're processing in order to display this correctly.
+    const basemapDataset = datasetsData?.filter(({ attributes }) => attributes?.slug === 'basemap');
     const basemapDatasetIds = basemapDataset?.map(({ id }) => id);
-    const nonBasemapDataset = datasetsData?.filter(({ id }) => !basemapDatasetIds.includes(id));
+    const nonBasemapDatasets = datasetsData?.filter(({ id }) => !basemapDatasetIds.includes(id));
 
+    // A dataset can contain layers with different environments assigned, we want
+    // to pick only the layers for the environment we're displaying.
     const filterLayersByEnvironment = (layers, environment) => {
       const layersData = layers?.data;
+
       return (
         layersData?.filter(({ attributes }) => {
           const environmentData = attributes?.environment?.data;
@@ -59,14 +62,17 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
       );
     };
 
-    const parseDatasetsByEnvironment = (dataset, environment) => {
-      const parsedDatasets = nonBasemapDataset?.map((d) => {
+    const parseDatasetsByEnvironment = (datasets, environment) => {
+      const parsedDatasets = datasets?.map((d) => {
         const { layers, ...rest } = d?.attributes;
         const filteredLayers = filterLayersByEnvironment(layers, environment);
+
+        // If dataset contains no layers, it should not displayed. We'll filter this
+        // values before the return of the parsed data array.
         if (!filteredLayers.length) return null;
 
         return {
-          id: dataset?.id,
+          id: d?.id,
           attributes: {
             ...rest,
             layers: {
@@ -76,12 +82,14 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
         };
       });
 
+      // Prevent displaying of groups when they are empty / contain no layers
       return parsedDatasets?.filter((dataset) => dataset !== null);
     };
 
-    const [terrestrialDataset, marineDataset] = [DATASETS.terrestrial, DATASETS.marine]?.map(
-      (environment) => parseDatasetsByEnvironment(nonBasemapDataset, environment)
-    );
+    const [terrestrialDataset, marineDataset] = [
+      ENVIRONMENTS.terrestrial,
+      ENVIRONMENTS.marine,
+    ]?.map((environment) => parseDatasetsByEnvironment(nonBasemapDatasets, environment));
 
     return {
       terrestrial: terrestrialDataset,
