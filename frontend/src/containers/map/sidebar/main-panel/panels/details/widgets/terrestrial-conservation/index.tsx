@@ -38,7 +38,7 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
       // @ts-ignore
       populate: {
         location: {
-          fields: ['code', 'totalTerrestrialArea'],
+          fields: ['code', 'total_terrestrial_area'],
         },
         environment: {
           fields: ['slug'],
@@ -116,7 +116,7 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
   const stats = useMemo(() => {
     if (!aggregatedData.length) return null;
 
-    const totalArea = location.totalMarineArea;
+    const totalArea = Number(location.total_terrestrial_area);
     const { protectedArea } = aggregatedData[0];
     const percentageFormatted = formatPercentage(locale, (protectedArea / totalArea) * 100, {
       displayPercentageSign: false,
@@ -137,7 +137,7 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
     const data = aggregatedData.map((entry, index) => {
       const isLastYear = index + 1 === aggregatedData.length;
       const { year, protectedArea } = entry;
-      const percentage = (protectedArea * 100) / location.totalMarineArea;
+      const percentage = (protectedArea * 100) / Number(location.total_terrestrial_area);
 
       return {
         // We only want to show up to 55%, so we'll cap the percentage here
@@ -145,7 +145,7 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
         percentage: percentage > 55 ? 55 : percentage,
         year,
         active: isLastYear,
-        totalArea: location.totalMarineArea,
+        totalArea: Number(location.total_terrestrial_area),
         protectedArea,
         future: false,
       };

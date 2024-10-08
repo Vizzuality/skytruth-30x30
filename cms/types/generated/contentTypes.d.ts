@@ -1555,11 +1555,7 @@ export interface ApiLocationLocation extends Schema.CollectionType {
   attributes: {
     code: Attribute.String & Attribute.Required;
     name: Attribute.String & Attribute.Required;
-    totalMarineArea: Attribute.Decimal &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
+    total_marine_area: Attribute.BigInteger & Attribute.Required;
     type: Attribute.String & Attribute.Required;
     groups: Attribute.Relation<
       'api::location.location',
@@ -1587,11 +1583,7 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'api::protection-coverage-stat.protection-coverage-stat'
     >;
     marine_bounds: Attribute.JSON;
-    totalTerrestrialArea: Attribute.Decimal &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
+    total_terrestrial_area: Attribute.BigInteger & Attribute.Required;
     terrestrial_bounds: Attribute.JSON;
     name_es: Attribute.String & Attribute.Required;
     name_fr: Attribute.String & Attribute.Required;

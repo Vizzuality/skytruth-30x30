@@ -112,7 +112,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         // @ts-ignore
         populate: {
           location: {
-            fields: ['name', 'name_es', 'name_fr', 'code', 'marine_bounds', 'totalMarineArea'],
+            fields: ['name', 'name_es', 'name_fr', 'code', 'marine_bounds', 'total_marine_area'],
           },
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -222,7 +222,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
                 protectedArea: formattedStats.protectedArea,
                 totalArea: formatKM(
                   locale,
-                  protectionCoverageStats?.location.data.attributes.totalMarineArea
+                  Number(protectionCoverageStats?.location.data.attributes.total_marine_area)
                 ),
               })}
             </div>

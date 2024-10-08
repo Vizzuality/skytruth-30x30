@@ -24,11 +24,10 @@
       "required": true,
       "pluginOptions": {}
     },
-    "totalMarineArea": {
-      "type": "decimal",
+    "total_marine_area": {
+      "type": "biginteger",
       "description": "Total marine area in km2",
       "required": true,
-      "min": 0,
       "column": {
         "defaultTo": 0,
         "type": "decimal",
@@ -78,11 +77,10 @@
       "type": "json",
       "pluginOptions": {}
     },
-    "totalTerrestrialArea": {
+    "total_terrestrial_area": {
       "pluginOptions": {},
-      "type": "decimal",
-      "required": true,
-      "min": 0
+      "type": "biginteger",
+      "required": true
     },
     "terrestrial_bounds": {
       "pluginOptions": {},

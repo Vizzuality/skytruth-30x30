@@ -109,7 +109,7 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         // @ts-ignore
         populate: {
           location: {
-            fields: ['code', 'marine_bounds', 'totalMarineArea'],
+            fields: ['code', 'marine_bounds', 'total_marine_area'],
           },
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -212,7 +212,7 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
                 protectedArea: formatKM(locale, protectionCoverageStats.protectedArea),
                 totalArea: formatKM(
                   locale,
-                  protectionCoverageStats.location.data.attributes.totalMarineArea
+                  Number(protectionCoverageStats.location.data.attributes.total_marine_area)
                 ),
               })}
             </div>

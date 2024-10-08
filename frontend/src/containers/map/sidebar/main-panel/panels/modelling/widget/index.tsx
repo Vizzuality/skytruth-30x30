@@ -113,7 +113,7 @@ const ModellingWidget: FCWithMessages = () => {
       // @ts-ignore
       populate: {
         location: {
-          fields: ['totalMarineArea', 'totalTerrestrialArea'],
+          fields: ['total_marine_area', 'total_terrestrial_area'],
         },
       },
       'pagination[limit]': 1,
@@ -129,11 +129,14 @@ const ModellingWidget: FCWithMessages = () => {
 
           const protectedArea = data?.[0].attributes.protectedArea ?? 0;
 
+          const location = data?.[0].attributes?.location?.data?.attributes;
           let totalArea;
           if (tab === 'marine') {
-            totalArea = data?.[0].attributes?.location?.data?.attributes?.totalMarineArea ?? 0;
+            totalArea = location?.total_marine_area ? Number(location?.total_marine_area) : 0;
           } else {
-            totalArea = data?.[0].attributes?.location?.data?.attributes?.totalTerrestrialArea ?? 0;
+            totalArea = location?.total_terrestrial_area
+              ? Number(location?.total_terrestrial_area)
+              : 0;
           }
 
           const totalCustomAreas = modellingData.locations_area.reduce((acc, location) => {
@@ -191,8 +194,8 @@ const ModellingWidget: FCWithMessages = () => {
                 'name_es',
                 'name_es',
                 'code',
-                'totalMarineArea',
-                'totalTerrestrialArea',
+                'total_marine_area',
+                'total_terrestrial_area',
               ],
             },
           },
@@ -215,9 +218,11 @@ const ModellingWidget: FCWithMessages = () => {
               // ? total extension of location
               let totalArea;
               if (tab === 'marine') {
-                totalArea = location?.totalMarineArea ?? 0;
+                totalArea = location?.total_marine_area ? Number(location.total_marine_area) : 0;
               } else {
-                totalArea = location?.totalTerrestrialArea ?? 0;
+                totalArea = location?.total_terrestrial_area
+                  ? Number(location.total_terrestrial_area)
+                  : 0;
               }
 
               // ? total custom  protected area (analysis)

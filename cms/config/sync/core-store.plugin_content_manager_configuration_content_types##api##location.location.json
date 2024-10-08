@@ -48,16 +48,16 @@
           "sortable": true
         }
       },
-      "totalMarineArea": {
+      "total_marine_area": {
         "edit": {
-          "label": "totalMarineArea",
+          "label": "total_marine_area",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "totalMarineArea",
+          "label": "total_marine_area",
           "searchable": true,
           "sortable": true
         }
@@ -165,16 +165,16 @@
           "sortable": false
         }
       },
-      "totalTerrestrialArea": {
+      "total_terrestrial_area": {
         "edit": {
-          "label": "totalTerrestrialArea",
+          "label": "total_terrestrial_area",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "totalTerrestrialArea",
+          "label": "total_terrestrial_area",
           "searchable": true,
           "sortable": true
         }
@@ -299,7 +299,7 @@
         "id",
         "code",
         "name",
-        "totalMarineArea"
+        "total_marine_area"
       ],
       "edit": [
         [
@@ -326,16 +326,6 @@
           {
             "name": "name_fr",
             "size": 6
-          }
-        ],
-        [
-          {
-            "name": "totalMarineArea",
-            "size": 4
-          },
-          {
-            "name": "totalTerrestrialArea",
-            "size": 4
           }
         ],
         [
@@ -377,6 +367,16 @@
           },
           {
             "name": "mpaa_fully_highly_protected_area",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "total_marine_area",
+            "size": 4
+          },
+          {
+            "name": "total_terrestrial_area",
             "size": 4
           }
         ]

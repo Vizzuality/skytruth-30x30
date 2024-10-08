@@ -36,7 +36,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       // @ts-ignore
       populate: {
         location: {
-          fields: ['code', 'totalMarineArea'],
+          fields: ['code', 'total_marine_area'],
         },
         environment: {
           fields: ['slug'],
@@ -114,7 +114,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
   const stats = useMemo(() => {
     if (!aggregatedData.length) return null;
 
-    const totalArea = location.totalMarineArea;
+    const totalArea = Number(location.total_marine_area);
     const { protectedArea } = aggregatedData[0];
     const percentageFormatted = formatPercentage(locale, (protectedArea / totalArea) * 100, {
       displayPercentageSign: false,
@@ -135,7 +135,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
     const data = aggregatedData.map((entry, index) => {
       const isLastYear = index + 1 === aggregatedData.length;
       const { year, protectedArea } = entry;
-      const percentage = (protectedArea * 100) / location.totalMarineArea;
+      const percentage = (protectedArea * 100) / Number(location.total_marine_area);
 
       return {
         // We only want to show up to 55%, so we'll cap the percentage here
@@ -143,7 +143,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
         percentage: percentage > 55 ? 55 : percentage,
         year,
         active: isLastYear,
-        totalArea: location.totalMarineArea,
+        totalArea: Number(location.total_marine_area),
         protectedArea,
         future: false,
       };

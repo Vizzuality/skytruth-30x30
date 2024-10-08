@@ -840,15 +840,15 @@
         "fields": [
           "code",
           "name",
-          "totalMarineArea",
           "type",
           "groups",
           "members",
           "fishing_protection_level_stats",
           "protection_coverage_stats",
-          "totalTerrestrialArea",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "total_marine_area",
+          "total_terrestrial_area"
         ],
         "locales": []
       },
@@ -875,15 +875,15 @@
         "fields": [
           "code",
           "name",
-          "totalMarineArea",
           "type",
           "groups",
           "members",
           "fishing_protection_level_stats",
           "protection_coverage_stats",
-          "totalTerrestrialArea",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "total_marine_area",
+          "total_terrestrial_area"
         ],
         "locales": []
       },
@@ -897,15 +897,15 @@
         "fields": [
           "code",
           "name",
-          "totalMarineArea",
           "type",
           "groups",
           "members",
           "fishing_protection_level_stats",
           "protection_coverage_stats",
-          "totalTerrestrialArea",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "total_marine_area",
+          "total_terrestrial_area"
         ],
         "locales": []
       },

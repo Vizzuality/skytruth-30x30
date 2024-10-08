@@ -96,7 +96,7 @@ const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ loc
         title: mpaaProtectionLevel?.name,
         slug: mpaaProtectionLevel?.slug,
         background: barColor,
-        totalArea: location?.totalMarineArea,
+        totalArea: Number(location?.total_marine_area),
         protectedArea: protectionLevelStats?.area,
         info: metadata?.info,
         sources: metadata?.sources,

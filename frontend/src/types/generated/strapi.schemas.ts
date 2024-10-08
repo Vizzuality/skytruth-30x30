@@ -1854,7 +1854,7 @@ export type ProtectionCoverageStatEnvironment = {
 export type ProtectionCoverageStatLocationDataAttributes = {
   code?: string;
   name?: string;
-  totalMarineArea?: number;
+  total_marine_area?: string;
   type?: string;
   groups?: ProtectionCoverageStatLocationDataAttributesGroups;
   members?: ProtectionCoverageStatLocationDataAttributesMembers;
@@ -1862,7 +1862,7 @@ export type ProtectionCoverageStatLocationDataAttributes = {
   mpaa_protection_level_stat?: ProtectionCoverageStatLocationDataAttributesMpaaProtectionLevelStat;
   protection_coverage_stats?: ProtectionCoverageStatLocationDataAttributesProtectionCoverageStats;
   marine_bounds?: unknown;
-  totalTerrestrialArea?: number;
+  total_terrestrial_area?: string;
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
@@ -2809,7 +2809,7 @@ export type PaChildrenDataItemAttributesLocationDataAttributesProtectionCoverage
 export type PaChildrenDataItemAttributesLocationDataAttributes = {
   code?: string;
   name?: string;
-  totalMarineArea?: number;
+  total_marine_area?: string;
   type?: string;
   groups?: PaChildrenDataItemAttributesLocationDataAttributesGroups;
   members?: PaChildrenDataItemAttributesLocationDataAttributesMembers;
@@ -2817,7 +2817,7 @@ export type PaChildrenDataItemAttributesLocationDataAttributes = {
   mpaa_protection_level_stat?: PaChildrenDataItemAttributesLocationDataAttributesMpaaProtectionLevelStat;
   protection_coverage_stats?: PaChildrenDataItemAttributesLocationDataAttributesProtectionCoverageStats;
   marine_bounds?: unknown;
-  totalTerrestrialArea?: number;
+  total_terrestrial_area?: string;
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
@@ -3633,7 +3633,7 @@ export type MpaaProtectionLevelStatLocationDataAttributesUpdatedBy = {
 export type MpaaProtectionLevelStatLocationDataAttributes = {
   code?: string;
   name?: string;
-  totalMarineArea?: number;
+  total_marine_area?: string;
   type?: string;
   groups?: MpaaProtectionLevelStatLocationDataAttributesGroups;
   members?: MpaaProtectionLevelStatLocationDataAttributesMembers;
@@ -3641,7 +3641,7 @@ export type MpaaProtectionLevelStatLocationDataAttributes = {
   mpaa_protection_level_stat?: MpaaProtectionLevelStatLocationDataAttributesMpaaProtectionLevelStat;
   protection_coverage_stats?: MpaaProtectionLevelStatLocationDataAttributesProtectionCoverageStats;
   marine_bounds?: unknown;
-  totalTerrestrialArea?: number;
+  total_terrestrial_area?: string;
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
@@ -5130,7 +5130,7 @@ export type LocationResponseMeta = { [key: string]: any };
 export interface Location {
   code: string;
   name: string;
-  totalMarineArea: number;
+  total_marine_area: string;
   type: string;
   groups?: LocationGroups;
   members?: LocationMembers;
@@ -5138,7 +5138,7 @@ export interface Location {
   mpaa_protection_level_stat?: LocationMpaaProtectionLevelStat;
   protection_coverage_stats?: LocationProtectionCoverageStats;
   marine_bounds?: unknown;
-  totalTerrestrialArea: number;
+  total_terrestrial_area: string;
   terrestrial_bounds?: unknown;
   name_es: string;
   name_fr: string;
@@ -5228,7 +5228,7 @@ export type LocationMembers = {
 export type LocationGroupsDataItemAttributes = {
   code?: string;
   name?: string;
-  totalMarineArea?: number;
+  total_marine_area?: string;
   type?: string;
   groups?: LocationGroupsDataItemAttributesGroups;
   members?: LocationGroupsDataItemAttributesMembers;
@@ -5236,7 +5236,7 @@ export type LocationGroupsDataItemAttributes = {
   mpaa_protection_level_stat?: LocationGroupsDataItemAttributesMpaaProtectionLevelStat;
   protection_coverage_stats?: LocationGroupsDataItemAttributesProtectionCoverageStats;
   marine_bounds?: unknown;
-  totalTerrestrialArea?: number;
+  total_terrestrial_area?: string;
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
@@ -6575,7 +6575,7 @@ export type HabitatStatHabitatDataAttributesCreatedBy = {
 export type HabitatStatLocationDataAttributes = {
   code?: string;
   name?: string;
-  totalMarineArea?: number;
+  total_marine_area?: string;
   type?: string;
   groups?: HabitatStatLocationDataAttributesGroups;
   members?: HabitatStatLocationDataAttributesMembers;
@@ -6583,7 +6583,7 @@ export type HabitatStatLocationDataAttributes = {
   mpaa_protection_level_stat?: HabitatStatLocationDataAttributesMpaaProtectionLevelStat;
   protection_coverage_stats?: HabitatStatLocationDataAttributesProtectionCoverageStats;
   marine_bounds?: unknown;
-  totalTerrestrialArea?: number;
+  total_terrestrial_area?: string;
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
@@ -7583,7 +7583,7 @@ export type FishingProtectionLevelStatLocationDataAttributesProtectionCoverageSt
 export type FishingProtectionLevelStatLocationDataAttributes = {
   code?: string;
   name?: string;
-  totalMarineArea?: number;
+  total_marine_area?: string;
   type?: string;
   groups?: FishingProtectionLevelStatLocationDataAttributesGroups;
   members?: FishingProtectionLevelStatLocationDataAttributesMembers;
@@ -7591,7 +7591,7 @@ export type FishingProtectionLevelStatLocationDataAttributes = {
   mpaa_protection_level_stat?: FishingProtectionLevelStatLocationDataAttributesMpaaProtectionLevelStat;
   protection_coverage_stats?: FishingProtectionLevelStatLocationDataAttributesProtectionCoverageStats;
   marine_bounds?: unknown;
-  totalTerrestrialArea?: number;
+  total_terrestrial_area?: string;
   terrestrial_bounds?: unknown;
   name_es?: string;
   name_fr?: string;
