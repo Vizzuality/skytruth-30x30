@@ -48,6 +48,20 @@
           "sortable": true
         }
       },
+      "total_marine_area": {
+        "edit": {
+          "label": "total_marine_area",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "total_marine_area",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "type": {
         "edit": {
           "label": "type",
@@ -107,6 +121,21 @@
           "sortable": false
         }
       },
+      "mpaa_protection_level_stats": {
+        "edit": {
+          "label": "mpaa_protection_level_stats",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "id"
+        },
+        "list": {
+          "label": "mpaa_protection_level_stats",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "protection_coverage_stats": {
         "edit": {
           "label": "protection_coverage_stats",
@@ -134,6 +163,20 @@
           "label": "marine_bounds",
           "searchable": false,
           "sortable": false
+        }
+      },
+      "total_terrestrial_area": {
+        "edit": {
+          "label": "total_terrestrial_area",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "total_terrestrial_area",
+          "searchable": true,
+          "sortable": true
         }
       },
       "terrestrial_bounds": {
@@ -238,11 +281,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "code",
-        "name"
-      ],
       "edit": [
         [
           {
@@ -292,6 +330,12 @@
         ],
         [
           {
+            "name": "mpaa_protection_level_stats",
+            "size": 6
+          }
+        ],
+        [
+          {
             "name": "marine_bounds",
             "size": 12
           }
@@ -301,7 +345,23 @@
             "name": "terrestrial_bounds",
             "size": 12
           }
+        ],
+        [
+          {
+            "name": "total_marine_area",
+            "size": 4
+          },
+          {
+            "name": "total_terrestrial_area",
+            "size": 4
+          }
         ]
+      ],
+      "list": [
+        "id",
+        "code",
+        "name",
+        "total_marine_area"
       ]
     }
   },

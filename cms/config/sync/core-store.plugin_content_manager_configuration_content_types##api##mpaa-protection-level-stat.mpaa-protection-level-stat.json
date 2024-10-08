@@ -20,6 +20,21 @@
           "sortable": true
         }
       },
+      "location": {
+        "edit": {
+          "label": "location",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "code"
+        },
+        "list": {
+          "label": "location",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "mpaa_protection_level": {
         "edit": {
           "label": "mpaa_protection_level",
@@ -123,13 +138,12 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "mpaa_protection_level",
-        "area"
-      ],
       "edit": [
         [
+          {
+            "name": "location",
+            "size": 6
+          },
           {
             "name": "area",
             "size": 4
@@ -145,6 +159,12 @@
             "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "location",
+        "mpaa_protection_level",
+        "area"
       ]
     }
   },

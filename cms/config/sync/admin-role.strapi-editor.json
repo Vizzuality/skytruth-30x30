@@ -846,7 +846,9 @@
           "fishing_protection_level_stats",
           "protection_coverage_stats",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "total_marine_area",
+          "total_terrestrial_area"
         ],
         "locales": []
       },
@@ -879,7 +881,9 @@
           "fishing_protection_level_stats",
           "protection_coverage_stats",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "total_marine_area",
+          "total_terrestrial_area"
         ],
         "locales": []
       },
@@ -899,7 +903,9 @@
           "fishing_protection_level_stats",
           "protection_coverage_stats",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "total_marine_area",
+          "total_terrestrial_area"
         ],
         "locales": []
       },
@@ -966,6 +972,7 @@
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
+          "location",
           "mpaa_protection_level",
           "area"
         ]
@@ -985,6 +992,7 @@
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
+          "location",
           "mpaa_protection_level",
           "area"
         ]
@@ -997,6 +1005,7 @@
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
+          "location",
           "mpaa_protection_level",
           "area"
         ]
