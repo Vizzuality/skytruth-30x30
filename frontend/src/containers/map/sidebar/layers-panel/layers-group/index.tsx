@@ -30,6 +30,8 @@ type LayersGroupProps = PropsWithChildren<{
   showBottomBorder?: boolean;
   isOpen?: boolean;
   loading?: boolean;
+  // Number of extra active layers for this group
+  extraActiveLayers?: number;
 }>;
 
 const LayersGroup: FCWithMessages<LayersGroupProps> = ({
@@ -39,6 +41,7 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
   showBottomBorder = true,
   isOpen = true,
   loading = true,
+  extraActiveLayers = 0,
   children,
 }): JSX.Element => {
   const [open, setOpen] = useState(isOpen);
@@ -55,8 +58,11 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
   }, [datasets]);
 
   const numActiveDatasetsLayers = useMemo(() => {
-    return datasetsLayersIds?.filter((id) => activeLayers?.includes(id))?.length || 0;
-  }, [datasetsLayersIds, activeLayers]);
+    return (
+      (datasetsLayersIds?.filter((id) => activeLayers?.includes(id))?.length ?? 0) +
+      extraActiveLayers
+    );
+  }, [datasetsLayersIds, activeLayers, extraActiveLayers]);
 
   const onToggleLayer = useCallback(
     (layerId: LayerResponseDataObject['id'], isActive: boolean) => {
@@ -120,8 +126,8 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
         className={cn(COLLAPSIBLE_CONTENT_CLASSES, { 'border-b': showBottomBorder })}
       >
         <div className="space-y-4 divide-y divide-dashed divide-black">
-          {loading && <span>{t('loading')}</span>}
-          {noData && <span>{t('no-data')}</span>}
+          {loading && <span className="font-mono text-xs">{t('loading')}</span>}
+          {noData && <span className="font-mono text-xs">{t('no-data-available')}</span>}
           {datasets?.map((dataset) => {
             return (
               <div key={dataset.id} className="[&:not(:first-child)]:pt-3">
@@ -136,10 +142,11 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
                     const metadata = layer?.attributes?.metadata;
 
                     return (
-                      <li key={layer.id} className="flex items-center justify-between">
-                        <span className="flex gap-2">
+                      <li key={layer.id} className="flex items-start justify-between">
+                        <span className="flex items-start gap-2">
                           <Switch
                             id={`${layer.id}-switch`}
+                            className="mt-px"
                             checked={isActive}
                             onCheckedChange={onCheckedChange}
                           />
@@ -148,7 +155,7 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
                           </Label>
                         </span>
                         {metadata?.description && (
-                          <TooltipButton className="-my-1" text={metadata?.description} />
+                          <TooltipButton className="mt-px" text={metadata?.description} />
                         )}
                       </li>
                     );
