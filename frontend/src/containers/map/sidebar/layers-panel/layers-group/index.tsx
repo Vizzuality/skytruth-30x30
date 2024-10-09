@@ -136,10 +136,11 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
                     const metadata = layer?.attributes?.metadata;
 
                     return (
-                      <li key={layer.id} className="flex items-center justify-between">
-                        <span className="flex gap-2">
+                      <li key={layer.id} className="flex items-start justify-between">
+                        <span className="flex items-start gap-2">
                           <Switch
                             id={`${layer.id}-switch`}
+                            className="mt-px"
                             checked={isActive}
                             onCheckedChange={onCheckedChange}
                           />
@@ -148,7 +149,7 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
                           </Label>
                         </span>
                         {metadata?.description && (
-                          <TooltipButton className="-my-1" text={metadata?.description} />
+                          <TooltipButton className="mt-px" text={metadata?.description} />
                         )}
                       </li>
                     );
