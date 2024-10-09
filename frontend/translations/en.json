@@ -238,7 +238,7 @@
       "marine-data": "Marine Data",
       "terrestrial-data": "Terrestrial Data",
       "loading": "Loading data...",
-      "no-data": "Data not available"
+      "no-data-available": "No data available"
     },
     "map": {
       "loading": "Loading...",

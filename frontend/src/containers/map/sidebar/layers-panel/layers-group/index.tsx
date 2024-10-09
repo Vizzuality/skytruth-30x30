@@ -120,8 +120,8 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
         className={cn(COLLAPSIBLE_CONTENT_CLASSES, { 'border-b': showBottomBorder })}
       >
         <div className="space-y-4 divide-y divide-dashed divide-black">
-          {loading && <span>{t('loading')}</span>}
-          {noData && <span>{t('no-data')}</span>}
+          {loading && <span className="font-mono text-xs">{t('loading')}</span>}
+          {noData && <span className="font-mono text-xs">{t('no-data-available')}</span>}
           {datasets?.map((dataset) => {
             return (
               <div key={dataset.id} className="[&:not(:first-child)]:pt-3">
