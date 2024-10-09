@@ -98,6 +98,25 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
     };
   }, [datasetsData]);
 
+  const defaultLayersIds = useMemo(() => {
+    const datasetsDefaultLayerIds = (datasets = []) => {
+      return datasets.reduce((acc, { attributes }) => {
+        const layersData = attributes?.layers?.data;
+        const defaultLayersIds = layersData.reduce(
+          (acc, { id, attributes }) => (attributes?.default ? [...acc, id] : acc),
+          []
+        );
+        return [...acc, ...defaultLayersIds];
+      }, []);
+    };
+
+    return {
+      terrestrial: datasetsDefaultLayerIds(datasets.terrestrial),
+      marine: datasetsDefaultLayerIds(datasets.marine),
+      basemap: datasetsDefaultLayerIds(datasets.basemap),
+    };
+  }, [datasets]);
+
   const handleLabelsChange = useCallback(
     (active: Parameters<ComponentProps<typeof Switch>['onCheckedChange']>[0]) => {
       setMapSettings((prev) => ({
