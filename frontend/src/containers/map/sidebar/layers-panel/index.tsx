@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback, useMemo } from 'react';
+import { ComponentProps, useCallback, useEffect, useMemo } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -6,7 +6,7 @@ import TooltipButton from '@/components/tooltip-button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { ENVIRONMENTS } from '@/constants/environments';
-import { useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
+import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { FCWithMessages } from '@/types';
 import { useGetDatasets } from '@/types/generated/dataset';
@@ -17,6 +17,7 @@ import LayersGroup, { SWITCH_LABEL_CLASSES } from './layers-group';
 const LayersPanel: FCWithMessages = (): JSX.Element => {
   const t = useTranslations('containers.map-sidebar-layers-panel');
   const locale = useLocale();
+  const [, setMapLayers] = useSyncMapLayers();
   const [{ labels }, setMapSettings] = useSyncMapSettings();
   const [{ tab }] = useSyncMapContentSettings();
 
@@ -42,6 +43,7 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
     }
   );
 
+  // Break up datasets by terrestrial, marine, basemap for ease of handling
   const datasets = useMemo(() => {
     // Basemap dataset is displayed separately in the panel, much like terrestrial/maritime.
     // We need to split it out from the datasets we're processing in order to display this correctly.
@@ -98,6 +100,7 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
     };
   }, [datasetsData]);
 
+  // Default layers ids by dataset type
   const defaultLayersIds = useMemo(() => {
     const datasetsDefaultLayerIds = (datasets = []) => {
       return datasets.reduce((acc, { attributes }) => {
@@ -116,6 +119,26 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
       basemap: datasetsDefaultLayerIds(datasets.basemap),
     };
   }, [datasets]);
+
+  // Set map layers to the corresponding defaults when the user switches tabs
+  useEffect(() => {
+    let mapLayers = [];
+    switch (tab) {
+      case 'summary':
+        mapLayers = ['terrestrial', 'marine', 'basemap']?.reduce(
+          (ids, dataset) => [...ids, ...defaultLayersIds[dataset]],
+          []
+        );
+        break;
+      case 'terrestrial':
+        mapLayers = defaultLayersIds.terrestrial;
+        break;
+      case 'marine':
+        mapLayers = defaultLayersIds.marine;
+        break;
+    }
+    setMapLayers(mapLayers);
+  }, [defaultLayersIds, setMapLayers, tab]);
 
   const handleLabelsChange = useCallback(
     (active: Parameters<ComponentProps<typeof Switch>['onCheckedChange']>[0]) => {
