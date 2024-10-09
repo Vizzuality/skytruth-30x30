@@ -180,9 +180,14 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
           Not ideal, but given it's a one-off, we'll pass the entry as a child to be displayed alongside the
           other entries, much like in the previous implementation.
         */}
-        <li className="flex items-center justify-between">
-          <span className="flex gap-2">
-            <Switch id="labels-switch" checked={labels} onCheckedChange={handleLabelsChange} />
+        <li className="flex items-start justify-between">
+          <span className="flex items-start gap-2">
+            <Switch
+              id="labels-switch"
+              className="mt-px"
+              checked={labels}
+              onCheckedChange={handleLabelsChange}
+            />
             <Label htmlFor="labels-switch" className={SWITCH_LABEL_CLASSES}>
               {t('labels')}
             </Label>
