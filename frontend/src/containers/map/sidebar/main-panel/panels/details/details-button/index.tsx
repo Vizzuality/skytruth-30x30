@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import { useTranslations } from 'next-intl';
+import { LuArrowRight } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
@@ -9,9 +10,10 @@ import { FCWithMessages } from '@/types';
 
 type DetailsButtonProps = {
   className?: HTMLDivElement['className'];
+  locationType: string;
 };
 
-const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className }) => {
+const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className, locationType }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
 
   const [{ tab }, setSettings] = useSyncMapContentSettings();
@@ -27,10 +29,12 @@ const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className }) => {
       onClick={handleButtonClick}
     >
       <span className="font-mono text-xs font-semibold normal-case">
-        {tab === 'summary' && t('more-regional-insights')}
-        {tab === 'terrestrial' && t('more-terrestrial-insights')}
-        {tab === 'marine' && t('more-marine-insights')}
+        {tab === 'summary' && locationType !== 'country' && t('show-global-insights-table')}
+        {tab === 'summary' && locationType === 'country' && t('show-country-insights-table')}
+        {tab === 'terrestrial' && t('show-terrestrial-insights-table')}
+        {tab === 'marine' && t('show-marine-insights-table')}
       </span>
+      <LuArrowRight className="ml-2.5 h-5 w-5" aria-hidden />
     </Button>
   );
 };
