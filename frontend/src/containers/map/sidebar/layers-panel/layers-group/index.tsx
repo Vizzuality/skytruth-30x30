@@ -30,6 +30,8 @@ type LayersGroupProps = PropsWithChildren<{
   showBottomBorder?: boolean;
   isOpen?: boolean;
   loading?: boolean;
+  // Number of extra active layers for this group
+  extraActiveLayers?: number;
 }>;
 
 const LayersGroup: FCWithMessages<LayersGroupProps> = ({
@@ -39,6 +41,7 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
   showBottomBorder = true,
   isOpen = true,
   loading = true,
+  extraActiveLayers = 0,
   children,
 }): JSX.Element => {
   const [open, setOpen] = useState(isOpen);
@@ -55,8 +58,11 @@ const LayersGroup: FCWithMessages<LayersGroupProps> = ({
   }, [datasets]);
 
   const numActiveDatasetsLayers = useMemo(() => {
-    return datasetsLayersIds?.filter((id) => activeLayers?.includes(id))?.length || 0;
-  }, [datasetsLayersIds, activeLayers]);
+    return (
+      (datasetsLayersIds?.filter((id) => activeLayers?.includes(id))?.length ?? 0) +
+      extraActiveLayers
+    );
+  }, [datasetsLayersIds, activeLayers, extraActiveLayers]);
 
   const onToggleLayer = useCallback(
     (layerId: LayerResponseDataObject['id'], isActive: boolean) => {

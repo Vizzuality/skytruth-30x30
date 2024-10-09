@@ -174,6 +174,7 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
         loading={isFetchingDatasetsData}
         showDatasetsNames={false}
         showBottomBorder={false}
+        extraActiveLayers={labels ? 1 : 0}
       >
         {/*
           The labels toggle doesn't come from the basemap dataset and has slightly functionality implemented.
