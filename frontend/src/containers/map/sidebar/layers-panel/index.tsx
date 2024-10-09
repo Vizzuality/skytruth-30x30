@@ -116,13 +116,13 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
       <LayersGroup
         name={t('terrestrial-data')}
         datasets={datasets.terrestrial}
-        isOpen={['terrestrial'].includes(tab)}
+        isOpen={['summary', 'terrestrial'].includes(tab)}
         loading={isFetchingDatasetsData}
       />
       <LayersGroup
         name={t('marine-data')}
         datasets={datasets.marine}
-        isOpen={['marine'].includes(tab)}
+        isOpen={['summary', 'marine'].includes(tab)}
         loading={isFetchingDatasetsData}
       />
       <LayersGroup
