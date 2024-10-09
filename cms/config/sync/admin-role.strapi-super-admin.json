@@ -1071,7 +1071,9 @@
           "total_terrestrial_area",
           "terrestrial_bounds",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "marine_target",
+          "marine_target_year"
         ]
       },
       "conditions": [],
@@ -1102,7 +1104,9 @@
           "total_terrestrial_area",
           "terrestrial_bounds",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "marine_target",
+          "marine_target_year"
         ]
       },
       "conditions": [],
@@ -1126,7 +1130,9 @@
           "total_terrestrial_area",
           "terrestrial_bounds",
           "name_es",
-          "name_fr"
+          "name_fr",
+          "marine_target",
+          "marine_target_year"
         ]
       },
       "conditions": [],

@@ -339,12 +339,12 @@
       "not-visible-due-to-error": "The current widget is not visible due to an error"
     },
     "chart-conservation": {
-      "30x30-target": "30x30 Target",
       "year-value": "Year: {value}",
       "coverage-value": "Coverage: {percentage}",
       "historical-trend": "Historical Trend",
       "future-projection": "Future Projection",
-      "historical": "Historical"
+      "historical": "Historical",
+      "percentage-target": "{target}% target"
     },
     "chart-horizontal-bar": {
       "marine-protected-percentage": "{percentage}<b>%</b>",

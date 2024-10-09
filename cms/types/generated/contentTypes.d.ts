@@ -1587,6 +1587,12 @@ export interface ApiLocationLocation extends Schema.CollectionType {
     terrestrial_bounds: Attribute.JSON;
     name_es: Attribute.String & Attribute.Required;
     name_fr: Attribute.String & Attribute.Required;
+    marine_target: Attribute.Integer &
+      Attribute.SetMinMax<{
+        min: 0;
+        max: 100;
+      }>;
+    marine_target_year: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
