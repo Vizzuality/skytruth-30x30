@@ -12,7 +12,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { CustomMapProps } from '@/components/map/types';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
-import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
+import { bboxLocationAtom, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
@@ -29,7 +29,7 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
   const { push } = useRouter();
-  const [, setLocationBBox] = useAtom(bboxLocation);
+  const [, setLocationBBox] = useAtom(bboxLocationAtom);
   const [popup, setPopup] = useAtom(popupAtom);
   const { locationCode } = useParams();
 
