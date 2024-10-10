@@ -170,7 +170,7 @@ const SidebarDetails: FCWithMessages = () => {
         </TabsContent>
       </div>
       <div className="shrink-0 border-t border-t-black bg-white px-4 py-5 md:px-8">
-        <DetailsButton />
+        <DetailsButton locationType={locationsData?.data[0]?.attributes.type} />
       </div>
     </Tabs>
   );
