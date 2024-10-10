@@ -32,6 +32,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
   const layerQuery = useGetLayersId<{
+    environment: LayerTyped['environment']['data']['attributes'];
     source: LayerTyped['config']['source'];
     click: LayerTyped['interaction_config']['events'][0];
   }>(
@@ -40,12 +41,13 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       locale,
-      populate: 'metadata',
+      populate: 'metadata,environment',
     },
     {
       query: {
         select: ({ data }) => ({
-          source: (data.attributes as LayerTyped).config?.source,
+          environment: (data.attributes as LayerTyped)?.environment?.data?.attributes,
+          source: (data.attributes as LayerTyped)?.config?.source,
           click: (data.attributes as LayerTyped)?.interaction_config?.events.find(
             (ev) => ev.type === 'click'
           ),
@@ -54,7 +56,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     }
   );
 
-  const { source } = layerQuery.data;
+  const { source, environment } = layerQuery.data;
 
   const DATA = useMemo(() => {
     if (source?.type === 'vector' && rendered && popup && map) {
@@ -102,7 +104,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
           },
           environment: {
             slug: {
-              $eq: 'marine',
+              $eq: environment.slug,
             },
           },
         },
@@ -110,7 +112,14 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         // @ts-ignore
         populate: {
           location: {
-            fields: ['name', 'name_es', 'name_fr', 'code', 'total_marine_area'],
+            fields: [
+              'name',
+              'name_es',
+              'name_fr',
+              'code',
+              'total_marine_area',
+              'total_terrestrial_area',
+            ],
           },
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -188,6 +197,9 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
 
   if (!DATA) return null;
 
+  const totalLocationArea =
+    protectionCoverageStats?.location.data.attributes[`total_${environment.slug}_area`];
+
   return (
     <div className="space-y-2">
       <h3 className="text-xl font-semibold">{localizedLocationName || '-'}</h3>
@@ -198,7 +210,11 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       {!isFetching && !!protectionCoverageStats && (
         <>
           <div className="space-y-2">
-            <div className="my-4 max-w-[95%] font-mono">{t('marine-conservation-coverage')}</div>
+            <div className="my-4 max-w-[95%] font-mono">
+              {environment?.slug === 'marine'
+                ? t('marine-conservation-coverage')
+                : t('terrestrial-conservation-coverage')}
+            </div>
             <div className="space-x-1 font-mono tracking-tighter text-black">
               {formattedStats.percentage !== '-' &&
                 t.rich('percentage-bold', {
@@ -217,10 +233,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
             <div className="space-x-1 font-mono font-medium text-black">
               {t('marine-protected-area', {
                 protectedArea: formattedStats.protectedArea,
-                totalArea: formatKM(
-                  locale,
-                  Number(protectionCoverageStats?.location.data.attributes.total_marine_area)
-                ),
+                totalArea: formatKM(locale, Number(totalLocationArea)),
               })}
             </div>
           </div>
