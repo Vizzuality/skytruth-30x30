@@ -5,13 +5,12 @@ import { useMap } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import type { Feature } from 'geojson';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { CustomMapProps } from '@/components/map/types';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
-import { bboxLocationAtom, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
+import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
@@ -28,7 +27,6 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
   const { push } = useRouter();
-  const setLocationBBox = useSetAtom(bboxLocationAtom);
   const [popup, setPopup] = useAtom(popupAtom);
 
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
@@ -112,7 +110,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         // @ts-ignore
         populate: {
           location: {
-            fields: ['name', 'name_es', 'name_fr', 'code', 'marine_bounds', 'total_marine_area'],
+            fields: ['name', 'name_es', 'name_fr', 'code', 'total_marine_area'],
           },
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -172,12 +170,11 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const handleLocationSelected = useCallback(async () => {
     if (!protectionCoverageStats?.location?.data.attributes) return undefined;
 
-    const { code, marine_bounds: bounds } = protectionCoverageStats.location.data.attributes;
+    const { code } = protectionCoverageStats.location.data.attributes;
 
     await push(`${PAGES.progressTracker}/${code.toUpperCase()}?${searchParams.toString()}`);
-    setLocationBBox(bounds as CustomMapProps['bounds']['bbox']);
     setPopup({});
-  }, [push, searchParams, setLocationBBox, protectionCoverageStats, setPopup]);
+  }, [push, searchParams, protectionCoverageStats, setPopup]);
 
   useEffect(() => {
     map?.on('render', handleMapRender);
