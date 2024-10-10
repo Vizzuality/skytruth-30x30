@@ -14,7 +14,7 @@ export const layersAtom = atom(true);
 // ? Map state
 export const layersInteractiveAtom = atom<LayerResponseDataObject['id'][]>([]);
 export const layersInteractiveIdsAtom = atom<string[]>([]);
-export const bboxLocation = atomWithReset<CustomMapProps['bounds']['bbox']>([
+export const bboxLocationAtom = atomWithReset<CustomMapProps['bounds']['bbox']>([
   -180, -85.5624999997749, 180, 90,
 ]);
 export const popupAtom = atom<Partial<MapLayerMouseEvent | null>>({});

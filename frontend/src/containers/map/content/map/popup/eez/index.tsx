@@ -9,10 +9,9 @@ import type { Feature } from 'geojson';
 import { useAtom, useAtomValue } from 'jotai';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { CustomMapProps } from '@/components/map/types';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
-import { bboxLocation, layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
+import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
@@ -29,7 +28,6 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
   const { push } = useRouter();
-  const [, setLocationBBox] = useAtom(bboxLocation);
   const [popup, setPopup] = useAtom(popupAtom);
   const { locationCode } = useParams();
 
@@ -109,7 +107,7 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         // @ts-ignore
         populate: {
           location: {
-            fields: ['code', 'marine_bounds', 'total_marine_area'],
+            fields: ['code', 'total_marine_area'],
           },
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -164,12 +162,11 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const handleLocationSelected = useCallback(async () => {
     if (!protectionCoverageStats?.location?.data.attributes) return undefined;
 
-    const { code, marine_bounds: bounds } = protectionCoverageStats.location.data.attributes;
+    const { code } = protectionCoverageStats.location.data.attributes;
 
     await push(`${PAGES.progressTracker}/${code.toUpperCase()}?${searchParams.toString()}`);
-    setLocationBBox(bounds as CustomMapProps['bounds']['bbox']);
     setPopup({});
-  }, [push, searchParams, setLocationBBox, protectionCoverageStats, setPopup]);
+  }, [push, searchParams, protectionCoverageStats, setPopup]);
 
   useEffect(() => {
     map?.on('render', handleMapRender);

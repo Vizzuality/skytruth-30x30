@@ -26,7 +26,7 @@ import RegionsPopup from '@/containers/map/content/map/popup/regions';
 import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
 import { sidebarAtom } from '@/containers/map/store';
 import {
-  bboxLocation,
+  bboxLocationAtom,
   drawStateAtom,
   layersInteractiveAtom,
   layersInteractiveIdsAtom,
@@ -51,8 +51,8 @@ const MainMap: FCWithMessages = () => {
   const isSidebarOpen = useAtomValue(sidebarAtom);
   const [popup, setPopup] = useAtom(popupAtom);
   const params = useParams();
-  const [locationBbox, setLocationBbox] = useAtom(bboxLocation);
-  const resetLocationBbox = useResetAtom(bboxLocation);
+  const [locationBbox, setLocationBbox] = useAtom(bboxLocationAtom);
+  const resetLocationBbox = useResetAtom(bboxLocationAtom);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
   const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
 
