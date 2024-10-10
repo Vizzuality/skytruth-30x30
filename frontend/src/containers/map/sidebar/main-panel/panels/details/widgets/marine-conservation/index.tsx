@@ -116,7 +116,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
     if (!aggregatedData.length) return null;
 
     const totalArea = Number(location.total_marine_area);
-    const { protectedArea } = aggregatedData[0];
+    const { protectedArea } = aggregatedData[aggregatedData.length - 1];
     const percentageFormatted = formatPercentage(locale, (protectedArea / totalArea) * 100, {
       displayPercentageSign: false,
     });

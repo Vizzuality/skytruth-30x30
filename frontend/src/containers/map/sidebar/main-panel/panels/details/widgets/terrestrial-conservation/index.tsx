@@ -118,7 +118,7 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
     if (!aggregatedData.length) return null;
 
     const totalArea = Number(location.total_terrestrial_area);
-    const { protectedArea } = aggregatedData[0];
+    const { protectedArea } = aggregatedData[aggregatedData.length - 1];
     const percentageFormatted = formatPercentage(locale, (protectedArea / totalArea) * 100, {
       displayPercentageSign: false,
     });
