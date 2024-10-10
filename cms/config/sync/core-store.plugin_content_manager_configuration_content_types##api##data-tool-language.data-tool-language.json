@@ -7,7 +7,7 @@
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "name",
+      "mainField": "slug",
       "defaultSortBy": "name",
       "defaultSortOrder": "ASC"
     },
@@ -123,12 +123,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "name",
-        "slug",
-        "data_tool"
-      ],
       "edit": [
         [
           {
@@ -146,6 +140,12 @@
             "size": 6
           }
         ]
+      ],
+      "list": [
+        "id",
+        "name",
+        "slug",
+        "data_tool"
       ]
     }
   },
