@@ -23,7 +23,7 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
   const [{ tab }] = useSyncMapContentSettings();
 
   const { data: habitatMetadatas } = useGetDataInfos<
-    { slug: string; info: string; sources?: { title: string; url: string }[] }[]
+    { slug: string; info: string; sources?: { id: number; title: string; url: string }[] }[]
   >(
     {
       locale,
@@ -45,10 +45,13 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
           data?.map((item) => ({
             slug: item.attributes.slug,
             info: item.attributes.content,
-            sources: item.attributes.data_sources?.data?.map(({ attributes: { title, url } }) => ({
-              title,
-              url,
-            })),
+            sources: item.attributes.data_sources?.data?.map(
+              ({ id, attributes: { title, url } }) => ({
+                id,
+                title,
+                url,
+              })
+            ),
           })) ?? [],
       },
     }
@@ -62,7 +65,7 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
       totalArea: number;
       protectedArea: number;
       info?: string;
-      sources?: { title: string; url: string }[];
+      sources?: { id: number; title: string; url: string }[];
       updatedAt: string;
     }[]
   >(

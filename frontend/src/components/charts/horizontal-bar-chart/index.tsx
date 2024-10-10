@@ -10,7 +10,13 @@ import { FCWithMessages } from '@/types';
 const DEFAULT_MAX_PERCENTAGE = 100;
 const PROTECTION_TARGET = 30;
 
-type HorizontalBarChartProps = {
+interface Source {
+  id: number;
+  title: string;
+  url: string;
+}
+
+interface HorizontalBarChartProps {
   className: string;
   data: {
     background: string;
@@ -18,19 +24,11 @@ type HorizontalBarChartProps = {
     totalArea: number;
     protectedArea: number;
     info?: string;
-    sources?:
-      | {
-          title: string;
-          url: string;
-        }
-      | {
-          title: string;
-          url: string;
-        }[];
+    sources?: Source | Source[];
   };
   showLegend?: boolean;
   showTarget?: boolean;
-};
+}
 
 const HorizontalBarChart: FCWithMessages<HorizontalBarChartProps> = ({
   className,

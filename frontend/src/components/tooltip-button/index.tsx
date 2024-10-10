@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import Linkify from 'react-linkify';
 
@@ -10,19 +10,17 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
 
-type TooltipButtonProps = {
+interface Source {
+  id: number;
+  title: string;
+  url: string;
+}
+
+interface TooltipButtonProps {
   className?: string;
   text: string;
-  sources?:
-    | {
-        title: string;
-        url: string;
-      }
-    | {
-        title: string;
-        url: string;
-      }[];
-};
+  sources?: Source | Source[];
+}
 
 const TooltipButton: FCWithMessages<TooltipButtonProps> = ({ className, text, sources }) => {
   const t = useTranslations('components.tooltip-button');
@@ -68,10 +66,9 @@ const TooltipButton: FCWithMessages<TooltipButtonProps> = ({ className, text, so
         {Array.isArray(sources) && (
           <div className="">
             <span>Data sources: </span>
-            {sources.map(({ title, url }, index) => (
-              <>
+            {sources.map(({ id, title, url }, index) => (
+              <Fragment key={id}>
                 <a
-                  key={title}
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -80,7 +77,7 @@ const TooltipButton: FCWithMessages<TooltipButtonProps> = ({ className, text, so
                   {title}
                 </a>
                 {index < sources.length - 1 && <span>, </span>}
-              </>
+              </Fragment>
             ))}
           </div>
         )}

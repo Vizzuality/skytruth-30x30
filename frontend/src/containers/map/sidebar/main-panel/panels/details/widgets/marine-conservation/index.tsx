@@ -100,7 +100,8 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
             ? {
                 info: data[0].attributes.content,
                 sources: data[0].attributes?.data_sources?.data?.map(
-                  ({ attributes: { title, url } }) => ({
+                  ({ id, attributes: { title, url } }) => ({
+                    id,
                     title,
                     url,
                   })
