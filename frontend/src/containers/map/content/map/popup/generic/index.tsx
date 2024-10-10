@@ -35,7 +35,7 @@ const GenericPopup: FCWithMessages<InteractionConfig & { layerId: number }> = ({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       locale,
-      populate: 'metadata',
+      populate: 'metadata,environment',
     },
     {
       query: {
