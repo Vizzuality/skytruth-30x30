@@ -84,7 +84,7 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
       'pagination[limit]': -1,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      fields: ['protectedArea', 'totalArea', 'updatedAt'],
+      fields: ['protected_area', 'total_area', 'updatedAt'],
       filters: {
         location: {
           code: location?.code,
@@ -119,8 +119,8 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
               title: habitat.name,
               slug: habitat.slug,
               background: HABITAT_CHART_COLORS[habitat.slug],
-              totalArea: stats.totalArea,
-              protectedArea: stats.protectedArea,
+              totalArea: stats.total_area,
+              protectedArea: stats.protected_area,
               info: metadata?.info,
               sources: metadata?.sources,
               updatedAt: stats.updatedAt,

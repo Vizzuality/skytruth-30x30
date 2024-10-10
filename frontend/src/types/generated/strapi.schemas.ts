@@ -1815,8 +1815,8 @@ export type ProtectionCoverageStatUpdatedBy = {
 export interface ProtectionCoverageStat {
   location?: ProtectionCoverageStatLocation;
   year: number;
-  protectedArea?: number;
-  protectedAreasCount: number;
+  protected_area?: number;
+  protected_areas_count: number;
   environment?: ProtectionCoverageStatEnvironment;
   coverage?: number;
   pas?: number;
@@ -1917,8 +1917,8 @@ export type ProtectionCoverageStatLocationDataAttributesProtectionCoverageStatsD
   {
     location?: ProtectionCoverageStatLocationDataAttributesProtectionCoverageStatsDataItemAttributesLocation;
     year?: number;
-    protectedArea?: number;
-    protectedAreasCount?: number;
+    protected_area?: number;
+    protected_areas_count?: number;
     environment?: ProtectionCoverageStatLocationDataAttributesProtectionCoverageStatsDataItemAttributesEnvironment;
     coverage?: number;
     pas?: number;
@@ -2872,8 +2872,8 @@ export type PaChildrenDataItemAttributesLocationDataAttributesProtectionCoverage
   {
     location?: PaChildrenDataItemAttributesLocationDataAttributesProtectionCoverageStatsDataItemAttributesLocation;
     year?: number;
-    protectedArea?: number;
-    protectedAreasCount?: number;
+    protected_area?: number;
+    protected_areas_count?: number;
     environment?: PaChildrenDataItemAttributesLocationDataAttributesProtectionCoverageStatsDataItemAttributesEnvironment;
     coverage?: number;
     pas?: number;
@@ -3685,8 +3685,8 @@ export type MpaaProtectionLevelStatLocationDataAttributesProtectionCoverageStats
   {
     location?: MpaaProtectionLevelStatLocationDataAttributesProtectionCoverageStatsDataItemAttributesLocation;
     year?: number;
-    protectedArea?: number;
-    protectedAreasCount?: number;
+    protected_area?: number;
+    protected_areas_count?: number;
     environment?: MpaaProtectionLevelStatLocationDataAttributesProtectionCoverageStatsDataItemAttributesEnvironment;
     coverage?: number;
     pas?: number;
@@ -5348,8 +5348,8 @@ export type LocationGroupsDataItemAttributesProtectionCoverageStatsDataItemAttri
 export type LocationGroupsDataItemAttributesProtectionCoverageStatsDataItemAttributes = {
   location?: LocationGroupsDataItemAttributesProtectionCoverageStatsDataItemAttributesLocation;
   year?: number;
-  protectedArea?: number;
-  protectedAreasCount?: number;
+  protected_area?: number;
+  protected_areas_count?: number;
   environment?: LocationGroupsDataItemAttributesProtectionCoverageStatsDataItemAttributesEnvironment;
   coverage?: number;
   pas?: number;
@@ -6492,8 +6492,8 @@ export interface HabitatStat {
   location?: HabitatStatLocation;
   habitat?: HabitatStatHabitat;
   year: number;
-  protectedArea: number;
-  totalArea: number;
+  protected_area: number;
+  total_area: number;
   environment?: HabitatStatEnvironment;
   createdAt?: string;
   updatedAt?: string;
@@ -6660,8 +6660,8 @@ export type HabitatStatLocationDataAttributesProtectionCoverageStatsDataItemAttr
 export type HabitatStatLocationDataAttributesProtectionCoverageStatsDataItemAttributes = {
   location?: HabitatStatLocationDataAttributesProtectionCoverageStatsDataItemAttributesLocation;
   year?: number;
-  protectedArea?: number;
-  protectedAreasCount?: number;
+  protected_area?: number;
+  protected_areas_count?: number;
   environment?: HabitatStatLocationDataAttributesProtectionCoverageStatsDataItemAttributesEnvironment;
   coverage?: number;
   pas?: number;
@@ -7627,8 +7627,8 @@ export type FishingProtectionLevelStatLocationDataAttributesProtectionCoverageSt
   {
     location?: FishingProtectionLevelStatLocationDataAttributesProtectionCoverageStatsDataItemAttributesLocation;
     year?: number;
-    protectedArea?: number;
-    protectedAreasCount?: number;
+    protected_area?: number;
+    protected_areas_count?: number;
     environment?: FishingProtectionLevelStatLocationDataAttributesProtectionCoverageStatsDataItemAttributesEnvironment;
     coverage?: number;
     pas?: number;

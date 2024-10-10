@@ -1406,12 +1406,12 @@ export interface ApiHabitatStatHabitatStat extends Schema.CollectionType {
       'api::habitat.habitat'
     >;
     year: Attribute.Integer & Attribute.Required;
-    protectedArea: Attribute.Decimal &
+    protected_area: Attribute.Decimal &
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    totalArea: Attribute.Decimal &
+    total_area: Attribute.Decimal &
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;
@@ -1938,11 +1938,11 @@ export interface ApiProtectionCoverageStatProtectionCoverageStat
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    protectedArea: Attribute.Decimal &
+    protected_area: Attribute.Decimal &
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    protectedAreasCount: Attribute.Integer & Attribute.Required;
+    protected_areas_count: Attribute.Integer & Attribute.Required;
     environment: Attribute.Relation<
       'api::protection-coverage-stat.protection-coverage-stat',
       'oneToOne',

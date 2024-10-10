@@ -46,7 +46,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       'pagination[limit]': -1,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      fields: ['year', 'protectedArea', 'updatedAt'],
+      fields: ['year', 'protected_area', 'updatedAt'],
       filters: {
         location: {
           code: {
@@ -76,7 +76,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
 
     return Object.keys(groupedByYear).map((year) => {
       const entries = groupedByYear[year];
-      const protectedArea = entries[0].attributes.protectedArea;
+      const protectedArea = entries[0].attributes.protected_area;
 
       return {
         year: Number(year),

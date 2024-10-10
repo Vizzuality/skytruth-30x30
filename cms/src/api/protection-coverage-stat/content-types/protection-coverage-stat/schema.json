@@ -23,7 +23,7 @@
       "required": true,
       "min": 0
     },
-    "protectedArea": {
+    "protected_area": {
       "type": "decimal",
       "min": 0,
       "column": {
@@ -35,7 +35,7 @@
         ]
       }
     },
-    "protectedAreasCount": {
+    "protected_areas_count": {
       "type": "integer",
       "required": true
     },

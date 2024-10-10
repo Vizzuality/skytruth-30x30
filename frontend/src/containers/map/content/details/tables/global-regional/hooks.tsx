@@ -37,7 +37,7 @@ export type GlobalRegionalTableColumns = {
     slug: string;
   };
   coverage: number;
-  protectedArea: number;
+  protected_area: number;
   pas: number;
   oecms: number;
   global_contribution: number;
@@ -206,8 +206,8 @@ export const useColumns = (
         },
       },
       {
-        id: 'protectedArea',
-        accessorKey: 'protectedArea',
+        id: 'protected_area',
+        accessorKey: 'protected_area',
         header: ({ column }) => (
           <HeaderItem>
             <SortingButton column={column} />
@@ -216,7 +216,7 @@ export const useColumns = (
           </HeaderItem>
         ),
         cell: ({ row }) => {
-          const { protectedArea: value } = row.original;
+          const { protected_area: value } = row.original;
           const formattedValue = cellFormatter.area(locale, value);
           return <span>{t('area-km2', { area: formattedValue })}</span>;
         },
@@ -349,7 +349,7 @@ export const useData = (
     {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      fields: ['coverage', 'protectedArea', 'pas', 'oecms', 'global_contribution'],
+      fields: ['coverage', 'protected_area', 'pas', 'oecms', 'global_contribution'],
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       populate: {
@@ -454,7 +454,7 @@ export const useData = (
                   slug: localizedEnvironment.slug,
                 },
                 coverage: attributes.coverage,
-                protectedArea: attributes.protectedArea,
+                protected_area: attributes.protected_area,
                 pas: attributes.pas,
                 oecms: attributes.oecms,
                 global_contribution: attributes.global_contribution,

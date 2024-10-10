@@ -49,30 +49,30 @@
           "sortable": true
         }
       },
-      "protectedArea": {
+      "protected_area": {
         "edit": {
-          "label": "protectedArea",
+          "label": "protected_area",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "protectedArea",
+          "label": "protected_area",
           "searchable": true,
           "sortable": true
         }
       },
-      "protectedAreasCount": {
+      "protected_areas_count": {
         "edit": {
-          "label": "protectedAreasCount",
+          "label": "protected_areas_count",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "protectedAreasCount",
+          "label": "protected_areas_count",
           "searchable": true,
           "sortable": true
         }
@@ -247,14 +247,6 @@
         ],
         [
           {
-            "name": "protectedArea",
-            "size": 4
-          },
-          {
-            "name": "protectedAreasCount",
-            "size": 4
-          },
-          {
             "name": "coverage",
             "size": 4
           }
@@ -276,6 +268,14 @@
         [
           {
             "name": "global_contribution",
+            "size": 4
+          },
+          {
+            "name": "protected_area",
+            "size": 4
+          },
+          {
+            "name": "protected_areas_count",
             "size": 4
           }
         ]

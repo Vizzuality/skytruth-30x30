@@ -811,8 +811,8 @@
           "location",
           "habitat",
           "year",
-          "protectedArea",
-          "totalArea",
+          "protected_area",
+          "total_area",
           "environment"
         ]
       },
@@ -834,8 +834,8 @@
           "location",
           "habitat",
           "year",
-          "protectedArea",
-          "totalArea",
+          "protected_area",
+          "total_area",
           "environment"
         ]
       },
@@ -850,8 +850,8 @@
           "location",
           "habitat",
           "year",
-          "protectedArea",
-          "totalArea",
+          "protected_area",
+          "total_area",
           "environment"
         ]
       },
@@ -1480,8 +1480,8 @@
         "fields": [
           "location",
           "year",
-          "protectedArea",
-          "protectedAreasCount",
+          "protected_area",
+          "protected_areas_count",
           "environment",
           "coverage",
           "pas",
@@ -1507,8 +1507,8 @@
         "fields": [
           "location",
           "year",
-          "protectedArea",
-          "protectedAreasCount",
+          "protected_area",
+          "protected_areas_count",
           "environment",
           "coverage",
           "pas",
@@ -1527,8 +1527,8 @@
         "fields": [
           "location",
           "year",
-          "protectedArea",
-          "protectedAreasCount",
+          "protected_area",
+          "protected_areas_count",
           "environment",
           "coverage",
           "pas",

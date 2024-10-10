@@ -117,7 +117,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        fields: ['coverage', 'protectedArea'],
+        fields: ['coverage', 'protected_area'],
         'pagination[limit]': 1,
       },
       {
@@ -134,7 +134,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         displayPercentageSign: false,
       });
 
-      const protectedArea = formatKM(locale, protectionCoverageStats.protectedArea);
+      const protectedArea = formatKM(locale, protectionCoverageStats.protected_area);
 
       return {
         percentage,

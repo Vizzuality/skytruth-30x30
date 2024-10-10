@@ -119,7 +119,7 @@ const ModellingWidget: FCWithMessages = () => {
       'pagination[limit]': 1,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      fields: ['protectedArea'],
+      fields: ['protected_area'],
     },
     {
       query: {
@@ -127,7 +127,7 @@ const ModellingWidget: FCWithMessages = () => {
         select: ({ data }) => {
           if (!data) return null;
 
-          const protectedArea = data?.[0].attributes.protectedArea ?? 0;
+          const protectedArea = data?.[0].attributes.protected_area ?? 0;
 
           const location = data?.[0].attributes?.location?.data?.attributes;
           let totalArea;
@@ -202,7 +202,7 @@ const ModellingWidget: FCWithMessages = () => {
           'pagination[limit]': 1,
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          fields: ['protectedArea'],
+          fields: ['protected_area'],
         },
         {
           query: {
@@ -211,7 +211,7 @@ const ModellingWidget: FCWithMessages = () => {
             select: ({ data }) => {
               if (!data) return null;
 
-              const protectedArea = data?.[0]?.attributes.protectedArea ?? 0;
+              const protectedArea = data?.[0]?.attributes.protected_area ?? 0;
 
               const location = data?.[0]?.attributes?.location?.data?.attributes;
 
