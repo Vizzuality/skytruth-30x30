@@ -515,6 +515,78 @@
     },
     {
       "action": "plugin::content-manager.explorer.create",
+      "subject": "api::environment.environment",
+      "properties": {
+        "fields": [
+          "name",
+          "slug"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::environment.environment",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::environment.environment",
+      "properties": {
+        "fields": [
+          "name",
+          "slug"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::environment.environment",
+      "properties": {
+        "fields": [
+          "name",
+          "slug"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
       "subject": "api::fishing-protection-level-stat.fishing-protection-level-stat",
       "properties": {
         "fields": [
@@ -769,8 +841,7 @@
           "metadata.resolution",
           "metadata.content_date",
           "metadata.license",
-          "dataset",
-          "legend_config"
+          "dataset"
         ],
         "locales": []
       },
@@ -810,8 +881,7 @@
           "metadata.resolution",
           "metadata.content_date",
           "metadata.license",
-          "dataset",
-          "legend_config"
+          "dataset"
         ],
         "locales": []
       },
@@ -836,8 +906,7 @@
           "metadata.resolution",
           "metadata.content_date",
           "metadata.license",
-          "dataset",
-          "legend_config"
+          "dataset"
         ],
         "locales": []
       },
@@ -853,17 +922,16 @@
         "fields": [
           "code",
           "name",
+          "total_marine_area",
           "type",
           "groups",
           "members",
           "fishing_protection_level_stats",
           "protection_coverage_stats",
+          "total_terrestrial_area",
           "name_es",
-          "name_fr",
-          "total_marine_area",
-          "total_terrestrial_area"
-        ],
-        "locales": []
+          "name_fr"
+        ]
       },
       "conditions": [
         "admin::is-creator"
@@ -873,6 +941,81 @@
     {
       "action": "plugin::content-manager.explorer.delete",
       "subject": "api::location.location",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::location.location",
+      "properties": {
+        "fields": [
+          "code",
+          "name",
+          "total_marine_area",
+          "type",
+          "groups",
+          "members",
+          "fishing_protection_level_stats",
+          "protection_coverage_stats",
+          "total_terrestrial_area",
+          "name_es",
+          "name_fr"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::location.location",
+      "properties": {
+        "fields": [
+          "code",
+          "name",
+          "total_marine_area",
+          "type",
+          "groups",
+          "members",
+          "fishing_protection_level_stats",
+          "protection_coverage_stats",
+          "total_terrestrial_area",
+          "name_es",
+          "name_fr"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
+      "properties": {
+        "fields": [
+          "slug",
+          "name",
+          "info"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
       "properties": {
         "locales": [
           "en",
@@ -887,22 +1030,18 @@
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "subject": "api::location.location",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
       "properties": {
         "fields": [
-          "code",
+          "slug",
           "name",
-          "type",
-          "groups",
-          "members",
-          "fishing_protection_level_stats",
-          "protection_coverage_stats",
-          "name_es",
-          "name_fr",
-          "total_marine_area",
-          "total_terrestrial_area"
+          "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [
         "admin::is-creator"
@@ -911,22 +1050,18 @@
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "subject": "api::location.location",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
       "properties": {
         "fields": [
-          "code",
+          "slug",
           "name",
-          "type",
-          "groups",
-          "members",
-          "fishing_protection_level_stats",
-          "protection_coverage_stats",
-          "name_es",
-          "name_fr",
-          "total_marine_area",
-          "total_terrestrial_area"
+          "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [
         "admin::is-creator"
@@ -1001,9 +1136,9 @@
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
-          "location",
           "mpaa_protection_level",
-          "area"
+          "area",
+          "location"
         ]
       },
       "conditions": [
@@ -1025,9 +1160,9 @@
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
-          "location",
           "mpaa_protection_level",
-          "area"
+          "area",
+          "location"
         ]
       },
       "conditions": [
@@ -1040,9 +1175,9 @@
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
-          "location",
           "mpaa_protection_level",
-          "area"
+          "area",
+          "location"
         ]
       },
       "conditions": [
@@ -1107,6 +1242,99 @@
           "info"
         ],
         "locales": []
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::pa.pa",
+      "properties": {
+        "fields": [
+          "name",
+          "area",
+          "year",
+          "protection_status",
+          "bbox",
+          "children",
+          "data_source",
+          "mpaa_establishment_stage",
+          "location",
+          "wdpaid",
+          "mpaa_protection_level",
+          "iucn_category",
+          "designation",
+          "environment",
+          "coverage",
+          "parent"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::pa.pa",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::pa.pa",
+      "properties": {
+        "fields": [
+          "name",
+          "area",
+          "year",
+          "protection_status",
+          "bbox",
+          "children",
+          "data_source",
+          "mpaa_establishment_stage",
+          "location",
+          "wdpaid",
+          "mpaa_protection_level",
+          "iucn_category",
+          "designation",
+          "environment",
+          "coverage",
+          "parent"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::pa.pa",
+      "properties": {
+        "fields": [
+          "name",
+          "area",
+          "year",
+          "protection_status",
+          "bbox",
+          "children",
+          "data_source",
+          "mpaa_establishment_stage",
+          "location",
+          "wdpaid",
+          "mpaa_protection_level",
+          "iucn_category",
+          "designation",
+          "environment",
+          "coverage",
+          "parent"
+        ]
       },
       "conditions": [
         "admin::is-creator"
