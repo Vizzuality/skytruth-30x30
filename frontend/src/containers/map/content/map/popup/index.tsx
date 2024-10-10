@@ -120,6 +120,7 @@ const PopupContainer: FCWithMessages = () => {
     <Popup
       latitude={popup.lngLat.lat}
       longitude={popup.lngLat.lng}
+      offset={10}
       closeOnClick={false}
       closeButton={false}
       maxWidth="300px"
