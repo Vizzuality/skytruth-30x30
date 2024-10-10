@@ -25,7 +25,7 @@ const LayerManagerItem = ({ id, beforeId, settings }: LayerManagerItemProps) => 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     locale,
-    populate: 'metadata',
+    populate: 'metadata,environment',
   });
   const [, setLayersInteractive] = useAtom(layersInteractiveAtom);
   const [, setLayersInteractiveIds] = useAtom(layersInteractiveIdsAtom);
