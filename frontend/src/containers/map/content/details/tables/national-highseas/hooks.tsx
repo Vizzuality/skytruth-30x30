@@ -756,7 +756,7 @@ export const useData = (
         placeholderData: [],
         enabled: isFiltering,
         keepPreviousData: true,
-        select: (data) => data.data.map(({ id }) => id),
+        select: (data) => data.data?.map(({ id }) => id) ?? [],
       },
     }
   );
@@ -796,7 +796,7 @@ export const useData = (
         placeholderData: [],
         enabled: isFiltering,
         keepPreviousData: true,
-        select: (data) => data.data.map(({ attributes }) => attributes.parent.data.id),
+        select: (data) => data.data?.map(({ attributes }) => attributes.parent.data.id) ?? [],
       },
     }
   );
