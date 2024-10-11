@@ -16,9 +16,9 @@ const LayersToolbox: FCWithMessages = () => {
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="bg-red absolute bottom-0 right-0 z-20">
+    <div className="absolute bottom-0 right-0 z-20 bg-red">
       <div className="relative">
-        <Collapsible className="bg-red relative" open={open} onOpenChange={setOpen}>
+        <Collapsible className="relative bg-red" open={open} onOpenChange={setOpen}>
           <CollapsibleTrigger className="absolute top-0 right-0 -translate-y-full border border-b-0 border-black bg-white">
             {open && <LuChevronDown className="mx-2 my-px h-5 w-5" aria-hidden />}
             {!open && (
