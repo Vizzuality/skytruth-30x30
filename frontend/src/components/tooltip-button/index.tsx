@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, ReactNode, useState } from 'react';
 
 import Linkify from 'react-linkify';
 
@@ -20,9 +20,15 @@ interface TooltipButtonProps {
   className?: string;
   text: string;
   sources?: Source | Source[];
+  extraContent?: ReactNode;
 }
 
-const TooltipButton: FCWithMessages<TooltipButtonProps> = ({ className, text, sources }) => {
+const TooltipButton: FCWithMessages<TooltipButtonProps> = ({
+  className,
+  text,
+  sources,
+  extraContent,
+}) => {
   const t = useTranslations('components.tooltip-button');
 
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(false);
@@ -65,7 +71,7 @@ const TooltipButton: FCWithMessages<TooltipButtonProps> = ({ className, text, so
 
         {Array.isArray(sources) && (
           <div className="">
-            <span>Data sources: </span>
+            <span>{t('data-sources:')} </span>
             {sources.map(({ id, title, url }, index) => (
               <Fragment key={id}>
                 <a
@@ -91,6 +97,7 @@ const TooltipButton: FCWithMessages<TooltipButtonProps> = ({ className, text, so
             {t('data-source')}
           </a>
         )}
+        {extraContent}
       </PopoverContent>
     </Popover>
   );

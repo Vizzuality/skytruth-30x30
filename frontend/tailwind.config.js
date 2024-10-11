@@ -33,6 +33,7 @@ module.exports = {
         orange: '#FD8E28',
         violet: '#AD6CFF',
         'gray-300': '#999999',
+        red: '#F43F4C',
       },
       maxWidth: {
         screen: '100vw',

@@ -2,7 +2,7 @@ import { MapLayerMouseEvent } from 'react-map-gl';
 
 import { Feature } from 'geojson';
 import { atom } from 'jotai';
-import { atomWithReset } from 'jotai/utils';
+import { atomWithReset, atomWithStorage } from 'jotai/utils';
 
 import { CustomMapProps } from '@/components/map/types';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
@@ -40,3 +40,11 @@ export const modellingAtom = atomWithReset<{
   data: null,
   errorMessage: undefined,
 });
+
+/**
+ * Whether the disclaimer dialog should be visible
+ */
+export const terrestrialDataDisclaimerDialogAtom = atomWithStorage(
+  'terrestrial-data-disclaimer-dialog',
+  true
+);
