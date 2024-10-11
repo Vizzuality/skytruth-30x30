@@ -271,10 +271,10 @@ export const useColumns = (
               ),
               cell: ({ row }) => {
                 const { location } = row.original;
-                const formattedValue = cellFormatter.percentage(
-                  locale,
-                  location.mpaa_protection_level_stats.percentage
-                );
+
+                const value = location.mpaa_protection_level_stats.percentage;
+                const formattedValue = cellFormatter.percentage(locale, value ?? 0);
+
                 return (
                   <span className="text-xs">{t('percentage', { percentage: formattedValue })}</span>
                 );
@@ -446,7 +446,7 @@ export const useData = (
                   name_fr: location?.name_fr,
                   code: location.code,
                   mpaa_protection_level_stats: {
-                    percentage: location?.mpaa_protection_level_stats?.data.attributes.percentage,
+                    percentage: location?.mpaa_protection_level_stats?.data?.attributes.percentage,
                   },
                 },
                 environment: {
