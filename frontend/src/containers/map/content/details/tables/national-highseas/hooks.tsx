@@ -269,6 +269,7 @@ export const useColumns = (
             </ExpansionControls>
           );
         },
+        size: 300,
       },
       {
         id: 'environment.name',

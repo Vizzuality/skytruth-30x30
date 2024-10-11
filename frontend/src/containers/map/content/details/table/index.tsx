@@ -58,6 +58,9 @@ const MapTable: MapTableProps<unknown> = <TData,>({
     onSortingChange,
     onPaginationChange,
     rowCount,
+    defaultColumn: {
+      size: 200,
+    },
   });
 
   // NOTE: do not memoize so that the table is re-rendered if the data changes
@@ -95,11 +98,16 @@ const MapTable: MapTableProps<unknown> = <TData,>({
                     ref={isFirstColumn ? firstColumnRef : null}
                     className={cn({
                       'border-r border-dashed border-black': shouldAddColumnSeparator(id),
-                      'h-10': true,
-                      'pl-6 pr-16': !isMapColumn,
+                      'h-10 overflow-hidden': true,
+                      'px-6': !isMapColumn,
                       'pl-0 pr-5': isFirstColumn,
                       'pr-0': isLastColumn,
                     })}
+                    style={{
+                      minWidth: column.getSize() ? `${column.getSize()}px` : undefined,
+                      width: column.getSize() ? `${column.getSize()}px` : undefined,
+                      maxWidth: column.getSize() ? `${column.getSize()}px` : undefined,
+                    }}
                   >
                     {flexRender(column.columnDef.header, header.getContext())}
                   </th>
@@ -135,8 +143,8 @@ const MapTable: MapTableProps<unknown> = <TData,>({
                       <td
                         key={cell.id}
                         className={cn({
-                          'h-16 pl-6': true,
-                          'pl-6 pr-16 ': !isMapColumn,
+                          'overflow-hidden whitespace-normal py-5 pl-6': true,
+                          'px-6 ': !isMapColumn,
                           '-mt-px -mb-px': isMapColumn,
                           'pl-0 pr-5': isFirstColumn,
                           'pr-0': isLastColumn,
@@ -144,6 +152,11 @@ const MapTable: MapTableProps<unknown> = <TData,>({
                             column.id
                           ),
                         })}
+                        style={{
+                          minWidth: column.getSize() ? `${column.getSize()}px` : undefined,
+                          width: column.getSize() ? `${column.getSize()}px` : undefined,
+                          maxWidth: column.getSize() ? `${column.getSize()}px` : undefined,
+                        }}
                       >
                         {flexRender(column.columnDef.cell, cell.getContext())}
                       </td>

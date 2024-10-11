@@ -24,7 +24,7 @@ const ExpansionControls: React.FC<ExpansionControlsProps> = ({ row, children }) 
   const toggleExpanded = getToggleExpandedHandler();
 
   return (
-    <div className="flex items-center">
+    <div className="flex max-w-full items-center">
       {isRowExpandable && (
         <button
           type="button"
@@ -42,6 +42,7 @@ const ExpansionControls: React.FC<ExpansionControlsProps> = ({ row, children }) 
       )}
       <span
         className={cn({
+          'w-full overflow-hidden whitespace-normal': true,
           'flex items-center pl-3': !isParentRow,
           'ml-6': isParentRow && !isRowExpandable,
         })}
