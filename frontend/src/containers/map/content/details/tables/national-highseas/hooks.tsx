@@ -728,39 +728,6 @@ export const useData = (
   // While unoptimal, this solution is still better than doing front-end filtering because we're
   // loading way less data.
 
-  // This request gets the list of all parents (no pagination) that match the filters. No sorting.
-  // This list is incomplete because some parents may not match the filters but their children do.
-  const { data: matchingParentsIds } = useGetPas<number[]>(
-    {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      fields: ['id'],
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      filters: {
-        $and: [
-          {
-            parent: {
-              name: {
-                $null: true,
-              },
-            },
-          },
-          queryFilters,
-        ],
-      },
-      'pagination[limit]': -1,
-    },
-    {
-      query: {
-        placeholderData: [],
-        enabled: isFiltering,
-        keepPreviousData: true,
-        select: (data) => data.data?.map(({ id }) => id) ?? [],
-      },
-    }
-  );
-
   // This request gets the list of all the parents (no pagination) for which at least one child
   // matches the filters. No sorting.
   const { data: parentIdsWithMatchingChildren } = useGetPas<number[]>(
@@ -801,15 +768,8 @@ export const useData = (
     }
   );
 
-  // List of all the parents (no pagination) that either match the filters or for which at least one
-  // of child matches the filters. No sorting.
-  const parentsIds = useMemo(() => {
-    return Array.from(
-      new Set([...(matchingParentsIds ?? []), ...(parentIdsWithMatchingChildren ?? [])])
-    );
-  }, [matchingParentsIds, parentIdsWithMatchingChildren]);
-
-  // Final query that gets the table's data using the list of parent ids
+  // This request gets the list of all parents that match the filters or the ones which children
+  // match, using the list `parentIdsWithMatchingChildren`.
   const { data: filteringData } = useGetPas<
     [NationalHighseasTableColumns[], PaListResponseMetaPagination]
   >(
@@ -829,14 +789,25 @@ export const useData = (
         },
       },
       filters: {
-        parent: {
-          name: {
-            $null: true,
+        $and: [
+          {
+            parent: {
+              name: {
+                $null: true,
+              },
+            },
           },
-        },
-        id: {
-          $in: parentsIds,
-        },
+          {
+            $or: [
+              queryFilters,
+              {
+                id: {
+                  $in: parentIdsWithMatchingChildren,
+                },
+              },
+            ],
+          },
+        ],
       },
       'pagination[pageSize]': pagination.pageSize,
       'pagination[page]': pagination.pageIndex + 1,
@@ -845,7 +816,7 @@ export const useData = (
     {
       query: {
         placeholderData: [],
-        enabled: isFiltering && parentsIds.length > 0,
+        enabled: isFiltering,
         keepPreviousData: true,
         select: processData,
       },
@@ -853,11 +824,7 @@ export const useData = (
   );
 
   if (isFiltering) {
-    if (parentsIds.length > 0) {
-      return filteringData;
-    }
-
-    return [[] as NationalHighseasTableColumns[], { total: 0 }] as const;
+    return filteringData;
   }
 
   return noFilteringData;
