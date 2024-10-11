@@ -1,14 +1,18 @@
 import { useMemo } from 'react';
 
+import { useAtom } from 'jotai';
 import { groupBy } from 'lodash-es';
 import { useLocale, useTranslations } from 'next-intl';
 
 import ConservationChart from '@/components/charts/conservation-chart';
 import { Button } from '@/components/ui/button';
+import Icon from '@/components/ui/icon';
 import Widget from '@/components/widget';
+import { terrestrialDataDisclaimerDialogAtom } from '@/containers/map/store';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { formatKM } from '@/lib/utils/formats';
 import { formatPercentage } from '@/lib/utils/formats';
+import Notification from '@/styles/icons/notification.svg';
 import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
@@ -28,6 +32,8 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
   const locale = useLocale();
 
   const [{ tab }, setSettings] = useSyncMapContentSettings();
+
+  const [, setDisclaimerDialogOpen] = useAtom(terrestrialDataDisclaimerDialogAtom);
 
   const { data, isFetching } = useGetProtectionCoverageStats<
     ProtectionCoverageStatListResponseDataItem[]
@@ -163,6 +169,19 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
       loading={isFetching}
       info={metadata?.info}
       sources={metadata?.sources}
+      tooltipExtraContent={
+        <Button
+          type="button"
+          variant="text-link"
+          size="sm"
+          className="-mt-3 justify-start gap-1.5 px-0 py-0 text-xs font-bold normal-case text-red"
+          onClick={() => setDisclaimerDialogOpen(true)}
+        >
+          <Icon icon={Notification} className="h-4 w-4" />
+
+          {t('data-disclaimer')}
+        </Button>
+      }
     >
       {stats && (
         <div className="mt-6 mb-4 flex flex-col">

@@ -1,5 +1,8 @@
 import { PropsWithChildren, useEffect } from 'react';
 
+import dynamic from 'next/dynamic';
+
+import { useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 import { useTranslations } from 'next-intl';
 
@@ -7,8 +10,19 @@ import Head from '@/components/head';
 import Header from '@/components/header';
 import Content from '@/containers/map/content';
 import Sidebar from '@/containers/map/sidebar';
-import { drawStateAtom, modellingAtom } from '@/containers/map/store';
+import {
+  drawStateAtom,
+  modellingAtom,
+  terrestrialDataDisclaimerDialogAtom,
+} from '@/containers/map/store';
 import { FCWithMessages } from '@/types';
+
+const TerrestrialDataDisclaimerDialog = dynamic(
+  () => import('@/components/terrestrial-data-disclaimer-dialog'),
+  {
+    ssr: false,
+  }
+);
 
 const LAYOUT_TYPES = {
   progress_tracker: 'progress-tracker',
@@ -30,6 +44,7 @@ const MapLayout: FCWithMessages<PropsWithChildren<MapLayoutProps>> = ({
 
   const resetModelling = useResetAtom(modellingAtom);
   const resetDrawState = useResetAtom(drawStateAtom);
+  const terrestrialDataDisclaimerDialogOpen = useAtomValue(terrestrialDataDisclaimerDialogAtom);
 
   useEffect(() => {
     if (type !== LAYOUT_TYPES.conservation_builder) {
@@ -48,6 +63,9 @@ const MapLayout: FCWithMessages<PropsWithChildren<MapLayoutProps>> = ({
         }
         description={description}
       />
+      {type === LAYOUT_TYPES.progress_tracker && terrestrialDataDisclaimerDialogOpen && (
+        <TerrestrialDataDisclaimerDialog />
+      )}
       <div className="flex h-screen w-screen flex-col">
         <div className="flex-shrink-0">
           <Header />

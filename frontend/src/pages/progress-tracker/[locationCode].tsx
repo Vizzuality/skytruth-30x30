@@ -30,6 +30,7 @@ ProgressTrackerPage.layout = {
 
     return {
       title: location?.[locationNameField],
+      type: 'progress-tracker',
     };
   },
 };
