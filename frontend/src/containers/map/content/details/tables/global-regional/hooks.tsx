@@ -446,7 +446,7 @@ export const useData = (
                   name_fr: location?.name_fr,
                   code: location.code,
                   mpaa_protection_level_stats: {
-                    percentage: location?.mpaa_protection_level_stats.data.attributes.percentage,
+                    percentage: location?.mpaa_protection_level_stats?.data.attributes.percentage,
                   },
                 },
                 environment: {
