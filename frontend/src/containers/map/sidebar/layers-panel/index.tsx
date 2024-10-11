@@ -1,6 +1,7 @@
 import { ComponentProps, useCallback, useEffect, useMemo } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
+import { usePreviousImmediate } from 'rooks';
 
 import TooltipButton from '@/components/tooltip-button';
 import { Label } from '@/components/ui/label';
@@ -20,6 +21,7 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
   const [, setMapLayers] = useSyncMapLayers();
   const [{ labels }, setMapSettings] = useSyncMapSettings();
   const [{ tab }] = useSyncMapContentSettings();
+  const previousTab = usePreviousImmediate(tab);
 
   const {
     data: datasetsData,
@@ -122,23 +124,25 @@ const LayersPanel: FCWithMessages = (): JSX.Element => {
 
   // Set map layers to the corresponding defaults when the user switches tabs
   useEffect(() => {
-    let mapLayers = [];
-    switch (tab) {
-      case 'summary':
-        mapLayers = ['terrestrial', 'marine', 'basemap']?.reduce(
-          (ids, dataset) => [...ids, ...defaultLayersIds[dataset]],
-          []
-        );
-        break;
-      case 'terrestrial':
-        mapLayers = defaultLayersIds.terrestrial;
-        break;
-      case 'marine':
-        mapLayers = defaultLayersIds.marine;
-        break;
+    if (tab !== previousTab && !!previousTab) {
+      let mapLayers = [];
+      switch (tab) {
+        case 'summary':
+          mapLayers = ['terrestrial', 'marine', 'basemap']?.reduce(
+            (ids, dataset) => [...ids, ...defaultLayersIds[dataset]],
+            []
+          );
+          break;
+        case 'terrestrial':
+          mapLayers = defaultLayersIds.terrestrial;
+          break;
+        case 'marine':
+          mapLayers = defaultLayersIds.marine;
+          break;
+      }
+      setMapLayers(mapLayers);
     }
-    setMapLayers(mapLayers);
-  }, [defaultLayersIds, setMapLayers, tab]);
+  }, [defaultLayersIds, setMapLayers, tab, previousTab]);
 
   const handleLabelsChange = useCallback(
     (active: Parameters<ComponentProps<typeof Switch>['onCheckedChange']>[0]) => {
