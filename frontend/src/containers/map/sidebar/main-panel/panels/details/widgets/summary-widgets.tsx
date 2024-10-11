@@ -34,6 +34,10 @@ const SummaryWidgets: FCWithMessages = () => {
     }
   );
 
+  if (!locationData) {
+    return null;
+  }
+
   return (
     <div
       className={cn({
