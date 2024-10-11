@@ -130,10 +130,12 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
             };
           });
 
-          return parsedData.sort((d1, d2) => {
-            const keys = Object.keys(HABITAT_CHART_COLORS);
-            return keys.indexOf(d1.slug) - keys.indexOf(d2.slug);
-          });
+          return parsedData
+            .sort((d1, d2) => {
+              const keys = Object.keys(HABITAT_CHART_COLORS);
+              return keys.indexOf(d1.slug) - keys.indexOf(d2.slug);
+            })
+            .filter(({ totalArea }) => totalArea !== 0);
         },
         placeholderData: [],
         refetchOnWindowFocus: false,
