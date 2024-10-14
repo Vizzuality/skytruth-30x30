@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import Image from 'next/image';
 
 import { useLocale, useTranslations } from 'next-intl';
@@ -10,8 +8,6 @@ import { formatPercentage } from '@/lib/utils/formats';
 import ArrowRight from '@/styles/icons/arrow-right.svg';
 import { FCWithMessages } from '@/types';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
-import { useGetStaticIndicators } from '@/types/generated/static-indicator';
-import { ProtectionCoverageStatListResponseDataItem } from '@/types/generated/strapi.schemas';
 
 type IntroProps = {
   onScrollClick: () => void;
@@ -21,58 +17,55 @@ const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
   const t = useTranslations('containers.homepage-intro');
   const locale = useLocale();
 
-  const { data: protectionStatsData } =
-    useGetProtectionCoverageStats<ProtectionCoverageStatListResponseDataItem>(
-      {
-        locale,
-        filters: {
-          location: {
-            code: 'GLOB',
-          },
-          is_last_year: {
-            $eq: true,
-          },
-          environment: {
-            slug: {
-              $eq: 'marine',
-            },
-          },
-        },
-        populate: 'location,environment',
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        'sort[year]': 'desc',
-        'pagination[limit]': 1,
-      },
-      {
-        query: {
-          select: ({ data }) => data?.[0],
-        },
-      }
-    );
-
-  const { data: protectedTerrestrialInlandAreasData } = useGetStaticIndicators(
+  const { data: protectionStatsData } = useGetProtectionCoverageStats<{
+    marine?: string;
+    terrestrial?: string;
+  }>(
     {
       locale,
       filters: {
-        slug: 'protected-land-area-percentage',
+        location: {
+          code: 'GLOB',
+        },
+        is_last_year: {
+          $eq: true,
+        },
       },
+      populate: 'location,environment',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      'sort[year]': 'desc',
     },
     {
       query: {
-        select: ({ data }) => data?.[0],
-        placeholderData: { data: [] },
+        placeholderData: { terrestrial: '−', marine: '−' },
+        select: ({ data }) => {
+          const terrestrialCoverage = data?.find(
+            (d) => d.attributes.environment.data.attributes.slug === 'terrestrial'
+          )?.attributes.coverage;
+
+          const marineCoverage = data?.find(
+            (d) => d.attributes.environment.data.attributes.slug === 'marine'
+          )?.attributes.coverage;
+
+          return {
+            terrestrial:
+              terrestrialCoverage !== undefined
+                ? formatPercentage(locale, terrestrialCoverage, {
+                    displayPercentageSign: false,
+                  })
+                : '−',
+            marine:
+              marineCoverage !== undefined
+                ? formatPercentage(locale, marineCoverage, {
+                    displayPercentageSign: false,
+                  })
+                : '−',
+          };
+        },
       },
     }
   );
-
-  const formattedOceanProtectedAreaPercentage = useMemo(() => {
-    if (!protectionStatsData) return null;
-
-    return formatPercentage(locale, protectionStatsData.attributes.coverage, {
-      displayPercentageSign: false,
-    });
-  }, [locale, protectionStatsData]);
 
   return (
     <div className="bg-black">
@@ -116,12 +109,12 @@ const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
         <div className="border-l border-t border-white md:w-[40%] md:border-t-0">
           <div className="flex h-full flex-col border-r">
             <SidebarItem
-              percentage={formattedOceanProtectedAreaPercentage}
+              percentage={protectionStatsData.marine}
               text={t('current-ocean-protected-area')}
               icon="icon1"
             />
             <SidebarItem
-              percentage={protectedTerrestrialInlandAreasData?.attributes?.value}
+              percentage={protectionStatsData.terrestrial}
               text={t('current-total-protected-area')}
               icon="icon2"
             />
