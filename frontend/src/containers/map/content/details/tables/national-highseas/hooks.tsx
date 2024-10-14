@@ -305,9 +305,12 @@ export const useColumns = (
         ),
         cell: ({ row }) => {
           const { coverage: value } = row.original;
-          if (!value) return <>&mdash;</>;
+          if (value === undefined || value === null) return <>&mdash;</>;
 
-          const formattedCoverage = cellFormatter.percentage(locale, value);
+          const formattedCoverage = cellFormatter.percentage(locale, value, {
+            displayZeroValue: false,
+            displayPercentageSign: false,
+          });
 
           return (
             <span className="text-4xl font-bold">

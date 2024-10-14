@@ -1,9 +1,16 @@
 export function formatPercentage(
   locale: string,
   value: number,
-  options?: Intl.NumberFormatOptions & { displayPercentageSign?: boolean }
+  options?: Intl.NumberFormatOptions & {
+    displayPercentageSign?: boolean;
+    displayZeroValue?: boolean;
+  }
 ) {
-  const { displayPercentageSign = true, ...intlNumberFormatOptions } = options || {};
+  const {
+    displayPercentageSign = true,
+    displayZeroValue = true,
+    ...intlNumberFormatOptions
+  } = options || {};
 
   const v = Intl.NumberFormat(locale === 'en' ? 'en-US' : locale, {
     minimumFractionDigits: 1,
@@ -12,7 +19,7 @@ export function formatPercentage(
     ...intlNumberFormatOptions,
   });
 
-  if (value < 0.1 && value > 0) {
+  if (value < 0.1 && (!displayZeroValue || (displayZeroValue && value > 0))) {
     return `<${v.format(0.1)}`;
   }
 
