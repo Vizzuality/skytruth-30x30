@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .mapboxgl-ctrl-bottom-right {
-  @apply !right-[335px];
+  @apply !right-[400px];
 }
 .mapboxgl-ctrl-bottom-left {
   @apply !right-[345px] !bottom-5 !left-auto;

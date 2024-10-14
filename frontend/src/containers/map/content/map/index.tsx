@@ -15,8 +15,6 @@ import { CustomMapProps } from '@/components/map/types';
 import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
-import EEZLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/eez';
-import EstablishmentLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/establishment';
 import Modelling from '@/containers/map/content/map/modelling';
 import Popup from '@/containers/map/content/map/popup';
 import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
@@ -342,11 +340,9 @@ MainMap.messages = [
   ...ZoomControls.messages,
   // Indirectly imported by the layer manager
   ...EEZLayerPopup.messages,
-  ...EEZLayerLegend.messages,
   ...GenericPopup.messages,
   ...ProtectedAreaPopup.messages,
   ...RegionsPopup.messages,
-  ...EstablishmentLayerLegend.messages,
 ];
 
 export default MainMap;

@@ -29,12 +29,11 @@ const LayersToolbox: FCWithMessages = () => {
             )}
           </CollapsibleTrigger>
           <CollapsibleContent className="border-l border-t border-black bg-white fill-mode-none data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-            <div className="relative h-full max-h-[calc(100vh-200px)] w-[300px] overflow-y-auto border ">
+            <div className="relative h-full max-h-[calc(100vh-200px)] w-[380px] overflow-y-auto border ">
               <LayersLegend />
             </div>
           </CollapsibleContent>
         </Collapsible>
-        <div className="absolute bottom-0 left-0 h-6 w-full bg-gradient-to-b from-transparent to-white" />
       </div>
     </div>
   );
