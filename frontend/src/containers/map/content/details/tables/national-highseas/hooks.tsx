@@ -584,6 +584,14 @@ export const useData = (
     [environment, filters, locationCode]
   );
 
+  const isFiltering = useMemo(
+    () =>
+      Object.values(filters)
+        .filter(Boolean)
+        .some((value) => value.length > 0),
+    [filters]
+  );
+
   const processData = useCallback(
     (data: PaListResponse) => {
       return [
@@ -707,7 +715,9 @@ export const useData = (
       'pagination[pageSize]': pagination.pageSize,
       'pagination[page]': pagination.pageIndex + 1,
       sort: querySort,
-      'keep-if-children-match': true,
+      // This parameter makes sure Strapi retains the parent for which children match the filters
+      // but make the request slower, so it is only added when necessary
+      ...(isFiltering ? { 'keep-if-children-match': true } : {}),
     },
     {
       query: {
