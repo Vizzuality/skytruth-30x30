@@ -344,12 +344,14 @@ export const useColumns = (
         accessorKey: 'data_source.title',
         header: ({ column }) => (
           <HeaderItem>
-            <FiltersButton
-              field="data_source.slug"
-              options={filtersOptions.dataSource}
-              values={filters['data_source.slug'] ?? []}
-              onChange={(field, values) => onChangeFilters({ ...filters, [field]: values })}
-            />
+            {environment !== 'terrestrial' && (
+              <FiltersButton
+                field="data_source.slug"
+                options={filtersOptions.dataSource}
+                values={filters['data_source.slug'] ?? []}
+                onChange={(field, values) => onChangeFilters({ ...filters, [field]: values })}
+              />
+            )}
             {t('data-source')}
             <TooltipButton column={column} tooltips={tooltips} />
           </HeaderItem>
