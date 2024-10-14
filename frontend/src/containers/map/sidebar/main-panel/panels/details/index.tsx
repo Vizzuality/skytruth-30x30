@@ -83,11 +83,18 @@ const SidebarDetails: FCWithMessages = () => {
       return marine_bounds;
     }
 
-    if (terrestrial_bounds === undefined || marine_bounds === undefined) {
+    if (terrestrial_bounds === undefined && marine_bounds === undefined) {
       return null;
     }
 
-    return combineBoundingBoxes(terrestrial_bounds as BBox, marine_bounds as BBox);
+    return combineBoundingBoxes(
+      // Falling back to the marine bounds because some locations don't have terrestrial bounds e.g.
+      // ABJN and Gibraltar
+      (terrestrial_bounds ?? marine_bounds) as BBox,
+      // Falling back to the terrestrial bounds because some locations don't have marine bounds e.g.
+      // any country without coast
+      (marine_bounds ?? terrestrial_bounds) as BBox
+    );
   }, [locationsData, tab]);
 
   const memberCountries = useMemo(() => {
