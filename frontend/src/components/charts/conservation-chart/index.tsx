@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import twTheme from 'lib/tailwind';
 
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import {
   ComposedChart,
   Bar,
@@ -19,7 +19,6 @@ import {
 import TooltipButton from '@/components/tooltip-button';
 import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
-import { useGetDataInfos } from '@/types/generated/data-info';
 
 import { getMultilineRenderer } from './helpers';
 import ChartLegend from './legend';
@@ -53,7 +52,6 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
   data,
 }) => {
   const t = useTranslations('components.chart-conservation');
-  const locale = useLocale();
 
   const barChartData = useMemo(() => {
     // Last year of data available
@@ -136,21 +134,6 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
     ];
   }, [activeYearData, historicalDelta]);
 
-  const { data: dataInfo } = useGetDataInfos(
-    {
-      locale,
-      filters: {
-        slug: tooltipSlug,
-      },
-    },
-    {
-      query: {
-        select: ({ data }) => data?.[0],
-        placeholderData: { data: [] },
-      },
-    }
-  );
-
   const chartData = useMemo(() => {
     const historicalYearsArray = data?.map(({ year }) => year);
     const lastDataYear = historicalYearsArray[historicalYearsArray.length - 1];
@@ -185,45 +168,12 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
       <ResponsiveContainer>
         <ComposedChart data={chartData}>
           <CartesianGrid vertical={false} strokeDasharray="3 3" />
-          {displayTarget && (
-            <ReferenceLine
-              xAxisId={1}
-              y={target}
-              label={(props) => {
-                const { viewBox } = props;
-                return (
-                  <g>
-                    <text {...viewBox} x={viewBox.x + 5} y={viewBox.y - 2}>
-                      {t.rich('percentage-target', { target })}
-                    </text>
-                    <foreignObject
-                      {...viewBox}
-                      x={
-                        viewBox.x + (t.rich('percentage-target', { target }) as string).length * 7.5
-                      }
-                      y={viewBox.y - 17}
-                      width="160"
-                      height="160"
-                    >
-                      <TooltipButton
-                        text={dataInfo?.attributes.content
-                          .replace('{target}', `${target}`)
-                          .replace('{target_year}', `${targetYear}`)}
-                        className="mt-1 hover:bg-transparent"
-                      />
-                    </foreignObject>
-                  </g>
-                );
-              }}
-              stroke="#FD8E28"
-              strokeDasharray="3 3"
-            />
-          )}
           <ReferenceLine
             xAxisId={1}
             x={firstYearData.year - 0.4}
             label={{ position: 'insideTopLeft', value: t('historical'), fill: '#000' }}
             stroke="#000"
+            strokeWidth={0}
           />
           <ReferenceLine
             xAxisId={1}
@@ -237,7 +187,68 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
             dataKey="year"
             ticks={xAxisTicks}
             domain={[firstYearData.year - 0.4, lastYearData.year]}
+            stroke="#000"
+            tick={{ fill: '#000' }}
+            axisLine={{ stroke: '#000' }}
+            tickLine={{ stroke: '#000' }}
           />
+          <Bar dataKey="percentage" xAxisId={1}>
+            {chartData.map((entry, index) => (
+              <Cell
+                stroke="black"
+                fill={entry?.active ? 'black' : 'transparent'}
+                key={`cell-${index}`}
+              />
+            ))}
+          </Bar>
+          <Line
+            xAxisId={2}
+            type="monotone"
+            strokeWidth={4}
+            dataKey="historical"
+            stroke={twTheme.colors.white as string}
+            dot={false}
+            activeDot={false}
+          />
+          <Line
+            xAxisId={2}
+            type="monotone"
+            strokeWidth={4}
+            dataKey="projected"
+            stroke={twTheme.colors.white as string}
+            dot={false}
+            activeDot={false}
+          />
+          <Line
+            xAxisId={2}
+            type="monotone"
+            strokeWidth={1}
+            dataKey="historical"
+            stroke={twTheme.colors.violet as string}
+            dot={false}
+            activeDot={false}
+          />
+          <Line
+            xAxisId={2}
+            type="monotone"
+            strokeWidth={1}
+            strokeDasharray="4 4"
+            dataKey="projected"
+            stroke={twTheme.colors.violet as string}
+            dot={false}
+            activeDot={false}
+          />
+          {displayTarget && (
+            <>
+              <ReferenceLine
+                xAxisId={1}
+                y={target}
+                strokeWidth={4}
+                stroke={twTheme.colors.white as string}
+              />
+              <ReferenceLine xAxisId={1} y={target} stroke="#FD8E28" strokeDasharray="3 3" />
+            </>
+          )}
           <XAxis
             xAxisId={2}
             type="number"
@@ -249,39 +260,20 @@ const ConservationChart: FCWithMessages<ConservationChartProps> = ({
             domain={[0, 55]}
             ticks={[0, 15, 30, 45, 55]}
             tickFormatter={(value) => `${value}%`}
+            stroke="#000"
+            tick={{ fill: '#000' }}
+            axisLine={{ stroke: '#000' }}
+            tickLine={{ stroke: '#000' }}
           />
-          <Line
-            xAxisId={2}
-            type="monotone"
-            strokeWidth={2}
-            dataKey="historical"
-            stroke={twTheme.colors.violet as string}
-            dot={false}
-            activeDot={false}
-          />
-          <Line
-            xAxisId={2}
-            type="monotone"
-            strokeWidth={2}
-            strokeDasharray="4 4"
-            dataKey="projected"
-            stroke={twTheme.colors.violet as string}
-            dot={false}
-            activeDot={false}
-          />
-          <Bar dataKey="percentage" xAxisId={1}>
-            {chartData.map((entry, index) => (
-              <Cell
-                stroke="black"
-                fill={entry?.active ? 'black' : 'transparent'}
-                key={`cell-${index}`}
-              />
-            ))}
-          </Bar>
           <Tooltip content={ChartTooltip} />
         </ComposedChart>
       </ResponsiveContainer>
-      <ChartLegend />
+      <ChartLegend
+        displayTarget={displayTarget}
+        target={target}
+        targetYear={targetYear}
+        tooltipSlug={tooltipSlug}
+      />
     </div>
   );
 };
