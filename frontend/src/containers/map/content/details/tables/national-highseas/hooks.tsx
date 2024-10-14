@@ -423,7 +423,17 @@ export const useColumns = (
               ),
               cell: ({ row }) => {
                 const { mpaa_establishment_stage } = row.original;
-                const formattedValue = mpaa_establishment_stage.name || t('not-assessed');
+
+                const hasSubRowWithValue =
+                  row.subRows.length > 0 &&
+                  row.subRows.some((row) => !!row.original.mpaa_establishment_stage);
+
+                let fallbackValue = t('not-assessed');
+                if (hasSubRowWithValue) {
+                  fallbackValue = '−';
+                }
+
+                const formattedValue = mpaa_establishment_stage.name ?? fallbackValue;
                 return <>{formattedValue}</>;
               },
             },
@@ -448,7 +458,17 @@ export const useColumns = (
               ),
               cell: ({ row }) => {
                 const { mpaa_protection_level } = row.original;
-                const formattedValue = mpaa_protection_level.name || t('not-assessed');
+
+                const hasSubRowWithValue =
+                  row.subRows.length > 0 &&
+                  row.subRows.some((row) => !!row.original.mpaa_protection_level);
+
+                let fallbackValue = t('not-assessed');
+                if (hasSubRowWithValue) {
+                  fallbackValue = '−';
+                }
+
+                const formattedValue = mpaa_protection_level.name ?? fallbackValue;
                 return <>{formattedValue}</>;
               },
             },
