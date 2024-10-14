@@ -584,14 +584,6 @@ export const useData = (
     [environment, filters, locationCode]
   );
 
-  const isFiltering = useMemo(
-    () =>
-      Object.values(filters)
-        .filter(Boolean)
-        .some((value) => value.length > 0),
-    [filters]
-  );
-
   const processData = useCallback(
     (data: PaListResponse) => {
       return [
@@ -688,9 +680,7 @@ export const useData = (
   );
 
   // If the user isn't filtering, only one request is sufficient to get all of the table's data
-  const { data: noFilteringData } = useGetPas<
-    [NationalHighseasTableColumns[], PaListResponseMetaPagination]
-  >(
+  const { data } = useGetPas<[NationalHighseasTableColumns[], PaListResponseMetaPagination]>(
     {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -717,121 +707,16 @@ export const useData = (
       'pagination[pageSize]': pagination.pageSize,
       'pagination[page]': pagination.pageIndex + 1,
       sort: querySort,
+      'keep-if-children-match': true,
     },
     {
       query: {
         placeholderData: [],
-        enabled: !isFiltering,
         keepPreviousData: true,
         select: processData,
       },
     }
   );
 
-  // If the user is filtering, we need to make several requests to Strapi. This is because a parent
-  // row needs to be filtered (among others) based on the values of the children rows. Strapi
-  // doesn't cover this use case so we're forced to multiply the requests.
-  // While unoptimal, this solution is still better than doing front-end filtering because we're
-  // loading way less data.
-
-  // This request gets the list of all the parents (no pagination) for which at least one child
-  // matches the filters. No sorting.
-  const { data: parentIdsWithMatchingChildren } = useGetPas<number[]>(
-    {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      fields: ['id'],
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      populate: {
-        parent: {
-          fields: ['id'],
-        },
-      },
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      filters: {
-        $and: [
-          {
-            parent: {
-              name: {
-                $null: false,
-              },
-            },
-          },
-          queryFilters,
-        ],
-      },
-      'pagination[limit]': -1,
-    },
-    {
-      query: {
-        placeholderData: [],
-        enabled: isFiltering,
-        keepPreviousData: true,
-        select: (data) => data.data?.map(({ attributes }) => attributes.parent.data.id) ?? [],
-      },
-    }
-  );
-
-  // This request gets the list of all parents that match the filters or the ones which children
-  // match, using the list `parentIdsWithMatchingChildren`.
-  const { data: filteringData } = useGetPas<
-    [NationalHighseasTableColumns[], PaListResponseMetaPagination]
-  >(
-    {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      fields: queryFields,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      populate: {
-        ...queryPopulate,
-        children: {
-          fields: queryFields,
-          populate: queryPopulate,
-          filters: queryFilters,
-          sort: querySort,
-        },
-      },
-      filters: {
-        $and: [
-          {
-            parent: {
-              name: {
-                $null: true,
-              },
-            },
-          },
-          {
-            $or: [
-              queryFilters,
-              {
-                id: {
-                  $in: parentIdsWithMatchingChildren,
-                },
-              },
-            ],
-          },
-        ],
-      },
-      'pagination[pageSize]': pagination.pageSize,
-      'pagination[page]': pagination.pageIndex + 1,
-      sort: querySort,
-    },
-    {
-      query: {
-        placeholderData: [],
-        enabled: isFiltering,
-        keepPreviousData: true,
-        select: processData,
-      },
-    }
-  );
-
-  if (isFiltering) {
-    return filteringData;
-  }
-
-  return noFilteringData;
+  return data;
 };
