@@ -24,7 +24,7 @@ import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
 import RegionsPopup from '@/containers/map/content/map/popup/regions';
 import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
-import { sidebarAtom } from '@/containers/map/store';
+import { layersAtom, sidebarAtom } from '@/containers/map/store';
 import {
   bboxLocationAtom,
   drawStateAtom,
@@ -49,6 +49,7 @@ const MainMap: FCWithMessages = () => {
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
   const isSidebarOpen = useAtomValue(sidebarAtom);
+  const isLayersPanelOpen = useAtomValue(layersAtom);
   const [popup, setPopup] = useAtom(popupAtom);
   const params = useParams();
   const [locationBbox, setLocationBbox] = useAtom(bboxLocationAtom);
@@ -251,19 +252,31 @@ const MainMap: FCWithMessages = () => {
   const bounds: ComponentProps<typeof Map>['bounds'] = useMemo(() => {
     if (!locationBbox) return null;
 
+    const padding = 20;
+
+    let leftPadding = padding;
+    if (typeof window !== 'undefined' && window?.innerWidth > 430) {
+      if (isSidebarOpen) {
+        leftPadding += 460;
+      }
+
+      if (isLayersPanelOpen) {
+        leftPadding += 280;
+      }
+    }
+
     return {
       bbox: locationBbox as ComponentProps<typeof Map>['bounds']['bbox'],
       options: {
         padding: {
-          top: 0,
-          bottom: 0,
-          left:
-            typeof window !== 'undefined' && window?.innerWidth > 430 && isSidebarOpen ? 430 : 0,
-          right: 0,
+          top: padding,
+          bottom: padding,
+          left: leftPadding,
+          right: padding,
         },
       },
     };
-  }, [locationBbox, isSidebarOpen]);
+  }, [locationBbox, isSidebarOpen, isLayersPanelOpen]);
 
   useEffect(() => {
     setCursor(drawState.active ? 'crosshair' : 'grab');
