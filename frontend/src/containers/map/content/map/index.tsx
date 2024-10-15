@@ -194,7 +194,6 @@ const MainMap: FCWithMessages = () => {
         layersInteractive.length &&
         layersInteractiveData.some((l) => {
           const attributes = l.attributes as LayerTyped;
-          console.log(l);
           return attributes?.interaction_config?.events.some((ev) => ev.type === 'click');
         })
       ) {
@@ -239,11 +238,15 @@ const MainMap: FCWithMessages = () => {
     [setPopup, drawState.active, safelySetFeatureState]
   );
 
-  const handleMouseLeave = useCallback(() => {
-    if (popup?.features?.length) return;
+  const handleMouseOut = useCallback(() => {
     safelyResetFeatureState();
-    setPopup({});
-  }, [popup?.features?.length, safelyResetFeatureState, setPopup]);
+
+    if (popup?.type !== 'click') {
+      // If the popup was opened through a click, we keep it open so that the user can eventually
+      // interact with it's content
+      setPopup({});
+    }
+  }, [safelyResetFeatureState, popup, setPopup]);
 
   const initialViewState: ComponentProps<typeof Map>['initialViewState'] = useMemo(() => {
     if (URLBbox) {
@@ -325,7 +328,7 @@ const MainMap: FCWithMessages = () => {
         onClick={handleMapClick}
         onMoveEnd={handleMoveEnd}
         onMouseMove={!disableMouseMove && handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseOut={handleMouseOut}
         attributionControl={false}
         cursor={cursor}
       >
