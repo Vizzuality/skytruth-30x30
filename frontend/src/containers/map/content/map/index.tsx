@@ -120,6 +120,53 @@ const MainMap: FCWithMessages = () => {
     setLocationBbox(locationsQuery?.data?.marine_bounds as CustomMapProps['bounds']['bbox']);
   }, [locationCode, locationsQuery, setLocationBbox]);
 
+  const safelyResetFeatureState = useCallback(() => {
+    if (!hoveredPolygonId.current) {
+      return;
+    }
+
+    const isSourceStillAvailable = !!map.getSource(hoveredPolygonId.current.source);
+
+    if (isSourceStillAvailable) {
+      map.setFeatureState(
+        {
+          source: hoveredPolygonId.current.source,
+          id: hoveredPolygonId.current.id,
+          sourceLayer: hoveredPolygonId.current.sourceLayer,
+        },
+        { hover: false }
+      );
+    }
+  }, [map]);
+
+  const safelySetFeatureState = useCallback(
+    (feature: mapboxgl.MapboxGeoJSONFeature) => {
+      const isSameId = !hoveredPolygonId.current || hoveredPolygonId.current.id === feature.id;
+
+      const isSameSource =
+        !hoveredPolygonId.current || hoveredPolygonId.current.source === feature.source;
+
+      const isSameSourceLayer =
+        !hoveredPolygonId.current || hoveredPolygonId.current.sourceLayer === feature.sourceLayer;
+
+      if (!isSameId || !isSameSource || !isSameSourceLayer) {
+        safelyResetFeatureState();
+      }
+
+      map.setFeatureState(
+        {
+          source: feature.source,
+          id: feature.id,
+          sourceLayer: feature.sourceLayer,
+        },
+        { hover: true }
+      );
+
+      hoveredPolygonId.current = feature;
+    },
+    [map, safelyResetFeatureState]
+  );
+
   const handleMoveEnd = useCallback(() => {
     setMapSettings((prev) => ({
       ...prev,
@@ -135,16 +182,8 @@ const MainMap: FCWithMessages = () => {
     (e: Parameters<ComponentProps<typeof Map>['onClick']>[0]) => {
       if (drawState.active) return null;
 
-      if (popup?.features?.length && hoveredPolygonId.current !== null) {
-        map.setFeatureState(
-          {
-            source: hoveredPolygonId.current.source,
-            id: hoveredPolygonId.current.id,
-            sourceLayer: hoveredPolygonId.current.sourceLayer,
-          },
-          { hover: false }
-        );
-
+      if (popup?.features?.length) {
+        safelyResetFeatureState();
         setPopup({});
       }
 
@@ -152,6 +191,7 @@ const MainMap: FCWithMessages = () => {
         layersInteractive.length &&
         layersInteractiveData.some((l) => {
           const attributes = l.attributes as LayerTyped;
+          console.log(l);
           return attributes?.interaction_config?.events.some((ev) => ev.type === 'click');
         })
       ) {
@@ -159,7 +199,14 @@ const MainMap: FCWithMessages = () => {
         setPopup(p);
       }
     },
-    [layersInteractive, layersInteractiveData, setPopup, drawState, popup, map]
+    [
+      drawState.active,
+      popup?.features?.length,
+      layersInteractive.length,
+      layersInteractiveData,
+      safelyResetFeatureState,
+      setPopup,
+    ]
   );
 
   const handleMouseMove = useCallback(
@@ -177,40 +224,8 @@ const MainMap: FCWithMessages = () => {
           setPopup({ ...e });
         }
 
-        const isSameId =
-          !hoveredPolygonId.current || hoveredPolygonId.current.id === e.features?.[0].id;
-
-        const isSameSource =
-          !hoveredPolygonId.current || hoveredPolygonId.current.source === e.features?.[0].source;
-
-        const isSameSourceLayer =
-          !hoveredPolygonId.current ||
-          hoveredPolygonId.current.sourceLayer === e.features?.[0].sourceLayer;
-
-        // Reset the state of the previously hovered geometry
-        if (!isSameId || !isSameSource || !isSameSourceLayer) {
-          map.setFeatureState(
-            {
-              source: hoveredPolygonId.current.source,
-              id: hoveredPolygonId.current.id,
-              sourceLayer: hoveredPolygonId.current.sourceLayer,
-            },
-            { hover: false }
-          );
-        }
-
-        // Highlight the currently hovered geometry
         if (e.features?.[0]) {
-          map.setFeatureState(
-            {
-              source: e.features[0].source,
-              id: e.features[0].id,
-              sourceLayer: e.features[0].sourceLayer,
-            },
-            { hover: true }
-          );
-
-          hoveredPolygonId.current = e.features[0];
+          safelySetFeatureState(e.features?.[0]);
         }
       } else {
         if (!drawState.active) {
@@ -218,23 +233,14 @@ const MainMap: FCWithMessages = () => {
         }
       }
     },
-    [map, hoveredPolygonId, drawState.active, setPopup]
+    [setPopup, drawState.active, safelySetFeatureState]
   );
 
   const handleMouseLeave = useCallback(() => {
     if (popup?.features?.length) return;
-    if (hoveredPolygonId.current !== null) {
-      map.setFeatureState(
-        {
-          source: hoveredPolygonId.current.source,
-          id: hoveredPolygonId.current.id,
-          sourceLayer: hoveredPolygonId.current.sourceLayer,
-        },
-        { hover: false }
-      );
-    }
+    safelyResetFeatureState();
     setPopup({});
-  }, [map, hoveredPolygonId, popup, setPopup]);
+  }, [popup?.features?.length, safelyResetFeatureState, setPopup]);
 
   const initialViewState: ComponentProps<typeof Map>['initialViewState'] = useMemo(() => {
     if (URLBbox) {
@@ -294,19 +300,6 @@ const MainMap: FCWithMessages = () => {
   useEffect(() => {
     setCursor(drawState.active ? 'crosshair' : 'grab');
   }, [drawState.active]);
-
-  useEffect(() => {
-    if (!popup?.features?.length && hoveredPolygonId.current !== null) {
-      map.setFeatureState(
-        {
-          source: hoveredPolygonId.current.source,
-          id: hoveredPolygonId.current.id,
-          sourceLayer: hoveredPolygonId.current.sourceLayer,
-        },
-        { hover: false }
-      );
-    }
-  }, [map, popup]);
 
   useEffect(() => {
     return () => {
