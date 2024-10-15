@@ -23,6 +23,8 @@ import { useGetLayers } from '@/types/generated/layer';
 
 import { useSyncMapLayers } from '../sync-settings';
 
+import { HOVER_POPUP_ICON_BY_SOURCE, HOVER_POPUP_PROPERTIES_BY_SOURCE } from './constants';
+
 const PopupContainer: FCWithMessages = () => {
   const locale = useLocale();
 
@@ -34,7 +36,10 @@ const PopupContainer: FCWithMessages = () => {
 
   const setPopup = useSetAtom(popupAtom);
 
-  const availableSources = Array.from(new Set(popup?.features?.map(({ source }) => source)));
+  const availableSources = useMemo(
+    () => Array.from(new Set(popup?.features?.map(({ source }) => source))),
+    [popup]
+  );
 
   const { data: layersInteractiveData } = useGetLayers(
     {
@@ -72,23 +77,20 @@ const PopupContainer: FCWithMessages = () => {
   );
 
   const hoverTooltipContent = useMemo(() => {
-    const properties = popup?.features?.find(({ source }) => source === 'ezz-source')?.properties;
-
-    let content = null;
+    const { properties, source } = popup?.features?.[0] ?? {};
 
     if (!properties) {
-      return content;
+      return null;
     }
 
-    if (locale === 'es') {
-      content = properties.GEONAME_ES;
-    }
-
-    if (locale === 'fr') {
-      content = properties.GEONAME_FR;
-    }
-
-    return content ?? properties.GEONAME;
+    return (
+      <div>
+        {HOVER_POPUP_ICON_BY_SOURCE[source] ? (
+          <Icon icon={HOVER_POPUP_ICON_BY_SOURCE[source]} className="mr-2 inline-block w-[14px]" />
+        ) : null}
+        {properties[HOVER_POPUP_PROPERTIES_BY_SOURCE[source]?.[locale]] ?? null}
+      </div>
+    );
   }, [locale, popup]);
 
   const closePopup = useCallback(() => {
@@ -157,7 +159,7 @@ const PopupContainer: FCWithMessages = () => {
           </Select>
         )}
         {isHoveredTooltip && (
-          <div className="font-mono text-sm text-gray-500">{hoverTooltipContent}</div>
+          <div className="font-mono text-sm text-black">{hoverTooltipContent}</div>
         )}
         {isClickedTooltip && selectedLayerId && <PopupItem id={selectedLayerId} />}
       </div>

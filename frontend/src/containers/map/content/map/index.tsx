@@ -315,10 +315,6 @@ const MainMap: FCWithMessages = () => {
 
   const disableMouseMove = popup.type === 'click' && popup.features?.length;
 
-  // ? the popup won't show up when the user is hovering a layer that is not EEZ
-  const hidePopup =
-    popup?.type === 'mousemove' && !popup.features?.some((f) => f.source === 'ezz-source');
-
   return (
     <div className="absolute left-0 h-full w-full border-b border-r border-black">
       <Map
@@ -333,7 +329,7 @@ const MainMap: FCWithMessages = () => {
         cursor={cursor}
       >
         <>
-          {!hidePopup && <Popup />}
+          <Popup />
           <LabelsManager />
           <LayersToolbox />
           <ZoomControls />
