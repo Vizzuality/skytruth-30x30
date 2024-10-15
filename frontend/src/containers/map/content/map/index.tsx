@@ -101,6 +101,9 @@ const MainMap: FCWithMessages = () => {
           $eq: true,
         },
       },
+      // Makes sure that the default interactive layers are displayed on top so that their
+      // highlighted states are fully visible
+      sort: 'interaction_config',
     },
     {
       query: {
