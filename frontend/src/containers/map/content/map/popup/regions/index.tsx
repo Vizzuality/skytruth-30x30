@@ -11,6 +11,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
@@ -30,9 +31,9 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const [popup, setPopup] = useAtom(popupAtom);
 
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
+  const [{ tab }] = useSyncMapContentSettings();
 
   const layerQuery = useGetLayersId<{
-    environment: LayerTyped['environment']['data']['attributes'];
     source: LayerTyped['config']['source'];
     click: LayerTyped['interaction_config']['events'][0];
   }>(
@@ -41,12 +42,11 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       locale,
-      populate: 'metadata,environment',
+      populate: 'metadata',
     },
     {
       query: {
         select: ({ data }) => ({
-          environment: (data.attributes as LayerTyped)?.environment?.data?.attributes,
           source: (data.attributes as LayerTyped)?.config?.source,
           click: (data.attributes as LayerTyped)?.interaction_config?.events.find(
             (ev) => ev.type === 'click'
@@ -56,7 +56,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     }
   );
 
-  const { source, environment } = layerQuery.data || {};
+  const { source } = layerQuery.data || {};
 
   const DATA = useMemo(() => {
     if (source?.type === 'vector' && rendered && popup && map) {
@@ -104,7 +104,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
           },
           environment: {
             slug: {
-              $eq: environment?.slug,
+              $eq: tab,
             },
           },
         },
@@ -130,7 +130,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       {
         query: {
           select: ({ data }) => data?.[0].attributes,
-          enabled: (!!DATA?.region_id || !!DATA?.GID_0) && !!environment,
+          enabled: !!DATA?.region_id || !!DATA?.GID_0,
         },
       }
     );
@@ -208,7 +208,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         <>
           <div className="space-y-2">
             <div className="my-4 max-w-[95%] font-mono">
-              {environment?.slug === 'marine'
+              {tab === 'marine'
                 ? t('marine-conservation-coverage')
                 : t('terrestrial-conservation-coverage')}
             </div>
