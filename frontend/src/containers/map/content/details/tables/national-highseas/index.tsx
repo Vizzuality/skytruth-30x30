@@ -7,6 +7,7 @@ import { usePreviousImmediate } from 'rooks';
 
 import FiltersButton from '@/components/filters-button';
 import TooltipButton from '@/components/tooltip-button';
+import { Skeleton } from '@/components/ui/skeleton';
 import Table from '@/containers/map/content/details/table';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { FCWithMessages } from '@/types';
@@ -47,7 +48,11 @@ const NationalHighseasTable: FCWithMessages = () => {
     pageSize: 100,
   });
 
-  const [data, { total }] = useData(
+  const {
+    data: [data, { total }],
+    isLoading,
+    isFetching,
+  } = useData(
     locationCode as string,
     tab === 'marine' || tab === 'terrestrial' ? tab : null,
     sorting,
@@ -67,6 +72,34 @@ const NationalHighseasTable: FCWithMessages = () => {
   useEffect(() => {
     setPagination((prevPagination) => ({ ...prevPagination, pageIndex: 0 }));
   }, [filters, sorting]);
+
+  // While the data is loading, we're showing a table with skeletons
+  if (isLoading || isFetching) {
+    const newColumns = columns.map((column) => ({
+      ...column,
+      cell: () => (
+        <div className="text-4xl font-bold">
+          <Skeleton className="my-3 h-4 w-full" />
+        </div>
+      ),
+    }));
+
+    const newData = data.length > 0 ? data : [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+
+    return (
+      <Table
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        columns={newColumns}
+        data={newData}
+        sorting={sorting}
+        onSortingChange={setSorting}
+        pagination={pagination}
+        onPaginationChange={setPagination}
+        rowCount={total ?? 0}
+      />
+    );
+  }
 
   return (
     <Table

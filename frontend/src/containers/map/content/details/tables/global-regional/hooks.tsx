@@ -314,7 +314,12 @@ export const useData = (
 ) => {
   const locale = useLocale();
 
-  const { data: locationType, isSuccess: isLocationSuccess } = useGetLocations<string>(
+  const {
+    data: locationType,
+    isSuccess: isLocationSuccess,
+    isLoading: isLocationLoading,
+    isFetching: isLocationFetching,
+  } = useGetLocations<string>(
     {
       locale,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -343,7 +348,7 @@ export const useData = (
     }
   }
 
-  const { data } = useGetProtectionCoverageStats<
+  const { data, isLoading, isFetching } = useGetProtectionCoverageStats<
     [GlobalRegionalTableColumns[], ProtectionCoverageStatListResponseMetaPagination]
   >(
     {
@@ -467,5 +472,9 @@ export const useData = (
     }
   );
 
-  return data;
+  return {
+    data,
+    isLoading: isLoading || isLocationLoading,
+    isFetching: isFetching || isLocationFetching,
+  };
 };

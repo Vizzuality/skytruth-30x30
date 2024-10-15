@@ -708,7 +708,9 @@ export const useData = (
   );
 
   // If the user isn't filtering, only one request is sufficient to get all of the table's data
-  const { data } = useGetPas<[NationalHighseasTableColumns[], PaListResponseMetaPagination]>(
+  const { data, isLoading, isFetching } = useGetPas<
+    [NationalHighseasTableColumns[], PaListResponseMetaPagination]
+  >(
     {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -748,5 +750,5 @@ export const useData = (
     }
   );
 
-  return data;
+  return { data, isLoading, isFetching };
 };
