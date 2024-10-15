@@ -36,7 +36,7 @@ const ProtectedAreaPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) =>
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       locale,
-      populate: 'metadata',
+      populate: 'metadata,environment',
     },
     {
       query: {

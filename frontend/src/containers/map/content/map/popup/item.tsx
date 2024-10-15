@@ -21,7 +21,7 @@ const PopupItem: FCWithMessages<PopupItemProps> = ({ id }) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     locale,
-    populate: 'metadata',
+    populate: 'metadata,environment',
   });
 
   const attributes = data?.data?.attributes as LayerTyped;
