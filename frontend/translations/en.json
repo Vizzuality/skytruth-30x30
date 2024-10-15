@@ -253,6 +253,7 @@
       "no-data-available": "No data available",
       "no-results": "No results.",
       "marine-conservation-coverage": "Marine Conservation Coverage",
+      "terrestrial-conservation-coverage": "Terrestrial Conservation Coverage",
       "percentage": "{percentage}%",
       "percentage-bold": "<b1>{percentage}</b1><b2>%</b2>",
       "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
