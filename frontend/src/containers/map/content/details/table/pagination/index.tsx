@@ -18,7 +18,7 @@ const Pagination = <TData extends RowData>({
   const t = useTranslations('containers.map');
 
   return (
-    <div className="sticky bottom-0 left-0 flex items-center justify-end p-3">
+    <div className="relative flex shrink-0 items-center justify-end p-3">
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-mono text-xs">
         {t('results-out-of', {
           startIndex: pagination.pageIndex * pagination.pageSize + 1,

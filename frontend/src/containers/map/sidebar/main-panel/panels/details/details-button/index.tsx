@@ -16,7 +16,7 @@ type DetailsButtonProps = {
 const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className, locationType }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
 
-  const [{ tab }, setSettings] = useSyncMapContentSettings();
+  const [{ tab, showDetails }, setSettings] = useSyncMapContentSettings();
 
   const handleButtonClick = useCallback(() => {
     setSettings((prevSettings) => ({ ...prevSettings, showDetails: !prevSettings.showDetails }));
@@ -24,7 +24,13 @@ const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className, location
 
   return (
     <Button
-      className={cn('flex h-10 px-5 md:px-8', className)}
+      className={cn(
+        {
+          'flex h-10 px-5 md:px-8': true,
+          'border border-black bg-orange text-black hover:bg-orange': showDetails,
+        },
+        className
+      )}
       size="full"
       onClick={handleButtonClick}
     >

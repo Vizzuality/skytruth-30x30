@@ -28,7 +28,7 @@ const ExpansionControls: React.FC<ExpansionControlsProps> = ({ row, children }) 
       {isRowExpandable && (
         <button
           type="button"
-          className="cursor pointer -ml-1.5 mr-1.5"
+          className="cursor pointer -ml-px mr-1.5"
           onClick={toggleExpanded}
           aria-label={isRowExpanded ? t('collapse-sub-rows') : t('expand-sub-rows')}
         >

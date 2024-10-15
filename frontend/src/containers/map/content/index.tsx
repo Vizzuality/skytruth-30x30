@@ -11,7 +11,7 @@ const MapContent: FCWithMessages = () => {
     <>
       <Map />
       {showDetails && (
-        <div className="relative h-full w-full border-b border-r border-black">
+        <div className="relative h-full w-full overflow-hidden border-b border-r border-black">
           <Details />
         </div>
       )}

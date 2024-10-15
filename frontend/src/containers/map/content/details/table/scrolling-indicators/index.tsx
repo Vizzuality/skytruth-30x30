@@ -23,16 +23,7 @@ const ScrollingIndicators: React.FC<ScrollingIndicatorsProps> = ({ className, ch
       {(xScrollPosition === 'start' || xScrollPosition === 'middle') && (
         <>
           <span className={cn(COMMON_CLASSNAMES.border, 'right-0 top-0')}>
-            <span
-              className={cn(COMMON_CLASSNAMES.iconWrapper, '-right-px top-0 -translate-y-full')}
-            >
-              <LuChevronRight className={COMMON_CLASSNAMES.icon} />
-            </span>
-          </span>
-          <span className={cn(COMMON_CLASSNAMES.border, 'right-0 bottom-0')}>
-            <span
-              className={cn(COMMON_CLASSNAMES.iconWrapper, '-right-px bottom-px translate-y-full')}
-            >
+            <span className={cn(COMMON_CLASSNAMES.iconWrapper, '-right-px top-0')}>
               <LuChevronRight className={COMMON_CLASSNAMES.icon} />
             </span>
           </span>
@@ -41,14 +32,7 @@ const ScrollingIndicators: React.FC<ScrollingIndicatorsProps> = ({ className, ch
       {(xScrollPosition === 'middle' || xScrollPosition === 'end') && (
         <>
           <span className={cn(COMMON_CLASSNAMES.border, 'left-0 top-0')}>
-            <span className={cn(COMMON_CLASSNAMES.iconWrapper, 'left-0 top-0 -translate-y-full')}>
-              <LuChevronLeft className={COMMON_CLASSNAMES.icon} />
-            </span>
-          </span>
-          <span className={cn(COMMON_CLASSNAMES.border, 'left-0 bottom-0')}>
-            <span
-              className={cn(COMMON_CLASSNAMES.iconWrapper, 'left-0 bottom-px translate-y-full')}
-            >
+            <span className={cn(COMMON_CLASSNAMES.iconWrapper, 'left-0 top-0')}>
               <LuChevronLeft className={COMMON_CLASSNAMES.icon} />
             </span>
           </span>

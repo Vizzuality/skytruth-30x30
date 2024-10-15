@@ -24,6 +24,10 @@ const PositionalScroll: React.FC<PositionalScrollProps> = ({
   const handleScroll = useCallback(() => {
     const target = ref.current;
 
+    if (!target) {
+      return;
+    }
+
     const xAtStartPosition = target.scrollLeft === 0;
     const xAtEndPosition = target.scrollLeft === target.scrollWidth - target.clientWidth;
 
