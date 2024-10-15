@@ -177,26 +177,41 @@ const MainMap: FCWithMessages = () => {
           setPopup({ ...e });
         }
 
-        if (hoveredPolygonId.current !== null) {
+        const isSameId =
+          !hoveredPolygonId.current || hoveredPolygonId.current.id === e.features?.[0].id;
+
+        const isSameSource =
+          !hoveredPolygonId.current || hoveredPolygonId.current.source === e.features?.[0].source;
+
+        const isSameSourceLayer =
+          !hoveredPolygonId.current ||
+          hoveredPolygonId.current.sourceLayer === e.features?.[0].sourceLayer;
+
+        // Reset the state of the previously hovered geometry
+        if (!isSameId || !isSameSource || !isSameSourceLayer) {
           map.setFeatureState(
             {
-              source: e.features?.[0].source,
+              source: hoveredPolygonId.current.source,
               id: hoveredPolygonId.current.id,
-              sourceLayer: e.features?.[0].sourceLayer,
+              sourceLayer: hoveredPolygonId.current.sourceLayer,
             },
             { hover: false }
           );
         }
-        map.setFeatureState(
-          {
-            source: e.features?.[0].source,
-            id: e.features[0].id,
-            sourceLayer: e.features?.[0].sourceLayer,
-          },
-          { hover: true }
-        );
 
-        hoveredPolygonId.current = e.features[0];
+        // Highlight the currently hovered geometry
+        if (e.features?.[0]) {
+          map.setFeatureState(
+            {
+              source: e.features[0].source,
+              id: e.features[0].id,
+              sourceLayer: e.features[0].sourceLayer,
+            },
+            { hover: true }
+          );
+
+          hoveredPolygonId.current = e.features[0];
+        }
       } else {
         if (!drawState.active) {
           setCursor('grab');
