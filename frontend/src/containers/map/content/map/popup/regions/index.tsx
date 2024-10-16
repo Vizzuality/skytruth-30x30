@@ -232,11 +232,15 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
               )}
             </div>
             <div className="space-x-1 font-mono font-medium text-black">
-              {t('marine-protected-area', {
+              {t('protected-area', {
                 protectedArea: formattedStats.protectedArea,
                 totalArea: formatKM(
                   locale,
-                  Number(protectionCoverageStats?.location.data.attributes.total_marine_area)
+                  Number(
+                    protectionCoverageStats?.location.data.attributes[
+                      environment === 'marine' ? 'total_marine_area' : 'total_terrestrial_area'
+                    ]
+                  )
                 ),
               })}
             </div>

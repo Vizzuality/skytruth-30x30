@@ -205,7 +205,7 @@ const EEZLayerPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
               )}
             </div>
             <div className="space-x-1 font-mono text-xs font-medium text-black">
-              {t('marine-protected-area', {
+              {t('protected-area', {
                 protectedArea: formatKM(locale, protectionCoverageStats.protected_area),
                 totalArea: formatKM(
                   locale,
