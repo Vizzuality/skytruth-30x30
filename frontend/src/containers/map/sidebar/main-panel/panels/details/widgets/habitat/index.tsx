@@ -116,12 +116,12 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
               )?.attributes;
             }
 
-            const metadata = habitatMetadatas?.find(({ slug }) => slug === habitat.slug);
+            const metadata = habitatMetadatas?.find(({ slug }) => slug === habitat?.slug);
 
             return {
-              title: habitat.name,
-              slug: habitat.slug,
-              background: HABITAT_CHART_COLORS[habitat.slug],
+              title: habitat?.name,
+              slug: habitat?.slug,
+              background: HABITAT_CHART_COLORS[habitat?.slug],
               totalArea: stats.total_area,
               protectedArea: stats.protected_area,
               info: metadata?.info,

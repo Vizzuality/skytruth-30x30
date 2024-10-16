@@ -62,7 +62,7 @@ const BoundariesPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         placeholderData: { data: {} },
         select: ({ data }) => ({
           source: (data.attributes as LayerTyped)?.config?.source,
-          environment: data.attributes?.environment?.data.attributes.slug,
+          environment: data.attributes?.environment?.data?.attributes.slug,
         }),
       },
     }
