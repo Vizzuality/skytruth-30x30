@@ -3,7 +3,7 @@ from flask.logging import default_handler
 import logging
 
 from src.connect_tcp import connect_tcp_socket
-from src.analysis import get_locations_stats
+from src.analysis import get_locations_stats_terrestrial, get_locations_stats_marine
 
 logger = logging.getLogger(__name__)
 logger.addHandler(default_handler)
@@ -50,7 +50,19 @@ def index(request):
         if not geometry:
             raise ValueError("geometry is required")
 
-        return (get_locations_stats(db, geometry), 200, headers)
+        funct = {
+            "marine": get_locations_stats_marine,
+            "terrestrial": get_locations_stats_terrestrial,
+        }
+
+        environment = ({**request.args, **request.get_json()}).get(
+            "environment", "marine"
+        )
+        if environment not in funct.keys():
+            raise ValueError("environment must be one of `marine` or `terrestrial`")
+
+        return (funct[environment](db, geometry), 200, headers)
+
     except ValueError as e:
         logger.exception(str(e))
         return {"error": str(e)}, 400, headers
