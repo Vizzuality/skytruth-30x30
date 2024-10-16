@@ -9,7 +9,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { PAGES } from '@/constants/pages';
-import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
+import { useMapSearchParams, useSyncMapLayers } from '@/containers/map/content/map/sync-settings';
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
@@ -26,6 +26,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const DATA_REF = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
   const searchParams = useMapSearchParams();
+  const [activeLayers] = useSyncMapLayers();
   const { push } = useRouter();
   const [popup, setPopup] = useAtom(popupAtom);
 
@@ -198,6 +199,13 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       map?.off('render', handleMapRender);
     };
   }, [map, handleMapRender]);
+
+  // Close the tooltip if the layer that was clicked is not active anymore
+  useEffect(() => {
+    if (!activeLayers.includes(layerId)) {
+      setPopup({});
+    }
+  }, [layerId, activeLayers, setPopup]);
 
   if (!DATA) return null;
 
