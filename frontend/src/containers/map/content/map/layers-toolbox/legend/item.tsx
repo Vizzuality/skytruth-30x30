@@ -2,10 +2,9 @@ import { ReactElement, isValidElement, useMemo } from 'react';
 
 import TooltipButton from '@/components/tooltip-button';
 import Icon from '@/components/ui/icon';
-import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
+import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
-import RegionsPopup from '@/containers/map/content/map/popup/regions';
 import { cn } from '@/lib/classnames';
 import { parseConfig } from '@/lib/json-converter';
 import CircleWithDottedRedStrokeIcon from '@/styles/icons/circle-with-dotted-red-stroke.svg';
@@ -157,10 +156,9 @@ const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
 
 LegendItem.messages = [
   // Imported by `parseConfig`
-  ...EEZLayerPopup.messages,
   ...GenericPopup.messages,
   ...ProtectedAreaPopup.messages,
-  ...RegionsPopup.messages,
+  ...BoundariesPopup.messages,
 ];
 
 export default LegendItem;
