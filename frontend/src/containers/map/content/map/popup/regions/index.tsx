@@ -18,18 +18,23 @@ import { useGetProtectionCoverageStats } from '@/types/generated/protection-cove
 import { ProtectionCoverageStat } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
+import { POPUP_PROPERTIES_BY_SOURCE } from '../constants';
+
 const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const t = useTranslations('containers.map');
   const locale = useLocale();
 
   const [rendered, setRendered] = useState(false);
-  const DATA_REF = useRef<Feature['properties'] | undefined>();
+
+  const geometryDataRef = useRef<Feature['properties'] | undefined>();
   const { default: map } = useMap();
+
   const searchParams = useMapSearchParams();
   const [activeLayers] = useSyncMapLayers();
-  const { push } = useRouter();
-  const [popup, setPopup] = useAtom(popupAtom);
 
+  const { push } = useRouter();
+
+  const [popup, setPopup] = useAtom(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
   const {
@@ -63,7 +68,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     }
   );
 
-  const DATA = useMemo(() => {
+  const geometryData = useMemo(() => {
     if (source?.type === 'vector' && rendered && popup && map) {
       const point = map.project(popup.lngLat);
 
@@ -74,7 +79,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         point.y < 0 ||
         point.y > map.getCanvas().height
       ) {
-        return DATA_REF.current;
+        return geometryDataRef.current;
       }
       const query = map.queryRenderedFeatures(point, {
         layers: layersInteractiveIds,
@@ -84,25 +89,28 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         return d.source === source.id;
       })?.properties;
 
-      DATA_REF.current = d;
+      geometryDataRef.current = d;
 
       if (d) {
-        return DATA_REF.current;
+        return geometryDataRef.current;
       }
     }
 
-    return DATA_REF.current;
+    return geometryDataRef.current;
   }, [popup, source, layersInteractiveIds, map, rendered]);
 
-  // ? I had to type the data ad hoc because the generated type is wrong when we are adding
-  // ? the `sort` query param
+  const locationCode = useMemo(
+    () => geometryData?.[POPUP_PROPERTIES_BY_SOURCE[source?.['id']]?.id],
+    [geometryData, source]
+  );
+
   const { data: protectionCoverageStats, isFetching } =
     useGetProtectionCoverageStats<ProtectionCoverageStat>(
       {
         locale,
         filters: {
           location: {
-            code: DATA?.GID_0 || DATA?.region_id,
+            code: locationCode,
           },
           is_last_year: {
             $eq: true,
@@ -135,7 +143,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       {
         query: {
           select: ({ data }) => data?.[0].attributes,
-          enabled: !!DATA?.region_id || !!DATA?.GID_0,
+          enabled: !!geometryData,
         },
       }
     );
@@ -165,15 +173,17 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       return null;
     }
 
+    const { attributes } = protectionCoverageStats.location.data;
+
     if (locale === 'es') {
-      return protectionCoverageStats.location.data.attributes.name_es;
+      return attributes.name_es;
     }
 
     if (locale === 'fr') {
-      return protectionCoverageStats.location.data.attributes.name_fr;
+      return attributes.name_fr;
     }
 
-    return protectionCoverageStats.location.data.attributes.name;
+    return attributes.name;
   }, [locale, protectionCoverageStats]);
 
   // handle renderer
@@ -182,13 +192,9 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   }, [map]);
 
   const handleLocationSelected = useCallback(async () => {
-    if (!protectionCoverageStats?.location?.data.attributes) return undefined;
-
-    const { code } = protectionCoverageStats.location.data.attributes;
-
-    await push(`${PAGES.progressTracker}/${code.toUpperCase()}?${searchParams.toString()}`);
+    await push(`${PAGES.progressTracker}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
     setPopup({});
-  }, [push, searchParams, protectionCoverageStats, setPopup]);
+  }, [push, locationCode, searchParams, setPopup]);
 
   useEffect(() => {
     map?.on('render', handleMapRender);
@@ -207,7 +213,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     }
   }, [layerId, activeLayers, setPopup]);
 
-  if (!DATA) return null;
+  if (!geometryData) return null;
 
   return (
     <div className="space-y-2">
