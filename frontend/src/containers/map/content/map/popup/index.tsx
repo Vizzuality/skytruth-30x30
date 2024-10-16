@@ -23,7 +23,7 @@ import { useGetLayers } from '@/types/generated/layer';
 
 import { useSyncMapLayers } from '../sync-settings';
 
-import { HOVER_POPUP_ICON_BY_SOURCE, HOVER_POPUP_PROPERTIES_BY_SOURCE } from './constants';
+import { POPUP_ICON_BY_SOURCE, POPUP_PROPERTIES_BY_SOURCE } from './constants';
 
 const PopupContainer: FCWithMessages = () => {
   const locale = useLocale();
@@ -85,10 +85,10 @@ const PopupContainer: FCWithMessages = () => {
 
     return (
       <div>
-        {HOVER_POPUP_ICON_BY_SOURCE[source] ? (
-          <Icon icon={HOVER_POPUP_ICON_BY_SOURCE[source]} className="mr-2 inline-block w-[14px]" />
+        {POPUP_ICON_BY_SOURCE[source] ? (
+          <Icon icon={POPUP_ICON_BY_SOURCE[source]} className="mr-2 inline-block w-[14px]" />
         ) : null}
-        {properties[HOVER_POPUP_PROPERTIES_BY_SOURCE[source]?.[locale]] ?? null}
+        {properties[POPUP_PROPERTIES_BY_SOURCE[source]?.name[locale]] ?? null}
       </div>
     );
   }, [locale, popup]);

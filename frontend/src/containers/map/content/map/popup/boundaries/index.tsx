@@ -9,7 +9,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { PAGES } from '@/constants/pages';
-import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
+import { useMapSearchParams, useSyncMapLayers } from '@/containers/map/content/map/sync-settings';
 import { layersInteractiveIdsAtom, popupAtom } from '@/containers/map/store';
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
@@ -18,45 +18,57 @@ import { useGetProtectionCoverageStats } from '@/types/generated/protection-cove
 import { ProtectionCoverageStat } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
-const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
+import { POPUP_BUTTON_CONTENT_BY_SOURCE, POPUP_PROPERTIES_BY_SOURCE } from '../constants';
+
+const BoundariesPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const t = useTranslations('containers.map');
   const locale = useLocale();
 
   const [rendered, setRendered] = useState(false);
-  const DATA_REF = useRef<Feature['properties'] | undefined>();
-  const { default: map } = useMap();
-  const searchParams = useMapSearchParams();
-  const { push } = useRouter();
-  const [popup, setPopup] = useAtom(popupAtom);
 
+  const geometryDataRef = useRef<Feature['properties'] | undefined>();
+  const { default: map } = useMap();
+
+  const searchParams = useMapSearchParams();
+  const [activeLayers] = useSyncMapLayers();
+
+  const { push } = useRouter();
+
+  const [popup, setPopup] = useAtom(popupAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
 
-  const layerQuery = useGetLayersId<{
+  const {
+    data: { source, environment },
+  } = useGetLayersId<{
     source: LayerTyped['config']['source'];
-    click: LayerTyped['interaction_config']['events'][0];
+    environment: string;
   }>(
     layerId,
     {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       locale,
-      populate: 'metadata',
+      fields: ['config'],
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      populate: {
+        environment: {
+          fields: ['slug'],
+        },
+      },
     },
     {
       query: {
+        placeholderData: { data: {} },
         select: ({ data }) => ({
-          source: (data.attributes as LayerTyped).config?.source,
-          click: (data.attributes as LayerTyped)?.interaction_config?.events.find(
-            (ev) => ev.type === 'click'
-          ),
+          source: (data.attributes as LayerTyped)?.config?.source,
+          environment: data.attributes?.environment?.data.attributes.slug,
         }),
       },
     }
   );
 
-  const { source } = layerQuery.data;
-
-  const DATA = useMemo(() => {
+  const geometryData = useMemo(() => {
     if (source?.type === 'vector' && rendered && popup && map) {
       const point = map.project(popup.lngLat);
 
@@ -67,7 +79,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         point.y < 0 ||
         point.y > map.getCanvas().height
       ) {
-        return DATA_REF.current;
+        return geometryDataRef.current;
       }
       const query = map.queryRenderedFeatures(point, {
         layers: layersInteractiveIds,
@@ -77,32 +89,40 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         return d.source === source.id;
       })?.properties;
 
-      DATA_REF.current = d;
+      geometryDataRef.current = d;
 
       if (d) {
-        return DATA_REF.current;
+        return geometryDataRef.current;
       }
     }
 
-    return DATA_REF.current;
+    return geometryDataRef.current;
   }, [popup, source, layersInteractiveIds, map, rendered]);
 
-  // ? I had to type the data ad hoc because the generated type is wrong when we are adding
-  // ? the `sort` query param
+  const locationCode = useMemo(
+    () => geometryData?.[POPUP_PROPERTIES_BY_SOURCE[source?.['id']]?.id],
+    [geometryData, source]
+  );
+
+  const localizedLocationName = useMemo(
+    () => geometryData?.[POPUP_PROPERTIES_BY_SOURCE[source?.['id']]?.name[locale]],
+    [geometryData, locale, source]
+  );
+
   const { data: protectionCoverageStats, isFetching } =
     useGetProtectionCoverageStats<ProtectionCoverageStat>(
       {
         locale,
         filters: {
           location: {
-            code: DATA?.region_id,
+            code: locationCode,
           },
           is_last_year: {
             $eq: true,
           },
           environment: {
             slug: {
-              $eq: 'marine',
+              $eq: environment,
             },
           },
         },
@@ -110,7 +130,14 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
         // @ts-ignore
         populate: {
           location: {
-            fields: ['name', 'name_es', 'name_fr', 'code', 'total_marine_area'],
+            fields: [
+              ...(locale === 'en' ? ['name'] : []),
+              ...(locale === 'es' ? ['name_es'] : []),
+              ...(locale === 'fr' ? ['name_fr'] : []),
+              'code',
+              'total_marine_area',
+              'total_terrestrial_area',
+            ],
           },
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -121,7 +148,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       {
         query: {
           select: ({ data }) => data?.[0].attributes,
-          enabled: !!DATA?.region_id,
+          enabled: !!geometryData,
         },
       }
     );
@@ -146,35 +173,15 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     };
   }, [locale, protectionCoverageStats]);
 
-  const localizedLocationName = useMemo(() => {
-    if (!protectionCoverageStats) {
-      return null;
-    }
-
-    if (locale === 'es') {
-      return protectionCoverageStats.location.data.attributes.name_es;
-    }
-
-    if (locale === 'fr') {
-      return protectionCoverageStats.location.data.attributes.name_fr;
-    }
-
-    return protectionCoverageStats.location.data.attributes.name;
-  }, [locale, protectionCoverageStats]);
-
   // handle renderer
   const handleMapRender = useCallback(() => {
     setRendered(map?.loaded() && map?.areTilesLoaded());
   }, [map]);
 
   const handleLocationSelected = useCallback(async () => {
-    if (!protectionCoverageStats?.location?.data.attributes) return undefined;
-
-    const { code } = protectionCoverageStats.location.data.attributes;
-
-    await push(`${PAGES.progressTracker}/${code.toUpperCase()}?${searchParams.toString()}`);
+    await push(`${PAGES.progressTracker}/${locationCode.toUpperCase()}?${searchParams.toString()}`);
     setPopup({});
-  }, [push, searchParams, protectionCoverageStats, setPopup]);
+  }, [push, locationCode, searchParams, setPopup]);
 
   useEffect(() => {
     map?.on('render', handleMapRender);
@@ -186,7 +193,14 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
     };
   }, [map, handleMapRender]);
 
-  if (!DATA) return null;
+  // Close the tooltip if the layer that was clicked is not active anymore
+  useEffect(() => {
+    if (!activeLayers.includes(layerId)) {
+      setPopup({});
+    }
+  }, [layerId, activeLayers, setPopup]);
+
+  if (!geometryData) return null;
 
   return (
     <div className="space-y-2">
@@ -198,7 +212,11 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
       {!isFetching && !!protectionCoverageStats && (
         <>
           <div className="space-y-2">
-            <div className="my-4 max-w-[95%] font-mono">{t('marine-conservation-coverage')}</div>
+            <div className="my-4 max-w-[95%] font-mono">
+              {environment === 'marine'
+                ? t('marine-conservation-coverage')
+                : t('terrestrial-conservation-coverage')}
+            </div>
             <div className="space-x-1 font-mono tracking-tighter text-black">
               {formattedStats.percentage !== '-' &&
                 t.rich('percentage-bold', {
@@ -215,11 +233,15 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
               )}
             </div>
             <div className="space-x-1 font-mono font-medium text-black">
-              {t('marine-protected-area', {
+              {t('protected-area', {
                 protectedArea: formattedStats.protectedArea,
                 totalArea: formatKM(
                   locale,
-                  Number(protectionCoverageStats?.location.data.attributes.total_marine_area)
+                  Number(
+                    protectionCoverageStats?.location.data.attributes[
+                      environment === 'marine' ? 'total_marine_area' : 'total_terrestrial_area'
+                    ]
+                  )
                 ),
               })}
             </div>
@@ -229,7 +251,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
             className="block w-full border border-black p-4 text-center font-mono uppercase"
             onClick={handleLocationSelected}
           >
-            {t('open-region-insights')}
+            {t(POPUP_BUTTON_CONTENT_BY_SOURCE[source?.['id']])}
           </button>
         </>
       )}
@@ -237,6 +259,6 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   );
 };
 
-RegionsPopup.messages = ['containers.map'];
+BoundariesPopup.messages = ['containers.map'];
 
-export default RegionsPopup;
+export default BoundariesPopup;

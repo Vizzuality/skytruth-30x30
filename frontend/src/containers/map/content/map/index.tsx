@@ -17,10 +17,9 @@ import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
 import Modelling from '@/containers/map/content/map/modelling';
 import Popup from '@/containers/map/content/map/popup';
-import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
+import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
-import RegionsPopup from '@/containers/map/content/map/popup/regions';
 import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
 import { layersAtom, sidebarAtom } from '@/containers/map/store';
 import {
@@ -349,10 +348,9 @@ MainMap.messages = [
   ...LayersToolbox.messages,
   ...ZoomControls.messages,
   // Indirectly imported by the layer manager
-  ...EEZLayerPopup.messages,
   ...GenericPopup.messages,
   ...ProtectedAreaPopup.messages,
-  ...RegionsPopup.messages,
+  ...BoundariesPopup.messages,
 ];
 
 export default MainMap;
