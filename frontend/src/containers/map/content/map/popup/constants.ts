@@ -43,3 +43,10 @@ export const POPUP_ICON_BY_SOURCE = {
   'gadm-countries': Mountain as IconProps['icon'],
   'gadm-regions': Mountain as IconProps['icon'],
 };
+
+export const POPUP_BUTTON_CONTENT_BY_SOURCE = {
+  'ezz-source': 'open-country-insights',
+  'regions-source': 'open-region-insights',
+  'gadm-countries': 'open-country-insights',
+  'gadm-regions': 'open-region-insights',
+};

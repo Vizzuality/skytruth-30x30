@@ -18,7 +18,7 @@ import { useGetProtectionCoverageStats } from '@/types/generated/protection-cove
 import { ProtectionCoverageStat } from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
-import { POPUP_PROPERTIES_BY_SOURCE } from '../constants';
+import { POPUP_BUTTON_CONTENT_BY_SOURCE, POPUP_PROPERTIES_BY_SOURCE } from '../constants';
 
 const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   const t = useTranslations('containers.map');
@@ -264,7 +264,7 @@ const RegionsPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
             className="block w-full border border-black p-4 text-center font-mono uppercase"
             onClick={handleLocationSelected}
           >
-            {t('open-region-insights')}
+            {t(POPUP_BUTTON_CONTENT_BY_SOURCE[source?.['id']])}
           </button>
         </>
       )}
