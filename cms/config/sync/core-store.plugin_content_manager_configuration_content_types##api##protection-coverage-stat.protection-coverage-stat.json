@@ -35,21 +35,6 @@
           "sortable": true
         }
       },
-      "protection_status": {
-        "edit": {
-          "label": "protection_status",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "slug"
-        },
-        "list": {
-          "label": "protection_status",
-          "searchable": true,
-          "sortable": true
-        }
-      },
       "year": {
         "edit": {
           "label": "year",
@@ -64,44 +49,115 @@
           "sortable": true
         }
       },
-      "cumSumProtectedArea": {
+      "protected_area": {
         "edit": {
-          "label": "cumSumProtectedArea",
+          "label": "protected_area",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "cumSumProtectedArea",
+          "label": "protected_area",
           "searchable": true,
           "sortable": true
         }
       },
-      "protectedArea": {
+      "protected_areas_count": {
         "edit": {
-          "label": "protectedArea",
+          "label": "protected_areas_count",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "protectedArea",
+          "label": "protected_areas_count",
           "searchable": true,
           "sortable": true
         }
       },
-      "protectedAreasCount": {
+      "environment": {
         "edit": {
-          "label": "protectedAreasCount",
+          "label": "environment",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "environment",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "coverage": {
+        "edit": {
+          "label": "coverage",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "protectedAreasCount",
+          "label": "coverage",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "pas": {
+        "edit": {
+          "label": "pas",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "pas",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "oecms": {
+        "edit": {
+          "label": "oecms",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "oecms",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "is_last_year": {
+        "edit": {
+          "label": "is_last_year",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "is_last_year",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "global_contribution": {
+        "edit": {
+          "label": "global_contribution",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "global_contribution",
           "searchable": true,
           "sortable": true
         }
@@ -169,7 +225,7 @@
       "list": [
         "id",
         "location",
-        "protection_status",
+        "environment",
         "year"
       ],
       "edit": [
@@ -179,7 +235,7 @@
             "size": 6
           },
           {
-            "name": "protection_status",
+            "name": "environment",
             "size": 6
           }
         ],
@@ -187,19 +243,39 @@
           {
             "name": "year",
             "size": 4
-          },
+          }
+        ],
+        [
           {
-            "name": "cumSumProtectedArea",
-            "size": 4
-          },
-          {
-            "name": "protectedArea",
+            "name": "coverage",
             "size": 4
           }
         ],
         [
           {
-            "name": "protectedAreasCount",
+            "name": "pas",
+            "size": 4
+          },
+          {
+            "name": "oecms",
+            "size": 4
+          },
+          {
+            "name": "is_last_year",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "global_contribution",
+            "size": 4
+          },
+          {
+            "name": "protected_area",
+            "size": 4
+          },
+          {
+            "name": "protected_areas_count",
             "size": 4
           }
         ]

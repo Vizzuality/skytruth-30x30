@@ -51,22 +51,35 @@ const LocationDropdown: FCWithMessages<LocationDropdownProps> = ({
     }
   );
 
+  const handleFiltering = (value: string, search: string) => {
+    if (value.toLocaleLowerCase().includes(search.toLocaleLowerCase())) return 1;
+    return 0;
+  };
+
   return (
-    <Command label={t('search-country-region')} className={cn(className)}>
+    <Command label={t('search-country-region')} className={cn(className)} filter={handleFiltering}>
       <CommandInput placeholder={searchPlaceholder} />
       <CommandEmpty>{t('no-result')}</CommandEmpty>
       <CommandGroup className="mt-4 max-h-64 overflow-y-auto">
         {locations.map(({ attributes }) => {
-          const { name, code, type } = attributes;
+          const { name, name_es, name_fr, code, type } = attributes;
+
+          let locationName = name;
+          if (locale === 'es') {
+            locationName = name_es;
+          }
+          if (locale === 'fr') {
+            locationName = name_fr;
+          }
 
           return (
-            <CommandItem key={code} value={name} onSelect={() => onSelected(code)}>
+            <CommandItem key={code} value={locationName} onSelect={() => onSelected(code)}>
               <div className="flex w-full cursor-pointer justify-between gap-x-4">
                 <div className="flex text-base font-bold">
                   {locationsQuery.data?.code === code && (
                     <Check className="relative top-1 mr-1 inline-block h-4 w-4 flex-shrink-0" />
                   )}
-                  {name}
+                  {locationName}
                 </div>
                 <span className="flex flex-shrink-0 items-center font-mono text-xs capitalize text-gray-300">
                   {type}

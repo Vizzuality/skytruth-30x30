@@ -2,12 +2,9 @@ import { ReactElement, isValidElement, useMemo } from 'react';
 
 import { useLocale } from 'next-intl';
 
-import EEZLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/eez';
-import EstablishmentLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/establishment';
-import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
+import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
-import RegionsPopup from '@/containers/map/content/map/popup/regions';
 import { parseConfig } from '@/lib/json-converter';
 import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
@@ -54,12 +51,9 @@ const PopupItem: FCWithMessages<PopupItemProps> = ({ id }) => {
 
 PopupItem.messages = [
   // These components are used by `parseConfig`
-  ...EEZLayerPopup.messages,
-  ...EEZLayerLegend.messages,
   ...GenericPopup.messages,
   ...ProtectedAreaPopup.messages,
-  ...RegionsPopup.messages,
-  ...EstablishmentLayerLegend.messages,
+  ...BoundariesPopup.messages,
 ];
 
 export default PopupItem;

@@ -7,17 +7,16 @@ type NoDataProps = {
   message?: string;
 };
 
-const NoData: FCWithMessages<NoDataProps> = ({
-  error = false,
-  message = 'The current widget is not visible due to an error.',
-}) => {
+const NoData: FCWithMessages<NoDataProps> = ({ error = false, message }) => {
   const t = useTranslations('components.widget');
 
   return (
     <div className="flex flex-col gap-8 py-12 px-14 text-center md:px-10 md:py-14">
       <p className="text-xs">
-        {error && message}
-        {!error && t('data-not-available')}
+        {error && !message && t('not-visible-due-to-error')}
+        {error && !!message && message}
+        {!error && !message && t('no-data-available')}
+        {!error && !!message && message}
       </p>
     </div>
   );

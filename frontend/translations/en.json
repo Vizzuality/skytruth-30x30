@@ -98,7 +98,12 @@
       "outro-button": "Get in touch",
       "looking-for": "I am looking for..."
     },
-    "progress-tracker": {},
+    "progress-tracker": {
+      "terrestrial-data-disclaimer-dialog-title": "Terrestrial Conservation Coverage Data Disclaimer",
+      "terrestrial-data-disclaimer-dialog-content": "Protected area totals and trends in this dataset are derived from publicly available boundaries sourced from Protected Planet. However, some countries restrict the release of detailed protected area boundaries, leading to differences between our totals and those reported by the World Database on Protected Areas.<br></br><br></br>Due to these data restrictions, our protected area totals are lower both globally and in regions where boundaries are not publicly accessible.",
+      "i-understand": "I understand",
+      "important-notification": "Important notification"
+    },
     "conservation-builder": {}
   },
   "containers": {
@@ -141,7 +146,8 @@
       "product-powered-by": "Product powered by",
       "current-ocean-protected-area": "Current global ocean protected area",
       "current-total-protected-area": "Current global land and inland waters protected area",
-      "statistics-icon": "Statistics icon"
+      "statistics-icon": "Statistics icon",
+      "info": "Info"
     },
     "homepage-link-cards": {
       "card-1-title": "Progress Tracker",
@@ -191,7 +197,10 @@
       "no-result": "No result",
       "view-all-countries": "View all countries",
       "hide-some-countries": "Hide some countries",
-      "more-details": "More details",
+      "show-global-insights-table": "Show Global Insights Table",
+      "show-country-insights-table": "Show Country Insights Table",
+      "show-terrestrial-insights-table": "Show Terrestrial Insights Table",
+      "show-marine-insights-table": "Show Marine Insights Table",
       "marine-conservation-coverage": "Marine Conservation Coverage",
       "marine-protected-percentage": "<b1>{percentage}</b1><b2>%</b2>",
       "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
@@ -217,11 +226,27 @@
       "national-level-contribution": "National level contribution",
       "global": "Global",
       "level-of-fishing-protection": "Level of Fishing Protection",
-      "highly-protected-from-fishing": "Highly protected from fishing"
+      "highly-protected-from-fishing": "Highly protected from fishing",
+      "summary": "Summary",
+      "terrestrial": "Terrestrial",
+      "marine": "Marine",
+      "terrestrial-conservation-coverage": "Terrestrial Conservation Coverage",
+      "terrestrial-protected-percentage": "<b1>{percentage}</b1><b2>%</b2>",
+      "terrestrial-protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "explore-terrestrial-conservation": "Explore Terrestrial Conservation",
+      "explore-marine-conservation": "Explore Marine Conservation",
+      "terrestrial-existing-conservation": "Existing terrestrial conservation coverage",
+      "not-assessed": "Not assessed",
+      "data-disclaimer": "Data disclaimer"
     },
     "map-sidebar-layers-panel": {
       "layers": "Layers",
-      "labels": "Labels"
+      "labels": "Labels",
+      "basemap": "Basemap",
+      "marine-data": "Marine Data",
+      "terrestrial-data": "Terrestrial Data",
+      "loading": "Loading data...",
+      "no-data-available": "No data available"
     },
     "map": {
       "loading": "Loading...",
@@ -229,13 +254,11 @@
       "no-data-available": "No data available",
       "no-results": "No results.",
       "marine-conservation-coverage": "Marine Conservation Coverage",
+      "terrestrial-conservation-coverage": "Terrestrial Conservation Coverage",
       "percentage": "{percentage}%",
       "percentage-bold": "<b1>{percentage}</b1><b2>%</b2>",
-      "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "protected-area": "{protectedArea} km² out of {totalArea} km²",
       "open-country-insights": "Open country insights",
-      "eezs": "EEZs",
-      "selected-eez": "Selected EEZ",
-      "area-corresponding-to-more-than-1-eez": "Area corresponding to more <br></br> than one EEZ",
       "global-coverage": "Global coverage",
       "area-km2": "{area} km²",
       "open-region-insights": "Open region insights",
@@ -249,16 +272,24 @@
       "show": "Show",
       "remove": "Remove",
       "close": "Close",
+      "environmental-conservation-national-regional-levels": "Environmental Conservation at National and Regional Levels",
+      "environmental-conservation-location": "Environmental Conservation for '{location'}",
+      "environmental-conservation": "Environmental Conservation",
+      "terrestrial-conservation-national-regional-levels": "Terrestrial Conservation at National and Regional Levels",
+      "terrestrial-conservation-location": "Terrestrial Conservation for '{location'}",
+      "terrestrial-conservation": "Terrestrial Conservation",
       "marine-conservation-national-regional-levels": "Marine Conservation at National and Regional Levels",
+      "environmental-conservation-high-seas": "Environmental Conservation for High Seas",
+      "terrestrial-conservation-high-seas": "Terrestrial Conservation for High Seas",
       "marine-conservation-location": "Marine Conservation for '{location'}",
       "marine-conservation": "Marine Conservation",
-      "marin-conservation-high-seas": "Marine Conservation for High Seas",
+      "marine-conservation-high-seas": "Marine Conservation for High Seas",
       "name": "Name",
       "coverage": "Coverage",
       "area": "Area",
       "data-source": "Data Source",
       "iucn-category": "IUCN Category",
-      "mpas": "MPAs",
+      "pas": "PAs",
       "n-a": "N/A",
       "not-assessed": "Not assessed",
       "oecms": "OECMs",
@@ -269,7 +300,14 @@
       "clear-sorting": "Clear sorting",
       "type": "Type",
       "establishment-stage": "Establishment Stage",
-      "protection-level": "Protection Level"
+      "protection-level": "Protection Level",
+      "ecosystem": "Ecosystem",
+      "results-out-of": "{startIndex}-{endIndex} out of {total}",
+      "previous-page": "Previous page",
+      "next-page": "Next page",
+      "page-number": "<a>Page</a> {number}",
+      "collapse-sub-rows": "Collapse sub-rows",
+      "expand-sub-rows": "Expand sub-rows"
     }
   },
   "components": {
@@ -303,15 +341,16 @@
     "widget": {
       "updated-on": "Updated on {date}",
       "loading-data": "Loading data...",
-      "data-not-available": "Data not available"
+      "no-data-available": "No data available",
+      "not-visible-due-to-error": "The current widget is not visible due to an error"
     },
     "chart-conservation": {
-      "30x30-target": "30x30 Target",
       "year-value": "Year: {value}",
       "coverage-value": "Coverage: {percentage}",
       "historical-trend": "Historical Trend",
       "future-projection": "Future Projection",
-      "historical": "Historical"
+      "historical": "Historical",
+      "target-xx-by": "Target: {target}% by {year}"
     },
     "chart-horizontal-bar": {
       "marine-protected-percentage": "{percentage}<b>%</b>",
@@ -326,7 +365,8 @@
     },
     "tooltip-button": {
       "info": "Info",
-      "data-source": "Data source"
+      "data-source": "Data source",
+      "data-sources:": "Data sources:"
     },
     "ui-carousel": {
       "previous-slide": "Previous slide",

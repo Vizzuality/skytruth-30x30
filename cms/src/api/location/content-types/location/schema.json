@@ -10,37 +10,24 @@
   "options": {
     "draftAndPublish": false
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "code": {
       "type": "string",
       "required": true,
       "unique": false,
       "description": "Unique textual identifier for the location, e.g. iso3 code for countries.",
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "name": {
       "type": "string",
       "required": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     },
-    "totalMarineArea": {
-      "type": "decimal",
+    "total_marine_area": {
+      "type": "biginteger",
       "description": "Total marine area in km2",
       "required": true,
-      "min": 0,
       "column": {
         "defaultTo": 0,
         "type": "decimal",
@@ -49,20 +36,12 @@
           2
         ]
       },
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "type": {
       "type": "string",
       "required": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "pluginOptions": {}
     },
     "groups": {
       "type": "relation",
@@ -84,9 +63,9 @@
     },
     "mpaa_protection_level_stats": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
-      "mappedBy": "location"
+      "inversedBy": "location"
     },
     "protection_coverage_stats": {
       "type": "relation",
@@ -94,13 +73,34 @@
       "target": "api::protection-coverage-stat.protection-coverage-stat",
       "mappedBy": "location"
     },
-    "bounds": {
+    "marine_bounds": {
       "type": "json",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
+    },
+    "total_terrestrial_area": {
+      "pluginOptions": {},
+      "type": "biginteger",
+      "required": true
+    },
+    "terrestrial_bounds": {
+      "pluginOptions": {},
+      "type": "json"
+    },
+    "name_es": {
+      "type": "string",
+      "required": true
+    },
+    "name_fr": {
+      "type": "string",
+      "required": true
+    },
+    "marine_target": {
+      "type": "integer",
+      "min": 0,
+      "max": 100
+    },
+    "marine_target_year": {
+      "type": "integer"
     }
   }
 }

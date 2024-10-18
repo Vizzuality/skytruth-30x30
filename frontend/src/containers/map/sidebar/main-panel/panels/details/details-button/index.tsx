@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import { useTranslations } from 'next-intl';
+import { LuArrowRight } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
@@ -9,12 +10,13 @@ import { FCWithMessages } from '@/types';
 
 type DetailsButtonProps = {
   className?: HTMLDivElement['className'];
+  locationType: string;
 };
 
-const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className }) => {
+const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className, locationType }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
 
-  const [, setSettings] = useSyncMapContentSettings();
+  const [{ tab, showDetails }, setSettings] = useSyncMapContentSettings();
 
   const handleButtonClick = useCallback(() => {
     setSettings((prevSettings) => ({ ...prevSettings, showDetails: !prevSettings.showDetails }));
@@ -22,14 +24,23 @@ const DetailsButton: FCWithMessages<DetailsButtonProps> = ({ className }) => {
 
   return (
     <Button
-      className={cn('flex h-10 justify-between border-t border-black px-5 md:px-8', className)}
-      variant="transparent"
+      className={cn(
+        {
+          'flex h-10 px-5 md:px-8': true,
+          'border border-black bg-orange text-black hover:bg-orange': showDetails,
+        },
+        className
+      )}
       size="full"
       onClick={handleButtonClick}
     >
-      <span className="w-full pt-1 font-mono text-xs font-semibold normal-case">
-        {t('more-details')}
+      <span className="font-mono text-xs font-semibold normal-case">
+        {tab === 'summary' && locationType !== 'country' && t('show-global-insights-table')}
+        {tab === 'summary' && locationType === 'country' && t('show-country-insights-table')}
+        {tab === 'terrestrial' && t('show-terrestrial-insights-table')}
+        {tab === 'marine' && t('show-marine-insights-table')}
       </span>
+      <LuArrowRight className="ml-2.5 h-5 w-5" aria-hidden />
     </Button>
   );
 };

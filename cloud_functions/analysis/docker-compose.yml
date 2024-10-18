@@ -25,7 +25,7 @@ services:
   skytruth-db-init:
     profiles:
       - feed_data_to_db
-    image: ghcr.io/osgeo/gdal:ubuntu-small-latest
+    image: ghcr.io/osgeo/gdal:ubuntu-small-3.9.3
     container_name: skytruth_cf_db_init
     environment:
       GRANT_SUDO: "yes"
@@ -33,7 +33,7 @@ services:
     restart: "no"
     volumes:
       - ./init.sh:/usr/share/init.sh
-    entrypoint: bash -c "chmod +x /usr/share/init.sh && /usr/share/init.sh"
+    entrypoint: bash -c "chmod +x /usr/share/init.sh && /usr/share/init.sh eez gadm"
     network_mode: "host"
     extra_hosts:
       - docker.host:0.0.0.0

@@ -26,17 +26,19 @@ export const FILTERS = {
 };
 
 const BUTTON_CLASSES =
-  'font-mono text-xs px-0 font-semibold no-underline normal-case ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2';
+  'font-mono text-xs px-0 font-semibold no-underline normal-case ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 transition-all';
 
 type LocationSelectorProps = {
   className?: HTMLDivElement['className'];
   theme: 'orange' | 'blue';
+  size?: 'default' | 'small';
   onChange: (locationCode: string) => void;
 };
 
 const LocationSelector: FCWithMessages<LocationSelectorProps> = ({
   className,
   theme,
+  size = 'default',
   onChange,
 }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
@@ -51,11 +53,22 @@ const LocationSelector: FCWithMessages<LocationSelectorProps> = ({
   const [locationsFilter, setLocationsFilter] = useState<keyof typeof FILTERS>('all');
   const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
 
+  const locationNameField = useMemo(() => {
+    let res = 'name';
+    if (locale === 'es') {
+      res = 'name_es';
+    }
+    if (locale === 'fr') {
+      res = 'name_fr';
+    }
+    return res;
+  }, [locale]);
+
   const { data: locationsData } = useGetLocations(
     {
       locale,
       'pagination[limit]': -1,
-      sort: 'name:asc',
+      sort: `${locationNameField}:asc`,
     },
     {
       query: {
@@ -106,7 +119,11 @@ const LocationSelector: FCWithMessages<LocationSelectorProps> = ({
     <div className={cn('flex gap-3.5', className)}>
       <Popover open={locationPopoverOpen} onOpenChange={setLocationPopoverOpen}>
         <PopoverTrigger asChild>
-          <Button className={BUTTON_CLASSES} type="button" variant="text-link">
+          <Button
+            className={cn({ [BUTTON_CLASSES]: true, 'h-auto py-0': size === 'small' })}
+            type="button"
+            variant="text-link"
+          >
             <Icon icon={MagnifyingGlassIcon} className="mr-2 h-4 w-4 pb-px" />
             {t('change-location')}
           </Button>
@@ -128,7 +145,7 @@ const LocationSelector: FCWithMessages<LocationSelectorProps> = ({
       </Popover>
       {locationCode !== 'GLOB' && (
         <Button
-          className={BUTTON_CLASSES}
+          className={cn({ [BUTTON_CLASSES]: true, 'h-auto py-0': size === 'small' })}
           type="button"
           variant="text-link"
           onClick={() => handleLocationSelected('GLOB')}

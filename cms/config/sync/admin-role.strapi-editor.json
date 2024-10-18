@@ -86,7 +86,11 @@
           "content",
           "data_sources"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -113,7 +117,11 @@
           "content",
           "data_sources"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -127,7 +135,11 @@
           "content",
           "data_sources"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -141,7 +153,11 @@
           "title",
           "url"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -168,7 +184,11 @@
           "title",
           "url"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -182,7 +202,11 @@
           "title",
           "url"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -194,7 +218,11 @@
         "fields": [
           "name"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -232,7 +260,11 @@
         "fields": [
           "name"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -244,7 +276,11 @@
         "fields": [
           "name"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -258,7 +294,11 @@
           "slug",
           "data_tool"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -298,7 +338,11 @@
           "slug",
           "data_tool"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -312,7 +356,11 @@
           "slug",
           "data_tool"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -324,7 +372,11 @@
         "fields": [
           "name"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -362,7 +414,11 @@
         "fields": [
           "name"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -374,7 +430,11 @@
         "fields": [
           "name"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -392,7 +452,11 @@
           "geography",
           "data_tool_ecosystems"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -436,7 +500,11 @@
           "geography",
           "data_tool_ecosystems"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -454,7 +522,11 @@
           "geography",
           "data_tool_ecosystems"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -468,7 +540,11 @@
           "layers",
           "slug"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -508,7 +584,11 @@
           "layers",
           "slug"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -522,7 +602,75 @@
           "layers",
           "slug"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::environment.environment",
+      "properties": {
+        "fields": [
+          "name",
+          "slug"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::environment.environment",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::environment.environment",
+      "properties": {
+        "fields": [
+          "name",
+          "slug"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::environment.environment",
+      "properties": {
+        "fields": [
+          "name",
+          "slug"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -534,7 +682,8 @@
         "fields": [
           "location",
           "fishing_protection_level",
-          "area"
+          "area",
+          "pct"
         ]
       },
       "conditions": [],
@@ -554,7 +703,8 @@
         "fields": [
           "location",
           "fishing_protection_level",
-          "area"
+          "area",
+          "pct"
         ]
       },
       "conditions": [],
@@ -567,7 +717,8 @@
         "fields": [
           "location",
           "fishing_protection_level",
-          "area"
+          "area",
+          "pct"
         ]
       },
       "conditions": [],
@@ -582,7 +733,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -609,7 +764,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -623,7 +782,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -636,8 +799,9 @@
           "location",
           "habitat",
           "year",
-          "protectedArea",
-          "totalArea"
+          "protected_area",
+          "total_area",
+          "environment"
         ]
       },
       "conditions": [],
@@ -658,8 +822,9 @@
           "location",
           "habitat",
           "year",
-          "protectedArea",
-          "totalArea"
+          "protected_area",
+          "total_area",
+          "environment"
         ]
       },
       "conditions": [],
@@ -673,8 +838,9 @@
           "location",
           "habitat",
           "year",
-          "protectedArea",
-          "totalArea"
+          "protected_area",
+          "total_area",
+          "environment"
         ]
       },
       "conditions": [],
@@ -689,7 +855,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -716,7 +886,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -730,7 +904,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -752,9 +930,19 @@
           "metadata.content_date",
           "metadata.license",
           "dataset",
-          "legend_config"
+          "legend_config.type",
+          "legend_config.items.icon",
+          "legend_config.items.color",
+          "legend_config.items.value",
+          "legend_config.items.description",
+          "default",
+          "environment"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -802,9 +990,19 @@
           "metadata.content_date",
           "metadata.license",
           "dataset",
-          "legend_config"
+          "legend_config.type",
+          "legend_config.items.icon",
+          "legend_config.items.color",
+          "legend_config.items.value",
+          "legend_config.items.description",
+          "default",
+          "environment"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -826,9 +1024,19 @@
           "metadata.content_date",
           "metadata.license",
           "dataset",
-          "legend_config"
+          "legend_config.type",
+          "legend_config.items.icon",
+          "legend_config.items.color",
+          "legend_config.items.value",
+          "legend_config.items.description",
+          "default",
+          "environment"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -840,16 +1048,21 @@
         "fields": [
           "code",
           "name",
-          "totalMarineArea",
+          "total_marine_area",
           "type",
           "groups",
           "members",
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "bounds"
-        ],
-        "locales": []
+          "marine_bounds",
+          "total_terrestrial_area",
+          "terrestrial_bounds",
+          "name_es",
+          "name_fr",
+          "marine_target",
+          "marine_target_year"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -857,70 +1070,75 @@
     {
       "action": "plugin::content-manager.explorer.delete",
       "subject": "api::location.location",
-      "properties": {
-        "locales": [
-          "en",
-          "es",
-          "fr"
-        ]
-      },
+      "properties": {},
       "conditions": [],
       "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "subject": "api::location.location",
-      "properties": {
-        "fields": [
-          "code",
-          "name",
-          "totalMarineArea",
-          "type",
-          "groups",
-          "members",
-          "fishing_protection_level_stats",
-          "mpaa_protection_level_stats",
-          "protection_coverage_stats",
-          "bounds"
-        ],
-        "locales": []
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
       "subject": "api::location.location",
       "properties": {
         "fields": [
           "code",
           "name",
-          "totalMarineArea",
+          "total_marine_area",
           "type",
           "groups",
           "members",
           "fishing_protection_level_stats",
           "mpaa_protection_level_stats",
           "protection_coverage_stats",
-          "bounds"
+          "marine_bounds",
+          "total_terrestrial_area",
+          "terrestrial_bounds",
+          "name_es",
+          "name_fr",
+          "marine_target",
+          "marine_target_year"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::location.location",
+      "properties": {
+        "fields": [
+          "code",
+          "name",
+          "total_marine_area",
+          "type",
+          "groups",
+          "members",
+          "fishing_protection_level_stats",
+          "mpaa_protection_level_stats",
+          "protection_coverage_stats",
+          "marine_bounds",
+          "total_terrestrial_area",
+          "terrestrial_bounds",
+          "name_es",
+          "name_fr",
+          "marine_target",
+          "marine_target_year"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
+      "properties": {
+        "fields": [
+          "slug",
+          "name",
+          "info"
         ],
-        "locales": []
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "subject": "api::mpa.mpa",
-      "properties": {
-        "fields": [
-          "name",
-          "area",
-          "year",
-          "protection_status",
-          "wdpaid",
-          "bbox",
-          "is_child"
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [],
@@ -928,23 +1146,30 @@
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::mpa.mpa",
-      "properties": {},
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
+      "properties": {
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
       "conditions": [],
       "actionParameters": {}
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "subject": "api::mpa.mpa",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
       "properties": {
         "fields": [
+          "slug",
           "name",
-          "area",
-          "year",
-          "protection_status",
-          "wdpaid",
-          "bbox",
-          "is_child"
+          "info"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [],
@@ -952,68 +1177,17 @@
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "subject": "api::mpa.mpa",
+      "subject": "api::mpa-iucn-category.mpa-iucn-category",
       "properties": {
         "fields": [
+          "slug",
           "name",
-          "area",
-          "year",
-          "protection_status",
-          "wdpaid",
-          "bbox",
-          "is_child"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "mpaa_establishment_stage",
-          "protection_status",
-          "year",
-          "area"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
-      "properties": {},
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "mpaa_establishment_stage",
-          "protection_status",
-          "year",
-          "area"
-        ]
-      },
-      "conditions": [],
-      "actionParameters": {}
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "subject": "api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat",
-      "properties": {
-        "fields": [
-          "location",
-          "mpaa_establishment_stage",
-          "protection_status",
-          "year",
-          "area"
+          "info"
+        ],
+        "locales": [
+          "en",
+          "es",
+          "fr"
         ]
       },
       "conditions": [],
@@ -1028,7 +1202,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1055,7 +1233,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1069,7 +1251,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1079,9 +1265,10 @@
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
-          "location",
           "mpaa_protection_level",
-          "area"
+          "area",
+          "percentage",
+          "location"
         ]
       },
       "conditions": [],
@@ -1099,9 +1286,10 @@
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
-          "location",
           "mpaa_protection_level",
-          "area"
+          "area",
+          "percentage",
+          "location"
         ]
       },
       "conditions": [],
@@ -1112,9 +1300,10 @@
       "subject": "api::mpaa-protection-level-stat.mpaa-protection-level-stat",
       "properties": {
         "fields": [
-          "location",
           "mpaa_protection_level",
-          "area"
+          "area",
+          "percentage",
+          "location"
         ]
       },
       "conditions": [],
@@ -1129,7 +1318,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1156,7 +1349,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1170,7 +1367,96 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::pa.pa",
+      "properties": {
+        "fields": [
+          "name",
+          "area",
+          "year",
+          "protection_status",
+          "bbox",
+          "children",
+          "data_source",
+          "mpaa_establishment_stage",
+          "location",
+          "wdpaid",
+          "mpaa_protection_level",
+          "iucn_category",
+          "designation",
+          "environment",
+          "coverage",
+          "parent"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::pa.pa",
+      "properties": {},
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::pa.pa",
+      "properties": {
+        "fields": [
+          "name",
+          "area",
+          "year",
+          "protection_status",
+          "bbox",
+          "children",
+          "data_source",
+          "mpaa_establishment_stage",
+          "location",
+          "wdpaid",
+          "mpaa_protection_level",
+          "iucn_category",
+          "designation",
+          "environment",
+          "coverage",
+          "parent"
+        ]
+      },
+      "conditions": [],
+      "actionParameters": {}
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::pa.pa",
+      "properties": {
+        "fields": [
+          "name",
+          "area",
+          "year",
+          "protection_status",
+          "bbox",
+          "children",
+          "data_source",
+          "mpaa_establishment_stage",
+          "location",
+          "wdpaid",
+          "mpaa_protection_level",
+          "iucn_category",
+          "designation",
+          "environment",
+          "coverage",
+          "parent"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1181,11 +1467,15 @@
       "properties": {
         "fields": [
           "location",
-          "protection_status",
           "year",
-          "cumSumProtectedArea",
-          "protectedArea",
-          "protectedAreasCount"
+          "protected_area",
+          "protected_areas_count",
+          "environment",
+          "coverage",
+          "pas",
+          "oecms",
+          "is_last_year",
+          "global_contribution"
         ]
       },
       "conditions": [],
@@ -1204,11 +1494,15 @@
       "properties": {
         "fields": [
           "location",
-          "protection_status",
           "year",
-          "cumSumProtectedArea",
-          "protectedArea",
-          "protectedAreasCount"
+          "protected_area",
+          "protected_areas_count",
+          "environment",
+          "coverage",
+          "pas",
+          "oecms",
+          "is_last_year",
+          "global_contribution"
         ]
       },
       "conditions": [],
@@ -1220,11 +1514,15 @@
       "properties": {
         "fields": [
           "location",
-          "protection_status",
           "year",
-          "cumSumProtectedArea",
-          "protectedArea",
-          "protectedAreasCount"
+          "protected_area",
+          "protected_areas_count",
+          "environment",
+          "coverage",
+          "pas",
+          "oecms",
+          "is_last_year",
+          "global_contribution"
         ]
       },
       "conditions": [],
@@ -1239,7 +1537,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1266,7 +1568,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1280,7 +1586,11 @@
           "name",
           "info"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1295,7 +1605,11 @@
           "value",
           "description"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1336,7 +1650,11 @@
           "value",
           "description"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}
@@ -1351,7 +1669,11 @@
           "value",
           "description"
         ],
-        "locales": []
+        "locales": [
+          "en",
+          "es",
+          "fr"
+        ]
       },
       "conditions": [],
       "actionParameters": {}

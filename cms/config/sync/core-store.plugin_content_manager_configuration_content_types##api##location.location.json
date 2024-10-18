@@ -48,16 +48,16 @@
           "sortable": true
         }
       },
-      "totalMarineArea": {
+      "total_marine_area": {
         "edit": {
-          "label": "totalMarineArea",
+          "label": "total_marine_area",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "totalMarineArea",
+          "label": "total_marine_area",
           "searchable": true,
           "sortable": true
         }
@@ -132,8 +132,8 @@
         },
         "list": {
           "label": "mpaa_protection_level_stats",
-          "searchable": false,
-          "sortable": false
+          "searchable": true,
+          "sortable": true
         }
       },
       "protection_coverage_stats": {
@@ -151,18 +151,102 @@
           "sortable": false
         }
       },
-      "bounds": {
+      "marine_bounds": {
         "edit": {
-          "label": "bounds",
+          "label": "marine_bounds",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "bounds",
+          "label": "marine_bounds",
           "searchable": false,
           "sortable": false
+        }
+      },
+      "total_terrestrial_area": {
+        "edit": {
+          "label": "total_terrestrial_area",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "total_terrestrial_area",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "terrestrial_bounds": {
+        "edit": {
+          "label": "terrestrial_bounds",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "terrestrial_bounds",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "name_es": {
+        "edit": {
+          "label": "name_es",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "name_es",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "name_fr": {
+        "edit": {
+          "label": "name_fr",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "name_fr",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "marine_target": {
+        "edit": {
+          "label": "marine_target",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "marine_target",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "marine_target_year": {
+        "edit": {
+          "label": "marine_target_year",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "marine_target_year",
+          "searchable": true,
+          "sortable": true
         }
       },
       "createdAt": {
@@ -225,12 +309,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "code",
-        "name",
-        "totalMarineArea"
-      ],
       "edit": [
         [
           {
@@ -238,17 +316,23 @@
             "size": 6
           },
           {
-            "name": "name",
+            "name": "type",
             "size": 6
           }
         ],
         [
           {
-            "name": "totalMarineArea",
-            "size": 4
+            "name": "name",
+            "size": 6
           },
           {
-            "name": "type",
+            "name": "name_es",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "name_fr",
             "size": 6
           }
         ],
@@ -264,9 +348,15 @@
         ],
         [
           {
-            "name": "fishing_protection_level_stats",
+            "name": "protection_coverage_stats",
             "size": 6
           },
+          {
+            "name": "fishing_protection_level_stats",
+            "size": 6
+          }
+        ],
+        [
           {
             "name": "mpaa_protection_level_stats",
             "size": 6
@@ -274,16 +364,42 @@
         ],
         [
           {
-            "name": "protection_coverage_stats",
-            "size": 6
+            "name": "marine_bounds",
+            "size": 12
           }
         ],
         [
           {
-            "name": "bounds",
+            "name": "terrestrial_bounds",
             "size": 12
           }
+        ],
+        [
+          {
+            "name": "total_marine_area",
+            "size": 4
+          },
+          {
+            "name": "total_terrestrial_area",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "marine_target",
+            "size": 4
+          },
+          {
+            "name": "marine_target_year",
+            "size": 4
+          }
         ]
+      ],
+      "list": [
+        "id",
+        "code",
+        "name",
+        "total_marine_area"
       ]
     }
   },

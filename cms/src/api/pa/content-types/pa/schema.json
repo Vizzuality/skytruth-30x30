@@ -1,0 +1,97 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pas",
+  "info": {
+    "singularName": "pa",
+    "pluralName": "pas",
+    "displayName": "PA",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "area": {
+      "type": "decimal",
+      "required": true,
+      "min": 0,
+      "column": {
+        "defaultTo": 0,
+        "type": "decimal",
+        "args": [
+          12,
+          2
+        ]
+      }
+    },
+    "year": {
+      "type": "integer",
+      "min": 0
+    },
+    "protection_status": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::protection-status.protection-status"
+    },
+    "bbox": {
+      "type": "json",
+      "required": true
+    },
+    "children": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::pa.pa"
+    },
+    "data_source": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::data-source.data-source"
+    },
+    "mpaa_establishment_stage": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpaa-establishment-stage.mpaa-establishment-stage"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location"
+    },
+    "wdpaid": {
+      "type": "biginteger"
+    },
+    "mpaa_protection_level": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpaa-protection-level.mpaa-protection-level"
+    },
+    "iucn_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mpa-iucn-category.mpa-iucn-category"
+    },
+    "designation": {
+      "type": "string"
+    },
+    "environment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::environment.environment"
+    },
+    "coverage": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::pa.pa"
+    }
+  }
+}

@@ -115,7 +115,7 @@ const ProtectedAreaPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) =>
   if (!DATA) return null;
 
   const globalCoveragePercentage =
-    (DATA.REP_M_AREA / locationQuery.data?.attributes?.totalMarineArea) * 100;
+    (DATA.REP_M_AREA / Number(locationQuery.data?.attributes?.total_marine_area)) * 100;
 
   const classNameByMPAType = cn({
     'text-green': DATA?.PA_DEF === '1',

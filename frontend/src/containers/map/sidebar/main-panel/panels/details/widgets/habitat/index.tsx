@@ -3,6 +3,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import HorizontalBarChart from '@/components/charts/horizontal-bar-chart';
 import Widget from '@/components/widget';
 import { HABITAT_CHART_COLORS } from '@/constants/habitat-chart-colors';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetHabitatStats } from '@/types/generated/habitat-stat';
@@ -19,77 +20,92 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
   const t = useTranslations('containers.map-sidebar-main-panel');
   const locale = useLocale();
 
-  const defaultQueryParams = {
-    filters: {
-      location: {
-        code: location?.code,
-      },
-    },
-  };
+  const [{ tab }] = useSyncMapContentSettings();
 
-  const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } = useGetHabitatStats(
-    {
-      ...defaultQueryParams,
-      locale,
-      fields: 'updatedAt',
-      sort: 'updatedAt:desc',
-      'pagination[limit]': 1,
-    },
-    {
-      query: {
-        enabled: Boolean(location?.code),
-        select: ({ data }) => data?.[0]?.attributes?.updatedAt,
-        placeholderData: { data: null },
-        refetchOnWindowFocus: false,
-      },
-    }
-  );
-
-  const { data: habitatMetadatas } = useGetDataInfos(
+  const { data: habitatMetadatas } = useGetDataInfos<
+    { slug: string; info: string; sources?: { id: number; title: string; url: string }[] }[]
+  >(
     {
       locale,
       filters: {
-        slug: [
-          'cold-water corals',
-          'warm-water corals',
-          'mangroves',
-          'seagrasses',
-          'saltmarshes',
-          'mangroves',
-          'seamounts',
-        ],
+        slug: Object.keys(HABITAT_CHART_COLORS),
       },
-      populate: 'data_sources',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      populate: {
+        data_sources: {
+          fields: ['title', 'url'],
+        },
+      },
+      sort: 'updatedAt:desc',
     },
     {
       query: {
         select: ({ data }) =>
-          data
-            ? data.map((item) => ({
-                slug: item.attributes.slug,
-                info: item.attributes.content,
-                sources: item.attributes?.data_sources?.data?.map(
-                  ({ attributes: { title, url } }) => ({
-                    title,
-                    url,
-                  })
-                ),
-              }))
-            : undefined,
+          data?.map((item) => ({
+            slug: item.attributes.slug,
+            info: item.attributes.content,
+            sources: item.attributes.data_sources?.data?.map(
+              ({ id, attributes: { title, url } }) => ({
+                id,
+                title,
+                url,
+              })
+            ),
+          })) ?? [],
       },
     }
   );
 
-  const { data: widgetChartData, isFetching: isFetchingHabitatStatsData } = useGetHabitatStats(
+  const { data: chartData, isFetching } = useGetHabitatStats<
     {
-      ...defaultQueryParams,
+      title: string;
+      slug: string;
+      background: string;
+      totalArea: number;
+      protectedArea: number;
+      info?: string;
+      sources?: { id: number; title: string; url: string }[];
+      updatedAt: string;
+    }[]
+  >(
+    {
       locale,
-      populate: 'habitat,habitat.localizations',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      populate: {
+        habitat: {
+          // This part is for the English version only
+          populate: {
+            // This part is for the Spanish and French versions
+            localizations: {
+              fields: ['slug', 'name', 'locale'],
+            },
+          },
+        },
+      },
       'pagination[limit]': -1,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      fields: ['protected_area', 'total_area', 'updatedAt'],
+      filters: {
+        location: {
+          code: location?.code,
+        },
+        environment: {
+          slug: {
+            $eq: tab === 'marine' ? tab : 'terrestrial',
+          },
+        },
+      },
     },
     {
       query: {
         select: ({ data }) => {
+          if (!data) {
+            return [];
+          }
+
           const parsedData = data.map((entry) => {
             const stats = entry?.attributes;
 
@@ -100,66 +116,41 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
               )?.attributes;
             }
 
-            const metadata = habitatMetadatas?.find(({ slug }) => slug === habitat.slug);
+            const metadata = habitatMetadatas?.find(({ slug }) => slug === habitat?.slug);
 
             return {
-              title: habitat.name,
-              slug: habitat.slug,
-              background: HABITAT_CHART_COLORS[habitat.slug],
-              totalArea: stats.totalArea,
-              protectedArea: stats.protectedArea,
+              title: habitat?.name,
+              slug: habitat?.slug,
+              background: HABITAT_CHART_COLORS[habitat?.slug],
+              totalArea: stats.total_area,
+              protectedArea: stats.protected_area,
               info: metadata?.info,
               sources: metadata?.sources,
+              updatedAt: stats.updatedAt,
             };
           });
 
-          return parsedData.reverse();
+          return parsedData
+            .sort((d1, d2) => {
+              const keys = Object.keys(HABITAT_CHART_COLORS);
+              return keys.indexOf(d1.slug) - keys.indexOf(d2.slug);
+            })
+            .filter(({ totalArea }) => totalArea !== 0);
         },
-        placeholderData: { data: [] },
+        placeholderData: [],
         refetchOnWindowFocus: false,
       },
     }
   );
 
-  // const { data: metadataWidget } = useGetDataInfos(
-  //   {
-  //     locale,
-  //     filters: {
-  //       slug: 'habitats-widget',
-  //     },
-  //     populate: 'data_sources',
-  //   },
-  //   {
-  //     query: {
-  //       select: ({ data }) =>
-  //         data[0]
-  //           ? {
-  //               info: data[0].attributes.content,
-  //               sources: data[0].attributes?.data_sources?.data?.map(
-  //                 ({ attributes: { title, url } }) => ({
-  //                   title,
-  //                   url,
-  //                 })
-  //               ),
-  //             }
-  //           : undefined,
-  //     },
-  //   }
-  // );
-
-  const noData = !widgetChartData.length;
-  const loading = isFetchingHabitatStatsData || isFetchingDataLastUpdate;
-
   return (
     <Widget
       title={t('proportion-habitat-within-protected-areas')}
-      lastUpdated={dataLastUpdate}
-      noData={noData}
-      loading={loading}
-      // info={metadataWidget?.info}
-      // sources={metadataWidget?.sources}
+      lastUpdated={chartData[0]?.updatedAt}
+      noData={!chartData.length}
+      loading={isFetching}
     >
-      {widgetChartData.map((chartData) => (
+      {chartData.map((chartData) => (
         <HorizontalBarChart
           key={chartData.slug}
           className="py-2"

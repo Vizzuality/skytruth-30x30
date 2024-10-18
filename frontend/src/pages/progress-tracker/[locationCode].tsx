@@ -12,16 +12,27 @@ import { LocationListResponse } from '@/types/generated/strapi.schemas';
 import { LayoutProps } from '../_app';
 
 const ProgressTrackerPage: FCWithMessages & {
-  layout: LayoutProps<{ location: { code: string; name: string } }>;
+  layout: LayoutProps<{ locale: string; location: { code: string; name: string } }>;
 } = () => {
   return null;
 };
 
 ProgressTrackerPage.layout = {
   Component: MapLayout,
-  props: ({ location }) => ({
-    title: location?.name,
-  }),
+  props: ({ locale, location }) => {
+    let locationNameField = 'name';
+    if (locale === 'es') {
+      locationNameField = 'name_es';
+    }
+    if (locale === 'fr') {
+      locationNameField = 'name_fr';
+    }
+
+    return {
+      title: location?.[locationNameField],
+      type: 'progress-tracker',
+    };
+  },
 };
 
 ProgressTrackerPage.messages = ['pages.progress-tracker', ...MapLayout.messages];
@@ -66,10 +77,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      location: locationsData.data[0].attributes || {
-        code: 'GLOB',
-        name: 'Global',
-      },
+      locale: context.locale,
+      location: locationsData.data[0].attributes,
       dehydratedState: dehydrate(queryClient),
       messages: await fetchTranslations(context.locale, ProgressTrackerPage.messages),
     },

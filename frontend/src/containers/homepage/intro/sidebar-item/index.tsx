@@ -1,7 +1,9 @@
 import Image from 'next/image';
 
+import { Info } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { Button } from '@/components/ui/button';
 import { FCWithMessages } from '@/types';
 
 const ICONS = {
@@ -13,16 +15,35 @@ type SidebarItemProps = {
   text: string;
   percentage: number | string;
   icon?: keyof typeof ICONS;
+  onClickInfoButton?: () => void;
 };
 
-const SidebarItem: FCWithMessages<SidebarItemProps> = ({ text, percentage, icon = 'icon1' }) => {
+const SidebarItem: FCWithMessages<SidebarItemProps> = ({
+  text,
+  percentage,
+  icon = 'icon1',
+  onClickInfoButton,
+}) => {
   const t = useTranslations('containers.homepage-intro');
 
   return (
     <div className="flex flex-row gap-6 border-b border-white px-10 py-6">
       <div className="flex flex-1 flex-col gap-2 font-mono">
-        <span className="text-6xl font-light">{percentage}%</span>
-        <span className="text-xs">{text}</span>
+        <div className="text-6xl font-light">{percentage}%</div>
+        <div className="text-xs">
+          {text}
+          {!!onClickInfoButton && (
+            <Button
+              className="ml-1.5 h-auto w-auto align-middle hover:bg-transparent hover:text-white"
+              size="icon"
+              variant="ghost"
+              onClick={onClickInfoButton}
+            >
+              <span className="sr-only">{t('info')}</span>
+              <Info className="h-4 w-4" aria-hidden="true" />
+            </Button>
+          )}
+        </div>
       </div>
       <div className="items-en flex w-[64px] items-end">
         <Image

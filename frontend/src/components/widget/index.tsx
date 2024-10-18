@@ -1,4 +1,4 @@
-import { ComponentProps, PropsWithChildren, useMemo } from 'react';
+import { ComponentProps, PropsWithChildren, ReactNode, useMemo } from 'react';
 
 import { timeFormatLocale } from 'd3-time-format';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -25,11 +25,13 @@ type WidgetProps = {
   title?: string;
   lastUpdated?: string;
   noData?: boolean;
+  noDataMessage?: ComponentProps<typeof NoData>['message'];
   loading?: boolean;
   error?: boolean;
-  messageError?: ComponentProps<typeof NoData>['message'];
+  errorMessage?: ComponentProps<typeof NoData>['message'];
   info?: ComponentProps<typeof TooltipButton>['text'];
   sources?: ComponentProps<typeof TooltipButton>['sources'];
+  tooltipExtraContent?: ReactNode;
 };
 
 const d3Locales = {
@@ -43,11 +45,13 @@ const Widget: FCWithMessages<PropsWithChildren<WidgetProps>> = ({
   title,
   lastUpdated,
   noData = false,
+  noDataMessage = undefined,
   loading = false,
   error = false,
-  messageError = undefined,
+  errorMessage = undefined,
   info,
   sources,
+  tooltipExtraContent,
   children,
 }) => {
   const t = useTranslations('components.widget');
@@ -67,15 +71,18 @@ const Widget: FCWithMessages<PropsWithChildren<WidgetProps>> = ({
       <div className="pt-2">
         <span className="flex items-baseline justify-between">
           {title && <h2 className="font-sans text-xl font-bold leading-tight">{title}</h2>}
-          {(info || sources) && <TooltipButton text={info} sources={sources} />}
+          {(info || sources) && (
+            <TooltipButton text={info} sources={sources} extraContent={tooltipExtraContent} />
+          )}
         </span>
         {!showNoData && lastUpdated && (
           <span className="text-xs">{t('updated-on', { date: formattedLastUpdated })}</span>
         )}
       </div>
       {loading && <Loading />}
-      {showNoData && <NoData error={error} message={messageError} />}
-      {!loading && !showNoData && <div>{children}</div>}
+      {!loading && error && <NoData error={error} message={errorMessage} />}
+      {!loading && !error && noData && <NoData error={error} message={noDataMessage} />}
+      {!loading && !error && !noData && <div>{children}</div>}
     </div>
   );
 };

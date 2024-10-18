@@ -6,21 +6,27 @@ import type { Feature } from 'geojson';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import { modellingAtom, drawStateAtom } from '@/containers/map/store';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { ModellingData } from '@/types/modelling';
 
-const fetchModelling = async (feature: Feature) => {
-  return axios.post<ModellingData>(process.env.NEXT_PUBLIC_ANALYSIS_CF_URL, feature);
+const fetchModelling = async (tab: string, feature: Feature) => {
+  return axios.post<ModellingData>(process.env.NEXT_PUBLIC_ANALYSIS_CF_URL, {
+    environment: tab,
+    geometry: feature,
+  });
 };
 
 const Modelling = () => {
   const { feature } = useAtomValue(drawStateAtom);
   const setModellingState = useSetAtom(modellingAtom);
 
+  const [{ tab }] = useSyncMapContentSettings();
+
   const { isFetching, isSuccess, data } = useQuery(
-    ['modelling', feature],
-    () => fetchModelling(feature),
+    ['modelling', tab, feature],
+    () => fetchModelling(tab, feature),
     {
-      enabled: Boolean(feature),
+      enabled: Boolean(feature) && ['marine', 'terrestrial'].includes(tab),
       select: ({ data }) => data,
       refetchOnWindowFocus: false,
       retry: false,
@@ -29,13 +35,13 @@ const Modelling = () => {
           setModellingState((prevState) => ({
             ...prevState,
             status: 'error',
-            messageError: req.response?.status === 400 ? req.response?.data.error : undefined,
+            errorMessage: req.response?.status === 400 ? req.response?.data.error : undefined,
           }));
         } else {
           setModellingState((prevState) => ({
             ...prevState,
             status: 'error',
-            messageError: undefined,
+            errorMessage: undefined,
           }));
         }
       },

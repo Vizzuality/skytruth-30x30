@@ -4,13 +4,18 @@ import { groupBy } from 'lodash-es';
 import { useLocale, useTranslations } from 'next-intl';
 
 import ConservationChart from '@/components/charts/conservation-chart';
+import { Button } from '@/components/ui/button';
 import Widget from '@/components/widget';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { formatKM } from '@/lib/utils/formats';
 import { formatPercentage } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
-import type { LocationGroupsDataItemAttributes } from '@/types/generated/strapi.schemas';
+import type {
+  LocationGroupsDataItemAttributes,
+  ProtectionCoverageStatListResponseDataItem,
+} from '@/types/generated/strapi.schemas';
 
 type MarineConservationWidgetProps = {
   location: LocationGroupsDataItemAttributes;
@@ -20,71 +25,65 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
   const t = useTranslations('containers.map-sidebar-main-panel');
   const locale = useLocale();
 
-  const defaultQueryParams = {
-    filters: {
-      location: {
-        code: location?.code || 'GLOB',
-      },
-    },
-  };
+  const [{ tab }, setSettings] = useSyncMapContentSettings();
 
-  const { data: dataLastUpdate, isFetching: isFetchingDataLastUpdate } =
-    useGetProtectionCoverageStats(
-      {
-        ...defaultQueryParams,
-        locale,
-        sort: 'updatedAt:desc',
-        'pagination[limit]': 1,
-      },
-      {
-        query: {
-          enabled: Boolean(location?.code),
-          select: ({ data }) => data?.[0]?.attributes?.updatedAt,
-          placeholderData: { data: null },
-          refetchOnWindowFocus: false,
-        },
-      }
-    );
-
-  const {
-    data: { data: protectionStatsData },
-    isFetching: isFetchingProtectionStatsData,
-  } = useGetProtectionCoverageStats(
+  const { data, isFetching } = useGetProtectionCoverageStats<
+    ProtectionCoverageStatListResponseDataItem[]
+  >(
     {
-      ...defaultQueryParams,
       locale,
-      populate: '*',
-      // @ts-expect-error this is an issue with Orval typing
-      'sort[year]': 'asc',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      populate: {
+        location: {
+          fields: ['code', 'total_marine_area', 'marine_target', 'marine_target_year'],
+        },
+        environment: {
+          fields: ['slug'],
+        },
+      },
+      sort: 'year:asc',
       'pagination[limit]': -1,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      fields: ['year', 'protected_area', 'updatedAt'],
+      filters: {
+        location: {
+          code: {
+            $eq: location?.code || 'GLOB',
+          },
+        },
+        environment: {
+          slug: {
+            $eq: 'marine',
+          },
+        },
+      },
     },
     {
       query: {
-        select: ({ data }) => ({ data }),
-        placeholderData: { data: [] },
+        select: ({ data }) => data ?? [],
+        placeholderData: [],
         refetchOnWindowFocus: false,
       },
     }
   );
 
-  const mergedProtectionStats = useMemo(() => {
-    if (!protectionStatsData.length) return null;
+  const aggregatedData = useMemo(() => {
+    if (!data.length) return [];
 
-    const groupedByYear = groupBy(protectionStatsData, 'attributes.year');
+    const groupedByYear = groupBy(data, 'attributes.year');
 
     return Object.keys(groupedByYear).map((year) => {
       const entries = groupedByYear[year];
-      const protectedArea = entries.reduce(
-        (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
-        0
-      );
+      const protectedArea = entries[0].attributes.protected_area;
 
       return {
         year: Number(year),
         protectedArea,
       };
     });
-  }, [protectionStatsData]);
+  }, [data]);
 
   const { data: metadata } = useGetDataInfos(
     {
@@ -101,7 +100,8 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
             ? {
                 info: data[0].attributes.content,
                 sources: data[0].attributes?.data_sources?.data?.map(
-                  ({ attributes: { title, url } }) => ({
+                  ({ id, attributes: { title, url } }) => ({
+                    id,
                     title,
                     url,
                   })
@@ -113,11 +113,10 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
   );
 
   const stats = useMemo(() => {
-    if (!mergedProtectionStats) return null;
+    if (!aggregatedData.length) return null;
 
-    const totalArea = location.totalMarineArea;
-    const lastYearData = mergedProtectionStats[mergedProtectionStats.length - 1];
-    const { protectedArea } = lastYearData;
+    const totalArea = Number(location.total_marine_area);
+    const { protectedArea } = aggregatedData[aggregatedData.length - 1];
     const percentageFormatted = formatPercentage(locale, (protectedArea / totalArea) * 100, {
       displayPercentageSign: false,
     });
@@ -128,16 +127,18 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       protectedPercentage: percentageFormatted,
       protectedArea: protectedAreaFormatted,
       totalArea: totalAreaFormatted,
+      target: location.marine_target,
+      targetYear: location.marine_target_year,
     };
-  }, [locale, location, mergedProtectionStats]);
+  }, [locale, location, aggregatedData]);
 
   const chartData = useMemo(() => {
-    if (!mergedProtectionStats?.length) return [];
+    if (!aggregatedData.length) return [];
 
-    const data = mergedProtectionStats.map((entry, index) => {
-      const isLastYear = index === mergedProtectionStats.length - 1;
+    const data = aggregatedData.map((entry, index) => {
+      const isLastYear = index + 1 === aggregatedData.length;
       const { year, protectedArea } = entry;
-      const percentage = (protectedArea * 100) / location.totalMarineArea;
+      const percentage = (protectedArea * 100) / Number(location.total_marine_area);
 
       return {
         // We only want to show up to 55%, so we'll cap the percentage here
@@ -145,25 +146,34 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
         percentage: percentage > 55 ? 55 : percentage,
         year,
         active: isLastYear,
-        totalArea: location.totalMarineArea,
+        totalArea: Number(location.total_marine_area),
         protectedArea,
         future: false,
       };
     });
 
     return data;
-  }, [location, mergedProtectionStats]);
+  }, [location, aggregatedData]);
 
-  const noData = !chartData.length;
-  const loading = isFetchingProtectionStatsData || isFetchingDataLastUpdate;
-  const displayTarget = location?.code === 'GLOB';
+  const noData = useMemo(() => {
+    if (!chartData.length) {
+      return true;
+    }
+
+    const emptyValues = chartData.every((d) => d.percentage === 0);
+    if (emptyValues) {
+      return true;
+    }
+
+    return false;
+  }, [chartData]);
 
   return (
     <Widget
       title={t('marine-conservation-coverage')}
-      lastUpdated={dataLastUpdate}
+      lastUpdated={data[data.length - 1]?.attributes.updatedAt}
       noData={noData}
-      loading={loading}
+      loading={isFetching}
       info={metadata?.info}
       sources={metadata?.sources}
     >
@@ -188,9 +198,24 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       )}
       <ConservationChart
         className="-ml-8 aspect-[16/10]"
-        displayTarget={displayTarget}
+        tooltipSlug="30x30-marine-target"
         data={chartData}
+        displayTarget={!!stats?.target}
+        target={stats?.target ?? undefined}
+        targetYear={stats?.targetYear ?? undefined}
       />
+      {tab !== 'marine' && (
+        <Button
+          variant="white"
+          size="full"
+          className="mt-5 flex h-10 px-5 md:px-8"
+          onClick={() => setSettings((settings) => ({ ...settings, tab: 'marine' }))}
+        >
+          <span className="font-mono text-xs font-semibold normal-case">
+            {t('explore-marine-conservation')}
+          </span>
+        </Button>
+      )}
     </Widget>
   );
 };

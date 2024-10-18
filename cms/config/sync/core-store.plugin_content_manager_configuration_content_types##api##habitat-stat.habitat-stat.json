@@ -64,30 +64,45 @@
           "sortable": true
         }
       },
-      "protectedArea": {
+      "protected_area": {
         "edit": {
-          "label": "protectedArea",
+          "label": "protected_area",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "protectedArea",
+          "label": "protected_area",
           "searchable": true,
           "sortable": true
         }
       },
-      "totalArea": {
+      "total_area": {
         "edit": {
-          "label": "totalArea",
+          "label": "total_area",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "totalArea",
+          "label": "total_area",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "environment": {
+        "edit": {
+          "label": "environment",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "environment",
           "searchable": true,
           "sortable": true
         }
@@ -173,13 +188,21 @@
           {
             "name": "year",
             "size": 4
+          }
+        ],
+        [
+          {
+            "name": "environment",
+            "size": 6
           },
           {
-            "name": "protectedArea",
+            "name": "protected_area",
             "size": 4
-          },
+          }
+        ],
+        [
           {
-            "name": "totalArea",
+            "name": "total_area",
             "size": 4
           }
         ]

@@ -1,7 +1,13 @@
 import { formatPercentage, formatKM } from '@/lib/utils/formats';
 
-const percentage = (locale: string, value: number) => {
-  return formatPercentage(locale, value, { displayPercentageSign: false });
+const percentage = (
+  locale: string,
+  value: number,
+  options: { displayPercentageSign?: boolean; displayZeroValue?: boolean } = {
+    displayPercentageSign: false,
+  }
+) => {
+  return formatPercentage(locale, value, options);
 };
 
 const area = (locale: string, value: number) => {

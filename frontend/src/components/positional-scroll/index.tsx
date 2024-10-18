@@ -1,8 +1,8 @@
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/lib/classnames';
 
-export type ScrollPositions = 'start' | 'middle' | 'end';
+export type ScrollPositions = 'start' | 'middle' | 'end' | 'no-scroll';
 
 export type PositionalScrollProps = PropsWithChildren<{
   className?: string;
@@ -16,8 +16,52 @@ const PositionalScroll: React.FC<PositionalScrollProps> = ({
   onYScrollPositionChange,
   children,
 }) => {
+  const ref = useRef<HTMLDivElement | null>();
+
   const [xPosition, setXPosition] = useState<ScrollPositions>('start');
   const [yPosition, setYPosition] = useState<ScrollPositions>('start');
+
+  const handleScroll = useCallback(() => {
+    const target = ref.current;
+
+    if (!target) {
+      return;
+    }
+
+    const xAtStartPosition = target.scrollLeft === 0;
+    const xAtEndPosition = target.scrollLeft === target.scrollWidth - target.clientWidth;
+
+    const yAtStartPosition = target.scrollTop === 0;
+    const yAtEndPosition = target.scrollTop === target.scrollHeight - target.clientHeight;
+
+    let calculatedXPosition: ScrollPositions = 'middle';
+    if (xAtStartPosition && xAtEndPosition) {
+      calculatedXPosition = 'no-scroll';
+    } else if (xAtStartPosition) {
+      calculatedXPosition = 'start';
+    } else if (xAtEndPosition) {
+      calculatedXPosition = 'end';
+    }
+
+    let calculatedYPosition: ScrollPositions = 'middle';
+    if (yAtStartPosition && yAtEndPosition) {
+      calculatedYPosition = 'no-scroll';
+    } else if (yAtStartPosition) {
+      calculatedYPosition = 'start';
+    } else if (yAtEndPosition) {
+      calculatedYPosition = 'end';
+    }
+
+    setXPosition(calculatedXPosition);
+    setYPosition(calculatedYPosition);
+  }, []);
+
+  // TODO: improve this
+  // Regularly recomputes the scroll position to make sure that if the size of the content has
+  // changed (independently from the scroll), we're still providing accurate information.
+  useEffect(() => {
+    setInterval(() => handleScroll(), 1000);
+  }, [handleScroll]);
 
   useEffect(() => {
     if (!onXScrollPositionChange) return;
@@ -29,24 +73,8 @@ const PositionalScroll: React.FC<PositionalScrollProps> = ({
     onYScrollPositionChange(yPosition);
   }, [onYScrollPositionChange, yPosition]);
 
-  const handleScroll = (event) => {
-    const target = event.target;
-
-    const xAtStartPosition = target.scrollLeft === 0;
-    const xAtEndPosition = target.scrollLeft === target.scrollWidth - target.clientWidth;
-
-    const yAtStartPosition = target.scrollTop === 0;
-    const yAtEndPosition = target.scrollTop === target.scrollHeight - target.clientHeight;
-
-    const calculatedXPosition = xAtStartPosition ? 'start' : xAtEndPosition ? 'end' : 'middle';
-    const calculatedYPosition = yAtStartPosition ? 'start' : yAtEndPosition ? 'end' : 'middle';
-
-    if (calculatedXPosition !== xPosition) setXPosition(calculatedXPosition);
-    if (calculatedYPosition !== yPosition) setYPosition(calculatedYPosition);
-  };
-
   return (
-    <div className={cn(className)} onScroll={handleScroll}>
+    <div ref={ref} className={cn(className)} onScroll={handleScroll}>
       {children}
     </div>
   );

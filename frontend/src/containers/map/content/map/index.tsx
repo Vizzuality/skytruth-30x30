@@ -15,18 +15,15 @@ import { CustomMapProps } from '@/components/map/types';
 import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
-import EEZLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/eez';
-import EstablishmentLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/establishment';
 import Modelling from '@/containers/map/content/map/modelling';
 import Popup from '@/containers/map/content/map/popup';
-import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
+import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
-import RegionsPopup from '@/containers/map/content/map/popup/regions';
 import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
-import { sidebarAtom } from '@/containers/map/store';
+import { layersAtom, sidebarAtom } from '@/containers/map/store';
 import {
-  bboxLocation,
+  bboxLocationAtom,
   drawStateAtom,
   layersInteractiveAtom,
   layersInteractiveIdsAtom,
@@ -49,10 +46,11 @@ const MainMap: FCWithMessages = () => {
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
   const isSidebarOpen = useAtomValue(sidebarAtom);
+  const isLayersPanelOpen = useAtomValue(layersAtom);
   const [popup, setPopup] = useAtom(popupAtom);
   const params = useParams();
-  const [locationBbox, setLocationBbox] = useAtom(bboxLocation);
-  const resetLocationBbox = useResetAtom(bboxLocation);
+  const [locationBbox, setLocationBbox] = useAtom(bboxLocationAtom);
+  const resetLocationBbox = useResetAtom(bboxLocationAtom);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
   const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
 
@@ -102,6 +100,9 @@ const MainMap: FCWithMessages = () => {
           $eq: true,
         },
       },
+      // Makes sure that the default interactive layers are displayed on top so that their
+      // highlighted states are fully visible
+      sort: 'interaction_config',
     },
     {
       query: {
@@ -118,8 +119,55 @@ const MainMap: FCWithMessages = () => {
   }, [setMapLayers, defaultLayers]);
 
   useEffect(() => {
-    setLocationBbox(locationsQuery?.data?.bounds as CustomMapProps['bounds']['bbox']);
+    setLocationBbox(locationsQuery?.data?.marine_bounds as CustomMapProps['bounds']['bbox']);
   }, [locationCode, locationsQuery, setLocationBbox]);
+
+  const safelyResetFeatureState = useCallback(() => {
+    if (!hoveredPolygonId.current) {
+      return;
+    }
+
+    const isSourceStillAvailable = !!map.getSource(hoveredPolygonId.current.source);
+
+    if (isSourceStillAvailable) {
+      map.setFeatureState(
+        {
+          source: hoveredPolygonId.current.source,
+          id: hoveredPolygonId.current.id,
+          sourceLayer: hoveredPolygonId.current.sourceLayer,
+        },
+        { hover: false }
+      );
+    }
+  }, [map]);
+
+  const safelySetFeatureState = useCallback(
+    (feature: mapboxgl.MapboxGeoJSONFeature) => {
+      const isSameId = !hoveredPolygonId.current || hoveredPolygonId.current.id === feature.id;
+
+      const isSameSource =
+        !hoveredPolygonId.current || hoveredPolygonId.current.source === feature.source;
+
+      const isSameSourceLayer =
+        !hoveredPolygonId.current || hoveredPolygonId.current.sourceLayer === feature.sourceLayer;
+
+      if (!isSameId || !isSameSource || !isSameSourceLayer) {
+        safelyResetFeatureState();
+      }
+
+      map.setFeatureState(
+        {
+          source: feature.source,
+          id: feature.id,
+          sourceLayer: feature.sourceLayer,
+        },
+        { hover: true }
+      );
+
+      hoveredPolygonId.current = feature;
+    },
+    [map, safelyResetFeatureState]
+  );
 
   const handleMoveEnd = useCallback(() => {
     setMapSettings((prev) => ({
@@ -136,16 +184,8 @@ const MainMap: FCWithMessages = () => {
     (e: Parameters<ComponentProps<typeof Map>['onClick']>[0]) => {
       if (drawState.active) return null;
 
-      if (popup?.features?.length && hoveredPolygonId.current !== null) {
-        map.setFeatureState(
-          {
-            source: hoveredPolygonId.current.source,
-            id: hoveredPolygonId.current.id,
-            sourceLayer: hoveredPolygonId.current.sourceLayer,
-          },
-          { hover: false }
-        );
-
+      if (popup?.features?.length) {
+        safelyResetFeatureState();
         setPopup({});
       }
 
@@ -160,7 +200,14 @@ const MainMap: FCWithMessages = () => {
         setPopup(p);
       }
     },
-    [layersInteractive, layersInteractiveData, setPopup, drawState, popup, map]
+    [
+      drawState.active,
+      popup?.features?.length,
+      layersInteractive.length,
+      layersInteractiveData,
+      safelyResetFeatureState,
+      setPopup,
+    ]
   );
 
   const handleMouseMove = useCallback(
@@ -178,49 +225,27 @@ const MainMap: FCWithMessages = () => {
           setPopup({ ...e });
         }
 
-        if (hoveredPolygonId.current !== null) {
-          map.setFeatureState(
-            {
-              source: e.features?.[0].source,
-              id: hoveredPolygonId.current.id,
-              sourceLayer: e.features?.[0].sourceLayer,
-            },
-            { hover: false }
-          );
+        if (e.features?.[0]) {
+          safelySetFeatureState(e.features?.[0]);
         }
-        map.setFeatureState(
-          {
-            source: e.features?.[0].source,
-            id: e.features[0].id,
-            sourceLayer: e.features?.[0].sourceLayer,
-          },
-          { hover: true }
-        );
-
-        hoveredPolygonId.current = e.features[0];
       } else {
         if (!drawState.active) {
           setCursor('grab');
         }
       }
     },
-    [map, hoveredPolygonId, drawState.active, setPopup]
+    [setPopup, drawState.active, safelySetFeatureState]
   );
 
-  const handleMouseLeave = useCallback(() => {
-    if (popup?.features?.length) return;
-    if (hoveredPolygonId.current !== null) {
-      map.setFeatureState(
-        {
-          source: hoveredPolygonId.current.source,
-          id: hoveredPolygonId.current.id,
-          sourceLayer: hoveredPolygonId.current.sourceLayer,
-        },
-        { hover: false }
-      );
+  const handleMouseOut = useCallback(() => {
+    safelyResetFeatureState();
+
+    if (popup?.type !== 'click') {
+      // If the popup was opened through a click, we keep it open so that the user can eventually
+      // interact with it's content
+      setPopup({});
     }
-    setPopup({});
-  }, [map, hoveredPolygonId, popup, setPopup]);
+  }, [safelyResetFeatureState, popup, setPopup]);
 
   const initialViewState: ComponentProps<typeof Map>['initialViewState'] = useMemo(() => {
     if (URLBbox) {
@@ -233,7 +258,7 @@ const MainMap: FCWithMessages = () => {
     if (locationsQuery.data && locationsQuery.data?.code !== 'GLOB') {
       return {
         ...DEFAULT_VIEW_STATE,
-        bounds: locationsQuery.data?.bounds as ComponentProps<
+        bounds: locationsQuery.data?.marine_bounds as ComponentProps<
           typeof Map
         >['initialViewState']['bounds'],
         padding: {
@@ -251,36 +276,35 @@ const MainMap: FCWithMessages = () => {
   const bounds: ComponentProps<typeof Map>['bounds'] = useMemo(() => {
     if (!locationBbox) return null;
 
+    const padding = 20;
+
+    let leftPadding = padding;
+    if (typeof window !== 'undefined' && window?.innerWidth > 430) {
+      if (isSidebarOpen) {
+        leftPadding += 460;
+      }
+
+      if (isLayersPanelOpen) {
+        leftPadding += 280;
+      }
+    }
+
     return {
       bbox: locationBbox as ComponentProps<typeof Map>['bounds']['bbox'],
       options: {
         padding: {
-          top: 0,
-          bottom: 0,
-          left:
-            typeof window !== 'undefined' && window?.innerWidth > 430 && isSidebarOpen ? 430 : 0,
-          right: 0,
+          top: padding,
+          bottom: padding,
+          left: leftPadding,
+          right: padding,
         },
       },
     };
-  }, [locationBbox, isSidebarOpen]);
+  }, [locationBbox, isSidebarOpen, isLayersPanelOpen]);
 
   useEffect(() => {
     setCursor(drawState.active ? 'crosshair' : 'grab');
   }, [drawState.active]);
-
-  useEffect(() => {
-    if (!popup?.features?.length && hoveredPolygonId.current !== null) {
-      map.setFeatureState(
-        {
-          source: hoveredPolygonId.current.source,
-          id: hoveredPolygonId.current.id,
-          sourceLayer: hoveredPolygonId.current.sourceLayer,
-        },
-        { hover: false }
-      );
-    }
-  }, [map, popup]);
 
   useEffect(() => {
     return () => {
@@ -289,10 +313,6 @@ const MainMap: FCWithMessages = () => {
   }, [resetLocationBbox]);
 
   const disableMouseMove = popup.type === 'click' && popup.features?.length;
-
-  // ? the popup won't show up when the user is hovering a layer that is not EEZ
-  const hidePopup =
-    popup?.type === 'mousemove' && !popup.features?.some((f) => f.source === 'ezz-source');
 
   return (
     <div className="absolute left-0 h-full w-full border-b border-r border-black">
@@ -303,12 +323,12 @@ const MainMap: FCWithMessages = () => {
         onClick={handleMapClick}
         onMoveEnd={handleMoveEnd}
         onMouseMove={!disableMouseMove && handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseOut={handleMouseOut}
         attributionControl={false}
         cursor={cursor}
       >
         <>
-          {!hidePopup && <Popup />}
+          <Popup />
           <LabelsManager />
           <LayersToolbox />
           <ZoomControls />
@@ -328,12 +348,9 @@ MainMap.messages = [
   ...LayersToolbox.messages,
   ...ZoomControls.messages,
   // Indirectly imported by the layer manager
-  ...EEZLayerPopup.messages,
-  ...EEZLayerLegend.messages,
   ...GenericPopup.messages,
   ...ProtectedAreaPopup.messages,
-  ...RegionsPopup.messages,
-  ...EstablishmentLayerLegend.messages,
+  ...BoundariesPopup.messages,
 ];
 
 export default MainMap;

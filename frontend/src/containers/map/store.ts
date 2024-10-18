@@ -2,7 +2,7 @@ import { MapLayerMouseEvent } from 'react-map-gl';
 
 import { Feature } from 'geojson';
 import { atom } from 'jotai';
-import { atomWithReset } from 'jotai/utils';
+import { atomWithReset, atomWithStorage } from 'jotai/utils';
 
 import { CustomMapProps } from '@/components/map/types';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
@@ -14,7 +14,7 @@ export const layersAtom = atom(true);
 // ? Map state
 export const layersInteractiveAtom = atom<LayerResponseDataObject['id'][]>([]);
 export const layersInteractiveIdsAtom = atom<string[]>([]);
-export const bboxLocation = atomWithReset<CustomMapProps['bounds']['bbox']>([
+export const bboxLocationAtom = atomWithReset<CustomMapProps['bounds']['bbox']>([
   -180, -85.5624999997749, 180, 90,
 ]);
 export const popupAtom = atom<Partial<MapLayerMouseEvent | null>>({});
@@ -33,10 +33,18 @@ export const modellingAtom = atomWithReset<{
   active: boolean;
   status: 'idle' | 'running' | 'success' | 'error';
   data: ModellingData;
-  messageError?: string;
+  errorMessage?: string;
 }>({
   active: false,
   status: 'idle',
   data: null,
-  messageError: undefined,
+  errorMessage: undefined,
 });
+
+/**
+ * Whether the disclaimer dialog should be visible
+ */
+export const terrestrialDataDisclaimerDialogAtom = atomWithStorage(
+  'terrestrial-data-disclaimer-dialog',
+  true
+);

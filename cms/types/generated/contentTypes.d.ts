@@ -1162,6 +1162,60 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
   };
 }
 
+export interface ApiEnvironmentEnvironment extends Schema.CollectionType {
+  collectionName: 'environments';
+  info: {
+    singularName: 'environment';
+    pluralName: 'environments';
+    displayName: 'Environment';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    slug: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::environment.environment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::environment.environment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::environment.environment',
+      'oneToMany',
+      'api::environment.environment'
+    >;
+    locale: Attribute.String;
+  };
+}
+
 export interface ApiFishingProtectionLevelFishingProtectionLevel
   extends Schema.CollectionType {
   collectionName: 'fishing_protection_levels';
@@ -1352,16 +1406,21 @@ export interface ApiHabitatStatHabitatStat extends Schema.CollectionType {
       'api::habitat.habitat'
     >;
     year: Attribute.Integer & Attribute.Required;
-    protectedArea: Attribute.Decimal &
+    protected_area: Attribute.Decimal &
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    totalArea: Attribute.Decimal &
+    total_area: Attribute.Decimal &
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;
       }>;
+    environment: Attribute.Relation<
+      'api::habitat-stat.habitat-stat',
+      'oneToOne',
+      'api::environment.environment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1453,6 +1512,11 @@ export interface ApiLayerLayer extends Schema.CollectionType {
         };
       }> &
       Attribute.DefaultTo<false>;
+    environment: Attribute.Relation<
+      'api::layer.layer',
+      'oneToOne',
+      'api::environment.environment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1488,43 +1552,11 @@ export interface ApiLocationLocation extends Schema.CollectionType {
   options: {
     draftAndPublish: false;
   };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
   attributes: {
-    code: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    totalMarineArea: Attribute.Decimal &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }> &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
-    type: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
+    code: Attribute.String & Attribute.Required;
+    name: Attribute.String & Attribute.Required;
+    total_marine_area: Attribute.BigInteger & Attribute.Required;
+    type: Attribute.String & Attribute.Required;
     groups: Attribute.Relation<
       'api::location.location',
       'manyToMany',
@@ -1542,7 +1574,7 @@ export interface ApiLocationLocation extends Schema.CollectionType {
     >;
     mpaa_protection_level_stats: Attribute.Relation<
       'api::location.location',
-      'oneToMany',
+      'oneToOne',
       'api::mpaa-protection-level-stat.mpaa-protection-level-stat'
     >;
     protection_coverage_stats: Attribute.Relation<
@@ -1550,12 +1582,17 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'oneToMany',
       'api::protection-coverage-stat.protection-coverage-stat'
     >;
-    bounds: Attribute.JSON &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
+    marine_bounds: Attribute.JSON;
+    total_terrestrial_area: Attribute.BigInteger & Attribute.Required;
+    terrestrial_bounds: Attribute.JSON;
+    name_es: Attribute.String & Attribute.Required;
+    name_fr: Attribute.String & Attribute.Required;
+    marine_target: Attribute.Integer &
+      Attribute.SetMinMax<{
+        min: 0;
+        max: 100;
       }>;
+    marine_target_year: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1569,80 +1606,6 @@ export interface ApiLocationLocation extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::location.location',
-      'oneToMany',
-      'api::location.location'
-    >;
-    locale: Attribute.String;
-  };
-}
-
-export interface ApiMpaMpa extends Schema.CollectionType {
-  collectionName: 'mpas';
-  info: {
-    singularName: 'mpa';
-    pluralName: 'mpas';
-    displayName: 'MPA';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    area: Attribute.Decimal &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
-    year: Attribute.Integer &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
-    protection_status: Attribute.Relation<
-      'api::mpa.mpa',
-      'oneToOne',
-      'api::protection-status.protection-status'
-    >;
-    bbox: Attribute.JSON & Attribute.Required;
-    children: Attribute.Relation<'api::mpa.mpa', 'oneToMany', 'api::mpa.mpa'>;
-    data_source: Attribute.Relation<
-      'api::mpa.mpa',
-      'oneToOne',
-      'api::data-source.data-source'
-    >;
-    mpaa_establishment_stage: Attribute.Relation<
-      'api::mpa.mpa',
-      'oneToOne',
-      'api::mpaa-establishment-stage.mpaa-establishment-stage'
-    >;
-    location: Attribute.Relation<
-      'api::mpa.mpa',
-      'oneToOne',
-      'api::location.location'
-    >;
-    wdpaid: Attribute.BigInteger;
-    mpaa_protection_level: Attribute.Relation<
-      'api::mpa.mpa',
-      'oneToOne',
-      'api::mpaa-protection-level.mpaa-protection-level'
-    >;
-    is_child: Attribute.Boolean &
-      Attribute.Required &
-      Attribute.DefaultTo<false>;
-    mpa_iucn_category: Attribute.Relation<
-      'api::mpa.mpa',
-      'oneToOne',
-      'api::mpa-iucn-category.mpa-iucn-category'
-    >;
-    designation: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::mpa.mpa', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::mpa.mpa', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1769,60 +1732,6 @@ export interface ApiMpaaEstablishmentStageMpaaEstablishmentStage
   };
 }
 
-export interface ApiMpaaEstablishmentStageStatMpaaEstablishmentStageStat
-  extends Schema.CollectionType {
-  collectionName: 'mpaa_establishment_stage_stats';
-  info: {
-    singularName: 'mpaa-establishment-stage-stat';
-    pluralName: 'mpaa-establishment-stage-stats';
-    displayName: 'MPAA Establishment Stage Stats';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    location: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'api::location.location'
-    >;
-    mpaa_establishment_stage: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'api::mpaa-establishment-stage.mpaa-establishment-stage'
-    >;
-    protection_status: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'api::protection-status.protection-status'
-    >;
-    year: Attribute.Integer &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
-    area: Attribute.Decimal &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiMpaaProtectionLevelMpaaProtectionLevel
   extends Schema.CollectionType {
   collectionName: 'mpaa_protection_levels';
@@ -1897,11 +1806,6 @@ export interface ApiMpaaProtectionLevelStatMpaaProtectionLevelStat
     draftAndPublish: false;
   };
   attributes: {
-    location: Attribute.Relation<
-      'api::mpaa-protection-level-stat.mpaa-protection-level-stat',
-      'manyToOne',
-      'api::location.location'
-    >;
     mpaa_protection_level: Attribute.Relation<
       'api::mpaa-protection-level-stat.mpaa-protection-level-stat',
       'oneToOne',
@@ -1912,6 +1816,12 @@ export interface ApiMpaaProtectionLevelStatMpaaProtectionLevelStat
       Attribute.SetMinMax<{
         min: 0;
       }>;
+    percentage: Attribute.Decimal;
+    location: Attribute.Relation<
+      'api::mpaa-protection-level-stat.mpaa-protection-level-stat',
+      'oneToOne',
+      'api::location.location'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1925,6 +1835,82 @@ export interface ApiMpaaProtectionLevelStatMpaaProtectionLevelStat
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPaPa extends Schema.CollectionType {
+  collectionName: 'pas';
+  info: {
+    singularName: 'pa';
+    pluralName: 'pas';
+    displayName: 'PA';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    area: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
+    year: Attribute.Integer &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
+    protection_status: Attribute.Relation<
+      'api::pa.pa',
+      'oneToOne',
+      'api::protection-status.protection-status'
+    >;
+    bbox: Attribute.JSON & Attribute.Required;
+    children: Attribute.Relation<'api::pa.pa', 'oneToMany', 'api::pa.pa'>;
+    data_source: Attribute.Relation<
+      'api::pa.pa',
+      'oneToOne',
+      'api::data-source.data-source'
+    >;
+    mpaa_establishment_stage: Attribute.Relation<
+      'api::pa.pa',
+      'oneToOne',
+      'api::mpaa-establishment-stage.mpaa-establishment-stage'
+    >;
+    location: Attribute.Relation<
+      'api::pa.pa',
+      'oneToOne',
+      'api::location.location'
+    >;
+    wdpaid: Attribute.BigInteger;
+    mpaa_protection_level: Attribute.Relation<
+      'api::pa.pa',
+      'oneToOne',
+      'api::mpaa-protection-level.mpaa-protection-level'
+    >;
+    iucn_category: Attribute.Relation<
+      'api::pa.pa',
+      'oneToOne',
+      'api::mpa-iucn-category.mpa-iucn-category'
+    >;
+    designation: Attribute.String;
+    environment: Attribute.Relation<
+      'api::pa.pa',
+      'oneToOne',
+      'api::environment.environment'
+    >;
+    coverage: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
+    parent: Attribute.Relation<'api::pa.pa', 'oneToOne', 'api::pa.pa'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::pa.pa', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::pa.pa', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1947,26 +1933,26 @@ export interface ApiProtectionCoverageStatProtectionCoverageStat
       'manyToOne',
       'api::location.location'
     >;
-    protection_status: Attribute.Relation<
-      'api::protection-coverage-stat.protection-coverage-stat',
-      'oneToOne',
-      'api::protection-status.protection-status'
-    >;
     year: Attribute.Integer &
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    cumSumProtectedArea: Attribute.Decimal &
-      Attribute.Required &
+    protected_area: Attribute.Decimal &
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    protectedArea: Attribute.Decimal &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
-    protectedAreasCount: Attribute.Integer & Attribute.Required;
+    protected_areas_count: Attribute.Integer & Attribute.Required;
+    environment: Attribute.Relation<
+      'api::protection-coverage-stat.protection-coverage-stat',
+      'oneToOne',
+      'api::environment.environment'
+    >;
+    coverage: Attribute.Decimal;
+    pas: Attribute.Decimal;
+    oecms: Attribute.Decimal;
+    is_last_year: Attribute.Boolean & Attribute.DefaultTo<false>;
+    global_contribution: Attribute.Decimal;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -2135,18 +2121,18 @@ declare module '@strapi/types' {
       'api::data-tool-language.data-tool-language': ApiDataToolLanguageDataToolLanguage;
       'api::data-tool-resource-type.data-tool-resource-type': ApiDataToolResourceTypeDataToolResourceType;
       'api::dataset.dataset': ApiDatasetDataset;
+      'api::environment.environment': ApiEnvironmentEnvironment;
       'api::fishing-protection-level.fishing-protection-level': ApiFishingProtectionLevelFishingProtectionLevel;
       'api::fishing-protection-level-stat.fishing-protection-level-stat': ApiFishingProtectionLevelStatFishingProtectionLevelStat;
       'api::habitat.habitat': ApiHabitatHabitat;
       'api::habitat-stat.habitat-stat': ApiHabitatStatHabitatStat;
       'api::layer.layer': ApiLayerLayer;
       'api::location.location': ApiLocationLocation;
-      'api::mpa.mpa': ApiMpaMpa;
       'api::mpa-iucn-category.mpa-iucn-category': ApiMpaIucnCategoryMpaIucnCategory;
       'api::mpaa-establishment-stage.mpaa-establishment-stage': ApiMpaaEstablishmentStageMpaaEstablishmentStage;
-      'api::mpaa-establishment-stage-stat.mpaa-establishment-stage-stat': ApiMpaaEstablishmentStageStatMpaaEstablishmentStageStat;
       'api::mpaa-protection-level.mpaa-protection-level': ApiMpaaProtectionLevelMpaaProtectionLevel;
       'api::mpaa-protection-level-stat.mpaa-protection-level-stat': ApiMpaaProtectionLevelStatMpaaProtectionLevelStat;
+      'api::pa.pa': ApiPaPa;
       'api::protection-coverage-stat.protection-coverage-stat': ApiProtectionCoverageStatProtectionCoverageStat;
       'api::protection-status.protection-status': ApiProtectionStatusProtectionStatus;
       'api::static-indicator.static-indicator': ApiStaticIndicatorStaticIndicator;

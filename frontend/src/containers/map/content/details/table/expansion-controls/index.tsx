@@ -1,11 +1,12 @@
 import { PropsWithChildren } from 'react';
 
 import { Row } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 import { GoTriangleDown } from 'react-icons/go';
 import { LuCornerDownRight } from 'react-icons/lu';
 
-import { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/useColumns';
-import { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/useColumns';
+import { GlobalRegionalTableColumns } from '@/containers/map/content/details/tables/global-regional/hooks';
+import { NationalHighseasTableColumns } from '@/containers/map/content/details/tables/national-highseas/hooks';
 import { cn } from '@/lib/classnames';
 
 export type ExpansionControlsProps = PropsWithChildren<{
@@ -13,6 +14,8 @@ export type ExpansionControlsProps = PropsWithChildren<{
 }>;
 
 const ExpansionControls: React.FC<ExpansionControlsProps> = ({ row, children }) => {
+  const t = useTranslations('containers.map');
+
   const { depth, getIsExpanded, getCanExpand, getToggleExpandedHandler } = row;
 
   const isParentRow = depth === 0;
@@ -21,12 +24,13 @@ const ExpansionControls: React.FC<ExpansionControlsProps> = ({ row, children }) 
   const toggleExpanded = getToggleExpandedHandler();
 
   return (
-    <div className="flex items-center">
+    <div className="flex max-w-full items-center">
       {isRowExpandable && (
         <button
-          className="cursor pointer -ml-1.5 mr-1.5"
+          type="button"
+          className="cursor pointer -ml-px mr-1.5"
           onClick={toggleExpanded}
-          aria-label={isRowExpanded ? 'Collapse sub-rows' : 'Expand sub-rows'}
+          aria-label={isRowExpanded ? t('collapse-sub-rows') : t('expand-sub-rows')}
         >
           <GoTriangleDown
             className={cn({
@@ -38,6 +42,7 @@ const ExpansionControls: React.FC<ExpansionControlsProps> = ({ row, children }) 
       )}
       <span
         className={cn({
+          'w-full overflow-hidden whitespace-normal': true,
           'flex items-center pl-3': !isParentRow,
           'ml-6': isParentRow && !isRowExpandable,
         })}

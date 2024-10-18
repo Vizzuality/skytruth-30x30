@@ -64,6 +64,20 @@
           "sortable": true
         }
       },
+      "percentage": {
+        "edit": {
+          "label": "percentage",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "percentage",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -124,12 +138,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "location",
-        "mpaa_protection_level",
-        "area"
-      ],
       "edit": [
         [
           {
@@ -137,16 +145,26 @@
             "size": 6
           },
           {
-            "name": "mpaa_protection_level",
-            "size": 6
+            "name": "area",
+            "size": 4
           }
         ],
         [
           {
-            "name": "area",
+            "name": "mpaa_protection_level",
+            "size": 6
+          },
+          {
+            "name": "percentage",
             "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "location",
+        "mpaa_protection_level",
+        "area"
       ]
     }
   },

@@ -12,12 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "location": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::location.location",
-      "inversedBy": "mpaa_protection_level_stats"
-    },
     "mpaa_protection_level": {
       "type": "relation",
       "relation": "oneToOne",
@@ -35,6 +29,15 @@
           2
         ]
       }
+    },
+    "percentage": {
+      "type": "decimal"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location",
+      "mappedBy": "mpaa_protection_level_stats"
     }
   }
 }

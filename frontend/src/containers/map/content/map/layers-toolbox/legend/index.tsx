@@ -13,6 +13,7 @@ import {
   useSyncMapLayerSettings,
   useSyncMapLayers,
 } from '@/containers/map/content/map/sync-settings';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
 import ArrowDownIcon from '@/styles/icons/arrow-down.svg';
 import ArrowTopIcon from '@/styles/icons/arrow-top.svg';
@@ -20,7 +21,10 @@ import CloseIcon from '@/styles/icons/close.svg';
 import OpacityIcon from '@/styles/icons/opacity.svg';
 import { FCWithMessages } from '@/types';
 import { useGetLayers } from '@/types/generated/layer';
-import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
+import {
+  LayerListResponseDataItem,
+  LayerResponseDataObject,
+} from '@/types/generated/strapi.schemas';
 import { LayerTyped } from '@/types/layers';
 
 import LegendItem from './item';
@@ -31,12 +35,38 @@ const Legend: FCWithMessages = () => {
 
   const [activeLayers, setMapLayers] = useSyncMapLayers();
   const [layerSettings, setLayerSettings] = useSyncMapLayerSettings();
+  const [{ tab }] = useSyncMapContentSettings();
 
-  const layersQuery = useGetLayers(
+  const layersQuery = useGetLayers<LayerListResponseDataItem[]>(
     {
       locale,
       sort: 'title:asc',
-      populate: 'legend_config,legend_config.items',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      fields: ['title'],
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      populate: {
+        legend_config: {
+          populate: {
+            items: true,
+          },
+        },
+        environment: {
+          fields: ['slug'],
+        },
+      },
+      filters: {
+        ...(tab !== 'summary'
+          ? {
+              environment: {
+                slug: {
+                  $in: tab,
+                },
+              },
+            }
+          : {}),
+      },
     },
     {
       query: {
@@ -147,7 +177,7 @@ const Legend: FCWithMessages = () => {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <div className="overflow-hidden text-ellipsis whitespace-nowrap font-mono text-xs ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 [&_svg]:aria-[expanded=true]:rotate-180">
+                        <div className="overflow-hidden text-ellipsis whitespace-nowrap font-mono text-xs font-bold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 [&_svg]:aria-[expanded=true]:rotate-180">
                           {title}
                         </div>
                       </TooltipTrigger>

@@ -10,13 +10,14 @@ import StackedHorizontalBarChart from '@/components/charts/stacked-horizontal-ba
 import TooltipButton from '@/components/tooltip-button';
 import Widget from '@/components/widget';
 import { modellingAtom } from '@/containers/map/store';
+import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
 import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
 import {
   getGetProtectionCoverageStatsQueryOptions,
   useGetProtectionCoverageStats,
 } from '@/types/generated/protection-coverage-stat';
-import { Location, ProtectionCoverageStatLocationData } from '@/types/generated/strapi.schemas';
+import { Location } from '@/types/generated/strapi.schemas';
 
 import useTooltips from '../useTooltips';
 
@@ -44,6 +45,7 @@ const WidgetSectionWidgetTitle: React.FC<WidgetSectionWidgetTitleProps> = ({ tit
 
 const WidgetLegend: FCWithMessages = () => {
   const t = useTranslations('containers.map-sidebar-main-panel');
+  const [{ tab }] = useSyncMapContentSettings();
 
   const LEGEND_LINE_CLASSES =
     'relative pl-9 font-mono text-xs before:absolute before:left-0 before:top-1/2 before:h-[2px] before:w-[28px] before:-translate-y-1/2';
@@ -52,7 +54,8 @@ const WidgetLegend: FCWithMessages = () => {
     <ul>
       <li>
         <span className={cn(LEGEND_LINE_CLASSES, 'before:bg-green')}>
-          {t('marine-existing-conservation')}
+          {tab === 'marine' && t('marine-existing-conservation')}
+          {tab === 'terrestrial' && t('terrestrial-existing-conservation')}
         </span>
       </li>
       <li>
@@ -68,56 +71,73 @@ const ModellingWidget: FCWithMessages = () => {
   const t = useTranslations('containers.map-sidebar-main-panel');
   const locale = useLocale();
 
+  const [{ tab }] = useSyncMapContentSettings();
+
   const chartsProps = DEFAULT_CHART_PROPS;
 
   const {
     status: modellingStatus,
     data: modellingData,
-    messageError,
+    errorMessage,
   } = useAtomValue(modellingAtom);
 
   // Tooltips with mapping
   const tooltips = useTooltips();
 
-  const {
-    data: globalProtectionStatsData,
-  }: {
-    data: {
-      protectedArea: number;
-      percentageProtectedArea: number;
-      totalMarineArea: number;
-      totalProtectedArea: number;
-      totalPercentage: number;
-      totalCustomAreas: number;
-      totalExistingAreaPercentage: number;
-      totalCustomAreasPercentage: number;
-    };
-  } = useGetProtectionCoverageStats(
+  const { data: globalProtectionStatsData } = useGetProtectionCoverageStats<{
+    protectedArea: number;
+    percentageProtectedArea: number;
+    totalArea: number;
+    totalProtectedArea: number;
+    totalPercentage: number;
+    totalCustomAreas: number;
+    totalExistingAreaPercentage: number;
+    totalCustomAreasPercentage: number;
+  }>(
     {
       locale,
       filters: {
         location: {
           code: 'GLOB',
         },
+        is_last_year: {
+          $eq: true,
+        },
+        environment: {
+          slug: {
+            $eq: tab,
+          },
+        },
       },
-      populate: 'location',
-      // @ts-expect-error this is an issue with Orval typing
-      'sort[year]': 'desc',
-      'pagination[limit]': 2,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      populate: {
+        location: {
+          fields: ['total_marine_area', 'total_terrestrial_area'],
+        },
+      },
+      'pagination[limit]': 1,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      fields: ['protected_area'],
     },
     {
       query: {
-        enabled: Boolean(modellingData?.locations_area),
+        enabled: Boolean(modellingData?.locations_area) && ['marine', 'terrestrial'].includes(tab),
         select: ({ data }) => {
           if (!data) return null;
 
-          const protectedArea = data.reduce(
-            (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
-            0
-          );
+          const protectedArea = data?.[0].attributes.protected_area ?? 0;
 
-          const totalMarineArea =
-            data?.[0].attributes?.location?.data?.attributes?.totalMarineArea || 0;
+          const location = data?.[0].attributes?.location?.data?.attributes;
+          let totalArea;
+          if (tab === 'marine') {
+            totalArea = location?.total_marine_area ? Number(location?.total_marine_area) : 0;
+          } else {
+            totalArea = location?.total_terrestrial_area
+              ? Number(location?.total_terrestrial_area)
+              : 0;
+          }
 
           const totalCustomAreas = modellingData.locations_area.reduce((acc, location) => {
             return acc + location.protected_area;
@@ -125,16 +145,16 @@ const ModellingWidget: FCWithMessages = () => {
 
           const totalProtectedArea = protectedArea + totalCustomAreas;
           //  ? percentage of custom protected areas (analysis)
-          const totalCustomAreasPercentage = (totalCustomAreas / totalMarineArea) * 100;
+          const totalCustomAreasPercentage = (totalCustomAreas / totalArea) * 100;
           //  ? percentage of existing global protected area
-          const totalExistingAreaPercentage = (protectedArea / totalMarineArea) * 100;
+          const totalExistingAreaPercentage = (protectedArea / totalArea) * 100;
 
           const totalPercentage = totalCustomAreasPercentage + totalExistingAreaPercentage;
 
           return {
             protectedArea,
-            percentageProtectedArea: (protectedArea / totalMarineArea) * 100,
-            totalMarineArea,
+            percentageProtectedArea: (protectedArea / totalArea) * 100,
+            totalArea,
             totalProtectedArea,
             totalPercentage,
             totalCustomAreas,
@@ -156,37 +176,54 @@ const ModellingWidget: FCWithMessages = () => {
             location: {
               code: location.code,
             },
+            is_last_year: {
+              $eq: true,
+            },
+            environment: {
+              slug: {
+                $eq: tab,
+              },
+            },
           },
-          populate: 'location,location.localizations',
-          // @ts-expect-error this is an issue with Orval typing
-          'sort[year]': 'desc',
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          populate: {
+            location: {
+              fields: [
+                'name',
+                'name_es',
+                'name_es',
+                'code',
+                'total_marine_area',
+                'total_terrestrial_area',
+              ],
+            },
+          },
+          'pagination[limit]': 1,
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          fields: ['protected_area'],
         },
         {
           query: {
-            enabled: Boolean(modellingData?.locations_area),
+            enabled:
+              Boolean(modellingData?.locations_area) && ['marine', 'terrestrial'].includes(tab),
             select: ({ data }) => {
               if (!data) return null;
 
-              const lastYearAvailable = data?.[0]?.attributes?.year;
+              const protectedArea = data?.[0]?.attributes.protected_area ?? 0;
 
-              const dataFiltered = data.filter(
-                (entry) => entry.attributes.year === lastYearAvailable
-              );
-
-              const protectedArea = dataFiltered.reduce(
-                (acc, entry) => acc + entry.attributes.cumSumProtectedArea,
-                0
-              );
-
-              let location = data?.[0]?.attributes?.location?.data?.attributes;
-              if (location.locale !== locale) {
-                location = (
-                  location.localizations.data as ProtectionCoverageStatLocationData[]
-                ).find((localization) => localization.attributes.locale === locale)?.attributes;
-              }
+              const location = data?.[0]?.attributes?.location?.data?.attributes;
 
               // ? total extension of location
-              const totalMarineArea = location?.totalMarineArea || 0;
+              let totalArea;
+              if (tab === 'marine') {
+                totalArea = location?.total_marine_area ? Number(location.total_marine_area) : 0;
+              } else {
+                totalArea = location?.total_terrestrial_area
+                  ? Number(location.total_terrestrial_area)
+                  : 0;
+              }
 
               // ? total custom  protected area (analysis)
               const totalCustomArea = modellingData.locations_area.find(
@@ -194,9 +231,9 @@ const ModellingWidget: FCWithMessages = () => {
               ).protected_area;
 
               //  ? percentage of custom protected area (analysis)
-              const totalCustomAreaPercentage = (totalCustomArea / totalMarineArea) * 100;
+              const totalCustomAreaPercentage = (totalCustomArea / totalArea) * 100;
               //  ? percentage of existing protected area
-              const totalExistingAreaPercentage = (protectedArea / totalMarineArea) * 100;
+              const totalExistingAreaPercentage = (protectedArea / totalArea) * 100;
 
               // ? sum of existing protected area and protected custom area (analysis)
               const totalProtectedArea = protectedArea + totalCustomArea;
@@ -205,7 +242,7 @@ const ModellingWidget: FCWithMessages = () => {
 
               return {
                 location,
-                totalMarineArea,
+                totalArea,
                 totalProtectedArea,
                 protectedArea,
                 totalExistingAreaPercentage,
@@ -228,7 +265,7 @@ const ModellingWidget: FCWithMessages = () => {
   const nationalLevelContributions: {
     location: Location;
     percentageProtectedArea: number;
-    totalMarineArea: number;
+    totalArea: number;
     totalProtectedArea: number;
     protectedArea: number;
     totalExistingAreaPercentage: number;
@@ -247,9 +284,16 @@ const ModellingWidget: FCWithMessages = () => {
     [locationQueries]
   );
 
-  const administrativeBoundaries = nationalLevelContributions?.map(
-    (contribution) => contribution?.location?.name
-  );
+  const administrativeBoundaries = nationalLevelContributions?.map((contribution) => {
+    let locationName = contribution.location.name;
+    if (locale === 'es') {
+      locationName = contribution.location.name_es;
+    }
+    if (locale === 'fr') {
+      locationName = contribution.location.name_fr;
+    }
+    return locationName;
+  });
 
   return (
     <Widget
@@ -257,7 +301,7 @@ const ModellingWidget: FCWithMessages = () => {
       noData={!nationalLevelContributions}
       loading={loading}
       error={error}
-      messageError={messageError}
+      errorMessage={errorMessage}
     >
       <div className="flex flex-col">
         <div className={cn(DEFAULT_ENTRY_CLASSNAMES, 'flex justify-between border-t-0')}>
@@ -279,12 +323,20 @@ const ModellingWidget: FCWithMessages = () => {
             <WidgetLegend />
           </div>
           {nationalLevelContributions?.map((contribution) => {
+            let locationName = contribution.location.name;
+            if (locale === 'es') {
+              locationName = contribution.location.name_es;
+            }
+            if (locale === 'fr') {
+              locationName = contribution.location.name_fr;
+            }
+
             return (
               <StackedHorizontalBarChart
                 key={contribution?.location?.code}
-                title={contribution?.location?.name}
+                title={locationName}
                 totalProtectedArea={contribution?.totalProtectedArea}
-                totalArea={contribution?.totalMarineArea}
+                totalArea={contribution?.totalArea}
                 highlightedPercentage={contribution?.totalPercentage}
                 data={[
                   {
@@ -314,7 +366,7 @@ const ModellingWidget: FCWithMessages = () => {
           <StackedHorizontalBarChart
             title={t('global')}
             totalProtectedArea={globalProtectionStatsData?.totalProtectedArea}
-            totalArea={globalProtectionStatsData?.totalMarineArea}
+            totalArea={globalProtectionStatsData?.totalArea}
             highlightedPercentage={globalProtectionStatsData?.totalPercentage}
             data={[
               {

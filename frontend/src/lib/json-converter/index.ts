@@ -8,12 +8,9 @@ import { JSONConfiguration, JSONConverter } from '@deck.gl/json/typed';
 //   LegendTypeChoropleth,
 //   LegendTypeGradient,
 // } from '@/components/map/legend/item-types';
-import EEZLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/eez';
-import EstablishmentLayerLegend from '@/containers/map/content/map/layers-toolbox/legend/establishment';
-import EEZLayerPopup from '@/containers/map/content/map/popup/eez';
+import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
-import RegionsPopup from '@/containers/map/content/map/popup/regions';
 import FUNCTIONS from '@/lib/utils';
 import { ParamsConfig } from '@/types/layers';
 
@@ -28,12 +25,9 @@ export const JSON_CONFIGURATION = new JSONConfiguration({
   functions: FUNCTIONS,
   enumerations: {},
   reactComponents: {
-    EEZLayerPopup,
-    EEZLayerLegend, // Deprecated
     GenericPopup,
     ProtectedAreaPopup,
-    RegionsPopup,
-    EstablishmentLayerLegend, // Deprecated
+    BoundariesPopup: BoundariesPopup,
     // LegendTypeBasic,
     // LegendTypeChoropleth,
     // LegendTypeGradient,

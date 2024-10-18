@@ -29,7 +29,9 @@ type Props = AppProps & {
 const App: React.FC<AppProps> = ({ Component, pageProps }: Props) => {
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
   // between users
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () => new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } })
+  );
 
   const router = useRouter();
 

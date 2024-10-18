@@ -61,7 +61,8 @@ const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ loc
             ? {
                 info: data[0]?.attributes?.content,
                 sources: data[0]?.attributes?.data_sources?.data?.map(
-                  ({ attributes: { title, url } }) => ({
+                  ({ id, attributes: { title, url } }) => ({
+                    id,
                     title,
                     url,
                   })
@@ -96,7 +97,7 @@ const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ loc
         title: mpaaProtectionLevel?.name,
         slug: mpaaProtectionLevel?.slug,
         background: barColor,
-        totalArea: location?.totalMarineArea,
+        totalArea: Number(location?.total_marine_area),
         protectedArea: protectionLevelStats?.area,
         info: metadata?.info,
         sources: metadata?.sources,
@@ -116,6 +117,7 @@ const ProtectionTypesWidget: FCWithMessages<ProtectionTypesWidgetProps> = ({ loc
       title={t('marine-conservation-protection-levels')}
       lastUpdated={lastUpdated}
       noData={noData}
+      noDataMessage={t('not-assessed')}
       loading={loading}
     >
       {widgetChartData.map((chartData) => (
