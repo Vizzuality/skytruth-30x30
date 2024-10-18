@@ -1,7 +1,10 @@
+import { useState } from 'react';
+
 import Image from 'next/image';
 
 import { useLocale, useTranslations } from 'next-intl';
 
+import TerrestrialDataDisclaimerDialog from '@/components/terrestrial-data-disclaimer-dialog';
 import Icon from '@/components/ui/icon';
 import SidebarItem from '@/containers/homepage/intro/sidebar-item';
 import { formatPercentage } from '@/lib/utils/formats';
@@ -16,6 +19,8 @@ type IntroProps = {
 const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
   const t = useTranslations('containers.homepage-intro');
   const locale = useLocale();
+
+  const [openDisclaimer, setOpenDisclaimer] = useState(false);
 
   const { data: protectionStatsData } = useGetProtectionCoverageStats<{
     marine?: string;
@@ -117,7 +122,11 @@ const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
               percentage={protectionStatsData.terrestrial}
               text={t('current-total-protected-area')}
               icon="icon2"
+              onClickInfoButton={() => setOpenDisclaimer(true)}
             />
+            {openDisclaimer && (
+              <TerrestrialDataDisclaimerDialog onClose={() => setOpenDisclaimer(false)} />
+            )}
             <div className="flex h-full w-full justify-center">
               <button
                 type="button"
@@ -134,6 +143,10 @@ const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
   );
 };
 
-Intro.messages = ['containers.homepage-intro', ...SidebarItem.messages];
+Intro.messages = [
+  'containers.homepage-intro',
+  ...SidebarItem.messages,
+  ...TerrestrialDataDisclaimerDialog.messages,
+];
 
 export default Intro;

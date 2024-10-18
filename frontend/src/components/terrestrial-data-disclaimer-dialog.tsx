@@ -13,10 +13,15 @@ import {
 import Icon from '@/components/ui/icon';
 import { terrestrialDataDisclaimerDialogAtom } from '@/containers/map/store';
 import Notification from '@/styles/icons/notification.svg';
+import { FCWithMessages } from '@/types';
 
-interface TerrestrialDataDisclaimerDialogProps {}
+interface TerrestrialDataDisclaimerDialogProps {
+  onClose?: () => void;
+}
 
-const TerrestrialDataDisclaimerDialog = ({}: TerrestrialDataDisclaimerDialogProps) => {
+const TerrestrialDataDisclaimerDialog: FCWithMessages<TerrestrialDataDisclaimerDialogProps> = ({
+  onClose,
+}) => {
   const t = useTranslations('pages.progress-tracker');
   const [, setOpen] = useAtom(terrestrialDataDisclaimerDialogAtom);
 
@@ -39,7 +44,7 @@ const TerrestrialDataDisclaimerDialog = ({}: TerrestrialDataDisclaimerDialogProp
           <Button
             type="button"
             className="font-mono text-xs font-normal normal-case"
-            onClick={() => setOpen(false)}
+            onClick={() => (onClose ? onClose() : setOpen(false))}
           >
             {t('i-understand')}
           </Button>
@@ -48,5 +53,7 @@ const TerrestrialDataDisclaimerDialog = ({}: TerrestrialDataDisclaimerDialogProp
     </Dialog>
   );
 };
+
+TerrestrialDataDisclaimerDialog.messages = ['pages.progress-tracker'];
 
 export default TerrestrialDataDisclaimerDialog;

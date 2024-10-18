@@ -146,7 +146,8 @@
       "product-powered-by": "Product powered by",
       "current-ocean-protected-area": "Current global ocean protected area",
       "current-total-protected-area": "Current global land and inland waters protected area",
-      "statistics-icon": "Statistics icon"
+      "statistics-icon": "Statistics icon",
+      "info": "Info"
     },
     "homepage-link-cards": {
       "card-1-title": "Progress Tracker",
