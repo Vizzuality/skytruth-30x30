@@ -187,10 +187,10 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
           type="button"
           variant="text-link"
           size="sm"
-          className="-mt-3 justify-start gap-1.5 px-0 py-0 text-xs font-bold normal-case text-red"
+          className="-mt-3 block px-0 py-0 text-left text-xs font-bold normal-case text-red"
           onClick={() => setDisclaimerDialogOpen(true)}
         >
-          <Icon icon={Notification} className="h-4 w-4" />
+          <Icon icon={Notification} className="mr-1.5 inline-block h-4 w-4" />
 
           {t('data-disclaimer')}
         </Button>
