@@ -114,15 +114,25 @@ const FishingProtectionWidget: FCWithMessages<FishingProtectionWidgetProps> = ({
     return parsedFishingProtectionLevelData?.filter(Boolean) ?? [];
   }, [t, protectionLevelsData, metadata]);
 
-  const noData = !widgetChartData.length;
-  const loading = isFetchingProtectionLevelsData;
+  const noData = useMemo(() => {
+    if (!widgetChartData.length) {
+      return true;
+    }
+
+    const emptyValues = widgetChartData.every((d) => d.totalArea === Infinity);
+    if (emptyValues) {
+      return true;
+    }
+
+    return false;
+  }, [widgetChartData]);
 
   return (
     <Widget
       title={t('level-of-fishing-protection')}
       lastUpdated={protectionLevelsData[0]?.attributes?.updatedAt}
       noData={noData}
-      loading={loading}
+      loading={isFetchingProtectionLevelsData}
     >
       {widgetChartData.map((chartData) => (
         <HorizontalBarChart
