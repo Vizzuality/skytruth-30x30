@@ -46,7 +46,8 @@ const TerrestrialWidgets: FCWithMessages = () => {
       })}
     >
       <TerrestrialConservationWidget location={locationData} />
-      <HabitatWidget location={locationData} />
+      {/* Temporarily hidden due to overestimations caused by the calculation methodology */}
+      {/* <HabitatWidget location={locationData} /> */}
     </div>
   );
 };
