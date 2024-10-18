@@ -62,20 +62,11 @@
         }
       },
       {
-        "dataset_groups": {
-          "__model__": true,
-          "name": true,
-          "slug": null,
-          "datasets": null
-        }
-      },
-      {
         "datasets": {
           "__model__": true,
           "name": true,
           "layers": null,
-          "slug": null,
-          "group": null
+          "slug": null
         }
       },
       {
@@ -127,24 +118,8 @@
               "description": true
             }
           },
-          "default": null
-        }
-      },
-      {
-        "locations": {
-          "__model__": true,
-          "code": null,
-          "name": true,
-          "totalMarineArea": null,
-          "type": null,
-          "groups": null,
-          "members": null,
-          "fishing_protection_level_stats": null,
-          "mpaa_protection_level_stats": null,
-          "protection_coverage_stats": null,
-          "marine_bounds": null,
-          "totalTerrestrialArea": null,
-          "terrestrial_bounds": null
+          "default": null,
+          "environment": null
         }
       },
       {
