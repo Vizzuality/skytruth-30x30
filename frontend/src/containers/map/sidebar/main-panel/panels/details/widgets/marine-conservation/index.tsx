@@ -155,11 +155,24 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
     return data;
   }, [location, aggregatedData]);
 
+  const noData = useMemo(() => {
+    if (!chartData.length) {
+      return true;
+    }
+
+    const emptyValues = chartData.every((d) => d.percentage === 0);
+    if (emptyValues) {
+      return true;
+    }
+
+    return false;
+  }, [chartData]);
+
   return (
     <Widget
       title={t('marine-conservation-coverage')}
       lastUpdated={data[data.length - 1]?.attributes.updatedAt}
-      noData={!chartData.length}
+      noData={noData}
       loading={isFetching}
       info={metadata?.info}
       sources={metadata?.sources}
