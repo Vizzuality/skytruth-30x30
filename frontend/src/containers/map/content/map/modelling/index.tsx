@@ -12,7 +12,7 @@ import { ModellingData } from '@/types/modelling';
 const fetchModelling = async (tab: string, feature: Feature) => {
   return axios.post<ModellingData>(process.env.NEXT_PUBLIC_ANALYSIS_CF_URL, {
     environment: tab,
-    feature,
+    geometry: feature,
   });
 };
 
