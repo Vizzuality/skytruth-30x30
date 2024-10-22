@@ -3,15 +3,12 @@ import { ComponentProps, useCallback, useEffect, useMemo, useRef, useState } fro
 import { useMap } from 'react-map-gl';
 
 import dynamic from 'next/dynamic';
-import { useParams } from 'next/navigation';
 
 import { useAtom, useAtomValue } from 'jotai';
-import { useResetAtom } from 'jotai/utils';
 import { useLocale } from 'next-intl';
 
 import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
-import { CustomMapProps } from '@/components/map/types';
 import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
@@ -21,17 +18,17 @@ import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
 import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
-import { layersAtom, sidebarAtom } from '@/containers/map/store';
 import {
   bboxLocationAtom,
   drawStateAtom,
+  layersAtom,
   layersInteractiveAtom,
   layersInteractiveIdsAtom,
   popupAtom,
+  sidebarAtom,
 } from '@/containers/map/store';
 import { FCWithMessages } from '@/types';
 import { useGetLayers } from '@/types/generated/layer';
-import { useGetLocations } from '@/types/generated/location';
 import { LayerTyped } from '@/types/layers';
 
 const LayerManager = dynamic(() => import('@/containers/map/content/map/layer-manager'), {
@@ -48,28 +45,10 @@ const MainMap: FCWithMessages = () => {
   const isSidebarOpen = useAtomValue(sidebarAtom);
   const isLayersPanelOpen = useAtomValue(layersAtom);
   const [popup, setPopup] = useAtom(popupAtom);
-  const params = useParams();
-  const [locationBbox, setLocationBbox] = useAtom(bboxLocationAtom);
-  const resetLocationBbox = useResetAtom(bboxLocationAtom);
+  const bboxLocation = useAtomValue(bboxLocationAtom);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
   const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
-
-  const locationCode = params?.locationCode || 'GLOB';
-
-  const locationsQuery = useGetLocations(
-    {
-      locale,
-      filters: {
-        code: locationCode,
-      },
-    },
-    {
-      query: {
-        queryKey: ['locations', locationCode],
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
-  );
+  const mountedRef = useRef(false);
 
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
@@ -117,10 +96,6 @@ const MainMap: FCWithMessages = () => {
       setMapLayers(defaultLayers);
     }
   }, [setMapLayers, defaultLayers]);
-
-  useEffect(() => {
-    setLocationBbox(locationsQuery?.data?.marine_bounds as CustomMapProps['bounds']['bbox']);
-  }, [locationCode, locationsQuery, setLocationBbox]);
 
   const safelyResetFeatureState = useCallback(() => {
     if (!hoveredPolygonId.current) {
@@ -255,26 +230,13 @@ const MainMap: FCWithMessages = () => {
       };
     }
 
-    if (locationsQuery.data && locationsQuery.data?.code !== 'GLOB') {
-      return {
-        ...DEFAULT_VIEW_STATE,
-        bounds: locationsQuery.data?.marine_bounds as ComponentProps<
-          typeof Map
-        >['initialViewState']['bounds'],
-        padding: {
-          top: 0,
-          bottom: 0,
-          left: isSidebarOpen ? 430 : 0,
-          right: 0,
-        },
-      };
-    }
-
     return DEFAULT_VIEW_STATE;
-  }, [URLBbox, isSidebarOpen, locationsQuery.data]);
+  }, [URLBbox]);
 
   const bounds: ComponentProps<typeof Map>['bounds'] = useMemo(() => {
-    if (!locationBbox) return null;
+    if (!mountedRef.current) {
+      return null;
+    }
 
     const padding = 20;
 
@@ -290,7 +252,7 @@ const MainMap: FCWithMessages = () => {
     }
 
     return {
-      bbox: locationBbox as ComponentProps<typeof Map>['bounds']['bbox'],
+      bbox: bboxLocation,
       options: {
         padding: {
           top: padding,
@@ -300,17 +262,15 @@ const MainMap: FCWithMessages = () => {
         },
       },
     };
-  }, [locationBbox, isSidebarOpen, isLayersPanelOpen]);
+  }, [bboxLocation, isSidebarOpen, isLayersPanelOpen]);
 
   useEffect(() => {
     setCursor(drawState.active ? 'crosshair' : 'grab');
   }, [drawState.active]);
 
   useEffect(() => {
-    return () => {
-      resetLocationBbox();
-    };
-  }, [resetLocationBbox]);
+    mountedRef.current = true;
+  }, []);
 
   const disableMouseMove = popup.type === 'click' && popup.features?.length;
 
