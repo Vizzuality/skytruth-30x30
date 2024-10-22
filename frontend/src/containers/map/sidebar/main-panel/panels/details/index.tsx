@@ -12,6 +12,7 @@ import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
 import { bboxLocationAtom } from '@/containers/map/store';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
+import useMapDefaultLayers from '@/hooks/use-map-default-layers';
 import useScrollPosition from '@/hooks/use-scroll-position';
 import { cn } from '@/lib/classnames';
 import { combineBoundingBoxes } from '@/lib/utils/geo';
@@ -128,6 +129,9 @@ const SidebarDetails: FCWithMessages = () => {
       setLocationBBox(locationBounds as CustomMapProps['bounds']['bbox']);
     }
   }, [setLocationBBox, locationBounds]);
+
+  // Update the map's default layers based on the tab
+  useMapDefaultLayers();
 
   return (
     <Tabs value={tab} onValueChange={handleTabChange} className="flex h-full w-full flex-col">
