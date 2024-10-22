@@ -72,7 +72,7 @@
       "impact": "Impact",
       "context": "Context",
       "section-services-title": "An entry point for 30x30",
-      "section-services-description": "In partnership with <b>Bloomberg Ocean Initiative, SkyTruth</b> is developing an entry point for 30x30 stakeholders. The tools below enable you to track the world’s progress toward 30x30, draw new protected areas, and find additional tools and organizations fighting for the protection of marine and terrestrial ecosystems <i>(terrestrial coming soon)</i>.",
+      "section-services-description": "In partnership with <b>Bloomberg Ocean Initiative, SkyTruth</b> is developing an entry point for 30x30 stakeholders. The tools below enable you to track the world’s progress toward 30x30, draw new protected areas, and find additional tools and organizations fighting for the protection of marine and terrestrial ecosystems.",
       "section-impact-title": "What’s at stake?",
       "section-impact-subsection-1-title": "Biodiversity",
       "section-impact-subsection-1-description-1": "Today, {protectedOceanPercentage} percent of the world’s ocean and <a1>{protectedLandPercentage} percent of its land area</a1> are protected. Wildlife populations - mammals, birds, fish, and other species - have decreased by nearly 70% since 1970, with up to <a2>{threatenedSpeciesPercentage} species threatened with extinction</a2>.",
