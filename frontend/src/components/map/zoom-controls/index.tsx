@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { FCWithMessages } from '@/types';
 
 const BUTTON_CLASSES = 'group bg-white';
-const ICON_CLASSES = 'h-6 w-6 text-black group-hover:text-white';
+const ICON_CLASSES = 'h-4 w-4 text-black group-hover:text-white';
 
 const ZoomControls: FCWithMessages = () => {
   const t = useTranslations('components.map');

@@ -203,16 +203,16 @@ const BoundariesPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
   if (!geometryData) return null;
 
   return (
-    <div className="space-y-2">
-      <h3 className="text-xl font-semibold">{localizedLocationName || '-'}</h3>
-      {isFetching && <div className="my-4 text-center font-mono text-xs">{t('loading')}</div>}
+    <div className="flex flex-col gap-2">
+      <h3 className="font-sans text-xl font-black">{localizedLocationName || '-'}</h3>
+      {isFetching && <div className="my-4 text-center font-mono text-xl">{t('loading')}</div>}
       {!isFetching && !protectionCoverageStats && (
         <div className="my-4 text-center font-mono text-xs">{t('no-data-available')}</div>
       )}
       {!isFetching && !!protectionCoverageStats && (
         <>
-          <div className="space-y-2">
-            <div className="my-4 max-w-[95%] font-mono">
+          <div className="flex flex-col gap-2">
+            <div className="max-w-[95%] font-mono">
               {environment === 'marine'
                 ? t('marine-conservation-coverage')
                 : t('terrestrial-conservation-coverage')}
@@ -222,18 +222,17 @@ const BoundariesPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
                 t.rich('percentage-bold', {
                   percentage: formattedStats.percentage,
                   b1: (chunks) => (
-                    <span className="text-[64px] font-bold leading-[80%]">{chunks}</span>
+                    <span className="text-[32px] font-bold leading-none">{chunks}</span>
                   ),
                   b2: (chunks) => <span className="text-lg">{chunks}</span>,
                 })}
               {formattedStats.percentage === '-' && (
-                <span className="text-[64px] font-bold leading-[80%]">
-                  {formattedStats.percentage}
-                </span>
+                <span className="text-xl font-bold leading-none">{formattedStats.percentage}</span>
               )}
             </div>
             <div className="space-x-1 font-mono font-medium text-black">
-              {t('protected-area', {
+              {t.rich('protected-area', {
+                br: () => <br />,
                 protectedArea: formattedStats.protectedArea,
                 totalArea: formatKM(
                   locale,
@@ -248,7 +247,7 @@ const BoundariesPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
           </div>
           <button
             type="button"
-            className="block w-full border border-black p-4 text-center font-mono uppercase"
+            className="mt-3 block w-full border border-black py-2.5 px-4 text-center font-mono text-xs"
             onClick={handleLocationSelected}
           >
             {t(POPUP_BUTTON_CONTENT_BY_SOURCE[source?.['id']])}

@@ -47,7 +47,7 @@ const ChartLegend: FCWithMessages<ChartLegendProps> = ({
       </span>
       {displayTarget && (
         <span className="inline-flex w-full items-center gap-3">
-          <span className="block w-10 border-b border-orange"></span>
+          <span className="block w-10 border-b border-dashed border-orange"></span>
           <span>
             {t.rich('target-xx-by', {
               target,

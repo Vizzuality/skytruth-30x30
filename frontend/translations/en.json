@@ -257,7 +257,7 @@
       "terrestrial-conservation-coverage": "Terrestrial Conservation Coverage",
       "percentage": "{percentage}%",
       "percentage-bold": "<b1>{percentage}</b1><b2>%</b2>",
-      "protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "protected-area": "{protectedArea} km² out of<br></br>{totalArea} km²",
       "open-country-insights": "Open country insights",
       "global-coverage": "Global coverage",
       "area-km2": "{area} km²",
