@@ -125,7 +125,7 @@ const PopupContainer: FCWithMessages = () => {
       offset={10}
       closeOnClick={false}
       closeButton={false}
-      maxWidth="300px"
+      maxWidth="230px"
       onClose={closePopup}
       className={cn({
         'min-w-[250px]': !isHoveredTooltip,
