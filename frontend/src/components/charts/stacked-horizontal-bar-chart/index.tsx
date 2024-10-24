@@ -11,6 +11,7 @@ type StackedHorizontalBarChartProps = {
   className: string;
   title?: string;
   info?: string;
+  customArea: number;
   totalProtectedArea: number;
   totalArea: number;
   highlightedPercentage: number;
@@ -28,6 +29,7 @@ const StackedHorizontalBarChart: FCWithMessages<StackedHorizontalBarChartProps> 
   data,
   title,
   info,
+  customArea,
   totalProtectedArea,
   totalArea,
   highlightedPercentage,
@@ -43,17 +45,24 @@ const StackedHorizontalBarChart: FCWithMessages<StackedHorizontalBarChartProps> 
         {formatPercentage(locale, highlightedPercentage, { displayPercentageSign: false })}
         <span className="pb-1.5 pl-1 text-xs">%</span>
       </div>
-      <div className="flex justify-between text-xs">
+      <div className="flex items-start justify-between text-xs">
         <span className="flex items-center">
           {title && title}
           {info && <TooltipButton text={info} />}
         </span>
-        <span className="text-right">
-          {t('marine-protected-area', {
-            protectedArea: formatKM(locale, totalProtectedArea),
-            totalArea: formatKM(locale, totalArea),
-          })}
-        </span>
+        <div>
+          <div className="text-right">
+            {t('marine-protected-area', {
+              protectedArea: formatKM(locale, totalProtectedArea),
+              totalArea: formatKM(locale, totalArea),
+            })}
+          </div>
+          <div className="text-right">
+            {t('new-added-area', {
+              area: formatKM(locale, customArea),
+            })}
+          </div>
+        </div>
       </div>
       <div className="relative my-2 flex h-3.5">
         <span className="absolute top-1/2 h-px w-full border-b border-dashed border-black"></span>

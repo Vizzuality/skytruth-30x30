@@ -361,7 +361,8 @@
     "chart-stacked-horizontal-bar": {
       "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
       "30%-target": "30% target",
-      "percentage": "{percentage}%"
+      "percentage": "{percentage}%",
+      "new-added-area": "{area} km² of new added area"
     },
     "tooltip-button": {
       "info": "Info",

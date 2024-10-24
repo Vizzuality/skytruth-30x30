@@ -335,6 +335,7 @@ const ModellingWidget: FCWithMessages = () => {
               <StackedHorizontalBarChart
                 key={contribution?.location?.code}
                 title={locationName}
+                customArea={contribution?.totalCustomArea}
                 totalProtectedArea={contribution?.totalProtectedArea}
                 totalArea={contribution?.totalArea}
                 highlightedPercentage={contribution?.totalPercentage}
@@ -365,6 +366,7 @@ const ModellingWidget: FCWithMessages = () => {
           </div>
           <StackedHorizontalBarChart
             title={t('global')}
+            customArea={globalProtectionStatsData?.totalCustomAreas}
             totalProtectedArea={globalProtectionStatsData?.totalProtectedArea}
             totalArea={globalProtectionStatsData?.totalArea}
             highlightedPercentage={globalProtectionStatsData?.totalPercentage}
