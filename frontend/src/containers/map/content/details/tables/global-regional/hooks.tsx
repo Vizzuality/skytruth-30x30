@@ -294,8 +294,11 @@ export const useColumns = (
         ),
         cell: ({ row }) => {
           const { global_contribution: value } = row.original;
-          if (!value) return t('no-data');
-          const formattedValue = cellFormatter.percentage(locale, value);
+          if (value === undefined || value === null) return t('no-data');
+          const formattedValue = cellFormatter.percentage(locale, value, {
+            displayPercentageSign: false,
+            displayZeroValue: false,
+          });
           return <span className="text-xs">{t('percentage', { percentage: formattedValue })}</span>;
         },
       },
