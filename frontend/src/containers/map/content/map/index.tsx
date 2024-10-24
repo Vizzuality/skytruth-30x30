@@ -37,7 +37,7 @@ const MainMap: FCWithMessages = () => {
   const locale = useLocale();
 
   const [{ bbox: URLBbox }, setMapSettings] = useSyncMapSettings();
-  const [, setMapLayers] = useSyncMapLayers();
+  const [mapLayers, setMapLayers] = useSyncMapLayers();
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
   const [popup, setPopup] = useAtom(popupAtom);
@@ -87,12 +87,13 @@ const MainMap: FCWithMessages = () => {
     }
   );
 
-  // Once we have fetched from the CMS which layers are active by default, we set toggle them on
+  // Once we have fetched from the CMS which layers are active by default, we set toggle them on, if
+  // there are already no layers in the URL
   useEffect(() => {
-    if (defaultLayers) {
+    if (defaultLayers && mapLayers.length === 0) {
       setMapLayers(defaultLayers);
     }
-  }, [setMapLayers, defaultLayers]);
+  }, [mapLayers, setMapLayers, defaultLayers]);
 
   const safelyResetFeatureState = useCallback(() => {
     if (!hoveredPolygonId.current) {
