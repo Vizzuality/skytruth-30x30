@@ -121,7 +121,7 @@ const MapSidebar: FCWithMessages<MapSidebarProps> = ({ type }) => {
             onClick={() => setSidebarOpen(!isSidebarOpen)}
           >
             <LuChevronLeft
-              className={cn('-ml-px h-6 w-6', { 'rotate-180': !isSidebarOpen })}
+              className={cn('-ml-px h-5 w-5', { 'rotate-180': !isSidebarOpen })}
               aria-hidden
             />
             <span className="sr-only">{t('toggle-sidebar')}</span>
