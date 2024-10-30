@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
+import { useMap } from 'react-map-gl';
+
 import { useParams } from 'next/navigation';
 
 import { useAtom } from 'jotai';

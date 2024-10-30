@@ -1,11 +1,8 @@
-import { ReactElement, isValidElement, useMemo } from 'react';
-
 import TooltipButton from '@/components/tooltip-button';
 import Icon from '@/components/ui/icon';
 import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
-import useConfig from '@/hooks/use-config';
 import { cn } from '@/lib/classnames';
 import CircleWithDottedRedStrokeIcon from '@/styles/icons/circle-with-dotted-red-stroke.svg';
 import CircleWithFillIcon from '@/styles/icons/circle-with-fill.svg';
@@ -15,7 +12,7 @@ import EstablishmentImplementedIcon from '@/styles/icons/implemented.svg';
 import EstablishmentManagedIcon from '@/styles/icons/managed.svg';
 import EstablishmentProposedIcon from '@/styles/icons/proposed.svg';
 import { FCWithMessages } from '@/types';
-import { LayerTyped, LegendConfig } from '@/types/layers';
+import { LayerTyped } from '@/types/layers';
 
 export interface LegendItemsProps {
   config: LayerTyped['legend_config'];
@@ -33,27 +30,6 @@ const ICONS_MAPPING = {
 
 const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
   const { type, items } = config || {};
-
-  const configParams = useMemo(
-    () => ({
-      config,
-      params_config: [],
-      settings: {},
-    }),
-    [config]
-  );
-
-  const parsedConfig = useConfig<LegendConfig | ReactElement>(configParams);
-
-  const LEGEND_ITEM_COMPONENT = useMemo(() => {
-    if (!parsedConfig) return null;
-
-    if (isValidElement(parsedConfig)) {
-      return parsedConfig;
-    }
-
-    return null;
-  }, [parsedConfig]);
 
   switch (type) {
     case 'basic':
@@ -155,7 +131,7 @@ const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
       );
 
     default:
-      return LEGEND_ITEM_COMPONENT;
+      return null;
   }
 };
 

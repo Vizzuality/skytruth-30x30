@@ -13,7 +13,7 @@ export type ParamsConfigValue = {
   default: unknown;
 };
 
-export type ParamsConfig = Record<string, ParamsConfigValue>[];
+export type ParamsConfig = ParamsConfigValue[];
 
 export type LegendConfig = {
   type?: 'basic' | 'icon' | 'gradient' | 'choropleth';
