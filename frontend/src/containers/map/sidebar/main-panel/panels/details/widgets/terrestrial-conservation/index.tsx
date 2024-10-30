@@ -10,8 +10,7 @@ import Icon from '@/components/ui/icon';
 import Widget from '@/components/widget';
 import { terrestrialDataDisclaimerDialogAtom } from '@/containers/map/store';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
-import { formatKM } from '@/lib/utils/formats';
-import { formatPercentage } from '@/lib/utils/formats';
+import { formatKM, formatPercentage } from '@/lib/utils/formats';
 import Notification from '@/styles/icons/notification.svg';
 import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
@@ -197,7 +196,7 @@ const TerrestrialConservationWidget: FCWithMessages<TerrestrialConservationWidge
       }
     >
       {stats && (
-        <div className="mt-6 mb-4 flex flex-col">
+        <div className="mb-4 mt-6 flex flex-col">
           <span className="space-x-1">
             {t.rich('terrestrial-protected-percentage', {
               b1: (chunks) => <span className="text-[64px] font-bold leading-[90%]">{chunks}</span>,

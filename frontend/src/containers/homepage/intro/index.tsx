@@ -75,7 +75,7 @@ const Intro: FCWithMessages<IntroProps> = ({ onScrollClick }) => {
   return (
     <div className="bg-black">
       <div className="flex flex-col text-white md:mx-auto md:max-w-7xl md:flex-row">
-        <div className="mt-6 mb-2 flex flex-1 flex-col gap-10 px-8 pt-10">
+        <div className="mb-2 mt-6 flex flex-1 flex-col gap-10 px-8 pt-10">
           <div className="relative">
             <Image
               className="h-auto w-full max-w-4xl"

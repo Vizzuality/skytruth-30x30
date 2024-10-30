@@ -47,7 +47,7 @@ export const getGetDataInfosQueryKey = (params?: GetDataInfosParams) => {
 
 export const getGetDataInfosQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataInfos>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataInfosParams,
   options?: {
@@ -74,7 +74,7 @@ export type GetDataInfosQueryError = ErrorType<Error>;
 
 export const useGetDataInfos = <
   TData = Awaited<ReturnType<typeof getDataInfos>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataInfosParams,
   options?: {
@@ -109,7 +109,7 @@ export const getGetDataInfosIdQueryKey = (id: number, params?: GetDataInfosIdPar
 
 export const getGetDataInfosIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataInfosId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataInfosIdParams,
@@ -137,7 +137,7 @@ export type GetDataInfosIdQueryError = ErrorType<Error>;
 
 export const useGetDataInfosId = <
   TData = Awaited<ReturnType<typeof getDataInfosId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataInfosIdParams,
@@ -173,7 +173,7 @@ export const postDataInfosIdLocalizations = (
 
 export const getPostDataInfosIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataInfosIdLocalizations>>,
@@ -210,7 +210,7 @@ export type PostDataInfosIdLocalizationsMutationError = ErrorType<Error>;
 
 export const usePostDataInfosIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataInfosIdLocalizations>>,

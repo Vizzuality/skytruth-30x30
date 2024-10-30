@@ -48,7 +48,7 @@ export const getGetProtectionCoverageStatsQueryKey = (
 
 export const getGetProtectionCoverageStatsQueryOptions = <
   TData = Awaited<ReturnType<typeof getProtectionCoverageStats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetProtectionCoverageStatsParams,
   options?: {
@@ -78,7 +78,7 @@ export type GetProtectionCoverageStatsQueryError = ErrorType<Error>;
 
 export const useGetProtectionCoverageStats = <
   TData = Awaited<ReturnType<typeof getProtectionCoverageStats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetProtectionCoverageStatsParams,
   options?: {
@@ -116,7 +116,7 @@ export const getGetProtectionCoverageStatsIdQueryKey = (
 
 export const getGetProtectionCoverageStatsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getProtectionCoverageStatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetProtectionCoverageStatsIdParams,
@@ -151,7 +151,7 @@ export type GetProtectionCoverageStatsIdQueryError = ErrorType<Error>;
 
 export const useGetProtectionCoverageStatsId = <
   TData = Awaited<ReturnType<typeof getProtectionCoverageStatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetProtectionCoverageStatsIdParams,

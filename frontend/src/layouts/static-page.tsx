@@ -31,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, arrowColor =
 
   return (
     <div className="-mb-6 min-w-[200px] px-8 md:mb-0 md:px-0">
-      <nav className="sticky top-10 bottom-3 my-10 flex flex-col gap-3 font-mono text-sm">
+      <nav className="sticky bottom-3 top-10 my-10 flex flex-col gap-3 font-mono text-sm">
         {Object.entries(sections).map(([key, { id, name }]) => {
           return (
             <button

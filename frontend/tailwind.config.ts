@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const defaultTheme = require('tailwindcss/defaultTheme');
+import defaultTheme from 'tailwindcss/defaultTheme';
+import TailwindAnimate from 'tailwindcss-animate';
+import TailwindLineClamp from '@tailwindcss/line-clamp';
+import type { Config } from "tailwindcss";
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config: Config = {
   darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -40,27 +41,27 @@ module.exports = {
       },
       keyframes: {
         'accordion-down': {
-          from: { height: 0 },
+          from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: 0 },
+          to: { height: '0' },
         },
         'collapsible-down': {
-          from: { height: 0 },
+          from: { height: '0' },
           to: { height: 'var(--radix-collapsible-content-height)' },
         },
         'collapsible-up': {
           from: { height: 'var(--radix-collapsible-content-height)' },
-          to: { height: 0 },
+          to: { height: '0' },
         },
         'collapsible-left': {
           from: { width: 'var(--radix-collapsible-content-width)' },
-          to: { width: 0 },
+          to: { width: '0' },
         },
         'collapsible-right': {
-          from: { width: 0 },
+          from: { width: '0' },
           to: { width: 'var(--radix-collapsible-content-width)' },
         },
       },
@@ -74,5 +75,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/line-clamp')],
+  plugins: [TailwindAnimate, TailwindLineClamp],
 };
+
+export default config;

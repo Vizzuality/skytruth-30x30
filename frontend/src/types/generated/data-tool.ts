@@ -49,7 +49,7 @@ export const getGetDataToolsQueryKey = (params?: GetDataToolsParams) => {
 
 export const getGetDataToolsInfiniteQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataTools>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataToolsParams,
   options?: {
@@ -76,7 +76,7 @@ export type GetDataToolsInfiniteQueryError = ErrorType<Error>;
 
 export const useGetDataToolsInfinite = <
   TData = Awaited<ReturnType<typeof getDataTools>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataToolsParams,
   options?: {
@@ -112,7 +112,7 @@ export const postDataTools = (
 
 export const getPostDataToolsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataTools>>,
@@ -176,7 +176,7 @@ export const getGetDataToolsIdQueryKey = (id: number, params?: GetDataToolsIdPar
 
 export const getGetDataToolsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataToolsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataToolsIdParams,
@@ -204,7 +204,7 @@ export type GetDataToolsIdQueryError = ErrorType<Error>;
 
 export const useGetDataToolsId = <
   TData = Awaited<ReturnType<typeof getDataToolsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataToolsIdParams,
@@ -240,7 +240,7 @@ export const putDataToolsId = (
 
 export const getPutDataToolsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putDataToolsId>>,
@@ -292,7 +292,7 @@ export const deleteDataToolsId = (id: number, options?: SecondParameter<typeof A
 
 export const getDeleteDataToolsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteDataToolsId>>,
@@ -358,7 +358,7 @@ export const postDataToolsIdLocalizations = (
 
 export const getPostDataToolsIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolsIdLocalizations>>,
@@ -395,7 +395,7 @@ export type PostDataToolsIdLocalizationsMutationError = ErrorType<Error>;
 
 export const usePostDataToolsIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolsIdLocalizations>>,

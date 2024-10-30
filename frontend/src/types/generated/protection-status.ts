@@ -50,7 +50,7 @@ export const getGetProtectionStatusesQueryKey = (params?: GetProtectionStatusesP
 
 export const getGetProtectionStatusesQueryOptions = <
   TData = Awaited<ReturnType<typeof getProtectionStatuses>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetProtectionStatusesParams,
   options?: {
@@ -79,7 +79,7 @@ export type GetProtectionStatusesQueryError = ErrorType<Error>;
 
 export const useGetProtectionStatuses = <
   TData = Awaited<ReturnType<typeof getProtectionStatuses>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetProtectionStatusesParams,
   options?: {
@@ -117,7 +117,7 @@ export const getGetProtectionStatusesIdQueryKey = (
 
 export const getGetProtectionStatusesIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getProtectionStatusesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetProtectionStatusesIdParams,
@@ -148,7 +148,7 @@ export type GetProtectionStatusesIdQueryError = ErrorType<Error>;
 
 export const useGetProtectionStatusesId = <
   TData = Awaited<ReturnType<typeof getProtectionStatusesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetProtectionStatusesIdParams,
@@ -184,7 +184,7 @@ export const postProtectionStatusesIdLocalizations = (
 
 export const getPostProtectionStatusesIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postProtectionStatusesIdLocalizations>>,
@@ -222,7 +222,7 @@ export type PostProtectionStatusesIdLocalizationsMutationError = ErrorType<Error
 
 export const usePostProtectionStatusesIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postProtectionStatusesIdLocalizations>>,
