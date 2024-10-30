@@ -5,7 +5,7 @@ import { useLocale } from 'next-intl';
 import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
-import { parseConfig } from '@/lib/json-converter';
+import useConfig from '@/hooks/use-config';
 import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
 import { InteractionConfig, LayerTyped } from '@/types/layers';
@@ -27,24 +27,29 @@ const PopupItem: FCWithMessages<PopupItemProps> = ({ id }) => {
 
   const { interaction_config, params_config } = attributes;
 
-  const INTERACTION_COMPONENT = useMemo(() => {
-    const l = parseConfig<InteractionConfig | ReactElement | null>({
+  const configParams = useMemo(
+    () => ({
       config: {
         ...interaction_config,
         layerId: id,
       },
       params_config,
       settings: {},
-    });
+    }),
+    [id, interaction_config, params_config]
+  );
 
-    if (!l) return null;
+  const parsedConfig = useConfig<InteractionConfig | ReactElement>(configParams);
 
-    if (isValidElement(l)) {
-      return l;
+  const INTERACTION_COMPONENT = useMemo(() => {
+    if (!parsedConfig) return null;
+
+    if (isValidElement(parsedConfig)) {
+      return parsedConfig;
     }
 
     return null;
-  }, [interaction_config, params_config, id]);
+  }, [parsedConfig]);
 
   return INTERACTION_COMPONENT;
 };

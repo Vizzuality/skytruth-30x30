@@ -73,11 +73,11 @@ interface ParseConfigurationProps {
   params_config: unknown;
   settings: Record<string, unknown>;
 }
-export const parseConfig = <T>({
+export const parseConfig = async <T>({
   config,
   params_config,
   settings,
-}: ParseConfigurationProps): T | null => {
+}: ParseConfigurationProps): Promise<T | null> => {
   if (!config || !params_config) {
     return null;
   }

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useParams } from 'next/navigation';
 
@@ -8,7 +8,7 @@ import { useLocale } from 'next-intl';
 import DeckJsonLayer from '@/components/map/layers/deck-json-layer';
 import MapboxLayer from '@/components/map/layers/mapbox-layer';
 import { layersInteractiveAtom, layersInteractiveIdsAtom } from '@/containers/map/store';
-import { parseConfig } from '@/lib/json-converter';
+import useConfig from '@/hooks/use-config';
 import { useGetLayersId } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 import { Config, LayerTyped } from '@/types/layers';
@@ -30,6 +30,23 @@ const LayerManagerItem = ({ id, beforeId, settings }: LayerManagerItemProps) => 
   const [, setLayersInteractive] = useAtom(layersInteractiveAtom);
   const [, setLayersInteractiveIds] = useAtom(layersInteractiveIdsAtom);
   const { locationCode = 'GLOB' } = useParams();
+
+  const { type, config, params_config } =
+    (data?.data?.attributes as LayerTyped) ?? ({} as LayerTyped);
+
+  const configParams = useMemo(
+    () => ({
+      config,
+      params_config,
+      settings: {
+        ...settings,
+        location: locationCode,
+      },
+    }),
+    [config, locationCode, params_config, settings]
+  );
+
+  const parsedConfig = useConfig(configParams);
 
   const handleAddMapboxLayer = useCallback(
     ({ styles }: Config) => {
@@ -63,29 +80,16 @@ const LayerManagerItem = ({ id, beforeId, settings }: LayerManagerItemProps) => 
     [data?.data?.attributes, id, setLayersInteractive, setLayersInteractiveIds]
   );
 
-  if (!data?.data?.attributes) return null;
-
-  const { type } = data.data.attributes as LayerTyped;
+  if (!parsedConfig) {
+    return null;
+  }
 
   if (type === 'mapbox') {
-    const { config, params_config } = data.data.attributes;
-
-    const c = parseConfig<Config>({
-      config,
-      params_config,
-      settings: {
-        ...settings,
-        location: locationCode,
-      },
-    });
-
-    if (!c) return null;
-
     return (
       <MapboxLayer
         id={`${id}-layer`}
         beforeId={beforeId}
-        config={c}
+        config={parsedConfig as Config}
         onAdd={handleAddMapboxLayer}
         onRemove={handleRemoveMapboxLayer}
       />
@@ -93,16 +97,10 @@ const LayerManagerItem = ({ id, beforeId, settings }: LayerManagerItemProps) => 
   }
 
   if (type === 'deckgl') {
-    const { config, params_config } = data.data.attributes;
-    const c = parseConfig({
-      // TODO: type
-      config,
-      params_config,
-      settings,
-    });
-
-    return <DeckJsonLayer id={`${id}-layer`} beforeId={beforeId} config={c} />;
+    return <DeckJsonLayer id={`${id}-layer`} beforeId={beforeId} config={parsedConfig} />;
   }
+
+  return null;
 };
 
 export default LayerManagerItem;

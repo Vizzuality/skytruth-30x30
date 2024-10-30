@@ -5,8 +5,8 @@ import Icon from '@/components/ui/icon';
 import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
+import useConfig from '@/hooks/use-config';
 import { cn } from '@/lib/classnames';
-import { parseConfig } from '@/lib/json-converter';
 import CircleWithDottedRedStrokeIcon from '@/styles/icons/circle-with-dotted-red-stroke.svg';
 import CircleWithFillIcon from '@/styles/icons/circle-with-fill.svg';
 import CircleWithoutFillIcon from '@/styles/icons/circle-without-fill.svg';
@@ -34,21 +34,26 @@ const ICONS_MAPPING = {
 const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
   const { type, items } = config || {};
 
-  const LEGEND_ITEM_COMPONENT = useMemo(() => {
-    const l = parseConfig<LegendConfig | ReactElement | null>({
+  const configParams = useMemo(
+    () => ({
       config,
       params_config: [],
       settings: {},
-    });
+    }),
+    [config]
+  );
 
-    if (!l) return null;
+  const parsedConfig = useConfig<LegendConfig | ReactElement>(configParams);
 
-    if (isValidElement(l)) {
-      return l;
+  const LEGEND_ITEM_COMPONENT = useMemo(() => {
+    if (!parsedConfig) return null;
+
+    if (isValidElement(parsedConfig)) {
+      return parsedConfig;
     }
 
     return null;
-  }, [config]);
+  }, [parsedConfig]);
 
   switch (type) {
     case 'basic':
