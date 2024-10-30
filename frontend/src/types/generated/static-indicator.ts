@@ -51,7 +51,7 @@ export const getGetStaticIndicatorsQueryKey = (params?: GetStaticIndicatorsParam
 
 export const getGetStaticIndicatorsQueryOptions = <
   TData = Awaited<ReturnType<typeof getStaticIndicators>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetStaticIndicatorsParams,
   options?: {
@@ -80,7 +80,7 @@ export type GetStaticIndicatorsQueryError = ErrorType<Error>;
 
 export const useGetStaticIndicators = <
   TData = Awaited<ReturnType<typeof getStaticIndicators>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetStaticIndicatorsParams,
   options?: {
@@ -114,7 +114,7 @@ export const postStaticIndicators = (
 
 export const getPostStaticIndicatorsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postStaticIndicators>>,
@@ -183,7 +183,7 @@ export const getGetStaticIndicatorsIdQueryKey = (
 
 export const getGetStaticIndicatorsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getStaticIndicatorsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetStaticIndicatorsIdParams,
@@ -213,7 +213,7 @@ export type GetStaticIndicatorsIdQueryError = ErrorType<Error>;
 
 export const useGetStaticIndicatorsId = <
   TData = Awaited<ReturnType<typeof getStaticIndicatorsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetStaticIndicatorsIdParams,
@@ -249,7 +249,7 @@ export const putStaticIndicatorsId = (
 
 export const getPutStaticIndicatorsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putStaticIndicatorsId>>,
@@ -303,7 +303,7 @@ export const deleteStaticIndicatorsId = (id: number, options?: SecondParameter<t
 
 export const getDeleteStaticIndicatorsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteStaticIndicatorsId>>,
@@ -340,7 +340,7 @@ export type DeleteStaticIndicatorsIdMutationError = ErrorType<Error>;
 
 export const useDeleteStaticIndicatorsId = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteStaticIndicatorsId>>,
@@ -372,7 +372,7 @@ export const postStaticIndicatorsIdLocalizations = (
 
 export const getPostStaticIndicatorsIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postStaticIndicatorsIdLocalizations>>,
@@ -410,7 +410,7 @@ export type PostStaticIndicatorsIdLocalizationsMutationError = ErrorType<Error>;
 
 export const usePostStaticIndicatorsIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postStaticIndicatorsIdLocalizations>>,

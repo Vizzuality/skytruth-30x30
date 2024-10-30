@@ -52,7 +52,7 @@ export const getGetFishingProtectionLevelsQueryKey = (
 
 export const getGetFishingProtectionLevelsQueryOptions = <
   TData = Awaited<ReturnType<typeof getFishingProtectionLevels>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetFishingProtectionLevelsParams,
   options?: {
@@ -82,7 +82,7 @@ export type GetFishingProtectionLevelsQueryError = ErrorType<Error>;
 
 export const useGetFishingProtectionLevels = <
   TData = Awaited<ReturnType<typeof getFishingProtectionLevels>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetFishingProtectionLevelsParams,
   options?: {
@@ -120,7 +120,7 @@ export const getGetFishingProtectionLevelsIdQueryKey = (
 
 export const getGetFishingProtectionLevelsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getFishingProtectionLevelsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetFishingProtectionLevelsIdParams,
@@ -155,7 +155,7 @@ export type GetFishingProtectionLevelsIdQueryError = ErrorType<Error>;
 
 export const useGetFishingProtectionLevelsId = <
   TData = Awaited<ReturnType<typeof getFishingProtectionLevelsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetFishingProtectionLevelsIdParams,
@@ -195,7 +195,7 @@ export const postFishingProtectionLevelsIdLocalizations = (
 
 export const getPostFishingProtectionLevelsIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postFishingProtectionLevelsIdLocalizations>>,
@@ -233,7 +233,7 @@ export type PostFishingProtectionLevelsIdLocalizationsMutationError = ErrorType<
 
 export const usePostFishingProtectionLevelsIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postFishingProtectionLevelsIdLocalizations>>,

@@ -48,7 +48,7 @@ export const getGetFishingProtectionLevelStatsQueryKey = (
 
 export const getGetFishingProtectionLevelStatsQueryOptions = <
   TData = Awaited<ReturnType<typeof getFishingProtectionLevelStats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetFishingProtectionLevelStatsParams,
   options?: {
@@ -82,7 +82,7 @@ export type GetFishingProtectionLevelStatsQueryError = ErrorType<Error>;
 
 export const useGetFishingProtectionLevelStats = <
   TData = Awaited<ReturnType<typeof getFishingProtectionLevelStats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetFishingProtectionLevelStatsParams,
   options?: {
@@ -124,7 +124,7 @@ export const getGetFishingProtectionLevelStatsIdQueryKey = (
 
 export const getGetFishingProtectionLevelStatsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getFishingProtectionLevelStatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetFishingProtectionLevelStatsIdParams,
@@ -160,7 +160,7 @@ export type GetFishingProtectionLevelStatsIdQueryError = ErrorType<Error>;
 
 export const useGetFishingProtectionLevelStatsId = <
   TData = Awaited<ReturnType<typeof getFishingProtectionLevelStatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetFishingProtectionLevelStatsIdParams,

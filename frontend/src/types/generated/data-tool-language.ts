@@ -51,7 +51,7 @@ export const getGetDataToolLanguagesQueryKey = (params?: GetDataToolLanguagesPar
 
 export const getGetDataToolLanguagesQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataToolLanguages>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataToolLanguagesParams,
   options?: {
@@ -80,7 +80,7 @@ export type GetDataToolLanguagesQueryError = ErrorType<Error>;
 
 export const useGetDataToolLanguages = <
   TData = Awaited<ReturnType<typeof getDataToolLanguages>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataToolLanguagesParams,
   options?: {
@@ -114,7 +114,7 @@ export const postDataToolLanguages = (
 
 export const getPostDataToolLanguagesMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolLanguages>>,
@@ -183,7 +183,7 @@ export const getGetDataToolLanguagesIdQueryKey = (
 
 export const getGetDataToolLanguagesIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataToolLanguagesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataToolLanguagesIdParams,
@@ -213,7 +213,7 @@ export type GetDataToolLanguagesIdQueryError = ErrorType<Error>;
 
 export const useGetDataToolLanguagesId = <
   TData = Awaited<ReturnType<typeof getDataToolLanguagesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataToolLanguagesIdParams,
@@ -249,7 +249,7 @@ export const putDataToolLanguagesId = (
 
 export const getPutDataToolLanguagesIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putDataToolLanguagesId>>,
@@ -303,7 +303,7 @@ export const deleteDataToolLanguagesId = (id: number, options?: SecondParameter<
 
 export const getDeleteDataToolLanguagesIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteDataToolLanguagesId>>,
@@ -340,7 +340,7 @@ export type DeleteDataToolLanguagesIdMutationError = ErrorType<Error>;
 
 export const useDeleteDataToolLanguagesId = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteDataToolLanguagesId>>,
@@ -372,7 +372,7 @@ export const postDataToolLanguagesIdLocalizations = (
 
 export const getPostDataToolLanguagesIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolLanguagesIdLocalizations>>,
@@ -410,7 +410,7 @@ export type PostDataToolLanguagesIdLocalizationsMutationError = ErrorType<Error>
 
 export const usePostDataToolLanguagesIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolLanguagesIdLocalizations>>,

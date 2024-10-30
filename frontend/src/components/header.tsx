@@ -176,7 +176,7 @@ const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
                             href={href}
                             as={as}
                             className={cn(
-                              'group -mx-3 block px-3 py-2  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+                              'group -mx-3 block px-3 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
                               buttonVariants({ theme })
                             )}
                             activeClassName="is-active"
@@ -213,7 +213,7 @@ const Header: FCWithMessages<HeaderProps> = ({ theme, hideLogo = false }) => {
                 <Icon
                   icon={ArrowRight}
                   className={cn(
-                    'mr-2.5 -mt-1 hidden w-5 fill-black group-[.is-active]:inline-block',
+                    '-mt-1 mr-2.5 hidden w-5 fill-black group-[.is-active]:inline-block',
                     colorClassName
                   )}
                 />

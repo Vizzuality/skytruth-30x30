@@ -48,7 +48,7 @@ export const getGetDatasetsQueryKey = (params?: GetDatasetsParams) => {
 
 export const getGetDatasetsQueryOptions = <
   TData = Awaited<ReturnType<typeof getDatasets>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDatasetsParams,
   options?: {
@@ -75,7 +75,7 @@ export type GetDatasetsQueryError = ErrorType<Error>;
 
 export const useGetDatasets = <
   TData = Awaited<ReturnType<typeof getDatasets>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDatasetsParams,
   options?: {
@@ -109,7 +109,7 @@ export const postDatasets = (
 
 export const getPostDatasetsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDatasets>>,
@@ -170,7 +170,7 @@ export const getGetDatasetsIdQueryKey = (id: number, params?: GetDatasetsIdParam
 
 export const getGetDatasetsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getDatasetsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDatasetsIdParams,
@@ -198,7 +198,7 @@ export type GetDatasetsIdQueryError = ErrorType<Error>;
 
 export const useGetDatasetsId = <
   TData = Awaited<ReturnType<typeof getDatasetsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDatasetsIdParams,
@@ -234,7 +234,7 @@ export const putDatasetsId = (
 
 export const getPutDatasetsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putDatasetsId>>,
@@ -286,7 +286,7 @@ export const deleteDatasetsId = (id: number, options?: SecondParameter<typeof AP
 
 export const getDeleteDatasetsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteDatasetsId>>,
@@ -352,7 +352,7 @@ export const postDatasetsIdLocalizations = (
 
 export const getPostDatasetsIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDatasetsIdLocalizations>>,
@@ -389,7 +389,7 @@ export type PostDatasetsIdLocalizationsMutationError = ErrorType<Error>;
 
 export const usePostDatasetsIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDatasetsIdLocalizations>>,

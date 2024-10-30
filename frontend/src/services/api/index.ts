@@ -4,6 +4,7 @@ export const AXIOS_INSTANCE = Axios.create({ baseURL: process.env.NEXT_PUBLIC_AP
 
 // add a second `options` argument here if you want to pass extra options to each generated query
 export const API = <T>(config: AxiosRequestConfig, options?: AxiosRequestConfig): Promise<T> => {
+  // eslint-disable-next-line import/no-named-as-default-member
   const source = Axios.CancelToken.source();
   const promise = AXIOS_INSTANCE({
     ...config,

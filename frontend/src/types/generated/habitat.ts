@@ -47,7 +47,7 @@ export const getGetHabitatsQueryKey = (params?: GetHabitatsParams) => {
 
 export const getGetHabitatsQueryOptions = <
   TData = Awaited<ReturnType<typeof getHabitats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetHabitatsParams,
   options?: {
@@ -74,7 +74,7 @@ export type GetHabitatsQueryError = ErrorType<Error>;
 
 export const useGetHabitats = <
   TData = Awaited<ReturnType<typeof getHabitats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetHabitatsParams,
   options?: {
@@ -106,7 +106,7 @@ export const getGetHabitatsIdQueryKey = (id: number, params?: GetHabitatsIdParam
 
 export const getGetHabitatsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getHabitatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetHabitatsIdParams,
@@ -134,7 +134,7 @@ export type GetHabitatsIdQueryError = ErrorType<Error>;
 
 export const useGetHabitatsId = <
   TData = Awaited<ReturnType<typeof getHabitatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetHabitatsIdParams,
@@ -170,7 +170,7 @@ export const postHabitatsIdLocalizations = (
 
 export const getPostHabitatsIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postHabitatsIdLocalizations>>,
@@ -207,7 +207,7 @@ export type PostHabitatsIdLocalizationsMutationError = ErrorType<Error>;
 
 export const usePostHabitatsIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postHabitatsIdLocalizations>>,

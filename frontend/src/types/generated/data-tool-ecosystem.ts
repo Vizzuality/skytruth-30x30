@@ -51,7 +51,7 @@ export const getGetDataToolEcosystemsQueryKey = (params?: GetDataToolEcosystemsP
 
 export const getGetDataToolEcosystemsQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataToolEcosystems>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataToolEcosystemsParams,
   options?: {
@@ -80,7 +80,7 @@ export type GetDataToolEcosystemsQueryError = ErrorType<Error>;
 
 export const useGetDataToolEcosystems = <
   TData = Awaited<ReturnType<typeof getDataToolEcosystems>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataToolEcosystemsParams,
   options?: {
@@ -114,7 +114,7 @@ export const postDataToolEcosystems = (
 
 export const getPostDataToolEcosystemsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolEcosystems>>,
@@ -183,7 +183,7 @@ export const getGetDataToolEcosystemsIdQueryKey = (
 
 export const getGetDataToolEcosystemsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataToolEcosystemsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataToolEcosystemsIdParams,
@@ -214,7 +214,7 @@ export type GetDataToolEcosystemsIdQueryError = ErrorType<Error>;
 
 export const useGetDataToolEcosystemsId = <
   TData = Awaited<ReturnType<typeof getDataToolEcosystemsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataToolEcosystemsIdParams,
@@ -250,7 +250,7 @@ export const putDataToolEcosystemsId = (
 
 export const getPutDataToolEcosystemsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putDataToolEcosystemsId>>,
@@ -287,7 +287,7 @@ export type PutDataToolEcosystemsIdMutationError = ErrorType<Error>;
 
 export const usePutDataToolEcosystemsId = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putDataToolEcosystemsId>>,
@@ -307,7 +307,7 @@ export const deleteDataToolEcosystemsId = (id: number, options?: SecondParameter
 
 export const getDeleteDataToolEcosystemsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteDataToolEcosystemsId>>,
@@ -344,7 +344,7 @@ export type DeleteDataToolEcosystemsIdMutationError = ErrorType<Error>;
 
 export const useDeleteDataToolEcosystemsId = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteDataToolEcosystemsId>>,
@@ -376,7 +376,7 @@ export const postDataToolEcosystemsIdLocalizations = (
 
 export const getPostDataToolEcosystemsIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolEcosystemsIdLocalizations>>,
@@ -414,7 +414,7 @@ export type PostDataToolEcosystemsIdLocalizationsMutationError = ErrorType<Error
 
 export const usePostDataToolEcosystemsIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolEcosystemsIdLocalizations>>,

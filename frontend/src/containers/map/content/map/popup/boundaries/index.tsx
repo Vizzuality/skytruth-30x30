@@ -247,7 +247,7 @@ const BoundariesPopup: FCWithMessages<{ layerId: number }> = ({ layerId }) => {
           </div>
           <button
             type="button"
-            className="mt-3 block w-full border border-black py-2.5 px-4 text-center font-mono text-xs"
+            className="mt-3 block w-full border border-black px-4 py-2.5 text-center font-mono text-xs"
             onClick={handleLocationSelected}
           >
             {t(POPUP_BUTTON_CONTENT_BY_SOURCE[source?.['id']])}

@@ -49,7 +49,7 @@ export const getGetContactDetailQueryKey = (params?: GetContactDetailParams) => 
 
 export const getGetContactDetailQueryOptions = <
   TData = Awaited<ReturnType<typeof getContactDetail>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetContactDetailParams,
   options?: {
@@ -76,7 +76,7 @@ export type GetContactDetailQueryError = ErrorType<Error>;
 
 export const useGetContactDetail = <
   TData = Awaited<ReturnType<typeof getContactDetail>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetContactDetailParams,
   options?: {
@@ -110,7 +110,7 @@ export const putContactDetail = (
 
 export const getPutContactDetailMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putContactDetail>>,
@@ -165,7 +165,7 @@ export const deleteContactDetail = (options?: SecondParameter<typeof API>) => {
 export const getDeleteContactDetailMutationOptions = <
   TError = ErrorType<Error>,
   TVariables = void,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteContactDetail>>,
@@ -201,7 +201,7 @@ export type DeleteContactDetailMutationError = ErrorType<Error>;
 export const useDeleteContactDetail = <
   TError = ErrorType<Error>,
   TVariables = void,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteContactDetail>>,
@@ -232,7 +232,7 @@ export const postContactDetailLocalizations = (
 
 export const getPostContactDetailLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postContactDetailLocalizations>>,
@@ -269,7 +269,7 @@ export type PostContactDetailLocalizationsMutationError = ErrorType<Error>;
 
 export const usePostContactDetailLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postContactDetailLocalizations>>,

@@ -119,7 +119,7 @@ const GenericPopup: FCWithMessages<InteractionConfig & { layerId: number }> = ({
   return (
     <>
       <div className="space-y-2">
-        {name && <h3 className="text-xl font-semibold line-clamp-2">{DATA?.[name.key]}</h3>}
+        {name && <h3 className="line-clamp-2 text-xl font-semibold">{DATA?.[name.key]}</h3>}
         <dl className="space-y-2">
           {restValues.map(({ key, label, format: customFormat }) => (
             <div key={key}>

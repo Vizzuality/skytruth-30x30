@@ -36,7 +36,7 @@ const ChartLegend: FCWithMessages<ChartLegendProps> = ({
   );
 
   return (
-    <div className="mt-2 ml-8 flex flex-wrap justify-between gap-3">
+    <div className="ml-8 mt-2 flex flex-wrap justify-between gap-3">
       <span className="inline-flex items-center gap-3">
         <span className="block w-10 border-b border-violet"></span>
         <span>{t('historical-trend')}</span>

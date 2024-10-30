@@ -3,8 +3,7 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 
 import { AccessorKeyColumnDef, PaginationState, SortingState } from '@tanstack/react-table';
-import { useLocale } from 'next-intl';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import FiltersButton from '@/components/filters-button';
 import Icon from '@/components/ui/icon';

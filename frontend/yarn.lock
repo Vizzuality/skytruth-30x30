@@ -5440,6 +5440,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"autoprefixer@npm:10.4.14":
+  version: 10.4.14
+  resolution: "autoprefixer@npm:10.4.14"
+  dependencies:
+    browserslist: ^4.21.5
+    caniuse-lite: ^1.0.30001464
+    fraction.js: ^4.2.0
+    normalize-range: ^0.1.2
+    picocolors: ^1.0.0
+    postcss-value-parser: ^4.2.0
+  peerDependencies:
+    postcss: ^8.1.0
+  bin:
+    autoprefixer: bin/autoprefixer
+  checksum: e9f18e664a4e4a54a8f4ec5f6b49ed228ec45afaa76efcae361c93721795dc5ab644f36d2fdfc0dea446b02a8067b9372f91542ea431994399e972781ed46d95
+  languageName: node
+  linkType: hard
+
 "available-typed-arrays@npm:^1.0.5":
   version: 1.0.5
   resolution: "available-typed-arrays@npm:1.0.5"
@@ -5593,6 +5611,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"browserslist@npm:^4.21.5":
+  version: 4.24.2
+  resolution: "browserslist@npm:4.24.2"
+  dependencies:
+    caniuse-lite: ^1.0.30001669
+    electron-to-chromium: ^1.5.41
+    node-releases: ^2.0.18
+    update-browserslist-db: ^1.1.1
+  bin:
+    browserslist: cli.js
+  checksum: cf64085f12132d38638f38937a255edb82c7551b164a98577b055dd79719187a816112f7b97b9739e400c4954cd66479c0d7a843cb816e346f4795dc24fd5d97
+  languageName: node
+  linkType: hard
+
 "buf-compare@npm:^1.0.0":
   version: 1.0.1
   resolution: "buf-compare@npm:1.0.1"
@@ -5721,6 +5753,13 @@ __metadata:
   version: 2.0.1
   resolution: "camelcase-css@npm:2.0.1"
   checksum: 1cec2b3b3dcb5026688a470b00299a8db7d904c4802845c353dbd12d9d248d3346949a814d83bfd988d4d2e5b9904c07efe76fecd195a1d4f05b543e7c0b56b1
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001669":
+  version: 1.0.30001675
+  resolution: "caniuse-lite@npm:1.0.30001675"
+  checksum: d1e20a445af355209a8795924e556ed97cd3e744ae0b09e27773a4dcf53e6531de9d206b0929bcbe62e5b69a555237a12c943edb48872803ef64cdb1877f47af
   languageName: node
   linkType: hard
 
@@ -6814,6 +6853,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"electron-to-chromium@npm:^1.5.41":
+  version: 1.5.49
+  resolution: "electron-to-chromium@npm:1.5.49"
+  checksum: 84d4fde02a6de9464f8de2933e2172253098bf219a368cfd0e1ec71b73f9c0800a9ddf7bfdf57408e5fedef858561eaaf4e30ebbf20d94244a6001d570ce07a9
+  languageName: node
+  linkType: hard
+
 "embla-carousel-react@npm:8.0.0":
   version: 8.0.0
   resolution: "embla-carousel-react@npm:8.0.0"
@@ -7380,6 +7426,13 @@ __metadata:
   version: 3.1.1
   resolution: "escalade@npm:3.1.1"
   checksum: a3e2a99f07acb74b3ad4989c48ca0c3140f69f923e56d0cba0526240ee470b91010f9d39001f2a4a313841d237ede70a729e92125191ba5d21e74b106800b133
+  languageName: node
+  linkType: hard
+
+"escalade@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "escalade@npm:3.2.0"
+  checksum: 47b029c83de01b0d17ad99ed766347b974b0d628e848de404018f3abee728e987da0d2d370ad4574aa3d5b5bfc368754fd085d69a30f8e75903486ec4b5b709e
   languageName: node
   linkType: hard
 
@@ -8109,6 +8162,13 @@ __metadata:
   version: 1.0.5
   resolution: "format-util@npm:1.0.5"
   checksum: 0c8622e54ad899ca184ff0b4999e9ff9567965051bade140911209d60554c2ea4d43075763c1cf574d2f740966afe46469c9284357919505cdddf1a0b65ff85c
+  languageName: node
+  linkType: hard
+
+"fraction.js@npm:^4.2.0":
+  version: 4.3.7
+  resolution: "fraction.js@npm:4.3.7"
+  checksum: e1553ae3f08e3ba0e8c06e43a3ab20b319966dfb7ddb96fd9b5d0ee11a66571af7f993229c88ebbb0d4a816eb813a24ed48207b140d442a8f76f33763b8d1f3f
   languageName: node
   linkType: hard
 
@@ -10768,6 +10828,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-releases@npm:^2.0.18":
+  version: 2.0.18
+  resolution: "node-releases@npm:2.0.18"
+  checksum: ef55a3d853e1269a6d6279b7692cd6ff3e40bc74947945101138745bfdc9a5edabfe72cb19a31a8e45752e1910c4c65c77d931866af6357f242b172b7283f5b3
+  languageName: node
+  linkType: hard
+
 "node-sarif-builder@npm:^2.0.3":
   version: 2.0.3
   resolution: "node-sarif-builder@npm:2.0.3"
@@ -10793,6 +10860,13 @@ __metadata:
   version: 3.0.0
   resolution: "normalize-path@npm:3.0.0"
   checksum: 88eeb4da891e10b1318c4b2476b6e2ecbeb5ff97d946815ffea7794c31a89017c70d7f34b3c2ebf23ef4e9fc9fb99f7dffe36da22011b5b5c6ffa34f4873ec20
+  languageName: node
+  linkType: hard
+
+"normalize-range@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "normalize-range@npm:0.1.2"
+  checksum: 9b2f14f093593f367a7a0834267c24f3cb3e887a2d9809c77d8a7e5fd08738bcd15af46f0ab01cc3a3d660386f015816b5c922cea8bf2ee79777f40874063184
   languageName: node
   linkType: hard
 
@@ -11496,7 +11570,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-value-parser@npm:^4.0.0":
+"postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
   checksum: 819ffab0c9d51cf0acbabf8996dffbfafbafa57afc0e4c98db88b67f2094cb44488758f06e5da95d7036f19556a4a732525e84289a425f4f6fd8e412a9d7442f
@@ -12792,6 +12866,7 @@ __metadata:
     "@types/recharts": ^1.8.26
     "@typescript-eslint/eslint-plugin": 8.9.0
     "@typescript-eslint/parser": 8.9.0
+    autoprefixer: 10.4.14
     axios: 1.5.1
     class-variance-authority: ^0.7.0
     clsx: ^2.0.0
@@ -14048,6 +14123,20 @@ __metadata:
     has-value: ^0.3.1
     isobject: ^3.0.0
   checksum: 5990ecf660672be2781fc9fb322543c4aa592b68ed9a3312fa4df0e9ba709d42e823af090fc8f95775b4cd2c9a5169f7388f0cec39238b6d0d55a69fc2ab6b29
+  languageName: node
+  linkType: hard
+
+"update-browserslist-db@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "update-browserslist-db@npm:1.1.1"
+  dependencies:
+    escalade: ^3.2.0
+    picocolors: ^1.1.0
+  peerDependencies:
+    browserslist: ">= 4.21.0"
+  bin:
+    update-browserslist-db: cli.js
+  checksum: 2ea11bd2562122162c3e438d83a1f9125238c0844b6d16d366e3276d0c0acac6036822dc7df65fc5a89c699cdf9f174acf439c39bedf3f9a2f3983976e4b4c3e
   languageName: node
   linkType: hard
 

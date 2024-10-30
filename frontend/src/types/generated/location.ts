@@ -43,7 +43,7 @@ export const getGetLocationsQueryKey = (params?: GetLocationsParams) => {
 
 export const getGetLocationsQueryOptions = <
   TData = Awaited<ReturnType<typeof getLocations>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetLocationsParams,
   options?: {
@@ -70,7 +70,7 @@ export type GetLocationsQueryError = ErrorType<Error>;
 
 export const useGetLocations = <
   TData = Awaited<ReturnType<typeof getLocations>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetLocationsParams,
   options?: {
@@ -102,7 +102,7 @@ export const getGetLocationsIdQueryKey = (id: number, params?: GetLocationsIdPar
 
 export const getGetLocationsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getLocationsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetLocationsIdParams,
@@ -130,7 +130,7 @@ export type GetLocationsIdQueryError = ErrorType<Error>;
 
 export const useGetLocationsId = <
   TData = Awaited<ReturnType<typeof getLocationsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetLocationsIdParams,

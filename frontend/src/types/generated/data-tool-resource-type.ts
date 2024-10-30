@@ -51,7 +51,7 @@ export const getGetDataToolResourceTypesQueryKey = (params?: GetDataToolResource
 
 export const getGetDataToolResourceTypesQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataToolResourceTypes>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataToolResourceTypesParams,
   options?: {
@@ -81,7 +81,7 @@ export type GetDataToolResourceTypesQueryError = ErrorType<Error>;
 
 export const useGetDataToolResourceTypes = <
   TData = Awaited<ReturnType<typeof getDataToolResourceTypes>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetDataToolResourceTypesParams,
   options?: {
@@ -115,7 +115,7 @@ export const postDataToolResourceTypes = (
 
 export const getPostDataToolResourceTypesMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolResourceTypes>>,
@@ -152,7 +152,7 @@ export type PostDataToolResourceTypesMutationError = ErrorType<Error>;
 
 export const usePostDataToolResourceTypes = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolResourceTypes>>,
@@ -187,7 +187,7 @@ export const getGetDataToolResourceTypesIdQueryKey = (
 
 export const getGetDataToolResourceTypesIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getDataToolResourceTypesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataToolResourceTypesIdParams,
@@ -218,7 +218,7 @@ export type GetDataToolResourceTypesIdQueryError = ErrorType<Error>;
 
 export const useGetDataToolResourceTypesId = <
   TData = Awaited<ReturnType<typeof getDataToolResourceTypesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetDataToolResourceTypesIdParams,
@@ -254,7 +254,7 @@ export const putDataToolResourceTypesId = (
 
 export const getPutDataToolResourceTypesIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putDataToolResourceTypesId>>,
@@ -291,7 +291,7 @@ export type PutDataToolResourceTypesIdMutationError = ErrorType<Error>;
 
 export const usePutDataToolResourceTypesId = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putDataToolResourceTypesId>>,
@@ -314,7 +314,7 @@ export const deleteDataToolResourceTypesId = (
 
 export const getDeleteDataToolResourceTypesIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteDataToolResourceTypesId>>,
@@ -351,7 +351,7 @@ export type DeleteDataToolResourceTypesIdMutationError = ErrorType<Error>;
 
 export const useDeleteDataToolResourceTypesId = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteDataToolResourceTypesId>>,
@@ -383,7 +383,7 @@ export const postDataToolResourceTypesIdLocalizations = (
 
 export const getPostDataToolResourceTypesIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolResourceTypesIdLocalizations>>,
@@ -421,7 +421,7 @@ export type PostDataToolResourceTypesIdLocalizationsMutationError = ErrorType<Er
 
 export const usePostDataToolResourceTypesIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postDataToolResourceTypesIdLocalizations>>,

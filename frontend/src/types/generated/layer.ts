@@ -48,7 +48,7 @@ export const getGetLayersQueryKey = (params?: GetLayersParams) => {
 
 export const getGetLayersQueryOptions = <
   TData = Awaited<ReturnType<typeof getLayers>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetLayersParams,
   options?: {
@@ -75,7 +75,7 @@ export type GetLayersQueryError = ErrorType<Error>;
 
 export const useGetLayers = <
   TData = Awaited<ReturnType<typeof getLayers>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetLayersParams,
   options?: {
@@ -109,7 +109,7 @@ export const postLayers = (
 
 export const getPostLayersMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postLayers>>,
@@ -170,7 +170,7 @@ export const getGetLayersIdQueryKey = (id: number, params?: GetLayersIdParams) =
 
 export const getGetLayersIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getLayersId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetLayersIdParams,
@@ -198,7 +198,7 @@ export type GetLayersIdQueryError = ErrorType<Error>;
 
 export const useGetLayersId = <
   TData = Awaited<ReturnType<typeof getLayersId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetLayersIdParams,
@@ -234,7 +234,7 @@ export const putLayersId = (
 
 export const getPutLayersIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putLayersId>>,
@@ -286,7 +286,7 @@ export const deleteLayersId = (id: number, options?: SecondParameter<typeof API>
 
 export const getDeleteLayersIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteLayersId>>,
@@ -349,7 +349,7 @@ export const postLayersIdLocalizations = (
 
 export const getPostLayersIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postLayersIdLocalizations>>,
@@ -386,7 +386,7 @@ export type PostLayersIdLocalizationsMutationError = ErrorType<Error>;
 
 export const usePostLayersIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postLayersIdLocalizations>>,
