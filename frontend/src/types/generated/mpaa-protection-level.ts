@@ -50,7 +50,7 @@ export const getGetMpaaProtectionLevelsQueryKey = (params?: GetMpaaProtectionLev
 
 export const getGetMpaaProtectionLevelsQueryOptions = <
   TData = Awaited<ReturnType<typeof getMpaaProtectionLevels>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetMpaaProtectionLevelsParams,
   options?: {
@@ -80,7 +80,7 @@ export type GetMpaaProtectionLevelsQueryError = ErrorType<Error>;
 
 export const useGetMpaaProtectionLevels = <
   TData = Awaited<ReturnType<typeof getMpaaProtectionLevels>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetMpaaProtectionLevelsParams,
   options?: {
@@ -118,7 +118,7 @@ export const getGetMpaaProtectionLevelsIdQueryKey = (
 
 export const getGetMpaaProtectionLevelsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getMpaaProtectionLevelsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetMpaaProtectionLevelsIdParams,
@@ -149,7 +149,7 @@ export type GetMpaaProtectionLevelsIdQueryError = ErrorType<Error>;
 
 export const useGetMpaaProtectionLevelsId = <
   TData = Awaited<ReturnType<typeof getMpaaProtectionLevelsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetMpaaProtectionLevelsIdParams,
@@ -185,7 +185,7 @@ export const postMpaaProtectionLevelsIdLocalizations = (
 
 export const getPostMpaaProtectionLevelsIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postMpaaProtectionLevelsIdLocalizations>>,
@@ -223,7 +223,7 @@ export type PostMpaaProtectionLevelsIdLocalizationsMutationError = ErrorType<Err
 
 export const usePostMpaaProtectionLevelsIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postMpaaProtectionLevelsIdLocalizations>>,

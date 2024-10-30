@@ -7,8 +7,7 @@ import ConservationChart from '@/components/charts/conservation-chart';
 import { Button } from '@/components/ui/button';
 import Widget from '@/components/widget';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
-import { formatKM } from '@/lib/utils/formats';
-import { formatPercentage } from '@/lib/utils/formats';
+import { formatKM, formatPercentage } from '@/lib/utils/formats';
 import { FCWithMessages } from '@/types';
 import { useGetDataInfos } from '@/types/generated/data-info';
 import { useGetProtectionCoverageStats } from '@/types/generated/protection-coverage-stat';
@@ -178,7 +177,7 @@ const MarineConservationWidget: FCWithMessages<MarineConservationWidgetProps> = 
       sources={metadata?.sources}
     >
       {stats && (
-        <div className="mt-6 mb-4 flex flex-col">
+        <div className="mb-4 mt-6 flex flex-col">
           <span className="space-x-1">
             {t.rich('marine-protected-percentage', {
               b1: (chunks) => <span className="text-[64px] font-bold leading-[90%]">{chunks}</span>,

@@ -46,7 +46,7 @@ export const getGetHabitatStatsQueryKey = (params?: GetHabitatStatsParams) => {
 
 export const getGetHabitatStatsQueryOptions = <
   TData = Awaited<ReturnType<typeof getHabitatStats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetHabitatStatsParams,
   options?: {
@@ -73,7 +73,7 @@ export type GetHabitatStatsQueryError = ErrorType<Error>;
 
 export const useGetHabitatStats = <
   TData = Awaited<ReturnType<typeof getHabitatStats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetHabitatStatsParams,
   options?: {
@@ -108,7 +108,7 @@ export const getGetHabitatStatsIdQueryKey = (id: number, params?: GetHabitatStat
 
 export const getGetHabitatStatsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getHabitatStatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetHabitatStatsIdParams,
@@ -138,7 +138,7 @@ export type GetHabitatStatsIdQueryError = ErrorType<Error>;
 
 export const useGetHabitatStatsId = <
   TData = Awaited<ReturnType<typeof getHabitatStatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetHabitatStatsIdParams,

@@ -134,7 +134,7 @@ const MapTable: MapTableProps<unknown> = <TData,>({
                       key={row.id}
                       className={cn({
                         relative: true,
-                        ' after:absolute after:-bottom-px after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-black':
+                        'after:absolute after:-bottom-px after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-black':
                           isLastSubRow,
                       })}
                     >
@@ -149,8 +149,8 @@ const MapTable: MapTableProps<unknown> = <TData,>({
                             key={cell.id}
                             className={cn({
                               'overflow-hidden whitespace-normal py-5 pl-6': true,
-                              'px-6 ': !isMapColumn,
-                              '-mt-px -mb-px': isMapColumn,
+                              'px-6': !isMapColumn,
+                              '-mb-px -mt-px': isMapColumn,
                               'sticky left-0 border-r border-r-black bg-white pl-0 pr-5':
                                 isFirstColumn,
                               'pr-0': isLastColumn,

@@ -69,7 +69,7 @@ const MapSidebar: FCWithMessages<MapSidebarProps> = ({ type }) => {
             open={isLayersOpen}
             onOpenChange={setLayersOpen}
           >
-            <CollapsibleContent className="relative top-0 left-0 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-collapsible-left data-[state=open]:animate-collapsible-right">
+            <CollapsibleContent className="relative left-0 top-0 h-full flex-shrink-0 bg-white fill-mode-none data-[state=closed]:animate-collapsible-left data-[state=open]:animate-collapsible-right">
               <div className="h-full md:w-[280px]">
                 <LayersPanel />
               </div>
@@ -115,13 +115,13 @@ const MapSidebar: FCWithMessages<MapSidebarProps> = ({ type }) => {
           <Button
             type="button"
             variant="white"
-            className={cn('absolute bottom-0 h-10 border-l-0 px-1 !py-3', {
+            className={cn('absolute bottom-0 h-10 border-l-0 !py-3 px-1', {
               'hidden md:flex': true,
             })}
             onClick={() => setSidebarOpen(!isSidebarOpen)}
           >
             <LuChevronLeft
-              className={cn('-ml-px h-6 w-6', { 'rotate-180': !isSidebarOpen })}
+              className={cn('-ml-px h-5 w-5', { 'rotate-180': !isSidebarOpen })}
               aria-hidden
             />
             <span className="sr-only">{t('toggle-sidebar')}</span>

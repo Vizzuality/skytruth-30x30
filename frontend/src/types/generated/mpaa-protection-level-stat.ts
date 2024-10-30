@@ -48,7 +48,7 @@ export const getGetMpaaProtectionLevelStatsQueryKey = (
 
 export const getGetMpaaProtectionLevelStatsQueryOptions = <
   TData = Awaited<ReturnType<typeof getMpaaProtectionLevelStats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetMpaaProtectionLevelStatsParams,
   options?: {
@@ -78,7 +78,7 @@ export type GetMpaaProtectionLevelStatsQueryError = ErrorType<Error>;
 
 export const useGetMpaaProtectionLevelStats = <
   TData = Awaited<ReturnType<typeof getMpaaProtectionLevelStats>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetMpaaProtectionLevelStatsParams,
   options?: {
@@ -116,7 +116,7 @@ export const getGetMpaaProtectionLevelStatsIdQueryKey = (
 
 export const getGetMpaaProtectionLevelStatsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getMpaaProtectionLevelStatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetMpaaProtectionLevelStatsIdParams,
@@ -151,7 +151,7 @@ export type GetMpaaProtectionLevelStatsIdQueryError = ErrorType<Error>;
 
 export const useGetMpaaProtectionLevelStatsId = <
   TData = Awaited<ReturnType<typeof getMpaaProtectionLevelStatsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetMpaaProtectionLevelStatsIdParams,

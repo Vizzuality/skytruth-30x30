@@ -55,7 +55,7 @@ const CountriesList: FCWithMessages<CountriesListProps> = ({
           </span>
         ))}
         {!isListOpen && (
-          <span className="absolute right-0 -bottom-0.5 flex pl-2">
+          <span className="absolute -bottom-0.5 right-0 flex pl-2">
             <span className="block w-10 bg-gradient-to-l from-orange to-transparent" />
             <span className={cn('px-2', bgColorClassName)}>....</span>
             <span

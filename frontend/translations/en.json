@@ -257,7 +257,7 @@
       "terrestrial-conservation-coverage": "Terrestrial Conservation Coverage",
       "percentage": "{percentage}%",
       "percentage-bold": "<b1>{percentage}</b1><b2>%</b2>",
-      "protected-area": "{protectedArea} km² out of {totalArea} km²",
+      "protected-area": "{protectedArea} km² out of<br></br>{totalArea} km²",
       "open-country-insights": "Open country insights",
       "global-coverage": "Global coverage",
       "area-km2": "{area} km²",
@@ -361,7 +361,8 @@
     "chart-stacked-horizontal-bar": {
       "marine-protected-area": "{protectedArea} km² out of {totalArea} km²",
       "30%-target": "30% target",
-      "percentage": "{percentage}%"
+      "percentage": "{percentage}%",
+      "new-added-area": "{area} km² of new added area"
     },
     "tooltip-button": {
       "info": "Info",
@@ -375,6 +376,11 @@
     "map": {
       "zoom-in": "Zoom in",
       "zoom-out": "Zoom out"
+    },
+    "mobile-disclaimer-dialog": {
+      "page-optimized-for-desktop-viewing": "This page is optimized for desktop viewing.",
+      "please-visit-us-from-larger-screen": "For full functionality and a better experience, please visit us from a larger screen.",
+      "i-understand": "I understand"
     }
   }
 }

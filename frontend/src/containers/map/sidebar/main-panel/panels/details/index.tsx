@@ -101,7 +101,7 @@ const SidebarDetails: FCWithMessages = () => {
     <Tabs value={tab} onValueChange={handleTabChange} className="flex h-full w-full flex-col">
       <div
         className={cn({
-          'flex flex-shrink-0 gap-y-2 gap-x-5 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6':
+          'flex flex-shrink-0 gap-x-5 gap-y-2 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6':
             true,
           'flex-col': containerScroll === 0,
           'flex-row flex-wrap': containerScroll > 0,

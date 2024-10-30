@@ -19,14 +19,12 @@ import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
 import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
 import {
-  bboxLocationAtom,
   drawStateAtom,
-  layersAtom,
   layersInteractiveAtom,
   layersInteractiveIdsAtom,
   popupAtom,
-  sidebarAtom,
 } from '@/containers/map/store';
+import useMapBounds from '@/hooks/useMapBounds';
 import { FCWithMessages } from '@/types';
 import { useGetLayers } from '@/types/generated/layer';
 import { LayerTyped } from '@/types/layers';
@@ -39,19 +37,18 @@ const MainMap: FCWithMessages = () => {
   const locale = useLocale();
 
   const [{ bbox: URLBbox }, setMapSettings] = useSyncMapSettings();
-  const [, setMapLayers] = useSyncMapLayers();
+  const [mapLayers, setMapLayers] = useSyncMapLayers();
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
-  const isSidebarOpen = useAtomValue(sidebarAtom);
-  const isLayersPanelOpen = useAtomValue(layersAtom);
   const [popup, setPopup] = useAtom(popupAtom);
-  const bboxLocation = useAtomValue(bboxLocationAtom);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
   const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
   const mountedRef = useRef(false);
 
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
+
+  const bounds = useMapBounds();
 
   const { data: layersInteractiveData } = useGetLayers(
     {
@@ -90,12 +87,13 @@ const MainMap: FCWithMessages = () => {
     }
   );
 
-  // Once we have fetched from the CMS which layers are active by default, we set toggle them on
+  // Once we have fetched from the CMS which layers are active by default, we set toggle them on, if
+  // there are already no layers in the URL
   useEffect(() => {
-    if (defaultLayers) {
+    if (defaultLayers && mapLayers.length === 0) {
       setMapLayers(defaultLayers);
     }
-  }, [setMapLayers, defaultLayers]);
+  }, [mapLayers, setMapLayers, defaultLayers]);
 
   const safelyResetFeatureState = useCallback(() => {
     if (!hoveredPolygonId.current) {
@@ -232,37 +230,6 @@ const MainMap: FCWithMessages = () => {
 
     return DEFAULT_VIEW_STATE;
   }, [URLBbox]);
-
-  const bounds: ComponentProps<typeof Map>['bounds'] = useMemo(() => {
-    if (!mountedRef.current) {
-      return null;
-    }
-
-    const padding = 20;
-
-    let leftPadding = padding;
-    if (typeof window !== 'undefined' && window?.innerWidth > 430) {
-      if (isSidebarOpen) {
-        leftPadding += 460;
-      }
-
-      if (isLayersPanelOpen) {
-        leftPadding += 280;
-      }
-    }
-
-    return {
-      bbox: bboxLocation,
-      options: {
-        padding: {
-          top: padding,
-          bottom: padding,
-          left: leftPadding,
-          right: padding,
-        },
-      },
-    };
-  }, [bboxLocation, isSidebarOpen, isLayersPanelOpen]);
 
   useEffect(() => {
     setCursor(drawState.active ? 'crosshair' : 'grab');

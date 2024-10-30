@@ -1,6 +1,5 @@
 import { useAtom } from 'jotai';
-import { useLocale } from 'next-intl';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import FiltersButton from '@/components/filters-button';
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';

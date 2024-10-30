@@ -30,7 +30,7 @@ const ContactUsPage: FCWithMessages = () => {
               <span className="h-full w-full bg-contain bg-bottom md:bg-[url('/images/static-pages/bg-images/cta-3.png')] md:bg-no-repeat" />
             </div>
           </div>
-          <div className="overflow-y-scroll pb-10 md:-mr-4 md:pr-4 md:pl-2">
+          <div className="overflow-y-scroll pb-10 md:-mr-4 md:pl-2 md:pr-4">
             <ContactUsForm />
           </div>
         </div>

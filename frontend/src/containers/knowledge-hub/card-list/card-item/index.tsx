@@ -66,7 +66,7 @@ const CardItem: FCWithMessages<{
                 <Icon icon={WorldIcon} className="h-4 w-4" />
               </div>
               <div className="columns-auto">
-                <h5 className="font-bold ">{t('ecosystems')}</h5>
+                <h5 className="font-bold">{t('ecosystems')}</h5>
                 <span>
                   {data.attributes.data_tool_ecosystems.data
                     .map(({ attributes: { name } }) => name)
@@ -81,7 +81,7 @@ const CardItem: FCWithMessages<{
                 <Icon icon={WorldIcon} className="h-4 w-4" />
               </div>
               <div className="columns-auto">
-                <h5 className="font-bold ">{t('languages')}</h5>
+                <h5 className="font-bold">{t('languages')}</h5>
                 <span>
                   {data.attributes.languages.data
                     .map(({ attributes: { name } }) => name)

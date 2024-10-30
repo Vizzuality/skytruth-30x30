@@ -1,6 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { useTranslations } from 'next-intl';
-import { useLocale } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 import { cardFiltersAtom } from '@/containers/knowledge-hub/store';
 import { FCWithMessages } from '@/types';

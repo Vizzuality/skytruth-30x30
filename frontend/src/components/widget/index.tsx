@@ -67,7 +67,7 @@ const Widget: FCWithMessages<PropsWithChildren<WidgetProps>> = ({
   const showNoData = !loading && (noData || error);
 
   return (
-    <div className={cn('py-4 px-4 md:px-8', className)}>
+    <div className={cn('px-4 py-4 md:px-8', className)}>
       <div className="pt-2">
         <span className="flex items-baseline justify-between">
           {title && <h2 className="font-sans text-xl font-bold leading-tight">{title}</h2>}

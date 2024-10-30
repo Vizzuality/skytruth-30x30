@@ -121,7 +121,7 @@ const FiltersButton: FCWithMessages<FiltersButtonProps> = ({
                       onCheckedChange={(v) => handleOnCheckedChange(value, v)}
                     />
                     <label
-                      className="flex-grow cursor-pointer pt-px pl-2 text-xs leading-none text-black"
+                      className="flex-grow cursor-pointer pl-2 pt-px text-xs leading-none text-black"
                       htmlFor={value}
                     >
                       {name}
