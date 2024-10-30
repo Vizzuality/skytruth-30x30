@@ -1,4 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+import TailwindAnimate from 'tailwindcss-animate';
+import TailwindLineClamp from '@tailwindcss/line-clamp';
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -73,7 +75,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/line-clamp')],
+  plugins: [TailwindAnimate, TailwindLineClamp],
 };
 
 export default config;

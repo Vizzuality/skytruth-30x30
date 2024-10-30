@@ -78,6 +78,7 @@
     "tailwind-merge": "2.5.4",
     "tailwindcss": "3.4.14",
     "tailwindcss-animate": "1.0.7",
+    "typescript-eslint": "8.9.0",
     "zod": "3.22.4"
   },
   "devDependencies": {
@@ -87,21 +88,22 @@
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
     "@types/recharts": "^1.8.26",
-    "@typescript-eslint/eslint-plugin": "6.8.0",
-    "@typescript-eslint/parser": "6.8.0",
-    "autoprefixer": "10.4.14",
-    "eslint": "8.32.0",
-    "eslint-config-next": "13.2.4",
-    "eslint-config-prettier": "8.6.0",
-    "eslint-plugin-prettier": "4.2.1",
+    "@typescript-eslint/eslint-plugin": "8.9.0",
+    "@typescript-eslint/parser": "8.9.0",
+    "eslint": "8.57.0",
+    "eslint-config-next": "14.2.15",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-import-resolver-typescript": "3.6.3",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-prettier": "5.2.1",
     "husky": "6.0.0",
-    "prettier": "2.8.3",
+    "prettier": "3.3.3",
     "prettier-plugin-tailwindcss": "0.6.8",
     "start-server-and-test": "1.12.1",
     "svg-sprite-loader": "6.0.11",
     "svgo": "3.0.2",
     "svgo-loader": "3.0.3",
-    "typescript": "5.2.2"
+    "typescript": "5.6.3"
   },
   "husky": {
     "pre-commit": "yarn lint"
