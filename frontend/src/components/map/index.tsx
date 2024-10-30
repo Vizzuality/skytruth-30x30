@@ -139,21 +139,8 @@ export const Map: FC<CustomMapProps> = ({
           // Global Fishing Watch tilers require authorization token and we're also passing the past
           // 12 months as a parameter
           if (url.startsWith('https://gateway.api.globalfishingwatch.org/')) {
-            const endDate = new Date();
-            const startDate = new Date(endDate);
-            startDate.setMonth(endDate.getMonth() - 12);
-
-            const formatDate = (date: Date): string => {
-              return date.toISOString().split('T')[0];
-            };
-
-            const newURL = url.replace(
-              '{{LAST_YEAR}}',
-              `${formatDate(startDate)},${formatDate(endDate)}`
-            );
-
             return {
-              url: newURL,
+              url,
               headers: {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_GLOBAL_FISHING_WATCH_TOKEN}`,
               },

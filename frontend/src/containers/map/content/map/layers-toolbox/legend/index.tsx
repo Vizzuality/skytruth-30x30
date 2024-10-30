@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
@@ -25,7 +25,7 @@ import {
   LayerListResponseDataItem,
   LayerResponseDataObject,
 } from '@/types/generated/strapi.schemas';
-import { LayerTyped } from '@/types/layers';
+import { LayerTyped, ParamsConfig } from '@/types/layers';
 
 import LegendItem from './item';
 
@@ -43,7 +43,7 @@ const Legend: FCWithMessages = () => {
       sort: 'title:asc',
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      fields: ['title'],
+      fields: ['title', 'params_config'],
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       populate: {
@@ -147,18 +147,15 @@ const Legend: FCWithMessages = () => {
     [activeLayers, setMapLayers]
   );
 
-  return (
-    <div className="px-4 py-2">
-      {!layersQuery.data?.length && (
-        <p>
-          {t.rich('open-layers-to-add-to-map', {
-            b: (chunks) => <span className="text-sm font-black uppercase">{chunks}</span>,
-          })}
-        </p>
-      )}
-      {layersQuery.data?.length > 0 && (
-        <div>
-          {layersQuery.data?.map(({ id, attributes: { title, legend_config } }, index) => {
+  const legendItems = useMemo(() => {
+    if (!layersQuery.data?.length) {
+      return null;
+    }
+
+    return (
+      <div>
+        {layersQuery.data?.map(
+          ({ id, attributes: { title, legend_config, params_config } }, index) => {
             const isFirst = index === 0;
             const isLast = index + 1 === layersQuery.data.length;
 
@@ -274,13 +271,39 @@ const Legend: FCWithMessages = () => {
                   </TooltipProvider>
                 </div>
                 <div className="pt-1.5">
-                  <LegendItem config={legend_config as LayerTyped['legend_config']} />
+                  <LegendItem
+                    config={legend_config as LayerTyped['legend_config']}
+                    paramsConfig={params_config as ParamsConfig}
+                  />
                 </div>
               </div>
             );
+          }
+        )}
+      </div>
+    );
+  }, [
+    activeLayers.length,
+    layerSettings,
+    layersQuery.data,
+    onChangeLayerOpacity,
+    onMoveLayerDown,
+    onMoveLayerUp,
+    onRemoveLayer,
+    onToggleLayerVisibility,
+    t,
+  ]);
+
+  return (
+    <div className="px-4 py-2">
+      {!layersQuery.data?.length && (
+        <p>
+          {t.rich('open-layers-to-add-to-map', {
+            b: (chunks) => <span className="text-sm font-black uppercase">{chunks}</span>,
           })}
-        </div>
+        </p>
       )}
+      {legendItems}
     </div>
   );
 };

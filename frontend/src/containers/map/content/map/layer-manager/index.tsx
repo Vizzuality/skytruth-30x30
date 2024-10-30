@@ -1,4 +1,6 @@
-import { Layer } from 'react-map-gl';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { Layer, useMap } from 'react-map-gl';
 
 import { DeckMapboxOverlayProvider } from '@/components/map/provider';
 import { CustomMapProps } from '@/components/map/types';
@@ -8,12 +10,45 @@ import {
   useSyncMapLayers,
 } from '@/containers/map/content/map/sync-settings';
 
-const LayerManager = ({ cursor }: { cursor: CustomMapProps['cursor'] }) => {
+const LayerManager = ({}: { cursor: CustomMapProps['cursor'] }) => {
+  const { default: map } = useMap();
+
+  const [zoom, setZoom] = useState(map?.getZoom() ?? 1);
+
   const [activeLayers] = useSyncMapLayers();
   const [layersSettings] = useSyncMapLayerSettings();
 
+  const getSettings = useCallback(
+    (l: number) => ({
+      ...(layersSettings[l] ?? { opacity: 1, visibility: true, expand: true }),
+      zoom,
+    }),
+    [layersSettings, zoom]
+  );
+
+  const layerManagerItems = useMemo(
+    () =>
+      activeLayers.map((l, i) => {
+        const beforeId = i === 0 ? 'custom-layers' : `${activeLayers[i - 1]}-layer`;
+        return <LayerManagerItem key={l} id={l} beforeId={beforeId} settings={getSettings(l)} />;
+      }),
+    [activeLayers, getSettings]
+  );
+
+  useEffect(() => {
+    const onZoom = () => {
+      setZoom(map.getZoom());
+    };
+
+    map.on('zoomend', onZoom);
+
+    return () => {
+      map.off('zoomend', onZoom);
+    };
+  }, [map, setZoom]);
+
   return (
-    <DeckMapboxOverlayProvider cursor={cursor}>
+    <DeckMapboxOverlayProvider>
       <>
         {/*
           Generate all transparent backgrounds to be able to sort by layers without an error
@@ -36,17 +71,7 @@ const LayerManager = ({ cursor }: { cursor: CustomMapProps['cursor'] }) => {
           Loop through active layers. The id is gonna be used to fetch the current layer and know how to order the layers.
           The first item will always be at the top of the layers stack
         */}
-        {activeLayers.map((l, i) => {
-          const beforeId = i === 0 ? 'custom-layers' : `${activeLayers[i - 1]}-layer`;
-          return (
-            <LayerManagerItem
-              key={l}
-              id={l}
-              beforeId={beforeId}
-              settings={layersSettings[l] ?? { opacity: 1, visibility: true, expand: true }}
-            />
-          );
-        })}
+        {layerManagerItems}
       </>
     </DeckMapboxOverlayProvider>
   );
