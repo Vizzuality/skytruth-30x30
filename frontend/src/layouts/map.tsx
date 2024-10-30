@@ -8,6 +8,8 @@ import { useTranslations } from 'next-intl';
 
 import Head from '@/components/head';
 import Header from '@/components/header';
+import MobileDisclaimerDialogStatic from '@/components/mobile-disclaimer-dialog';
+import TerrestrialDataDisclaimerDialogStatic from '@/components/terrestrial-data-disclaimer-dialog';
 import Content from '@/containers/map/content';
 import Sidebar from '@/containers/map/sidebar';
 import {
@@ -16,6 +18,10 @@ import {
   terrestrialDataDisclaimerDialogAtom,
 } from '@/containers/map/store';
 import { FCWithMessages } from '@/types';
+
+const MobileDisclaimerDialog = dynamic(() => import('@/components/mobile-disclaimer-dialog'), {
+  ssr: false,
+});
 
 const TerrestrialDataDisclaimerDialog = dynamic(
   () => import('@/components/terrestrial-data-disclaimer-dialog'),
@@ -66,6 +72,7 @@ const MapLayout: FCWithMessages<PropsWithChildren<MapLayoutProps>> = ({
       {type === LAYOUT_TYPES.progress_tracker && terrestrialDataDisclaimerDialogOpen && (
         <TerrestrialDataDisclaimerDialog />
       )}
+      <MobileDisclaimerDialog />
       <div className="flex h-screen w-screen flex-col">
         <div className="flex-shrink-0">
           <Header />
@@ -87,6 +94,13 @@ const MapLayout: FCWithMessages<PropsWithChildren<MapLayoutProps>> = ({
   );
 };
 
-MapLayout.messages = ['layouts.map', ...Header.messages, ...Sidebar.messages, ...Content.messages];
+MapLayout.messages = [
+  'layouts.map',
+  ...Header.messages,
+  ...Sidebar.messages,
+  ...Content.messages,
+  ...TerrestrialDataDisclaimerDialogStatic.messages,
+  ...MobileDisclaimerDialogStatic.messages,
+];
 
 export default MapLayout;

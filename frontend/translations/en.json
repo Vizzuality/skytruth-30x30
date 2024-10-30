@@ -376,6 +376,11 @@
     "map": {
       "zoom-in": "Zoom in",
       "zoom-out": "Zoom out"
+    },
+    "mobile-disclaimer-dialog": {
+      "page-optimized-for-desktop-viewing": "This page is optimized for desktop viewing.",
+      "please-visit-us-from-larger-screen": "For full functionality and a better experience, please visit us from a larger screen.",
+      "i-understand": "I understand"
     }
   }
 }
