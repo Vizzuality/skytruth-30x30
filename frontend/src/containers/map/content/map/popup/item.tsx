@@ -5,7 +5,7 @@ import { useLocale } from 'next-intl';
 import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
-import useConfig from '@/hooks/use-config';
+import useResolvedConfig from '@/hooks/use-resolved-config';
 import { FCWithMessages } from '@/types';
 import { useGetLayersId } from '@/types/generated/layer';
 import { InteractionConfig, LayerTyped } from '@/types/layers';
@@ -39,7 +39,7 @@ const PopupItem: FCWithMessages<PopupItemProps> = ({ id }) => {
     [id, interaction_config, params_config]
   );
 
-  const parsedConfig = useConfig<InteractionConfig | ReactElement>(configParams);
+  const parsedConfig = useResolvedConfig<InteractionConfig | ReactElement>(configParams);
 
   const INTERACTION_COMPONENT = useMemo(() => {
     if (!parsedConfig) return null;

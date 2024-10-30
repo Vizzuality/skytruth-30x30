@@ -50,6 +50,7 @@ export const getParams = ({ params_config, settings = {} }: GetParamsProps) => {
   if (!params_config) {
     return {};
   }
+
   return params_config.reduce(
     (acc, p) => {
       return {
@@ -78,9 +79,56 @@ const createNewParamsConfigParam = async (
   };
 };
 
+/**
+ * Resolve the final params_config after creating any new eventual dynamic parameter
+ * @param params_config Initial params_config
+ * @param settings Values to replace the defaults of the parameters
+ */
+export const resolveParamsConfig = async (
+  params_config: ParamsConfig,
+  settings: Record<string, unknown>
+) => {
+  let finalParamsConfig = params_config;
+  const initParameter = finalParamsConfig.find(({ key }) => key === '_INIT_');
+
+  // If `initParameter` is defined, then we want to asynchronously create new parameters within `pc`
+  if (initParameter) {
+    const initParameterConfig = initParameter.default as Record<
+      string,
+      { ['@@function']: string; [attr: string]: unknown }
+    >;
+
+    const newParams: ParamsConfigValue[] = [];
+
+    for (const [name, attrs] of Object.entries(initParameterConfig)) {
+      const param = await createNewParamsConfigParam(
+        name,
+        attrs['@@function'],
+        Object.entries(attrs).reduce((res, [key, name]) => {
+          if (key === '@@function') {
+            return res;
+          }
+
+          return {
+            ...res,
+            [key]: getParams({ params_config: finalParamsConfig, settings })[
+              (name as string).replace('@@#params.', '')
+            ],
+          };
+        }, {})
+      );
+      newParams.push(param);
+    }
+
+    finalParamsConfig = [...finalParamsConfig, ...newParams];
+  }
+
+  return finalParamsConfig;
+};
+
 interface ParseConfigurationProps {
   config: unknown;
-  params_config: unknown;
+  params_config: ParamsConfig;
   settings: Record<string, unknown>;
 }
 
@@ -105,42 +153,10 @@ export const parseConfig = async <T>({
     configuration: JSON_CONFIGURATION,
   });
 
-  let pc = params_config as ParamsConfig;
-  const initParameter = pc.find(({ key }) => key === '_INIT_');
-
-  // If `initParameter` is defined, then we want to asynchronously create new parameters within `pc`
-  if (initParameter) {
-    const initParameterConfig = initParameter.default as Record<
-      string,
-      { ['@@function']: string; [attr: string]: unknown }
-    >;
-
-    const newParams: ParamsConfigValue[] = [];
-
-    for (const [name, attrs] of Object.entries(initParameterConfig)) {
-      const param = await createNewParamsConfigParam(
-        name,
-        attrs['@@function'],
-        Object.entries(attrs).reduce((res, [key, name]) => {
-          if (key === '@@function') {
-            return res;
-          }
-
-          return {
-            ...res,
-            [key]: getParams({ params_config: pc, settings })[
-              (name as string).replace('@@#params.', '')
-            ],
-          };
-        }, {})
-      );
-      newParams.push(param);
-    }
-
-    pc = [...pc, ...newParams];
-  }
-
-  const params = getParams({ params_config: pc, settings });
+  const params = getParams({
+    params_config: await resolveParamsConfig(params_config, settings),
+    settings,
+  });
 
   // Merge enumerations with config
   JSON_CONVERTER.mergeConfiguration({

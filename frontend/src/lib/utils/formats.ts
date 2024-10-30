@@ -32,6 +32,11 @@ export function formatPercentage(
   return v.format(displayPercentageSign ? value / 100 : value);
 }
 
+export function formatNumber(locale: string, value: number, options?: Intl.NumberFormatOptions) {
+  const formatter = Intl.NumberFormat(locale === 'en' ? 'en-US' : locale, options);
+  return formatter.format(value);
+}
+
 export function formatKM(locale: string, value: number, options?: Intl.NumberFormatOptions) {
   if (value < 1 && value > 0) return '<1';
 
@@ -49,6 +54,7 @@ export function formatKM(locale: string, value: number, options?: Intl.NumberFor
 
 const FORMATS = {
   formatPercentage,
+  formatNumber,
   formatKM,
 } as const;
 

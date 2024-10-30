@@ -1,7 +1,5 @@
 import { useCallback, useMemo } from 'react';
 
-import { useMap } from 'react-map-gl';
-
 import { useParams } from 'next/navigation';
 
 import { useAtom } from 'jotai';
@@ -10,7 +8,7 @@ import { useLocale } from 'next-intl';
 import DeckJsonLayer from '@/components/map/layers/deck-json-layer';
 import MapboxLayer from '@/components/map/layers/mapbox-layer';
 import { layersInteractiveAtom, layersInteractiveIdsAtom } from '@/containers/map/store';
-import useConfig from '@/hooks/use-config';
+import useResolvedConfig from '@/hooks/use-resolved-config';
 import { useGetLayersId } from '@/types/generated/layer';
 import { LayerResponseDataObject } from '@/types/generated/strapi.schemas';
 import { Config, LayerTyped } from '@/types/layers';
@@ -48,7 +46,7 @@ const LayerManagerItem = ({ id, beforeId, settings }: LayerManagerItemProps) => 
     [config, locationCode, params_config, settings]
   );
 
-  const parsedConfig = useConfig(configParams);
+  const parsedConfig = useResolvedConfig(configParams);
 
   const handleAddMapboxLayer = useCallback(
     ({ styles }: Config) => {

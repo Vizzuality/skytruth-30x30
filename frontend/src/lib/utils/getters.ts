@@ -1,3 +1,5 @@
+import { formatNumber } from '@/lib/utils/formats';
+
 export const injectLastYearRange = ({ url }: { url: string }) => {
   const endDate = new Date();
   const startDate = new Date(endDate);
@@ -45,6 +47,47 @@ export const getFishingEffortBins = async ({
   return res;
 };
 
+export const getFishingEffortLegendConfig = async ({
+  url,
+  colors,
+  zoom,
+  locale,
+}: {
+  url: string;
+  colors: string[];
+  zoom: number;
+  locale: string;
+}) => {
+  const data = await fetch(
+    injectZoom({ url: injectLastYearRange({ url }), zoom: Math.min(12, Math.round(zoom)) }),
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_GLOBAL_FISHING_WATCH_TOKEN}`,
+      },
+    }
+  ).then((res) => res.json());
+
+  const entries = data.entries[0] as number[];
+
+  const res = [];
+  for (let i = 0, j = colors.length - 1; i <= j; i++) {
+    const value = entries?.[i] ?? i * 10000000;
+    res.push({
+      color: colors[i] ?? '#FFFFFF',
+      value:
+        i % 3 === 0
+          ? `${formatNumber(locale, value, {
+              notation: 'compact',
+              compactDisplay: 'short',
+              maximumFractionDigits: 1,
+            })}${i === colors.length - 1 ? '>=' : ''}`
+          : '',
+    });
+  }
+
+  return res;
+};
+
 export const getAtIndex = <T>({ array, index }: { array: T[]; index: number }) => {
   return array[index];
 };
@@ -53,6 +96,7 @@ const GETTERS = {
   injectZoom,
   injectLastYearRange,
   getFishingEffortBins,
+  getFishingEffortLegendConfig,
   getAtIndex,
 };
 

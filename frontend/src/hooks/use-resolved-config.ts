@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { parseConfig } from '@/lib/json-converter';
 
-export default function useConfig<Config>(params: Parameters<typeof parseConfig<Config>>[0]) {
+export default function useResolvedConfig<Config>(
+  params: Parameters<typeof parseConfig<Config>>[0]
+) {
   const [config, setConfig] = useState<Config | null>(null);
 
   useEffect(() => {
