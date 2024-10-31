@@ -124,15 +124,24 @@ const LegendItem: FCWithMessages<LegendItemsProps> = ({ config, paramsConfig }) 
       return (
         <>
           <ul className="flex w-full">
-            {items.map(({ color }) => (
+            {items.map(({ color }, index) => (
               <li
                 key={`${color}`}
-                className="h-2 flex-shrink-0"
+                className="relative h-3 flex-shrink-0"
                 style={{
                   width: `${100 / items.length}%`,
-                  backgroundColor: color,
+                  backgroundColor:
+                    index === 0 &&
+                    (color.toLowerCase() === '#fff' || color.toLowerCase() === '#ffffff')
+                      ? (items[index + 1]?.color ?? color)
+                      : color,
                 }}
-              />
+              >
+                {index === 0 &&
+                  (color.toLowerCase() === '#fff' || color.toLowerCase() === '#ffffff') && (
+                    <div className="absolute inset-px bg-white" />
+                  )}
+              </li>
             ))}
           </ul>
 
@@ -141,7 +150,7 @@ const LegendItem: FCWithMessages<LegendItemsProps> = ({ config, paramsConfig }) 
               <li
                 key={`${color}`}
                 className={cn({
-                  'flex flex-shrink-0 justify-center text-xs': true,
+                  'flex flex-shrink-0 justify-center font-mono text-xs': true,
                   'justify-start': index === 0,
                   'justify-end': index + 1 === items.length,
                 })}
