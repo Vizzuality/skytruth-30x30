@@ -87,12 +87,18 @@ const MainMap: FCWithMessages = () => {
     }
   );
 
+  const previousDefaultLayersRef = useRef(defaultLayers);
+
   // Once we have fetched from the CMS which layers are active by default, we set toggle them on, if
-  // there are already no layers in the URL
+  // there are already no layers in the URL and we've just fetched
+  // That last condition is important because we don't want to activate the default layers if the
+  // user manually remove all the layers from the map
   useEffect(() => {
-    if (defaultLayers && mapLayers.length === 0) {
+    if (!previousDefaultLayersRef.current && defaultLayers && mapLayers.length === 0) {
       setMapLayers(defaultLayers);
     }
+
+    previousDefaultLayersRef.current = defaultLayers;
   }, [mapLayers, setMapLayers, defaultLayers]);
 
   const safelyResetFeatureState = useCallback(() => {
