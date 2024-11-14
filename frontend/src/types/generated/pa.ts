@@ -43,7 +43,7 @@ export const getGetPasQueryKey = (params?: GetPasParams) => {
 
 export const getGetPasQueryOptions = <
   TData = Awaited<ReturnType<typeof getPas>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetPasParams,
   options?: {
@@ -99,7 +99,7 @@ export const getGetPasIdQueryKey = (id: number, params?: GetPasIdParams) => {
 
 export const getGetPasIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getPasId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetPasIdParams,
@@ -127,7 +127,7 @@ export type GetPasIdQueryError = ErrorType<Error>;
 
 export const useGetPasId = <
   TData = Awaited<ReturnType<typeof getPasId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetPasIdParams,

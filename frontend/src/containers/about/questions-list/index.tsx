@@ -23,7 +23,7 @@ export type QuestionsListProps = VariantProps<typeof questionsListVariants> & {
 const QuestionsList: React.FC<QuestionsListProps> = ({ questions, color }) => (
   <div
     className={cn(
-      'my-8 border border-black py-8 px-10 text-2xl font-extrabold md:my-16 md:py-16',
+      'my-8 border border-black px-10 py-8 text-2xl font-extrabold md:my-16 md:py-16',
       questionsListVariants({ color })
     )}
   >

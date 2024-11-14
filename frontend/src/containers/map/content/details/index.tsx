@@ -144,7 +144,7 @@ const MapDetails: FCWithMessages = () => {
           onClick={handleOnCloseClick}
         >
           {t('close')}
-          <Icon icon={CloseIcon} className="ml-2 h-3 w-3 pb-px " />
+          <Icon icon={CloseIcon} className="ml-2 h-3 w-3 pb-px" />
         </Button>
       </div>
       <div className="flex-grow overflow-hidden">

@@ -135,6 +135,20 @@ export const Map: FC<CustomMapProps> = ({
         mapStyle="mapbox://styles/skytruth/clnud2d3100nr01pl3b4icpyw"
         dragRotate={false}
         touchZoomRotate={false}
+        transformRequest={(url) => {
+          // Global Fishing Watch tilers require authorization token and we're also passing the past
+          // 12 months as a parameter
+          if (url.startsWith('https://gateway.api.globalfishingwatch.org/')) {
+            return {
+              url,
+              headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_GLOBAL_FISHING_WATCH_TOKEN}`,
+              },
+            };
+          }
+
+          return null;
+        }}
         {...mapboxProps}
         {...localViewState}
       >

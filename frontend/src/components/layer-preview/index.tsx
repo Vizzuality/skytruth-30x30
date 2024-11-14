@@ -78,7 +78,7 @@ const LayerPreview: React.FC<{
 
   return (
     <div
-      className="absolute top-0 left-0 h-full w-full bg-cover bg-center bg-no-repeat"
+      className="absolute left-0 top-0 h-full w-full bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage: `url(${srcImage})`,
       }}

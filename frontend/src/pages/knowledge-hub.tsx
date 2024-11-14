@@ -1,8 +1,11 @@
 import { useRef } from 'react';
 
+import dynamic from 'next/dynamic';
+
 import { GetServerSideProps } from 'next';
 import { useTranslations } from 'next-intl';
 
+import MobileDisclaimerDialogStatic from '@/components/mobile-disclaimer-dialog';
 import Cta from '@/components/static-pages/cta';
 import Intro from '@/components/static-pages/intro';
 import Section from '@/components/static-pages/section';
@@ -12,6 +15,10 @@ import CardList from '@/containers/knowledge-hub/card-list';
 import Layout, { Content } from '@/layouts/static-page';
 import { fetchTranslations } from '@/lib/i18n';
 import { FCWithMessages } from '@/types';
+
+const MobileDisclaimerDialog = dynamic(() => import('@/components/mobile-disclaimer-dialog'), {
+  ssr: false,
+});
 
 const KnowledgeHubPage: FCWithMessages = () => {
   const t = useTranslations('pages.knowledge-hub');
@@ -47,6 +54,7 @@ const KnowledgeHubPage: FCWithMessages = () => {
         />
       }
     >
+      <MobileDisclaimerDialog />
       <Content>
         <Section ref={sectionRef} borderTop={false} className="py-0 md:mb-0">
           <div className="space-y-24">
@@ -67,6 +75,7 @@ KnowledgeHubPage.messages = [
   ...Layout.messages,
   ...CardFilters.messages,
   ...CardList.messages,
+  ...MobileDisclaimerDialogStatic.messages,
 ];
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

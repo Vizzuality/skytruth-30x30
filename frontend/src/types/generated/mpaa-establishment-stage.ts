@@ -52,7 +52,7 @@ export const getGetMpaaEstablishmentStagesQueryKey = (
 
 export const getGetMpaaEstablishmentStagesQueryOptions = <
   TData = Awaited<ReturnType<typeof getMpaaEstablishmentStages>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetMpaaEstablishmentStagesParams,
   options?: {
@@ -82,7 +82,7 @@ export type GetMpaaEstablishmentStagesQueryError = ErrorType<Error>;
 
 export const useGetMpaaEstablishmentStages = <
   TData = Awaited<ReturnType<typeof getMpaaEstablishmentStages>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetMpaaEstablishmentStagesParams,
   options?: {
@@ -120,7 +120,7 @@ export const getGetMpaaEstablishmentStagesIdQueryKey = (
 
 export const getGetMpaaEstablishmentStagesIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getMpaaEstablishmentStagesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetMpaaEstablishmentStagesIdParams,
@@ -155,7 +155,7 @@ export type GetMpaaEstablishmentStagesIdQueryError = ErrorType<Error>;
 
 export const useGetMpaaEstablishmentStagesId = <
   TData = Awaited<ReturnType<typeof getMpaaEstablishmentStagesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetMpaaEstablishmentStagesIdParams,
@@ -195,7 +195,7 @@ export const postMpaaEstablishmentStagesIdLocalizations = (
 
 export const getPostMpaaEstablishmentStagesIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postMpaaEstablishmentStagesIdLocalizations>>,
@@ -233,7 +233,7 @@ export type PostMpaaEstablishmentStagesIdLocalizationsMutationError = ErrorType<
 
 export const usePostMpaaEstablishmentStagesIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postMpaaEstablishmentStagesIdLocalizations>>,

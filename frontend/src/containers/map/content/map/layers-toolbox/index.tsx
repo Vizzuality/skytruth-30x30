@@ -19,7 +19,7 @@ const LayersToolbox: FCWithMessages = () => {
     <div className="absolute bottom-0 right-0 z-20 bg-red">
       <div className="relative">
         <Collapsible className="relative bg-red" open={open} onOpenChange={setOpen}>
-          <CollapsibleTrigger className="absolute top-0 right-0 -translate-y-full border border-b-0 border-black bg-white">
+          <CollapsibleTrigger className="absolute right-0 top-0 -translate-y-full border border-b-0 border-black bg-white">
             {open && <LuChevronDown className="mx-2 my-px h-5 w-5" aria-hidden />}
             {!open && (
               <span className="flex items-center gap-2 py-2.5 pl-3 pr-4 font-mono text-xs">
@@ -29,7 +29,7 @@ const LayersToolbox: FCWithMessages = () => {
             )}
           </CollapsibleTrigger>
           <CollapsibleContent className="border-l border-t border-black bg-white fill-mode-none data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-            <div className="relative h-full max-h-[calc(100vh-200px)] w-[380px] overflow-y-auto border ">
+            <div className="relative h-full max-h-[calc(100vh-200px)] w-[380px] overflow-y-auto border">
               <LayersLegend />
             </div>
           </CollapsibleContent>

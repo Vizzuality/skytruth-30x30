@@ -2,22 +2,18 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { BBox } from '@turf/turf';
-import { useAtom } from 'jotai';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { CustomMapProps } from '@/components/map/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PAGES } from '@/constants/pages';
 import { useMapSearchParams } from '@/containers/map/content/map/sync-settings';
-import { bboxLocationAtom } from '@/containers/map/store';
 import { useSyncMapContentSettings } from '@/containers/map/sync-settings';
+import useMapDefaultLayers from '@/hooks/use-map-default-layers';
 import useScrollPosition from '@/hooks/use-scroll-position';
+import useMapLocationBounds from '@/hooks/useMapLocationBounds';
 import { cn } from '@/lib/classnames';
-import { combineBoundingBoxes } from '@/lib/utils/geo';
 import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
-import { Location } from '@/types/generated/strapi.schemas';
 
 import LocationSelector from '../../location-selector';
 
@@ -41,13 +37,12 @@ const SidebarDetails: FCWithMessages = () => {
   const searchParams = useMapSearchParams();
 
   const [{ tab }, setSettings] = useSyncMapContentSettings();
-  const [, setLocationBBox] = useAtom(bboxLocationAtom);
 
   const { data: locationsData } = useGetLocations({
     locale,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    fields: ['name', 'name_es', 'name_fr', 'marine_bounds', 'terrestrial_bounds'],
+    fields: ['name', 'name_es', 'name_fr', 'type'],
     filters: {
       code: locationCode,
     },
@@ -70,32 +65,6 @@ const SidebarDetails: FCWithMessages = () => {
     }
     return res;
   }, [locale]);
-
-  const locationBounds = useMemo(() => {
-    const { terrestrial_bounds, marine_bounds } =
-      locationsData?.data[0]?.attributes ?? ({} as Location);
-
-    if (tab === 'terrestrial') {
-      return terrestrial_bounds;
-    }
-
-    if (tab === 'marine') {
-      return marine_bounds;
-    }
-
-    if (terrestrial_bounds === undefined && marine_bounds === undefined) {
-      return null;
-    }
-
-    return combineBoundingBoxes(
-      // Falling back to the marine bounds because some locations don't have terrestrial bounds e.g.
-      // ABJN and Gibraltar
-      (terrestrial_bounds ?? marine_bounds) as BBox,
-      // Falling back to the terrestrial bounds because some locations don't have marine bounds e.g.
-      // any country without coast
-      (marine_bounds ?? terrestrial_bounds) as BBox
-    );
-  }, [locationsData, tab]);
 
   const memberCountries = useMemo(() => {
     return locationsData?.data[0]?.attributes?.members?.data?.map(({ attributes }) => ({
@@ -122,18 +91,17 @@ const SidebarDetails: FCWithMessages = () => {
     containerRef.current?.scrollTo({ top: 0 });
   }, [tab, locationCode]);
 
-  // Zoom the map to the location's bounds (terrestrial bounds, marine bounds or both)
-  useEffect(() => {
-    if (locationBounds) {
-      setLocationBBox(locationBounds as CustomMapProps['bounds']['bbox']);
-    }
-  }, [setLocationBBox, locationBounds]);
+  // Update the map's default layers based on the tab
+  useMapDefaultLayers();
+
+  // Update the map's position based on the location
+  useMapLocationBounds();
 
   return (
     <Tabs value={tab} onValueChange={handleTabChange} className="flex h-full w-full flex-col">
       <div
         className={cn({
-          'flex flex-shrink-0 gap-y-2 gap-x-5 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6':
+          'flex flex-shrink-0 gap-x-5 gap-y-2 border-b border-black bg-orange px-4 pt-4 md:px-8 md:pt-6':
             true,
           'flex-col': containerScroll === 0,
           'flex-row flex-wrap': containerScroll > 0,

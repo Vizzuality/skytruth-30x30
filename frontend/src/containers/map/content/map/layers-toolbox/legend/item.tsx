@@ -1,12 +1,16 @@
-import { ReactElement, isValidElement, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
+import { useMap } from 'react-map-gl';
+
+import { useLocale } from 'next-intl';
 
 import TooltipButton from '@/components/tooltip-button';
 import Icon from '@/components/ui/icon';
 import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
+import useResolvedParamsConfig from '@/hooks/use-resolved-params-config';
 import { cn } from '@/lib/classnames';
-import { parseConfig } from '@/lib/json-converter';
 import CircleWithDottedRedStrokeIcon from '@/styles/icons/circle-with-dotted-red-stroke.svg';
 import CircleWithFillIcon from '@/styles/icons/circle-with-fill.svg';
 import CircleWithoutFillIcon from '@/styles/icons/circle-without-fill.svg';
@@ -15,10 +19,11 @@ import EstablishmentImplementedIcon from '@/styles/icons/implemented.svg';
 import EstablishmentManagedIcon from '@/styles/icons/managed.svg';
 import EstablishmentProposedIcon from '@/styles/icons/proposed.svg';
 import { FCWithMessages } from '@/types';
-import { LayerTyped, LegendConfig } from '@/types/layers';
+import { LayerTyped, ParamsConfig } from '@/types/layers';
 
 export interface LegendItemsProps {
   config: LayerTyped['legend_config'];
+  paramsConfig: ParamsConfig;
 }
 
 const ICONS_MAPPING = {
@@ -31,24 +36,44 @@ const ICONS_MAPPING = {
   'establishment-implemented': EstablishmentImplementedIcon,
 };
 
-const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
-  const { type, items } = config || {};
+const LegendItem: FCWithMessages<LegendItemsProps> = ({ config, paramsConfig }) => {
+  const locale = useLocale();
+  const { current: map } = useMap();
 
-  const LEGEND_ITEM_COMPONENT = useMemo(() => {
-    const l = parseConfig<LegendConfig | ReactElement | null>({
-      config,
-      params_config: [],
-      settings: {},
-    });
+  const [zoom, setZoom] = useState(map?.getZoom() ?? 1);
 
-    if (!l) return null;
+  const resolvedParamsConfigParams = useMemo(
+    () => ({
+      locale,
+      zoom,
+    }),
+    [locale, zoom]
+  );
 
-    if (isValidElement(l)) {
-      return l;
-    }
+  const resolvedParamsConfig = useResolvedParamsConfig(paramsConfig, resolvedParamsConfigParams);
+  const dynamicLegendConfig = useMemo(
+    () =>
+      resolvedParamsConfig?.find(({ key }) => key === 'legend_config')?.default as
+        | LayerTyped['legend_config']['items']
+        | undefined,
+    [resolvedParamsConfig]
+  );
 
-    return null;
-  }, [config]);
+  useEffect(() => {
+    const onZoom = () => {
+      setZoom(map.getZoom());
+    };
+
+    map.on('zoomend', onZoom);
+
+    return () => {
+      map.off('zoomend', onZoom);
+    };
+  }, [map, setZoom]);
+
+  const { type } = config ?? {};
+  let { items } = config ?? {};
+  items = dynamicLegendConfig ?? items;
 
   switch (type) {
     case 'basic':
@@ -99,23 +124,36 @@ const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
       return (
         <>
           <ul className="flex w-full">
-            {items.map(({ color }) => (
+            {items.map(({ color }, index) => (
               <li
                 key={`${color}`}
-                className="h-2 flex-shrink-0"
+                className="relative h-3 flex-shrink-0"
                 style={{
                   width: `${100 / items.length}%`,
-                  backgroundColor: color,
+                  backgroundColor:
+                    index === 0 &&
+                    (color.toLowerCase() === '#fff' || color.toLowerCase() === '#ffffff')
+                      ? (items[index + 1]?.color ?? color)
+                      : color,
                 }}
-              />
+              >
+                {index === 0 &&
+                  (color.toLowerCase() === '#fff' || color.toLowerCase() === '#ffffff') && (
+                    <div className="absolute inset-px bg-white" />
+                  )}
+              </li>
             ))}
           </ul>
 
           <ul className="mt-1 flex w-full">
-            {items.map(({ value }) => (
+            {items.map(({ color, value }, index) => (
               <li
-                key={`${value}`}
-                className="flex-shrink-0 text-center text-xs"
+                key={`${color}`}
+                className={cn({
+                  'flex flex-shrink-0 justify-center font-mono text-xs': true,
+                  'justify-start': index === 0,
+                  'justify-end': index + 1 === items.length,
+                })}
                 style={{
                   width: `${100 / items.length}%`,
                 }}
@@ -150,7 +188,7 @@ const LegendItem: FCWithMessages<LegendItemsProps> = ({ config }) => {
       );
 
     default:
-      return LEGEND_ITEM_COMPONENT;
+      return null;
   }
 };
 

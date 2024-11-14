@@ -82,7 +82,7 @@ const HorizontalBarChart: FCWithMessages<HorizontalBarChartProps> = ({
       <div className="relative mb-2 flex h-3.5">
         <span className="absolute top-1/2 h-px w-full border-b border-dashed border-black"></span>
         <span
-          className="absolute top-0 bottom-0 left-0 border border-black !bg-cover"
+          className="absolute bottom-0 left-0 top-0 border border-black !bg-cover"
           style={{
             background,
             width: `${barFillPercentage}%`,
@@ -90,7 +90,7 @@ const HorizontalBarChart: FCWithMessages<HorizontalBarChartProps> = ({
         />
         {showTarget && (
           <span
-            className="absolute top-0 bottom-0 w-1 border-x border-white bg-orange"
+            className="absolute bottom-0 top-0 w-1 border-x border-white bg-orange"
             style={{
               left: `${targetPositionPercentage}%`,
             }}

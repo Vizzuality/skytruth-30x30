@@ -1,5 +1,7 @@
 import Document, { Html, Main, NextScript, Head } from 'next/document';
 
+import { mediaStyles } from '@/media';
+
 export default class MyDocument extends Document {
   render() {
     return (
@@ -19,6 +21,7 @@ export default class MyDocument extends Document {
           <meta property="og:type" content="website" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@SkyTruth" />
+          <style type="text/css" dangerouslySetInnerHTML={{ __html: mediaStyles }} />
         </Head>
         <body>
           <Main />

@@ -12,7 +12,7 @@ import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
 import FUNCTIONS from '@/lib/utils';
-import { ParamsConfig } from '@/types/layers';
+import { ParamsConfig, ParamsConfigValue } from '@/types/layers';
 
 export const JSON_CONFIGURATION = new JSONConfiguration({
   React,
@@ -34,6 +34,11 @@ export const JSON_CONFIGURATION = new JSONConfiguration({
   },
 });
 
+export interface GetParamsProps {
+  settings: Record<string, unknown>;
+  params_config: ParamsConfig;
+}
+
 /**
  * *`getParams`*
  * Get params from params_config
@@ -41,21 +46,91 @@ export const JSON_CONFIGURATION = new JSONConfiguration({
  * @returns {Object} params
  *
  */
-export interface GetParamsProps {
-  settings: Record<string, unknown>;
-  params_config: ParamsConfig;
-}
 export const getParams = ({ params_config, settings = {} }: GetParamsProps) => {
   if (!params_config) {
     return {};
   }
-  return params_config.reduce((acc, p) => {
-    return {
-      ...acc,
-      [`${p.key}`]: settings[`${p.key}`] ?? p.default,
-    };
-  }, {} as Record<string, unknown>);
+
+  return params_config.reduce(
+    (acc, p) => {
+      return {
+        ...acc,
+        [`${p.key}`]: settings[`${p.key}`] ?? p.default,
+      };
+    },
+    {} as Record<string, unknown>
+  );
 };
+
+/**
+ * Create a new parameter for the params_config array
+ * @param name Name of the new parameter
+ * @param methodName Name of the (async) function that will compute the value of the parameter
+ * @param params Parameters for the (async) function that will compute the value of the parameter
+ */
+const createNewParamsConfigParam = async (
+  name: string,
+  methodName: string,
+  params: Record<string, unknown>
+): Promise<ParamsConfigValue> => {
+  return {
+    key: name,
+    default: await FUNCTIONS[methodName](params),
+  };
+};
+
+/**
+ * Resolve the final params_config after creating any new eventual dynamic parameter
+ * @param params_config Initial params_config
+ * @param settings Values to replace the defaults of the parameters
+ */
+export const resolveParamsConfig = async (
+  params_config: ParamsConfig,
+  settings: Record<string, unknown>
+) => {
+  let finalParamsConfig = params_config;
+  const initParameter = finalParamsConfig.find(({ key }) => key === '_INIT_');
+
+  // If `initParameter` is defined, then we want to asynchronously create new parameters within `pc`
+  if (initParameter) {
+    const initParameterConfig = initParameter.default as Record<
+      string,
+      { ['@@function']: string; [attr: string]: unknown }
+    >;
+
+    const newParams: ParamsConfigValue[] = [];
+
+    for (const [name, attrs] of Object.entries(initParameterConfig)) {
+      const param = await createNewParamsConfigParam(
+        name,
+        attrs['@@function'],
+        Object.entries(attrs).reduce((res, [key, name]) => {
+          if (key === '@@function') {
+            return res;
+          }
+
+          return {
+            ...res,
+            [key]: getParams({ params_config: finalParamsConfig, settings })[
+              (name as string).replace('@@#params.', '')
+            ],
+          };
+        }, {})
+      );
+      newParams.push(param);
+    }
+
+    finalParamsConfig = [...finalParamsConfig, ...newParams];
+  }
+
+  return finalParamsConfig;
+};
+
+interface ParseConfigurationProps {
+  config: unknown;
+  params_config: ParamsConfig;
+  settings: Record<string, unknown>;
+}
 
 /**
  * *`parseConfig`*
@@ -65,16 +140,11 @@ export const getParams = ({ params_config, settings = {} }: GetParamsProps) => {
  * @returns {Object} config
  *
  */
-interface ParseConfigurationProps {
-  config: unknown;
-  params_config: unknown;
-  settings: Record<string, unknown>;
-}
-export const parseConfig = <T>({
+export const parseConfig = async <T>({
   config,
   params_config,
   settings,
-}: ParseConfigurationProps): T | null => {
+}: ParseConfigurationProps): Promise<T | null> => {
   if (!config || !params_config) {
     return null;
   }
@@ -83,13 +153,17 @@ export const parseConfig = <T>({
     configuration: JSON_CONFIGURATION,
   });
 
-  const pc = params_config as ParamsConfig;
-  const params = getParams({ params_config: pc, settings });
+  const params = getParams({
+    params_config: await resolveParamsConfig(params_config, settings),
+    settings,
+  });
+
   // Merge enumerations with config
   JSON_CONVERTER.mergeConfiguration({
     enumerations: {
       params,
     },
   });
+
   return JSON_CONVERTER.convert(config);
 };

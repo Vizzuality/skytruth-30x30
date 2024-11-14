@@ -51,7 +51,7 @@ export const getGetMpaIucnCategoriesQueryKey = (params?: GetMpaIucnCategoriesPar
 
 export const getGetMpaIucnCategoriesQueryOptions = <
   TData = Awaited<ReturnType<typeof getMpaIucnCategories>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetMpaIucnCategoriesParams,
   options?: {
@@ -80,7 +80,7 @@ export type GetMpaIucnCategoriesQueryError = ErrorType<Error>;
 
 export const useGetMpaIucnCategories = <
   TData = Awaited<ReturnType<typeof getMpaIucnCategories>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetMpaIucnCategoriesParams,
   options?: {
@@ -114,7 +114,7 @@ export const postMpaIucnCategories = (
 
 export const getPostMpaIucnCategoriesMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postMpaIucnCategories>>,
@@ -183,7 +183,7 @@ export const getGetMpaIucnCategoriesIdQueryKey = (
 
 export const getGetMpaIucnCategoriesIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getMpaIucnCategoriesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetMpaIucnCategoriesIdParams,
@@ -213,7 +213,7 @@ export type GetMpaIucnCategoriesIdQueryError = ErrorType<Error>;
 
 export const useGetMpaIucnCategoriesId = <
   TData = Awaited<ReturnType<typeof getMpaIucnCategoriesId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetMpaIucnCategoriesIdParams,
@@ -249,7 +249,7 @@ export const putMpaIucnCategoriesId = (
 
 export const getPutMpaIucnCategoriesIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putMpaIucnCategoriesId>>,
@@ -303,7 +303,7 @@ export const deleteMpaIucnCategoriesId = (id: number, options?: SecondParameter<
 
 export const getDeleteMpaIucnCategoriesIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteMpaIucnCategoriesId>>,
@@ -340,7 +340,7 @@ export type DeleteMpaIucnCategoriesIdMutationError = ErrorType<Error>;
 
 export const useDeleteMpaIucnCategoriesId = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteMpaIucnCategoriesId>>,
@@ -372,7 +372,7 @@ export const postMpaIucnCategoriesIdLocalizations = (
 
 export const getPostMpaIucnCategoriesIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postMpaIucnCategoriesIdLocalizations>>,
@@ -410,7 +410,7 @@ export type PostMpaIucnCategoriesIdLocalizationsMutationError = ErrorType<Error>
 
 export const usePostMpaIucnCategoriesIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postMpaIucnCategoriesIdLocalizations>>,

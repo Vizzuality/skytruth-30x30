@@ -51,7 +51,7 @@ export const getGetEnvironmentsQueryKey = (params?: GetEnvironmentsParams) => {
 
 export const getGetEnvironmentsQueryOptions = <
   TData = Awaited<ReturnType<typeof getEnvironments>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetEnvironmentsParams,
   options?: {
@@ -78,7 +78,7 @@ export type GetEnvironmentsQueryError = ErrorType<Error>;
 
 export const useGetEnvironments = <
   TData = Awaited<ReturnType<typeof getEnvironments>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   params?: GetEnvironmentsParams,
   options?: {
@@ -112,7 +112,7 @@ export const postEnvironments = (
 
 export const getPostEnvironmentsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postEnvironments>>,
@@ -178,7 +178,7 @@ export const getGetEnvironmentsIdQueryKey = (id: number, params?: GetEnvironment
 
 export const getGetEnvironmentsIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getEnvironmentsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetEnvironmentsIdParams,
@@ -208,7 +208,7 @@ export type GetEnvironmentsIdQueryError = ErrorType<Error>;
 
 export const useGetEnvironmentsId = <
   TData = Awaited<ReturnType<typeof getEnvironmentsId>>,
-  TError = ErrorType<Error>
+  TError = ErrorType<Error>,
 >(
   id: number,
   params?: GetEnvironmentsIdParams,
@@ -244,7 +244,7 @@ export const putEnvironmentsId = (
 
 export const getPutEnvironmentsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putEnvironmentsId>>,
@@ -298,7 +298,7 @@ export const deleteEnvironmentsId = (id: number, options?: SecondParameter<typeo
 
 export const getDeleteEnvironmentsIdMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteEnvironmentsId>>,
@@ -364,7 +364,7 @@ export const postEnvironmentsIdLocalizations = (
 
 export const getPostEnvironmentsIdLocalizationsMutationOptions = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postEnvironmentsIdLocalizations>>,
@@ -401,7 +401,7 @@ export type PostEnvironmentsIdLocalizationsMutationError = ErrorType<Error>;
 
 export const usePostEnvironmentsIdLocalizations = <
   TError = ErrorType<Error>,
-  TContext = unknown
+  TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postEnvironmentsIdLocalizations>>,

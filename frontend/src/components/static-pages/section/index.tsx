@@ -31,7 +31,7 @@ const Section = forwardRef<HTMLDivElement, SectionProps>(
   ({ className, borderTop = true, children }, ref) => (
     <div
       ref={ref}
-      className={cn('w-full border-black py-6 px-8 md:mx-auto md:mb-20 md:max-w-7xl md:px-0', {
+      className={cn('w-full border-black px-8 py-6 md:mx-auto md:mb-20 md:max-w-7xl md:px-0', {
         'border-t': borderTop,
         [className]: true,
       })}

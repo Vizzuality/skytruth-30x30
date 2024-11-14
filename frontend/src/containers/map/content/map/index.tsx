@@ -3,15 +3,12 @@ import { ComponentProps, useCallback, useEffect, useMemo, useRef, useState } fro
 import { useMap } from 'react-map-gl';
 
 import dynamic from 'next/dynamic';
-import { useParams } from 'next/navigation';
 
 import { useAtom, useAtomValue } from 'jotai';
-import { useResetAtom } from 'jotai/utils';
 import { useLocale } from 'next-intl';
 
 import Map, { ZoomControls, Attributions } from '@/components/map';
 import { DEFAULT_VIEW_STATE } from '@/components/map/constants';
-import { CustomMapProps } from '@/components/map/types';
 import DrawControls from '@/containers/map/content/map/draw-controls';
 import LabelsManager from '@/containers/map/content/map/labels-manager';
 import LayersToolbox from '@/containers/map/content/map/layers-toolbox';
@@ -21,17 +18,15 @@ import BoundariesPopup from '@/containers/map/content/map/popup/boundaries';
 import GenericPopup from '@/containers/map/content/map/popup/generic';
 import ProtectedAreaPopup from '@/containers/map/content/map/popup/protected-area';
 import { useSyncMapLayers, useSyncMapSettings } from '@/containers/map/content/map/sync-settings';
-import { layersAtom, sidebarAtom } from '@/containers/map/store';
 import {
-  bboxLocationAtom,
   drawStateAtom,
   layersInteractiveAtom,
   layersInteractiveIdsAtom,
   popupAtom,
 } from '@/containers/map/store';
+import useMapBounds from '@/hooks/useMapBounds';
 import { FCWithMessages } from '@/types';
 import { useGetLayers } from '@/types/generated/layer';
-import { useGetLocations } from '@/types/generated/location';
 import { LayerTyped } from '@/types/layers';
 
 const LayerManager = dynamic(() => import('@/containers/map/content/map/layer-manager'), {
@@ -42,37 +37,18 @@ const MainMap: FCWithMessages = () => {
   const locale = useLocale();
 
   const [{ bbox: URLBbox }, setMapSettings] = useSyncMapSettings();
-  const [, setMapLayers] = useSyncMapLayers();
+  const [mapLayers, setMapLayers] = useSyncMapLayers();
   const { default: map } = useMap();
   const drawState = useAtomValue(drawStateAtom);
-  const isSidebarOpen = useAtomValue(sidebarAtom);
-  const isLayersPanelOpen = useAtomValue(layersAtom);
   const [popup, setPopup] = useAtom(popupAtom);
-  const params = useParams();
-  const [locationBbox, setLocationBbox] = useAtom(bboxLocationAtom);
-  const resetLocationBbox = useResetAtom(bboxLocationAtom);
   const hoveredPolygonId = useRef<Parameters<typeof map.setFeatureState>[0] | null>(null);
   const [cursor, setCursor] = useState<'grab' | 'crosshair' | 'pointer'>('grab');
-
-  const locationCode = params?.locationCode || 'GLOB';
-
-  const locationsQuery = useGetLocations(
-    {
-      locale,
-      filters: {
-        code: locationCode,
-      },
-    },
-    {
-      query: {
-        queryKey: ['locations', locationCode],
-        select: ({ data }) => data?.[0]?.attributes,
-      },
-    }
-  );
+  const mountedRef = useRef(false);
 
   const layersInteractive = useAtomValue(layersInteractiveAtom);
   const layersInteractiveIds = useAtomValue(layersInteractiveIdsAtom);
+
+  const bounds = useMapBounds();
 
   const { data: layersInteractiveData } = useGetLayers(
     {
@@ -111,16 +87,19 @@ const MainMap: FCWithMessages = () => {
     }
   );
 
-  // Once we have fetched from the CMS which layers are active by default, we set toggle them on
+  const previousDefaultLayersRef = useRef(defaultLayers);
+
+  // Once we have fetched from the CMS which layers are active by default, we set toggle them on, if
+  // there are already no layers in the URL and we've just fetched
+  // That last condition is important because we don't want to activate the default layers if the
+  // user manually remove all the layers from the map
   useEffect(() => {
-    if (defaultLayers) {
+    if (!previousDefaultLayersRef.current && defaultLayers && mapLayers.length === 0) {
       setMapLayers(defaultLayers);
     }
-  }, [setMapLayers, defaultLayers]);
 
-  useEffect(() => {
-    setLocationBbox(locationsQuery?.data?.marine_bounds as CustomMapProps['bounds']['bbox']);
-  }, [locationCode, locationsQuery, setLocationBbox]);
+    previousDefaultLayersRef.current = defaultLayers;
+  }, [mapLayers, setMapLayers, defaultLayers]);
 
   const safelyResetFeatureState = useCallback(() => {
     if (!hoveredPolygonId.current) {
@@ -255,62 +234,16 @@ const MainMap: FCWithMessages = () => {
       };
     }
 
-    if (locationsQuery.data && locationsQuery.data?.code !== 'GLOB') {
-      return {
-        ...DEFAULT_VIEW_STATE,
-        bounds: locationsQuery.data?.marine_bounds as ComponentProps<
-          typeof Map
-        >['initialViewState']['bounds'],
-        padding: {
-          top: 0,
-          bottom: 0,
-          left: isSidebarOpen ? 430 : 0,
-          right: 0,
-        },
-      };
-    }
-
     return DEFAULT_VIEW_STATE;
-  }, [URLBbox, isSidebarOpen, locationsQuery.data]);
-
-  const bounds: ComponentProps<typeof Map>['bounds'] = useMemo(() => {
-    if (!locationBbox) return null;
-
-    const padding = 20;
-
-    let leftPadding = padding;
-    if (typeof window !== 'undefined' && window?.innerWidth > 430) {
-      if (isSidebarOpen) {
-        leftPadding += 460;
-      }
-
-      if (isLayersPanelOpen) {
-        leftPadding += 280;
-      }
-    }
-
-    return {
-      bbox: locationBbox as ComponentProps<typeof Map>['bounds']['bbox'],
-      options: {
-        padding: {
-          top: padding,
-          bottom: padding,
-          left: leftPadding,
-          right: padding,
-        },
-      },
-    };
-  }, [locationBbox, isSidebarOpen, isLayersPanelOpen]);
+  }, [URLBbox]);
 
   useEffect(() => {
     setCursor(drawState.active ? 'crosshair' : 'grab');
   }, [drawState.active]);
 
   useEffect(() => {
-    return () => {
-      resetLocationBbox();
-    };
-  }, [resetLocationBbox]);
+    mountedRef.current = true;
+  }, []);
 
   const disableMouseMove = popup.type === 'click' && popup.features?.length;
 
