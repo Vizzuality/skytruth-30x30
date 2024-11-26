@@ -7,7 +7,7 @@ import { cn } from '@/lib/classnames';
 import { FCWithMessages } from '@/types';
 import { useGetLocations } from '@/types/generated/location';
 
-// import HabitatWidget from './habitat';
+import HabitatWidget from './habitat';
 import TerrestrialConservationWidget from './terrestrial-conservation';
 
 const TerrestrialWidgets: FCWithMessages = () => {
@@ -46,8 +46,7 @@ const TerrestrialWidgets: FCWithMessages = () => {
       })}
     >
       <TerrestrialConservationWidget location={locationData} />
-      {/* Temporarily hidden due to overestimations caused by the calculation methodology */}
-      {/* <HabitatWidget location={locationData} /> */}
+      <HabitatWidget location={locationData} />
     </div>
   );
 };
