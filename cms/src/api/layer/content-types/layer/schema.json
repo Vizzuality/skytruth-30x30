@@ -98,6 +98,11 @@
       },
       "type": "boolean",
       "default": false
+    },
+    "environment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::environment.environment"
     }
   }
 }
