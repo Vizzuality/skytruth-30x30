@@ -143,12 +143,41 @@ const HabitatWidget: FCWithMessages<HabitatWidgetProps> = ({ location }) => {
     }
   );
 
+  const { data: metadata } = useGetDataInfos(
+    {
+      locale,
+      filters: {
+        slug: 'habitat-widget',
+      },
+      populate: 'data_sources',
+    },
+    {
+      query: {
+        select: ({ data }) =>
+          data[0]
+            ? {
+                info: data[0].attributes.content,
+                sources: data[0].attributes?.data_sources?.data?.map(
+                  ({ id, attributes: { title, url } }) => ({
+                    id,
+                    title,
+                    url,
+                  })
+                ),
+              }
+            : undefined,
+      },
+    }
+  );
+
   return (
     <Widget
       title={t('proportion-habitat-within-protected-areas')}
       lastUpdated={chartData[0]?.updatedAt}
       noData={!chartData.length}
       loading={isFetching}
+      info={metadata?.info}
+      sources={metadata?.sources}
     >
       {chartData.map((chartData) => (
         <HorizontalBarChart

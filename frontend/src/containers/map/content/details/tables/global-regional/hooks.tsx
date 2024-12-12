@@ -272,6 +272,10 @@ export const useColumns = (
                 const { location } = row.original;
 
                 const value = location.mpaa_protection_level_stats.percentage;
+                if (value === null || value === undefined) {
+                  return <span className="text-xs">{t('no-data-available')}</span>;
+                }
+
                 const formattedValue = cellFormatter.percentage(locale, value ?? 0);
 
                 return (
